@@ -1,0 +1,29 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 1005,
+  "elapsed_s": 259.3,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1481,
+      "skipped": 0
+    },
+    "journey": {
+      "character": "ghost",
+      "checks": 997,
+      "failed": 0,
+      "ms": 256498,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

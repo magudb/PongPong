@@ -50,9 +50,19 @@ static func decorate(npc: String, dialogue: Dictionary, context: Dictionary = {}
 	if not seek.is_empty():choices.append(seek)
 	var garden := SecretGardenStory.choice(npc)
 	if not garden.is_empty():
-		choices.append(garden)
+		var step := SecretGardenStory.step()
+		# A journal-directed conversation must expose its required reply on
+		# the first page, even when this citizen offers several side quests.
+		if step >= 0 and step < SecretGardenStory.STEPS.size() and str(SecretGardenStory.STEPS[step].get("npc", "")) == npc:
+			choices.push_front(garden)
+		else:
+			choices.append(garden)
 	var mother := MotherStory.choice(npc)
-	if not mother.is_empty(): choices.append(mother)
+	if not mother.is_empty():
+		if str(MotherStory.topic_page(npc).get("mother_evidence", "")) != "":
+			choices.push_front(mother)
+		else:
+			choices.append(mother)
 	if choices.size() > 4:
 		var extra := choices.slice(3)
 		choices = choices.slice(0, 3)

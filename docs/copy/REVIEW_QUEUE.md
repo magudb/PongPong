@@ -33,7 +33,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | festivals.csv | draft | 91 | 537 | 1.3 |
 | finds.csv | draft | 47 | 81 | 0.2 |
 | forest.csv | draft | 21 | 46 | 0.1 |
-| forest_mother.csv | draft | 132 | 1767 | 4.4 |
+| forest_mother.csv | draft | 132 | 1774 | 4.4 |
 | furniture.csv | draft | 322 | 2075 | 5.2 |
 | ghost.csv | draft | 15 | 97 | 0.2 |
 | ghost_dialogue.csv | draft | 9 | 170 | 0.4 |
@@ -51,7 +51,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | keepers.csv | draft | 66 | 568 | 1.4 |
 | levels.csv | draft | 3 | 12 | 0.0 |
 | life.csv | draft | 27 | 121 | 0.3 |
-| look.csv | draft | 4 | 20 | 0.1 |
+| look.csv | draft | 4 | 25 | 0.1 |
 | loot_dungeon.csv | draft | 11 | 81 | 0.2 |
 | materials.csv | draft | 75 | 378 | 0.9 |
 | menus.csv | draft | 34 | 122 | 0.3 |

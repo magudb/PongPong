@@ -1,0 +1,53 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 636,
+  "elapsed_s": 21.2,
+  "engine": [],
+  "failed": 2,
+  "failures": [
+    "journey_regressions.real_dodge_enters_stair_trigger",
+    "journey_regressions.player_can_step_back_off_stair"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1196,
+      "skipped": 0
+    },
+    "data": {
+      "character": "animal",
+      "checks": 495,
+      "failed": 0,
+      "ms": 8367,
+      "skipped": 0
+    },
+    "journey_regressions": {
+      "character": "animal",
+      "checks": 30,
+      "failed": 2,
+      "ms": 408,
+      "skipped": 0
+    },
+    "quests": {
+      "character": "animal",
+      "checks": 61,
+      "failed": 0,
+      "ms": 5718,
+      "skipped": 0
+    },
+    "social_talk": {
+      "character": "animal",
+      "checks": 42,
+      "failed": 0,
+      "ms": 152,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

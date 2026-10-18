@@ -67,6 +67,11 @@ func set_enabled(on: bool) -> void:
 func _on_body_entered(body: Node) -> void:
 	if not armed or not body.is_in_group("player"):
 		return
+	# Enter deliberately on foot. A dodge or combat knockback can cross a
+	# stair while the player is fighting beside it; travelling then also
+	# disposes the live encounter. Step out and walk back in after the action.
+	if body is PlayerBody2D and body.state != PlayerBody2D.S.FREE:
+		return
 	if not is_open():
 		if not _told:
 			_told = true

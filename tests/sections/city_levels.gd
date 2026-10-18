@@ -1143,6 +1143,7 @@ func _climbing(t) -> void:
 	ActorLevel.clear(p)
 	await t.physics(3)
 	var cb: Callable = _record_events()
+	p.set("mouse_aim", false)
 	var before: StringName = ActorLevel.level_id(p)
 	var refused_wrong_level: bool = not top.climb(p)                         # the top end is for actors on the Upper deck
 	var started: bool = bottom.climb(p)
@@ -1162,10 +1163,12 @@ func _climbing(t) -> void:
 			ev.append(e)
 	t.check("ladder_emits_game_event", ev.size() == 1 and ev[0][1]["lane"] == "main_ladder" and ev[0][1]["from"] == "torvet" and ev[0][1]["to"] == "upper" and absf(float(ev[0][1]["seconds"]) - 1.1) < 0.001, "game_event ladder_climbed {lane, from, to, seconds} once per climb (the audio cue): %s" % [ev])
 	# the way down from the top end, and the tracker keeps the level afterwards
+	p.event_face(Vector2.LEFT)
 	var down_ok: bool = top.climb(p)
 	await t.until(func() -> bool: return not top.climbing, 4.0)
 	await t.physics(3)
 	t.check("ladder_climbs_down_too", down_ok and ActorLevel.level_id(p) == &"torvet" and p.z_index == 80 and p.global_position.distance_to(lad["bottom"]) < 3.0, "the top end takes the actor back to the Torvet (z %d) and the tracker leaves it there" % p.z_index)
+	t.check("ladder_landing_updates_combat_aim", p is Player2D and (p as Player2D).combat.aim_ground().dot(Vector2.DOWN) > .999, "A real climb turns an idle player's next attack with the painted pose.")
 	# --- the real E path: the player's own E query (PlayerStub2D.nearest_interactable / try_interact) finds the end and starts the climb
 	p.global_position = lad["bottom"] + Vector2(0, 8)
 	p.event_face(Vector2.UP)

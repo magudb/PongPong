@@ -1,0 +1,249 @@
+[
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s04",
+		"day": 17,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 3.26702976226807,
+				"interactions": 0,
+				"nav": true,
+				"next": "(5904.0, 2324.0)",
+				"ok": true,
+				"position": "(5904.081, 2322.061)",
+				"seconds": 13.3666666666667,
+				"stuck": false,
+				"ticks": 802,
+				"waypoint_index": 37,
+				"waypoints": 38
+			}
+		},
+		"event": "travel_moerkeskoven_f4",
+		"garden_step": 12,
+		"gold": 630,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 56,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s04",
+		"day": 17,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 1.96098780632019,
+				"interactions": 0,
+				"nav": true,
+				"next": "(1488.0, 588.0)",
+				"ok": true,
+				"position": "(1487.924, 589.1635)",
+				"seconds": 16.2,
+				"stuck": false,
+				"ticks": 972,
+				"waypoint_index": 44,
+				"waypoints": 45
+			}
+		},
+		"event": "travel_moerkeskoven_f3",
+		"garden_step": 12,
+		"gold": 630,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 56,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s04",
+		"day": 17,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.78636884689331,
+				"interactions": 0,
+				"nav": true,
+				"next": "(5328.0, 2212.0)",
+				"ok": true,
+				"position": "(5328.058, 2210.346)",
+				"seconds": 14.35,
+				"stuck": false,
+				"ticks": 861,
+				"waypoint_index": 37,
+				"waypoints": 38
+			}
+		},
+		"event": "travel_moerkeskoven_f2",
+		"garden_step": 12,
+		"gold": 630,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 56,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s04",
+		"day": 17,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 3.14041543006897,
+				"interactions": 0,
+				"nav": true,
+				"next": "(2064.0, 868.0)",
+				"ok": true,
+				"position": "(2063.417, 869.8322)",
+				"seconds": 8.65,
+				"stuck": false,
+				"ticks": 519,
+				"waypoint_index": 26,
+				"waypoints": 27
+			}
+		},
+		"event": "travel_moerkeskoven_f1",
+		"garden_step": 12,
+		"gold": 630,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 56,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven",
+		"chapter": "s04",
+		"day": 17,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.39041566848755,
+				"interactions": 0,
+				"nav": true,
+				"next": "(4656.0, 1540.0)",
+				"ok": true,
+				"position": "(4656.077, 1541.419)",
+				"seconds": 13.1166666666667,
+				"stuck": false,
+				"ticks": 787,
+				"waypoint_index": 36,
+				"waypoints": 37
+			}
+		},
+		"event": "travel_moerkeskoven",
+		"garden_step": 12,
+		"gold": 630,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 56,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s04",
+		"day": 17,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 1.52663195133209,
+				"interactions": 0,
+				"nav": true,
+				"next": "(2352.0, 1820.0)",
+				"ok": true,
+				"position": "(2351.953, 1819.094)",
+				"seconds": 6.23333333333333,
+				"stuck": false,
+				"ticks": 374,
+				"waypoint_index": 15,
+				"waypoints": 16
+			}
+		},
+		"event": "travel_traetoppen",
+		"garden_step": 12,
+		"gold": 630,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 56,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s04",
+		"day": 17,
+		"detail": {
+			"detail": "{ \"ok\": false, \"area_changed\": false, \"ticks\": 570, \"seconds\": 9.5, \"dist_left\": 4462.28564453125, \"stuck\": true, \"nav\": true, \"waypoints\": 216, \"waypoint_index\": 49, \"position\": (4070.596, 1806.346), \"next\": (3589.2, 1890.0), \"collider\": \"Colliders_e\", \"interactions\": 0 }"
+		},
+		"event": "FAILED_walk_route_hyggebyen",
+		"garden_step": 12,
+		"gold": 630,
+		"hearts": 12,
+		"hour": 21,
+		"minute": 15,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s04",
+		"day": 17,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 1990.28356933594,
+				"interactions": 0,
+				"nav": true,
+				"next": "(420.0, 3330.0)",
+				"ok": true,
+				"position": "(1024.0, 2204.0)",
+				"seconds": 21.7666666666667,
+				"stuck": false,
+				"ticks": 1306,
+				"waypoint_index": 172,
+				"waypoints": 173
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 12,
+		"gold": 630,
+		"hearts": 12,
+		"hour": 21,
+		"minute": 59,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s04",
+		"day": 17,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.95343995094299,
+				"interactions": 0,
+				"nav": true,
+				"next": "(576.0, 798.0)",
+				"ok": true,
+				"position": "(573.9045, 799.2358)",
+				"seconds": 9.41666666666667,
+				"stuck": false,
+				"ticks": 565,
+				"waypoint_index": 25,
+				"waypoints": 26
+			}
+		},
+		"event": "travel_secret_garden",
+		"garden_step": 12,
+		"gold": 630,
+		"hearts": 12,
+		"hour": 22,
+		"minute": 19,
+		"player_state": 0
+	}
+]

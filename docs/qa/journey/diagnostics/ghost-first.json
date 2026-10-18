@@ -1,0 +1,32 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 578,
+  "elapsed_s": 149.66,
+  "engine": [],
+  "failed": 2,
+  "failures": [
+    "journey.walk_route_hyggebyen",
+    "journey.journey_finished"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1710,
+      "skipped": 0
+    },
+    "journey": {
+      "character": "ghost",
+      "checks": 570,
+      "failed": 2,
+      "ms": 146511,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

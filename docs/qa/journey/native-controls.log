@@ -1,0 +1,83 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=windowed character=ghost sections=res://tests/sections only=journey_regressions,town_budgets
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.Hr1EHv/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-mechanics/docs/qa/journey/native-controls
+== section journey_regressions [windowed]  (res://tests/sections/journey_regressions.gd)
+  ok    journey_regressions.action_cannot_trigger_travel_3
+  ok    journey_regressions.action_cannot_trigger_travel_4
+  ok    journey_regressions.action_cannot_trigger_travel_5
+  ok    journey_regressions.action_cannot_trigger_travel_6
+  ok    journey_regressions.action_cannot_trigger_travel_1
+  ok    journey_regressions.action_cannot_trigger_travel_2
+  ok    journey_regressions.ordinary_walking_still_triggers_travel
+  ok    journey_regressions.real_dodge_enters_stair_trigger ([3])
+  ok    journey_regressions.real_dodge_cannot_change_area
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-mechanics/docs/qa/journey/native-controls/journey_regressions_dodge_across_stair_keeps_encounter.png (1280x720)
+  ok    journey_regressions.player_can_step_back_off_stair
+  ok    journey_regressions.real_walk_reentry_requests_travel
+  ok    journey_regressions.precise_controller_aim_survives_pose_quantization
+  ok    journey_regressions.real_spear_swing_30.0
+  ok    journey_regressions.spear_hits_between_drawing_directions_30.0 (13)
+  ok    journey_regressions.real_spear_swing_22.5
+  ok    journey_regressions.spear_hits_between_drawing_directions_22.5 (13)
+  ok    journey_regressions.garden_fixture_step_0
+  ok    journey_regressions.garden_fixture_step_1
+  ok    journey_regressions.garden_fixture_step_2
+  ok    journey_regressions.garden_fixture_step_3
+  ok    journey_regressions.garden_fixture_step_4
+  ok    journey_regressions.garden_fixture_step_5
+  ok    journey_regressions.garden_fixture_step_6
+  ok    journey_regressions.garden_fixture_step_7
+  ok    journey_regressions.garden_fixture_step_8
+  ok    journey_regressions.pending_garden_reply_is_first
+  ok    journey_regressions.overflow_stays_bounded
+  ok    journey_regressions.all_eight_other_options_survive
+  ok    journey_regressions.required_reply_is_not_duplicated
+  ok    journey_regressions.old_garden_reply_does_not_displace_new_quests
+  ok    journey_regressions.witness_fixture_available
+  ok    journey_regressions.pending_mother_evidence_is_first
+  ok    journey_regressions.witness_options_are_preserved
+  ok    journey_regressions.recorded_witness_recall_does_not_displace_new_quests
+  ok    journey_regressions.scripted_pages_remain_exact
+  --    journey_regressions: 35 checks, 0 failed, 0 skipped, 6.7 s
+== section town_budgets [windowed]  (res://tests/sections/town_budgets.gd)
+  ok    town_budgets.int_froebutikken_travel_budget (526.938ms / 1 citizens)
+  ok    town_budgets.int_froebutikken_frame_windowed ({ "frames": 257, "fps": 512.554596039169, "ms": 1.95101167315175, "worst_ms": 3.786, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  ok    town_budgets.int_froebutikken_draw_calls (54 area / 131 including HUD)
+  ok    town_budgets.hyggebyen_scenery_resources_prepared (["res://assets/iso_tiles/drawn_grass_hyggebyen.webp", "res://assets/iso_tiles/drawn_grass_hyggebyen_flowers.webp", "res://assets/iso_tiles/drawn_deck_hyggebyen.webp", "res://assets/iso_tiles/drawn_path_dirt.webp", "res://assets/iso_tiles/drawn_cobble_hyggebyen.webp"])
+  ok    town_budgets.hyggebyen_presented_frame_windowed ({ "frames": 177, "fps": 353.741061542951, "ms": 2.82692655367232, "worst_ms": 4.326, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  ok    town_budgets.hyggebyen_area_frame_windowed ({ "frames": 200, "fps": 399.171320338976, "ms": 2.50519, "worst_ms": 3.451, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-mechanics/docs/qa/journey/native-controls/town_budgets_hyggebyen_ground_quadrant_16.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-mechanics/docs/qa/journey/native-controls/town_budgets_hyggebyen_ground_quadrant_8.png (1280x720)
+  ok    town_budgets.ground_batch_preserves_painted_tiles ({ "mean_8bit": 0.00009060329861, "max_8bit": 11, "mean_limit": 0.001, "max_limit": 16 })
+  ok    town_budgets.traetoppen_scenery_resources_prepared (["res://assets/isometric_characters/owl/idle.webp"])
+  ok    town_budgets.traetoppen_travel_budget (498.380ms / 3 citizens)
+  ok    town_budgets.traetoppen_frame_windowed ({ "frames": 159, "fps": 317.070349734578, "ms": 3.15387421383648, "worst_ms": 4.084, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  ok    town_budgets.traetoppen_draw_calls (235 area / 235 including HUD)
+  ok    town_budgets.farm_frame_windowed ({ "frames": 172, "fps": 343.123662166826, "ms": 2.9144011627907, "worst_ms": 4.704, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  ok    town_budgets.farm_draw_calls (496 area / 569 including HUD)
+  ok    town_budgets.farm_draw_calls_zoom_0.3 (630 area / 703 including HUD)
+  ok    town_budgets.farm_draw_calls_zoom_0.2 (665 area / 738 including HUD)
+  ok    town_budgets.city_travel_twelve_cold_citizens (545.066ms / 12 bodies; { &"request_ms": 14.752, &"prefetch_and_fade_ms": 306.056, &"prepared_paths": ["res://assets/iso_props/painted_world/bat_hang.webp", "res://assets/iso_props/painted_world/bat_hang_f1.webp", "res://assets/iso_props/painted_world/bat_house_hanging.webp", "res://assets/iso_props/painted_world/bath_tub_back.webp", "res://assets/iso_props/painted_world/bath_tub_front.webp", "res://assets/iso_props/painted_world/bridge_deck_tile_w43.webp", "res://assets/iso_props/painted_world/bridge_post.webp", "res://assets/iso_props/city/fire_flame.webp", "res://assets/iso_props/zz_painted_consistency/mailbox_red.webp", "res://assets/iso_props/drawn/signpost.webp", "res://assets/iso_props/city/fire_flame_f1.webp", "res://assets/iso_props/city/fire_flame_f2.webp", "res://assets/iso_props/painted_world/fire_pit.webp", "res://assets/iso_props/painted_world/canopy_top_strip.webp", "res://assets/iso_props/painted_world/foliage_front_a.webp", "res://assets/iso_props/painted_world/foliage_front_b.webp", "res://assets/iso_props/painted_world/hut_l_dark.webp", "res://assets/iso_props/painted_world/hut_l_dark_night.webp", "res://assets/iso_props/painted_world/hut_l_straw_night.webp", "res://assets/iso_props/painted_world/hut_l_straw.webp", "res://assets/iso_props/painted_world/hut_m_dark.webp", "res://assets/iso_props/painted_world/hut_m_dark_night.webp", "res://assets/iso_props/painted_world/hut_m_moss.webp", "res://assets/iso_props/painted_world/hut_m_moss_night.webp", "res://assets/iso_props/painted_world/hut_m_straw_night.webp", "res://assets/iso_props/painted_world/hut_m_straw.webp", "res://assets/iso_props/painted_world/hut_raadhus.webp", "res://assets/iso_props/painted_world/hut_raadhus_night.webp", "res://assets/iso_props/painted_world/hut_s_moss.webp", "res://assets/iso_props/painted_world/hut_s_moss_night.webp", "res://assets/iso_props/painted_world/hut_s_straw_night.webp", "res://assets/iso_props/painted_world/hut_s_straw.webp", "res://assets/iso_props/painted_world/ladder_tile.webp", "res://assets/iso_props/painted_world/lamp_door.webp", "res://assets/iso_props/painted_world/lantern_hang.webp", "res://assets/iso_props/painted_world/lift_basket.webp", "res://assets/iso_props/painted_world/lift_pulley.webp", "res://assets/iso_props/painted_world/log_stack.webp", "res://assets/iso_props/painted_world/market_stall_traetoppen.webp", "res://assets/iso_props/painted_world/notice_board.webp", "res://assets/iso_props/painted_world/owl_shelf.webp", "res://assets/iso_props/zz_painted_consistency/pennant_blue.webp", "res://assets/iso_props/zz_painted_consistency/pennant_blue_f1.webp", "res://assets/iso_props/zz_painted_consistency/pennant_gold.webp", "res://assets/iso_props/zz_painted_consistency/pennant_gold_f1.webp", "res://assets/iso_props/zz_painted_consistency/pennant_mint.webp", "res://assets/iso_props/zz_painted_consistency/pennant_mint_f1.webp", "res://assets/iso_props/zz_painted_consistency/pennant_pink.webp", "res://assets/iso_props/zz_painted_consistency/pennant_pink_f1.webp", "res://assets/iso_props/painted_world/planter_box.webp", "res://assets/iso_props/painted_world/planter_box_berry.webp", "res://assets/iso_props/painted_world/platform_disc_171.webp", "res://assets/iso_props/painted_world/platform_disc_184.webp", "res://assets/iso_props/painted_world/platform_disc_196.webp", "res://assets/iso_props/painted_world/rope_tile.webp", "res://assets/iso_props/painted_world/seed_basket.webp", "res://assets/iso_props/city/shadow_soft.webp", "res://assets/iso_props/painted_world/trunk_bark_w367.webp", "res://assets/iso_props/painted_world/trunk_bark_w404.webp", "res://assets/iso_props/painted_world/trunk_bark_w441.webp", "res://assets/iso_props/painted_world/trunk_bark_w698.webp", "res://assets/iso_props/painted_world/platform_disc_306.webp", "res://assets/iso_props/painted_world/trunk_foot_w367.webp", "res://assets/iso_props/painted_world/trunk_foot_w404.webp", "res://assets/iso_props/painted_world/trunk_foot_w441.webp", "res://assets/iso_props/painted_world/trunk_hole_owl.webp", "res://assets/iso_props/painted_world/trunk_hole_owl_b.webp", "res://assets/iso_props/painted_world/trunk_foot_w698.webp", "res://assets/iso_props/painted_world/trunk_root_w367.webp", "res://assets/iso_props/painted_world/trunk_root_w404.webp", "res://assets/iso_props/painted_world/trunk_root_w441.webp", "res://assets/iso_props/painted_world/trunk_root_w698.webp", "res://assets/backdrops/treetop_sky.png", "res://assets/isometric_characters/owl/idle.webp", "res://assets/isometric_characters/owl_fru_ugle/idle.webp", "res://assets/isometric_characters/owl_fru_ugle/talk.webp", "res://assets/iso_props/painted_world/backdrop_treetop_far.webp", "res://assets/isometric_characters/owl_fru_ugle/walk.webp", "res://assets/isometric_characters/fairy_baker/idle.webp", "res://assets/isometric_characters/fairy_baker/talk.webp", "res://assets/isometric_characters/fairy_baker/hover.webp", "res://assets/isometric_characters/capybara_sofus/idle.webp", "res://assets/isometric_characters/capybara_sofus/walk.webp", "res://assets/isometric_characters/capybara_sofus/talk.webp", "res://assets/isometric_characters/fairy_birk_npc/idle.webp", "res://assets/isometric_characters/fairy_birk_npc/talk.webp", "res://assets/isometric_characters/fairy_birk_npc/hover.webp", "res://assets/isometric_characters/hobbit_pip/idle.webp", "res://assets/isometric_characters/hobbit_pip/talk.webp", "res://assets/isometric_characters/hobbit_pip/walk.webp", "res://assets/isometric_characters/hobbit_bodil/idle.webp", "res://assets/isometric_characters/hobbit_bodil/walk.webp", "res://assets/isometric_characters/hobbit_bodil/talk.webp", "res://assets/isometric_characters/bear_brumme/idle.webp", "res://assets/isometric_characters/bear_brumme/talk.webp", "res://assets/isometric_characters/bear_brumme/walk.webp", "res://assets/isometric_characters/cat_morfar_mis/idle.webp", "res://assets/isometric_characters/cat_morfar_mis/talk.webp", "res://assets/isometric_characters/cat_morfar_mis/walk.webp", "res://assets/isometric_characters/cat/idle.webp", "res://assets/isometric_characters/cat/talk.webp", "res://assets/isometric_characters/cat/walk.webp", "res://assets/isometric_characters/bear/idle.webp", "res://assets/isometric_characters/bear/talk.webp", "res://assets/isometric_characters/bear/walk.webp", "res://assets/isometric_characters/fairy_builder/idle.webp", "res://assets/isometric_characters/fairy_builder/talk.webp", "res://assets/isometric_characters/fairy_builder/hover.webp", "res://assets/isometric_characters/fairy_furnisher/idle.webp", "res://assets/isometric_characters/fairy_furnisher/talk.webp", "res://assets/isometric_characters/fairy_furnisher/hover.webp"], &"entered_ms": 343.089, &"warmed_ms": 411.044, &"total_ms": 545.053 })
+  ok    town_budgets.l15_crowd_player_on_safe_deck
+  ok    town_budgets.l15_city_citizen_count (14 visible / 16 distinct looks; controlled fixture, normal schedules checked by L02/L12)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-mechanics/docs/qa/journey/native-controls/town_budgets_S04_city_crowd_readability.png (1280x720)
+  ok    l15_S04_city_crowd_readability_not_blank (2480 distinct colours, luma std 0.217)
+  ok    town_budgets.l15_city_peak_under_320mb (289.42MB / 16 warmed looks)
+  ok    town_budgets.l15_city_frame ({ "frames": 252, "fps": 503.331575667514, "ms": 1.9867619047619, "worst_ms": 3.029, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  ok    town_budgets.l15_city_draw_calls (original city/HUD: 236 <=250; with equipment: 247)
+  ok    town_budgets.l15_equipment_draw_increment (11 additional draws <=16)
+  ok    town_budgets.vram_arithmetic_matches_renderer_festival_four_added_looks (36.001MB measured / 36.001MB arithmetic (0.00%))
+  ok    town_budgets.city_peak_under_320mb
+  ok    town_budgets.vram_festival_day_row (325.631MB / 20 warmed looks)
+  ok    town_budgets.vram_process_cap_holds_with_20_looks (325.631MB total renderer textures)
+  ok    town_budgets.vram_arithmetic_matches_renderer_farm_kit (17.873MB measured / 17.871MB arithmetic (0.01%))
+  ok    town_budgets.farm_kit_vram_with_s3tc (17.8713912963867)
+  --    town_budgets: 29 checks, 0 failed, 0 skipped, 27.5 s
+== summary: 2 section(s) run, 64 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 39.5 s
+PLAYTEST PASS (64 checks in 2 sections, 0 allowed engine messages, 0 known-issue messages)

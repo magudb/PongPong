@@ -183,6 +183,8 @@ func _pose(body: Node2D, direction: Vector2) -> void:
 	if "forced_clip" in body:
 		body.set("forced_clip", &"walk")
 	var facing := Iso.dir8_of(direction)
+	if "combat_aim" in body:
+		body.set("combat_aim", direction.normalized())
 	if "facing8" in body:
 		body.set("facing8", facing)
 	if "facing_vec" in body:

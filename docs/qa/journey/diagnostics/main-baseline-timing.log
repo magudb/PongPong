@@ -1,0 +1,245 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=town_loop,town_budgets
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.u4u78y/Library/Application Support/Traetoppen (throwaway)
+== section town_budgets  (res://tests/sections/town_budgets.gd)
+  ok    town_budgets.visible_icon_shares_live_texture
+  ok    town_budgets.closed_icon_releases_texture
+  ok    town_budgets.visible_weapon_owns_texture
+  ok    town_budgets.closed_weapon_preview_releases_texture
+  ok    town_budgets.unused_terrain_lookup_releases_texture
+  ok    town_budgets.active_tilemap_owns_tileset_and_sheet
+  ok    town_budgets.last_tilemap_releases_tileset_and_sheet
+  ok    town_budgets.builders_use_instance_caches (Both real lookup caches release a texture when its last scene owner goes away)
+  ok    town_budgets.interior_cold_build ({ "asset_preparation_ms": 280.707, "cold_entry_ms": 26.172, "warm_entry_ms": 4.181, "nodes": 143, "scenery_nodes": 111, "scenery_lights": 2 })
+  ok    town_budgets.interior_warm_rebuild ({ "asset_preparation_ms": 280.707, "cold_entry_ms": 26.172, "warm_entry_ms": 4.181, "nodes": 143, "scenery_nodes": 111, "scenery_lights": 2 })
+  ok    town_budgets.interior_nodes_and_lights ({ "sprites": 37, "night": 3, "bodies": 11, "lights": 2, "furniture": 13, "walls": 14, "hatch": 5, "stand_ins": 0, "placeholders": 0, "counters": 3, "handlers": 0, "pieces": 16, "accent_masks": 0, "service_lights": 0, "base_sprites": 26, "build_us": 2753, "zoom_fit": 0.75369458128079, "nodes": 104 } live_nodes=143)
+  ok    town_budgets.nav_bake_interior (105)
+  ok    town_budgets.keepers_warm_idle_talk_only (["idle", "talk"])
+  ok    town_budgets.room_population_cap
+  info  CITY NODES {"AnimatedSprite2D":8,"Area2D":65,"Camera2D":1,"CanvasLayer":1,"CharacterBody2D":7,"CollisionPolygon2D":16,"CollisionShape2D":111,"ColorRect":2,"Label":20,"Line2D":74,"Node":10,"Node2D":151,"PointLight2D":15,"Sprite2D":228,"StaticBody2D":20,"TileMapLayer":5,"Timer":4}
+  info  CITY BRANCH Backdrop 12
+  info  CITY BRANCH Ground 1
+  info  CITY BRANCH Water0 1
+  info  CITY BRANCH Water1 1
+  info  CITY BRANCH Water2 1
+  info  CITY BRANCH Water3 1
+  info  CITY BRANCH GroundFx 2
+  info  CITY BRANCH Skirts 1
+  info  CITY BRANCH Objects 252
+  info  CITY BRANCH Colliders 71
+  info  CITY BRANCH Triggers 111
+  info  CITY BRANCH Floors 209
+  info  CITY BRANCH OccluderFade 1
+  info  CITY BRANCH LevelGlow 59
+  info  CITY BRANCH LevelTracker 1
+  info  CITY BRANCH DailyFlags 1
+  info  CITY BRANCH LadderCap_main_ladder 2
+  info  CITY BRANCH Canopy 2
+  info  CITY BRANCH NightFx 1
+  info  CITY BRANCH TownDirector 2
+  info  CITY BRANCH Bounds 5
+  ok    town_budgets.city_warm_build ({ "asset_preparation_ms": 926.57, "cold_entry_ms": 101.536, "warm_entry_ms": 12.116, "nodes": 738, "scenery_nodes": 666, "scenery_lights": 12 })
+  ok    town_budgets.city_nodes_and_lights ({ "asset_preparation_ms": 926.57, "cold_entry_ms": 101.536, "warm_entry_ms": 12.116, "nodes": 738, "scenery_nodes": 666, "scenery_lights": 12 })
+  ok    town_budgets.nav_bake_city (11.531ms)
+  ok    town_budgets.city_baked_footprint_matches_geometry
+  ok    town_budgets.grid_warm_build ({ "asset_preparation_ms": 362.863, "cold_entry_ms": 67.644, "warm_entry_ms": 5.06, "nodes": 670, "scenery_nodes": 606, "scenery_lights": 9 })
+  FAIL  town_budgets.grid_parked_return ({ "asset_preparation_ms": 362.863, "cold_entry_ms": 67.644, "warm_entry_ms": 5.06, "nodes": 670, "scenery_nodes": 606, "scenery_lights": 9 })
+  ok    town_budgets.grid_npc_cap
+  ok    town_budgets.farm_warm_build ({ "asset_preparation_ms": 0.005, "cold_entry_ms": 5.736, "warm_entry_ms": 3.173, "nodes": 590, "scenery_nodes": 566, "scenery_lights": 11 })
+  ok    town_budgets.farm_dimensions
+  ok    town_budgets.nav_bake_grid_60 (4.564ms)
+  ok    town_budgets.route_plan_p95 (1us)
+  ok    town_budgets.batch_locations_match_individual_queries
+  ok    town_budgets.where_is_sweep (291us for 34)
+  ok    town_budgets.director_30_agents (0.1665ms / 30 agents)
+  ok    town_budgets.ordinary_visual_cap
+  ok    town_budgets.room_keeps_host_and_caps_visitors (Low-priority keeper retained; four of eight visitors admitted)
+  ok    town_budgets.csv_reload (104.735ms)
+  ok    town_budgets.farm_kit_vram_with_s3tc (17.8713912963867)
+  ok    town_budgets.vram_festival_day_row
+  ok    town_budgets.vram_process_cap_holds_with_20_looks (Authored arithmetic envelope; native scene measurements are separate)
+  info  TOWN BUDGETS {"farm":{"asset_preparation_ms":0.005,"cold_entry_ms":5.736,"nodes":590,"scenery_lights":11,"scenery_nodes":566,"warm_entry_ms":3.173},"hyggebyen":{"asset_preparation_ms":362.863,"cold_entry_ms":67.644,"nodes":670,"scenery_lights":9,"scenery_nodes":606,"warm_entry_ms":5.06},"int_froebutikken":{"asset_preparation_ms":280.707,"cold_entry_ms":26.172,"nodes":143,"scenery_lights":2,"scenery_nodes":111,"warm_entry_ms":4.181},"traetoppen":{"asset_preparation_ms":926.57,"cold_entry_ms":101.536,"nodes":738,"scenery_lights":12,"scenery_nodes":666,"warm_entry_ms":12.116}}
+  --    town_budgets: 34 checks, 1 failed, 0 skipped, 7.2 s
+== section town_loop  (res://tests/sections/town_loop.gd)
+  ok    town_loop.loop_json_ids_exist ([])
+  ok    town_loop.l00_selected_race_and_skin (requested animal / actual type 0, skin animal_fox)
+  ok    town_loop.l00_new_game_on_farm
+  ok    town_loop.l00_first_morning_order (["postman_pip", "fairy_king", "postman_pip"] / 3)
+  ok    town_loop.l00_no_raw_keys
+  ok    town_loop.l00_first_morning_runs_once
+  ok    town_loop.l00_hud_and_banner
+  ok    town_loop.l00_first_morning_esc_skips
+  ok    town_loop.l00_player_control_returns
+  ok    town_loop.l08_day_one_personal_delivery_no_duplicate
+  ok    town_loop.l11_mailbox_day2_completes_mail_objective ({ "current": 1, "target": 1, "done": true })
+  ok    town_loop.l08_one_letter_per_day
+  ok    town_loop.capability_probes_match_live_packages
+  ok    town_loop.capability_unknown_is_missing
+  ok    town_loop.unknown_wave_fails_closed
+  ok    town_loop.gate_includes_full_usable_towns
+  ok    town_loop.digest_volatile_paths_are_exactly_the_named_ones
+  ok    town_loop.digest_rounds_only_to_four_decimals
+  ok    town_loop.digest_has_teeth_gold
+  ok    town_loop.digest_has_teeth_flags
+  ok    town_loop.digest_stable_over_wall_clock
+  ok    town_loop.farm_bridge_warp_exists
+  ok    town_loop.walker_reaches_fixture_warp ({ "ok": true, "area_changed": false, "ticks": 644, "seconds": 10.7333333333333, "dist_left": 5.60813283920288, "stuck": false, "nav": true, "waypoints": 34, "waypoint_index": 33, "position": (-700.0344, 3151.646), "next": (-704.0, 3154.0), "collider": "", "interactions": 0 })
+  ok    town_loop.walker_uses_navigation_and_tick_budget ({ "ok": true, "area_changed": false, "ticks": 644, "seconds": 10.7333333333333, "dist_left": 5.60813283920288, "stuck": false, "nav": true, "waypoints": 34, "waypoint_index": 33, "position": (-700.0344, 3151.646), "next": (-704.0, 3154.0), "collider": "", "interactions": 0 })
+  ok    town_loop.l01_bridge_arrival_without_pingpong
+  ok    town_loop.l01_unlock_toast_and_objective ({ "current": 1, "target": 1, "done": true })
+  ok    town_loop.l02_population_equals_schedule (["gardener_hoppe", "bertil", "guard_oak"] expected=["gardener_hoppe", "bertil", "guard_oak"])
+  ok    town_loop.l02_visual_cap_16
+  ok    town_loop.l02_area_populated_event
+  ok    town_loop.l02_live_citizen_at_routine_post
+  ok    town_loop.l03_walk_reaches_citizen ({ "ok": true, "area_changed": false, "ticks": 1271, "seconds": 21.1833333333333, "dist_left": 38.0777282714844, "stuck": false, "nav": true, "waypoints": 117, "waypoint_index": 116, "position": (1731.664, 657.3045), "next": (1693.9, 660.2), "collider": "@CharacterBody2D@7510", "interactions": 1 })
+  ok    town_loop.l03_walk_and_talk
+  ok    town_loop.l03_first_meeting_copy
+  ok    town_loop.l03_weekly_heart_once
+  ok    town_loop.l03_repeat_chat_no_extra_heart
+  ok    town_loop.l03_esc_first_line_no_heart
+  ok    town_loop.l03_people_book_shows_heart
+  ok    town_loop.l07_talk_menu_opens_picker
+  ok    town_loop.l07_carrot_available
+  ok    town_loop.l07_item_removed_once
+  ok    town_loop.l07_one_gift_per_day
+  info  Gift taste transaction: { "ok": true, "item": "turnip", "class": "like", "points": 20, "birthday": "", "repeated": false, "hearts": 1, "hearts_before": 1, "stage_before": "bekendt", "stage_after": &"bekendt" }
+  info  Gift taste transaction: { "ok": true, "item": "flour", "class": "neutral", "points": 8, "birthday": "", "repeated": false, "hearts": 1, "hearts_before": 1, "stage_before": "bekendt", "stage_after": &"bekendt" }
+  info  Gift taste transaction: { "ok": true, "item": "stone", "class": "dislike", "points": 0, "birthday": "", "repeated": false, "hearts": 1, "hearts_before": 1, "stage_before": "bekendt", "stage_after": &"bekendt" }
+  info  Gift taste transaction: { "ok": true, "item": "lantern_oil", "class": "hate", "points": 0, "birthday": "", "repeated": false, "hearts": 1, "hearts_before": 1, "stage_before": "bekendt", "stage_after": &"bekendt" }
+  ok    town_loop.l07_taste_classes_and_points
+  ok    town_loop.l07_two_gifts_per_week
+  ok    town_loop.l07_birthday_multiplier
+  ok    town_loop.l07_protected_items_unchanged
+  ok    town_loop.l05_closed_before_open
+  ok    town_loop.l05_closed_door_does_not_travel
+  ok    town_loop.l05_opens_from_registry
+  ok    town_loop.l04_door_enters ({ "ok": true, "area_changed": false, "ticks": 72, "seconds": 1.2, "dist_left": 2.85893845558167, "stuck": false, "nav": true, "waypoints": 4, "waypoint_index": 3, "position": (130.0123, 989.2058), "next": (128.0, 988.0), "collider": "", "interactions": 0 })
+  ok    town_loop.l04_iso_zone_zoom_and_budget ({ "sprites": 37, "night": 3, "bodies": 11, "lights": 2, "furniture": 13, "walls": 14, "hatch": 5, "stand_ins": 0, "placeholders": 0, "counters": 3, "handlers": 0, "pieces": 16, "accent_masks": 0, "service_lights": 0, "base_sprites": 26, "build_us": 3974, "zoom_fit": 0.75369458128079, "nodes": 104 })
+  ok    town_loop.l04_weather_curtain_hidden_indoors
+  ok    town_loop.l04_zone_and_running_clock
+  ok    town_loop.l04_room_zoom_fits ((735.6059, 621.0444))
+  ok    town_loop.l04_keeper_behind_counter
+  ok    town_loop.l03b_keeper_talk_host_opens_dialogue
+  ok    town_loop.l03b_keeper_weekly_heart_at_counter
+  ok    town_loop.l03b_keeper_repeat_no_extra_heart
+  ok    town_loop.l06_counter_opens_panel
+  ok    town_loop.l06_keeper_greeting_and_bust
+  ok    town_loop.l10_seeds_from_shop
+  ok    town_loop.l06_buy_exact (listed=60 charged=60)
+  ok    town_loop.l06_refusals_have_reasons
+  ok    town_loop.l06_escape_restores_world
+  ok    town_loop.l05_warning_thirty_minutes
+  ok    town_loop.l05_panel_closes_before_eviction
+  ok    town_loop.l05_closed_weekday_reason
+  ok    town_loop.l04_counter_is_barrier
+  ok    town_loop.l05_exit_always_open
+  ok    town_loop.l06b_keeper_weekly_heart_at_noon
+  ok    town_loop.l06c_home_upgrade_desk_at_noon ({ "id": "upgrade", "text_key": "DLG_CHOICE_HOME_UPGRADE", "action": "home_upgrade", "tier": 2 } / [{ "id": "open_home_builder", "payload": { "tier": 2 } }, { "id": "open_home_builder", "payload": { "tier": 1 } }])
+  ok    town_loop.l08_post_office_interior
+  ok    town_loop.l08_letter_of_the_day (birthday_cake)
+  ok    town_loop.l08_office_repeat_does_not_duplicate
+  ok    town_loop.l08_parcels_honest_stub
+  ok    town_loop.l09_walk_back_to_farm ({ "ok": true, "area_changed": true, "ticks": 282, "seconds": 4.7, "dist_left": 5582.15869140625, "stuck": false, "nav": true, "waypoints": 8, "waypoint_index": 7, "position": (-512.0, 3040.0), "next": (5070.0, 3015.0), "collider": "", "interactions": 0 } area=farm travel=false)
+  ok    town_loop.l09_farm_state_intact
+  ok    town_loop.l02_citizens_freed_on_exit
+  ok    town_loop.l10_walk_to_plot_27_29
+  ok    town_loop.l10_walk_to_plot_26_29
+  ok    town_loop.l10_walk_to_plot_25_29
+  ok    town_loop.l10_till_plant_water (plant=[[&"plot_27_29", &"carrot"], [&"plot_26_29", &"carrot"], [&"plot_25_29", &"carrot"]] water=[&"plot_27_29", &"plot_26_29", &"plot_25_29"])
+  ok    town_loop.l10_energy_costs
+  ok    town_loop.l10_forste_dage_objectives ({ "current": 3, "target": 3, "done": true })
+  ok    town_loop.l10_hint_once_per_save
+  ok    town_loop.l11_bed_closed_before_18
+  ok    town_loop.l11_bed_opens_at_18
+  ok    town_loop.l11_sleep_rolls_day
+  ok    town_loop.l11_crops_grow
+  ok    town_loop.l11_no_pass_out_at_midnight
+  ok    town_loop.l11_curfew_at_the_configured_time
+  ok    town_loop.l11_pass_out_wakes_on_farm
+  ok    town_loop.l11_harvest_purchased_seed_crops
+  ok    town_loop.l11_shipping_uses_live_bin ({ "ok": true, "area_changed": false, "ticks": 273, "seconds": 4.55, "dist_left": 2.00783228874207, "stuck": false, "nav": true, "waypoints": 14, "waypoint_index": 13, "position": (769.6013, 1960.719), "next": (768.0, 1960.0), "collider": "", "interactions": 0 } selected=true amount=5 left=0)
+  ok    town_loop.l11_bin_pays_once_at_dawn
+  ok    town_loop.l11_shop_restocks_at_dawn
+  ok    town_loop.l12_citizens_moved_by_routine_postman_pip (["farm.pip_mailbox", "int_postkontoret.counter"])
+  ok    town_loop.l12_citizens_moved_by_routine_gardener_hoppe (["traetoppen.a_bench", "farm.hoppe_fence"])
+  ok    town_loop.l12_route_takes_time
+  ok    town_loop.l12_weather_override ({ "npc": "gardener_hoppe", "state": "stay", "plan": "work", "place": "int_hoppe_hut.table", "act": "sit", "area": "int_hoppe_hut" })
+  ok    town_loop.l12_weekend_variant ({ "npc": "carpenter_brumme", "state": "stay", "plan": "stall", "place": "traetoppen.t_stall", "act": "work", "area": "traetoppen" })
+  ok    town_loop.l12_pip_visits_farm_from_day_2 ({ "npc": "postman_pip", "state": "stay", "plan": "town_only", "place": "int_postkontoret.bed", "act": "sleep", "area": "int_postkontoret" } / { "npc": "postman_pip", "state": "stay", "plan": "work", "place": "farm.pip_mailbox", "act": "stand", "area": "farm" })
+  ok    town_loop.l12_hoppe_wednesday_visit ({ "npc": "gardener_hoppe", "state": "stay", "plan": "work", "place": "traetoppen.a_beds1", "act": "tend", "area": "traetoppen" } / { "npc": "gardener_hoppe", "state": "stay", "plan": "farm_visit", "place": "farm.hoppe_fence", "act": "stand", "area": "farm" })
+  ok    town_loop.l12_night_presence ([])
+  ok    town_loop.l13_save_cost (p95=18.268ms / 20853 bytes full cast 34)
+  ok    town_loop.l13_digest_roundtrip
+  ok    town_loop.l13_citizens_same_places
+  ok    town_loop.l13_social_section_order (["game", "time", "economy", "quests", "husbandry", "shops", "home", "furniture", "wardrobe", "loot", "dungeon", "social"] social=60)
+  ok    town_loop.l13_old_save_without_social
+WARNING: SocialManager.from_dict: unknown NPC 'loop_removed_citizen' kept in the orphans bucket
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] from_dict (res://scripts/social/social_manager.gd:1392)
+         [1] _apply_payload (res://scripts/autoload/save_manager.gd:912)
+         [2] load_game (res://scripts/autoload/save_manager.gd:300)
+         [3] load_and_enter (res://scripts/autoload/save_manager.gd:319)
+         [4] _load (res://tests/lib/town_loop/save.gd:64)
+         [5] run (res://tests/lib/town_loop/save.gd:53)
+         [6] _load (res://tests/lib/town_loop/save.gd:70)
+         [7] physics (res://tests/lib/drive.gd:85)
+  ok    town_loop.l13_content_drift_is_warning
+  ok    town_loop.l17_lint_clean_core (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_no_raw_keys_both_locales (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_boxes_fit (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_frozen_voice_text_hashes (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_citizen_slots_complete (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_social_voice_rows_reviewed (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_voice_assets_complete (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_voice_text_and_audio_hashes (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_observed_screens_have_no_raw_keys (3914 live labels / [])
+  ok    town_loop.l17_voice_index_and_recordings_complete (PASS voiced_index_in_sync
+)
+  ok    town_loop.x01_birthday_greeting_and_real_gift ({ "ok": true, "item": "carrot", "class": "love", "points": 160, "birthday": "day", "repeated": false, "hearts": 4, "hearts_before": 3, "stage_before": "nabo", "stage_after": &"ven" })
+  ok    town_loop.extended_scene_returns_control
+  ok    town_loop.x03_heart_event_real_scene_once
+  ok    town_loop.x08_rain_fallback (["SOC_ANY_WX_REGN_1", "DLG_MERCHANT_GREET"])
+  ok    town_loop.x05_mail_screen_live_locations
+  ok    town_loop.x05_mail_escape_restores_world
+  ok    town_loop.x04_relationship_consent_and_stage
+  ok    town_loop.x06_farm_visit_enters_home ([&"home", &"", false])
+  ok    town_loop.x06_farm_visit_named_actor_and_saved_gift
+  ok    town_loop.x07_seasonal_decor_live_painted_family
+  ok    town_loop.extended_scene_returns_control
+  ok    town_loop.x02_festival_scene_decor_hours_bed_music ({ "hosts": 3, "opening": 4, "year": 4, "sleep": false, "shop": false, "music": true })
+  ok    town_loop.extended_scene_returns_control
+  ok    town_loop.x09_commitment_saved_safe_wedding
+  ok    town_loop.l16_shop_bell_is_logged
+  ok    town_loop.l16_missing_cue_logged_silent
+  ok    town_loop.l16_wood_surface_follows_room
+  ok    town_loop.l16_real_movement_footsteps
+  ok    town_loop.l16_stone_surface_follows_ground
+  ok    town_loop.l16_rope_surface_follows_bridge
+  ok    town_loop.l16_night_ambience_follows_clock
+  ok    town_loop.extended_legs_listed_with_reasons
+  info  Installed extended town scenarios: 10.372s
+  ok    town_loop.l18_data_only_citizen
+  ok    town_loop.l18_data_only_building
+  ok    town_loop.l18_data_only_routine_edit
+  ok    town_loop.l18_data_only_shop_hours
+  ok    town_loop.l18_data_only_festival
+  ok    town_loop.l18_data_only_event
+  ok    town_loop.l18_data_only_quest
+  ok    town_loop.l18_no_gd_changed
+  ok    town_loop.selftest_mutants_caught (Eight real producer mutants plus a clean baseline, including audio playback without logging)
+  FAIL  town_loop.l14_wall_time (123.535s <= 120s)
+  ok    town_loop.l14_area_switch_times ([{ "area": "farm", "ms": 93 }, { "area": "traetoppen", "ms": 19 }, { "area": "hyggebyen", "ms": 35 }, { "area": "int_froebutikken", "ms": 4 }, { "area": "int_bageriet", "ms": 4 }, { "area": "int_toemmerhandlen", "ms": 3 }, { "area": "int_postkontoret", "ms": 3 }, { "area": "int_postkontoret", "ms": 5 }, { "area": "traetoppen", "ms": 12 }, { "area": "traetoppen", "ms": 12 }, { "area": "int_froebutikken", "ms": 5 }, { "area": "home", "ms": 57 }, { "area": "farm", "ms": 104 }, { "area": "traetoppen", "ms": 13 }, { "area": "int_froebutikken", "ms": 5 }, { "area": "hyggebyen", "ms": 31 }, { "area": "traetoppen", "ms": 16 }])
+  ok    town_loop.l14_no_orphans (growth=0)
+  ok    town_loop.l14_zero_engine_messages ([])
+  ok    town_loop.gate_leg_not_skipped ([])
+  ok    town_loop.report_lists_every_required_leg (Every required wave/leg listed; missing and repeated failing checks retained.
+)
+  --    town_loop: 156 checks, 1 failed, 0 skipped, 123.6 s
+  note  section town_loop took 123.6 s (> 30 s): consider splitting it
+== summary: 2 section(s) run, 190 checks (2 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 1 allowed message(s), 0 problem(s), 0 known-issue message(s), 139.8 s
+  FAILED   town_budgets.grid_parked_return
+  FAILED   town_loop.l14_wall_time
+PLAYTEST FAIL: 2 check failures, 0 engine errors, 0 engine warnings, 0 problems

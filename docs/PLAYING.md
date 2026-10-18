@@ -58,6 +58,10 @@ In the forest, mend the lamp's three stitches to reveal a map, return a travelle
 
 Watch hearts, oil and the selected weapon. Dodging avoids attacks during its protection window; cream telegraphs mark the danger before an enemy strikes. Fairy light reveals ambushes. Berry drops heal on pickup, and supplies can restore health or oil. Weapons, crafting, forging, gem appraisal and lantern gems offer different loadouts.
 
+Walk onto stairs and doorways to travel. Dodges, attacks and knockback do not trigger entrances; if an action leaves you standing on one, step away and walk back in. Keyboard and controller attacks retain the precise movement direction while the character uses the nearest painted pose. Moving the mouse aims toward the cursor.
+
+The forest uses lantern oil instead of advancing the day clock. To meet Natteblik after dark, take the lift back to town, wait there until night, then return to his Hollow on floor 2, 6 or 10.
+
 The investigation's finale resolves the mother's fate and brings her legacy back to the garden. Free play continues after the return. The story's required evidence does not depend on paid appraisal, rare random loot or a friendship/calendar gate.
 
 ## Saving and scope

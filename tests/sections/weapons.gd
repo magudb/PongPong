@@ -50,7 +50,7 @@ func run(t) -> void:
 	t.check("heart_on_kill",player.half_hearts == player.max_half_hearts-1)
 	for id in ["moon_wave","quake"]:
 		enemy.damage = 0
-		player.facing_vec = Vector2.RIGHT
+		player.event_face(Vector2.RIGHT)
 		player.mouse_aim = false
 		for i in 4: WeaponFx.on_swing(player,{"id":"test_"+id,"damage":10,"effect":{"id":id,"every":4,"mult":.6,"radius":160,"range":360}})
 		t.check(id+"_every_four_swings",enemy.damage == 6,str(enemy.damage))

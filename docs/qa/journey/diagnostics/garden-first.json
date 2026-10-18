@@ -1,0 +1,31 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 51,
+  "elapsed_s": 42.01,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "journey.door_accessible_int_smedjen"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 2857,
+      "skipped": 0
+    },
+    "journey": {
+      "character": "animal",
+      "checks": 43,
+      "failed": 1,
+      "ms": 30800,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

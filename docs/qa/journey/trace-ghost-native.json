@@ -1,0 +1,485 @@
+[
+	{
+		"area": "farm",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"path": "/tmp/pongpong-journey-ghost-complete.json",
+			"sha256": "a4bf4ffdfa767289b783be3415e1efd2c2e9a5ff624b4bc5a9d604e6a2f501ce"
+		},
+		"event": "resumed_earned_save",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 8,
+		"minute": 10,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"inventory": {
+				"axe_wooden": 1,
+				"dng_forest_thread": 17,
+				"dng_owl_feather": 8,
+				"dng_resin": 5,
+				"fertilizer": 3,
+				"hoe_wooden": 1,
+				"pickaxe_wooden": 1,
+				"rough_krystalgrotten": 2,
+				"scythe": 1,
+				"timber_beam": 1,
+				"tornebaer": 19,
+				"watering_can_copper": 1
+			}
+		},
+		"event": "opening",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 8,
+		"minute": 10,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 16,
+			"player_state": 0,
+			"spawn": "from_farm"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 8,
+		"minute": 11,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 16,
+			"player_state": 0,
+			"spawn": "from_farm"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 8,
+		"minute": 12,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 0.445498883724213,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(-704.0, 3154.0)",
+					"position": "(-700.3262, 3151.819)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(-704.0, 3154.0)",
+				"ok": true,
+				"position": "(-703.6849, 3153.813)",
+				"seconds": 1.0,
+				"stuck": false,
+				"ticks": 60,
+				"waypoint_index": 4,
+				"waypoints": 5
+			}
+		},
+		"event": "travel_traetoppen",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 8,
+		"minute": 12,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 16,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 8,
+		"minute": 44,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 16,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 8,
+		"minute": 45,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 1990.28356933594,
+				"interactions": 0,
+				"last_advance": {
+					"level": "f",
+					"point": "(1290.0, 3054.0)",
+					"position": "(1284.794, 3056.484)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(420.0, 3330.0)",
+				"ok": true,
+				"position": "(1024.0, 2204.0)",
+				"seconds": 16.0666666666667,
+				"stuck": false,
+				"ticks": 964,
+				"waypoint_index": 146,
+				"waypoints": 147
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 8,
+		"minute": 45,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"destination": "secret_garden",
+			"hearts": 16,
+			"player_state": 0,
+			"spawn": "from_town"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 9,
+		"minute": 4,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"destination": "secret_garden",
+			"hearts": 16,
+			"player_state": 0,
+			"spawn": "from_town"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 9,
+		"minute": 4,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.95343995094299,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(576.0, 798.0)",
+					"position": "(570.5345, 801.2233)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(576.0, 798.0)",
+				"ok": true,
+				"position": "(573.9045, 799.2358)",
+				"seconds": 9.41666666666667,
+				"stuck": false,
+				"ticks": 565,
+				"waypoint_index": 25,
+				"waypoints": 26
+			}
+		},
+		"event": "travel_secret_garden",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 9,
+		"minute": 5,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 16,
+			"player_state": 0,
+			"spawn": "from_garden"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 9,
+		"minute": 6,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 16,
+			"player_state": 0,
+			"spawn": "from_garden"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 9,
+		"minute": 6,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 0.18606823682785,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(-448.0, 1254.0)",
+					"position": "(-444.5097, 1251.928)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(-448.0, 1254.0)",
+				"ok": true,
+				"position": "(-447.8684, 1253.922)",
+				"seconds": 0.683333333333333,
+				"stuck": false,
+				"ticks": 41,
+				"waypoint_index": 3,
+				"waypoints": 4
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 9,
+		"minute": 7,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 16,
+			"player_state": 0,
+			"spawn": "from_hyggebyen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 9,
+		"minute": 26,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 16,
+			"player_state": 0,
+			"spawn": "from_hyggebyen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 9,
+		"minute": 26,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 0.339120328426361,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1216.0, 2318.0)",
+					"position": "(1212.401, 2315.863)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1216.0, 2318.0)",
+				"ok": true,
+				"position": "(1215.76, 2317.858)",
+				"seconds": 9.58333333333333,
+				"stuck": false,
+				"ticks": 575,
+				"waypoint_index": 26,
+				"waypoints": 27
+			}
+		},
+		"event": "travel_traetoppen",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 9,
+		"minute": 27,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"destination": "farm",
+			"hearts": 16,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 9,
+		"minute": 58,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"destination": "farm",
+			"hearts": 16,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 9,
+		"minute": 58,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 5582.15869140625,
+				"interactions": 0,
+				"last_advance": {
+					"level": "g",
+					"point": "(4170.0, 2925.0)",
+					"position": "(4172.74, 2928.53)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(5070.0, 3015.0)",
+				"ok": true,
+				"position": "(-512.0, 3040.0)",
+				"seconds": 15.8333333333333,
+				"stuck": false,
+				"ticks": 950,
+				"waypoint_index": 147,
+				"waypoints": 148
+			}
+		},
+		"event": "travel_farm",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 9,
+		"minute": 59,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "complete",
+		"day": 20,
+		"detail": {},
+		"event": "verified_continuation",
+		"garden_step": 12,
+		"gold": 440,
+		"hearts": 16,
+		"hour": 9,
+		"minute": 59,
+		"player_state": 0
+	}
+]

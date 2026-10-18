@@ -1,0 +1,32 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 503,
+  "elapsed_s": 137.18,
+  "engine": [],
+  "failed": 2,
+  "failures": [
+    "journey.dialogue_action_name_iva",
+    "journey.journey_finished"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1536,
+      "skipped": 0
+    },
+    "journey": {
+      "character": "animal",
+      "checks": 495,
+      "failed": 2,
+      "ms": 134271,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

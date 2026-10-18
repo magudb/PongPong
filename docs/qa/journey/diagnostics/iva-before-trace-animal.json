@@ -1,0 +1,7862 @@
+[
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 1,
+		"detail": {
+			"inventory": {
+				"axe_wooden": 1,
+				"health_tonic": 1,
+				"hoe_wooden": 1,
+				"lantern_oil": 2,
+				"pickaxe_wooden": 1,
+				"scythe": 1,
+				"turnip_seeds": 5,
+				"watering_can_copper": 1
+			}
+		},
+		"event": "opening",
+		"garden_step": -1,
+		"gold": 500,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 17,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 1,
+		"detail": {},
+		"event": "first_planting",
+		"garden_step": -1,
+		"gold": 500,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 42,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 2,
+		"detail": {},
+		"event": "slept",
+		"garden_step": -1,
+		"gold": 500,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 3,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 3,
+		"detail": {},
+		"event": "slept",
+		"garden_step": -1,
+		"gold": 500,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 3,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 4,
+		"detail": {},
+		"event": "slept",
+		"garden_step": -1,
+		"gold": 500,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 3,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 5,
+		"detail": {},
+		"event": "slept",
+		"garden_step": -1,
+		"gold": 500,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 3,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {},
+		"event": "slept",
+		"garden_step": -1,
+		"gold": 770,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 3,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"harvest": {
+				"turnip": 6
+			},
+			"payout": 270
+		},
+		"event": "harvest_paid",
+		"garden_step": -1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 6,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_farm"
+		},
+		"event": "area_request",
+		"garden_step": -1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 25,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_farm"
+		},
+		"event": "area_request",
+		"garden_step": -1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 25,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 3.59826803207397,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(-704.0, 3154.0)",
+					"position": "(-701.4557, 3152.489)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(-704.0, 3154.0)",
+				"ok": true,
+				"position": "(-701.4557, 3152.489)",
+				"seconds": 9.43333333333333,
+				"stuck": false,
+				"ticks": 566,
+				"waypoint_index": 30,
+				"waypoints": 31
+			}
+		},
+		"event": "travel_traetoppen",
+		"garden_step": -1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 26,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": -1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 58,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": -1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 59,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 1990.28356933594,
+				"interactions": 0,
+				"last_advance": {
+					"level": "f",
+					"point": "(1290.0, 3054.0)",
+					"position": "(1284.729, 3056.448)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(420.0, 3330.0)",
+				"ok": true,
+				"position": "(1024.0, 2204.0)",
+				"seconds": 16.4666666666667,
+				"stuck": false,
+				"ticks": 988,
+				"waypoint_index": 146,
+				"waypoints": 147
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": -1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 59,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "secret_garden",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_town"
+		},
+		"event": "area_request",
+		"garden_step": -1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 18,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "secret_garden",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_town"
+		},
+		"event": "area_request",
+		"garden_step": -1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 18,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.95343995094299,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(576.0, 798.0)",
+					"position": "(570.5345, 801.2233)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(576.0, 798.0)",
+				"ok": true,
+				"position": "(573.9045, 799.2358)",
+				"seconds": 9.41666666666667,
+				"stuck": false,
+				"ticks": 565,
+				"waypoint_index": 25,
+				"waypoints": 26
+			}
+		},
+		"event": "travel_secret_garden",
+		"garden_step": -1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 19,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {},
+		"event": "garden_started",
+		"garden_step": 1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 20,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"act": "tend",
+			"area": "traetoppen",
+			"npc": "gardener_hoppe",
+			"place": "traetoppen.a_beds1",
+			"plan": "inn",
+			"state": "stay"
+		},
+		"event": "locate_gardener_hoppe",
+		"garden_step": 1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 20,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_garden"
+		},
+		"event": "area_request",
+		"garden_step": 1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 21,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_garden"
+		},
+		"event": "area_request",
+		"garden_step": 1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 22,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 3.86250066757202,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(-448.0, 1254.0)",
+					"position": "(-445.2689, 1252.378)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(-448.0, 1254.0)",
+				"ok": true,
+				"position": "(-445.2689, 1252.378)",
+				"seconds": 0.85,
+				"stuck": false,
+				"ticks": 51,
+				"waypoint_index": 4,
+				"waypoints": 5
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 22,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_hyggebyen"
+		},
+		"event": "area_request",
+		"garden_step": 1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 41,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_hyggebyen"
+		},
+		"event": "area_request",
+		"garden_step": 1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 42,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.70295882225037,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1216.0, 2318.0)",
+					"position": "(1210.73, 2314.871)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1216.0, 2318.0)",
+				"ok": true,
+				"position": "(1214.089, 2316.865)",
+				"seconds": 9.61666666666667,
+				"stuck": false,
+				"ticks": 577,
+				"waypoint_index": 26,
+				"waypoints": 27
+			}
+		},
+		"event": "travel_traetoppen",
+		"garden_step": 1,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 42,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"act": "eat",
+			"area": "int_brummes_hus",
+			"npc": "carpenter_brumme",
+			"place": "int_brummes_hus.table",
+			"plan": "stall",
+			"state": "stay"
+		},
+		"event": "locate_carpenter_brumme",
+		"garden_step": 2,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 8,
+		"minute": 30,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"act": "walk",
+			"area": "traetoppen",
+			"leg": {
+				"area": "traetoppen",
+				"frac": 0.223812849162011,
+				"from": "traetoppen.door_brummes_hus",
+				"kind": "walk",
+				"t0": 8.85582546108862,
+				"t1": 9.5,
+				"to": "traetoppen.t_stall"
+			},
+			"npc": "carpenter_brumme",
+			"place": "traetoppen.t_stall",
+			"plan": "stall",
+			"state": "move"
+		},
+		"event": "locate_carpenter_brumme",
+		"garden_step": 2,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 0,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"act": "walk",
+			"area": "traetoppen",
+			"leg": {
+				"area": "traetoppen",
+				"frac": 0.327304469273743,
+				"from": "traetoppen.door_brummes_hus",
+				"kind": "walk",
+				"t0": 8.85582546108862,
+				"t1": 9.5,
+				"to": "traetoppen.t_stall"
+			},
+			"npc": "carpenter_brumme",
+			"place": "traetoppen.t_stall",
+			"plan": "stall",
+			"state": "move"
+		},
+		"event": "locate_carpenter_brumme",
+		"garden_step": 2,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 4,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"act": "walk",
+			"area": "traetoppen",
+			"leg": {
+				"area": "traetoppen",
+				"frac": 0.430796089385474,
+				"from": "traetoppen.door_brummes_hus",
+				"kind": "walk",
+				"t0": 8.85582546108862,
+				"t1": 9.5,
+				"to": "traetoppen.t_stall"
+			},
+			"npc": "carpenter_brumme",
+			"place": "traetoppen.t_stall",
+			"plan": "stall",
+			"state": "move"
+		},
+		"event": "locate_carpenter_brumme",
+		"garden_step": 2,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 8,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"act": "walk",
+			"area": "traetoppen",
+			"leg": {
+				"area": "traetoppen",
+				"frac": 0.534287709497205,
+				"from": "traetoppen.door_brummes_hus",
+				"kind": "walk",
+				"t0": 8.85582546108862,
+				"t1": 9.5,
+				"to": "traetoppen.t_stall"
+			},
+			"npc": "carpenter_brumme",
+			"place": "traetoppen.t_stall",
+			"plan": "stall",
+			"state": "move"
+		},
+		"event": "locate_carpenter_brumme",
+		"garden_step": 2,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 12,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"act": "walk",
+			"area": "traetoppen",
+			"leg": {
+				"area": "traetoppen",
+				"frac": 0.63777932960894,
+				"from": "traetoppen.door_brummes_hus",
+				"kind": "walk",
+				"t0": 8.85582546108862,
+				"t1": 9.5,
+				"to": "traetoppen.t_stall"
+			},
+			"npc": "carpenter_brumme",
+			"place": "traetoppen.t_stall",
+			"plan": "stall",
+			"state": "move"
+		},
+		"event": "locate_carpenter_brumme",
+		"garden_step": 2,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 16,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"act": "walk",
+			"area": "traetoppen",
+			"leg": {
+				"area": "traetoppen",
+				"frac": 0.741270949720671,
+				"from": "traetoppen.door_brummes_hus",
+				"kind": "walk",
+				"t0": 8.85582546108862,
+				"t1": 9.5,
+				"to": "traetoppen.t_stall"
+			},
+			"npc": "carpenter_brumme",
+			"place": "traetoppen.t_stall",
+			"plan": "stall",
+			"state": "move"
+		},
+		"event": "locate_carpenter_brumme",
+		"garden_step": 2,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 20,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"act": "walk",
+			"area": "traetoppen",
+			"leg": {
+				"area": "traetoppen",
+				"frac": 0.844762569832403,
+				"from": "traetoppen.door_brummes_hus",
+				"kind": "walk",
+				"t0": 8.85582546108862,
+				"t1": 9.5,
+				"to": "traetoppen.t_stall"
+			},
+			"npc": "carpenter_brumme",
+			"place": "traetoppen.t_stall",
+			"plan": "stall",
+			"state": "move"
+		},
+		"event": "locate_carpenter_brumme",
+		"garden_step": 2,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 24,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"act": "walk",
+			"area": "traetoppen",
+			"leg": {
+				"area": "traetoppen",
+				"frac": 0.948254189944134,
+				"from": "traetoppen.door_brummes_hus",
+				"kind": "walk",
+				"t0": 8.85582546108862,
+				"t1": 9.5,
+				"to": "traetoppen.t_stall"
+			},
+			"npc": "carpenter_brumme",
+			"place": "traetoppen.t_stall",
+			"plan": "stall",
+			"state": "move"
+		},
+		"event": "locate_carpenter_brumme",
+		"garden_step": 2,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 28,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"act": "work",
+			"area": "traetoppen",
+			"npc": "carpenter_brumme",
+			"place": "traetoppen.t_stall",
+			"plan": "stall",
+			"state": "stay"
+		},
+		"event": "locate_carpenter_brumme",
+		"garden_step": 2,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 32,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {},
+		"event": "garden_helpers",
+		"garden_step": 3,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 55,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 3,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 10,
+		"minute": 27,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 3,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 10,
+		"minute": 27,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 1990.28356933594,
+				"interactions": 0,
+				"last_advance": {
+					"level": "f",
+					"point": "(1290.0, 3054.0)",
+					"position": "(1283.733, 3055.912)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(420.0, 3330.0)",
+				"ok": true,
+				"position": "(1024.0, 2204.0)",
+				"seconds": 16.1833333333333,
+				"stuck": false,
+				"ticks": 971,
+				"waypoint_index": 139,
+				"waypoints": 140
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 3,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 10,
+		"minute": 28,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "secret_garden",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_town"
+		},
+		"event": "area_request",
+		"garden_step": 3,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 10,
+		"minute": 47,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "secret_garden",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_town"
+		},
+		"event": "area_request",
+		"garden_step": 3,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 10,
+		"minute": 47,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.95343995094299,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(576.0, 798.0)",
+					"position": "(570.5345, 801.2233)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(576.0, 798.0)",
+				"ok": true,
+				"position": "(573.9045, 799.2358)",
+				"seconds": 9.41666666666667,
+				"stuck": false,
+				"ticks": 565,
+				"waypoint_index": 25,
+				"waypoints": 26
+			}
+		},
+		"event": "travel_secret_garden",
+		"garden_step": 3,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 10,
+		"minute": 48,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {},
+		"event": "garden_watered",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 10,
+		"minute": 55,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_garden"
+		},
+		"event": "area_request",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 2,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_garden"
+		},
+		"event": "area_request",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 3,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 3.14068579673767,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(-448.0, 1254.0)",
+					"position": "(-442.4205, 1250.687)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(-448.0, 1254.0)",
+				"ok": true,
+				"position": "(-445.7792, 1252.681)",
+				"seconds": 3.98333333333333,
+				"stuck": false,
+				"ticks": 239,
+				"waypoint_index": 12,
+				"waypoints": 13
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 4,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_hyggebyen"
+		},
+		"event": "area_request",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 22,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_hyggebyen"
+		},
+		"event": "area_request",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 23,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 0.339120328426361,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1216.0, 2318.0)",
+					"position": "(1212.401, 2315.863)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1216.0, 2318.0)",
+				"ok": true,
+				"position": "(1215.76, 2317.858)",
+				"seconds": 9.58333333333333,
+				"stuck": false,
+				"ticks": 575,
+				"waypoint_index": 26,
+				"waypoints": 27
+			}
+		},
+		"event": "travel_traetoppen",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 24,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "farm",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 55,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"destination": "farm",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 55,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 6,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 5582.15869140625,
+				"interactions": 0,
+				"last_advance": {
+					"level": "g",
+					"point": "(4170.0, 2925.0)",
+					"position": "(4172.74, 2928.53)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(5070.0, 3015.0)",
+				"ok": true,
+				"position": "(-512.0, 3040.0)",
+				"seconds": 15.8333333333333,
+				"stuck": false,
+				"ticks": 950,
+				"waypoint_index": 147,
+				"waypoints": 148
+			}
+		},
+		"event": "travel_farm",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 56,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {},
+		"event": "slept",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 3,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_farm"
+		},
+		"event": "area_request",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 21,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_farm"
+		},
+		"event": "area_request",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 22,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.2544093132019,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(-704.0, 3154.0)",
+					"position": "(-699.0472, 3151.059)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(-704.0, 3154.0)",
+				"ok": true,
+				"position": "(-702.4059, 3153.053)",
+				"seconds": 9.21666666666667,
+				"stuck": false,
+				"ticks": 553,
+				"waypoint_index": 29,
+				"waypoints": 30
+			}
+		},
+		"event": "travel_traetoppen",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 22,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 55,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 55,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 1990.28356933594,
+				"interactions": 0,
+				"last_advance": {
+					"level": "f",
+					"point": "(1290.0, 3054.0)",
+					"position": "(1284.723, 3056.445)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(420.0, 3330.0)",
+				"ok": true,
+				"position": "(1024.0, 2204.0)",
+				"seconds": 16.55,
+				"stuck": false,
+				"ticks": 993,
+				"waypoint_index": 146,
+				"waypoints": 147
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 56,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "secret_garden",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_town"
+		},
+		"event": "area_request",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 15,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "secret_garden",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_town"
+		},
+		"event": "area_request",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 15,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.95343995094299,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(576.0, 798.0)",
+					"position": "(570.5345, 801.2233)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(576.0, 798.0)",
+				"ok": true,
+				"position": "(573.9045, 799.2358)",
+				"seconds": 9.41666666666667,
+				"stuck": false,
+				"ticks": 565,
+				"waypoint_index": 25,
+				"waypoints": 26
+			}
+		},
+		"event": "travel_secret_garden",
+		"garden_step": 6,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 16,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"act": "walk",
+			"area": "traetoppen",
+			"leg": {
+				"area": "traetoppen",
+				"frac": 0.812424154868535,
+				"from": "traetoppen.door_postkontoret",
+				"kind": "walk",
+				"t0": 7.10044984255511,
+				"t1": 7.48967611336032,
+				"to": "traetoppen.t_fire_n"
+			},
+			"npc": "postman_pip",
+			"place": "traetoppen.t_fire_n",
+			"plan": "rest",
+			"state": "move"
+		},
+		"event": "locate_postman_pip",
+		"garden_step": 8,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 25,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"act": "walk",
+			"area": "traetoppen",
+			"leg": {
+				"area": "traetoppen",
+				"frac": 0.983704131753828,
+				"from": "traetoppen.door_postkontoret",
+				"kind": "walk",
+				"t0": 7.10044984255511,
+				"t1": 7.48967611336032,
+				"to": "traetoppen.t_fire_n"
+			},
+			"npc": "postman_pip",
+			"place": "traetoppen.t_fire_n",
+			"plan": "rest",
+			"state": "move"
+		},
+		"event": "locate_postman_pip",
+		"garden_step": 8,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 29,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"act": "sit",
+			"area": "traetoppen",
+			"npc": "postman_pip",
+			"place": "traetoppen.t_fire_n",
+			"plan": "rest",
+			"state": "stay"
+		},
+		"event": "locate_postman_pip",
+		"garden_step": 8,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 33,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_garden"
+		},
+		"event": "area_request",
+		"garden_step": 8,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 41,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_garden"
+		},
+		"event": "area_request",
+		"garden_step": 8,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 41,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.79468870162964,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(-448.0, 1254.0)",
+					"position": "(-442.6651, 1250.832)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(-448.0, 1254.0)",
+				"ok": true,
+				"position": "(-446.0239, 1252.827)",
+				"seconds": 4.1,
+				"stuck": false,
+				"ticks": 246,
+				"waypoint_index": 13,
+				"waypoints": 14
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 8,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 7,
+		"minute": 42,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_hyggebyen"
+		},
+		"event": "area_request",
+		"garden_step": 8,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 8,
+		"minute": 1,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_hyggebyen"
+		},
+		"event": "area_request",
+		"garden_step": 8,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 8,
+		"minute": 1,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 0.339120328426361,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1216.0, 2318.0)",
+					"position": "(1212.401, 2315.863)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1216.0, 2318.0)",
+				"ok": true,
+				"position": "(1215.76, 2317.858)",
+				"seconds": 9.58333333333333,
+				"stuck": false,
+				"ticks": 575,
+				"waypoint_index": 26,
+				"waypoints": 27
+			}
+		},
+		"event": "travel_traetoppen",
+		"garden_step": 8,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 8,
+		"minute": 2,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"actor_level": "torvet",
+			"approach": "(2560.0, 2128.0)",
+			"nearest": "@Node2D@4068:<Node2D#13335286259555>",
+			"query": "(2688.0, 2128.0)",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 33.1142234802246,
+				"interactions": 0,
+				"last_advance": {
+					"level": "torvet",
+					"point": "(2541.4, 2133.85)",
+					"position": "(2492.629, 2193.515)",
+					"reason": "occupied"
+				},
+				"nav": true,
+				"next": "(2557.4, 2124.35)",
+				"ok": false,
+				"position": "(2527.836, 2123.324)",
+				"seconds": 14.5,
+				"stuck": true,
+				"ticks": 870,
+				"waypoint_index": 131,
+				"waypoints": 133
+			},
+			"target": "(2629.4, 2110.1)"
+		},
+		"event": "approach_missed_target",
+		"garden_step": 8,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 8,
+		"minute": 31,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"actor_level": "torvet",
+			"approach": "(2688.0, 2128.0)",
+			"nearest": "@Node2D@4068:<Node2D#13335286259555>",
+			"query": "(2688.0, 2128.0)",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 158.918243408203,
+				"interactions": 0,
+				"last_advance": {
+					"level": "torvet",
+					"point": "(2541.4, 2124.35)",
+					"position": "(2535.108, 2125.47)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(2557.4, 2124.35)",
+				"ok": false,
+				"position": "(2529.108, 2126.28)",
+				"seconds": 5.0,
+				"stuck": true,
+				"ticks": 300,
+				"waypoint_index": 2,
+				"waypoints": 12
+			},
+			"target": "(2629.4, 2110.1)"
+		},
+		"event": "approach_missed_target",
+		"garden_step": 8,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 8,
+		"minute": 41,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"actor_level": "torvet",
+			"approach": "(2560.0, 2052.0)",
+			"nearest": "Lane_main_ladder_torvet:<Node2D#13322099368533>",
+			"query": "(2560.0, 2128.0)",
+			"route": {
+				"area_changed": false,
+				"collider": "Colliders_torvet",
+				"dist_left": 56.7445602416992,
+				"interactions": 0,
+				"last_advance": {
+					"level": "torvet",
+					"point": "(2509.4, 2076.85)",
+					"position": "(2509.202, 2079.257)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(2560.0, 2052.0)",
+				"ok": false,
+				"position": "(2539.084, 2083.32)",
+				"seconds": 2.5,
+				"stuck": true,
+				"ticks": 150,
+				"waypoint_index": 6,
+				"waypoints": 7
+			},
+			"target": "(2629.4, 2110.1)"
+		},
+		"event": "approach_missed_target",
+		"garden_step": 8,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 8,
+		"minute": 46,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"act": "guard",
+			"area": "traetoppen",
+			"npc": "guard_oak",
+			"place": "traetoppen.b_lift",
+			"plan": "work",
+			"state": "stay"
+		},
+		"event": "locate_guard_oak",
+		"garden_step": 9,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 8,
+		"minute": 50,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"actor_level": "torvet",
+			"approach": "(4032.0, 950.0)",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2478.576171875,
+				"interactions": 0,
+				"last_advance": {
+					"level": "torvet",
+					"point": "(2541.4, 2114.85)",
+					"position": "(2534.249, 2116.273)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(2557.4, 2114.85)",
+				"ok": false,
+				"position": "(2528.018, 2119.759)",
+				"seconds": 5.5,
+				"stuck": true,
+				"ticks": 330,
+				"waypoint_index": 2,
+				"waypoints": 115
+			},
+			"target": "(4107.9, 924.2)"
+		},
+		"event": "approach_failed",
+		"garden_step": 9,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 1,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"actor_level": "torvet",
+			"approach": "(4160.0, 950.0)",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2559.06909179688,
+				"interactions": 0,
+				"last_advance": {
+					"level": "torvet",
+					"point": "(2541.4, 2114.85)",
+					"position": "(2533.465, 2115.101)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(2557.4, 2114.85)",
+				"ok": false,
+				"position": "(2526.638, 2119.697)",
+				"seconds": 11.0,
+				"stuck": true,
+				"ticks": 660,
+				"waypoint_index": 2,
+				"waypoints": 117
+			},
+			"target": "(4107.9, 924.2)"
+		},
+		"event": "approach_failed",
+		"garden_step": 9,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 23,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "moerkeskoven",
+			"hearts": 10,
+			"player_state": 1,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 10,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 57,
+		"player_state": 1
+	},
+	{
+		"area": "moerkeskoven",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {},
+		"event": "rode_forest_lift",
+		"garden_step": 10,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 58,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_skovlift"
+		},
+		"event": "area_request",
+		"garden_step": 11,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 58,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_skovlift"
+		},
+		"event": "area_request",
+		"garden_step": 11,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 58,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 3.13930821418762,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(2352.0, 1820.0)",
+					"position": "(2352.171, 1815.317)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(2352.0, 1820.0)",
+				"ok": true,
+				"position": "(2352.068, 1818.136)",
+				"seconds": 2.61666666666667,
+				"stuck": false,
+				"ticks": 157,
+				"waypoint_index": 7,
+				"waypoints": 8
+			}
+		},
+		"event": "travel_traetoppen",
+		"garden_step": 11,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 58,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 11,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 10,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 11,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 10,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 1990.28356933594,
+				"interactions": 0,
+				"last_advance": {
+					"level": "f",
+					"point": "(1290.0, 3054.0)",
+					"position": "(1284.706, 3056.436)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(420.0, 3330.0)",
+				"ok": true,
+				"position": "(1024.0, 2204.0)",
+				"seconds": 29.45,
+				"stuck": false,
+				"ticks": 1767,
+				"waypoint_index": 215,
+				"waypoints": 216
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 11,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 10,
+		"minute": 58,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "secret_garden",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_town"
+		},
+		"event": "area_request",
+		"garden_step": 11,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 17,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "secret_garden",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_town"
+		},
+		"event": "area_request",
+		"garden_step": 11,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 17,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.95343995094299,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(576.0, 798.0)",
+					"position": "(570.5345, 801.2233)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(576.0, 798.0)",
+				"ok": true,
+				"position": "(573.9045, 799.2358)",
+				"seconds": 9.41666666666667,
+				"stuck": false,
+				"ticks": 565,
+				"waypoint_index": 25,
+				"waypoints": 26
+			}
+		},
+		"event": "travel_secret_garden",
+		"garden_step": 11,
+		"gold": 920,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 18,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {},
+		"event": "garden_restored",
+		"garden_step": 12,
+		"gold": 1070,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 22,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"act": "sit",
+			"area": "hyggebyen",
+			"npc": "mayor_lyra",
+			"place": "hyggebyen.blossom_bench1",
+			"plan": "rest",
+			"state": "stay"
+		},
+		"event": "locate_mayor_lyra",
+		"garden_step": 12,
+		"gold": 1070,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 22,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_garden"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 1070,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 28,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_garden"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 1070,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 28,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 0.212547019124031,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(-448.0, 1254.0)",
+					"position": "(-444.7916, 1252.095)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(-448.0, 1254.0)",
+				"ok": true,
+				"position": "(-448.1503, 1254.089)",
+				"seconds": 2.9,
+				"stuck": false,
+				"ticks": 174,
+				"waypoint_index": 9,
+				"waypoints": 10
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 12,
+		"gold": 1070,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 29,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_hyggebyen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 1320,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 54,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_hyggebyen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 1320,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 55,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 1.48617458343506,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1216.0, 2318.0)",
+					"position": "(1211.59, 2315.382)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1216.0, 2318.0)",
+				"ok": true,
+				"position": "(1214.949, 2317.376)",
+				"seconds": 9.36666666666667,
+				"stuck": false,
+				"ticks": 562,
+				"waypoint_index": 28,
+				"waypoints": 29
+			}
+		},
+		"event": "travel_traetoppen",
+		"garden_step": 12,
+		"gold": 1320,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 55,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "farm",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 1320,
+		"hearts": 10,
+		"hour": 12,
+		"minute": 27,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"destination": "farm",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 1320,
+		"hearts": 10,
+		"hour": 12,
+		"minute": 27,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 5582.15869140625,
+				"interactions": 0,
+				"last_advance": {
+					"level": "g",
+					"point": "(4170.0, 2925.0)",
+					"position": "(4172.739, 2928.53)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(5070.0, 3015.0)",
+				"ok": true,
+				"position": "(-512.0, 3040.0)",
+				"seconds": 15.8666666666667,
+				"stuck": false,
+				"ticks": 952,
+				"waypoint_index": 147,
+				"waypoints": 148
+			}
+		},
+		"event": "travel_farm",
+		"garden_step": 12,
+		"gold": 1320,
+		"hearts": 10,
+		"hour": 12,
+		"minute": 28,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 7,
+		"detail": {},
+		"event": "first_planting",
+		"garden_step": 12,
+		"gold": 1320,
+		"hearts": 10,
+		"hour": 13,
+		"minute": 55,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 8,
+		"detail": {},
+		"event": "slept",
+		"garden_step": 12,
+		"gold": 1320,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 3,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 9,
+		"detail": {},
+		"event": "slept",
+		"garden_step": 12,
+		"gold": 1320,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 3,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 10,
+		"detail": {},
+		"event": "slept",
+		"garden_step": 12,
+		"gold": 1320,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 3,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 11,
+		"detail": {},
+		"event": "slept",
+		"garden_step": 12,
+		"gold": 1320,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 3,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {},
+		"event": "slept",
+		"garden_step": 12,
+		"gold": 2530,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 3,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"harvest": {
+				"carrot": 11,
+				"turnip": 11
+			},
+			"payout": 1210
+		},
+		"event": "harvest_paid",
+		"garden_step": 12,
+		"gold": 2530,
+		"hearts": 10,
+		"hour": 6,
+		"minute": 6,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_farm"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 2530,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 25,
+		"player_state": 0
+	},
+	{
+		"area": "farm",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_farm"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 2530,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 25,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 3.73258590698242,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(-704.0, 3154.0)",
+					"position": "(-701.3607, 3152.433)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(-704.0, 3154.0)",
+				"ok": true,
+				"position": "(-701.3607, 3152.433)",
+				"seconds": 9.43333333333333,
+				"stuck": false,
+				"ticks": 566,
+				"waypoint_index": 30,
+				"waypoints": 31
+			}
+		},
+		"event": "travel_traetoppen",
+		"garden_step": 12,
+		"gold": 2530,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 26,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 2530,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 58,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 2530,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 58,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 1990.28356933594,
+				"interactions": 0,
+				"last_advance": {
+					"level": "f",
+					"point": "(1290.0, 3054.0)",
+					"position": "(1284.794, 3056.484)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(420.0, 3330.0)",
+				"ok": true,
+				"position": "(1024.0, 2204.0)",
+				"seconds": 16.0666666666667,
+				"stuck": false,
+				"ticks": 964,
+				"waypoint_index": 146,
+				"waypoints": 147
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 12,
+		"gold": 2530,
+		"hearts": 10,
+		"hour": 9,
+		"minute": 59,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "int_smedjen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 2530,
+		"hearts": 10,
+		"hour": 10,
+		"minute": 13,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "int_smedjen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 2530,
+		"hearts": 10,
+		"hour": 10,
+		"minute": 14,
+		"player_state": 0
+	},
+	{
+		"area": "int_smedjen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 0.603651821613312,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(960.0, 1938.0)",
+					"position": "(962.2393, 1939.922)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(896.0, 1900.0)",
+				"ok": true,
+				"position": "(895.5758, 1899.745)",
+				"seconds": 7.46666666666667,
+				"stuck": false,
+				"ticks": 448,
+				"waypoint_index": 21,
+				"waypoints": 22
+			}
+		},
+		"event": "travel_int_smedjen",
+		"garden_step": 12,
+		"gold": 2530,
+		"hearts": 10,
+		"hour": 10,
+		"minute": 15,
+		"player_state": 0
+	},
+	{
+		"area": "int_smedjen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"amount": 1,
+			"item": "wpn_spear_thistle",
+			"paid": 1980
+		},
+		"event": "purchase",
+		"garden_step": 12,
+		"gold": 550,
+		"hearts": 10,
+		"hour": 10,
+		"minute": 15,
+		"player_state": 0
+	},
+	{
+		"area": "int_smedjen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_int_smedjen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 550,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 6,
+		"player_state": 0
+	},
+	{
+		"area": "int_smedjen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_int_smedjen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 550,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 6,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 2688.603515625,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(64.0, 418.0)",
+					"position": "(64.0, 415.526)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(0.0, 420.0)",
+				"ok": true,
+				"position": "(832.0, 1938.0)",
+				"seconds": 0.65,
+				"stuck": false,
+				"ticks": 39,
+				"waypoint_index": 2,
+				"waypoints": 3
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 12,
+		"gold": 550,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 7,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "int_troldmandstaarnet",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 550,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 22,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "int_troldmandstaarnet",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 550,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 22,
+		"player_state": 0
+	},
+	{
+		"area": "int_troldmandstaarnet",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.41624641418457,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(-576.0, 1102.0)",
+					"position": "(-571.1141, 1104.899)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(-640.0, 1064.0)",
+				"ok": true,
+				"position": "(-638.2914, 1065.014)",
+				"seconds": 7.7,
+				"stuck": false,
+				"ticks": 462,
+				"waypoint_index": 23,
+				"waypoints": 24
+			}
+		},
+		"event": "travel_int_troldmandstaarnet",
+		"garden_step": 12,
+		"gold": 550,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 23,
+		"player_state": 0
+	},
+	{
+		"area": "int_troldmandstaarnet",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"amount": 3,
+			"item": "health_tonic",
+			"paid": 198
+		},
+		"event": "purchase",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 23,
+		"player_state": 0
+	},
+	{
+		"area": "int_troldmandstaarnet",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"inventory": {
+				"axe_wooden": 1,
+				"fertilizer": 3,
+				"health_tonic": 4,
+				"hoe_wooden": 1,
+				"lantern_oil": 2,
+				"pickaxe_wooden": 1,
+				"scythe": 1,
+				"watering_can_copper": 1
+			},
+			"weapon": "wpn_spear_thistle"
+		},
+		"event": "forest_prepared",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 23,
+		"player_state": 0
+	},
+	{
+		"area": "int_troldmandstaarnet",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_int_troldmandstaarnet"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 24,
+		"player_state": 0
+	},
+	{
+		"area": "int_troldmandstaarnet",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_int_troldmandstaarnet"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 25,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 1371.15844726562,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(0.0, 380.0)",
+					"position": "(0.0, 377.526)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(-64.0, 382.0)",
+				"ok": true,
+				"position": "(-704.0, 1102.0)",
+				"seconds": 0.65,
+				"stuck": false,
+				"ticks": 39,
+				"waypoint_index": 2,
+				"waypoints": 3
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 25,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_hyggebyen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 45,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "from_hyggebyen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 46,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 0.846630990505219,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1216.0, 2318.0)",
+					"position": "(1212.043, 2315.65)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1216.0, 2318.0)",
+				"ok": true,
+				"position": "(1215.401, 2317.645)",
+				"seconds": 10.1,
+				"stuck": false,
+				"ticks": 606,
+				"waypoint_index": 32,
+				"waypoints": 33
+			}
+		},
+		"event": "travel_traetoppen",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 11,
+		"minute": 46,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"actor_level": "f",
+			"approach": "(4096.0, 988.0)",
+			"route": {
+				"dist_left": 4470.02294921875,
+				"nav": true,
+				"ok": false,
+				"seconds": 0.0,
+				"stuck": false,
+				"ticks": 0,
+				"waypoints": 0
+			},
+			"target": "(4164.0, 930.0)"
+		},
+		"event": "approach_failed",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 6,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"actor_level": "f",
+			"approach": "(4224.0, 988.0)",
+			"route": {
+				"dist_left": 4551.4638671875,
+				"nav": true,
+				"ok": false,
+				"seconds": 0.0,
+				"stuck": false,
+				"ticks": 0,
+				"waypoints": 0
+			},
+			"target": "(4164.0, 930.0)"
+		},
+		"event": "approach_failed",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 6,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven",
+			"hearts": 10,
+			"player_state": 1,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 1
+	},
+	{
+		"area": "moerkeskoven",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {},
+		"event": "rode_forest_lift",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f1",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"floor": 1,
+			"hearts": 10,
+			"weapon": "wpn_spear_thistle",
+			"world_seed": "623894952310093262"
+		},
+		"event": "floor_entered",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 305.478454589844,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(4752.0, 980.0)",
+					"position": "(4751.845, 983.8892)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(4752.0, 924.0)",
+				"ok": true,
+				"position": "(4554.069, 917.3986)",
+				"seconds": 6.46666666666667,
+				"stuck": false,
+				"ticks": 388,
+				"waypoint_index": 15,
+				"waypoints": 18
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 282.477966308594,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(3600.0, 1932.0)",
+					"position": "(3607.606, 1932.057)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(3504.0, 1988.0)",
+				"ok": true,
+				"position": "(3554.341, 1957.825)",
+				"seconds": 9.83333333333333,
+				"stuck": false,
+				"ticks": 590,
+				"waypoint_index": 25,
+				"waypoints": 29
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 0.0833333333339397,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 290.1962890625,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(2160.0, 1596.0)",
+					"position": "(2166.946, 1595.779)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(2064.0, 1596.0)",
+				"ok": true,
+				"position": "(2162.196, 1595.779)",
+				"seconds": 5.51666666666667,
+				"stuck": false,
+				"ticks": 331,
+				"waypoint_index": 14,
+				"waypoints": 18
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 276.690399169922,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1872.0, 1036.0)",
+					"position": "(1871.88, 1040.746)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1872.0, 980.0)",
+				"ok": true,
+				"position": "(1871.88, 1032.285)",
+				"seconds": 3.91666666666667,
+				"stuck": false,
+				"ticks": 235,
+				"waypoint_index": 11,
+				"waypoints": 15
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {},
+		"event": "evidence_marked_lamp",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f2",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f2",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 3.61222791671753,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1776.0, 980.0)",
+					"position": "(1775.911, 982.1441)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1776.0, 980.0)",
+				"ok": true,
+				"position": "(1775.911, 982.1441)",
+				"seconds": 6.28333333333333,
+				"stuck": false,
+				"ticks": 377,
+				"waypoint_index": 17,
+				"waypoints": 18
+			}
+		},
+		"event": "travel_moerkeskoven_f2",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"floor": 2,
+			"hearts": 10,
+			"weapon": "wpn_spear_thistle",
+			"world_seed": "623894952310093262"
+		},
+		"event": "floor_entered",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 236.660751342773,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(4656.0, 1708.0)",
+					"position": "(4655.854, 1705.673)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(4656.0, 1764.0)",
+				"ok": true,
+				"position": "(4795.917, 1831.135)",
+				"seconds": 6.25,
+				"stuck": false,
+				"ticks": 375,
+				"waypoint_index": 14,
+				"waypoints": 17
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 0.0833333333339397,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 209.230758666992,
+				"interactions": 0,
+				"last_advance": {},
+				"nav": true,
+				"next": "(4752.0, 1820.0)",
+				"ok": true,
+				"position": "(4743.202, 1807.005)",
+				"seconds": 0.416666666666667,
+				"stuck": false,
+				"ticks": 25,
+				"waypoint_index": 1,
+				"waypoints": 5
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 167.434555053711,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(2928.0, 812.0)",
+					"position": "(2927.831, 815.8571)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(2832.0, 756.0)",
+				"ok": true,
+				"position": "(2855.939, 769.3668)",
+				"seconds": 13.2833333333333,
+				"stuck": false,
+				"ticks": 797,
+				"waypoint_index": 37,
+				"waypoints": 40
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "tornebusk",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 245.022750854492,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(2352.0, 644.0)",
+					"position": "(2356.683, 643.9433)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(2256.0, 644.0)",
+				"ok": true,
+				"position": "(2290.183, 643.9433)",
+				"seconds": 1.7,
+				"stuck": false,
+				"ticks": 102,
+				"waypoint_index": 5,
+				"waypoints": 9
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 251.095779418945,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(2160.0, 644.0)",
+					"position": "(2164.392, 643.9433)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(2064.0, 588.0)",
+				"ok": true,
+				"position": "(2138.081, 634.1483)",
+				"seconds": 0.7,
+				"stuck": false,
+				"ticks": 42,
+				"waypoint_index": 2,
+				"waypoints": 5
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 298.257415771484,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1968.0, 1484.0)",
+					"position": "(1973.766, 1480.883)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1872.0, 1540.0)",
+				"ok": true,
+				"position": "(1882.094, 1534.136)",
+				"seconds": 6.55,
+				"stuck": false,
+				"ticks": 393,
+				"waypoint_index": 17,
+				"waypoints": 22
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 1.43333333333339,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 297.64501953125,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(2064.0, 1428.0)",
+					"position": "(2064.498, 1423.586)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1968.0, 1484.0)",
+				"ok": true,
+				"position": "(1988.486, 1472.281)",
+				"seconds": 0.783333333333333,
+				"stuck": false,
+				"ticks": 47,
+				"waypoint_index": 2,
+				"waypoints": 7
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f3",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f3",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 4051.34399414062,
+				"interactions": 0,
+				"last_advance": {},
+				"nav": true,
+				"next": "(1968.0, 700.0)",
+				"ok": true,
+				"position": "(5328.0, 2044.0)",
+				"seconds": 0.4,
+				"stuck": false,
+				"ticks": 24,
+				"waypoint_index": 1,
+				"waypoints": 3
+			}
+		},
+		"event": "travel_moerkeskoven_f3",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"floor": 3,
+			"hearts": 10,
+			"weapon": "wpn_spear_thistle",
+			"world_seed": "623894952310093262"
+		},
+		"event": "floor_entered",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 262.261962890625,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(4272.0, 1036.0)",
+					"position": "(4278.472, 1035.928)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(4176.0, 1036.0)",
+				"ok": true,
+				"position": "(4107.475, 898.62)",
+				"seconds": 8.51666666666667,
+				"stuck": false,
+				"ticks": 511,
+				"waypoint_index": 21,
+				"waypoints": 24
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 3
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "tornebusk",
+			"seconds": 0.599999999999454,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 282.025024414062,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(4176.0, 868.0)",
+					"position": "(4173.602, 866.5812)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(4176.0, 924.0)",
+				"ok": true,
+				"position": "(4180.464, 881.6552)",
+				"seconds": 1.05,
+				"stuck": false,
+				"ticks": 63,
+				"waypoint_index": 3,
+				"waypoints": 7
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 284.838531494141,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(3312.0, 1708.0)",
+					"position": "(3318.055, 1708.082)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(3216.0, 1708.0)",
+				"ok": true,
+				"position": "(3237.305, 1708.082)",
+				"seconds": 7.81666666666667,
+				"stuck": false,
+				"ticks": 469,
+				"waypoint_index": 22,
+				"waypoints": 26
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 168.026351928711,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(3216.0, 1988.0)",
+					"position": "(3216.118, 1983.312)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(3216.0, 2044.0)",
+				"ok": true,
+				"position": "(3216.118, 2000.234)",
+				"seconds": 2.35,
+				"stuck": false,
+				"ticks": 141,
+				"waypoint_index": 7,
+				"waypoints": 10
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "tornebusk",
+			"seconds": 0.0833333333339397,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 168.897842407227,
+				"interactions": 0,
+				"last_advance": {},
+				"nav": true,
+				"next": "(3312.0, 2044.0)",
+				"ok": true,
+				"position": "(3230.672, 2012.109)",
+				"seconds": 0.2,
+				"stuck": false,
+				"ticks": 12,
+				"waypoint_index": 1,
+				"waypoints": 4
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "tornebusk",
+			"seconds": 0.25,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 833.7666015625,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1680.0, 1540.0)",
+					"position": "(1683.666, 1537.819)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1584.0, 1596.0)",
+				"ok": true,
+				"position": "(1629.472, 1569.455)",
+				"seconds": 7.73333333333333,
+				"stuck": false,
+				"ticks": 464,
+				"waypoint_index": 18,
+				"waypoints": 28
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 167.652282714844,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1488.0, 1820.0)",
+					"position": "(1487.662, 1816.512)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1392.0, 1876.0)",
+				"ok": true,
+				"position": "(1416.363, 1862.706)",
+				"seconds": 2.16666666666667,
+				"stuck": false,
+				"ticks": 130,
+				"waypoint_index": 5,
+				"waypoints": 8
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "tornebusk",
+			"seconds": 0.0833333333339397,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 168.215896606445,
+				"interactions": 0,
+				"last_advance": {},
+				"nav": true,
+				"next": "(1392.0, 1988.0)",
+				"ok": true,
+				"position": "(1370.48, 1944.943)",
+				"seconds": 0.183333333333333,
+				"stuck": false,
+				"ticks": 11,
+				"waypoint_index": 1,
+				"waypoints": 4
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 3
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "tornebusk",
+			"seconds": 0.366666666665878,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f4",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f4",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 3667.05200195312,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1872.0, 1316.0)",
+					"position": "(1874.551, 1317.488)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1776.0, 1260.0)",
+				"ok": true,
+				"position": "(5232.0, 1988.0)",
+				"seconds": 13.1166666666667,
+				"stuck": false,
+				"ticks": 787,
+				"waypoint_index": 34,
+				"waypoints": 36
+			}
+		},
+		"event": "travel_moerkeskoven_f4",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"floor": 4,
+			"hearts": 10,
+			"weapon": "wpn_spear_thistle",
+			"world_seed": "623894952310093262"
+		},
+		"event": "floor_entered",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 259.888153076172,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(4560.0, 1932.0)",
+					"position": "(4562.638, 1933.62)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(4464.0, 1932.0)",
+				"ok": true,
+				"position": "(4404.672, 1972.765)",
+				"seconds": 4.96666666666667,
+				"stuck": false,
+				"ticks": 298,
+				"waypoint_index": 8,
+				"waypoints": 13
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "ugleoje",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 243.688217163086,
+				"interactions": 0,
+				"last_advance": {},
+				"nav": true,
+				"next": "(4272.0, 2044.0)",
+				"ok": true,
+				"position": "(4325.034, 2015.099)",
+				"seconds": 0.6,
+				"stuck": false,
+				"ticks": 36,
+				"waypoint_index": 1,
+				"waypoints": 5
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "ugleoje",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 165.857406616211,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(2736.0, 924.0)",
+					"position": "(2735.819, 927.3997)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(2736.0, 868.0)",
+				"ok": true,
+				"position": "(2735.819, 910.4778)",
+				"seconds": 9.41666666666667,
+				"stuck": false,
+				"ticks": 565,
+				"waypoint_index": 22,
+				"waypoints": 25
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "tornebusk",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 8,
+			"kind": "bat",
+			"seconds": 1.51666666666642,
+			"swings": 3,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 8,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 282.608764648438,
+				"interactions": 0,
+				"last_advance": {},
+				"nav": true,
+				"next": "(3024.0, 756.0)",
+				"ok": true,
+				"position": "(3041.033, 758.8281)",
+				"seconds": 0.633333333333333,
+				"stuck": false,
+				"ticks": 38,
+				"waypoint_index": 1,
+				"waypoints": 6
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 8,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"hearts": 8,
+			"kind": "bat",
+			"seconds": 0.0833333333339397,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 8,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s03",
+		"day": 12,
+		"detail": {
+			"kind": "snurresvamp",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 364.807769775391,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(2064.0, 1316.0)",
+					"position": "(2067.004, 1314.248)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1968.0, 1372.0)",
+				"ok": true,
+				"position": "(1822.973, 1269.198)",
+				"seconds": 7.06666666666667,
+				"stuck": false,
+				"ticks": 424,
+				"waypoint_index": 11,
+				"waypoints": 15
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 8,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "snurresvamp",
+			"seconds": 12.8500000000004,
+			"swings": 4,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f5",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f5",
+			"hearts": 10,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 1.89181244373322,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1200.0, 1484.0)",
+					"position": "(1206.638, 1483.935)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1200.0, 1484.0)",
+				"ok": true,
+				"position": "(1201.889, 1483.935)",
+				"seconds": 2.86666666666667,
+				"stuck": false,
+				"ticks": 172,
+				"waypoint_index": 9,
+				"waypoints": 10
+			}
+		},
+		"event": "travel_moerkeskoven_f5",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"floor": 5,
+			"hearts": 10,
+			"weapon": "wpn_spear_thistle",
+			"world_seed": "623894952310093262"
+		},
+		"event": "floor_entered",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 169.345230102539,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(3216.0, 1092.0)",
+					"position": "(3216.123, 1094.65)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(3216.0, 1036.0)",
+				"ok": true,
+				"position": "(3216.123, 1080.549)",
+				"seconds": 14.75,
+				"stuck": false,
+				"ticks": 885,
+				"waypoint_index": 40,
+				"waypoints": 43
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "tornebusk",
+			"seconds": 0.566666666666606,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 168.393859863281,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(3216.0, 980.0)",
+					"position": "(3211.879, 978.6169)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(3312.0, 980.0)",
+				"ok": true,
+				"position": "(3239.607, 980.3902)",
+				"seconds": 0.4,
+				"stuck": false,
+				"ticks": 24,
+				"waypoint_index": 2,
+				"waypoints": 5
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "tornebusk",
+			"seconds": 0.766666666667334,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "tornebusk",
+			"seconds": 0.566666666667516,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 273.811309814453,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(3216.0, 2324.0)",
+					"position": "(3216.16, 2320.964)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(3216.0, 2380.0)",
+				"ok": true,
+				"position": "(3216.16, 2329.425)",
+				"seconds": 9.21666666666667,
+				"stuck": false,
+				"ticks": 553,
+				"waypoint_index": 27,
+				"waypoints": 31
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "ugleoje",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 216.701629638672,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(3312.0, 2492.0)",
+					"position": "(3307.131, 2489.355)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(3408.0, 2548.0)",
+				"ok": true,
+				"position": "(3349.837, 2638.424)",
+				"seconds": 2.2,
+				"stuck": false,
+				"ticks": 132,
+				"waypoint_index": 2,
+				"waypoints": 4
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 189.517166137695,
+				"interactions": 0,
+				"last_advance": {},
+				"nav": true,
+				"next": "(3216.0, 2604.0)",
+				"ok": true,
+				"position": "(3267.135, 2569.371)",
+				"seconds": 0.316666666666667,
+				"stuck": false,
+				"ticks": 19,
+				"waypoint_index": 1,
+				"waypoints": 4
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "ugleoje",
+			"seconds": 0.0833333333339397,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 134.303482055664,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(4464.0, 2268.0)",
+					"position": "(4459.714, 2267.953)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(4560.0, 2268.0)",
+				"ok": true,
+				"position": "(4464.464, 2267.953)",
+				"seconds": 5.31666666666667,
+				"stuck": false,
+				"ticks": 319,
+				"waypoint_index": 14,
+				"waypoints": 17
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "tornebusk",
+			"seconds": 0.566666666666606,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 166.715469360352,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(4656.0, 2324.0)",
+					"position": "(4655.186, 2326.392)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(4752.0, 2268.0)",
+				"ok": true,
+				"position": "(4689.095, 2303.67)",
+				"seconds": 0.433333333333333,
+				"stuck": false,
+				"ticks": 26,
+				"waypoint_index": 2,
+				"waypoints": 5
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "tornebusk",
+			"seconds": 1.06666666666661,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 283.231201171875,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(5904.0, 2100.0)",
+					"position": "(5904.104, 2095.662)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(5904.0, 2156.0)",
+				"ok": true,
+				"position": "(5904.104, 2109.764)",
+				"seconds": 9.26666666666667,
+				"stuck": false,
+				"ticks": 556,
+				"waypoint_index": 25,
+				"waypoints": 29
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "ugleoje",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 354.571594238281,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(6000.0, 2100.0)",
+					"position": "(5995.517, 2100.764)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(6096.0, 2100.0)",
+				"ok": true,
+				"position": "(5809.548, 2139.679)",
+				"seconds": 2.3,
+				"stuck": false,
+				"ticks": 138,
+				"waypoint_index": 2,
+				"waypoints": 6
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "ugleoje",
+			"seconds": 0.0833333333339397,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 284.492004394531,
+				"interactions": 0,
+				"last_advance": {},
+				"nav": true,
+				"next": "(5904.0, 2212.0)",
+				"ok": true,
+				"position": "(6088.245, 2092.862)",
+				"seconds": 2.03333333333333,
+				"stuck": false,
+				"ticks": 122,
+				"waypoint_index": 1,
+				"waypoints": 3
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "ugleoje",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 242.110946655273,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(5616.0, 1260.0)",
+					"position": "(5615.897, 1263.481)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(5616.0, 1204.0)",
+				"ok": true,
+				"position": "(5615.897, 1223.996)",
+				"seconds": 6.03333333333333,
+				"stuck": false,
+				"ticks": 362,
+				"waypoint_index": 16,
+				"waypoints": 22
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "bat",
+			"seconds": 0.0833333333339397,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"actor_level": "",
+			"approach": "(3504.0, 2156.0)",
+			"nearest": "@Node2D@6749:<Node2D#30078259961513>",
+			"query": "(3504.0, 2100.0)",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 3.91211295127869,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(3504.0, 2156.0)",
+					"position": "(3500.089, 2156.058)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(3504.0, 2156.0)",
+				"ok": true,
+				"position": "(3500.089, 2156.058)",
+				"seconds": 10.3666666666667,
+				"stuck": false,
+				"ticks": 622,
+				"waypoint_index": 27,
+				"waypoints": 28
+			},
+			"target": "(3504.0, 2100.0)"
+		},
+		"event": "approach_missed_target",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {},
+		"event": "evidence_memory_lamp",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {},
+		"event": "evidence_memory_table",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {},
+		"event": "evidence_memory_basket",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {},
+		"event": "evidence_memory_map",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f4",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f4",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 1106.25830078125,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1200.0, 812.0)",
+					"position": "(1203.496, 813.9673)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1104.0, 756.0)",
+				"ok": true,
+				"position": "(1488.0, 1372.0)",
+				"seconds": 14.2833333333333,
+				"stuck": false,
+				"ticks": 857,
+				"waypoint_index": 36,
+				"waypoints": 38
+			}
+		},
+		"event": "travel_moerkeskoven_f4",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f3",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f4",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f3",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.76620483398438,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(5232.0, 2324.0)",
+					"position": "(5232.153, 2319.538)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(5232.0, 2324.0)",
+				"ok": true,
+				"position": "(5232.057, 2322.358)",
+				"seconds": 16.7333333333333,
+				"stuck": false,
+				"ticks": 1004,
+				"waypoint_index": 42,
+				"waypoints": 43
+			}
+		},
+		"event": "travel_moerkeskoven_f3",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f2",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f3",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f2",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 3900.32080078125,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(5616.0, 1876.0)",
+					"position": "(5611.825, 1875.931)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(5616.0, 1876.0)",
+				"ok": true,
+				"position": "(2256.0, 700.0)",
+				"seconds": 14.7,
+				"stuck": false,
+				"ticks": 882,
+				"waypoint_index": 40,
+				"waypoints": 41
+			}
+		},
+		"event": "travel_moerkeskoven_f2",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f1",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f2",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f1",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 2840.931640625,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(4752.0, 700.0)",
+					"position": "(4749.534, 701.3512)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(4848.0, 644.0)",
+				"ok": true,
+				"position": "(2064.0, 980.0)",
+				"seconds": 21.3833333333333,
+				"stuck": false,
+				"ticks": 1283,
+				"waypoint_index": 58,
+				"waypoints": 60
+			}
+		},
+		"event": "travel_moerkeskoven_f1",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_floor"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f1",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_floor"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 2240.0,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(4752.0, 2100.0)",
+					"position": "(4752.277, 2096.729)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(4752.0, 2100.0)",
+				"ok": true,
+				"position": "(3408.0, 1036.0)",
+				"seconds": 14.9333333333333,
+				"stuck": false,
+				"ticks": 896,
+				"waypoint_index": 41,
+				"waypoints": 42
+			}
+		},
+		"event": "travel_moerkeskoven",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_skovlift"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_skovlift"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 1.52663195133209,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(2352.0, 1820.0)",
+					"position": "(2351.807, 1816.275)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(2352.0, 1820.0)",
+				"ok": true,
+				"position": "(2351.953, 1819.094)",
+				"seconds": 6.23333333333333,
+				"stuck": false,
+				"ticks": 374,
+				"waypoint_index": 15,
+				"waypoints": 16
+			}
+		},
+		"event": "travel_traetoppen",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 20,
+		"minute": 58,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 21,
+		"minute": 54,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 21,
+		"minute": 55,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 1990.28356933594,
+				"interactions": 0,
+				"last_advance": {
+					"level": "f",
+					"point": "(1290.0, 3054.0)",
+					"position": "(1284.794, 3056.484)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(420.0, 3330.0)",
+				"ok": true,
+				"position": "(1024.0, 2204.0)",
+				"seconds": 28.5,
+				"stuck": false,
+				"ticks": 1710,
+				"waypoint_index": 215,
+				"waypoints": 216
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 21,
+		"minute": 56,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "secret_garden",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_town"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 22,
+		"minute": 14,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"destination": "secret_garden",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_town"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 22,
+		"minute": 15,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s04",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.94586205482483,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(576.0, 798.0)",
+					"position": "(570.5399, 801.2202)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(576.0, 798.0)",
+				"ok": true,
+				"position": "(573.9099, 799.2326)",
+				"seconds": 9.48333333333333,
+				"stuck": false,
+				"ticks": 569,
+				"waypoint_index": 25,
+				"waypoints": 26
+			}
+		},
+		"event": "travel_secret_garden",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 22,
+		"minute": 15,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {},
+		"event": "evidence_echo_account",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 22,
+		"minute": 17,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_garden"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 22,
+		"minute": 19,
+		"player_state": 0
+	},
+	{
+		"area": "secret_garden",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"destination": "hyggebyen",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_garden"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 22,
+		"minute": 19,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 3.55325508117676,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(-448.0, 1254.0)",
+					"position": "(-445.4873, 1252.508)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(-448.0, 1254.0)",
+				"ok": true,
+				"position": "(-445.4873, 1252.508)",
+				"seconds": 1.25,
+				"stuck": false,
+				"ticks": 75,
+				"waypoint_index": 5,
+				"waypoints": 6
+			}
+		},
+		"event": "travel_hyggebyen",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 22,
+		"minute": 20,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"attempt": 1,
+			"destination": "traetoppen",
+			"route": {
+				"area_changed": false,
+				"collider": "Ground",
+				"dist_left": 389.266937255859,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(896.0, 2128.0)",
+					"position": "(826.9554, 2087.024)",
+					"reason": "occupied"
+				},
+				"nav": true,
+				"next": "(960.0, 2166.0)",
+				"ok": false,
+				"position": "(828.1939, 2297.995)",
+				"seconds": 12.5,
+				"stuck": true,
+				"ticks": 750,
+				"waypoint_index": 21,
+				"waypoints": 27
+			}
+		},
+		"event": "walk_replan",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 22,
+		"minute": 45,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"attempt": 2,
+			"destination": "traetoppen",
+			"route": {
+				"area_changed": false,
+				"collider": "Ground",
+				"dist_left": 532.743408203125,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1088.0, 2242.0)",
+					"position": "(1008.669, 2194.89)",
+					"reason": "occupied"
+				},
+				"nav": true,
+				"next": "(1152.0, 2280.0)",
+				"ok": false,
+				"position": "(922.4238, 2054.046)",
+				"seconds": 6.5,
+				"stuck": true,
+				"ticks": 390,
+				"waypoint_index": 11,
+				"waypoints": 14
+			}
+		},
+		"event": "walk_replan",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 22,
+		"minute": 59,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_hyggebyen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 5,
+		"player_state": 0
+	},
+	{
+		"area": "hyggebyen",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"destination": "traetoppen",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "from_hyggebyen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 5,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.99186992645264,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1216.0, 2318.0)",
+					"position": "(1210.526, 2314.75)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1216.0, 2318.0)",
+				"ok": true,
+				"position": "(1213.884, 2316.744)",
+				"seconds": 2.41666666666667,
+				"stuck": false,
+				"ticks": 145,
+				"waypoint_index": 8,
+				"waypoints": 9
+			}
+		},
+		"event": "travel_traetoppen",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 6,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"actor_level": "f",
+			"approach": "(4096.0, 988.0)",
+			"route": {
+				"dist_left": 4470.02294921875,
+				"nav": true,
+				"ok": false,
+				"seconds": 0.0,
+				"stuck": false,
+				"ticks": 0,
+				"waypoints": 0
+			},
+			"target": "(4164.0, 930.0)"
+		},
+		"event": "approach_failed",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 6,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"actor_level": "f",
+			"approach": "(4224.0, 988.0)",
+			"route": {
+				"dist_left": 4551.4638671875,
+				"nav": true,
+				"ok": false,
+				"seconds": 0.0,
+				"stuck": false,
+				"ticks": 0,
+				"waypoints": 0
+			},
+			"target": "(4164.0, 930.0)"
+		},
+		"event": "approach_failed",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 6,
+		"player_state": 0
+	},
+	{
+		"area": "traetoppen",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven",
+			"hearts": 12,
+			"player_state": 1,
+			"spawn": "from_traetoppen"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 56,
+		"player_state": 1
+	},
+	{
+		"area": "moerkeskoven",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {},
+		"event": "rode_forest_lift",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f5",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "rune"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f6",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f5",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f6",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 4560.04638671875,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(5904.0, 2100.0)",
+					"position": "(5901.219, 2098.384)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(6000.0, 2156.0)",
+				"ok": true,
+				"position": "(1488.0, 2548.0)",
+				"seconds": 23.9166666666667,
+				"stuck": false,
+				"ticks": 1435,
+				"waypoint_index": 60,
+				"waypoints": 62
+			}
+		},
+		"event": "travel_moerkeskoven_f6",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"floor": 6,
+			"hearts": 12,
+			"weapon": "wpn_spear_thistle",
+			"world_seed": "623894952310093262"
+		},
+		"event": "floor_entered",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 268.792053222656,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1776.0, 1092.0)",
+					"position": "(1776.305, 1095.398)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1872.0, 1036.0)",
+				"ok": true,
+				"position": "(1830.229, 1058.771)",
+				"seconds": 10.2333333333333,
+				"stuck": false,
+				"ticks": 614,
+				"waypoint_index": 27,
+				"waypoints": 30
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "mosfroe",
+			"seconds": 0.0833333333339397,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 167.697509765625,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(2640.0, 1204.0)",
+					"position": "(2636.393, 1204.048)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(2736.0, 1204.0)",
+				"ok": true,
+				"position": "(2693.393, 1204.048)",
+				"seconds": 2.95,
+				"stuck": false,
+				"ticks": 177,
+				"waypoint_index": 9,
+				"waypoints": 12
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "tornebusk",
+			"seconds": 1.06666666666661,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 168.663314819336,
+				"interactions": 0,
+				"last_advance": {},
+				"nav": true,
+				"next": "(2928.0, 1148.0)",
+				"ok": true,
+				"position": "(2935.713, 1103.961)",
+				"seconds": 0.6,
+				"stuck": false,
+				"ticks": 36,
+				"waypoint_index": 1,
+				"waypoints": 4
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "tornebusk",
+			"seconds": 0.566666666666606,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 263.306762695312,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(3024.0, 1316.0)",
+					"position": "(3018.009, 1313.936)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(3120.0, 1372.0)",
+				"ok": true,
+				"position": "(3117.408, 1370.515)",
+				"seconds": 0.883333333333333,
+				"stuck": false,
+				"ticks": 53,
+				"waypoint_index": 2,
+				"waypoints": 7
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "ugleoje",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 276.503631591797,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(3120.0, 1428.0)",
+					"position": "(3120.421, 1423.365)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(3120.0, 1484.0)",
+				"ok": true,
+				"position": "(3120.421, 1431.826)",
+				"seconds": 0.516666666666667,
+				"stuck": false,
+				"ticks": 31,
+				"waypoint_index": 2,
+				"waypoints": 6
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "mosfroe",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 167.208251953125,
+				"interactions": 0,
+				"last_advance": {},
+				"nav": true,
+				"next": "(3120.0, 1540.0)",
+				"ok": true,
+				"position": "(3054.214, 1504.727)",
+				"seconds": 0.0833333333333333,
+				"stuck": false,
+				"ticks": 5,
+				"waypoint_index": 1,
+				"waypoints": 4
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 11,
+			"kind": "tornebusk",
+			"seconds": 0.566666666666606,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 11,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 280.476013183594,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(5616.0, 1092.0)",
+					"position": "(5611.4, 1091.929)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(5712.0, 1092.0)",
+				"ok": true,
+				"position": "(5639.9, 1091.929)",
+				"seconds": 10.9,
+				"stuck": false,
+				"ticks": 654,
+				"waypoint_index": 31,
+				"waypoints": 35
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "ugleoje",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 271.128540039062,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(6192.0, 1932.0)",
+					"position": "(6187.281, 1929.252)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(6288.0, 1988.0)",
+				"ok": true,
+				"position": "(6214.391, 1945.064)",
+				"seconds": 5.83333333333333,
+				"stuck": false,
+				"ticks": 350,
+				"waypoint_index": 15,
+				"waypoints": 19
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 166.383346557617,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(6384.0, 2212.0)",
+					"position": "(6384.195, 2208.288)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(6384.0, 2268.0)",
+				"ok": true,
+				"position": "(6384.195, 2225.21)",
+				"seconds": 2.05,
+				"stuck": false,
+				"ticks": 123,
+				"waypoint_index": 6,
+				"waypoints": 9
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "tornebusk",
+			"seconds": 0.566666666666606,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 165.599899291992,
+				"interactions": 0,
+				"last_advance": {},
+				"nav": true,
+				"next": "(6288.0, 2324.0)",
+				"ok": true,
+				"position": "(6309.114, 2310.484)",
+				"seconds": 0.566666666666667,
+				"stuck": false,
+				"ticks": 34,
+				"waypoint_index": 1,
+				"waypoints": 4
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "tornebusk",
+			"seconds": 0.566666666666606,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 169.800659179688,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(6288.0, 2380.0)",
+					"position": "(6285.619, 2376.374)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(6192.0, 2436.0)",
+				"ok": true,
+				"position": "(6220.831, 2421.45)",
+				"seconds": 0.85,
+				"stuck": false,
+				"ticks": 51,
+				"waypoint_index": 2,
+				"waypoints": 5
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "tornebusk",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 269.989624023438,
+				"interactions": 0,
+				"last_advance": {},
+				"nav": true,
+				"next": "(6096.0, 2380.0)",
+				"ok": true,
+				"position": "(6316.533, 2269.408)",
+				"seconds": 2.03333333333333,
+				"stuck": false,
+				"ticks": 122,
+				"waypoint_index": 1,
+				"waypoints": 4
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f7",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f6",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"destination": "moerkeskoven_f7",
+			"hearts": 12,
+			"player_state": 0,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"route": {
+				"area_changed": true,
+				"collider": "",
+				"dist_left": 4626.052734375,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(5808.0, 868.0)",
+					"position": "(5808.144, 870.8222)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(5808.0, 868.0)",
+				"ok": true,
+				"position": "(1584.0, 1988.0)",
+				"seconds": 9.76666666666667,
+				"stuck": false,
+				"ticks": 586,
+				"waypoint_index": 27,
+				"waypoints": 28
+			}
+		},
+		"event": "travel_moerkeskoven_f7",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"floor": 7,
+			"hearts": 12,
+			"weapon": "wpn_spear_thistle",
+			"world_seed": "623894952310093262"
+		},
+		"event": "floor_entered",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 280.803283691406,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1392.0, 1204.0)",
+					"position": "(1392.099, 1208.368)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1392.0, 1148.0)",
+				"ok": true,
+				"position": "(1392.099, 1202.727)",
+				"seconds": 6.86666666666667,
+				"stuck": false,
+				"ticks": 412,
+				"waypoint_index": 20,
+				"waypoints": 24
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 21.8345165252686,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(1296.0, 1036.0)",
+					"position": "(1293.804, 1031.778)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(1315.098, 1028.911)",
+				"ok": true,
+				"position": "(1293.804, 1031.778)",
+				"seconds": 9.3,
+				"stuck": false,
+				"ticks": 558,
+				"waypoint_index": 4,
+				"waypoints": 5
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "bat"
+		},
+		"event": "target_resolved_while_walking",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "bat",
+			"seconds": 0.0833333333339397,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 269.1669921875,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(2544.0, 1932.0)",
+					"position": "(2539.083, 1932.056)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(2640.0, 1932.0)",
+				"ok": true,
+				"position": "(2562.833, 1932.056)",
+				"seconds": 8.85,
+				"stuck": false,
+				"ticks": 531,
+				"waypoint_index": 23,
+				"waypoints": 27
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 198.292739868164,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(2928.0, 1932.0)",
+					"position": "(2921.788, 1932.056)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(3024.0, 1932.0)",
+				"ok": true,
+				"position": "(2936.038, 1932.056)",
+				"seconds": 0.366666666666667,
+				"stuck": false,
+				"ticks": 22,
+				"waypoint_index": 2,
+				"waypoints": 5
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "bat",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "sporesvamp",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 165.557708740234,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(4272.0, 2716.0)",
+					"position": "(4271.848, 2713.844)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(4176.0, 2772.0)",
+				"ok": true,
+				"position": "(4198.955, 2759.631)",
+				"seconds": 18.45,
+				"stuck": false,
+				"ticks": 1107,
+				"waypoint_index": 50,
+				"waypoints": 53
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "sporesvamp",
+			"seconds": 0.683333333333394,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "sporesvamp",
+			"seconds": 0.966666666667152,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 350.534790039062,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(5328.0, 1764.0)",
+					"position": "(5323.199, 1763.945)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(5424.0, 1764.0)",
+				"ok": true,
+				"position": "(5177.326, 1863.829)",
+				"seconds": 11.0,
+				"stuck": false,
+				"ticks": 660,
+				"waypoint_index": 26,
+				"waypoints": 29
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "ugleoje",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 166.677764892578,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(5904.0, 1988.0)",
+					"position": "(5896.072, 1988.065)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(6000.0, 1988.0)",
+				"ok": true,
+				"position": "(5929.322, 1988.065)",
+				"seconds": 3.08333333333333,
+				"stuck": false,
+				"ticks": 185,
+				"waypoint_index": 8,
+				"waypoints": 11
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "tornebusk",
+			"seconds": 0.566666666666606,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 10,
+			"kind": "tornebusk",
+			"seconds": 0.33333333333303,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 10,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "sporesvamp",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 168.124526977539,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(6480.0, 1988.0)",
+					"position": "(6475.375, 1988.047)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(6576.0, 1988.0)",
+				"ok": true,
+				"position": "(6503.875, 1988.047)",
+				"seconds": 0.716666666666667,
+				"stuck": false,
+				"ticks": 43,
+				"waypoint_index": 3,
+				"waypoints": 6
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "sporesvamp",
+			"seconds": 0.566666666666606,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 274.633575439453,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(4464.0, 812.0)",
+					"position": "(4463.867, 815.5246)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(4464.0, 756.0)",
+				"ok": true,
+				"position": "(4463.867, 807.0637)",
+				"seconds": 12.5333333333333,
+				"stuck": false,
+				"ticks": 752,
+				"waypoint_index": 33,
+				"waypoints": 37
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "ugleoje",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 259.820983886719,
+				"interactions": 0,
+				"last_advance": {
+					"level": "",
+					"point": "(4272.0, 868.0)",
+					"position": "(4267.899, 870.371)",
+					"reason": "reached"
+				},
+				"nav": true,
+				"next": "(4368.0, 812.0)",
+				"ok": true,
+				"position": "(4271.289, 868.3948)",
+				"seconds": 0.916666666666667,
+				"stuck": false,
+				"ticks": 55,
+				"waypoint_index": 3,
+				"waypoints": 6
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"hearts": 12,
+			"kind": "ugleoje",
+			"seconds": 0.0833333333330302,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 4
+	},
+	{
+		"area": "moerkeskoven_f7",
+		"chapter": "s05",
+		"day": 12,
+		"detail": {
+			"detail": "[{ \"text_key\": \"FM_RECORD\", \"action\": \"mother_record\" }, { \"text_key\": \"REL_TALK_GOODBYE\", \"action\": \"close\" }]"
+		},
+		"event": "FAILED_dialogue_action_name_iva",
+		"garden_step": 12,
+		"gold": 352,
+		"hearts": 12,
+		"hour": 23,
+		"minute": 57,
+		"player_state": 0
+	}
+]
