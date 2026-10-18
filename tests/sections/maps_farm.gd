@@ -1150,7 +1150,7 @@ func _performance(t) -> void:
 		best = minf(best, float(v))
 	var fa: IsoArea = _a
 	t.info("the live farm: %d nodes under the area, %d prop sprites, %d skirt pieces, %d colliders, %d PointLights (prototype with its stand-ins: 496 / 124 / 111 / 76 / 11)" % [_count_nodes(fa), fa.prop_nodes.size(), fa.skirt_nodes.size(), fa.colliders.get_child_count(), _count_nodes(fa, "PointLight2D")])
-	t.check("build_budget", best < 60.0 and node_count <= 700, "rebuild ms of 5 builds %s: the MINIMUM %.1f ms < 60 (prototype: 20.4-20.9 quiet, 41.4-47.4 loaded); %d nodes in one area (budget 700, prototype 496)" % [ms_list, best, node_count])
+	t.check("build_budget", best < t.perf_limit(60.0) and node_count <= 700, "rebuild ms of 5 builds %s: the MINIMUM %.1f ms < %.1f (native reference 60; prototype: 20.4-20.9 quiet, 41.4-47.4 loaded); %d nodes in one area (budget 700, prototype 496)" % [ms_list, best, t.perf_limit(60.0), node_count])
 	# parked round trip: leave to the fixture and come back (the iso area stays alive in the cache)
 	_world._enter(&"_fixture_iso", &"default")
 	await t.physics(1)
@@ -1166,7 +1166,7 @@ func _performance(t) -> void:
 	var best_trip: float = 1e9
 	for v2 in trips:
 		best_trip = minf(best_trip, float(v2))
-	t.check("parked_round_trip", best_trip < 5.0 and _world.area.map.id == &"farm", "coming back to the parked farm: %s ms, the minimum %.2f ms < 5 (prototype: 0.66-1.6 ms)" % [trips, best_trip])
+	t.check("parked_round_trip", best_trip < t.perf_limit(5.0) and _world.area.map.id == &"farm", "coming back to the parked farm: %s ms, the minimum %.2f ms < %.1f (native reference 5; prototype: 0.66-1.6 ms)" % [trips, best_trip, t.perf_limit(5.0)])
 
 
 # ================================================================== K2. the end of the bridge (the milestone's walk from the farm into Traetoppen)

@@ -14,8 +14,10 @@ run at fixed 60 Hz physics without real-time pacing; their game-time limits,
 all 180 boss duels and 100-fight/100-ambush samples remain asserted. Other
 sections retain normal pacing. Lua 5.4 checks live data independently, and
 Xvfb/Mesa supplies software rendering for the art probes. Shared CI CPUs use
-a maximum 2x allowance for enemy-logic, warm-room and social lookup/selection computation timings;
-reports show the measured values and limits. Native reference limits, game-time
+a maximum 3x allowance for enemy-logic, room and cached social/routine computation timings;
+CI logs show the measured values and limits. The full UI-audit time limit
+scales with its screen registry (10 seconds for fixtures plus 3 per screen),
+including its intentional focus/localization frame waits. Native reference limits, game-time
 assertions, geometry counts and correctness checks stay unchanged. Each export
 runner tests the update installer and boots the actual packaged executable.
 Raw Lua, CSV, JSON and map data are included explicitly. Development exports

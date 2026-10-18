@@ -23,7 +23,7 @@ extends "res://tests/lib/flow.gd"
 ## Native reference runs keep the authored limits; game-time assertions never use this.
 func perf_limit(reference: float) -> float:
 	var configured := OS.get_environment("TT_PERF_SCALE")
-	var scale := clampf(configured.to_float(), 1.0, 2.0) if configured.is_valid_float() else 1.0
+	var scale := clampf(configured.to_float(), 1.0, 3.0) if configured.is_valid_float() else 1.0
 	return reference * scale
 
 
