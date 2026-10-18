@@ -6,8 +6,8 @@
 # otherwise commit ~28 junk binaries (plan R.4). Every CSV ships a keep-import instead.
 *.translation
 !legacy/**/*.translation
-export_presets.cfg
 export.cfg
+.godot-bin/
 
 # Feature tooling (addendum 4.4 / RV-P11)
 # flock file of tools/features/add_autoload.py (exception E1, repo root)

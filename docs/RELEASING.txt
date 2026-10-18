@@ -1,0 +1,91 @@
+Trætoppen desktop releases
+=========================
+
+Repository: https://github.com/magudb/PongPong
+Engine: Godot 4.7.2, pinned with SHA-256 checksums in tools/ci/godot.json.
+
+CI
+--
+Pushes to main and pull requests run the strict headless playtest for animal,
+fairy, hobbit and ghost, plus native Windows and macOS export jobs. Each hero
+suite is split into four parallel groups; coverage checks ensure every section
+runs exactly once for each hero. Each export
+runner tests the update installer and boots the actual packaged executable.
+Raw Lua, CSV, JSON and map data are included explicitly. Development exports
+use version 0.0.0 and do not perform automatic network update checks.
+
+Production
+----------
+Push a canonical vX.Y.Z tag, for example:
+
+  git tag -a v0.1.0 -m "Trætoppen v0.1.0"
+  git push origin v0.1.0
+
+The tag's version is injected into the game and native application metadata.
+Tags with suffixes, leading zeroes or additional components are rejected.
+Production release waits for all four character gates and both native export
+and smoke checks. The GitHub release is then created with both ZIPs together,
+their JSON build records and SHA256SUMS. Failed checks never publish a release.
+
+Packages:
+  Traetoppen-vX.Y.Z-windows.zip: portable x86_64 Traetoppen/ folder.
+  Traetoppen-vX.Y.Z-macos.zip: universal Intel/Apple Silicon Traetoppen.app.
+
+Windows: extract the whole Traetoppen folder, then run Traetoppen.exe.
+macOS: extract Traetoppen.app, then move it to a writable installation location.
+Keep saves in the normal user-data folder; the updater never replaces it.
+
+macOS signing
+-------------
+Without signing secrets, the Godot export has an ad-hoc signature. For normal
+downloaded-app distribution through Gatekeeper, configure all these repository
+Actions secrets before tagging:
+
+  MACOS_CERTIFICATE_P12       Base64 Developer ID Application .p12 certificate
+  MACOS_CERTIFICATE_PASSWORD  Password for that .p12
+  MACOS_SIGNING_IDENTITY      Developer ID Application certificate common name
+  APPLE_ID                   Apple account used for notarization
+  APPLE_APP_PASSWORD         App-specific notarization password
+  APPLE_TEAM_ID              Apple Developer team ID
+
+The macOS job imports a temporary keychain, signs with hardened runtime,
+submits to notarytool, staples the accepted ticket and removes the keychain.
+Secrets never enter the project, artifacts or source. A partially configured
+certificate setup fails the build instead of claiming a notarized release.
+
+Godot's platform instructions:
+https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_macos.html
+https://docs.godotengine.org/en/stable/tutorials/export/running_on_macos.html
+
+Updates
+-------
+Stable installed builds check the public GitHub latest-release API once per
+session from the title. A newer version appears as a title-menu action.
+Settings > Updates provides an explicit check and download/install action.
+Drafts, prereleases, downgrades, wrong-platform assets, untrusted asset URLs,
+missing SHA-256 digests and oversized packages are ignored.
+
+After confirmation, the game downloads to user://updates and verifies GitHub's
+asset digest. The install helper independently rechecks the archive, validates
+and stages it, then signals that the running game may exit. A playing session
+must autosave successfully first. The helper waits for the process to exit,
+swaps only the installed game folder/bundle, and relaunches it. A failed swap
+or launch restores the previous installation. Failed preparation leaves the
+running game open. Cancellation removes a partial download. Read-only and
+unexpected install locations are refused; move/extract the release to a
+writable normal installation folder before updating.
+
+Public release checks use no embedded token. Private repositories would need
+a separate public update feed or an authenticated distribution service.
+
+Local checks
+------------
+  python3 -m unittest discover -s tools/release/tests -v
+  python3 tools/loc/csv_lint.py --strict --quiet
+  actionlint .github/workflows/*.yml
+  tests/run_playtest.sh --strict --only=release_updates,menus,area_map
+  python3 tools/ci/install_godot.py --templates
+  python3 tools/release/release.py build --platform macos --version 0.1.0 --production --smoke
+
+Use --platform windows on Windows for its native smoke run. macOS can also
+cross-export the Windows ZIP without --smoke. Full public CI gates all releases.

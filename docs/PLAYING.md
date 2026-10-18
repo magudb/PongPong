@@ -2,6 +2,8 @@
 
 Open `project.godot` with Godot 4.7 and run the main scene. Start a new game or load a slot from the title screen. Character selection offers eight heroes across animal, fairy, hobbit and ghost families. Danish is the primary language; English is available in settings.
 
+Released Windows and macOS builds can be downloaded from GitHub Releases. Extract the Windows folder or macOS app before launching. A newer production release appears on the title menu, and Settings → Updates lets you check manually. Confirming an update downloads and verifies it, saves a running game and restarts with the new build. Saves stay in the existing user-data folder.
+
 ## Controls and equipment
 
 | Action | Keyboard / mouse |
@@ -16,11 +18,14 @@ Open `project.godot` with Godot 4.7 and run the main scene. Start a new game or 
 | Fairy light | Q |
 | Drink a healing supply | R |
 | Inventory | I or Tab |
+| Area map, exits and nearby people | M, or Pause → Map |
 | Clothing and loadout | G |
 | Farm buildings, field expansion and house upgrades | B, while on the farm |
 | Journal | J |
 | Hotbar slots | 1–8 |
 | Pause / close current panel | Escape |
+
+Press M, or choose Map in the pause menu, to see the current area, your blue diamond, named entrances and nearby people. Select a name with the mouse, arrow keys or controller to highlight its numbered marker. The map follows the farm's current deck, the towns' paths and bridges, and each interior's floor. In the dungeon it shows the ground you have explored. M, Escape or controller B closes it and resumes play.
 
 The clothing screen has separate outfit and hands/loadout views. Select an owned piece, preview it, then apply it to equip it. Tools, weapons and lantern gems use their own equipment slots. Weapon cards show damage, attack speed, damage per second, effects and recommended floors; lantern-gem cards show their actual modifiers. The same details appear when browsing shop stock. Equipment and clothing persist with the save. The character's hands and HUD identify the selected tool on the farm and the equipped weapon in adventure areas; an action keeps showing the item actually being used until it finishes.
 

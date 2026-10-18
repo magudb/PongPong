@@ -56,6 +56,8 @@ var notes: Array[String] = []             # data problems met while building (th
 var contains_calls: int = 0
 
 var _by_id: Dictionary = {}
+# Connected mouths per level: avoid scanning every bridge for every moving actor.
+var _draw_joins: Dictionary = {}
 var _scan: Array[Level] = []              # bridges first (priority 1), then platforms
 var _grid: Dictionary = {}                # Vector2i cell (GRID_CELL px) -> the levels whose bounding box touches it, in scan order
 
@@ -173,6 +175,16 @@ func _build(d: Dictionary) -> void:
 				"centre": Vector2(LuaData.num(c[0]), LuaData.num(c[1])) * scale if c.size() >= 2 else Vector2.ZERO,
 				"r": LuaData.num(c[2]) * scale if c.size() >= 3 else 0.0,
 			})
+	_draw_joins.clear()
+	for lv in levels:
+		_draw_joins[lv] = []
+	for bridge in bridges:
+		for end in 2:
+			var platform := get_level(bridge.from_id if end == 0 else bridge.to_id)
+			if platform == null: continue
+			var join := {"bridge": bridge, "platform": platform, "end": end}
+			_draw_joins[bridge].append(join)
+			_draw_joins[platform].append(join)
 	# 4. finalise: bounding boxes, scan order
 	for lv in levels:
 		lv.finalize()
@@ -494,17 +506,15 @@ func level_at(pos: Vector2) -> Level:
 func draw_rank(pos: Vector2, level: Level) -> int:
 	var rank := level.rank
 	const CLEARANCE := 176.0
-	for bridge in bridges:
-		if level != bridge and level.id != bridge.from_id and level.id != bridge.to_id:
-			continue
-		for end in 2:
-			var platform := get_level(bridge.from_id if end == 0 else bridge.to_id)
-			if level != bridge and level != platform: continue
-			var mouth: Vector2 = bridge.gate_path[0 if end == 0 else bridge.gate_path.size()-1]
-			var inside: Vector2 = bridge.path[0 if end == 0 else bridge.path.size()-1]
-			var closest := Geometry2D.get_closest_point_to_segment(pos, mouth, inside)
-			if pos.distance_squared_to(closest) <= CLEARANCE * CLEARANCE:
-				rank = maxi(rank, maxi(platform.rank, bridge.rank))
+	for join: Dictionary in _draw_joins.get(level, []):
+		var bridge: Level = join.bridge
+		var platform: Level = join.platform
+		var end: int = join.end
+		var mouth: Vector2 = bridge.gate_path[0 if end == 0 else bridge.gate_path.size()-1]
+		var inside: Vector2 = bridge.path[0 if end == 0 else bridge.path.size()-1]
+		var closest := Geometry2D.get_closest_point_to_segment(pos, mouth, inside)
+		if pos.distance_squared_to(closest) <= CLEARANCE * CLEARANCE:
+			rank = maxi(rank, maxi(platform.rank, bridge.rank))
 	return rank
 
 

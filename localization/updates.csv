@@ -1,0 +1,21 @@
+keys,da,en
+UPDATE_TITLE,Opdateringer,Updates
+UPDATE_CHECK,Søg efter opdateringer,Check for updates
+UPDATE_VERSION,Installeret version: %s,Installed version: %s
+UPDATE_INSTALL,Hent og opdater,Download and update
+UPDATE_AVAILABLE,Ny version: %s,New version: %s
+UPDATE_CONFIRM_TITLE,Opdater spillet,Update the game
+UPDATE_CONFIRM,Spillet gemmes og genstartes med version %s. Vil du fortsætte?,The game will save and restart with version %s. Continue?
+UPDATE_INSTALLED_ONLY,Automatisk installation virker i den udpakkede Windows-udgave eller macOS-appen.,Automatic installation is available in the extracted Windows release or macOS app.
+UPDATE_STATE_IDLE,Du kan søge efter en nyere udgave her.,You can check for a newer version here.
+UPDATE_STATE_CHECKING,Søger efter en nyere udgave…,Checking for a newer version…
+UPDATE_STATE_CURRENT,Der er ingen nyere udgave at hente.,There is no newer release to download.
+UPDATE_STATE_AVAILABLE,Version %s er klar til at blive hentet.,Version %s is ready to download.
+UPDATE_STATE_READY,Version %s er hentet og kontrolleret.,Version %s has been downloaded and verified.
+UPDATE_STATE_DOWNLOADING,Henter opdateringen…,Downloading the update…
+UPDATE_STATE_INSTALLING,Opdaterer spillet. Det starter igen om lidt.,Updating the game. It will restart shortly.
+UPDATE_STATE_UNAVAILABLE,Kunne ikke søge efter opdateringer. Prøv igen senere.,Could not check for updates. Try again later.
+UPDATE_STATE_UNSUPPORTED,Automatiske opdateringer findes til Windows og macOS.,Automatic updates are available for Windows and macOS.
+UPDATE_STATE_DOWNLOAD_FAILED,Opdateringen kunne ikke hentes eller kontrolleres. Din nuværende udgave er bevaret.,The update could not be downloaded or verified. Your current version is unchanged.
+UPDATE_STATE_INSTALL_FAILED,Kunne ikke starte installationen. Pak spillet ud i en mappe du kan skrive i og prøv igen.,Could not start installation. Extract the game into a writable folder and try again.
+UPDATE_STATE_SAVE_FAILED,Spillet kunne ikke gemmes. Opdateringen er sat på pause.,The game could not be saved. The update has been stopped.

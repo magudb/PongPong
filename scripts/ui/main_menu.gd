@@ -2,6 +2,7 @@ extends Control
 ## Title owns scene navigation; modal screens own their stack entries and focus return.
 var _rows: Array = []
 var _last_row: Control
+var _updates_button: Button
 
 func _ready() -> void:
 	GameManager.pop_all_modals()
@@ -16,6 +17,16 @@ func _ready() -> void:
 	%SettingsButton.pressed.connect(func(): _remember(%SettingsButton); EventBus.ui_panel_toggled.emit(&"settings", true))
 	%QuitButton.pressed.connect(func(): GameManager.quit_game())
 	%LanguageButton.pressed.connect(_on_language)
+	_updates_button = Button.new()
+	_updates_button.name = "UpdatesButton"
+	_updates_button.theme_type_variation = &"MenuRow"
+	_updates_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	%QuitButton.get_parent().add_child(_updates_button)
+	%QuitButton.get_parent().move_child(_updates_button, %QuitButton.get_index())
+	_updates_button.pressed.connect(_open_updates)
+	var updates := ReleaseUpdates.inst()
+	updates.changed.connect(_refresh_labels)
+	updates.check(true)
 	for id in ["save_load_ui", "settings_ui"]:
 		var screen: Node = load("res://scenes/ui/" + id + ".tscn").instantiate()
 		add_child(screen)
@@ -30,6 +41,10 @@ func _ready() -> void:
 	await get_tree().process_frame
 	if UiNav.is_stop(focus):
 		focus.grab_focus()
+	# Release templates disable --script overrides; the explicit headless probe
+	# starts after the real title has finished its normal startup.
+	if DisplayServer.get_name() == "headless" and "--release-smoke" in OS.get_cmdline_user_args():
+		get_tree().root.add_child.call_deferred(load("res://scripts/release/export_smoke.gd").new())
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
@@ -49,6 +64,9 @@ func _refresh_labels() -> void:
 	var latest: int = SaveManager.get_latest_slot()
 	%ContinueInfo.text = tr("MENU_CONTINUE_DAY") % int(SaveManager.get_save_summary(latest).get("total_day", 1)) if latest >= 0 else ""
 	_rows = [%ContinueButton, %LoadButton, %NewGameButton, %SettingsButton, %QuitButton]
+	_updates_button.visible = ReleaseUpdates.inst().state in ["available", "ready"]
+	_updates_button.text = tr("UPDATE_AVAILABLE") % str(ReleaseUpdates.inst().available.get("version", ""))
+	if _updates_button.visible: _rows.insert(_rows.size() - 1, _updates_button)
 	UiNav.wire_ring(_rows)
 	UiNav.wire_row([%LanguageButton])
 	UiNav.hover_focus(_rows + [%LanguageButton])
@@ -89,6 +107,13 @@ func _on_continue() -> void:
 
 func _on_language() -> void:
 	LocalizationManager.set_locale("en" if LocalizationManager.is_da() else "da")
+
+func _open_updates() -> void:
+	var screen := get_node_or_null("Updates")
+	if screen == null:
+		screen = load("res://scenes/ui/update_panel.tscn").instantiate()
+		add_child(screen)
+	screen.open(_updates_button)
 
 static func fixture_guide(node: Node, _host: Node) -> void:
 	var button := node.get_node("%ContinueButton") as Button

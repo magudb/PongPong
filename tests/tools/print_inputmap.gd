@@ -61,12 +61,12 @@ func _initialize() -> void:
 		print("  %-10s -> %s" % [sig, ", ".join(shared[sig])])
 
 	var errors: Array = Contract.verify()
-	var base_count: int = Contract.ACTIONS.size() - Contract.ADDENDUM.size() - Contract.TOWN.size()
+	var base_count: int = Contract.ACTIONS.size() - Contract.ADDENDUM.size() - Contract.TOWN.size() - Contract.HOTBAR.size() - Contract.NAVIGATION.size()
 	if errors.is_empty():
 		print("P01 INPUTMAP OK: ui_accept takes joy A, ui_cancel takes joy B, the D-pad walks focus; no event is modifier-, location- or device-qualified")
 		print("P01 INPUTMAP OK: ui_page_up takes PageUp + LB (joy 9), ui_page_down takes PageDown + RB (joy 10); RB still triggers drink and rotate_item")
-		print("P01 INPUTMAP OK: %d actions = %d (PLAN 3.2) + %d (addendum 3.3: %s) + %d (towns addendum: %s); no unintended clash" % [
-			Contract.ACTIONS.size(), base_count, Contract.ADDENDUM.size(), ", ".join(Contract.ADDENDUM), Contract.TOWN.size(), ", ".join(Contract.TOWN)])
+		print("P01 INPUTMAP OK: %d actions = %d (PLAN 3.2) + %d (addendum 3.3: %s) + %d (towns addendum: %s) + %d hotbar + %d map; no unintended clash" % [
+			Contract.ACTIONS.size(), base_count, Contract.ADDENDUM.size(), ", ".join(Contract.ADDENDUM), Contract.TOWN.size(), ", ".join(Contract.TOWN), Contract.HOTBAR.size(), Contract.NAVIGATION.size()])
 		quit(0)
 		return
 	for e: String in errors:

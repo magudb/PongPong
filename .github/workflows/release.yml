@@ -1,0 +1,76 @@
+name: Production release
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.metadata.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Require a strict vX.Y.Z production tag
+        id: metadata
+        run: python3 tools/release/release.py metadata
+
+  tests:
+    needs: version
+    uses: ./.github/workflows/playtest.yml
+
+  builds:
+    needs: version
+    uses: ./.github/workflows/build.yml
+    with:
+      version: ${{ needs.version.outputs.version }}
+      production: true
+    secrets: inherit
+
+  publish:
+    needs: [version, tests, builds]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: release-*-v${{ needs.version.outputs.version }}
+          path: dist
+          merge-multiple: true
+      - name: Publish both platforms together after every check passes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          test -f "dist/Traetoppen-${RELEASE_TAG}-windows.zip"
+          test -f "dist/Traetoppen-${RELEASE_TAG}-macos.zip"
+          cd dist
+          sha256sum --check ./*.sha256
+          cat ./*.sha256 > SHA256SUMS
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          mac = json.loads(Path(f'Traetoppen-{os.environ["RELEASE_TAG"]}-macos.zip.json').read_text())
+          notes = [
+              "Download the ZIP for your platform from Assets below.",
+              "",
+              "- **Windows x86_64:** extract the whole Traetoppen folder and run Traetoppen.exe.",
+              "- **macOS Intel / Apple Silicon:** extract Traetoppen.app and move it to a writable installation folder.",
+              "- **Updates:** Settings → Updates downloads and installs newer releases after confirmation. Saves are preserved.",
+              "",
+          ]
+          if not mac["signed_and_notarized"]:
+              notes += ["The macOS build is ad-hoc signed and **not notarized**. See the [macOS installation guidance](https://docs.godotengine.org/en/stable/tutorials/export/running_on_macos.html) if macOS blocks its first launch.", ""]
+          Path("RELEASE_NOTES.txt").write_text("\n".join(notes), encoding="utf-8")
+          PY
+          gh release create "$RELEASE_TAG" ./*.zip ./*.json SHA256SUMS --verify-tag --latest --generate-notes --notes-file RELEASE_NOTES.txt --title "Trætoppen $RELEASE_TAG"

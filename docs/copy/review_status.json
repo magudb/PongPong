@@ -1238,5 +1238,19 @@
     "date": "",
     "voice_frozen": false,
     "rows": 22
+  },
+  "localization/map.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 6
+  },
+  "localization/updates.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 20
   }
 }
