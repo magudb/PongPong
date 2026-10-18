@@ -13,7 +13,9 @@ extends RefCounted
 ## towns.hours_enabled = false (once T-towns-core and the P12 helper ShopHoursGate exist, the shop's own hours would answer first: flea_market's building loppeloftet is open 10-16 only).
 ## The Hours rule on the 26 hour day is proven by towns_data.hours_after_midnight / hours_weekday_is_the_game_day (CK-A-TC), never here.
 const SECTION := "clock26"
-const TIMEOUT_S := 240.0
+# Calendar edge cases emit hundreds of real day signals before the frame-based checks.
+# Fresh CI machines need room for those synchronous game-system listeners.
+const TIMEOUT_S := 900.0
 const Fmt = preload("res://scripts/ui/theme/tt_format.gd")
 
 var t

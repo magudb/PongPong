@@ -41,6 +41,10 @@ func _ready() -> void:
 	await get_tree().process_frame
 	if UiNav.is_stop(focus):
 		focus.grab_focus()
+	# Release templates disable --script overrides; the explicit headless probe
+	# starts after the real title has finished its normal startup.
+	if DisplayServer.get_name() == "headless" and "--release-smoke" in OS.get_cmdline_user_args():
+		get_tree().root.add_child.call_deferred(load("res://scripts/release/export_smoke.gd").new())
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():

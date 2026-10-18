@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import os
+import plistlib
 from pathlib import Path
 import re
 import shutil
@@ -41,7 +42,7 @@ def run(command, **options):
     subprocess.run([str(x) for x in command], check=True, **options)
 
 
-def prepare(stage, version, repository, production):
+def prepare(stage, version, repository, production, platform_name=None):
     validate_version(version)
     if not REPOSITORY.fullmatch(repository):
         raise ValueError("Invalid GitHub owner/repository")
@@ -55,6 +56,8 @@ def prepare(stage, version, repository, production):
     project = project.replace('config/version="0.0.0"', f'config/version="{version}"')
     project = project.replace('repository="magudb/PongPong"', f'repository="{repository}"')
     project = project.replace('channel="development"', 'channel="stable"' if production else 'channel="development"')
+    if platform_name == "macos":
+        project = project.replace("[rendering]", "[rendering]\ntextures/vram_compression/import_etc2_astc=true")
     (stage / "project.godot").write_text(project)
     presets = (stage / "export_presets.cfg").read_text().replace('"0.0.0.0"', f'"{version}.0"').replace('"0.0.0"', f'"{version}"')
     (stage / "export_presets.cfg").write_text(presets)
@@ -99,7 +102,7 @@ def build(args):
         work = Path(temporary)
         stage = work / "project"
         stage.mkdir()
-        prepare(stage, args.version, args.repository, args.production)
+        prepare(stage, args.version, args.repository, args.production, args.platform)
         run([godot, "--headless", "--path", stage, "--import"])
         # A second scan resolves late-bound class names on fresh machines.
         run([godot, "--headless", "--path", stage, "--import"])
@@ -112,7 +115,14 @@ def build(args):
         run([godot, "--headless", "--path", stage, "--export-release", "Windows" if args.platform == "windows" else "macOS", executable])
         signed = sign_macos(product, work) if args.platform == "macos" and os.sys.platform == "darwin" else False
         if args.smoke:
-            binary = executable if args.platform == "windows" else product / "Contents/MacOS/Traetoppen"
+            if args.platform == "windows":
+                binary = executable
+            else:
+                with (product / "Contents/Info.plist").open("rb") as plist:
+                    binary_name = plistlib.load(plist)["CFBundleExecutable"]
+                if not isinstance(binary_name, str) or Path(binary_name).name != binary_name:
+                    raise ValueError("Invalid macOS bundle executable")
+                binary = product / "Contents/MacOS" / binary_name
             smoke_report = work / "smoke.json"
             # Keep exported smoke saves/settings separate from the runner's account.
             profile = work / "profile"
@@ -121,7 +131,12 @@ def build(args):
             environment["HOME"] = str(profile)
             environment["USERPROFILE"] = str(profile)
             environment["APPDATA"] = str(profile / "AppData/Roaming")
-            run([binary, "--headless", "--script", "res://scripts/release/export_smoke.gd", "--", "--report=" + str(smoke_report)], env=environment, timeout=120)
+            result = subprocess.run([str(binary), "--headless", "--", "--release-smoke", "--report=" + str(smoke_report)], env=environment, cwd=product.parent, timeout=120, capture_output=True, text=True, encoding="utf-8", errors="replace")
+            print(result.stdout, flush=True)
+            print(result.stderr, flush=True)
+            result.check_returncode()
+            if re.search(r"^(?:SCRIPT ERROR|ERROR|WARNING):", result.stdout + "\n" + result.stderr, re.MULTILINE):
+                raise ValueError("Exported game emitted engine errors or warnings")
             smoke = json.loads(smoke_report.read_text()) if smoke_report.exists() else {}
             if smoke.get("result") != "pass" or smoke.get("version") != args.version or smoke.get("channel") != ("stable" if args.production else "development"):
                 raise ValueError("Exported-game smoke check did not pass")

@@ -93,12 +93,12 @@ class InstallerTests(unittest.TestCase):
         target = self.root / "Traetoppen.app"
         replacement = self.root / "incoming/Traetoppen.app"
         for bundle, version in ((target, "0.1.0"), (replacement, "0.2.0")):
-            executable = bundle / "Contents/MacOS/Traetoppen"
+            executable = bundle / "Contents/MacOS/Trætoppen"
             executable.parent.mkdir(parents=True)
             shutil.copyfile("/usr/bin/true", executable)
             executable.chmod(0o755)
             with (bundle / "Contents/Info.plist").open("wb") as file:
-                plistlib.dump({"CFBundleIdentifier": "io.github.magudb.traetoppen", "CFBundleExecutable": "Traetoppen", "CFBundlePackageType": "APPL", "CFBundleShortVersionString": version}, file)
+                plistlib.dump({"CFBundleIdentifier": "io.github.magudb.traetoppen", "CFBundleExecutable": "Trætoppen", "CFBundlePackageType": "APPL", "CFBundleShortVersionString": version}, file)
             subprocess.run(["codesign", "--force", "--sign", "-", str(bundle)], check=True, capture_output=True)
         archive = self.root / "update.zip"
         subprocess.run(["ditto", "-c", "-k", "--keepParent", str(replacement), str(archive)], check=True)

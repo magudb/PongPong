@@ -15,9 +15,12 @@ static func inst() -> ReleaseUpdates:
 	var tree := Engine.get_main_loop() as SceneTree
 	var found := tree.root.get_node_or_null("ReleaseUpdates") as ReleaseUpdates
 	if found != null: return found
+	var pending := tree.root.get_meta("tt_release_updates") as ReleaseUpdates if tree.root.has_meta("tt_release_updates") else null
+	if is_instance_valid(pending): return pending
 	var service := ReleaseUpdates.new()
 	service.name = "ReleaseUpdates"
-	tree.root.add_child(service)
+	tree.root.set_meta("tt_release_updates", service)
+	tree.root.add_child.call_deferred(service)
 	return service
 
 static func current_version() -> String:
@@ -45,6 +48,9 @@ func _set_state(value: String) -> void:
 	changed.emit()
 
 func check(automatic := false) -> void:
+	if not is_node_ready():
+		check.call_deferred(automatic)
+		return
 	if state in ["checking", "downloading", "installing"]: return
 	if automatic and (checked or not production()): return
 	if platform_name().is_empty():
@@ -108,8 +114,8 @@ func progress() -> float:
 func install_target() -> String:
 	var executable := OS.get_executable_path()
 	if platform_name() == "macos":
-		var suffix := "/Traetoppen.app/Contents/MacOS/Traetoppen"
-		return executable.trim_suffix("/Contents/MacOS/Traetoppen") if executable.ends_with(suffix) else ""
+		var folder := executable.get_base_dir()
+		return folder.trim_suffix("/Contents/MacOS") if folder.ends_with("/Traetoppen.app/Contents/MacOS") else ""
 	if platform_name() == "windows" and executable.get_file() == "Traetoppen.exe" and executable.get_base_dir().get_file() == "Traetoppen":
 		return executable.get_base_dir()
 	return ""

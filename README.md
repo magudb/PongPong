@@ -223,7 +223,8 @@ The game uses painted 2D characters and environments. Current implementation and
 - [x] Area map on M and in the pause menu
 - [ ] Human playtesting of onboarding, balance, all ten earned home tiers and social routes
 - [ ] Native-speaker copy review and listening review; most voice lines remain synthetic placeholders
-- [ ] Packaged releases, exported-build checks and low-end hardware testing
+- [x] Windows/macOS release pipeline, exported-build checks and confirmed updates
+- [ ] Low-end hardware, controller and long-session testing
 - [ ] Optional collection screen and fishing
 
 Children and multiplayer/co-op remain later scope. Some earlier design documents retain historical milestone deferrals; they are not a current list of missing mechanics.

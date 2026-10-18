@@ -31,7 +31,7 @@ finish() {
 trap finish EXIT
 /usr/bin/ditto -x -k "$archive" "$stage"
 replacement="$stage/Traetoppen.app"
-[[ -x "$replacement/Contents/MacOS/Traetoppen" ]]
+[[ -x "$replacement/Contents/MacOS/Trætoppen" ]]
 [[ -z "$(/usr/bin/find "$replacement" -type l -print -quit)" ]]
 [[ "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$replacement/Contents/Info.plist")" == io.github.magudb.traetoppen ]]
 /usr/bin/codesign --verify --deep --strict "$replacement"
