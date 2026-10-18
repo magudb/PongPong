@@ -1,0 +1,18 @@
+{
+  "screens": [
+    {
+      "id": "area_map",
+      "title": "Områdekort",
+      "kind": "modal",
+      "scene": "res://scenes/ui/map_ui.tscn",
+      "package": "Area navigation",
+      "guide": "docs/design/UI_NAVIGATION.md",
+      "focus": "initial",
+      "modal": "map",
+      "esc_depth": 1,
+      "checks": ["initial_focus", "focus_walk", "focusable_report", "rule_report", "i18n_flip", "escape_chain", "ring_pixels", "panel_pixels", "button_pixels"],
+      "open": {"driver": "res://tests/lib/ui_map_driver.gd"},
+      "options": {"button": "%MapClose"}
+    }
+  ]
+}

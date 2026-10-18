@@ -30,7 +30,7 @@ const GUIDE_SCREENS: Array[String] = ["title", "select", "hud", "shop", "quest",
 ## count anywhere). Wave 3 had 16 ids; RT7 (towns / social) added the five of RT7_IDS.
 const SCREEN_IDS: Array[StringName] = [
 	&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal",
-	&"people", &"gift_ui", &"post", &"shop_ui", &"animal_care_ui", &"build_menu_ui",
+	&"people", &"gift_ui", &"post", &"map_ui", &"shop_ui", &"animal_care_ui", &"build_menu_ui",
 	&"husbyggeri", &"indretning", &"home_chest", &"home_amenities", &"garderobe", &"samlerbog",
 	&"cheat_menu", &"pause_menu", &"save_load_ui", &"settings_ui",
 ]

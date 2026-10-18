@@ -45,6 +45,7 @@ const ACTIONS: Dictionary = {
 	"slot_9": {"keys": [KEY_9]},
 	"slot_10": {"keys": [KEY_0]},
 	"inventory": {"keys": [KEY_I, KEY_TAB]},
+	"map": {"keys": [KEY_M]},
 	"journal": {"keys": [KEY_J]},
 	"pause": {"keys": [KEY_ESCAPE], "joy": [JOY_BUTTON_START]},
 	"build_menu": {"keys": [KEY_B]},
@@ -68,9 +69,10 @@ const ACTIONS: Dictionary = {
 ## The five actions the feature addendum adds on top of PLAN 3.2.
 const ADDENDUM: Array = ["decorate", "wardrobe", "collection", "rotate_item", "pickup_item"]
 
-## One town action and two named N04 hotbar actions: 30 + 5 + 1 + 2 = 38.
+## One town action, two named N04 hotbar actions and the area map: 30 + 5 + 1 + 2 + 1 = 39.
 const TOWN: Array = ["people"]
 const HOTBAR: Array = ["hotbar_previous", "hotbar_next"]
+const NAVIGATION: Array = ["map"]
 
 ## The `ui_*` overrides that give a pad the paging keys (UI_NAVIGATION.md F10): the tab / page
 ## actions of every screen (`ui_page_up` = LB, `ui_page_down` = RB).
@@ -85,8 +87,8 @@ const ANY_DEVICE: int = -1
 ## ui_up/down/left/right but NOT joy A on ui_accept, joy B on ui_cancel nor LB / RB on
 ## ui_page_up / ui_page_down (probed), so a pad could not activate, cancel or page a focused
 ## screen. Every override is the engine default plus the pad button: "logical" = LOGICAL keycodes,
-## exactly like the engine's own defaults (PageUp / PageDown stay on the page actions). 38 contract
-## actions + these four overrides = 42 project actions.
+## exactly like the engine's own defaults (PageUp / PageDown stay on the page actions). 39 contract
+## actions + these four overrides = 43 project actions, plus the separate cheat action.
 const UI_OVERRIDES: Dictionary = {
 	"ui_accept": {"logical": [KEY_ENTER, KEY_KP_ENTER, KEY_SPACE], "joy": [JOY_BUTTON_A]},
 	"ui_cancel": {"logical": [KEY_ESCAPE], "joy": [JOY_BUTTON_B]},

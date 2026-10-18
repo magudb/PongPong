@@ -12,7 +12,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	super._ready()
-	# Keep the title's menu face, font and gold focus while fitting all thirteen pause actions.
+	# Keep the title's menu face, font and gold focus while fitting the pause actions.
 	var compact := theme.duplicate() as Theme
 	for state in ["normal", "hover", "pressed", "hover_pressed", "disabled", "focus"]:
 		var box := theme.get_stylebox(state, "MenuRow").duplicate() as StyleBox
@@ -38,7 +38,7 @@ func _screen(id: StringName) -> Node:
 func _specs() -> Array:
 	var rows: Array = [["ResumeButton", "UI_RESUME", close]]
 	var world := get_tree().get_first_node_in_group("world_2d")
-	for spec in [["inventory_ui", "InventoryButton", "INV_TITLE"], ["quest_journal", "JournalButton", "QJ_TITLE"], ["people", "PeopleButton", "PAUSE_PEOPLE"], ["build_menu_ui", "BuildButton", "PAUSE_BUILD"], ["garderobe", "WardrobeButton", "PAUSE_WARDROBE"], ["samlerbog", "CollectionButton", "PAUSE_COLLECTION"]]:
+	for spec in [["inventory_ui", "InventoryButton", "INV_TITLE"], ["map_ui", "MapButton", "MAP_TITLE"], ["quest_journal", "JournalButton", "QJ_TITLE"], ["people", "PeopleButton", "PAUSE_PEOPLE"], ["build_menu_ui", "BuildButton", "PAUSE_BUILD"], ["garderobe", "WardrobeButton", "PAUSE_WARDROBE"], ["samlerbog", "CollectionButton", "PAUSE_COLLECTION"]]:
 		if _screen(StringName(spec[0])) == null:
 			continue
 		if spec[0] == "build_menu_ui" and (world == null or world.get("area").map.id != &"farm"):

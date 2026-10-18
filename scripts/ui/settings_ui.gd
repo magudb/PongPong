@@ -6,6 +6,7 @@ const SIZES := [Vector2i(1280, 720), Vector2i(1600, 900), Vector2i(1920, 1080)]
 const BUSES := ["Master", "Music", "Sfx", "Voice"]
 var _applying := false
 var forest_help_button: Button
+var updates_button: Button
 
 func _init() -> void:
 	super._init()
@@ -30,10 +31,23 @@ func _ready() -> void:
 		var chip: Button = get_node("%%Size%d" % index)
 		chip.pressed.connect(func(): _size_changed(index))
 	%HintBar.set_hints([{"action": &"ui_left", "key": "HINT_CHANGE"}, {"action": &"ui_cancel", "key": "HINT_BACK"}])
-	forest_help_button = preload("res://scripts/ui/social/social_layout.gd").button(%CloseButton.get_parent(),"ASSIST_TITLE","ButtonSecondaryS")
-	forest_help_button.get_parent().move_child(forest_help_button,%CloseButton.get_index())
+	var footer := HBoxContainer.new()
+	footer.add_theme_constant_override("separation", 12)
+	%CloseButton.get_parent().add_child(footer)
+	%CloseButton.reparent(footer)
+	forest_help_button = preload("res://scripts/ui/social/social_layout.gd").button(footer,"ASSIST_TITLE","ButtonSecondaryS")
 	forest_help_button.pressed.connect(_open_forest_help)
+	updates_button = preload("res://scripts/ui/social/social_layout.gd").button(footer,"UPDATE_TITLE","ButtonSecondaryS")
+	updates_button.pressed.connect(_open_updates)
+	footer.move_child(%CloseButton, footer.get_child_count() - 1)
 	_refresh_texts()
+
+func _open_updates() -> void:
+	var screen := get_node_or_null("Updates")
+	if screen == null:
+		screen = load("res://scenes/ui/update_panel.tscn").instantiate()
+		add_child(screen)
+	screen.open(updates_button)
 
 func _open_forest_help() -> void:
 	var screen := get_node_or_null("ForestHelp")
@@ -138,8 +152,11 @@ func _update_sizes() -> void:
 		rows.append([get_node("%" + bus + "Slider")])
 	rows.append([%FullscreenCheck])
 	rows.append(sizes)
-	if forest_help_button != null and forest_help_button.visible: rows.append([forest_help_button])
-	rows.append([%CloseButton])
+	var footer: Array = []
+	if forest_help_button != null and forest_help_button.visible: footer.append(forest_help_button)
+	if updates_button != null: footer.append(updates_button)
+	footer.append(%CloseButton)
+	rows.append(footer)
 	for row in rows:
 		UiNav.wire_row(row)
 	# Enter a radio row at its selected chip; keyboard history must not change the route.

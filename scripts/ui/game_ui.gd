@@ -23,7 +23,7 @@ signal mode_changed(new_mode: StringName)
 signal screen_loaded(screen_id: StringName, screen: Node)
 
 const SCENE_DIR := "res://scenes/ui/"
-## Back to front (21 ids; only the ones whose scene exists are instanced, so an id is inert until its package lands).
+## Back to front; only existing scenes are instanced, so an id is inert until its package lands.
 ##  * The home screens of the feature addendum (husbyggeri, indretning, home_chest, garderobe, samlerbog) are modals of the same
 ##    rank as the backpack: above the shops, below the pause menu and everything it opens.
 ##  * The towns / social screens (RT7): `social_hud` (festival ribbon, birthday chips) sits right behind the HUDs; `event_overlay`
@@ -33,7 +33,7 @@ const SCENE_DIR := "res://scenes/ui/"
 ## order[1] == forest_hud, order[-3] == pause_menu, order[-1] == settings_ui.
 const SCREEN_ORDER: Array[StringName] = [
 	&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal",
-	&"people", &"gift_ui", &"post", &"shop_ui", &"animal_care_ui", &"build_menu_ui",
+	&"people", &"gift_ui", &"post", &"map_ui", &"shop_ui", &"animal_care_ui", &"build_menu_ui",
 	&"husbyggeri", &"indretning", &"home_chest", &"home_amenities", &"garderobe", &"samlerbog",
 	&"cheat_menu", &"pause_menu", &"save_load_ui", &"settings_ui",
 ]

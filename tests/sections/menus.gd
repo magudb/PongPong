@@ -289,7 +289,7 @@ func run_windowed(t) -> void:
 	await t.frames(5)
 	var panel: Control = pause.get_node("Panel")
 	var names: Array = pause._rows.map(func(row):return str(row.name))
-	t.check("full_game_pause_has_core_actions_and_test_menu",["ResumeButton","InventoryButton","JournalButton","PeopleButton","BuildButton","WardrobeButton","CheatButton","SaveButton","LoadButton","SettingsButton","QuitButton","QuitGameButton"].all(func(id):return id in names) and pause._rows.size() in [12,13],str(names))
+	t.check("full_game_pause_has_core_actions_and_test_menu",["ResumeButton","InventoryButton","MapButton","JournalButton","PeopleButton","BuildButton","WardrobeButton","CheatButton","SaveButton","LoadButton","SettingsButton","QuitButton","QuitGameButton"].all(func(id):return id in names) and pause._rows.size() in [13,14],str(names))
 	t.check("full_game_pause_panel_fits",pause.get_global_rect().encloses(panel.get_global_rect()))
 	pause._rows[-1].grab_focus()
 	await t.frames(3)
@@ -340,7 +340,7 @@ func _all_pause_rows(t, pause: TTScreen, game_ui: GameUI) -> void:
 	pause.open()
 	await t.frames(3)
 	var rect: Rect2 = pause.get_node("Panel").get_global_rect()
-	t.check("all_thirteen_pause_rows_fit_720", pause._rows.size() == 13 and rect.position.y >= 0 and rect.end.y <= 720, str(rect))
+	t.check("all_pause_rows_fit_720", pause._rows.size() == 14 and rect.position.y >= 0 and rect.end.y <= 720, str(rect))
 	game_ui._screens = originals
 	for stub in stubs:
 		stub.free()

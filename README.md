@@ -6,6 +6,8 @@ A Stardew Valley-inspired 2D isometric farming and adventure game in **Godot 4.7
 
 See [Playing the game](docs/PLAYING.md) for current controls, clothing/loadout, homes, towns and the garden/forest journey. Validation and milestone evidence are tracked in [mechanics progress](docs/qa/mechanics/PROGRESS.md).
 
+Windows and universal macOS builds are published to [GitHub Releases](https://github.com/magudb/PongPong/releases) when a `vX.Y.Z` tag passes CI. Installed production builds check for new releases; **Settings → Updates** downloads, verifies and installs an update after confirmation. See [release and signing setup](docs/RELEASING.txt).
+
 ---
 
 ## 🌿 Koncept / Concept
@@ -212,19 +214,19 @@ Voice-lines placeres i `assets/audio/voice/<npc>/<line>.ogg`.
 
 ## 📅 Roadmap
 
-- [x] Kernearkitektur & autoloads
-- [x] Karaktervalg (dyr / fe / hobbit)
-- [x] Farm-system med afgrøder
-- [x] Lua quest- & dialog-system
-- [x] Økonomi & butikker
-- [x] Mørk skov-mining
-- [x] Dansk lokalisering
-- [ ] 3D-modeller & animationer (chibi)
-- [ ] Pathfinding & NPC-bevægelse
-- [ ] Fuld voice-over
-- [ ] Save-slot UI
-- [ ] Sæson-events & festivaler
-- [ ] Multiplayer (co-op)
+The game uses painted 2D characters and environments. Current implementation and verification are recorded in [MECHANICS_STATUS.json](docs/MECHANICS_STATUS.json), the [playing guide](docs/PLAYING.md), and the [fresh-save journey acceptance](docs/qa/journey/README.md).
+
+- [x] Eight heroes, farming, animals, processing, sprinklers and greenhouse
+- [x] Towns, scheduled citizens, shops, quests, friendships, relationships and festivals
+- [x] Ten home tiers, furniture, wardrobe, inventory and save/load menus
+- [x] Twelve dungeon floors, combat, bosses and the mother's story through its return-home ending
+- [x] Area map on M and in the pause menu
+- [ ] Human playtesting of onboarding, balance, all ten earned home tiers and social routes
+- [ ] Native-speaker copy review and listening review; most voice lines remain synthetic placeholders
+- [ ] Packaged releases, exported-build checks and low-end hardware testing
+- [ ] Optional collection screen and fishing
+
+Children and multiplayer/co-op remain later scope. Some earlier design documents retain historical milestone deferrals; they are not a current list of missing mechanics.
 
 ---
 
