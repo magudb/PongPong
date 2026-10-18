@@ -20,6 +20,11 @@ scales with its screen registry (10 seconds for fixtures plus 3 per screen),
 including its intentional focus/localization frame waits. Native reference limits, game-time
 assertions, geometry counts and correctness checks stay unchanged. Each export
 runner tests the update installer and boots the actual packaged executable.
+Windows then installs the NSIS setup EXE, checks its Start menu shortcut and
+Apps & Features entry, applies a ZIP update, boots the installed game, and
+uninstalls it while retaining a non-installer file. macOS verifies and mounts
+the DMG, copies its app as a player would, checks both native architectures,
+applies a ZIP update and boots the installed app. All test installs are temporary.
 Raw Lua, CSV, JSON and map data are included explicitly. Development exports
 use version 0.0.0 and do not perform automatic network update checks.
 
@@ -33,16 +38,31 @@ Push a canonical vX.Y.Z tag, for example:
 The tag's version is injected into the game and native application metadata.
 Tags with suffixes, leading zeroes or additional components are rejected.
 Production release waits for all four character gates and both native export
-and smoke checks. The GitHub release is then created with both ZIPs together,
-their JSON build records and SHA256SUMS. Failed checks never publish a release.
+and smoke checks. The GitHub release is created with the Windows setup EXE,
+macOS DMG and both update ZIPs together, their JSON build records and
+SHA256SUMS. Failed checks never publish a release. The existing v0.1.0 assets
+remain unchanged; the next production tag adds the native installers.
 
 Packages:
+  Traetoppen-vX.Y.Z-windows-setup.exe: per-user Windows installation wizard.
+  Traetoppen-vX.Y.Z-macos.dmg: universal app and Applications drag-install link.
   Traetoppen-vX.Y.Z-windows.zip: portable x86_64 Traetoppen/ folder.
   Traetoppen-vX.Y.Z-macos.zip: universal Intel/Apple Silicon Traetoppen.app.
 
-Windows: extract the whole Traetoppen folder, then run Traetoppen.exe.
-macOS: extract Traetoppen.app, then move it to a writable installation location.
-Keep saves in the normal user-data folder; the updater never replaces it.
+Windows: run Setup. The default location is %LOCALAPPDATA%\Programs\Traetoppen;
+no administrator account is required. Setup creates a Start menu shortcut and
+an Apps & Features uninstall entry. A desktop shortcut is optional. Custom
+locations must retain the Traetoppen folder name. Updates preserve Uninstall.exe
+and refresh the registered version. Uninstall removes game files and shortcuts;
+it leaves saves and files it did not install.
+
+macOS: open the DMG, drag Traetoppen.app to Applications, and eject the image.
+For a personal installation, copy the app into ~/Applications instead. Updating
+requires a writable installation folder. Move the app to the Trash to uninstall;
+saves stay in the normal user-data folder.
+
+ZIP files remain update payloads for both platforms and also support existing
+portable installations. No change to the release-feed format is required.
 
 macOS signing
 -------------
@@ -57,8 +77,10 @@ Actions secrets before tagging:
   APPLE_APP_PASSWORD         App-specific notarization password
   APPLE_TEAM_ID              Apple Developer team ID
 
-The macOS job imports a temporary keychain, signs with hardened runtime,
-submits to notarytool, staples the accepted ticket and removes the keychain.
+The macOS job imports a temporary keychain, signs the app with hardened runtime,
+notarizes and staples it, and packages its update ZIP. It then signs, notarizes
+and staples the DMG before removing the keychain. Both downloads therefore carry
+their own notarization tickets when credentials are configured.
 Secrets never enter the project, artifacts or source. A partially configured
 certificate setup fails the build instead of claiming a notarized release.
 
@@ -94,7 +116,10 @@ Local checks
   actionlint .github/workflows/*.yml
   tests/run_playtest.sh --strict --only=release_updates,menus,area_map
   python3 tools/ci/install_godot.py --templates
+  python3 tools/ci/install_nsis.py  # Windows only; pins NSIS 3.13 and SHA-256
   python3 tools/release/release.py build --platform macos --version 0.1.0 --production --smoke
 
-Use --platform windows on Windows for its native smoke run. macOS can also
-cross-export the Windows ZIP without --smoke. Full public CI gates all releases.
+Use --platform windows on Windows for its native install/update/uninstall smoke
+run. Cross-exporting Windows installers requires a native makensis compiler
+(for example, brew install makensis on macOS); omit --smoke when cross-building.
+Override the compiler with MAKENSIS or --makensis. Full public CI gates releases.

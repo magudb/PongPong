@@ -105,7 +105,7 @@ Trætoppen is in active development. Milestone *M1b, full usable towns* was merg
 
 ## Getting started
 
-**Play a release.** Windows and universal macOS builds are published on [GitHub Releases](https://github.com/magudb/PongPong/releases) when a `vX.Y.Z` tag passes CI. Installed production builds check for new releases; **Settings → Updates** downloads, verifies and installs an update after you confirm. See [docs/RELEASING.txt](docs/RELEASING.txt) for the release and signing setup.
+**Play a release.** Download the **Windows setup EXE** or the **macOS DMG** from [GitHub Releases](https://github.com/magudb/PongPong/releases). Windows Setup installs for your account and adds a Start menu shortcut and an uninstall entry; a desktop shortcut is optional. On macOS, open the DMG, drag Traetoppen.app to Applications, then eject the disk image. The Mac app supports Intel and Apple Silicon. New `vX.Y.Z` tags publish these installers after CI passes; the existing v0.1.0 release uses ZIPs. Installed production builds check for new releases; **Settings → Updates** downloads, verifies and installs an update after you confirm. ZIPs remain available as updater payloads. See [docs/RELEASING.txt](docs/RELEASING.txt) for the release and signing setup.
 
 **Run from source.**
 
@@ -162,7 +162,7 @@ python3 tools/loc/csv_lint.py --strict              # lint the localization CSVs
   - Outside `legacy/`, the project has 628 GDScript files and 67 scenes, with no GDExtensions or addons.
 - **CI.** On every push to `main`, every pull request and on manual dispatch:
   - [`playtest.yml`](.github/workflows/playtest.yml) downloads a checksum-pinned Godot 4.7.2, imports the project and runs the strict harness for each of the four races on Ubuntu, split into 4 shards per race.
-  - [`build.yml`](.github/workflows/build.yml) exports the game for Windows and universal macOS and smoke-tests the exported build.
+  - [`build.yml`](.github/workflows/build.yml) exports Windows and universal macOS builds, creates native installers, installs them and checks the real game, in-game update and Windows uninstallation.
   - [`release.yml`](.github/workflows/release.yml) publishes both platforms to GitHub Releases when a `vX.Y.Z` tag is pushed.
 
 See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for the full workflow.
