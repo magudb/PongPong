@@ -21,7 +21,8 @@ including its intentional focus/localization frame waits. Native reference limit
 assertions, geometry counts and correctness checks stay unchanged. Each export
 runner tests the update installer and boots the actual packaged executable.
 Windows then installs the NSIS setup EXE, checks its Start menu shortcut and
-Apps & Features entry, applies a ZIP update, boots the installed game, and
+Apps & Features entry, applies a ZIP update from the game's working folder,
+checks that reinstalling remembers the selected location, boots the game, and
 uninstalls it while retaining a non-installer file. macOS verifies and mounts
 the DMG, copies its app as a player would, checks both native architectures,
 applies a ZIP update and boots the installed app. All test installs are temporary.

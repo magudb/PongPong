@@ -110,9 +110,14 @@ def smoke_windows(installer, archive, work, version, smoke_game):
         digest = sha256(archive)
         run(["powershell.exe", "-NoProfile", "-File", ROOT / "scripts/release/install_windows.ps1",
              "-ParentProcessId", "0", "-Archive", archive, "-Target", installed,
-             "-ExpectedSha", digest, "-Result", work / "installed-update.json", "-NoLaunch"])
+             "-ExpectedSha", digest, "-Result", work / "installed-update.json", "-NoLaunch"], cwd=installed)
         if uninstaller.read_bytes() != previous:
             raise ValueError("In-game update removed or changed the Windows uninstaller")
+        # Reinstall without /D: Setup must recover the registered custom location.
+        subprocess.run(subprocess.list2cmdline([str(installer), "/S"]), check=True, timeout=180)
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, UNINSTALL_KEY, 0, view) as key:
+            if winreg.QueryValueEx(key, "InstallLocation")[0] != str(installed):
+                raise ValueError("Windows Setup forgot the previous installation location")
         smoke_game(installed, work / "installed-smoke")
     finally:
         uninstaller = installed / "Uninstall.exe"

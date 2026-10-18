@@ -92,7 +92,7 @@ class InstallerTests(unittest.TestCase):
                 package.writestr(name, value)
         digest = hashlib.sha256(archive.read_bytes()).hexdigest()
         command = [self.powershell, "-NoProfile", "-File", str(ROOT / "scripts/release/install_windows.ps1"), "-ParentProcessId", "0", "-Archive", str(archive), "-Target", str(target), "-ExpectedSha", "0" * 64 if bad_hash else digest, "-Result", str(self.result), "-NoLaunch"]
-        result = subprocess.run(command, capture_output=True, text=True, timeout=30)
+        result = subprocess.run(command, cwd=target, capture_output=True, text=True, timeout=30)
         return result, target
 
     def test_windows_replaces_complete_package(self):

@@ -33,6 +33,11 @@ try {
     if (Test-Path -LiteralPath $uninstaller -PathType Leaf) {
         Copy-Item -LiteralPath $uninstaller -Destination (Join-Path $replacement 'Uninstall.exe')
     }
+    # Windows locks a process's working directory. Start menu launches inherit
+    # the game directory; leave it in both PowerShell and the OS before swapping.
+    $installationParent = Split-Path -Parent $Target
+    Set-Location -LiteralPath $installationParent
+    [Environment]::CurrentDirectory = $installationParent
     [IO.File]::WriteAllText($Result + '.ready', 'ready')
     for ($attempt = 0; $attempt -lt 120; $attempt++) {
         if ($ParentProcessId -eq 0 -or !(Get-Process -Id $ParentProcessId -ErrorAction SilentlyContinue)) { break }
