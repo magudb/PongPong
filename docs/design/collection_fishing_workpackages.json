@@ -1,0 +1,528 @@
+{
+ "v": 1,
+ "date": "2026-10-18",
+ "status": "proposed (awaiting COLLECTION_FISHING_OPEN_QUESTIONS.md Q1, Q2)",
+ "note": "Work packages of docs/design/COLLECTION_FISHING_ADDENDUM.md. One package per independently buildable unit. Fields per package: id, title, phase, wave, depends_on (hard), soft_depends_on, files (owned; disjoint across packages except sharedEdits), deliverables, tests, acceptance, estimate (dev-days, excluding art). Every package branches fresh from origin/main (43aa4e81, includes PR #1); the collection-fishing worktree (61cd5183) is 9 commits behind and is not built on. No package adds an input action, EventBus signal, SCREEN_ORDER id or FEATURE_ORDERS key. All tests run under tests/run_playtest.sh --strict.",
+ "waves": {
+  "A": "FI1-fish-data-rules, SB1-collection-log, SB2-rarity-slot-focus (independent, parallel)",
+  "B": "FI2-fishing-session, FI3-fish-uses (after FI1); SB3-samlerbog-ui (after SB1, SB2)",
+  "C": "CF1-fish-page-bridge (after FI1, FI2, SB1, SB3); CF2-docs (after the shipped packages)",
+  "owner-gated": "ART-FISH (after FI1 ids are frozen and the owner's go-ahead, Q2); ART-SB optional",
+  "P2": "FI-P2-quests-sizes, SB-P2-extras"
+ },
+ "shipAlone": {
+  "samlerbog": [
+   "SB1-collection-log",
+   "SB2-rarity-slot-focus",
+   "SB3-samlerbog-ui",
+   "CF2-docs (Samlerbog half)"
+  ],
+  "fishing": [
+   "FI1-fish-data-rules",
+   "FI2-fishing-session",
+   "FI3-fish-uses",
+   "ART-FISH or the Q2 exemption",
+   "CF2-docs (fishing half)"
+  ]
+ },
+ "sharedEdits": [
+  {
+   "file": "lua/config/audio.lua",
+   "edit": "append-only rows in audio_map.events (:16-21): FI3 adds fish_cast = \"bath_splash\"; SB1 adds collection_new = \"pickup_soft\", collection_stamp = \"stage_up\"",
+   "who": [
+    "FI3-fish-uses",
+    "SB1-collection-log"
+   ]
+  },
+  {
+   "file": "tools/loc/key_owners.json",
+   "edit": "FI1 adds the fishing.csv entry and removes the WHISPER_FISHING_CLOSED exact entry (:87); next to PR #1's map.csv / updates.csv entries on origin/main",
+   "who": [
+    "FI1-fish-data-rules"
+   ]
+  },
+  {
+   "file": "project.godot [autoload]",
+   "edit": "only via python3 tools/features/add_autoload.py CollectionLog, the last task of SB1",
+   "who": [
+    "SB1-collection-log"
+   ]
+  },
+  {
+   "file": "tests/sections/collection.gd",
+   "edit": "SB1 creates it; SB3 appends the screen / focus / windowed checks; CF1 appends the bridge checks",
+   "who": [
+    "SB1-collection-log",
+    "SB3-samlerbog-ui",
+    "CF1-fish-page-bridge"
+   ]
+  }
+ ],
+ "contracts": {
+  "fish_caught": "EventBus.game_event(&\"fish_caught\", {item: String, rarity: String, water: String (dam|byens_dam|maanesoe), night: bool}) emitted once per landed fish, always after a successful add_item; optional int cm from FI-P2. Producer FishingRules.record (FI1/FI2); consumer CollectionLog (SB1). Neither side references the other.",
+  "fish_category": "fish items have category = \"fish\"; fish_cakes is category food and is not a Samlerbog entry",
+  "fish_sources": "fish items carry no sources rows; lua/config/fishing.lua roster[id].waters + waters[w].name_key is the single source of where a fish lives (Samlerbog source line COLLECT_SRC_FISH_FMT)",
+  "collection_save": "section collection, order SaveManager.FEATURE_ORDERS[\"collection\"] (50), {v:1, discovered, new, stamps, fish:{id:{n,d,cm?}}, welcomed, orphans}",
+  "fishing_save": "GameManager world flags only (fish_day, fish_left_<water>, fish_byens_count, fish_moon_nights, fish_total, fish_got_<id>, fish_tutorial), one set_flags per catch"
+ },
+ "packages": [
+  {
+   "id": "FI1-fish-data-rules",
+   "title": "Fish data, roster config, recipe, copy and the pure FishingRules class",
+   "phase": "MVP",
+   "wave": "A",
+   "track": "fishing",
+   "depends_on": [],
+   "soft_depends_on": [
+    "ART-FISH (or the owner-approved coverage exemption, Q2) before merge"
+   ],
+   "files": [
+    "lua/items/fish.lua",
+    "lua/items/fish.lua.import",
+    "lua/config/fishing.lua",
+    "lua/config/fishing.lua.import",
+    "lua/recipes/fishing.lua",
+    "lua/recipes/fishing.lua.import",
+    "scripts/fishing/fishing_rules.gd",
+    "localization/fishing.csv",
+    "localization/fishing.csv.import",
+    "localization/farm.csv (retire WHISPER_FISHING_CLOSED, :8)",
+    "localization/economy.csv (ITEM_FISHING_ROD_DESC text, :22)",
+    "localization/look.csv (LOOK_MOONPOND_FISHING text, :3)",
+    "tools/loc/key_owners.json (shared edit)",
+    "tools/art/drawn/coverage.gd (only if Q2 = listed exemption)",
+    "tests/sections/fishing.gd (rules part)"
+   ],
+   "deliverables": [
+    "13 fish items (category fish; Gamle Gustav unique, Månefisken legendary, max_stack 1, sell 0) + fish_cakes (food, stamina 25, stamina_cost 0, sell 15), addendum 3.6 / 3.9",
+    "lua/config/fishing.lua: timings, areas -> water, 3 waters with per_day 8/6/6, rain_mult 2, full roster with seasons / night / rain / pity counters",
+    "recipe fish_cakes: fish_roach 2 + flour 1 -> 2, category bake (backpack Værksted)",
+    "FishingRules pure statics: water_for(area) (floor_of(area) > 0 -> maanesoe), faces_water(player), left_today(water) with lazy daily reset, eligible(water, season, night, rain), roll(rng, fits: Callable) honouring pity and keepsake flags, record(item, water, night) = one set_flags + game_event fish_caught",
+    "fishing.csv (~46 keys, da + en) created with tools/loc/new_csv.py; key_owners entry with prefixes FISH_, RECIPE_FISH_, QUEST_FISH_, OBJ_FISH_ and item_files lua/items/fish.lua",
+    "changed rod / Moon-pond copy; WHISPER_FISHING_CLOSED retired with its exact owner entry"
+   ],
+   "tests": [
+    "fishing.rules_every_water_every_season_has_two_normals",
+    "fishing.rules_roll_deterministic_seeded",
+    "fishing.rules_roll_only_fish_that_fit",
+    "fishing.rules_eel_moon_night_only",
+    "fishing.rules_goldfish_byens_dam_only",
+    "fishing.rules_rain_doubles_weight",
+    "fishing.pity_gustav_sure_at_25",
+    "fishing.pity_moon_sure_at_12_nights",
+    "fishing.keepsake_never_rolled_twice_even_when_in_chest",
+    "fishing.pool_counts_down_and_resets_next_day",
+    "fishing.old_save_without_flags_has_full_pools",
+    "fishing.fish_cakes_recipe_crafts",
+    "fishing.fish_cakes_cost_no_energy",
+    "fishing.config_roster_matches_items",
+    "fishing.loc_keys_da_en",
+    "fishing.owner_of_recipe_fish_cakes_is_fishing_csv",
+    "fishing.owner_of_fishing_rod_desc_is_economy_csv"
+   ],
+   "acceptance": [
+    "--strict --only=fishing green; loc, economy, economy_hours, forest_look green",
+    "write_import_stubs.py --check and tools/loc/csv_lint.py clean",
+    "strict art coverage green via painted icons or the listed exemption (Q2)",
+    "no edit to project.godot, event_bus.gd, save_manager.gd, seed_shop.lua"
+   ],
+   "estimate": "1.5 d"
+  },
+  {
+   "id": "FI2-fishing-session",
+   "title": "FishingSession2D and Player2D routing: cast, bite, self-hook, reel, cancel, prompt",
+   "phase": "MVP",
+   "wave": "B",
+   "track": "fishing",
+   "depends_on": [
+    "FI1-fish-data-rules"
+   ],
+   "soft_depends_on": [],
+   "files": [
+    "scripts/fishing/fishing_session_2d.gd",
+    "scripts/world2d/player_2d.gd",
+    "tests/sections/fishing.gd (session part, appended)"
+   ],
+   "deliverables": [
+    "FishingSession2D: CAST 0.5 s -> WAIT 1.5-4.0 s -> BITE window 1.5 s <-> NIBBLE 1.0-2.0 s -> self-hook on bite 2 -> REEL 0.6 s -> catch; code-drawn bobber, ripple and '!' bubble in the guide palette (no red, not TelegraphRing2D); outline-only ripple under assist_reduce_flash; bite splash via AudioManager.play_sfx(\"bath_splash\", -6)",
+    "Player2D: _unhandled_input routes interact / use_tool to _fishing.press() first (:194-198); holds _tool_time while _fishing is live (:241-245); any movement vector cancels (:255-274); FISH_PROMPT only when nothing is interactable (:318-322); E branch before the flying refusal (:324-329); rod branch replaces the stub (:341-343); stamina check before the cast; _using_item = fishing_rod so the rod is drawn in ortho areas; use_tool does not cast in ortho areas",
+    "refusal whispers before casting: FISH_LAND, FISH_POOL_EMPTY, UI_TIRED, FISH_BAG_FULL; cancel whisper FISH_REEL_IN on movement, modal_changed, area_changed, damaged",
+    "catch: add_item (its own toast), _spend_stamina(cost x race mult), FishingRules.record, tool_used, whisper FISH_LEFT_FMT / FISH_LAST_TODAY; first-cast tutorial whispers sequenced with FISH_STIR"
+   ],
+   "tests": [
+    "fishing.session_no_input_still_catches",
+    "fishing.session_press_in_window_catches_first_bite",
+    "fishing.early_press_harmless",
+    "fishing.press_routed_while_using",
+    "fishing.move_modal_travel_damage_cancel_without_cost",
+    "fishing.keyboard_only_e_fishes_without_rod_on_hotbar",
+    "fishing.fairy_flying_whispers_land",
+    "fishing.ghost_fishes_from_shore",
+    "fishing.npc_on_pier_keeps_talk_prompt",
+    "fishing.ortho_use_tool_still_swings_weapon_with_rod_owned",
+    "fishing.hub_bog_and_floor_pond_share_maanesoe_pool",
+    "fishing.tired_refuses_before_cast",
+    "fishing.bag_full_refuses_before_cast",
+    "fishing.not_facing_water_no_prompt",
+    "fishing.catch_emits_one_item_toast_item_gained_and_fish_caught",
+    "fishing.held_rod_drawn_while_fishing_in_ortho"
+   ],
+   "acceptance": [
+    "--strict --only=fishing green for all four hero races",
+    "full --strict run green (player, combat, ui_nav, hud, loot, forest_look, menus unchanged)",
+    "keyboard-only and gamepad-only catch at all three waters in a manual playtest",
+    "no focusable node added; no change to game_ui.gd, pause_menu.gd, ui_foundation.gd, project.godot"
+   ],
+   "estimate": "2.25 d"
+  },
+  {
+   "id": "FI3-fish-uses",
+   "title": "What fish are for: shipping bin, cat/fox feed, gift tastes, catch sounds",
+   "phase": "MVP",
+   "wave": "B",
+   "track": "fishing",
+   "depends_on": [
+    "FI1-fish-data-rules"
+   ],
+   "soft_depends_on": [],
+   "files": [
+    "lua/config/farm_site.lua (:28, add \"fish\")",
+    "lua/config/husbandry.lua (:73 cat, :148 fox feed_types += fish_roach)",
+    "scripts/farm/animal_husbandry.gd (:86, :161 fallback mirror)",
+    "lua/social/gift_tastes.lua (:84, :95, :98, :99, :100, :104)",
+    "lua/config/audio.lua (shared edit: fish_cast)",
+    "scripts/audio/audio_director.gd (_event case fish_caught)",
+    "tests/sections/fishing.gd (uses part, appended)"
+   ],
+   "deliverables": [
+    "shipping bin accepts category fish (keepsakes refused as unsellable)",
+    "cat and fox accept fish_roach; milk / cookie stay favourites; Lua and fallback table agree",
+    "gift rows: Pippin, Rasmus like category:fish; Bodil love fish_goldfish; Morfar Mis love fish_roach + like category:fish; Kvak like category:fish + love fish_cakes; penguin postman love fish_smelt",
+    "audio: fish_cast data row; fish_caught code case pickup_soft / loot_rare / loot_unique / loot_legendary, skipped when floor_of(area) > 0",
+    "no shop edit (the seed shop already buys every sellable item)"
+   ],
+   "tests": [
+    "fishing.bin_accepts_fish",
+    "fishing.seed_shop_buys_fish_unchanged",
+    "fishing.cat_fox_accept_fish_roach",
+    "fishing.no_double_rarity_sfx_on_floor"
+   ],
+   "acceptance": [
+    "--strict --only=fishing,economy_hours,mechanics_review_fixes,social green",
+    "the social gift validator accepts the new rows",
+    "seed shop still buys wood (economy_hours.gd:218)"
+   ],
+   "estimate": "0.75 d"
+  },
+  {
+   "id": "SB1-collection-log",
+   "title": "CollectionLog autoload, CollectionCatalog, samlerbog config and the collection save section",
+   "phase": "MVP",
+   "wave": "A",
+   "track": "samlerbog",
+   "depends_on": [],
+   "soft_depends_on": [],
+   "files": [
+    "lua/config/samlerbog.lua",
+    "lua/config/samlerbog.lua.import",
+    "scripts/collection/collection_catalog.gd",
+    "scripts/collection/collection_log.gd",
+    "lua/config/audio.lua (shared edit: collection_new, collection_stamp)",
+    "project.godot [autoload] (via add_autoload.py only, last task)",
+    "tests/sections/collection.gd (log part)"
+   ],
+   "deliverables": [
+    "config: 6 pages (furniture, clothing, jewellery, weapons, treasures, fish), stamps 25/50/100, stamp_gold 50/150/400, reward_pct 100, unknown_shows_source / unknown_shows_riddle knobs",
+    "CollectionCatalog (pure static): page -> ids (282 today; fish page hidden while empty), totals, rarity counts, source lines for all 12 kinds + COLLECT_SRC_UNKNOWN, fish source line from the fishing roster when present, set lookup",
+    "CollectionLog: section collection at FEATURE_ORDERS.collection; to_dict / from_dict / reset / validate_dict; discovered never reverts; orphans kept; stamp flags re-asserted on load",
+    "wiring: item_gained -> discover; game_event fish_caught -> fish[n, d, cm?]; pure idempotent reset(); from_dict top-up; load_completed old-save backfill (day 0) + welcome toast on first player_spawned; new_game_started -> _on_new_game -> deferred silent backfill",
+    "owned-now = ItemKinds.owned_total + HomeManager.chest_count; backfill also from LootService.found",
+    "toast queue: deferred flush, item-id icon for one discovery, merged COLLECT_TOAST_MANY_FMT for several, held in action mode until area_changed out of the forest",
+    "stamps: ready-toast once (keyboard glyph or pause-menu wording); claim() for the screen: add_gold, set_flags samlerbog_<page>_<n>, game_event collection_stamp",
+    "item_discovered(id, rarity, page_id) emitted once per id",
+    "python3 tools/features/add_autoload.py CollectionLog run last"
+   ],
+   "tests": [
+    "collection.page_counts",
+    "collection.every_entry_has_a_source_line",
+    "collection.every_entry_obtainable",
+    "collection.discover_once",
+    "collection.toast_merge",
+    "collection.toast_forest_deferred",
+    "collection.silent_starter_backfilled",
+    "collection.reset_is_pure",
+    "collection.chest_counts",
+    "collection.sell_keeps_found",
+    "collection.old_save_backfill",
+    "collection.persist_roundtrip",
+    "collection.orphans_kept",
+    "collection.stamps_claim (log level)",
+    "collection.fish_event (stub event)"
+   ],
+   "acceptance": [
+    "--strict --only=collection,ui_nav,hud,loot,save,core green (toast order in ui_nav.toast_stack_caps_and_rarity unchanged; save.feature_orders_* and core.signal_arity_lint unchanged)",
+    "check_project.gd accepts the CollectionLog autoload line",
+    "no push_error in from_dict / backfill; an unknown v rolls the load back"
+   ],
+   "estimate": "2 d"
+  },
+  {
+   "id": "SB2-rarity-slot-focus",
+   "title": "RaritySlot: gold double ring on a focused unknown (silhouette) tile",
+   "phase": "MVP",
+   "wave": "A",
+   "track": "samlerbog",
+   "depends_on": [],
+   "soft_depends_on": [],
+   "files": [
+    "scripts/ui/components/rarity_slot.gd",
+    "tests/sections/ui_foundation.gd (one check)"
+   ],
+   "deliverables": [
+    "plan(): an unknown tile with is_selected gets gold_ring and the gold / ink rings (today it returns before the selected branch, rarity_slot.gd:136-141); _draw draws them for the unknown state",
+    "'gold = focus' preserved (rarity_slot.gd:4-6)"
+   ],
+   "tests": [
+    "ui_foundation.unknown_selected_has_gold_ring"
+   ],
+   "acceptance": [
+    "--strict --only=ui_foundation,ui_nav,inventory green; existing asserts ui_foundation.gd:275-277,408,416 unchanged"
+   ],
+   "estimate": "0.25 d"
+  },
+  {
+   "id": "SB3-samlerbog-ui",
+   "title": "The Samlerbog screen (TTScreen, key C and the pause row), copy and UI audit",
+   "phase": "MVP",
+   "wave": "B",
+   "track": "samlerbog",
+   "depends_on": [
+    "SB1-collection-log",
+    "SB2-rarity-slot-focus"
+   ],
+   "soft_depends_on": [],
+   "files": [
+    "scripts/ui/samlerbog_ui.gd",
+    "scenes/ui/samlerbog.tscn",
+    "localization/samlerbog.csv",
+    "localization/samlerbog.csv.import",
+    "tests/lib/ui_screens.json (samlerbog row note only, optional)",
+    "tests/checkpoints/guide_ref_features/ui_samlerbog.png (first capture, after owner review, Q10)",
+    "tests/sections/collection.gd (screen part, appended)"
+   ],
+   "deliverables": [
+    "TTScreen with screen_id / modal_name samlerbog, hotkey_action collection, _hotkey_open_allowed requiring the player FREE, pauses_tree",
+    "layout per addendum 4.6: PanelParchmentL24 + scrim, Display34 title, keeper subtitle, I alt counts, CloseButton, PillTab page chips, MeterGreen bar, rarity counts, 3 stamp seals, 8-column FocusProxy grid of RaritySlot tiles (lazy per page), PanelDetail card, HintBar footer",
+    "focus: wire_grid(cells, 8) + wire_groups([chips, cells, [close]]); Left / Right on chips and PgUp / PgDn / LB / RB page; hover previews, click focuses; initial focus first Ny tile",
+    "inline welcome banner on first open; stamps claimed on open with a 0.4 s seal pop (static under assist_reduce_flash); Ny cleared on close for focused tiles",
+    "UiFixtures.register_setup for samlerbog and samlerbog_guide",
+    "samlerbog.csv (COLLECT_*, ~45 keys da + en) created with tools/loc/new_csv.py; same-text item names marked tt_text_same_ok"
+   ],
+   "tests": [
+    "collection.stamps_claim_on_open",
+    "collection.hotkey_gates",
+    "collection.screen_counts",
+    "collection.focus_map",
+    "collection windowed: UiAudit.audit_screen(t, \"samlerbog\") incl. ring_pixels on a focused unknown and a found tile, esc_depth 1, i18n flip"
+   ],
+   "acceptance": [
+    "--strict --only=collection,menus,loc,ui_audit,ui_foundation green; the registry row turns from SKIP to live",
+    "menus: farm pause menu shows 14 rows and fits 720 (origin/main:tests/sections/menus.gd)",
+    "full keyboard and gamepad walk of every page; Esc / B / C close; gold ring on every focused tile"
+   ],
+   "estimate": "2.25 d"
+  },
+  {
+   "id": "CF1-fish-page-bridge",
+   "title": "Fish page integration: real catches feed the Samlerbog",
+   "phase": "MVP",
+   "wave": "C",
+   "track": "bridge",
+   "depends_on": [
+    "FI1-fish-data-rules",
+    "FI2-fishing-session",
+    "SB1-collection-log",
+    "SB3-samlerbog-ui"
+   ],
+   "soft_depends_on": [
+    "ART-FISH"
+   ],
+   "files": [
+    "tests/sections/collection.gd (bridge part, appended; skipped when no fish items exist)"
+   ],
+   "deliverables": [
+    "verified contract: fish_caught {item, rarity, water, night} recorded; COLLECT_FISH_COUNT_FMT until sizes exist",
+    "Fisk page visible with 13 entries; source line from the roster's water names; Fisk stamps at 4 / 7 / 13"
+   ],
+   "tests": [
+    "collection.fish_page_shows_13_with_fishing",
+    "collection.real_catch_discovers_and_records",
+    "collection.fish_source_line_from_roster",
+    "collection.fish_stamp_25_needs_4"
+   ],
+   "acceptance": [
+    "--strict --only=collection,fishing green; full --strict run green"
+   ],
+   "estimate": "0.5 d"
+  },
+  {
+   "id": "CF2-docs",
+   "title": "Player docs, roadmap and superseded-decision notes",
+   "phase": "MVP",
+   "wave": "C",
+   "track": "docs",
+   "depends_on": [],
+   "soft_depends_on": [
+    "the shipped packages of the half being documented"
+   ],
+   "files": [
+    "README.md (roadmap line 228 on origin/main, split per Q9)",
+    "docs/PLAYING.md (Fiskeri section; C: Samlerbog)",
+    "docs/design/PLAN_2D.md (notes at :430, :694, :1297, :1695)",
+    "docs/design/DUNGEON_V2_ADDENDUM.md (notes at DX25 :783, CR23 :868)",
+    "docs/design/TOWNS_FARM_SOCIAL_ADDENDUM.md (notes at DT7 :971, DT38 :44, :1033)"
+   ],
+   "deliverables": [
+    "README roadmap ticked per shipped feature",
+    "PLAYING.md: how to fish (E facing water, no fail, daily pools, night / rain), the Samlerbog (C or pause row, stamps)",
+    "superseded notes pointing at COLLECTION_FISHING_ADDENDUM.md (only if Q1 = yes)"
+   ],
+   "tests": [
+    "docs only; full --strict run unaffected"
+   ],
+   "acceptance": [
+    "edited on origin/main (PR #1 changed README.md and PLAYING.md)"
+   ],
+   "estimate": "0.5 d"
+  },
+  {
+   "id": "ART-FISH",
+   "title": "Painted fish icon sheet (owner-gated, Codex style)",
+   "phase": "MVP (owner-gated)",
+   "wave": "owner-gated",
+   "track": "art",
+   "depends_on": [
+    "FI1-fish-data-rules"
+   ],
+   "soft_depends_on": [
+    "owner go-ahead (Q2)",
+    "coordination with the Codex restyle"
+   ],
+   "files": [
+    "tools/art/drawn/sources/icons_fish.png",
+    "tools/art/drawn/item_recipes.json (14 rows)",
+    "assets/icons/items/fish_*.webp (+ _night for the 2 keepsakes; packer output)",
+    "tools/art/drawn/coverage.gd (remove the temporary exemption, if any)"
+   ],
+   "deliverables": [
+    "one 4x4 painted sheet: 13 fish + fish cakes + 2 spare, imagegen per tools/art/drawn/README.md",
+    "pack.py --only=items, write_import_stubs.py; night rims generated for unique / legendary"
+   ],
+   "tests": [
+    "art_forest_mother.complete_effective_catalog (strict coverage)"
+   ],
+   "acceptance": [
+    "strict art coverage green with no fish exemption; owner approves the sheet"
+   ],
+   "estimate": "owner decides"
+  },
+  {
+   "id": "FI-P2-quests-sizes",
+   "title": "Fishing phase 2: Pippin's and Kvak's quests, fish sizes, Dyne scene",
+   "phase": "P2",
+   "wave": "P2",
+   "track": "fishing",
+   "depends_on": [
+    "FI2-fishing-session"
+   ],
+   "soft_depends_on": [
+    "CF1-fish-page-bridge (size record line)"
+   ],
+   "files": [
+    "lua/quests/fish_first_bobber.lua",
+    "lua/quests/fish_kvak_bill.lua",
+    "lua/events/ghostfam/ (Dyne Moon Fish scene, owner of that tree to confirm)",
+    "scripts/fishing/fishing_rules.gd (cm roll)"
+   ],
+   "deliverables": [
+    "quest Prik i proppen (Pippin, HØST, game_event fish_caught -> 60 g + 2 cookies, optionally gives the rod, Q4)",
+    "quest Kvaks fiskeregning (LÆR, pattern lua/quests/math_harvest_puzzle.lua)",
+    "optional int cm in fish_caught; Samlerbog switches to COLLECT_FISH_RECORD_FMT",
+    "Dyne scene gated on flag:fish_got_fish_moon&night&at:traetoppen.t_fire_e"
+   ],
+   "tests": [
+    "fishing.quest_first_bobber_completes",
+    "fishing.kvak_math_quest",
+    "collection.fish_record_keeps_max_cm"
+   ],
+   "acceptance": [
+    "--strict green; quest validator accepts both quests"
+   ],
+   "estimate": "2 d"
+  },
+  {
+   "id": "SB-P2-extras",
+   "title": "Samlerbog phase 2: Fru Ugle tip, shop badge, quest state query, set filter",
+   "phase": "P2",
+   "wave": "P2",
+   "track": "samlerbog",
+   "depends_on": [
+    "SB3-samlerbog-ui"
+   ],
+   "soft_depends_on": [],
+   "files": [
+    "lua/dialogue/appraiser_fru_ugle.lua (collect_tip)",
+    "scripts/ui/shop_ui.gd (Ny til din Samlerbog glyph)",
+    "scripts/collection/collection_log.gd (register_state_query samlerbog_found + refresh_objectives)"
+   ],
+   "deliverables": [
+    "daily tip pointing at one unknown entry",
+    "shop row glyph for items not yet in the book",
+    "quest state query samlerbog_found",
+    "Sæt filter chip"
+   ],
+   "tests": [
+    "collection.state_query_samlerbog_found",
+    "collection.shop_badge",
+    "collection.fru_ugle_tip_once_a_day"
+   ],
+   "acceptance": [
+    "--strict green; each part can be dropped independently"
+   ],
+   "estimate": "2-3 d"
+  }
+ ],
+ "estimateTotals": {
+  "fishing_mvp": "4.5 d code (FI1 1.5 + FI2 2.25 + FI3 0.75) + share of CF1/CF2; art separate",
+  "samlerbog_mvp": "4.5 d (SB1 2 + SB2 0.25 + SB3 2.25)",
+  "bridge_and_docs": "1 d"
+ },
+ "risks": [
+  {
+   "id": "R1",
+   "risk": "Player2D refuses input in S.USING; S.USING auto-ends and allows slow walking",
+   "mitigation": "FI2 routes presses first, holds _tool_time, cancels on movement; dedicated tests"
+  },
+  {
+   "id": "R2",
+   "risk": "strict art coverage fails on fish without icons",
+   "mitigation": "Q2: painted sheet or listed temporary exemption"
+  },
+  {
+   "id": "R3",
+   "risk": "book toast displaces the item tile in ui_nav.toast_stack_caps_and_rarity",
+   "mitigation": "deferred flush, item-id icon; run ui_nav with collection"
+  },
+  {
+   "id": "R4",
+   "risk": "merge hotspots after PR #1 (key_owners.json, project.godot, README, PLAYING)",
+   "mitigation": "branch fresh from origin/main; add_autoload last; docs only in CF2"
+  },
+  {
+   "id": "R5",
+   "risk": "Codex art restyle on main",
+   "mitigation": "only ART-FISH touches tools/art/drawn/** or assets/icons/**, after checking with that work"
+  }
+ ],
+ "openQuestions": "docs/design/COLLECTION_FISHING_OPEN_QUESTIONS.md (Q1 and Q2 block packages; the rest have defaults)"
+}

@@ -51,7 +51,7 @@ Trætoppen is a broad and carefully engineered cozy game, and most of what the o
 - a 10-tier home ladder, and five rarity tiers across furniture, clothing and weapons
 - 34 citizens with routines, gifts and birthdays, and 5 + 4 festivals
 - a marriage track, and Blund's counted hide-and-seek
-- a clean Danish localization pipeline (0 lint errors, no retired town names, no raw keys)
+- a clean Danish localization pipeline (0 lint errors, no leftovers of the old town name, no raw keys)
 - a HUD that matches the Miljøer v2 sketch.
 
 No P0 was found. Four P1s remain, and they are all cheap to fix:
@@ -1536,7 +1536,7 @@ The in-world HUD matches the Miljøer v2 sketch closely. The date chip and the m
 
 ### Area: Menus and gameplay panels
 
-The menus and panels sit on a solid shared base. TTScreen gives every screen the modal stack, Esc closing only the top layer, focus return to the opener, a focus-loss guard and a swallowed closing press, and the main flows (title, select, pause, settings, save/load, shop, journal, gift, people) look like the style guide. The weak spots are the panels built in code (Husbyggeri, Indretning, Hjemmets kiste, Byg, Dine dyr, Hjem og hverdag). They ignore their UI_NAVIGATION screen cards: first focus lands on "Luk", and pressing any list row rebuilds the list, so the focus guard throws the player back to "Luk" after every pick or transfer. That makes keyboard play tiring in the exact places the owner's home, furniture and animal loop lives. The biggest discoverability gap: Indretning, the only way to place furniture, opens only with an untaught H key and appears in no menu, prompt, tutorial or doc. Other gaps: festival details, hidden error toasts (an "inventory full" purchase gets a "sold out" line instead), missing or unreadable key hints, the Husbyggeri ladder not showing the current tier or its gates clearly, and a cheat menu that ships in the player's pause menu. Copy is warm and free of retired town-name leftovers, but has a few Danish slips: "slot" in the save toasts, decimal points, and mixed date formats.
+The menus and panels sit on a solid shared base. TTScreen gives every screen the modal stack, Esc closing only the top layer, focus return to the opener, a focus-loss guard and a swallowed closing press, and the main flows (title, select, pause, settings, save/load, shop, journal, gift, people) look like the style guide. The weak spots are the panels built in code (Husbyggeri, Indretning, Hjemmets kiste, Byg, Dine dyr, Hjem og hverdag). They ignore their UI_NAVIGATION screen cards: first focus lands on "Luk", and pressing any list row rebuilds the list, so the focus guard throws the player back to "Luk" after every pick or transfer. That makes keyboard play tiring in the exact places the owner's home, furniture and animal loop lives. The biggest discoverability gap: Indretning, the only way to place furniture, opens only with an untaught H key and appears in no menu, prompt, tutorial or doc. Other gaps: festival details, hidden error toasts (an "inventory full" purchase gets a "sold out" line instead), missing or unreadable key hints, the Husbyggeri ladder not showing the current tier or its gates clearly, and a cheat menu that ships in the player's pause menu. Copy is warm and free of leftovers of the old town name, but has a few Danish slips: "slot" in the save toasts, decimal points, and mixed date formats.
 
 **Strengths**
 - TTScreen (scripts/ui/nav/tt_screen.gd) gives all 21 modal screens one modal stack.
@@ -1548,16 +1548,16 @@ The menus and panels sit on a solid shared base. TTScreen gives every screen the
 - The 'Hvor er …?' post locator hides Blund while he plays hide-and-seek (post_locations.gd:27,40), so it does not spoil the minigame.
 - Character select: four painted hero cards with Danish perk blurbs, appearance chips (Rasmus/Kiki), a gold ring on the selected card, and page 2 with sensible defaults (Eventyrrejsende / Min Trækronsgård).
 - The garderobe has a live try-on preview, outfit sets (Arbejde/Skov/Fest), 'Se alt tøj' showing unowned pieces greyed out, and 'replaces X' warnings before equipping.
-- No retired town-name leftovers anywhere in localization/, scripts/ui, lua/ or scenes/ui.
+- No leftovers of the old town name anywhere in localization/, scripts/ui, lua/ or scenes/ui.
 
 ### Area: Danish copy, localization, accessibility
 
-Localization engineering is in very good shape. Both offline lints pass (tools/loc/csv_lint.py: 66 CSVs, 4563 keys, 0 errors; tools/copy/copy_lint.py: 0 findings). All 2359 text keys referenced from Lua exist. Scenes contain no hard-coded text. No English leftovers or raw keys reach players. The retired town name and the other banned names are gone, and the voice manifest shows 0 text drift across 296 clips. The weaknesses are in what the lints cannot see. First, the social copy is largely copy-paste: 30 of 34 NPC bios use one template, and the 125 gift-reaction rows contain only 5 distinct lines, which undercuts the "full social sim" goal. Second, a few player-facing texts give the wrong information: the hero-select blurbs are design-sheet notes, the pickaxe prompts say "hakke" (the hoe's name), and the math quest shows its own answers. Third, several Danish formatting rules are not applied: decimal comma, plurals, and lowercase weekdays mid-sentence. Accessibility is the weakest area. There is no key remapping, text-size or motion setting. Tutorial and refusal feedback is a 3.5-second whisper shown once per save. The key-hint bar is illegible (1.8:1 contrast) on the dark-backdrop screens. The forest assist presets and the player-paced dialogue are genuine strengths.
+Localization engineering is in very good shape. Both offline lints pass (tools/loc/csv_lint.py: 66 CSVs, 4563 keys, 0 errors; tools/copy/copy_lint.py: 0 findings). All 2359 text keys referenced from Lua exist. Scenes contain no hard-coded text. No English leftovers or raw keys reach players. The old town name and the other banned names are gone, and the voice manifest shows 0 text drift across 296 clips. The weaknesses are in what the lints cannot see. First, the social copy is largely copy-paste: 30 of 34 NPC bios use one template, and the 125 gift-reaction rows contain only 5 distinct lines, which undercuts the "full social sim" goal. Second, a few player-facing texts give the wrong information: the hero-select blurbs are design-sheet notes, the pickaxe prompts say "hakke" (the hoe's name), and the math quest shows its own answers. Third, several Danish formatting rules are not applied: decimal comma, plurals, and lowercase weekdays mid-sentence. Accessibility is the weakest area. There is no key remapping, text-size or motion setting. Tutorial and refusal feedback is a 3.5-second whisper shown once per save. The key-hint bar is illegible (1.8:1 contrast) on the dark-backdrop screens. The forest assist presets and the player-paced dialogue are genuine strengths.
 
 **Strengths**
 - Localization pipeline is solid and verified: csv_lint PASS (66 files, 4563 keys, 0 errors/warnings), copy_lint 0 findings, every Lua *_key literal (2359) resolves in the merged CSVs, no hard-coded text in scenes/*.tscn, keep-imports in place, da/en % …
 - No English leftovers in the Danish column and no Danish leftovers in the English column (scripted scan of all 4563 merged rows); no raw keys visible in any of the ~30 screenshots reviewed.
-- The retired town name is fully purged (0 hits outside docs, 0 in docs); banned names (Lyra, Maja, Mjau, Eventyrskoven, PongPong) are absent from all CSVs.
+- The old town name is fully purged (0 hits outside docs, 0 in docs); banned names (Lyra, Maja, Mjau, Eventyrskoven, PongPong) are absent from all CSVs.
 - Voice: 296 clips (11 frozen human recordings + 285 Sara placeholders) with 0 drift between manifest text and current CSV text; voice is suppressed in English and stops on advance.
 - Dialogue is player-paced: no auto-advance, the typewriter (40 chars/s, config ui.dialogue_chars_per_second) is skippable with one press, and body text is 19-20 px; the box grows with long lines (dialogue_ui.tscn TextLabel fit_content).
 - Rarity is never colour-only: RarityPips adds shape and count per tier (rarity_pips.gd:3-4), and the five tier names match the owner's normal/uncommon/rare/unique/legendary.
@@ -2384,7 +2384,7 @@ The main story is structurally sound and safe to play. Every chapter flag is set
 - The finale honours every hard rule in the addendum: the fate is stated plainly, the echo is not a prisoner, the role is refused, the seed tin comes home, and free play continues afterwards.
 - The journal's next-lead system (MotherStory.next_lead plus the FM_LEAD_* rows) always names a concrete floor or person, so the player is never left without a lead.
 - The secret garden is a warm, self-contained first beat.
-- Hyggebyen inside Trætoppen and the fairy king's lottery are used consistently; no retired town-name leftovers remain anywhere in the code or data (rg found none outside old reviews).
+- Hyggebyen inside Trætoppen and the fairy king's lottery are used consistently; no leftovers of the old town name remain anywhere in the code or data (rg found none outside old reviews).
 - Prior findings S-B/GM-04 (the 'Mød' wording), S-F/GM-08 (the Pip giver), S-H (the 'Eg' typo), GM-10 (early conclusions) and the pre-boss weapon hint (DTUT_WEAPON_WEAK) are confirmed fixed in the current code.
 
 ### Area: Side quests, NPC writing, cast consistency
@@ -2399,7 +2399,7 @@ Some of the side content is good. Hoppe's weather and seed-swap dialogue, Sofus'
 - Quest choices are filtered by QuestManager.is_offerable, and quests a giver can offer are injected automatically, so a thin dialogue file never shows a dead quest button (scripts/world2d/npc_dialogue.gd:49-57).
 - Prior finding S-B (boss-road copy said 'meet' but the quest required kills) is fixed.
 - Math quests teach real arithmetic in-voice (Maja's subtraction, Zephyr's times tables) and pay off in bogtraeet.
-- No retired town-name leftovers anywhere in lua/, localization/, scripts/ or data/.
+- No leftovers of the old town name anywhere in lua/, localization/, scripts/ or data/.
 
 ### Area: Heart-event scenes and their runner: content, triggers, choices and payoff (10 NPCs, about 4,000 Lua lines, never read)
 
@@ -3246,7 +3246,7 @@ I traced a new player's first week through the code, from title to the first dun
 - Day-2 mail always carries Pip's round (post_box_2d.gd refresh pushes pips_runde first).
 - The dungeon whisper tutorial now has a weak-weapon nudge, DTUT_WEAPON_WEAK (run_watch.gd:103).
 - The opening now plants the mother premise and points to a first lead (fairy_king.lua:14, FM_OPENING_LEAD), which partly addresses prior GM-06.
-- No retired town-name leftovers remain anywhere in localization, lua, scripts or maps.
+- No leftovers of the old town name remain anywhere in localization, lua, scripts or maps.
 
 ### Area: Status of prior review findings
 
