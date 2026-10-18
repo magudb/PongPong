@@ -1,0 +1,556 @@
+{
+  "v": 1,
+  "note": "Work packages of docs/design/MULTIPLAYER_ADDENDUM.md (2026-10-18). Schema of towns_farm_social_workpackages.json / features_workpackages.json. 10 new packages (MP1..MP10 is reserved; MP9 is the QA package, MP8 EXTENDED), 12 amendments (RM1..RM12). User decisions of 2026-10-18 are binding: LAN one machine per player, shared farm + world with separate inventories, host owns the save. Architecture default: host-authoritative ENet. Single-player must remain green on every wave.",
+  "waves": {
+    "1": "NEW MP1-player-registry MP2-player-input | AMENDED RM1-world-player-slots RM2-player-scripts-input",
+    "2": "NEW MP3-player-state MP4-net-session | AMENDED RM3-economy-per-player RM4-quests-per-player RM5-save-v3 RM6-eventbus-player-handle RM7-game-manager-identity RM8-social-per-player",
+    "3": "NEW MP5-net-sync MP6-net-intent | AMENDED RM9-farm-actors RM10-shop-actors",
+    "4": "NEW MP7-mp-ui | AMENDED RM11-ui-join-and-pad RM12-save-summary-roster",
+    "5": "NEW MP8-drop-in-out MP9-mp-qa | AMENDED none"
+  },
+  "tiers": {
+    "CORE": "MP1 MP2 MP3 MP4 MP5 MP6 MP7",
+    "EXTENDED": "MP8",
+    "QA": "MP9"
+  },
+  "contracts": {
+    "eventBusSignalsNote": "Wave 2 is the contract cut. Arity lint (tests/sections/core.gd) must pass in the same wave as every consumer. New signals may land earlier only if unused by single-player paths.",
+    "eventBusSignalsKept": [
+      "player_spawned(player: Node2D) — emitted once per body",
+      "player_character_changed(character_id: StringName)"
+    ],
+    "eventBusSignalsNew": [
+      "player_despawned(player_id: StringName)",
+      "player_joined(player_id: StringName, peer_id: int, profile: Dictionary)",
+      "player_left(player_id: StringName, reason: StringName)",
+      "net_session_changed(state: StringName)"
+    ],
+    "eventBusSignalsArityChange": [
+      "player_inventory_changed(player_id: StringName, inventory: Dictionary)",
+      "player_stats_changed(player_id: StringName, stats: Dictionary)",
+      "player_moved(player_id: StringName, zone: StringName)",
+      "player_health_changed(player_id: StringName, half_hearts: int, max_half_hearts: int)",
+      "player_oil_changed(player_id: StringName, seconds: float, max_seconds: float)",
+      "player_defeated(player_id: StringName)",
+      "hotbar_changed(player_id: StringName, entries: Array, selected: int)",
+      "hotbar_assign_requested(player_id: StringName, slot: int, item_id: StringName)",
+      "interaction_prompt_changed(player_id: StringName, text: String)",
+      "gold_changed(player_id: StringName, amount: int, delta: int)",
+      "item_gained(player_id: StringName, item_id: StringName, amount: int)",
+      "item_purchased(player_id: StringName, item_id: StringName, amount: int, cost: int)",
+      "item_sold(player_id: StringName, item_id: StringName, amount: int, revenue: int)",
+      "quest_offered(player_id: StringName, quest_id: StringName)",
+      "quest_accepted(player_id: StringName, quest_id: StringName)",
+      "quest_objective_updated(player_id: StringName, quest_id: StringName, objective_id: StringName, progress: int, target: int)",
+      "quest_completed(player_id: StringName, quest_id: StringName)",
+      "quest_failed(player_id: StringName, quest_id: StringName)",
+      "outfit_changed(player_id: StringName, equipped: Dictionary)",
+      "garment_equipped(player_id: StringName, item_id: StringName, slot: StringName)",
+      "friend_changed(player_id: StringName, npc_id: StringName, hearts: int)"
+    ],
+    "saveSections": {
+      "removedAsCore": ["economy", "quests"],
+      "addedRegistered": "players (order 15, node PlayerRoster, rows 1..4)",
+      "payloadVersion": 3,
+      "migration": "v2 -> v3 maps the single implicit player into players[0] (game.player_name/character_type/character_skin, economy.*, quests.*, world.player_pos, world.hotbar, wardrobe.*)",
+      "note": "JSON.stringify payload keeps pretty indent + full float precision (tests/sections/save.gd pins it)."
+    },
+    "autoloads": "NONE new in CORE. PlayerRoster and MultiplayerSession are children of WorldRoot2D.",
+    "inputActions": [
+      "run gains joypad binding (L3 / left stick press)",
+      "fly_toggle gains joypad binding (R3)",
+      "fly_descend gains joypad binding (D-pad down)",
+      "hotbar slot chords documented in MP2 (shoulder + d-pad)"
+    ],
+    "luaConfigKeys": [
+      "multiplayer.port (default 24565)",
+      "multiplayer.max_players (default 4)",
+      "multiplayer.shared_purse (default false)",
+      "multiplayer.sleep_requires_all (default true)"
+    ],
+    "lookupRule": "NEVER get_first_node_in_group('player') / is_in_group('player') for identity. Use WorldRoot2D.player_by_id / local_player / player_for_event. A lint (MP1) fails the suite on new occurrences.",
+    "authority": "Host-authoritative. Guests send intent; host validates and applies; results replicate. Guests never write world state or the save."
+  },
+  "decisions": [
+    {
+      "id": "DT-MP1",
+      "title": "LAN, one machine per player, up to 4",
+      "decision": "ENetMultiplayerPeer over the local network. Host creates a session, up to three guests join by IP/host code in CORE. No split-screen, no internet matchmaking in this track.",
+      "why": "User decision 2026-10-18. Split-screen is a different (harder) problem: shared viewport, four cameras, four device maps."
+    },
+    {
+      "id": "DT-MP2",
+      "title": "Shared farm + world, separate inventories",
+      "decision": "One farm, one calendar, shared shop stock/animals/buildings/loot/world flags. Each player has own gold, backpack, equipment, hotbar, quests, wardrobe, vitals. Home tier, home chest and furniture are household-shared.",
+      "why": "User decision 2026-10-18; matches Stardew default and the existing 'one world, one farm' design."
+    },
+    {
+      "id": "DT-MP3",
+      "title": "Host owns the save",
+      "decision": "One host-side JSON payload holds the world and up to four player profiles (payload v3). Guests do not persist the world. Host disconnect ends the session.",
+      "why": "User decision 2026-10-18; only coherent with host-authoritative simulation."
+    },
+    {
+      "id": "DT-MP4",
+      "title": "Host-authoritative simulation",
+      "decision": "The host runs farm, time, shops, enemies, loot and quest application. Guests send intent (use_tool, interact, buy, accept_quest); the host re-validates and applies, then replicates results.",
+      "why": "Cheapest correct model for a farm game; makes the host save the world of record; kills double-spend races at the source."
+    },
+    {
+      "id": "DT-MP5",
+      "title": "EventBus gains a player_id on player-scoped signals",
+      "decision": "Wave 2 is one contract cut: ~21 signals gain player_id as first argument; 4 new signals. World-scoped signals keep arity. The arity lint and every consumer land together.",
+      "why": "The bus is the sole cross-system hub and is arity-linted; a half-migrated bus cannot ship."
+    },
+    {
+      "id": "DT-MP6",
+      "title": "No new autoload",
+      "decision": "PlayerRoster and MultiplayerSession are children of WorldRoot2D, not autoloads. Session lifetime is world lifetime; tests can spawn a world without a global session.",
+      "why": "Autoload order is already a 16-node contract; multiplayer must not extend it."
+    },
+    {
+      "id": "DT-MP7",
+      "title": "SocialManager friendship rows become per-player",
+      "decision": "SocialManager._rows is keyed by player_id -> npc_id. Shared campaign state (world_seed, festivals, household partner) stays global. World flag mirrors friend_<npc> become player-scoped mirrors under flags or move into the players row (RM8 decides the exact shape).",
+      "why": "The one real conflict with TOWNS_FARM_SOCIAL_ADDENDUM.md. Hearts are per-hero in every social RPG; the household still shares the house and festivals."
+    },
+    {
+      "id": "DT-MP8",
+      "title": "is_single_player becomes live",
+      "decision": "GameManager.is_single_player is true when players.size() == 1 and no peer is connected. Pause, sleep and save paths read it. The unused variable becomes a real gate.",
+      "why": "The only multiplayer-shaped hook in the codebase; it should stop being dead weight."
+    },
+    {
+      "id": "DT-MP9",
+      "title": "Single-player parity is a wave gate",
+      "decision": "Every wave keeps tests/run_playtest.sh --strict green for all four characters with players[0] behaviour identical to today's one player.",
+      "why": "Multiplayer is a later scope; it must not regress the shipped single-player game."
+    },
+    {
+      "id": "DT-MP10",
+      "title": "Sleep is a vote with host force",
+      "decision": "The day ends when every living player is in bed. The host pause menu may force sleep. Config key multiplayer.sleep_requires_all (default true).",
+      "why": "Stardew-like expectation; one clock means one day roll."
+    }
+  ],
+  "honestStubs": [
+    "scripts/player/player_input.gd (MP2)",
+    "scripts/net/multiplayer_session.gd (MP4)",
+    "scripts/net/intent_bus.gd (MP6)",
+    "scenes/ui/multiplayer_lobby.tscn (MP7)",
+    "lua/config/multiplayer.lua (MP4)",
+    "localization/multiplayer.csv (MP7)"
+  ],
+  "risks": [
+    {
+      "id": "R1",
+      "risk": "EventBus arity change touches ~21 signals and every consumer",
+      "mitigation": "One wave (wave 2), arity lint is the net, MP3 owns the whole cut"
+    },
+    {
+      "id": "R2",
+      "risk": "get_first_node_in_group('player') appears in ~30 files",
+      "mitigation": "MP1 replaces them all; lint no_first_player_group fails the suite on new occurrences"
+    },
+    {
+      "id": "R3",
+      "risk": "Host desync (farm/world state diverges)",
+      "mitigation": "Host-authoritative + intent validation; world mutations only on host; periodic farm hash in net tests (MP5)"
+    },
+    {
+      "id": "R4",
+      "risk": "Save migration breaks existing player saves",
+      "mitigation": "v2->v3 migration is test-pinned in tests/sections/save.gd; v2 files still load as players[0]"
+    },
+    {
+      "id": "R5",
+      "risk": "Input abstraction regresses feel (tool repeat, dodge, aim)",
+      "mitigation": "MP2 ships a single-player parity section; --strict playtest is the gate"
+    },
+    {
+      "id": "R6",
+      "risk": "GL Compatibility + ENet on weak Wi-Fi",
+      "mitigation": "LAN only; unreliable channel for transforms with interpolation on guests; no public-internet claims"
+    },
+    {
+      "id": "R7",
+      "risk": "Feature managers still write 'the' player via GameData.eco()",
+      "mitigation": "MP3 introduces a PlayerState boundary object; managers take an explicit player handle"
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "Q1",
+      "question": "Shared purse as a session-create option?",
+      "default": "later (MP8), default off"
+    },
+    {
+      "id": "Q2",
+      "question": "Sleep: all-in-bed vote or host forces?",
+      "default": "vote + host force (DT-MP10)"
+    },
+    {
+      "id": "Q3",
+      "question": "When the host quits mid-day, do guests get a copy of the save?",
+      "default": "no; session ends; host save is the world of record"
+    },
+    {
+      "id": "Q4",
+      "question": "Can a guest resume their profile on another host later?",
+      "default": "no in this track; profile lives with the host save"
+    },
+    {
+      "id": "Q5",
+      "question": "Design Children / hero-twin rules for multiplayer now?",
+      "default": "no; separate tracks"
+    },
+    {
+      "id": "Q6",
+      "question": "LAN discovery in CORE or EXTENDED?",
+      "default": "EXTENDED (MP8); CORE is join-by-IP / host code"
+    }
+  ],
+  "acceptanceRows": [
+    "AC-MP1: single-player playtest --strict is green for all four characters after every wave",
+    "AC-MP2: two Player2D bodies in one WorldRoot2D each keep their own gold/inventory/quests after a shop buy and a harvest",
+    "AC-MP3: host save v3 round-trips 4 player profiles; a v2 save loads as players[0] with identical values",
+    "AC-MP4: a guest intent of use_tool on a farm plot is applied exactly once by the host and replicated",
+    "AC-MP5: sleep vote ends the day only when all living players are in bed; host force sleep works",
+    "AC-MP6: guest disconnect despawns the body and leaves the profile in the host save",
+    "AC-MP7: no new get_first_node_in_group('player') exists outside the migration alias (lint)",
+    "AC-MP8: EventBus arity lint passes with the new player_id signatures (wave 2)",
+    "AC-MP9: net_loop playtest leg — host + 2 mock guests: join, walk, till/plant/water, shop buy, sleep, save/load",
+    "AC-MP10: guest cannot mutate world state directly (a raw client-side farm write is rejected / not observable on the host)"
+  ],
+  "newPackages": [
+    {
+      "id": "MP1-player-registry",
+      "title": "Player registry: player_id / peer_id / is_local on bodies, WorldRoot2D.players[], lookup helpers, migration of every get_first_node_in_group('player')",
+      "wave": "1",
+      "size": "L",
+      "class": "CORE",
+      "track": "multiplayer",
+      "dependsOn": [],
+      "softDependsOn": [],
+      "owns": [
+        "scripts/world2d/player_registry.gd",
+        "tests/sections/multiplayer_registry.gd"
+      ],
+      "lift": [],
+      "tasks": [
+        "PlayerBody2D gains player_id: StringName, peer_id: int, is_local: bool, player_slot: int (0..3). Defaults preserve single-player: player_id='p0', peer_id=1, is_local=true -> verify: multiplayer_registry.body_defaults",
+        "WorldRoot2D.players: Array and player_by_peer: Dictionary; _make_player() becomes _make_players() creating 1..4 bodies; deprecated alias `player` returns players[0] and logs once under is_single_player -> verify: multiplayer_registry.alias_is_players0",
+        "Helpers on WorldRoot2D: player_by_id(id), local_player(), player_for_event(event), all_players(). Group `player` stays for physics/area queries only -> verify: multiplayer_registry.helpers",
+        "Replace every get_first_node_in_group('player') / is_in_group('player') identity lookup in scripts/ with the helpers (list in the addendum investigation: economy_manager, minimap_2d, loot_drop_2d, enemy_2d, gift_reaction, forest_hud, city_builder, relationship_flow, gift_flow, festival_stage, event_runner, home_services, hide_seek, rules_data, roster, hazard_2d, cues, boss_base, dungeon_floors, canopy_fade, hud, rejsestolpe_2d, crown_cache_2d, loot_markers, occluder_fade, warp_2d, whisper_zone, climb_lane, door_2d, soft_ground) -> verify: multiplayer_registry.no_first_player_group lint",
+        "player_spawned is emitted once per body; add player_despawned(player_id) (contract addition allowed in wave 1 if unused by single-player paths) -> verify: multiplayer_registry.spawn_despawn"
+      ]
+    },
+    {
+      "id": "MP2-player-input",
+      "title": "PlayerInput abstraction: device-bound input for Player2D/PlayerBody2D/PlayerCombat2D, mouse-aim indirection, pad binding gaps closed",
+      "wave": "1",
+      "size": "L",
+      "class": "CORE",
+      "track": "multiplayer",
+      "dependsOn": ["MP1-player-registry"],
+      "softDependsOn": [],
+      "owns": [
+        "scripts/player/player_input.gd",
+        "tests/sections/multiplayer_input.gd"
+      ],
+      "lift": [],
+      "tasks": [
+        "scripts/player/player_input.gd: move_vector(), is_action_pressed/release(action), aim_position(world), handle_event(event), consume_if_handled(). Source is the Input singleton when is_local and device is keyboard/mouse; a device id when is_local and pad; an intent buffer otherwise -> verify: multiplayer_input.sources",
+        "Player2D._unhandled_input / _physics_process and PlayerBody2D movement stop calling Input.* directly; combat dodge vector and mouse aim go through PlayerInput -> verify: multiplayer_input.no_input_singleton_in_player",
+        "Only the local player calls get_viewport().set_input_as_handled() -> verify: multiplayer_input.only_local_consumes",
+        "project.godot: bind run (L3), fly_toggle (R3), fly_descend (D-pad down); document hotbar chords (shoulder + d-pad) in MP2 glyph pass -> verify: multiplayer_input.pad_bindings_present",
+        "Single-player parity section: walk/run/tool repeat/dodge/aim produce the same actions as before the abstraction -> verify: multiplayer_input.parity"
+      ]
+    },
+    {
+      "id": "MP3-player-state",
+      "title": "Per-player state: PlayerState boundary (gold, inventory, equipment, hotbar, quests, wardrobe, vitals), SocialManager rows per player, EventBus player_id contract cut",
+      "wave": "2",
+      "size": "XL",
+      "class": "CORE",
+      "track": "multiplayer",
+      "dependsOn": ["MP1-player-registry", "MP2-player-input"],
+      "softDependsOn": [],
+      "owns": [
+        "scripts/player/player_state.gd",
+        "tests/sections/multiplayer_state.gd"
+      ],
+      "lift": [],
+      "tasks": [
+        "PlayerState wraps what EconomyManager/QuestManager/WardrobeManager hold today for one hero: gold, inventory, equipment, arsenal, hotbar refs, quest log, wardrobe owned/equipped/presets, vitals snapshot. Single-player: one PlayerState, managers delegate -> verify: multiplayer_state.single_player_equivalence",
+        "EconomyManager becomes a facade over N PlayerStates + shared shop stock; add_gold/spend_gold/has_item/use_item take a player_id or a PlayerState (compat overload defaults to local_player() during migration) -> verify: multiplayer_state.two_wallets",
+        "QuestManager: active/completed/failed/offered/flags become per-player; shared/campaign mirrors stay in GameManager.world_flags -> verify: multiplayer_state.quests_per_player",
+        "SocialManager._rows keyed by player_id -> npc_id; world_seed/festivals/partner stay global; friend_<npc> world-flag mirrors follow RM8's chosen shape -> verify: multiplayer_state.hearts_per_player",
+        "EventBus contract cut (DT-MP5): the 21 arity changes + 4 new signals of contracts.eventBusSignals*, every consumer updated, arity lint green -> verify: multiplayer_state.eventbus_lint",
+        "WardrobeManager.equipped/owned become per-player; outfit_changed carries player_id -> verify: multiplayer_state.wardrobe_per_player"
+      ]
+    },
+    {
+      "id": "MP4-net-session",
+      "title": "LAN session: MultiplayerSession (host/join/close), ENetMultiplayerPeer, lobby handshake, lua/config/multiplayer.lua, is_single_player gate",
+      "wave": "2",
+      "size": "L",
+      "class": "CORE",
+      "track": "multiplayer",
+      "dependsOn": ["MP3-player-state"],
+      "softDependsOn": [],
+      "owns": [
+        "scripts/net/multiplayer_session.gd",
+        "lua/config/multiplayer.lua",
+        "tests/sections/multiplayer_session.gd"
+      ],
+      "lift": [],
+      "tasks": [
+        "MultiplayerSession (child of WorldRoot2D): host(port, max_players), join(address, port), close(), state: idle|hosting|joining|connected|ended. Emits net_session_changed -> verify: multiplayer_session.lifecycle",
+        "lua/config/multiplayer.lua: port 24565, max_players 4, shared_purse false, sleep_requires_all true. Loaded through the existing config path (GameManager.config_value memoised) -> verify: multiplayer_session.config_defaults",
+        "Handshake: guest sends profile {name, character_type, character_skin}; host assigns player_id p1..p3 and a spawn; both sides create the body. player_joined emitted on every peer -> verify: multiplayer_session.handshake",
+        "GameManager.is_single_player becomes live (DT-MP8); pause and save paths read it -> verify: multiplayer_session.single_player_flag",
+        "Host-authoritative rule is structural: MultiplayerSession exposes is_host / is_guest; world mutators assert is_host or are no-ops on guests -> verify: multiplayer_session.host_gate"
+      ]
+    },
+    {
+      "id": "MP5-net-sync",
+      "title": "World and player replication: MultiplayerSynchronizer on bodies (ch. 1 unreliable), host snapshots for area/farm/time, interpolation on guests",
+      "wave": "3",
+      "size": "L",
+      "class": "CORE",
+      "track": "multiplayer",
+      "dependsOn": ["MP4-net-session"],
+      "softDependsOn": [],
+      "owns": [
+        "scripts/net/world_sync.gd",
+        "tests/sections/multiplayer_sync.gd"
+      ],
+      "lift": [],
+      "tasks": [
+        "Each Player2D gains a MultiplayerSynchronizer for transform, anim state, aim, vitals (unreliable ch. 1) + a reliable channel for hotbar/equipment display -> verify: multiplayer_sync.body_sync",
+        "Host broadcasts area change, day/time of day, weather, farm plot facts, shop stock deltas, enemy transforms/hits, loot pickups as EventBus-shaped facts; guests replay them on their EventBus -> verify: multiplayer_sync.facts_round_trip",
+        "Guest interpolation: remote bodies interpolate; local body predicts; host correction snaps with a 120 ms blend -> verify: multiplayer_sync.interpolation",
+        "Farm/world desync detector: host sends a cheap farm hash every 10 s; a mock-guest test asserts equality after a mixed workload -> verify: multiplayer_sync.farm_hash",
+        "Forest clock freeze / day roll stay host-only world events; guests receive the same EventBus day_* they receive today -> verify: multiplayer_sync.time_host_only"
+      ]
+    },
+    {
+      "id": "MP6-net-intent",
+      "title": "Intent pipeline: guests send intent, host validates and applies (tools, interact, buy, quests, combat), IntentBus replaces direct world writes on guests",
+      "wave": "3",
+      "size": "L",
+      "class": "CORE",
+      "track": "multiplayer",
+      "dependsOn": ["MP5-net-sync"],
+      "softDependsOn": [],
+      "owns": [
+        "scripts/net/intent_bus.gd",
+        "tests/sections/multiplayer_intent.gd"
+      ],
+      "lift": [],
+      "tasks": [
+        "IntentBus: typed intents {use_tool, interact, buy, sell, craft, accept_quest, complete_manual, attack, dodge, light, drink, pickup, place, sleep_vote, chat_event}. Local intents on the host are applied directly; guest intents arrive by reliable RPC -> verify: multiplayer_intent.types",
+        "Host validation: range to target, item ownership, gold, shop stock/hours, quest availability, cooldowns. Invalid intents are dropped and counted -> verify: multiplayer_intent.rejects",
+        "FarmGrid / ShopSystem / QuestManager / AnimalHusbandry mutators on a guest are no-ops or assert; the ONLY write path is IntentBus on the host -> verify: multiplayer_intent.no_guest_world_writes",
+        "Double-spend race test: two mock guests buy the last unit of a shop item; exactly one succeeds -> verify: multiplayer_intent.last_unit_race",
+        "Combat: guest attack intents are host-resolved; enemy damage and death are host facts -> verify: multiplayer_intent.combat_host_resolved"
+      ]
+    },
+    {
+      "id": "MP7-mp-ui",
+      "title": "Multiplayer UI: lobby (host/join), roster strip, per-player HUD binding, pad glyphs, sleep-vote widget, host pause (force sleep)",
+      "wave": "4",
+      "size": "M",
+      "class": "CORE",
+      "track": "multiplayer",
+      "dependsOn": ["MP6-net-intent"],
+      "softDependsOn": [],
+      "owns": [
+        "scenes/ui/multiplayer_lobby.tscn",
+        "scripts/ui/multiplayer_lobby.gd",
+        "scripts/ui/multiplayer_hud.gd",
+        "localization/multiplayer.csv",
+        "tests/sections/multiplayer_ui.gd"
+      ],
+      "lift": [],
+      "tasks": [
+        "Main menu gains 'Spil sammen' -> lobby screen: Host (port, name), Join (address, port), player slots with names/types, ready state. UI follows UI_NAVIGATION.md screen contracts (new registry rows) -> verify: multiplayer_ui.lobby_flow",
+        "Roster strip on the farm HUD: up to 4 chips (name, hearts, stamina) bound to each PlayerState; forest_hud/current_item_badge/hud bind to local_player() not first-in-group -> verify: multiplayer_ui.hud_binds_local",
+        "Sleep-vote widget + host pause entry 'Gør det i morgen' (force sleep) -> verify: multiplayer_ui.sleep_vote",
+        "localization/multiplayer.csv: all new copy is Danish with English fallback; keys MP_*; style sheet + lint as for other new CSVs -> verify: multiplayer_ui.loc_keys",
+        "Pad glyph pass: ui_hints shows the new run/fly/hotbar chords for gamepad -> verify: multiplayer_ui.pad_glyphs"
+      ]
+    },
+    {
+      "id": "MP8-drop-in-out",
+      "title": "EXTENDED: drop-in/drop-out rejoin from the host save, LAN discovery (UDP broadcast), optional shared purse",
+      "wave": "5",
+      "size": "M",
+      "class": "EXTENDED",
+      "track": "multiplayer",
+      "dependsOn": ["MP7-mp-ui"],
+      "softDependsOn": [],
+      "owns": [
+        "scripts/net/lan_discovery.gd",
+        "tests/sections/multiplayer_rejoin.gd"
+      ],
+      "lift": [],
+      "tasks": [
+        "Guest disconnect (MP4/DT-MP3) already keeps the profile; this package re-creates a body from the host-save profile on rejoin mid-session -> verify: multiplayer_rejoin.profile_restored",
+        "LAN discovery: UDP broadcast announce/listen for sessions on the local network; lobby lists hosts without typing an IP -> verify: multiplayer_rejoin.discovery_loopback",
+        "Shared purse option at session create (multiplayer.shared_purse): one gold scalar for the party, toggled per session -> verify: multiplayer_rejoin.shared_purse",
+        "Host force-sleep and host-only pause polish; guest inventory/journal stay openable while the sim is paused -> verify: multiplayer_rejoin.pause_rules"
+      ]
+    },
+    {
+      "id": "MP9-mp-qa",
+      "title": "QA: net_loop acceptance leg (host + 2 mock guests), save v3 fixtures, single-player parity matrix, docs refresh",
+      "wave": "5",
+      "size": "M",
+      "class": "QA",
+      "track": "multiplayer",
+      "dependsOn": ["MP8-drop-in-out"],
+      "softDependsOn": ["MP7-mp-ui"],
+      "owns": [
+        "tests/acceptance/net_loop.gd",
+        "tests/fixtures/multiplayer/**",
+        "docs/qa/multiplayer/**"
+      ],
+      "lift": [],
+      "tasks": [
+        "net_loop acceptance leg: host + 2 mock guests — join, walk, till/plant/water, shop buy, harvest, sleep vote, save/load on host, guest rejoin -> verify: acceptance rows AC-MP9",
+        "Save fixtures: v2 single-player -> v3 players[0]; v3 with 4 profiles round-trip; summary card lists the roster -> verify: save.gd extensions",
+        "Single-player parity matrix on all four characters after every wave (the existing gate) -> verify: run_playtest.sh --strict",
+        "docs/PLAYING.md + README.md: multiplayer is no longer 'later work' once MP7 lands; document host/join and the shared-farm rules in Danish-facing guide copy -> verify: docs mention the lobby and the host save"
+      ]
+    }
+  ],
+  "amendments": [
+    {
+      "id": "RM1-world-player-slots",
+      "target": "P04-area-framework / scripts/world2d/world_2d.gd",
+      "wave": "1",
+      "size": "M",
+      "dependsOn": ["MP1-player-registry"],
+      "tasks": [
+        "WorldRoot2D to_dict/from_dict: world payload gains players[] (id, area, player_pos, hotbar) and drops the single player_pos/hotbar keys behind migration -> verify: save.gd world_players"
+      ]
+    },
+    {
+      "id": "RM2-player-scripts-input",
+      "target": "P06-player-farm-core / scripts/world2d/player_*.gd, player_combat_2d.gd",
+      "wave": "1",
+      "size": "M",
+      "dependsOn": ["MP2-player-input"],
+      "tasks": [
+        "Player2D/PlayerBody2D/PlayerCombat2D consume PlayerInput only; camera.make_current() only when is_local -> verify: multiplayer_input.camera_local_only"
+      ]
+    },
+    {
+      "id": "RM3-economy-per-player",
+      "target": "P12-economy-shop-crafting / scripts/autoload/economy_manager.gd",
+      "wave": "2",
+      "size": "L",
+      "dependsOn": ["MP3-player-state"],
+      "tasks": [
+        "EconomyManager delegates gold/inventory/equipment to PlayerState rows; shared shop stock stays; public API keeps a local_player() default -> verify: multiplayer_state.economy_facade"
+      ]
+    },
+    {
+      "id": "RM4-quests-per-player",
+      "target": "P13-quests-lua-runtime / scripts/autoload/quest_manager.gd",
+      "wave": "2",
+      "size": "L",
+      "dependsOn": ["MP3-player-state"],
+      "tasks": [
+        "QuestManager active/completed/failed/offered/flags per player_id; Lua hooks receive the acting player_id in context -> verify: multiplayer_state.quest_facade"
+      ]
+    },
+    {
+      "id": "RM5-save-v3",
+      "target": "P15-save-system / scripts/autoload/save_manager.gd",
+      "wave": "2",
+      "size": "L",
+      "dependsOn": ["MP3-player-state"],
+      "tasks": [
+        "PAYLOAD_VERSION 3; registered section 'players' (order 15); v2->v3 migration; economy/quests stop being required core sections (read as migration input only); meta.summary gains players[] -> verify: save.gd v3_round_trip, save.gd v2_migrates"
+      ]
+    },
+    {
+      "id": "RM6-eventbus-player-handle",
+      "target": "P02-event-bus / scripts/autoload/event_bus.gd",
+      "wave": "2",
+      "size": "L",
+      "dependsOn": ["MP3-player-state"],
+      "tasks": [
+        "Declare the 21 arity changes + 4 new signals of contracts.eventBusSignals*; update every connect/emit in scripts/ and scenes/ in the same wave; arity lint green -> verify: core.signal_arity_lint"
+      ]
+    },
+    {
+      "id": "RM7-game-manager-identity",
+      "target": "scripts/autoload/game_manager.gd",
+      "wave": "2",
+      "size": "M",
+      "dependsOn": ["MP3-player-state"],
+      "tasks": [
+        "player_name/character_type/character_skin move to PlayerState; farm_name stays world; is_single_player becomes live; start_new_game takes a profile list (size 1 in single-player) -> verify: multiplayer_state.gm_identity"
+      ]
+    },
+    {
+      "id": "RM8-social-per-player",
+      "target": "S-core / scripts/social/social_manager.gd",
+      "wave": "2",
+      "size": "L",
+      "dependsOn": ["MP3-player-state"],
+      "tasks": [
+        "SocialManager._rows keyed by player_id -> npc_id; friend_<npc> world-flag mirrors become per-player (exact shape recorded here when implemented); festivals/partner/world_seed stay global -> verify: multiplayer_state.hearts_per_player"
+      ]
+    },
+    {
+      "id": "RM9-farm-actors",
+      "target": "N02-farm-objects / scripts/world2d/farm_grid.gd, farm_view.gd",
+      "wave": "3",
+      "size": "M",
+      "dependsOn": ["MP6-net-intent"],
+      "tasks": [
+        "FarmGrid mutators take an actor_id (who planted/watered/harvested) for the fact payload; on a guest they only forward IntentBus -> verify: multiplayer_intent.farm_actor"
+      ]
+    },
+    {
+      "id": "RM10-shop-actors",
+      "target": "F4-loot-shops / scripts/economy/shop_system.gd",
+      "wave": "3",
+      "size": "M",
+      "dependsOn": ["MP6-net-intent"],
+      "tasks": [
+        "ShopSystem.buy/sell take a player_id; stock changes are host facts; hours rule unchanged -> verify: multiplayer_intent.shop_actor"
+      ]
+    },
+    {
+      "id": "RM11-ui-join-and-pad",
+      "target": "P28-ui-nav-foundation / scripts/ui/nav/*, scripts/ui/character_select.gd",
+      "wave": "4",
+      "size": "M",
+      "dependsOn": ["MP7-mp-ui"],
+      "tasks": [
+        "Character select is per-player (host picks farm name once; each guest picks name/type/skin in the lobby); ui_hints gains the new pad chords; UI_NAVIGATION.md registry rows for the lobby -> verify: multiplayer_ui.nav_rows"
+      ]
+    },
+    {
+      "id": "RM12-save-summary-roster",
+      "target": "P15-save-system summary UI",
+      "wave": "4",
+      "size": "S",
+      "dependsOn": ["RM5-save-v3"],
+      "tasks": [
+        "Slot summary lists host name + player count + roster names; keep player_name as the host alias for old UI -> verify: multiplayer_ui.summary_roster"
+      ]
+    }
+  ],
+  "ownershipCheck": {
+    "note": "Not yet run. When this track is executed, extend check_ownership.py over MP*/RM* patterns and prove: no overlap with towns/farm/social or dungeon packages, dependencies strictly earlier in the wave list, every owns path is disjoint.",
+    "status": "pending",
+    "mutants": "planned: a write into a later package's path; a missing player_id on one EventBus signal; a leftover get_first_node_in_group('player'); a v2-only save writer"
+  }
+}
