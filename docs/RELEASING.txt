@@ -7,7 +7,9 @@ Engine: Godot 4.7.2, pinned with SHA-256 checksums in tools/ci/godot.json.
 CI
 --
 Pushes to main and pull requests run the strict headless playtest for animal,
-fairy, hobbit and ghost, plus native Windows and macOS export jobs. Each export
+fairy, hobbit and ghost, plus native Windows and macOS export jobs. Each hero
+suite is split into four parallel groups; coverage checks ensure every section
+runs exactly once for each hero. Each export
 runner tests the update installer and boots the actual packaged executable.
 Raw Lua, CSV, JSON and map data are included explicitly. Development exports
 use version 0.0.0 and do not perform automatic network update checks.

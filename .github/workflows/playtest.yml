@@ -24,13 +24,14 @@ concurrency:
 
 jobs:
   playtest:
-    name: headless harness (${{ matrix.character }})
+    name: headless harness (${{ matrix.character }}, part ${{ matrix.shard }})
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
         character: [animal, fairy, hobbit, ghost]
+        shard: [0, 1, 2, 3]
 
     env:
       PYTHONUNBUFFERED: "1"
@@ -75,12 +76,13 @@ jobs:
       - name: Run playtest (strict)
         run: |
           set -euo pipefail
-          tests/run_playtest.sh --strict --timeout=3600 --character=${{ matrix.character }} --report=/tmp/playtest-${{ matrix.character }}.json
+          sections="$(python tools/ci/sections.py --shard ${{ matrix.shard }} --count 4)"
+          tests/run_playtest.sh --strict --timeout=2700 --only="$sections" --character=${{ matrix.character }} --report=/tmp/playtest-${{ matrix.character }}-${{ matrix.shard }}.json
 
       - name: Upload report
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: playtest-report-${{ matrix.character }}
-          path: /tmp/playtest-${{ matrix.character }}.json
+          name: playtest-report-${{ matrix.character }}-${{ matrix.shard }}
+          path: /tmp/playtest-${{ matrix.character }}-${{ matrix.shard }}.json
           if-no-files-found: ignore

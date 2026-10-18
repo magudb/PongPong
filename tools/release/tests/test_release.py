@@ -40,6 +40,22 @@ class VersionTests(unittest.TestCase):
         self.assertNotIn("export_presets.cfg", (ROOT / ".gitignore").read_text())
 
 
+class CoverageTests(unittest.TestCase):
+    def test_ci_shards_run_every_section_exactly_once(self):
+        spec = importlib.util.spec_from_file_location("ci_sections", ROOT / "tools/ci/sections.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        expected = {p.stem for p in (ROOT / "tests/sections").glob("*.gd") if not p.name.startswith("_")}
+        groups = module.partitions(4)
+        all_sections = [name for group in groups for name in group]
+        self.assertTrue(all(groups))
+        self.assertEqual(set(all_sections), expected)
+        self.assertEqual(len(all_sections), len(expected))
+        for invalid in (0, -1, len(expected) + 1):
+            with self.assertRaises(ValueError):
+                module.partitions(invalid)
+
+
 class InstallerTests(unittest.TestCase):
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory(prefix="traetoppen-updater-test-")

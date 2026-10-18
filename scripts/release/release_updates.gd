@@ -158,8 +158,8 @@ func install() -> bool:
 		_set_state("install_failed")
 		return false
 	_set_state("installing")
-	# The helper validates and stages the package before the running game may exit.
-	for attempt in 200:
+	# Allow large packages to finish validation and extraction before the game exits.
+	for attempt in 1200:
 		if FileAccess.file_exists(ready): break
 		if not OS.is_process_running(process): break
 		await get_tree().create_timer(0.1, true).timeout
