@@ -851,6 +851,9 @@ func _real_lua_syntax() -> void:
 
 func _probes() -> void:
 	var t = _t
+	# the probes outside the subset make the interpreter say what it skipped: one engine warning each (QUAL-08), all of them
+	# naming a fixture file
+	t.allow("LuaRuntime: res://tests/fixtures/lua/")
 	var raw := FileAccess.get_file_as_string(FIX + "probe_expected.json")
 	var doc: Variant = JSON.parse_string(raw)
 	t.check("probe_fixture_loaded", typeof(doc) == TYPE_DICTIONARY and (doc as Dictionary).has("cases") and str(doc.get("generator", "")).begins_with("Lua 5.4"), "probe_expected.json holds %d cases generated with %s" % [(doc as Dictionary).get("cases", []).size() if typeof(doc) == TYPE_DICTIONARY else 0, str((doc as Dictionary).get("generator", "?")) if typeof(doc) == TYPE_DICTIONARY else "?"])
@@ -866,7 +869,7 @@ func _probes() -> void:
 		files[str(c["probe"])] = true
 		if not ok:
 			failed += 1
-	t.expect_clean_since(mark, "replaying every probe (also the ones outside the subset) raises no engine error or warning")
+	t.expect_clean_since(mark, "replaying every probe (also the ones outside the subset) raises no engine error and no warning but the runtime messages of the fixtures")
 	t.check("lua_probes", failed == 0, "%d cases over %d files: %d exact, %d best effort, %d flagged-only; %d failed" % [(doc["cases"] as Array).size(), files.size(), counts["exact"], counts["best_effort"], counts["flagged"], failed])
 
 
@@ -1050,6 +1053,10 @@ func _flag_branch(flags: Dictionary, context: Dictionary, string_name_keys: bool
 
 func _semantics() -> void:
 	var t = _t
+	# the runtime messages of the inline scripts below are engine warnings (the first matching rule counts a message)
+	t.allow("LuaRuntime: res://x.lua:4 in u: unknown Lua function `nonexistent`")
+	t.allow("LuaRuntime: res://x.lua:")
+	t.allow("LuaRuntime: res://tests/where_")
 	# unknown api functions and constructs are logged once and never raise
 	var sid := "tests/fixtures/lua/semantics_inline"
 	_lr._scripts[sid] = _lr.parse_lua_source("kind = \"quest\"\nid = \"u\"\nfunction u(context)\n  api.nonexistent(\"x\")\n  local n = 3 * 4\n  api.nonexistent(\"y\")\n  return { ok = true, n = n }\nend\n", "res://x.lua")
@@ -1058,8 +1065,9 @@ func _semantics() -> void:
 	var r1: Variant = _lr._invoke_function(sid, "u", [{}])
 	var logged_after_first: int = _lr._logged_once.size()
 	var r2: Variant = _lr._invoke_function(sid, "u", [{}])
-	t.check("unknown_identifiers_log_once", logged_after_first >= 1 and _lr._logged_once.size() == logged_after_first, "an unknown api function is logged once (%d messages after two calls) and never as an engine warning" % _lr._logged_once.size())
-	t.expect_clean_since(mark, "unknown api functions and unsupported constructs raise no engine error or warning")
+	t.check("unknown_identifiers_log_once", logged_after_first >= 1 and _lr._logged_once.size() == logged_after_first, "an unknown api function is logged once (%d messages after two calls), as an engine warning that names file, line and function" % _lr._logged_once.size())
+	t.expect_clean_since(mark, "unknown api functions and unsupported constructs raise no engine error and no other warning")
+	t.expect(t.allowed_count("LuaRuntime: res://x.lua:4 in u: unknown Lua function `nonexistent`") == 1, "the unknown function is ONE engine warning for two calls (%d)" % t.allowed_count("LuaRuntime: res://x.lua:4 in u: unknown Lua function `nonexistent`"))
 	t.expect(typeof(r1) == TYPE_DICTIONARY and r1["ok"] == true and r2 == r1, "the function still returns its table")
 	_lr._scripts.erase(sid)
 	# a runtime message names the file, line and function, and each script reports its own mistake once (LUA-04)

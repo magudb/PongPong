@@ -27,8 +27,9 @@ extends Node
 ##   * A bare identifier that is not a local or parameter reads the WORLD FLAG of that name (`context.home_tier or home_tier or 1`).
 ##   * Comparing values of different types is false, never an engine error (`false == 3`).
 ##   * api.emit(name, payload) carries the payload; api.notification(title, message) runs both through tr().
-##   * Unknown api functions are logged once per script (print, not an engine warning) and answer nil; a runtime message
-##     names the file, the line and the function it comes from ("res://lua/x.lua:12 in get_dialogue: ...").
+##   * Unknown api functions answer nil. A runtime message (an unknown api function, a skipped statement, a comparison of
+##     unlike types: real Lua would raise) is an engine WARNING, once per script and message, and names the file, the line
+##     and the function it comes from ("LuaRuntime: res://lua/x.lua:12 in get_dialogue: ..."); it is kept in runtime_report.
 ##   * The social functions (api.get_hearts / add_hearts / is_birthday / festival) are late-bound to the SocialManager autoload
 ##     (S-core): without it they answer nil and change nothing. `api.festival()` answers "" (a TRUTHY string in Lua) when no
 ##     festival is on: compare it (`api.festival() ~= ""`), never test it.
@@ -73,7 +74,7 @@ var lint_on_load: bool = OS.is_debug_build()
 ## lint does not depend on it (a duplicate is a content bug of the file that owns the id, not a Lua subset violation).
 var data_report: Array[Dictionary] = []
 ## Messages of the Lua functions that ran since the last reload (an unknown api function, a skipped statement, a comparison
-## of unlike types ...): {path, line, function, message}, one per script and message, in order. Printed as "[Lua] ..." too.
+## of unlike types ...): {path, line, function, message}, one per script and message, in order; each one is also an engine warning.
 var runtime_report: Array[Dictionary] = []
 ## Milliseconds the last reload_scripts() needed (tests assert it stays small).
 var load_ms: int = 0
@@ -986,7 +987,7 @@ func _log_once(message: String) -> void:
 	_logged_once[key] = true
 	var path := str((_scripts.get(_cur_sid, {}) as Dictionary).get("source_path", _cur_sid))
 	runtime_report.append({"path": path, "line": _cur_line, "function": _cur_fn, "message": message})
-	print("[Lua] ", _where(), message)
+	push_warning("LuaRuntime: " + _where() + message)
 
 
 ## "res://lua/dialogue/x.lua:12 in get_dialogue: " for the running function, "" outside Lua.

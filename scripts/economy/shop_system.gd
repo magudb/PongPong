@@ -583,8 +583,9 @@ func _curve_price(shop_id: String, item_id: String, base: int) -> Variant:
 	return int(raw) if (typeof(raw) == TYPE_INT or typeof(raw) == TYPE_FLOAT) and float(raw) >= 0.0 else null
 
 
+## A data or contract error (an unknown shop, a stocked item without a def), once per message, as an engine warning.
 func _log_once(message: String) -> void:
 	if _logged.has(message):
 		return
 	_logged[message] = true
-	print("[Shop] ", message)
+	push_warning("ShopSystem: " + message)
