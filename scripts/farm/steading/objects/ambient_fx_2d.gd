@@ -70,6 +70,15 @@ func _resize() -> void:
 	leaves.position = Vector2(viewport.x * 0.6, -20)
 	leaves.emission_rect_extents = Vector2(viewport.x * 0.7, 6)
 
+## The canopy and the falling leaves sit on their own CanvasLayers, which the world's CanvasModulate does not reach: both copy its colour
+## (review REND-01). Summer's fireflies are additive light (a material) and keep their own glow.
 func _process(_delta: float) -> void:
-	if is_instance_valid(world) and world.day_night != null and canopy.modulate != world.day_night.color:
-		canopy.modulate = world.day_night.color
+	if not is_instance_valid(world) or world.day_night == null:
+		return
+	var tint: Color = world.day_night.color
+	if canopy.modulate != tint:
+		canopy.modulate = tint
+	if is_instance_valid(leaves):
+		var leaf_tint: Color = Color.WHITE if leaves.material != null else tint
+		if leaves.modulate != leaf_tint:
+			leaves.modulate = leaf_tint
