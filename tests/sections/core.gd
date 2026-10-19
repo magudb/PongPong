@@ -109,9 +109,11 @@ const FEATURE_SIGNALS := {
 	"item_discovered": "item_id:StringName,rarity:StringName,category:StringName",
 }
 
-## The devin-review fix round: flags are event-driven (IsoArea used to poll them at 4 Hz).
+## The devin-review fix round: flags are event-driven (IsoArea used to poll them at 4 Hz). The 2026-10-19 review: a Lua reload
+## (F9) tells the systems that copied Lua data (LUA-03).
 const REVIEW_SIGNALS := {
 	"flag_changed": "flag:StringName,value:Nil",
+	"lua_reloaded": "",
 }
 
 var t
