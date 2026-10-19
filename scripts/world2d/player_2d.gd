@@ -375,12 +375,15 @@ func use_selected() -> bool:
 							var harvest_cell := area.global_to_cell(global_position) + area.facing_step(direction)
 							ok = farm.harvest(harvest_cell) > 0 or farm.clear_crop(harvest_cell) or ok
 				"axe", "pickaxe":
-					ok = _at_farm() and farm.clear_crop(cell, false)
-					if not ok:
-						# The object in reach that takes a tool hit (a rock, a tree, a sprinkler), past nearer hosts that do not.
-						var host := nearest_interactable(func(h: Node) -> bool: return h.has_method("tool_hit"))
-						if host != null:
-							ok = bool(host.call("tool_hit", str(def.tool_type), int(def.get("power", 1)), self))
+					# The object in reach that takes a tool hit (a rock, a tree, a sprinkler), past nearer hosts that do not,
+					# comes first; only then a crop on the target cell, which the tool deliberately removes.
+					var host := nearest_interactable(func(h: Node) -> bool: return h.has_method("tool_hit"))
+					if host != null:
+						ok = bool(host.call("tool_hit", str(def.tool_type), int(def.get("power", 1)), self))
+					elif _at_farm() and farm.get_plot(cell) != null and farm.get_plot(cell).crop_id != &"":
+						ok = _remove_crop(cell)
+					else:
+						EventBus.whisper_requested.emit("UI_TOOL_NO_EFFECT")
 		"seed":
 			if _at_farm():
 				var reason: String = farm.plant(cell, item)
@@ -408,6 +411,18 @@ func use_selected() -> bool:
 		visual.play_action(&"interact", 1.4 * dig)
 	tool_used.emit(item, cell, ok)
 	return ok
+
+## An axe / pickaxe on a crop: a ripe one is harvested first (a full backpack keeps it in the ground), the rest is cleared to tilled soil.
+func _remove_crop(cell: Vector2i) -> bool:
+	var harvested := false
+	if farm.state_of(cell) == FarmGrid.State.READY:
+		harvested = farm.harvest(cell) > 0
+		if not harvested:
+			return false
+	var cleared: bool = farm.clear_crop(cell, false)
+	if cleared:
+		EventBus.whisper_requested.emit("FARM_CROP_CLEARED")
+	return harvested or cleared
 
 func _is_cow(host: Node) -> bool:
 	if not host is Animal2D:

@@ -1,7 +1,7 @@
 extends RefCounted
 ## Regressions from the 2026-10-19 review of player interaction, combat input and world hosts:
 ## telegraph-only damage (DUN-01), dodge direction (GAP3-06), the buffered dodge across a pause (GAP3-12), E reach
-## (GAP3-02) and the host choice of E and of the tools (GAP3-03).
+## (GAP3-02), the host choice of E and of the tools (GAP3-03) and the axe on crops (GAP4-02).
 const SECTION := "interaction_review"
 const TIMEOUT_S := 180.0
 
@@ -78,6 +78,7 @@ func run(t) -> void:
 	await _tool_targets(t)
 	await world.travel(&"farm", &"default")
 	WorldRoot2D.unregister_map(&"_t_interaction")
+	await _axe_on_crops(t)
 	gm.clear_config_overrides()
 
 
@@ -252,4 +253,73 @@ func _tool_targets(t) -> void:
 	player._tool_time = 0.0
 	sign_host.queue_free()
 	rock.queue_free()
+	await t.physics(2)
+
+
+## A farm cell to aim at from the cell before it (facing S): `pick` (cell -> bool) decides; Vector2i.MAX when none fits.
+func _aim_cell(t, cells: Array, pick: Callable) -> Vector2i:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	for cell in cells:
+		var stand: Vector2i = cell - area.facing_step(0)
+		if not area.is_walkable(stand) or not pick.call(cell):
+			continue
+		player.global_position = area.cell_to_global(stand)
+		player.facing8 = 0
+		player.state = PlayerBody2D.S.FREE
+		player._tool_time = 0.0
+		player.stamina = player.max_stamina
+		return cell
+	return Vector2i.MAX
+
+
+func _whispers(keys: Array) -> Callable:
+	var listen := func(key: String) -> void: keys.append(key)
+	EventBus.whisper_requested.connect(listen)
+	return listen
+
+
+## GAP4-02: the axe / pickaxe acts on the object it reaches first, harvests a ripe crop before clearing it, and says so when it
+## clears a living one. It cleared any crop on the target cell first, losing a READY crop's yield, even when aimed past it.
+func _axe_on_crops(t) -> void:
+	var world: WorldRoot2D = t.world()
+	var area: IsoArea = world.area
+	var player: Player2D = world.player
+	var farm: FarmGrid = world.farm
+	var eco: Node = t.autoload("EconomyManager")
+	eco.add_item(&"turnip_seeds", 3, true)
+	player.hotbar.assign(0, &"axe_wooden")
+	player.hotbar.select(0)
+	var tool_free := func(cell: Vector2i) -> bool:
+		player.global_position = area.cell_to_global(cell - area.facing_step(0))
+		player.facing8 = 0
+		return farm.state_of(cell) in [FarmGrid.State.EMPTY, FarmGrid.State.TILLED] and farm.can_till(cell) \
+			and player.nearest_interactable(func(h: Node) -> bool: return h.has_method("tool_hit")) == null
+	var cell := _aim_cell(t, farm.farmable_cells(), tool_free)
+	if cell == Vector2i.MAX:
+		t.fail("no free field cell to aim the axe at")
+		return
+	var keys: Array = []
+	var listen := _whispers(keys)
+	if farm.state_of(cell) == FarmGrid.State.EMPTY:
+		farm.till(cell)
+	farm.plant(cell, &"turnip_seeds")
+	farm.get_plot(cell).state = FarmGrid.State.READY
+	var turnips: int = eco.count_item(&"turnip")
+	var ripe_ok: bool = player.use_selected()
+	t.check("axe_harvests_ripe_crop_first", ripe_ok and eco.count_item(&"turnip") > turnips and farm.state_of(cell) == FarmGrid.State.TILLED, "ok %s turnips %d -> %d" % [ripe_ok, turnips, eco.count_item(&"turnip")])
+	_aim_cell(t, [cell], func(_c: Vector2i) -> bool: return true)
+	farm.plant(cell, &"turnip_seeds")
+	keys.clear()
+	t.check("axe_clears_living_crop_with_a_word", player.use_selected() and farm.state_of(cell) == FarmGrid.State.TILLED and keys == ["FARM_CROP_CLEARED"], str(keys))
+	_aim_cell(t, [cell], func(_c: Vector2i) -> bool: return true)
+	farm.plant(cell, &"turnip_seeds")
+	var rock: RockProbe = _probe(t, RockProbe.new(), area.cell_to_global(cell + area.facing_step(7)))
+	await t.physics(2)
+	t.check("axe_hits_object_in_reach_before_crop", player.use_selected() and rock.hits.size() == 1 and farm.state_of(cell) == FarmGrid.State.PLANTED, "hits %s state %d" % [rock.hits, farm.state_of(cell)])
+	rock.queue_free()
+	farm.clear_crop(cell, false)
+	EventBus.whisper_requested.disconnect(listen)
+	player.state = PlayerBody2D.S.FREE
+	player._tool_time = 0.0
 	await t.physics(2)

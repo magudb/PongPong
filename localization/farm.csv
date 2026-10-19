@@ -1,5 +1,6 @@
 keys,da,en
 FARM_CELL_RESERVED,Her skal der være plads til gården. Prøv et andet felt.,The farm needs this space. Try another plot.
+FARM_CROP_CLEARED,Planten er fjernet. Jorden er klar igen.,The plant is cleared away. The soil is ready again.
 UI_TOOL_NO_EFFECT,Her er der ikke brug for det lige nu.,That is not needed here right now.
 UI_NOT_IN_SEASON,Frøet må vente på sin årstid.,This seed needs to wait for its season.
 UI_TIRED,Tag et lille hvil. Energien kommer tilbage.,Take a short rest. Your energy will return.
