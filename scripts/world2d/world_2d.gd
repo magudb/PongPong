@@ -370,6 +370,11 @@ static func is_parkable(a: IsoArea) -> bool:
 	return a.projection == &"iso" and not a.map.is_builder()
 
 
+## Is `id` a parked area (left earlier, kept alive with its nodes outside the tree)?
+func is_parked(id: StringName) -> bool:
+	return _cache.has(id)
+
+
 func _enter(id: StringName, spawn: StringName) -> bool:
 	if not has_area(id):
 		last_travel_error = "no such area: %s" % id
@@ -506,8 +511,6 @@ func travel(area_id: StringName, spawn: StringName) -> void:
 	var tw: Tween = create_tween()
 	tw.tween_property(_fade, "color:a", 1.0, FADE_OUT)
 	await tw.finished
-	await art_prefetch.finish()
-	art_prefetch.request(area_id)
 	await art_prefetch.finish()
 	last_travel_profile.prefetch_and_fade_ms = (Time.get_ticks_usec()-began)/1000.0
 	last_travel_profile.prepared_paths = art_prefetch.staged.keys()

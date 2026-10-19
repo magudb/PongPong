@@ -150,6 +150,7 @@ func run(t) -> void:
 	await _sleep_and_passout(t)
 	await _save_dict_and_intro(t)
 	_warm_jobs(t)
+	await _art_prefetch_targets(t)
 	await _clear_colour_after_quit(t)
 	_cleanup(t)
 
@@ -2627,6 +2628,37 @@ func _warm_jobs(t) -> void:
 	t.check("warm_clips_skips_the_dummy_renderer", w.warm_skipped == skipped + 1 and near.visual.warm_calls == 0, "headless: no threaded sheet loads (they raced the dummy renderer in 2 of 120 runs); counted in warm_skipped")
 	near.queue_free()
 	far.queue_free()
+
+
+# ================================================================== art prefetch: a new destination, a parked area
+
+## AreaArtPrefetch.request() for another destination drops the old one's loads from what finish() waits for (the fade must not wait for
+## the city the player turned away from), still collects them, and does not re-parse a parked area (review REND-13).
+func _art_prefetch_targets(t) -> void:
+	var w: WorldRoot2D = _world as WorldRoot2D
+	var pf: AreaArtPrefetch = w.art_prefetch
+	pf.release()
+	# headless stages synchronously, so the approach load is injected by hand (the theme: no texture upload under the dummy renderer)
+	var path := "res://assets/ui/theme.tres"
+	ResourceLoader.load_threaded_request(path)
+	pf.pending.append(path)
+	pf.request(&"farm")
+	var moved: bool = pf.pending.is_empty() and pf.abandoned.has(path) and pf.staged.is_empty()
+	var started: float = t.game_seconds()
+	await pf.finish()
+	var waited: float = t.game_seconds() - started
+	var collected: bool = await t.until(func() -> bool: return pf.abandoned.is_empty(), 10.0)
+	t.check("prefetch_abandons_the_old_destination", moved and waited < 0.05 and collected,
+		"a request for another area moves the pending load to `abandoned` (%s), finish() returns at once (%.3f s), _poll still collects it (%s)" % [moved, waited, collected])
+	var room := &"int_froebutikken"
+	w._cache[room] = null                    # parked (the value is never read by the prefetch)
+	pf.request(room)
+	var skipped: bool = pf.staged.is_empty() and pf.pending.is_empty()
+	w._cache.erase(room)
+	pf.request(room)
+	var staged_fresh: int = pf.staged.size()
+	pf.release()
+	t.check("prefetch_skips_a_parked_area", skipped and staged_fresh > 0, "parked: nothing parsed or staged; not parked: %d paths staged" % staged_fresh)
 
 
 class FakeVisual extends RefCounted:
