@@ -2455,12 +2455,12 @@ func _save_dict_and_intro(t) -> void:
 			if is_instance_valid(pa) and (pa as Node).get_parent() == null:
 				parked_before.append(pa)
 		t.new_game()
-		sm.set("pending_world", {"v": 1, "area": "_fixture_ortho", "player_pos": [310.0, 140.0], "placed": [{"item": "fence_x", "cell": [1, 1]}], "area_flags": {"_fixture_ortho": {"seen": true}}})
+		sm.set("pending_world", {"v": 1, "area": "_fixture_ortho", "player_pos": [310.0, 140.0], "placed": [{"item": "fence", "cell": [1, 1]}], "area_flags": {"_fixture_ortho": {"seen": true}}})     # a real farm placeable: an unknown item is set aside as an orphan (SAVE-07)
 		var ok: bool = await t.change_scene("res://scenes/main/world.tscn", 20.0)
 		await t.until(func() -> bool: return t.player() != null, 10.0)
 		await t.frames(5)
 		var w2: Node = t.world()
-		t.check("pending_world_is_consumed_in_ready", ok and w2 != null and w2.area.map.id == &"_fixture_ortho" and w2.player.global_position.distance_to(Vector2(310, 140)) < 2.0 and w2.placed_items == [{"item": "fence_x", "cell": [1, 1]}] and (sm.get("pending_world") as Dictionary).is_empty(),
+		t.check("pending_world_is_consumed_in_ready", ok and w2 != null and w2.area.map.id == &"_fixture_ortho" and w2.player.global_position.distance_to(Vector2(310, 140)) < 2.0 and w2.placed_items == [{"item": "fence", "cell": [1, 1]}] and (sm.get("pending_world") as Dictionary).is_empty(),
 			"Continue starts the world in the saved area at the saved position; the hand-over dictionary is cleared")
 		t.check("welcome_toast_is_not_shown_on_continue_in_the_saved_area", toasts.is_empty(), "Continue in the area it was saved in shows no welcome toast: %s" % [toasts])
 		toasts.clear()

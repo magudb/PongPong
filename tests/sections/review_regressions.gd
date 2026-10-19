@@ -538,11 +538,12 @@ func _animal_validation() -> void:
 	_fresh()
 	ah.from_dict(_animal())
 	var before: Dictionary = ah.to_dict()
+	# (an unknown species and an unknown building type used to be in this list; since SAVE-07 they are content drift that loads into
+	# the orphans bucket, checked below)
 	var invalid: Array = [
-		_animal("missing_species"),
 		{"animals": {"bad": 7}},
 		{"animals": []},
-		{"buildings": {"bad": {"building_type": "missing_building"}}},
+		{"buildings": {"bad": {"building_type": ""}}},
 		_animal("chicken", {"happiness": "happy"}),
 		_animal("chicken", {"age_days": -1}),
 		_animal("chicken", {"products_ready": 1.5}),
@@ -557,8 +558,12 @@ func _animal_validation() -> void:
 	for data in invalid:
 		rejected = rejected and not ah.from_dict(data) and ah.to_dict() == before
 	t.check("invalid_husbandry_records_rejected_without_mutation", rejected, "")
+	var drifted := _animal("missing_species")
+	drifted["buildings"] = {"building_1": {"id": "building_1", "building_type": "missing_building", "animals_inside": []}}
+	t.check("unknown_husbandry_types_kept_as_orphans", ah.from_dict(drifted) and ah.animals.is_empty() and ah.buildings.is_empty() and ah.orphans.animals.has("animal_1") and ah.orphans.buildings.has("building_1"), "")
+	ah.from_dict(before)
 	var payload: Dictionary = sm.gather_payload()
-	payload["husbandry"] = _animal("missing_species")
+	payload["husbandry"] = _animal("chicken", {"happiness": "happy"})
 	var file := FileAccess.open(sm.slot_path(1), FileAccess.WRITE)
 	file.store_string(JSON.stringify(payload))
 	file.close()
