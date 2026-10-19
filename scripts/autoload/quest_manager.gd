@@ -108,6 +108,7 @@ var completed_days: Dictionary = {}
 var pending_rewards: Dictionary = {}
 
 var _claiming_rewards: bool = false
+var _claim_again: bool = false           # a claim was asked for while one ran (a reward completed another quest): run another pass
 var _reward_claim_queued: bool = false
 var _refresh_queued: bool = false
 var _accept_counter: int = 0
@@ -183,6 +184,7 @@ func reset() -> void:
 	offered_quests.clear()
 	completed_days.clear()
 	pending_rewards.clear()
+	_claim_again = false
 	_reward_claim_queued = false
 	_refresh_queued = false
 	_accept_counter = 0
@@ -628,12 +630,25 @@ func _grant_friendship(hearts_by_npc: Dictionary) -> void:
 
 
 ## Delivers what fits, retaining the rest in the save. Called again after inventory changes and successful loads.
-## Returns true when nothing remains owed. The guard prevents item-gained listeners from claiming a grant twice.
+## Returns true when nothing remains owed. The guard prevents item-gained listeners from claiming a grant twice; a claim asked for
+## during a pass (a reward that completed another quest owes that quest's rewards) runs as one more pass before the guard is released.
 func claim_rewards() -> bool:
 	if _claiming_rewards:
+		_claim_again = true
 		return pending_rewards.is_empty()
 	_claiming_rewards = true
+	_claim_again = true
+	while _claim_again:
+		_claim_again = false
+		_claim_pass()
+	_claiming_rewards = false
+	return pending_rewards.is_empty()
+
+
+func _claim_pass() -> void:
 	for quest_id in pending_rewards.keys():
+		if not pending_rewards.has(quest_id):
+			continue
 		var owed: Dictionary = pending_rewards[quest_id]
 		for item_id in owed.keys():
 			var amount := int(owed[item_id])
@@ -645,8 +660,6 @@ func claim_rewards() -> bool:
 				owed[item_id] = amount
 		if owed.is_empty():
 			pending_rewards.erase(quest_id)
-	_claiming_rewards = false
-	return pending_rewards.is_empty()
 
 
 func _on_inventory_changed(_inventory: Dictionary) -> void:

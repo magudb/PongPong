@@ -412,6 +412,19 @@ func _quest_rewards() -> void:
 	invalid["pending_rewards"] = {"review_save_during_grant": {"turnip": "bad"}}
 	t.check("invalid_pending_rewards_rejected_without_mutation", not qm.from_dict(invalid) and qm.to_dict() == before, "")
 
+	# A reward that completes another quest (SYS-07): that quest's rewards arrive in the same claim, not on the next pickup.
+	_fresh()
+	_full_backpack()
+	_quest("review_chain_a", "x", {"items": {"turnip": 1}})
+	_quest("review_chain_b", "collect_turnip", {"items": {"carrot": 2}})
+	qm.accept_quest(&"review_chain_a")
+	qm.accept_quest(&"review_chain_b")
+	qm.update_objective(&"review_chain_a", &"x")
+	eco.remove_item(&"wood", 99)
+	eco.remove_item(&"wood", 99)
+	await t.frames(2)
+	t.check("chained_quest_rewards_claimed_together", qm.is_completed(&"review_chain_b") and eco.count_item(&"turnip") == 1 and eco.count_item(&"carrot") == 2 and qm.pending_rewards.is_empty(), "turnip %d, carrot %d, owed %s" % [eco.count_item(&"turnip"), eco.count_item(&"carrot"), str(qm.pending_rewards)])
+
 
 func _repeatable_quests() -> void:
 	_fresh()
