@@ -218,8 +218,13 @@ func dodge() -> bool:
 			return false
 	elif player.state != S.FREE:
 		return false
+	# The stick / keys are already a GROUND vector (walking uses them as one), so the
+	# dodge runs parallel to the walk; only the screen facing row needs converting.
 	var direction := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	_dodge_direction = Iso.to_ground(direction if direction != Vector2.ZERO else player.facing_vec).normalized()
+	if direction == Vector2.ZERO:
+		var precise: Variant = player.get("combat_aim")
+		direction = precise if precise is Vector2 and precise.length_squared() > .01 else Iso.to_ground(player.facing_vec)
+	_dodge_direction = direction.normalized()
 	player.state = S.DODGE
 	_remaining = float(GameData.combat("dodge_time", 0.3))
 	durations.dodge = float(GameData.combat("dodge_cooldown", 0.9))
@@ -311,10 +316,14 @@ func _shake_camera(strength: float) -> void:
 func _effect(method: StringName, args: Array) -> void:
 	Svc.static_call(FX, method, args)
 
-func cancel_action() -> void:
-	_hit.clear()
+## A press buffered before a pause or modal is dropped: it never fires on resume.
+func clear_buffer() -> void:
 	_buffer = &""
 	_buffer_time = 0.0
+
+func cancel_action() -> void:
+	_hit.clear()
+	clear_buffer()
 	attack_held = false
 	hit_stop = 0
 	extra_altitude = 0.0

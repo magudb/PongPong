@@ -1,6 +1,6 @@
 extends RefCounted
 ## Regressions from the 2026-10-19 review of player interaction, combat input and world hosts:
-## telegraph-only damage (DUN-01).
+## telegraph-only damage (DUN-01) and dodge direction (GAP3-06).
 const SECTION := "interaction_review"
 const TIMEOUT_S := 180.0
 
@@ -16,6 +16,7 @@ func run(t) -> void:
 	await t.frames(2)
 	DungeonRun.apply_preset("none")
 	await _telegraph_only(t)
+	await _dodge_direction(t)
 	gm.clear_config_overrides()
 
 
@@ -57,4 +58,27 @@ func _telegraph_only(t) -> void:
 	player.revive(origin + Vector2(-300, 0))
 	player.combat._iframes = 0
 	await t.physics(2)
+
+
+## GAP3-06: a dodge runs parallel to the walk. The stick is already a ground vector; converting it again made a diagonal dodge 14 degrees steeper.
+func _dodge_direction(t) -> void:
+	var player: Player2D = t.world().player
+	player.combat.cooldowns.dodge = 0
+	t.hold(&"move_right")
+	t.hold(&"move_back")
+	await t.physics(6)
+	var walk := Input.get_vector("move_left", "move_right", "move_forward", "move_back").normalized()
+	var began: bool = player.combat.dodge()
+	var dodge: Vector2 = player.combat._dodge_direction
+	t.release(&"move_right")
+	t.release(&"move_back")
+	t.check("diagonal_dodge_parallel_to_walk", began and absf(rad_to_deg(dodge.angle_to(walk))) < 0.5,
+		"walk %s, dodge %s (%.1f degrees apart)" % [walk, dodge, rad_to_deg(dodge.angle_to(walk))])
+	await t.seconds(float(GameData.combat("dodge_time", 0.3)) + 0.1)
+	# without input the dodge follows the last precise walking direction
+	player.combat.cooldowns.dodge = 0
+	player.combat_aim = Vector2(1, 1).normalized()
+	t.check("idle_dodge_follows_last_walk", player.combat.dodge() and player.combat._dodge_direction.is_equal_approx(Vector2(1, 1).normalized()), str(player.combat._dodge_direction))
+	await t.seconds(float(GameData.combat("dodge_time", 0.3)) + 0.1)
+	player.combat.cooldowns.dodge = 0
 
