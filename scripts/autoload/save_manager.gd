@@ -5,7 +5,8 @@ extends Node
 ## (AUTO_SLOT = 6, an int so it travels through EventBus.save_completed(slot: int)). A manual save rolls the previous
 ## file of its slot to save_N.bak.json first (only when that file is a valid save payload); the auto slot has no backup.
 ## Every write goes to <file>.tmp, is read back and compared, and only then renamed over the real file: a crash or a
-## full disk never leaves half a save behind and never replaces a good save with a bad one.
+## full disk never leaves half a save behind and never replaces a good save with a bad one (on Windows the old file is moved
+## to <file>.old first, see _commit_temp; start-up finishes an interrupted replacement, see _recover_interrupted_writes).
 ##
 ## AUTOSAVE writes ONLY the auto slot, never a manual one: every AUTOSAVE_INTERVAL_SECONDS real seconds while the phase
 ## is PLAYING, and once after every day end (EventBus.day_ended fires at the bed and at every crossed day end, game hour 26 = 02:00). The day-end
@@ -57,9 +58,10 @@ extends Node
 ##   gather_payload() validate_payload(data) slot_path(slot) backup_path(slot)   constants MANUAL_SLOTS AUTO_SLOT NO_SLOT FEATURE_ORDERS
 ##   vars current_slot pending_world last_error autosave_enabled auto_save_interval_seconds save_dir clock_override world_scene
 ##
-## TEST SEAMS (no behaviour of their own): save_dir, clock_override and world_scene are variables; _system_bias_minutes() (the time zone
-## offset used to read a v1 local time stamp) and _store_text(file, text) (the one place where bytes go into the temp file)
-## are methods that a test overrides in a subclass, to pin the time zone and to model a disk that loses bytes silently.
+## TEST SEAMS (no behaviour of their own): save_dir, clock_override, world_scene and replace_via_old are variables; _system_bias_minutes()
+## (the time zone offset used to read a v1 local time stamp), _store_text(file, text) (the one place where bytes go into the temp file)
+## and _replace_file(source, destination) are methods that a test overrides in a subclass, to pin the time zone, to model a disk
+## that loses bytes silently and a move that fails.
 
 const SAVE_DIR := "user://saves"
 const SAVE_FILE := "save_%d.json"
@@ -105,6 +107,9 @@ var auto_save_interval_seconds: float = AUTOSAVE_INTERVAL_SECONDS
 var autosave_enabled: bool = true
 ## {slot, code, detail} of the last failed load or save, {} after a success. code: missing corrupt invalid version apply scene slot write gather event.
 var last_error: Dictionary = {}
+## How a verified temp file replaces its target (see _commit_temp): through <file>.old on Windows, a plain atomic rename elsewhere.
+## A test seam too (a test runs the Windows protocol on any machine).
+var replace_via_old: bool = OS.get_name() == "Windows"
 ## Test seam: a value >= 0 replaces Time.get_unix_time_from_system() as the time stamp of a save.
 var clock_override: float = -1.0
 ## The scene load_and_enter / continue_latest change to (a test points it at a scene that does not exist; the game never changes it).
@@ -149,7 +154,7 @@ class ApplyGuard extends Logger:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_ensure_dir()
-	_remove_stale_temp_files()
+	_recover_interrupted_writes()
 	EventBus.new_game_started.connect(reset)
 	EventBus.day_ended.connect(_on_day_ended)
 
@@ -212,7 +217,7 @@ func has_any_save() -> bool:
 func delete_save(slot: int = 0) -> void:
 	if not is_valid_slot(slot):
 		return
-	for path in [slot_path(slot), backup_path(slot), slot_path(slot) + ".tmp"]:
+	for path in [slot_path(slot), backup_path(slot), slot_path(slot) + ".tmp", slot_path(slot) + ".old"]:
 		if path != "" and FileAccess.file_exists(path):
 			DirAccess.remove_absolute(path)
 	if current_slot == slot:
@@ -950,11 +955,27 @@ func _ensure_dir() -> void:
 		DirAccess.make_dir_recursive_absolute(save_dir)
 
 
-## A crash between the temp write and the rename leaves a .tmp behind; it is garbage, the real file is intact.
-func _remove_stale_temp_files() -> void:
-	for file_name in DirAccess.get_files_at(save_dir):
-		if file_name.ends_with(".tmp"):
-			DirAccess.remove_absolute(save_dir.path_join(file_name))
+## Finishes or undoes a write that a crash (or a failed move) interrupted, at start-up. <file>.tmp next to an intact <file> is
+## garbage (the crash came before the rename) and is removed. A <file>.tmp WITHOUT <file> is a verified write whose move failed
+## (or a Windows replacement cut off after the old file was moved aside): when it parses as a JSON object it becomes the file.
+## A <file>.old (the file a Windows replacement moved aside) is put back when nothing better took its place, else removed.
+func _recover_interrupted_writes() -> void:
+	var files := DirAccess.get_files_at(save_dir)
+	for file_name in files:
+		if not file_name.ends_with(".tmp"):
+			continue
+		var temp := save_dir.path_join(file_name)
+		var target := temp.trim_suffix(".tmp")
+		if not FileAccess.file_exists(target) and _read_json_file(temp)["state"] == "ok" and _replace_file(temp, target) == OK:
+			continue
+		DirAccess.remove_absolute(temp)
+	for file_name in files:
+		if not file_name.ends_with(".old"):
+			continue
+		var old := save_dir.path_join(file_name)
+		var target := old.trim_suffix(".old")
+		if FileAccess.file_exists(target) or _replace_file(old, target) != OK:
+			DirAccess.remove_absolute(old)
 
 
 ## {state: missing | unreadable | corrupt | ok, data, detail}. The first byte of a save must be '{' (a binary file is
@@ -995,7 +1016,7 @@ func _store_text(file: FileAccess, text: String) -> void:
 	file.store_string(text)
 
 
-## Temp file, read back and compared, rename over the target. False leaves the target as it was.
+## Temp file, read back and compared, then moved over the target (_commit_temp). False leaves the target as it was.
 func _write_atomic(path: String, text: String) -> bool:
 	var temp := path + ".tmp"
 	var file := FileAccess.open(temp, FileAccess.WRITE)
@@ -1008,11 +1029,41 @@ func _write_atomic(path: String, text: String) -> bool:
 	if write_error != OK or FileAccess.get_file_as_bytes(temp) != text.to_utf8_buffer():
 		DirAccess.remove_absolute(temp)
 		return false
-	var rename_error := _replace_file(temp, path)
-	if rename_error != OK:
-		DirAccess.remove_absolute(temp)
+	return _commit_temp(temp, path)
+
+
+## Moves a verified temp file over `path`. A POSIX rename replaces the target atomically. The engine's Windows rename deletes the
+## target and THEN moves (DirAccessWindows::rename), so a move that fails there (an antivirus or backup tool holding the temp)
+## would leave no file at all: with replace_via_old the old file is first moved aside to <path>.old, the temp moved in, the .old
+## removed, and a failed move puts the .old back. A verified temp is never deleted while the target is missing; whatever a
+## failure leaves behind, _recover_interrupted_writes() sorts out at the next start.
+func _commit_temp(temp: String, path: String) -> bool:
+	if not replace_via_old:
+		if _replace_file(temp, path) == OK:
+			return true
+		if _occupied(path):                    # the old file is still there: the temp is only garbage
+			DirAccess.remove_absolute(temp)
 		return false
+	var old := path + ".old"
+	var had_target := FileAccess.file_exists(path)
+	if had_target:
+		if FileAccess.file_exists(old):
+			DirAccess.remove_absolute(old)
+		if _replace_file(path, old) != OK:     # nothing was moved: the target is as it was
+			DirAccess.remove_absolute(temp)
+			return false
+	if _replace_file(temp, path) != OK:
+		if had_target and _replace_file(old, path) == OK:
+			DirAccess.remove_absolute(temp)
+		return false
+	if had_target:
+		DirAccess.remove_absolute(old)
 	return true
+
+
+## A file or a directory sits at `path`.
+func _occupied(path: String) -> bool:
+	return FileAccess.file_exists(path) or DirAccess.dir_exists_absolute(path)
 
 
 ## Replacement failure must preserve the existing file; also a seam for disk-failure probes.
@@ -1042,8 +1093,7 @@ func _roll_backup(slot: int) -> void:
 	if DirAccess.copy_absolute(path, temp) != OK:
 		DirAccess.remove_absolute(temp)
 		return
-	if _replace_file(temp, backup) != OK:
-		DirAccess.remove_absolute(temp)
+	_commit_temp(temp, backup)
 
 
 # ------------------------------------------------------------------ feedback

@@ -90,9 +90,18 @@ class FakeSection extends Node:
 class ProbeManager extends "res://scripts/autoload/save_manager.gd":
 	var bias_minutes := 0
 	var lose_bytes := false
+	var fail_temp_moves := false               # moving a .tmp into place fails (an antivirus or backup tool holds it)
+	var delete_target_first := false           # ... after the destination was deleted, as the engine's Windows rename does
 
 	func _system_bias_minutes() -> int:
 		return bias_minutes
+
+	func _replace_file(source: String, destination: String) -> Error:
+		if fail_temp_moves and source.ends_with(".tmp"):
+			if delete_target_first and FileAccess.file_exists(destination):
+				DirAccess.remove_absolute(destination)
+			return ERR_FILE_CANT_WRITE
+		return super._replace_file(source, destination)
 
 	func _store_text(file: FileAccess, text: String) -> void:
 		file.store_string(text.substr(0, int(text.length() / 2.0)) if lose_bytes else text)
@@ -1210,8 +1219,57 @@ func _test_slots_and_backup() -> void:
 	second.save_dir = _scratch
 	t.root.add_child(second)
 	t.check("stale_temp_files_swept", not FileAccess.file_exists(sm.save_dir.path_join("save_4.json.tmp")) and _read_text(sm.save_dir.path_join("save_4.json")) == "keep me",
-		"a crash leftover (.tmp) is removed when SaveManager starts, real saves stay")
+		"a crash leftover (.tmp) next to its intact file is removed when SaveManager starts, real saves stay")
 	second.free()
+	_test_interrupted_replacement()
+
+
+## SAVE-03: a verified temp file is never deleted while its target is missing, the Windows replacement goes through <file>.old,
+## and start-up finishes whatever an interrupted replacement left behind.
+func _test_interrupted_replacement() -> void:
+	_fresh()
+	_set_state(100, 1)
+	sm.save_game(1)
+	# the engine's Windows rename deleted the target, then the move failed: the verified temp stays, it is the only copy
+	var windowsish := _new_probe()
+	windowsish.fail_temp_moves = true
+	windowsish.delete_target_first = true
+	_set_state(200, 2)
+	var failed: bool = not windowsish.save_game(1)
+	t.check("failed_move_keeps_verified_temp", failed and not FileAccess.file_exists(sm.slot_path(1)) and _gold_in(sm.slot_path(1) + ".tmp") == 200 and windowsish.last_error.get("code") == "write",
+		"target deleted, move failed: save_game false, save_1.json.tmp (gold %d) is kept" % _gold_in(sm.slot_path(1) + ".tmp"))
+	windowsish.free()
+	var recovered := _new_probe()
+	t.check("orphan_temp_promoted_at_start", _gold_in(sm.slot_path(1)) == 200 and not FileAccess.file_exists(sm.slot_path(1) + ".tmp") and recovered.inspect_slot(1)["state"] == &"ok",
+		"the next start makes the orphaned temp the save (gold %d)" % _gold_in(sm.slot_path(1)))
+	recovered.free()
+	# a temp that does not parse (a crash while the very first save of a slot was written) is garbage, not a save
+	_write_text(sm.slot_path(5) + ".tmp", "{ half")
+	var swept := _new_probe()
+	t.check("orphan_damaged_temp_removed", not FileAccess.file_exists(sm.slot_path(5) + ".tmp") and not FileAccess.file_exists(sm.slot_path(5)), "a damaged orphan .tmp is removed, no save_5.json appears")
+	swept.free()
+	# the Windows protocol: old file aside, temp in, .old gone; a failed move puts the old file back
+	var aside := _new_probe()
+	aside.replace_via_old = true
+	_set_state(300, 3)
+	var moved: bool = aside.save_game(1)
+	t.check("replace_via_old_saves", moved and _gold_in(sm.slot_path(1)) == 300 and not FileAccess.file_exists(sm.slot_path(1) + ".old") and not FileAccess.file_exists(sm.slot_path(1) + ".tmp") and _gold_in(sm.backup_path(1)) == 200,
+		"save_1.json gold %d, .bak gold %d, no .old or .tmp left" % [_gold_in(sm.slot_path(1)), _gold_in(sm.backup_path(1))])
+	aside.fail_temp_moves = true
+	_set_state(400, 4)
+	var refused: bool = not aside.save_game(1)
+	t.check("replace_via_old_failure_restores_target", refused and _gold_in(sm.slot_path(1)) == 300 and not FileAccess.file_exists(sm.slot_path(1) + ".old") and not FileAccess.file_exists(sm.slot_path(1) + ".tmp"),
+		"the move of the temp failed: the old file is back in place (gold %d), nothing left over" % _gold_in(sm.slot_path(1)))
+	aside.free()
+	# a crash between the two moves: only save_1.json.old (and no usable temp) is left: start-up puts it back; next to a file it is removed
+	DirAccess.rename_absolute(sm.slot_path(1), sm.slot_path(1) + ".old")
+	_write_text(sm.slot_path(2) + ".old", "older")
+	_set_state(500, 5)
+	sm.save_game(2)
+	var restorer := _new_probe()
+	t.check("old_file_restored_at_start", _gold_in(sm.slot_path(1)) == 300 and not FileAccess.file_exists(sm.slot_path(1) + ".old") and _gold_in(sm.slot_path(2)) == 500 and not FileAccess.file_exists(sm.slot_path(2) + ".old"),
+		"save_1.json.old became save_1.json (gold %d); save_2.json.old next to save_2.json was removed" % _gold_in(sm.slot_path(1)))
+	restorer.free()
 
 
 ## current_slot is a MANUAL slot or NO_SLOT, never the auto slot: a caller doing save_game(current_slot) after Continue /
