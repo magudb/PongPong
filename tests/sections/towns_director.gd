@@ -82,6 +82,7 @@ func run(t) -> void:
 			t.check("both_talk_hosts_forward_to_keeper", talk_hosts == 2)
 			await _talk(t, director, "merchant_pip")
 	await _crowd(t, false)
+	await _arrivals(t)
 	await _park(t)
 	await _curfew(t)
 	gm.clear_config_overrides()
@@ -109,6 +110,7 @@ func _park(t) -> void:
 	await t.world().travel(&"hyggebyen", &"default")
 	await t.frames(4)
 	var old := _director(t)
+	var grid: NavGrid = old.nav
 	var old_actors: Array = old.live.values().map(func(actor): return weakref(actor))
 	for i in 30:
 		await t.world().travel(&"farm", &"default")
@@ -118,6 +120,25 @@ func _park(t) -> void:
 		await t.world().travel(&"hyggebyen", &"default")
 		await t.frames(3)
 		t.check("park_reenter_" + str(i), _director(t) == old and old.ready_for_population and t.tree.get_nodes_in_group("town_director").size() == 1 and NpcDirector._active.size() == 1)
+	# A parked town keeps its baked grid; the city's level graph and reflowed festival posts are shared by every entry (SIM-05).
+	t.check("parked_town_keeps_its_grid", grid != null and old.nav == grid and old.init_ms > 0.0, "re-entry initialization %.3f ms" % old.init_ms)
+	await t.world().travel(&"traetoppen", &"default")
+	await t.frames(4)
+	var city := _director(t)
+	var city_nav: LevelNav = city.level_nav
+	var posts := {}
+	for name in city.anchors:
+		if str(name).begins_with("fest_"):
+			posts[name] = city.anchors[name]
+	await t.world().travel(&"hyggebyen", &"default")
+	await t.frames(3)
+	await t.world().travel(&"traetoppen", &"default")
+	await t.frames(4)
+	var again := _director(t)
+	var same_posts := not posts.is_empty() and posts.keys().all(func(name): return again.anchors.get(name) == posts[name])
+	t.check("city_reentry_reuses_static_geometry", again != city and city_nav != null and again.level_nav == city_nav and same_posts, "re-entry initialization %.3f ms" % again.init_ms)
+	await t.world().travel(&"hyggebyen", &"default")
+	await t.frames(3)
 	var started := Time.get_ticks_usec()
 	for i in 500:
 		old._physics_process(1.0 / 60)
@@ -134,6 +155,79 @@ func _park(t) -> void:
 	tm.set_time_scale(1.0)
 	gm.set_config_override("time.minutes_per_real_second", 0.0)
 	t.check("director_follows_the_clock_rate", is_equal_approx(scaled, 4.0) and paused == 0.0, "scaled %s paused %s" % [scaled, paused])
+
+## Seats, arrivals and the minute tick of a running town: stable seats (SIM-08), quiet resyncs (SIM-01), staged sheets (REND-02).
+func _arrivals(t) -> void:
+	await t.world().travel(&"hyggebyen", &"default")
+	await t.frames(4)
+	var director := _director(t)
+	var place := ""
+	for name in RouteTable.anchors_of("hyggebyen"):
+		var cap := RouteTable.capacity("hyggebyen." + str(name))
+		if cap >= 3 and cap < 99 and not str(name).begins_with("fest_"):
+			place = "hyggebyen." + str(name)
+			break
+	var everyone: Array = Routines.npc_ids()
+	var cast: Array = everyone.slice(0, 3)
+	var registry := {}
+	for i in 2:
+		registry[cast[i]] = {"priority": 50, "plans": {"day": {"blocks": [{"from": 6.0, "at": place, "act": "stand"}]}}, "select": [{"plan": "day"}]}
+	Routines.override_registry = registry
+	Routines.clear_cache()
+	director.resync()
+	var first: Dictionary = director._post_offsets.duplicate()
+	registry[cast[2]] = registry[cast[0]].duplicate(true)
+	Routines.clear_cache()
+	director.resync()
+	var kept := first.keys().all(func(id): return director._post_offsets.get(id) == first[id])
+	var seats: Array = cast.map(func(id): return director._post_offsets.get(id, Vector2.INF))
+	var apart := not seats.has(Vector2.INF)
+	for i in seats.size():
+		for j in range(i + 1, seats.size()):
+			apart = apart and seats[i].distance_to(seats[j]) >= 40
+	t.check("seats_stay_when_a_guest_joins", place != "" and first.size() == 2 and kept and apart, "%s: %s then %s" % [place, first, seats])
+	var populated := [0]
+	var listener := func(id: StringName, _payload: Dictionary) -> void:
+		if id == &"area_populated":
+			populated[0] += 1
+	t.autoload("EventBus").game_event.connect(listener)
+	director.resync(false)
+	director.resync(false)
+	var quiet: int = populated[0]
+	registry.erase(cast[2])
+	Routines.clear_cache()
+	director.resync()
+	t.autoload("EventBus").game_event.disconnect(listener)
+	t.check("area_populated_only_on_change", quiet == 0 and populated[0] == 1, "%d events for unchanged resyncs, %d after a departure" % [quiet, populated[0] - quiet])
+	var before: int = director.stats.resyncs
+	for i in 120:
+		director._physics_process(1.0 / 60)
+	t.check("no_resync_between_minute_ticks", director.stats.resyncs == before, "%d resyncs in two seconds without a tick" % (director.stats.resyncs - before))
+	# A walk-in whose sheets are not resident appears only once they are, loaded on worker threads.
+	var newcomer := ""
+	var sheet := ""
+	for id in everyone:
+		var look := IsoChibiSprite2D.resolve_id(str(t.autoload("LuaRuntime").get_npc(id).get("visual", "fairy")))
+		var path := IsoChibiSprite2D.CHARACTERS_DIR + look + "/" + str(IsoChibiSprite2D.meta_for(look).animations.idle.sheet)
+		if not id in cast and not ResourceLoader.has_cached(path):
+			newcomer = id
+			sheet = path
+			break
+	registry[newcomer] = registry[cast[0]].duplicate(true)
+	Routines.clear_cache()
+	var resident := []
+	var spawned := func(id: String, _node: Node2D) -> void:
+		if id == newcomer:
+			resident.append(ResourceLoader.has_cached(sheet))
+	director.citizen_spawned.connect(spawned)
+	director.resync(false)
+	var staged: bool = director._staging.has(newcomer) and not director.live.has(newcomer)
+	await t.until(func(): return director.live.has(newcomer), 5.0)
+	director.citizen_spawned.disconnect(spawned)
+	t.check("walk_in_spawns_after_threaded_sheets", newcomer != "" and staged and resident == [true] and director._staging.is_empty(), "%s staged %s resident at spawn %s" % [newcomer, staged, resident])
+	Routines.override_registry = {}
+	Routines.clear_cache()
+	director.resync()
 
 func _curfew(t) -> void:
 	var gm: Node = t.autoload("GameManager")
