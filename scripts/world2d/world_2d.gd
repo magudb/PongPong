@@ -73,6 +73,7 @@ var _fade: ColorRect
 var _vignette: CanvasLayer
 var _vignette_rect: TextureRect
 var _faint_pending: bool = false
+var _wakes: int = 0                         # bumped by every night's wake-up (_sleep_sequence): a faint reads it to wake only once
 var _zone: StringName = &""
 var _rebuild_queued: bool = false
 
@@ -733,6 +734,7 @@ func _sleep_sequence(passed_out: bool) -> void:
 	# The day roll: builders finish (home_upgraded / furniture_changed), crops grow, the weather is rolled. `traveling` is set for the
 	# whole night, so a room that has to change is only QUEUED here and rebuilt below, behind the black screen, before the fade-in.
 	GameManager.sleep_until_morning()
+	_wakes += 1
 	if passed_out:
 		_enter(_wake_area(), StringName(str(GameData.cfg("dungeon.hub.wake_spawn", "from_home"))))
 		_pose_for_sleep()
@@ -788,20 +790,36 @@ func _on_player_defeated() -> void:
 		return
 	_faint_pending = true
 	var faint_day: int = GameManager.total_day()
+	# A night under way (a pass-out fading out, the bed) wakes the player at home itself, before or after this point.
+	var night_owned: bool = sleeping
+	var wakes_at_defeat: int = _wakes
 	await get_tree().create_timer(1.3, false).timeout    # the player lies fainted: a pause holds it, like the rest of the world
 	# travel() refuses while a fade / sleep sequence runs: wait it out so the rescue teleport is not silently skipped
 	var guard := 0
 	while (traveling or sleeping) and guard < 600:
 		await get_tree().process_frame
 		guard += 1
+	# One wake-up per night (review SYS-01): a night that woke the player since the defeat already brought the morning and took the
+	# player home. A second sleep_until_morning() at 06:00 would run end_day() and skip a whole day, and a second fade, teleport and
+	# fee would rescue a player who is awake in bed. Only the run is closed and the player stood up where the night left them.
+	if night_owned or _wakes != wakes_at_defeat:
+		var run: Variant = Svc.static_call("res://scripts/dungeon/floors/dungeon_floors.gd", &"inst", [])
+		if run is Node and run.has_method("end_run"):
+			run.call("end_run", &"defeated")
+		if player.has_method("revive"):
+			player.call("revive", player.global_position)
+		_restore_player()
+		_pass_out_pending = false
+		_faint_pending = false
+		return
 	traveling = true
 	var fade_out := _fade_tween(1.0, FADE_OUT)
 	await fade_out.finished
 	var floors: Variant = Svc.static_call("res://scripts/dungeon/floors/dungeon_floors.gd", &"inst", [])
 	if floors is Node and floors.has_method("end_run"):
 		floors.call("end_run", &"defeated")
-	# One wake-up per night: when the calendar already rolled since the defeat (the day end passed during the delay above) and the
-	# clock is at the morning, a second sleep_until_morning() would run end_day() and skip a whole day.
+	# The calendar can also roll without a night: the day end passed during the delay above (midnight_passed is ignored while a faint
+	# is pending). With the clock at the morning a sleep_until_morning() would run end_day() and skip a whole day.
 	if GameManager.total_day() == faint_day or int(GameManager.hour) < GameManager.day_start_hour():
 		GameManager.sleep_until_morning()
 	var loss := floori(float(EconomyManager.gold) * clampf(float(GameData.cfg("dungeon.defeat.gold_loss_pct", 10)), 0.0, 100.0) / 100.0)
