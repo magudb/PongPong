@@ -49,6 +49,22 @@ func run(t) -> void:
 	await world.travel(&"moerkeskoven_f2",&"default")
 	await t.until(func(): return WorldRoot2D.has_area(&"moerkeskoven_f3"),10.0)
 	t.check("floors.register_ahead_neighbours_and_unregister_far",WorldRoot2D.has_area(&"moerkeskoven_f1") and WorldRoot2D.has_area(&"moerkeskoven_f3") and not WorldRoot2D.has_area(&"moerkeskoven_f5"),"area=%s floor=%s registered=%s tasks=%s texts=%s error=%s" % [world.area.map.id,floors.floor,floors._registered,floors._tasks.keys(),floors._texts.keys(),floors.last_error])
+	# DUN-12: the canopy settles, then only the crowns over the player animate (and settle again).
+	var canopy: CanopyFade = world.area.get_children().filter(func(n): return n is CanopyFade).front()
+	await t.seconds(.3)
+	var settled_idle := canopy._fading.is_empty()
+	var crown: Dictionary = canopy._crowns.front()
+	var parked: Vector2 = world.player.global_position
+	world.player.global_position = world.area.cell_to_global(crown.cell)
+	var moving := 0
+	var watch_until: float = t.game_seconds()+.3
+	while t.game_seconds() < watch_until:
+		await t.frames(1)
+		moving = maxi(moving,canopy._fading.size())
+	await t.seconds(.2)
+	var faded: bool = crown.nodes.all(func(n): return not is_instance_valid(n) or is_equal_approx(n.modulate.a,.45))
+	t.check("floors.canopy_fades_only_crowns_over_player",settled_idle and moving >= 1 and moving < 12 and faded and canopy._fading.is_empty(),"crowns=%d idle=%s moving=%d faded=%s left=%d" % [canopy._crowns.size(),settled_idle,moving,faded,canopy._fading.size()])
+	world.player.global_position = parked
 	var synchronous := DungeonGen.build_text(floors.cfg,3,floors.floor_seed(3),floors._context(3))
 	t.check("floors.prefetch_equals_sync",synchronous.text == floors.floor_text(3))
 	await world.travel(&"moerkeskoven_f3",&"default")
