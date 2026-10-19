@@ -29,12 +29,15 @@ const SCENE_DIR := "res://scenes/ui/"
 ##  * The towns / social screens (RT7): `social_hud` (festival ribbon, birthday chips) sits right behind the HUDs; `event_overlay`
 ##    (the letterbox of an event scene) is between the HUDs and `dialogue_ui`, so the bars are drawn BEHIND the dialogue;
 ##    `people`, `gift_ui` and `post` are modals of the quest book's rank: above it, above the shops, below the pause menu.
+##  * The dungeon screens `appraisal_ui` (Fru Ugle, opened by LootService) and `rune_picker` (the hub's runestone) are modals of the
+##    same rank: their openers look them up with get_screen, so they draw and take keys below the pause menu like every other modal.
 ## Invariants (pinned by ui_foundation.game_ui_loads_new_ids_in_order and the foundation smoke): order[0] == hud,
 ## order[1] == forest_hud, order[-3] == pause_menu, order[-1] == settings_ui.
 const SCREEN_ORDER: Array[StringName] = [
 	&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal",
 	&"people", &"gift_ui", &"post", &"map_ui", &"shop_ui", &"animal_care_ui", &"build_menu_ui",
 	&"husbyggeri", &"indretning", &"home_chest", &"home_amenities", &"garderobe", &"samlerbog",
+	&"appraisal_ui", &"rune_picker",
 	&"cheat_menu", &"pause_menu", &"save_load_ui", &"settings_ui",
 ]
 const MODE_FARM := &"farm"

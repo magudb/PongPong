@@ -22,6 +22,7 @@ func run(t) -> void:
 	await t.frames(3)
 	var picker: TTScreen = world.game_ui.get_node_or_null("RunePicker")
 	t.check("floors.rune_picker_lists_one_plus_stones",picker != null and picker.is_open() and picker.rows.get_child_count() == 1)
+	t.check("floors.rune_picker_is_a_game_ui_screen",picker == world.game_ui.get_screen(&"rune_picker") and picker.get_index() < world.game_ui.get_screen(&"pause_menu").get_index())
 	picker.close()
 	floors.enter(1)
 	await t.until(func(): return world.area.map.id == &"moerkeskoven_f1" and not world.traveling,10.0)
