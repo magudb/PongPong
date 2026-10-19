@@ -1601,14 +1601,17 @@ func _whisper_line(t) -> void:
 	await t.frames(1)
 	var inert: bool = UiAudit.focusable_report(whisper, {"forbid_focus": true})["defects"].is_empty() and whisper.mouse_filter == Control.MOUSE_FILTER_IGNORE
 	var raw_ok: bool = t.find_raw_keys(whisper).is_empty()
-	# 3.5 s, then it fades (0.4 s) and goes
-	await t.seconds(3.0)
-	var still_there := whisper.is_showing()
-	await t.seconds(1.3)
+	# UX-12: it stays for its reading time (3.5 s for a short line, longer for a long one, at most 8 s), then it fades (0.4 s) and goes
+	var reading := WhisperLine.seconds_for(whisper.shown_text())
+	var scaled: bool = is_equal_approx(WhisperLine.seconds_for("OK"), WhisperLine.SECONDS) and reading > WhisperLine.SECONDS \
+		and WhisperLine.seconds_for("x".repeat(400)) == WhisperLine.MAX_SECONDS
+	await t.seconds(reading - 0.5)
+	var still_there: bool = whisper.is_showing() and scaled
+	await t.seconds(0.5 + WhisperLine.FADE_OUT + 0.4)
 	var gone := not whisper.is_showing()
 	var conns: int = _bus.whisper_requested.get_connections().filter(func(c: Dictionary) -> bool: return c["callable"].get_object() == whisper).size()
 	t.check("whisper_line", hidden_ok and shows and place_ok and long_ok and short_ok and replaced and en_ok and inert and raw_ok and still_there and gone and conns == 1,
-		"hidden at first (%s); whisper_requested(key) shows tr(key) in a PanelWhisper with the Whisper italic (%s) at left 40 / bottom 40, at most 360 wide (%s) and wraps a long text (%s), a short one hugs its text (%s); a second whisper replaces it (%s) and it follows the language (%s); inert (%s), no raw keys (%s); still there after 3 s (%s) and gone after 3.5 s + fade (%s); one connection (%d)" % [hidden_ok, shows, place_ok, long_ok, short_ok, replaced, en_ok, inert, raw_ok, still_there, gone, conns])
+		"hidden at first (%s); whisper_requested(key) shows tr(key) in a PanelWhisper with the Whisper italic (%s) at left 40 / bottom 40, at most 360 wide (%s) and wraps a long text (%s), a short one hugs its text (%s); a second whisper replaces it (%s) and it follows the language (%s); inert (%s), no raw keys (%s); still there for its reading time, which grows with the text (%s), and gone after it + fade (%s); one connection (%d)" % [hidden_ok, shows, place_ok, long_ok, short_ok, replaced, en_ok, inert, raw_ok, still_there, gone, conns])
 	await _finish_test(t)
 
 

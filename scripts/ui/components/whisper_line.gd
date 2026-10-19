@@ -1,12 +1,15 @@
 class_name WhisperLine
 extends Control
 ## The whisper (UI_NAVIGATION.md 5.1 S09 / S10): `EventBus.whisper_requested(text_key)` shows tr(text_key) in a `PanelWhisper` (night plate, teal border) at
-## the left / bottom corner (40 px from both edges), at most 360 px wide, `Whisper` italic 18, for 3.5 s (0.15 s in, 0.4 s out). A second whisper replaces
-## the first and restarts the timer. The farm HUD, the forest HUD and the title / select scenes instance it: every refusal of the world (the bed before
+## the left / bottom corner (40 px from both edges), at most 360 px wide, `Whisper` italic 18, for seconds_for(text): 3.5 s for a short line, longer for a long one (UX-12: a fixed 3.5 s was too
+## short to read a two-line whisper), at most 8 s (0.15 s in, 0.4 s out). A second whisper replaces the first and restarts the timer. The farm HUD, the forest HUD and the title / select scenes instance it: every refusal of the world (the bed before
 ## 18:00, a locked warp, missing items, Indretning outside the home, a wrong-season seed) is a whisper, and without it none of them gives any feedback.
 ## Scene: scenes/ui/components/whisper_line.tscn. Not focusable, mouse_filter IGNORE. The text re-labels on a language switch while it is showing.
 
 const SECONDS := 3.5
+## the reading time a whisper stays up: 1.5 s plus this many characters per second, between SECONDS and MAX_SECONDS
+const READ_CHARS_PER_SECOND := 14.0
+const MAX_SECONDS := 8.0
 const MAX_WIDTH := 360.0
 const FADE_IN := 0.15
 const FADE_OUT := 0.4
@@ -69,9 +72,14 @@ func show_whisper(text_key: String) -> void:
 		_tween.kill()
 	_tween = create_tween()
 	_tween.tween_property(_panel, "modulate:a", 1.0, FADE_IN)
-	_tween.tween_interval(SECONDS)
+	_tween.tween_interval(seconds_for(_label.text))
 	_tween.tween_property(_panel, "modulate:a", 0.0, FADE_OUT)
 	_tween.tween_callback(_hide)
+
+
+## How long a whisper with this display text stays fully visible.
+static func seconds_for(text: String) -> float:
+	return clampf(1.5 + text.length() / READ_CHARS_PER_SECOND, SECONDS, MAX_SECONDS)
 
 
 func is_showing() -> bool:

@@ -148,6 +148,12 @@ func _input_and_actions(t, dialogue: Control, ui: GameUI) -> void:
 	await t.frames(2)
 	await _to_choices(t, dialogue)
 	t.check("choice_focus", dialogue.get_viewport().gui_get_focus_owner() == dialogue._buttons[0])
+	# UX-12: a tap right after the choices appear answers nothing (the player has not seen them yet), and no continue button offers to pick one.
+	t.tap(&"interact")
+	await t.frames(1)
+	t.check("choice_grace_ignores_rapid_tap", dialogue.is_open() and dialogue._wants_focus() and ends.size() == 1 and not dialogue.get_node("%NextButton").visible,
+		"open %s, choices %s, ended %d, continue button %s" % [dialogue.is_open(), dialogue._wants_focus(), ends.size(), dialogue.get_node("%NextButton").visible])
+	await t.seconds(dialogue.CHOICE_GRACE_SECONDS + 0.05)
 	dialogue._buttons[-1].grab_focus()
 	t.tap_key(KEY_DOWN)
 	await t.frames(2)
@@ -166,6 +172,7 @@ func _input_and_actions(t, dialogue: Control, ui: GameUI) -> void:
 	npc.interact(t.player())
 	await t.frames(2)
 	await _to_choices(t, dialogue)
+	await t.seconds(dialogue.CHOICE_GRACE_SECONDS + 0.05)
 	dialogue._buttons[-1].grab_focus()
 	UiAudit.press_pad(t, JOY_BUTTON_A)
 	await t.frames(3)
