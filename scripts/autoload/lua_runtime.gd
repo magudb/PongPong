@@ -5,6 +5,8 @@ extends Node
 ## top-level functions with `local`, `if/return`, the `api.*` calls and the expression operators `and or not == ~= < <= > >= ..`.
 ## The parser lives in scripts/data/lua_parser.gd (+ lua_tokens.gd); the load-time lint in scripts/data/lua_lint.gd and
 ## `tools/lua/lint.gd`. Everything outside the subset is reported in `lint_report` at load - never as an engine warning.
+## Each file is tokenized once; the lint reads the same tokens as the parser and runs in debug builds only (`lint_on_load`):
+## CI and tools/lua/lint.gd enforce a clean lint, so a release build does not pay for it at every launch.
 ## A real Lua GDExtension can replace the internals later: the public API below stays stable.
 ##
 ## Files are loaded from res://lua/** (any directory; the `kind = "..."` header decides what a file is):
@@ -34,6 +36,7 @@ const ARG_INT_LIMIT := 1.0e15
 const LUA_ROOT := "res://lua"
 const API_VERSION := 2
 
+const _Tokens := preload("res://scripts/data/lua_tokens.gd")
 const _Parser := preload("res://scripts/data/lua_parser.gd")
 const _Lint := preload("res://scripts/data/lua_lint.gd")
 const _Data := preload("res://scripts/data/lua_data.gd")
@@ -56,8 +59,11 @@ var _logged_once: Dictionary = {}
 var _hot_reload_enabled: bool = true
 
 ## Findings of LuaLint (plus data-level checks) for every file loaded by the last reload_scripts()/load_file():
-## Array of {path, line, rule, token, message}. Empty = lint clean.
+## Array of {path, line, rule, token, message}. Empty = lint clean. Without `lint_on_load` only the data-level checks are in it.
 var lint_report: Array[Dictionary] = []
+## Run LuaLint on every file that is loaded. On in debug builds (the editor, the test harness, tools); a release build skips it
+## (about 0.2 s of every launch) and keeps the data-level checks (duplicate_key, rarity, tables_header, registry_header).
+var lint_on_load: bool = OS.is_debug_build()
 ## Consistency notes that are not syntax: an id defined by two files (the later file wins). Same shape as lint_report; a clean
 ## lint does not depend on it (a duplicate is a content bug of the file that owns the id, not a Lua subset violation).
 var data_report: Array[Dictionary] = []
@@ -256,7 +262,11 @@ func lint_summary() -> String:
 
 ## Parses a Lua source (no registration). See scripts/data/lua_parser.gd for the shape of the result.
 func parse_lua_source(source: String, path: String = "") -> Dictionary:
-	var out: Dictionary = _Parser.parse_source(source, path)
+	return _with_kind(_Parser.parse_source(source, path), path)
+
+
+## Fills in `kind` and `id` of a parser result from its literal assignments (else the kind is detected from path and content).
+func _with_kind(out: Dictionary, path: String) -> Dictionary:
 	out["kind"] = str(out["table_assigns"].get("kind", ""))
 	out["id"] = str(out["table_assigns"].get("id", ""))
 	if out["kind"] == "":
@@ -350,7 +360,7 @@ func _scan_dir(path: String) -> void:
 		_scan_dir(path.path_join(d))
 
 
-## Reads + lints + parses one file into _scripts. Returns the script id ("" on a read error).
+## Reads + lints + parses one file into _scripts (one tokenizer pass for both). Returns the script id ("" on a read error).
 func _load_script(path: String) -> String:
 	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
@@ -358,8 +368,10 @@ func _load_script(path: String) -> String:
 		return ""
 	var source := file.get_as_text()
 	file.close()
-	lint_report.append_array(_Lint.lint(source, path))
-	var parsed := parse_lua_source(source, path)
+	var tk := _Tokens.tokenize(source)
+	if lint_on_load:
+		lint_report.append_array(_Lint.lint_tokens(tk, path))
+	var parsed := _with_kind(_Parser.parse_tokens(source, tk, path), path)
 	var sid := _script_id(path)
 	_scripts[sid] = parsed
 	return sid

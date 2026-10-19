@@ -113,7 +113,8 @@ func _boot() -> void:
 	_lr.reload_scripts()
 	t.expect_clean_since(mark, "reload_scripts logs no engine error or warning (the untranslated-key format error of lua_runtime.gd:42 is gone)")
 	t.check("reload_idempotent", _lr.get_all_script_ids().size() == before_scripts and _lr.get_all_item_ids().size() == before_items and _lr._quest_modules.size() == before_quests, "%d scripts, %d items, %d quests before and after" % [before_scripts, before_items, before_quests])
-	t.expect(int(_lr.load_ms) < 5000, "loading every Lua file takes %d ms" % int(_lr.load_ms))
+	t.check("lua_load_time", t.perf_ok("lua_load_time", float(_lr.load_ms), 1500.0), "loading every Lua file (one tokenizer pass for lint and parser) takes %d ms, reference 1500 ms" % int(_lr.load_ms))
+	t.check("lint_on_load_only_in_debug_builds", _lr.lint_on_load == OS.is_debug_build(), "the load-time lint runs only when OS.is_debug_build() (%s); CI enforces lint_clean, a release build skips it" % str(OS.is_debug_build()))
 	t.check("f9_only_in_debug_builds", _lr.is_processing_unhandled_key_input() == OS.is_debug_build(), "F9 hot reload is bound only when OS.is_debug_build() (%s)" % str(OS.is_debug_build()))
 	t.expect(_lr.has_method("get_recipes") and _lr.has_method("get_shop") and _lr.has_method("get_npc") and _lr.has_method("reload_scripts") and _lr.has_method("lint_source"), "LuaRuntime exposes get_recipes, get_shop, get_npc, reload_scripts, lint_source")
 	# the announcement of an explicit reload (F9) carries the count and never trips over an untranslated key
@@ -739,6 +740,14 @@ func _lint_rules() -> void:
 	t.expect_clean_since(mark, "loading files with lint findings logs no engine warning")
 	_lr.reload_scripts()
 	t.expect(_lr.lint_report.is_empty(), "reload_scripts clears the previous findings")
+	# a release build skips the subset lint at load but keeps the data-level checks of the loader
+	_lr.lint_on_load = false
+	_lr.load_file(FIX + "lint_bad_rarity.lua")
+	_lr.load_file(FIX + "p07_arith.lua")
+	var release_rules := _rules_of(_lr.lint_report)
+	_lr.lint_on_load = OS.is_debug_build()
+	_lr.reload_scripts()
+	t.check("lint_skipped_without_lint_on_load", release_rules == ["rarity"], "without lint_on_load only the data-level findings are reported (the arithmetic of p07 is not): %s" % str(release_rules))
 
 
 func _lint_clean() -> void:

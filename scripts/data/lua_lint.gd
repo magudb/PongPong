@@ -41,7 +41,12 @@ const _BITWISE := ["&", "|", "<<", ">>"]
 
 ## Lints a source text. `path` is only copied into the findings.
 static func lint(source: String, path: String = "") -> Array[Dictionary]:
-	var tk := _Tokens.tokenize(source)
+	return lint_tokens(_Tokens.tokenize(source), path)
+
+
+## lint() on the tokens of a source the caller already has (LuaTokens.tokenize): LuaRuntime tokenizes a file once for the
+## lint and the parser.
+static func lint_tokens(tk: Dictionary, path: String = "") -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for f in tk["findings"] as Array:
 		out.append(_mk(path, int(f["line"]), str(f["rule"]), str(f["token"]), str(f["message"])))

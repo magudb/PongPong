@@ -51,9 +51,15 @@ var _pos := 0
 
 
 static func parse_source(source: String, path: String = "") -> Dictionary:
+	return parse_tokens(source, _Tokens.tokenize(source), path)
+
+
+## parse_source on the tokens of `source` the caller already has (LuaTokens.tokenize(source)): LuaRuntime tokenizes a file once
+## for the lint and the parser.
+static func parse_tokens(source: String, tk: Dictionary, path: String = "") -> Dictionary:
 	var out := {"kind": "", "id": "", "functions": {}, "table_assigns": {}, "source_path": path}
 	var p := LuaParser.new()
-	p.setup(source)
+	p.setup_tokens(source, tk)
 	p.parse_top_level(out)
 	return out
 
@@ -66,8 +72,11 @@ static func compile_body(body: String) -> Array:
 
 
 func setup(source: String) -> void:
+	setup_tokens(source, _Tokens.tokenize(source))
+
+
+func setup_tokens(source: String, tk: Dictionary) -> void:
 	_src = source
-	var tk := _Tokens.tokenize(source)
 	_types = tk["type"]
 	_texts = tk["text"]
 	_lines = tk["line"]
