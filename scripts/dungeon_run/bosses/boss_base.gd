@@ -83,6 +83,14 @@ func _recover() -> void:
 	remaining = float(cfg.dazed)
 	cooldown = remaining
 	visual.play_action(&"hit")
+## A hit stuns the boss as it does any enemy, but never shortens a daze or a running pattern: the punish window after a
+## dash (and the wait while rain or clouds fall) keeps its full length instead of the 0.38 s stagger and 0.4 s cooldown.
+func stun(seconds: float) -> void:
+	var dazed := remaining if state in [S.RECOVER,S.STUN] else 0.0
+	var wait := cooldown
+	super.stun(seconds)
+	remaining = maxf(remaining,dazed)
+	cooldown = maxf(cooldown,wait)
 func _on_health_changed() -> void:
 	EventBus.boss_bar_changed.emit(str(cfg.name_key),float(hp)/max_hp,awake)
 	while phase < 2 and hp <= max_hp*([.66,.33][phase]):
