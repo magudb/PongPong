@@ -36,6 +36,7 @@ var _interact_range: float = 45.0
 ## fallback still catches an interactable that appears while standing still).
 var _prompt_last_pos: Vector2 = Vector2(INF, INF)
 var _prompt_last_facing: int = -1
+var _prompt_last_ready := false
 var _prompt_stale: float = 0.0
 const PROMPT_REFRESH_S := 0.5
 ## One mouse-wheel notch of zoom; a trackpad pan counts its delta in notches.
@@ -289,7 +290,14 @@ func nearest_interactable() -> Node:
 	return best
 
 
+## The one gate of the E prompt and of E itself, so the prompt never offers what E refuses (review GAP3-07).
+func can_interact_now() -> bool:
+	return state == S.FREE
+
+
 func try_interact() -> bool:
+	if not can_interact_now():
+		return false
 	var it: Node = nearest_interactable()
 	if it == null:
 		return false
@@ -299,15 +307,18 @@ func try_interact() -> bool:
 
 func _update_prompt(delta: float = 0.0) -> void:
 	_prompt_stale += delta
-	# The prompt only changes when the player moves or turns; skip the physics query otherwise,
-	# but still refresh at PROMPT_REFRESH_S so a newly-available interactable is not missed.
-	if global_position.is_equal_approx(_prompt_last_pos) and facing8 == _prompt_last_facing \
+	# The prompt only changes when the player moves, turns or can / cannot interact any more (take-off, the end of
+	# a talk); skip the physics query otherwise, but still refresh at PROMPT_REFRESH_S so a newly-available
+	# interactable is not missed.
+	var ready := can_interact_now()
+	if global_position.is_equal_approx(_prompt_last_pos) and facing8 == _prompt_last_facing and ready == _prompt_last_ready \
 			and _prompt_stale < PROMPT_REFRESH_S:
 		return
 	_prompt_stale = 0.0
 	_prompt_last_pos = global_position
 	_prompt_last_facing = facing8
-	var it: Node = nearest_interactable()
+	_prompt_last_ready = ready
+	var it: Node = nearest_interactable() if ready else null
 	var text := interaction_text(it)
 	if text != _prompt:
 		_prompt = text

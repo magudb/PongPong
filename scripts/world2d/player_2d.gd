@@ -331,14 +331,17 @@ func _farm_repeat_allowed() -> bool:
 func _at_farm() -> bool:
 	return farm != null and area != null and farm.map != null and area.map.id == farm.map.id
 
+func can_interact_now() -> bool:
+	return state == S.FREE and not is_flying
+
 func interaction_text(it: Node) -> String:
-	if state == S.FREE and not is_flying and _at_farm() and farm.state_of(target_cell()) == FarmGrid.State.READY:
+	if can_interact_now() and _at_farm() and farm.state_of(target_cell()) == FarmGrid.State.READY:
 		var crop: StringName = farm.get_plot(target_cell()).crop_id
 		return tr("FARMSITE_HARVEST_FMT") % tr(str(GameData.item_def(crop).get("name_key", "")))
 	return super.interaction_text(it)
 
 func try_interact() -> bool:
-	if not world_input_allowed() or state != S.FREE or is_flying:
+	if not world_input_allowed() or not can_interact_now():
 		return false
 	if _at_farm() and farm.state_of(target_cell()) == FarmGrid.State.READY:
 		return farm.harvest(target_cell()) > 0
@@ -610,6 +613,8 @@ func hop() -> bool:
 func toggle_flight() -> void:
 	if is_flying:
 		_try_land(false)
+	elif _landing:
+		return                                   # the descent finishes first; a take-off now would leave _landing pinning the fairy (GAP3-01)
 	elif state == S.FREE and can_fly_here() and stamina >= 15.0:
 		is_flying = true
 		is_jumping = false
@@ -662,23 +667,54 @@ func _try_land(forced: bool) -> bool:
 		if not forced:
 			EventBus.whisper_requested.emit("UI_NO_ROOM_TO_LAND")
 			return false
-		var candidates: Array[Vector2] = []
-		for y in area.map.height:
-			for x in area.map.width:
-				if area.is_walkable(Vector2i(x, y)):
-					candidates.append(area.cell_to_global(Vector2i(x, y)))
-		candidates.sort_custom(func(a: Vector2, b: Vector2): return Iso.ground_dist(global_position, a) < Iso.ground_dist(global_position, b))
-		var found := false
-		for at in candidates:
-			if _landing_safe(at):
-				_landing_at = at
-				found = true
-				break
-		if not found:
+		var found: Variant = _nearest_landing()
+		if found == null:
 			return false
+		_landing_at = found
 	is_flying = false
 	_landing = true
 	return true
+
+## The nearest safe landing spot (a cell centre, by ground distance) or null. Searches square rings of cells outward and
+## stops once a ring cannot hold anything nearer than the best spot found: sorting the whole map cost ~19 ms on the farm (GAP3-09).
+func _nearest_landing() -> Variant:
+	var origin := area.global_to_cell(global_position)
+	var step := minf(Iso.ground_dist(area.cell_to_global(origin), area.cell_to_global(origin + Vector2i.RIGHT)),
+		Iso.ground_dist(area.cell_to_global(origin), area.cell_to_global(origin + Vector2i.DOWN)))
+	var slack := Iso.ground_dist(global_position, area.cell_to_global(origin))
+	var best: Variant = null
+	var best_d := INF
+	for r in maxi(area.map.width, area.map.height) + 1:
+		# every cell of ring r is at least r steps from the origin cell, the player at most `slack` away from its centre
+		if r * step - slack > best_d:
+			break
+		var ring: Array[Vector2] = []
+		for cell in _ring_cells(origin, r):
+			if cell.x >= 0 and cell.y >= 0 and cell.x < area.map.width and cell.y < area.map.height and area.is_walkable(cell):
+				ring.append(area.cell_to_global(cell))
+		ring.sort_custom(func(a: Vector2, b: Vector2): return Iso.ground_dist(global_position, a) < Iso.ground_dist(global_position, b))
+		for at in ring:
+			var d := Iso.ground_dist(global_position, at)
+			if d >= best_d:
+				break
+			if _landing_safe(at):
+				best = at
+				best_d = d
+				break
+	return best
+
+## The cells at Chebyshev distance r around `origin` (the border of a (2r+1)-square).
+static func _ring_cells(origin: Vector2i, r: int) -> Array[Vector2i]:
+	if r == 0:
+		return [origin]
+	var cells: Array[Vector2i] = []
+	for i in range(-r, r + 1):
+		cells.append(origin + Vector2i(i, -r))
+		cells.append(origin + Vector2i(i, r))
+	for j in range(-r + 1, r):
+		cells.append(origin + Vector2i(-r, j))
+		cells.append(origin + Vector2i(r, j))
+	return cells
 
 func _cancel_flight() -> void:
 	is_flying = false

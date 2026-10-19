@@ -4,6 +4,13 @@ extends RefCounted
 const SECTION := "player_input"
 const TIMEOUT_S := 200.0
 
+class HostProbe extends Node2D:
+	var used := 0
+	func interact(_player: Node) -> void:
+		used += 1
+	func get_interaction_prompt() -> String:
+		return "E: Probe"
+
 func _mouse(button: MouseButton, pressed := true) -> InputEventMouseButton:
 	var ev := InputEventMouseButton.new()
 	ev.button_index = button
@@ -58,6 +65,9 @@ func run(t) -> void:
 	_aim_follows_device(t, world, p)
 	_mac_keys(t, world, p)
 	await _pad_run_fly_zoom(t, world, p)
+	_take_off_while_landing(t, world, p)
+	await _prompt_follows_gate(t, world, p)
+	_forced_landing_search(t, world, p)
 	world.call("_enter", &"farm", &"default")
 	p.restore_after_sleep()
 	_free(p)
@@ -287,3 +297,88 @@ func _pad_run_fly_zoom(t, world: WorldRoot2D, p: Player2D) -> void:
 	var pinch_out: bool = is_equal_approx(p.camera.zoom.x, maxf(range.x, z0 * 0.9))
 	p.set_zoom(world.area.zoom_default)
 	t.check("pad_stick_and_trackpad_zoom", motion_skipped and stick_in and pan_in and pinch_out, "a stick event steps nothing %s; held stick zooms in %s; pan up zooms in %s; pinch zooms out %s" % [motion_skipped, stick_in, pan_in, pinch_out])
+
+## GAP3-01: F during the landing descent is ignored; the fairy lands, then takes off again normally.
+func _take_off_while_landing(t, world: WorldRoot2D, p: Player2D) -> void:
+	world.call("_enter", &"farm", &"default")
+	p.set_physics_process(false)
+	_free(p)
+	if not p.can_fly_here():
+		t.skip("this hero cannot fly on the farm (run with --character=fairy)")
+		return
+	p.toggle_flight()
+	var landing: bool = p._try_land(false) and p._landing
+	p.toggle_flight()
+	var refused: bool = not p.is_flying and p._landing
+	for i in 120:
+		p._update_vertical(1.0 / 60.0)
+	var landed: bool = not p._landing and not p.is_flying
+	p.toggle_flight()
+	t.check("take_off_ignored_while_landing", landing and refused and landed and p.is_flying, "landing %s, F refused %s, landed %s, flies again %s" % [landing, refused, landed, p.is_flying])
+	_free(p)
+
+## GAP3-07: the E prompt and E use one gate: a flying fairy sees no prompt, and the cached prompt follows the change at once.
+func _prompt_follows_gate(t, world: WorldRoot2D, p: Player2D) -> void:
+	world.call("_enter", &"farm", &"default")
+	p.set_physics_process(false)
+	_free(p)
+	var host := HostProbe.new()
+	var zone := Area2D.new()
+	zone.collision_layer = Iso.LAYER_INTERACTABLE
+	zone.collision_mask = 0
+	var collision := CollisionShape2D.new()
+	var shape := CircleShape2D.new()
+	shape.radius = 20.0
+	collision.shape = shape
+	zone.add_child(collision)
+	host.add_child(zone)
+	world.area.objects.add_child(host)
+	host.global_position = p.target_global()
+	await t.physics(2)
+	p._update_prompt(PlayerBody2D.PROMPT_REFRESH_S)
+	var shown: bool = p._prompt == "E: Probe"
+	p.is_flying = true
+	p._update_prompt(0.0)
+	var hidden_in_flight: bool = p._prompt == "" and not p.try_interact() and host.used == 0
+	p.is_flying = false
+	p._update_prompt(0.0)
+	var back: bool = p._prompt == "E: Probe" and p.try_interact() and host.used == 1
+	t.check("prompt_and_e_share_one_gate", shown and hidden_in_flight and back, "prompt on the ground %s, none and no E in flight %s, back at once on landing %s" % [shown, hidden_in_flight, back])
+	host.queue_free()
+	_free(p)
+
+## GAP3-09: the forced landing finds the same nearest safe cell as the old full-map sort, without sorting the map.
+func _forced_landing_search(t, world: WorldRoot2D, p: Player2D) -> void:
+	world.call("_enter", &"farm", &"default")
+	p.set_physics_process(false)
+	_free(p)
+	var area: IsoArea = world.area
+	var spots: Array[Vector2] = [p.global_position]
+	for y in area.map.height:
+		for x in area.map.width:
+			if not area.is_walkable(Vector2i(x, y)) and spots.size() < 4:
+				spots.append(area.cell_to_global(Vector2i(x, y)))
+	var same := true
+	var worst_us := 0.0
+	var detail: Array[String] = []
+	for at in spots:
+		p.global_position = at
+		var started := Time.get_ticks_usec()
+		var found: Variant = p._nearest_landing()
+		worst_us = maxf(worst_us, float(Time.get_ticks_usec() - started))
+		var want: Variant = null
+		var want_d := INF
+		for y in area.map.height:
+			for x in area.map.width:
+				var c := area.cell_to_global(Vector2i(x, y))
+				if area.is_walkable(Vector2i(x, y)) and Iso.ground_dist(at, c) < want_d and p._landing_safe(c):
+					want = c
+					want_d = Iso.ground_dist(at, c)
+		var ok: bool = (found == null) == (want == null) and (found == null or is_equal_approx(Iso.ground_dist(at, found), want_d))
+		same = same and ok
+		detail.append("%s -> %s / %s" % [at, found, want])
+	t.check("forced_landing_matches_full_search", same and spots.size() > 1, ", ".join(detail))
+	t.check("forced_landing_search_is_cheap", t.perf_ok("forced_landing_search_is_cheap", worst_us, 3000.0), "worst %.0f us over %d spots (the full sort took ~19 ms)" % [worst_us, spots.size()])
+	p.global_position = spots[0]
+	_free(p)
+
