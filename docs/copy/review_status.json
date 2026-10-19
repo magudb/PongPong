@@ -934,7 +934,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 34
+    "rows": 47
   },
   "localization/zz_final.csv": {
     "status": "draft",
@@ -948,7 +948,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 8
+    "rows": 13
   },
   "localization/shop_ui.csv": {
     "status": "draft",
