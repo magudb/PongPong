@@ -480,6 +480,23 @@ func _placement_reasons(t) -> void:
 	var grass := _aim_cell(t, grass_cells, func(c: Vector2i) -> bool: return PlacementService.can_place(&"scarecrow", c) == "")
 	await t.physics(2)
 	t.check("decoration_marker_gold_where_it_fits", grass != Vector2i.MAX and player._marker.valid)
+	# a machine on a dead crop: it cannot be harvested, so the reason points to clearing it, not to "Høst det først"
+	var dead := Vector2i.MAX
+	for c in farm.farmable_cells():
+		if farm.state_of(c) in [FarmGrid.State.EMPTY, FarmGrid.State.TILLED] and PlacementService.can_place(&"sprinkler", c) == "":
+			dead = c
+			break
+	var reasons: Array = []
+	if dead != Vector2i.MAX:
+		t.autoload("EconomyManager").add_item(&"turnip_seeds", 1, true)
+		if farm.state_of(dead) == FarmGrid.State.EMPTY:
+			farm.till(dead)
+		farm.plant(dead, &"turnip_seeds")
+		reasons.append(PlacementService.can_place(&"sprinkler", dead))
+		farm.get_plot(dead).state = FarmGrid.State.WITHERED
+		reasons.append(PlacementService.can_place(&"sprinkler", dead))
+		farm.clear_crop(dead, false)
+	t.check("machine_on_withered_crop_says_clear_it", reasons == ["FARM_PLACE_GROWING", "FARM_PLACE_WITHERED"], str(reasons))
 	EventBus.whisper_requested.disconnect(listen)
 
 

@@ -65,7 +65,8 @@ static func _draw_prop(target: IsoArea, item: String, at: Vector2i) -> Node2D:
 ## Why `item` cannot stand on `at` right now, as the whisper key of the reason ("" = it can). The farm marker and place()
 ## share this answer, so the gold ring and the refusal never disagree.
 ##   FARM_PLACE_ONLY_FARM  not on the farm or in the greenhouse   FARM_CELL_RESERVED  the steading keeps the cell free
-##   FARM_PLACE_FIELD      a decoration on a field cell          FARM_PLACE_GROWING  a machine on a cell with a crop
+##   FARM_PLACE_FIELD      a decoration on a field cell          FARM_PLACE_GROWING  a machine on a cell with a living crop
+##   FARM_PLACE_WITHERED   a machine on a cell with a dead crop (it cannot be harvested: the scythe clears it)
 ##   FARM_PLACE_BLOCKED    not walkable, or a marker, a placed piece, world geometry, a resource or an actor is there
 static func can_place(item: StringName, at: Vector2i) -> String:
 	var tree := Engine.get_main_loop() as SceneTree
@@ -78,6 +79,7 @@ static func can_place(item: StringName, at: Vector2i) -> String:
 	var reserved := FarmReserve.blocked(world.area,at)
 	if reserved == "field" or at in model.farmable_cells():
 		if not machine: return "FARM_PLACE_FIELD"
+		if model.state_of(at) == FarmGrid.State.WITHERED: return "FARM_PLACE_WITHERED"
 		if model.state_of(at) not in [FarmGrid.State.EMPTY, FarmGrid.State.TILLED]: return "FARM_PLACE_GROWING"
 	if reserved not in (["", "field", "zone"] if machine else [""]): return "FARM_CELL_RESERVED"
 	for marker in world.area.markers:

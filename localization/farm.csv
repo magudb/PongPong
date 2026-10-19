@@ -4,6 +4,7 @@ FARM_CROP_CLEARED,Planten er fjernet. Jorden er klar igen.,The plant is cleared 
 FARM_PLACE_ONLY_FARM,Den skal stå hjemme på gården.,That belongs at home on the farm.
 FARM_PLACE_FIELD,Pynt står bedst uden for markerne.,Decorations go beside the fields.
 FARM_PLACE_GROWING,Her vokser noget. Høst det først.,Something is growing here. Harvest it first.
+FARM_PLACE_WITHERED,Ryd den visne plante med leen først.,Clear the withered plant with the scythe first.
 FARM_PLACE_BLOCKED,Her står allerede noget. Prøv et andet felt.,Something is already here. Try another spot.
 UI_TOOL_NO_EFFECT,Her er der ikke brug for det lige nu.,That is not needed here right now.
 UI_NOT_IN_SEASON,Frøet må vente på sin årstid.,This seed needs to wait for its season.
