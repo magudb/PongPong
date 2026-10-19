@@ -425,6 +425,22 @@ func _quest_rewards() -> void:
 	await t.frames(2)
 	t.check("chained_quest_rewards_claimed_together", qm.is_completed(&"review_chain_b") and eco.count_item(&"turnip") == 1 and eco.count_item(&"carrot") == 2 and qm.pending_rewards.is_empty(), "turnip %d, carrot %d, owed %s" % [eco.count_item(&"turnip"), eco.count_item(&"carrot"), str(qm.pending_rewards)])
 
+	# SYS-16: a stack that only partly fits is delivered in part, a garment the player already owns is sold at once instead of owed forever.
+	_fresh()
+	_full_backpack()
+	eco.remove_item(&"wood", 99)
+	_quest("review_partial", "x", {"items": {"turnip": 150}})
+	qm.accept_quest(&"review_partial")
+	qm.update_objective(&"review_partial", &"x")
+	t.check("partial_stack_reward_delivers_what_fits", eco.count_item(&"turnip") == 99 and qm.pending_rewards.get(&"review_partial", {}) == {"turnip": 51}, "turnip %d, owed %s" % [eco.count_item(&"turnip"), str(qm.pending_rewards)])
+	eco.inventory.clear()
+	eco.add_item(&"hat_chef_white", 1)
+	var gold_hat: int = eco.gold
+	_quest("review_owned_hat", "x", {"items": {"hat_chef_white": 1}})
+	qm.accept_quest(&"review_owned_hat")
+	qm.update_objective(&"review_owned_hat", &"x")
+	t.check("owned_garment_reward_is_sold_not_owed", not qm.pending_rewards.has(&"review_owned_hat") and eco.count_item(&"hat_chef_white") == 1 and eco.gold > gold_hat, "owed %s, hats %d, gold %d -> %d" % [str(qm.pending_rewards), eco.count_item(&"hat_chef_white"), gold_hat, eco.gold])
+
 
 func _repeatable_quests() -> void:
 	_fresh()

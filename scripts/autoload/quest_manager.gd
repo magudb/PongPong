@@ -42,6 +42,7 @@ enum QuestState { LOCKED, AVAILABLE, ACTIVE, COMPLETED, FAILED }
 
 const _Svc := preload("res://scripts/data/svc.gd")
 const _Data := preload("res://scripts/data/lua_data.gd")
+const _Kinds := preload("res://scripts/data/item_kinds.gd")
 
 const QUEST_LUA_DIR := "res://lua/quests"
 const FRIEND_CAP := 10
@@ -629,7 +630,9 @@ func _grant_friendship(hearts_by_npc: Dictionary) -> void:
 		EventBus.friend_changed.emit(StringName(str(npc)), after)
 
 
-## Delivers what fits, retaining the rest in the save. Called again after inventory changes and successful loads.
+## Delivers what fits, retaining the rest in the save. Called again after inventory changes and successful loads. A backpack stack
+## that only partly fits is delivered in part; a piece its store refuses (a garment already owned, furniture at its cap) goes through
+## LootService.deliver, which sells such a duplicate at once (SYS-16), so it is never owed forever.
 ## Returns true when nothing remains owed. The guard prevents item-gained listeners from claiming a grant twice; a claim asked for
 ## during a pass (a reward that completed another quest owes that quest's rewards) runs as one more pass before the guard is released.
 func claim_rewards() -> bool:
@@ -652,14 +655,35 @@ func _claim_pass() -> void:
 		var owed: Dictionary = pending_rewards[quest_id]
 		for item_id in owed.keys():
 			var amount := int(owed[item_id])
-			if not EconomyManager.can_add_item(StringName(item_id), amount):
+			var give := _claimable(StringName(item_id), amount)
+			if give <= 0:
 				continue
 			# item_gained listeners may save immediately: at that point the grant is owned and must no longer be owed.
-			owed.erase(item_id)
-			if not EconomyManager.add_item(StringName(item_id), amount):
+			if give < amount:
+				owed[item_id] = amount - give
+			else:
+				owed.erase(item_id)
+			if not _deliver_reward(StringName(item_id), give):
 				owed[item_id] = amount
 		if owed.is_empty():
 			pending_rewards.erase(quest_id)
+
+
+## How many of an owed reward to hand over now: all of it when it fits, else what the backpack has room for; a piece with a store of its
+## own is handed over whole (the store takes it, or LootService sells the duplicate).
+func _claimable(item_id: StringName, amount: int) -> int:
+	if EconomyManager.can_add_item(item_id, amount):
+		return amount
+	if _Kinds.storage_of(item_id) == _Kinds.BACKPACK:
+		return mini(amount, EconomyManager.backpack_room_for(item_id))
+	return amount
+
+
+func _deliver_reward(item_id: StringName, amount: int) -> bool:
+	var loot := _Svc.node("LootService")
+	if loot != null and loot.has_method("deliver"):
+		return bool(_Data.dict(loot.call("deliver", item_id, amount)).get("ok", false))
+	return EconomyManager.add_item(item_id, amount)
 
 
 func _on_inventory_changed(_inventory: Dictionary) -> void:
