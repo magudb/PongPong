@@ -22,7 +22,7 @@ static func create_marker(params: Dictionary, pos: Vector2, _cell: Vector2i, are
 func _ready() -> void:
 	add_to_group("farm_animal")
 	collision_layer = Iso.LAYER_NPC
-	collision_mask = Iso.LAYER_WORLD
+	collision_mask = Iso.LAYER_WORLD | Iso.LAYER_PLAYER   # the rule next to Iso.MASK_WALKING
 	var body := CollisionShape2D.new()
 	var shape := CircleShape2D.new()
 	shape.radius = 16

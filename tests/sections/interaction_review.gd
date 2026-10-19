@@ -78,6 +78,7 @@ func run(t) -> void:
 	await _hotbar_auto_assign(t)
 	await _warp_after_tool_use(t)
 	await _stall_keeper_reach(t)
+	await _actors_block_player(t)
 	await world.travel(&"farm", &"default")
 	WorldRoot2D.unregister_map(&"_t_interaction")
 	await _axe_on_crops(t)
@@ -466,4 +467,35 @@ func _stall_keeper_reach(t) -> void:
 	ShopCounter.keeper_resolver = Callable()
 	for node in [keeper, stall, room]:
 		node.queue_free()
+	await t.physics(2)
+
+
+## GAP3-13: the player and the walking actors block each other both ways (Iso.MASK_WALKING). A wandering NPC or a farm animal had
+## no LAYER_PLAYER in its mask, so it walked into the player, who was then pushed out of the overlap.
+func _actors_block_player(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var home: Vector2i = area.global_to_cell(player.global_position)
+	player.global_position = area.cell_to_global(home)
+	var npc := Npc2D.create({"id": "carpenter_brumme"})
+	npc.area = area
+	area.objects.add_child(npc)
+	npc.global_position = player.global_position + Vector2(-150, 0)
+	npc._home = npc.global_position
+	npc._target = player.global_position + Vector2(150, 0)
+	npc._wait = 0.0
+	var start: Vector2 = player.global_position
+	var passed := false
+	for i in 120:
+		await t.physics(1)
+		passed = passed or npc.global_position.x > player.global_position.x
+	t.check("wandering_npc_stops_at_player", not passed and player.global_position.distance_to(start) < 2.0,
+		"npc at %s, player moved %.1f px" % [npc.global_position - start, player.global_position.distance_to(start)])
+	var animal := Animal2D.new()
+	area.objects.add_child(animal)
+	animal.set_physics_process(false)                        # no yard: only its collision setup is under test
+	t.check("actor_masks_include_player", (npc.collision_mask & Iso.LAYER_PLAYER) != 0 and (npc.collision_mask & Iso.LAYER_NPC) == 0 \
+		and (animal.collision_mask & Iso.LAYER_PLAYER) != 0 and (animal.collision_mask & Iso.LAYER_NPC) == 0 and (Iso.MASK_WALKING & Iso.LAYER_NPC) != 0)
+	animal.queue_free()
+	npc.queue_free()
 	await t.physics(2)
