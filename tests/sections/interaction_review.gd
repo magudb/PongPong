@@ -75,12 +75,12 @@ func _dodge_direction(t) -> void:
 	t.release(&"move_back")
 	t.check("diagonal_dodge_parallel_to_walk", began and absf(rad_to_deg(dodge.angle_to(walk))) < 0.5,
 		"walk %s, dodge %s (%.1f degrees apart)" % [walk, dodge, rad_to_deg(dodge.angle_to(walk))])
-	await t.seconds(float(GameData.combat("dodge_time", 0.3)) + 0.1)
+	await t.physics(int(ceil(float(GameData.combat("dodge_time", 0.3)) * 60.0)) + 6)    # the dodge runs on physics ticks
 	# without input the dodge follows the last precise walking direction
 	player.combat.cooldowns.dodge = 0
 	player.combat_aim = Vector2(1, 1).normalized()
 	t.check("idle_dodge_follows_last_walk", player.combat.dodge() and player.combat._dodge_direction.is_equal_approx(Vector2(1, 1).normalized()), str(player.combat._dodge_direction))
-	await t.seconds(float(GameData.combat("dodge_time", 0.3)) + 0.1)
+	await t.physics(int(ceil(float(GameData.combat("dodge_time", 0.3)) * 60.0)) + 6)    # the dodge runs on physics ticks
 	player.combat.cooldowns.dodge = 0
 
 
