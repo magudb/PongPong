@@ -98,9 +98,14 @@ func run(t) -> void:
 	gm.end_day()
 	t.check("floors.new_day_clears_done_and_seen",floors.done.is_empty() and floors.seen.is_empty() and floors.reveal.is_empty() and floors.stones.has(3))
 	t.check("floors.day_started_prunes_when_outside",not WorldRoot2D.has_area(&"moerkeskoven_f3"))
-	floors.enter(3)
+	# DUN-10: a rune start on an ungenerated floor queues a worker instead of generating inside the click, and the floor above
+	# arrives from a worker too, already parsed.
+	var queued := floors.enter(3)
+	t.check("floors.rune_start_generates_on_a_worker",queued and floors._tasks.has(3) and floors._pending_entry == 3 and not floors._texts.has(3) and not WorldRoot2D.has_area(&"moerkeskoven_f3"))
 	await t.until(func(): return world.area.map.id == &"moerkeskoven_f3" and not world.traveling,10.0)
 	t.check("floors.runestone_reentry_uses_authored_spawn",world.player.global_position.distance_to(world.area.get_spawn("rune")) < 2)
+	await t.until(func(): return WorldRoot2D.has_area(&"moerkeskoven_f2") and WorldRoot2D.has_area(&"moerkeskoven_f4"),10.0)
+	t.check("floors.neighbours_registered_from_workers",WorldRoot2D.has_area(&"moerkeskoven_f2") and WorldRoot2D.has_area(&"moerkeskoven_f4") and floors._maps.is_empty() and WorldRoot2D.load_map(&"moerkeskoven_f2").errors.is_empty(),"tasks=%s maps=%s error=%s" % [floors._tasks.keys(),floors._maps.keys(),floors.last_error])
 	var payload: Dictionary = floors.to_dict()
 	payload["spec"] = "old-layout"
 	payload["deepest"] = 7

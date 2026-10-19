@@ -1,7 +1,7 @@
 class_name DungeonFloors
 extends Node
 ## Run state hosted by LootService and applied before WorldRoot2D restores its
-## position. Only data generation runs on workers; map registration stays here.
+## position. Generation and map parsing run on workers; map registration stays here.
 var cfg: Dictionary = {}
 var last_error := ""
 var world_seed := ""
@@ -16,9 +16,11 @@ var reveal: Dictionary = {}
 var gen := 1
 var spec := ""
 var _texts: Dictionary = {}
+var _maps: Dictionary = {}     # floor -> AreaMap a worker parsed, used once by the next registration
 var _registered: Dictionary = {}
 var _tasks: Dictionary = {}
 var _generation := 0
+var _pending_entry := 0        # a floor enter() waits for (its worker is still generating)
 
 static func inst() -> DungeonFloors:
 	var loot := Svc.node("LootService")
@@ -90,12 +92,24 @@ func start_run(first_floor: int) -> bool:
 		if player != null and player.has_method("begin_dungeon_run"): player.begin_dungeon_run()
 		Svc.static_call("res://scripts/world2d/enemy_2d.gd",&"begin_run")
 	return true
+## Travels to a floor. A floor that is not generated yet (a deep rune start) is built on a worker first and the travel
+## follows a few frames later from _process, so the click never generates on the main thread; true = travel started
+## or queued (a later generation failure leaves last_error, as a refused start does).
 func enter(number: int) -> bool:
 	if not _valid_floor(number): return false
+	GameManager.pop_all_modals()
+	# The day rollover start_run would do drops cached floors, so it happens before the prefetch.
+	if not active and seed_day != GameManager.total_day(): _clear_day(GameManager.total_day())
+	if not (_registered.has(number) and WorldRoot2D.has_area(_id(number))) and not _texts.has(number):
+		_prefetch(number)
+		if _tasks.has(number):
+			_pending_entry = number
+			return true
+	return _enter_now(number)
+func _enter_now(number: int) -> bool:
 	if not active and not start_run(number): return false
 	var id := _ensure(number)
 	if id == &"": return false
-	GameManager.pop_all_modals()
 	EventBus.area_change_requested.emit(id,&"rune" if stones.has(number) else &"default")
 	return true
 func leave() -> void:
@@ -128,7 +142,9 @@ func _ensure(number: int, day := -1) -> StringName:
 	if _registered.has(number) and WorldRoot2D.has_area(_id(number)): return _id(number)
 	var text := floor_text(number)
 	if text == "": return &""
-	var map := AreaMap.parse_text(text)
+	# A worker parsed it already; it is used once, so a later re-registration starts from clean text again.
+	var map: AreaMap = _maps[number] if _maps.has(number) else AreaMap.parse_text(text)
+	_maps.erase(number)
 	if not map.errors.is_empty():
 		last_error = str(map.errors)
 		return &""
@@ -146,7 +162,12 @@ func _prefetch(number: int) -> void:
 	var seed_value := floor_seed(number)
 	var context := _context(number)
 	var result := {}
-	var task := WorkerThreadPool.add_task(func(): result["value"] = DungeonGen.build_text(snapshot,number,seed_value,context),false,"Forest floor %d" % number)
+	# AreaMap is pure data, so the worker parses the text as well and registration on the main thread is cheap.
+	var job := func():
+		var built := DungeonGen.build_text(snapshot,number,seed_value,context)
+		if built.get("ok",false): built["map"] = AreaMap.parse_text(str(built.text))
+		result["value"] = built
+	var task := WorkerThreadPool.add_task(job,false,"Forest floor %d" % number)
 	_tasks[number] = {"id":task,"box":result,"generation":_generation}
 func _finish_task(number: int, wait: bool) -> void:
 	if not _tasks.has(number): return
@@ -158,22 +179,30 @@ func _finish_task(number: int, wait: bool) -> void:
 		last_error = "stale generation"
 		return
 	var result: Dictionary = task.box.get("value",{})
-	if result.get("ok",false): _texts[number] = result.text
+	if result.get("ok",false):
+		_texts[number] = result.text
+		if result.get("map") is AreaMap: _maps[number] = result.map
 	else: last_error = "worker: " + str(result)
 func _process(_dt: float) -> void:
 	for number in _tasks.keys():
 		if WorkerThreadPool.is_task_completed(_tasks[number].id):
 			_finish_task(number,false)
 			if (active and absi(int(number)-floor) <= 1) or (not active and number == 1): _ensure(number)
+	if _pending_entry != 0 and not _tasks.has(_pending_entry):
+		var waiting := _pending_entry
+		_pending_entry = 0
+		_enter_now(waiting)
 func _drain_tasks() -> void:
 	for task in _tasks.values(): WorkerThreadPool.wait_for_task_completion(task.id)
 	_tasks.clear()
 func _invalidate() -> void:
 	_generation += 1
+	_pending_entry = 0
 	_drain_tasks()
 	for number in _registered: WorldRoot2D.unregister_map(_id(int(number)))
 	_registered.clear()
 	_texts.clear()
+	_maps.clear()
 func _area_requested(id: StringName, _spawn: StringName) -> void:
 	var number := floor_of_id(id)
 	if not _valid_floor(number): return
@@ -191,7 +220,8 @@ func _area_changed(id: StringName) -> void:
 		_restore_boss_flag()
 		var player := get_tree().get_first_node_in_group("player")
 		if first and player != null and player.has_method("restore_oil"): player.restore_oil()
-		_ensure(number-1)
+		# Both neighbours come from workers: after a rune start the floor above is not generated yet either.
+		_prefetch(number-1)
 		_prefetch(number+1)
 		_prune(number)
 		EventBus.game_event.emit(&"dungeon_floor_entered",{"floor":number,"level":number,"band":band_of(number),"zone":band_of(number),"seed_day":seed_day,"first_today":first,"deepest":deepest})
@@ -208,6 +238,7 @@ func _prune(number: int) -> void:
 			WorldRoot2D.unregister_map(_id(int(other)))
 			_registered.erase(other)
 			_texts.erase(other)
+			_maps.erase(other)
 func _morning(_day: int, _season: StringName) -> void:
 	if not active:
 		_clear_day(GameManager.total_day())
