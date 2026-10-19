@@ -56,6 +56,7 @@ func run(t) -> void:
 	_hop_on_pad_a(t, world, p)
 	_keyboard_tool_key(t, world, p)
 	_aim_follows_device(t, world, p)
+	_mac_keys(t, world, p)
 	world.call("_enter", &"farm", &"default")
 	p.restore_after_sleep()
 	_free(p)
@@ -210,3 +211,23 @@ func _pad_families(t) -> void:
 		and labels[UiHints.PLAYSTATION] == [str(TranslationServer.translate("NAV_PAD_PS_CROSS")), str(TranslationServer.translate("NAV_PAD_PS_TRIANGLE")), str(TranslationServer.translate("NAV_PAD_PS_OPTIONS")), "L1"] \
 		and labels[UiHints.NINTENDO] == ["B", "X", "+", "L"]
 	t.check("pad_glyphs_follow_family", families_ok and labels_ok and UiHints.glyph(&"interact", &"gamepad") == "A", "families %s, labels %s" % [families_ok, labels])
+
+## UX-16: no Ctrl (Spaces on macOS) and no PgUp / PgDn needed: Shift descends in flight, Q / E page, letters stay typing in a field.
+func _mac_keys(t, world: WorldRoot2D, p: Player2D) -> void:
+	world.call("_enter", &"farm", &"default")
+	p.set_physics_process(false)
+	_free(p)
+	p.is_flying = true
+	p._unhandled_input(_key(KEY_SHIFT))
+	var down: bool = p._climb_down
+	p._unhandled_input(_key(KEY_SHIFT, false))
+	var up: bool = not p._climb_down
+	_free(p)
+	var field := LineEdit.new()
+	t.root.add_child(field)
+	var page_free: bool = UiNav.page_pressed(_key(KEY_E), &"ui_page_down") and UiNav.page_pressed(_key(KEY_Q), &"ui_page_up") and not UiNav.page_pressed(_key(KEY_Q), &"ui_page_down")
+	field.grab_focus()
+	var typing: bool = not UiNav.page_pressed(_key(KEY_E), &"ui_page_down") and not UiNav.page_pressed(_key(KEY_Q), &"ui_page_up") \
+		and UiNav.page_pressed(_key(KEY_PAGEDOWN), &"ui_page_down") and UiNav.page_pressed(_pad(JOY_BUTTON_LEFT_SHOULDER), &"ui_page_up")
+	field.queue_free()
+	t.check("mac_friendly_keys", down and up and page_free and typing, "Shift descends %s / stops %s; Q E page %s; in a text field only PgDn and LB page %s" % [down, up, page_free, typing])

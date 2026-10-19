@@ -131,7 +131,7 @@ tools/dev/play.sh --throwaway   # same, with a temporary profile that is deleted
 | Interact, talk | E or Enter |
 | Use tool / attack | Left mouse or X |
 | Jump / dodge | Space |
-| Fairy flight / descend | F / Ctrl |
+| Fairy flight / descend | F / Shift (Space climbs) |
 | Fairy light / drink a supply | Q / R |
 | Inventory · journal · wardrobe | I or Tab · J · G |
 | Farm upgrades (on the farm) · decorate · people | B · H · P |

@@ -124,8 +124,11 @@ func _wire() -> void:
 	UiNav.link(%CloseButton, &"down", enabled_rows[0] if not enabled_rows.is_empty() else %CloseButton)
 	UiNav.hover_focus(_rows + _deletes + [%CloseButton])
 
+## A MacBook has no forward Delete: its Backspace (labelled "delete") removes a slot too (review UX-16).
+const DELETE_KEYS: Array[Key] = [KEY_DELETE, KEY_BACKSPACE]
+
 func _input(event: InputEvent) -> void:
-	if is_open() and is_top() and event is InputEventKey and event.pressed and (event.keycode == KEY_DELETE or event.physical_keycode == KEY_DELETE):
+	if is_open() and is_top() and event is InputEventKey and event.pressed and (event.keycode in DELETE_KEYS or event.physical_keycode in DELETE_KEYS):
 		if _focused_slot >= 0 and UiNav.is_stop(_deletes[_focused_slot]):
 			_on_delete_pressed(_focused_slot)
 		get_viewport().set_input_as_handled()

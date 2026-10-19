@@ -173,13 +173,13 @@ func _input(event: InputEvent) -> void:
 		else:
 			_to_title()
 		vp.set_input_as_handled()
-	elif event.is_action_pressed("ui_page_up"):
+	elif UiNav.page_pressed(event, &"ui_page_up", vp):
 		if _page == 2:
 			_set_page(1)
 		else:
 			_to_title()
 		vp.set_input_as_handled()
-	elif event.is_action_pressed("ui_page_down") and _page == 1:
+	elif UiNav.page_pressed(event, &"ui_page_down", vp) and _page == 1:
 		_set_page(2)
 		vp.set_input_as_handled()
 	elif _page == 1 and event.is_action_pressed("ui_accept") and vp.gui_get_focus_owner() in _cards:

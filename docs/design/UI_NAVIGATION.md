@@ -157,7 +157,7 @@ Bindings are physical keys unless written otherwise. "Stage" says where the scre
 | `pause` | Esc | Start | on the world with no modal: open the pause menu. With a modal open: close the top modal (same as `ui_cancel`) | I | echo ignored |
 | `interact` | E, Enter | A | in the world: talk / use / sleep / harvest. In dialogue: same as `ui_accept` (advance, complete typing, pick the focused choice). In Indretning: place | U (world); I (dialogue and Indretning PLACE only: they dispatch the press themselves, F4) | echo ignored |
 | `jump` / `dodge` | Space | A / B | world only; **refused while a modal is open** | U | - |
-| `run`, `fly_toggle`, `fly_descend`, `light`, `drink` | Shift, F, Ctrl, Q, R | - / - / - / Y / RB | world only | U / poll | - |
+| `run`, `fly_toggle`, `fly_descend`, `light`, `drink` | Shift, F, Shift (in flight; not Ctrl, which switches Spaces on macOS), Q, R | - / - / - / Y / RB | world only | U / poll | - |
 | `use_tool` / `attack` | LMB, X | X | world only; in an action area the press is `attack` (checked first, review DUN-07); a click on a UI Control never reaches it (the Control consumes the mouse, 3.7) | U | - |
 | `slot_1` .. `slot_10` | 1-9, 0 | - (D-pad left / right cycle, P06 amendment) | select the hotbar slot; in the backpack with an item selected: assign it to that slot; in a modal otherwise ignored | U | echo ignored |
 | `inventory` | I, Tab | - (pause-menu row) | open / close the backpack. Opening is refused while another modal is open. **Closing is read in `_input`**, because Tab is also `ui_focus_next` and the GUI stage eats it while a Control has focus (F1, F2) | I | echo ignored |
@@ -170,9 +170,9 @@ Bindings are physical keys unless written otherwise. "Stage" says where the scre
 | `pickup_item` | X, RMB | X | Indretning only | I | echo ignored |
 | `zoom_in` / `zoom_out` | mouse wheel | - | camera zoom; **ignored while any modal is open**; Indretning consumes the wheel itself (rotate) | U | - |
 | `ui_focus_next` / `ui_focus_prev` | Tab / Shift+Tab | - | next / previous focus stop; in the backpack Tab belongs to `inventory` | G | echo repeats |
-| `ui_page_up` / `ui_page_down` | PageUp / PageDown | **LB / RB (added)** | previous / next tab or page: shop tabs, quest tabs, Garderobe filters, Indretning filters (BROWSE), Vælg figur page 2 / 1; settings: nothing | I | echo ignored |
+| `ui_page_up` / `ui_page_down` | Q / E, PageUp / PageDown (Q / E: a MacBook has no PgUp / PgDn; `UiNav.page_pressed` leaves them to a focused text field) | **LB / RB (added)** | previous / next tab or page: shop tabs, quest tabs, Garderobe filters, Indretning filters (BROWSE), Vælg figur page 2 / 1; settings: nothing | I | echo ignored |
 | `ui_home` / `ui_end` | Home / End | - | not used | - | - |
-| Delete | Delete | - | save/load: delete the focused slot (confirm) | I | echo ignored |
+| Delete | Delete, Backspace (the Mac delete key) | - | save/load: delete the focused slot (confirm) | I | echo ignored |
 | LMB / RMB / wheel | click / secondary / scroll | - | click presses; RMB only in Indretning (`pickup_item`); wheel scrolls a `ScrollContainer` under the pointer in a modal | G | - |
 
 Rules on the table:
@@ -870,7 +870,7 @@ The glyph is read from the live InputMap (the first event of the action that mat
 | `ui_up` + `ui_down` | ↑↓ | D-pad |
 | `ui_left` + `ui_right` | ←→ | D-pad |
 | four directions | ↑↓←→ | D-pad |
-| `ui_page_up` / `ui_page_down` | PgUp / PgDn | LB / RB |
+| `ui_page_up` / `ui_page_down` | Q / E, PgUp / PgDn | LB / RB |
 | `ui_focus_next` | Tab | - |
 | `jump` | Mellemrum | A |
 | `dodge` | Mellemrum | B |
@@ -880,7 +880,7 @@ The glyph is read from the live InputMap (the first event of the action that mat
 | `decorate` | H | Back |
 | `wardrobe`, `inventory`, `journal`, `build_menu`, `collection` | G, I, J, B, C | pause-menu row (Garderobe, Rygsæk, Opgavebog, **Byg** - farm only -, Samlerbog) |
 | `slot_1 .. slot_10` | 1 .. 0 | D-pad ◂ ▸ (cycle) |
-| Delete (save / load) | Delete | - |
+| Delete (save / load) | Delete, Backspace | - |
 
 ## Appendix B - localization families and strings
 
