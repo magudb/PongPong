@@ -369,9 +369,12 @@ func _load_script(path: String) -> String:
 	var source := file.get_as_text()
 	file.close()
 	var tk := _Tokens.tokenize(source)
+	# with the lint, the parser compiles every function body now (the grammar findings need it) and the runtime never
+	# compiles them again; without it the bodies are compiled the first time they run
+	var grammar: Variant = ([] as Array[Dictionary]) if lint_on_load else null
+	var parsed := _with_kind(_Parser.parse_tokens(source, tk, path, grammar), path)
 	if lint_on_load:
-		lint_report.append_array(_Lint.lint_tokens(tk, path))
-	var parsed := _with_kind(_Parser.parse_tokens(source, tk, path), path)
+		lint_report.append_array(_Lint.lint_tokens(tk, path, grammar))
 	var sid := _script_id(path)
 	_scripts[sid] = parsed
 	return sid
@@ -624,7 +627,7 @@ func _invoke_function(sid: String, fname: String, args: Array) -> Variant:
 	for i in params.size():
 		scope[str(params[i])] = args[i] if i < args.size() else null
 	if not func_def.has("ast"):
-		func_def["ast"] = _Parser.compile_body(str(func_def.get("body", "")))     # lazily, once
+		func_def["ast"] = _Parser.compile_body(str(func_def.get("body", "")), int(func_def.get("body_line", 1)))     # lazily, once
 	var outcome: Variant = _exec_block(func_def["ast"], scope)
 	if outcome == null:
 		return null
@@ -654,6 +657,8 @@ func _exec_block(stmts: Array, scope: Dictionary) -> Variant:
 						return r2
 			"return":
 				return [null if s[1] == null else _ev(s[1], scope)]
+			"unsupported":
+				_log_once("unsupported Lua statement (%s) is skipped: see LuaRuntime.lint_report" % str(s[1]))
 	return null
 
 
@@ -785,7 +790,7 @@ func _call_api(method: String, args: Array) -> Variant:
 			if qm2 != null:
 				qm2.complete_quest(StringName(_str_arg(args, 0)))
 			return null
-	_log_once("unknown Lua function `%s` evaluates to nil (api functions: add_gold add_item remove_item set_flag get_flag has_flag has_item get_gold notification unlock_zone emit log offer_quest complete_quest get_hearts add_hearts is_birthday festival)" % method)
+	_log_once("unknown Lua function `%s` evaluates to nil (api functions: %s)" % [method, " ".join(_Lint.API_FUNCTIONS)])
 	return null
 
 

@@ -6,7 +6,7 @@ extends RefCounted
 ##
 ## A finding is {path, line, rule, token, message}. "Lint clean" means lint() returned an empty array.
 ## Rules (rule id: what it flags):
-##   else elseif      `else` / `elseif`            loop       `for` `while` `repeat` `goto`
+##   else elseif      `else` / `elseif`            loop       `for` `while` `repeat` `goto` `break`
 ##   long_bracket     `[[ ]]` long strings and `--[[ ]]` block comments
 ##   local_function   `local function f`          module_function  `function M.f` / `function obj:m`
 ##   escape           a backslash inside a string (escaped quotes, \n ...)
@@ -19,10 +19,17 @@ extends RefCounted
 ##   nil_value        `nil` as a table value (leave the key out)
 ##   kind_missing / kind_unknown   the `kind = "..."` header (config items quest dialogue recipes shops registry)
 ##   unbalanced       `if` / `function` / `do` not closed by `end`, or a stray `end`
-##   unterminated_string, stray_character   tokenizer level
+##   unterminated_string, stray_character   tokenizer level (`!` `?` `@` `$` and a backslash are stray outside strings)
+##   unknown_function a call that is not one of the api functions (API_FUNCTIONS), as `api.name(...)` or bare: a typo answers nil
+##   syntax local_list field_assignment function_value unsupported top_level
+##                    the grammar findings of LuaParser (see its header): what the parser could not use, so that a file
+##                    the subset would run differently from real Lua is never lint clean
+## The lint is a DENY-list over the tokens plus the parser's grammar findings; tests/sections/data.gd also runs real Lua's
+## `luac -p` over res://lua (data.lua_real_syntax) as an independent gate.
 
 # preload, not the class name: LuaRuntime (an autoload) depends on this script and must compile with a stale class cache
 const _Tokens := preload("res://scripts/data/lua_tokens.gd")
+const _Parser := preload("res://scripts/data/lua_parser.gd")
 
 const KINDS := ["config", "items", "quest", "quests", "dialogue", "recipes", "shops", "registry"]
 const _STDLIB_TABLES := ["string", "math", "table", "os", "io", "utf8", "coroutine", "debug", "package"]
@@ -35,20 +42,30 @@ const _KEYWORDS := [
 	"and", "break", "do", "else", "elseif", "end", "false", "for", "function", "goto", "if", "in", "local", "nil",
 	"not", "or", "repeat", "return", "then", "true", "until", "while",
 ]
+## what Lua can call (LuaRuntime._call_api): `api.<name>(...)` or the bare name
+const API_FUNCTIONS := [
+	"add_gold", "add_item", "remove_item", "set_flag", "get_flag", "has_flag", "has_item", "get_gold", "notification",
+	"unlock_zone", "emit", "log", "offer_quest", "complete_quest", "get_hearts", "add_hearts", "is_birthday", "festival",
+]
 const _BINARY_ARITH := ["+", "*", "/", "%", "^", "//"]
 const _BITWISE := ["&", "|", "<<", ">>"]
 
 
 ## Lints a source text. `path` is only copied into the findings.
 static func lint(source: String, path: String = "") -> Array[Dictionary]:
-	return lint_tokens(_Tokens.tokenize(source), path)
+	var tk := _Tokens.tokenize(source)
+	var grammar: Array[Dictionary] = []
+	_Parser.parse_tokens(source, tk, path, grammar)
+	return lint_tokens(tk, path, grammar)
 
 
-## lint() on the tokens of a source the caller already has (LuaTokens.tokenize): LuaRuntime tokenizes a file once for the
-## lint and the parser.
-static func lint_tokens(tk: Dictionary, path: String = "") -> Array[Dictionary]:
+## lint() on the tokens of a source the caller already has (LuaTokens.tokenize) and the grammar findings the parser collected
+## from them (LuaParser.parse_tokens with a findings array): LuaRuntime tokenizes and parses a file once for both.
+static func lint_tokens(tk: Dictionary, path: String = "", grammar: Array = []) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for f in tk["findings"] as Array:
+		out.append(_mk(path, int(f["line"]), str(f["rule"]), str(f["token"]), str(f["message"])))
+	for f in grammar:
 		out.append(_mk(path, int(f["line"]), str(f["rule"]), str(f["token"]), str(f["message"])))
 	_token_rules(tk, path, out)
 	_table_rules(tk, path, out)
@@ -98,7 +115,7 @@ static func _token_rules(tk: Dictionary, path: String, out: Array[Dictionary]) -
 					out.append(_mk(path, ln, "else", t, "`else` is not part of the supported Lua subset: write separate `if ... then return ... end` blocks"))
 				"elseif":
 					out.append(_mk(path, ln, "elseif", t, "`elseif` is not part of the supported Lua subset: write separate `if ... then return ... end` blocks"))
-				"for", "while", "repeat", "goto":
+				"for", "while", "repeat", "goto", "break":
 					out.append(_mk(path, ln, "loop", t, "`%s` is not supported: Lua data files have no loops or jumps" % t))
 				"local":
 					if i + 1 < count and types[i + 1] == _Tokens.NAME and texts[i + 1] == "function":
@@ -111,6 +128,8 @@ static func _token_rules(tk: Dictionary, path: String, out: Array[Dictionary]) -
 						out.append(_mk(path, ln, "stdlib", t + ".", "`%s.` (Lua standard library) is not available in the interpreted subset" % t))
 					elif (t in _STDLIB_FUNCS) and i + 1 < count and types[i + 1] == _Tokens.OP and texts[i + 1] == "(" and not _after_dot(types, texts, i) and not _after_function_kw(types, texts, i):
 						out.append(_mk(path, ln, "stdlib", t, "`%s(...)` (Lua standard library) is not available in the interpreted subset" % t))
+					elif i + 1 < count and types[i + 1] == _Tokens.OP and texts[i + 1] == "(" and not (t in _KEYWORDS):
+						_call_rule(types, texts, i, path, ln, out)
 		elif ty == _Tokens.OP:
 			if t == "#":
 				out.append(_mk(path, ln, "length", "#", "the length operator `#` is not supported"))
@@ -127,6 +146,27 @@ static func _token_rules(tk: Dictionary, path: String, out: Array[Dictionary]) -
 				# obj:method(...) call (function definitions are reported by module_function)
 				if i > 0 and i + 2 < count and types[i + 1] == _Tokens.NAME and texts[i + 2] == "(" and (types[i - 1] == _Tokens.NAME or types[i - 1] == _Tokens.STRING or texts[i - 1] == ")" or texts[i - 1] == "]") and not _after_function_kw(types, texts, i - 1):
 					out.append(_mk(path, ln, "method_call", ":" + texts[i + 1], "method calls (`obj:method(...)`) are not supported"))
+
+
+## `name(` at token `i`: an api function (`api.name(` or bare `name(`) is fine; a definition (`function name(`), a method call
+## and the standard library have their own rules; every other call is unknown_function (the runtime would answer nil).
+static func _call_rule(types: PackedInt32Array, texts: PackedStringArray, i: int, path: String, ln: int, out: Array[Dictionary]) -> void:
+	var t := texts[i]
+	if _after_function_kw(types, texts, i) or (i > 0 and types[i - 1] == _Tokens.OP and texts[i - 1] == ":"):
+		return
+	if not _after_dot(types, texts, i):
+		if not (t in API_FUNCTIONS):
+			out.append(_mk(path, ln, "unknown_function", t, "`%s(...)` is not an api function: it answers nil (the api functions: %s)" % [t, " ".join(API_FUNCTIONS)]))
+		return
+	# a dotted call: only api.<name>, and only a two-part path (`a.b.c(` and `x.api.f(` are not api calls)
+	var base := texts[i - 2] if i >= 2 and types[i - 2] == _Tokens.NAME else ""
+	if base in _STDLIB_TABLES or (i >= 3 and _after_function_kw(types, texts, i - 2)):
+		return                                 # the stdlib / module_function rules
+	if base == "api" and not _after_dot(types, texts, i - 2):
+		if not (t in API_FUNCTIONS):
+			out.append(_mk(path, ln, "unknown_function", "api." + t, "`api.%s` is not an api function: it answers nil (the api functions: %s)" % [t, " ".join(API_FUNCTIONS)]))
+		return
+	out.append(_mk(path, ln, "unknown_function", t, "only `api.<name>(...)` can be called, not `...%s(...)`: it answers nil" % t))
 
 
 static func _after_dot(types: PackedInt32Array, texts: PackedStringArray, i: int) -> bool:

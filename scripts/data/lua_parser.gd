@@ -7,8 +7,9 @@ extends RefCounted
 ## parse_source(source, path) returns
 ##   kind, id          from `kind = "..."` / `id = "..."` (empty when absent)
 ##   table_assigns     top-level `name = <string|number|true|false>` literals
-##   functions         name -> {params: Array[String], body: String (source text), line: int}; the runtime compiles the body
-##                     with compile_body() when the function first runs and caches the statements as "ast" in that dictionary
+##   functions         name -> {params: Array[String], body: String (source text), line: int, body_line: int}; the runtime
+##                     compiles the body with compile_body() when the function first runs and caches the statements as "ast"
+##                     in that dictionary (parse_tokens() with a findings array compiles every body at once)
 ##   <table name>      every top-level `name = { ... }` table, parsed to Dictionary / Array / literals
 ##                     (so `objectives rewards items config lines choices meta shops recipes npcs ...` all arrive the same way)
 ##   source_path       the path argument
@@ -23,7 +24,18 @@ extends RefCounted
 ##   expressions: [lit, v] [var, name] [field, e, key] [index, e, k] [call, "api.name"|"name", [args]] [tbl, const]
 ##                [or, a, b] [and, a, b] [not, a] [neg, a] [cmp, op, a, b] [cat, a, b] [unsupported, why]
 ##   statements : [local, name, e] [assign, name, e] [call, call_expr] [if, [[cond, block], ...], else_block|null]
-##                [return, e|null] [unsupported, why]        (a block is an Array of statements)
+##                [return, e|null] [unsupported, why]        (a block is an Array of statements; the LAST element of
+##                every statement is the source line it starts on)
+##
+## Grammar findings ({line, rule, token, message}, collected by parse_tokens() with a findings array; LuaLint reports them):
+##   syntax            not Lua at all: `!=`, `if a = b then`, a misspelt keyword (`retrun x`), a statement after `return`,
+##                     a missing `then` / `)` / `]` - real Lua refuses the file, the subset would silently run something else
+##   local_list        `local a, b = ...`                   field_assignment   `t.x = v` / `t[k] = v`
+##   function_value    a function defined inside a function, or used as a value (`local f = function() ... end`)
+##   unsupported       valid Lua the interpreter does not evaluate (a call that is not `api.<name>(...)`)
+##   top_level         a top-level statement the loader ignores (it reads `name = <literal or table>` and `function name(...)`)
+## Constructs the token rules of LuaLint already name (loops, `local function`, `#`, arithmetic, method calls, the standard
+## library ...) are not reported twice.
 
 # preload, not the class name: the autoload LuaRuntime depends on this script, and an autoload must compile even when the
 # global class cache is stale (a fresh clone before `godot --import`)
@@ -48,6 +60,9 @@ var _starts := PackedInt32Array()
 var _ends := PackedInt32Array()
 var _count := 0
 var _pos := 0
+## grammar findings of everything parsed so far (see the header)
+var findings: Array[Dictionary] = []
+var _fn_ranges: Array = []      # [name, first body token, token index of its `end`] per top-level function, in source order
 
 
 static func parse_source(source: String, path: String = "") -> Dictionary:
@@ -55,20 +70,37 @@ static func parse_source(source: String, path: String = "") -> Dictionary:
 
 
 ## parse_source on the tokens of `source` the caller already has (LuaTokens.tokenize(source)): LuaRuntime tokenizes a file once
-## for the lint and the parser.
-static func parse_tokens(source: String, tk: Dictionary, path: String = "") -> Dictionary:
+## for the lint and the parser. With `grammar` (an Array) every function body is compiled now, from the same tokens (the
+## statements land in functions[name]["ast"]), and the grammar findings of the whole file are appended to it.
+static func parse_tokens(source: String, tk: Dictionary, path: String = "", grammar: Variant = null) -> Dictionary:
 	var out := {"kind": "", "id": "", "functions": {}, "table_assigns": {}, "source_path": path}
 	var p := LuaParser.new()
 	p.setup_tokens(source, tk)
 	p.parse_top_level(out)
+	if grammar is Array:
+		p.compile_functions(out["functions"])
+		(grammar as Array).append_array(p.findings)
 	return out
 
 
 ## Compiles the body text of a function (what functions[name]["body"] holds) into the statement list of the AST.
-static func compile_body(body: String) -> Array:
+## `first_line` is the source line the body text starts on (functions[name]["body_line"]): the statements carry real lines.
+static func compile_body(body: String, first_line: int = 1) -> Array:
 	var p := LuaParser.new()
 	p.setup(body)
-	return p.parse_block(p._count)
+	if first_line != 1:
+		for i in p._count:
+			p._lines[i] += first_line - 1
+	return p._parse_body(p._count)
+
+
+## Compiles every function body of the last parse_top_level() into functions[name]["ast"] (from the tokens already read).
+func compile_functions(functions: Dictionary) -> void:
+	for r in _fn_ranges:
+		_pos = int(r[1])
+		var ast := _parse_body(int(r[2]))
+		if functions.has(r[0]):
+			(functions[r[0]] as Dictionary)["ast"] = ast
 
 
 func setup(source: String) -> void:
@@ -99,22 +131,28 @@ func parse_top_level(out: Dictionary) -> void:
 			if t == "local":
 				_pos += 1
 				if _kw("function"):
-					_skip_function_like()
+					_skip_function_like()          # the lint's local_function
 				else:
+					_top_level_finding(_pos - 1, "a top-level `local` is not read: write `name = <literal or table>`")
 					_skip_statement()
 				continue
 			if t == "return":
+				_top_level_finding(_pos, "a top-level `return` is not read (module-style files are not supported): everything after it is ignored")
 				_pos = _count
 				break
 			if _pos + 1 < _count and _types[_pos + 1] == T_OP and _texts[_pos + 1] == "=":
 				_parse_assignment(out)
 				continue
+			_top_level_finding(_pos, "only `name = <literal or table>` and `function name(...)` are read at the top level: this statement is ignored")
 			_skip_statement()
 			continue
+		if not _op(";"):
+			_finding(_pos, "syntax", "unexpected `%s` at the top level of the file" % _texts[_pos])
 		_pos += 1
 
 
 func _parse_assignment(out: Dictionary) -> void:
+	var key_idx := _pos
 	var key := _texts[_pos]
 	_pos += 2
 	if _pos >= _count:
@@ -149,10 +187,12 @@ func _parse_assignment(out: Dictionary) -> void:
 	if is_literal:
 		# `x = 5 * 2` is an expression, not a literal: keep nothing rather than a wrong number
 		if _pos < _count and _types[_pos] == T_OP and _texts[_pos] != "," and _texts[_pos] != ";" and _lines[_pos] == _lines[_pos - 1] and _texts[_pos] != "}":
+			_top_level_finding(key_idx, "`%s = ...` is an expression, not a literal: the loader ignores it" % key)
 			_skip_statement()
 			return
 		assigns[key] = literal
 		return
+	_top_level_finding(key_idx, "the value of `%s` is not a literal or a table: the loader ignores it" % key)
 	_skip_statement()
 
 
@@ -164,6 +204,7 @@ func _parse_function_def(functions: Dictionary) -> void:
 		fname += _texts[_pos]
 		_pos += 1
 	if fname == "" or not _op("("):
+		_finding(mini(_pos, _count - 1), "syntax", "`function` needs a name and `(` (only top-level `function name(...)` definitions are read)")
 		_skip_statement()
 		return
 	_pos += 1
@@ -177,12 +218,15 @@ func _parse_function_def(functions: Dictionary) -> void:
 	var end_idx := _find_block_end(_pos)
 	var body_from := _ends[rparen] if rparen < _count else _src.length()
 	var body_to := _starts[end_idx] if end_idx >= 0 else _src.length()
-	# the statements are compiled lazily from `body` (compile_body) the first time the function runs
+	# the statements are compiled lazily from `body` (compile_body) the first time the function runs; the body text starts
+	# right after `)`, so its first line is the line of `)`
 	functions[fname] = {
 		"params": params,
-		"body": _src.substr(body_from, maxi(body_to - body_from, 0)).strip_edges(),
+		"body": _src.substr(body_from, maxi(body_to - body_from, 0)).strip_edges(false, true),
 		"line": fn_line,
+		"body_line": _lines[rparen] if rparen < _count else fn_line,
 	}
+	_fn_ranges.append([fname, _pos, _count if end_idx < 0 else end_idx])
 	_pos = _count if end_idx < 0 else end_idx + 1
 
 
@@ -364,18 +408,37 @@ static func _number(text: String) -> Variant:
 
 # ------------------------------------------------------------------------------------------------ blocks and statements
 
-## Parses statements up to a block terminator (end else elseif until) or token index `limit`.
+## Parses statements up to a block terminator (end else elseif until) or token index `limit`. Every statement gets its
+## source line appended (the last element).
 func parse_block(limit: int) -> Array:
 	var stmts: Array = []
+	var returned := false
 	while _pos < limit:
 		if _types[_pos] == T_NAME and (_texts[_pos] in _TERMINATORS):
 			break
+		if returned and not _op(";"):
+			_finding(_pos, "syntax", "`return` must be the last statement of its block: real Lua refuses `%s` after it" % _texts[_pos])
+			returned = false
 		var before := _pos
+		var line := _lines[_pos]
 		var s: Variant = _parse_statement(limit)
 		if s != null:
+			(s as Array).append(line)
 			stmts.append(s)
+			returned = returned or str(s[0]) == "return"
 		if _pos <= before:
 			_pos = before + 1                  # never stall
+	return stmts
+
+
+## A whole function body up to `limit`: a block, and a terminator that closes nothing (`else`, `elseif`, `until`) is a
+## syntax finding (a stray `end` cannot be inside: it would have ended the function, the lint's `unbalanced`).
+func _parse_body(limit: int) -> Array:
+	var stmts := parse_block(limit)
+	while _pos < limit:
+		_finding(_pos, "syntax", "`%s` without an open `if`" % _texts[_pos])
+		_pos += 1
+		stmts.append_array(parse_block(limit))
 	return stmts
 
 
@@ -386,6 +449,7 @@ func _parse_statement(limit: int) -> Variant:
 		_pos += 1
 		return null
 	if ty != T_NAME:
+		_finding(_pos, "syntax", "unexpected `%s`: a statement starts with local, if, return, do, an api call or `name = value`" % t)
 		_skip_statement()
 		return ["unsupported", t]
 	match t:
@@ -409,45 +473,55 @@ func _parse_statement(limit: int) -> Variant:
 			_skip_repeat()
 			return ["unsupported", t]
 		"function":
+			_finding(_pos, "function_value", "a function can only be defined at the top level of the file (`function name(...)`), not inside another one")
 			_skip_function_like()
 			return ["unsupported", "function"]
 		"do":
+			var do_at := _pos
 			_pos += 1
 			var inner := parse_block(limit)
-			if _kw("end"):
-				_pos += 1
+			_expect_end(do_at)
 			return ["if", [[["lit", true], inner]], null]
 		"break", "goto":
 			_pos += 1
 			return ["unsupported", t]
 		"then", "in", "until", "end", "else", "elseif":
+			_finding(_pos, "syntax", "unexpected `%s`" % t)
 			_pos += 1
 			return null
 	# expression statement: a call or an assignment to a plain name
+	var first := _pos
 	var e2 := _parse_suffixed()
 	if _op("="):
 		_pos += 1
 		var value := _checked(_parse_expr())
 		if e2[0] == "var":
 			return ["assign", e2[1], value]
+		_finding(first, "field_assignment", "assigning to a field (`t.x = v`, `t[k] = v`) is not supported: keep the value in a local, or store it with api.set_flag")
 		return ["unsupported", "assignment to a field"]
 	if e2[0] == "call":
 		return ["call", e2]
-	_skip_statement()
+	if e2[0] == "unsupported" and _pos > first + 1:
+		return e2                              # a call the subset does not evaluate (reported where it was parsed)
+	_finding(first, "syntax", "`%s` is neither a call nor an assignment (a misspelt keyword?)" % _texts[first])
+	if _pos < limit and _pos > first and _lines[_pos] == _lines[_pos - 1]:
+		_skip_statement()
 	return ["unsupported", "statement"]
 
 
 func _parse_local(_limit: int) -> Variant:
 	_pos += 1
 	if _kw("function"):
-		_skip_function_like()
+		_skip_function_like()                  # the lint's local_function
 		return ["unsupported", "local function"]
 	if _pos >= _count or _types[_pos] != T_NAME:
+		_finding(mini(_pos, _count - 1), "syntax", "a name is expected after `local`")
 		_skip_statement()
 		return ["unsupported", "local"]
 	var lname := _texts[_pos]
 	_pos += 1
 	if _op(","):                               # `local a, b = ...`
+		_finding(_pos - 2, "local_list", "`local a, b` declares several names at once: write one `local name = value` per name")
 		_skip_statement()
 		return ["unsupported", "local list"]
 	if _op("="):
@@ -461,29 +535,54 @@ func _parse_local(_limit: int) -> Variant:
 
 
 func _parse_if(limit: int) -> Variant:
+	var if_at := _pos
 	_pos += 1
 	var branches: Array = []
 	var cond := _checked(_parse_expr())
-	if _kw("then"):
-		_pos += 1
+	_expect_then(limit, if_at)
 	var block := parse_block(limit)
 	branches.append([cond, block])
 	var else_block: Variant = null
 	while true:
 		if _kw("elseif"):
+			var elseif_at := _pos
 			_pos += 1
 			var c2 := _checked(_parse_expr())
-			if _kw("then"):
-				_pos += 1
+			_expect_then(limit, elseif_at)
 			branches.append([c2, parse_block(limit)])
 		elif _kw("else"):
 			_pos += 1
 			else_block = parse_block(limit)
 		else:
 			break
+	_expect_end(if_at)
+	return ["if", branches, else_block]
+
+
+## `then` after the condition of `if` / `elseif` (token `opener`). Anything else is a syntax finding, and the parser resumes
+## after the `then` of the statement, so `if a != b then` is one finding, not one per token.
+func _expect_then(limit: int, opener: int) -> void:
+	if _kw("then"):
+		_pos += 1
+		return
+	_finding(mini(_pos, _count - 1), "syntax", "`then` expected after the condition of the `%s` on line %d, not `%s`" % [_texts[opener], _lines[opener], _tok(_pos)])
+	var j := _pos
+	while j < limit:
+		if _types[j] == T_NAME:
+			if _texts[j] == "then":
+				_pos = j + 1
+				return
+			if _texts[j] in _STATEMENT_WORDS:
+				return
+		j += 1
+
+
+## `end` closing the block opened by token `opener` (`if` / `do`). At the end of the input the lint's `unbalanced` says it.
+func _expect_end(opener: int) -> void:
 	if _kw("end"):
 		_pos += 1
-	return ["if", branches, else_block]
+	elif _pos < _count:
+		_finding(_pos, "syntax", "`end` expected to close the `%s` on line %d, not `%s`" % [_texts[opener], _lines[opener], _texts[_pos]])
 
 
 func _skip_loop() -> void:
@@ -598,19 +697,29 @@ func _parse_suffixed() -> Array:
 		if t == "nil":
 			_pos += 1
 			return ["lit", null]
+		if t == "function":
+			_finding(_pos, "function_value", "functions are not values in the subset (`function() ... end` inside a function): define a top-level `function name(...)`")
+			_skip_function_like()
+			return ["unsupported", "function"]
 		if t in _STATEMENT_WORDS or t == "then" or t == "and" or t == "or" or t == "not" or t == "in":
+			_finding(_pos, "syntax", "an expression is expected before `%s`" % t)
 			return ["lit", null]               # not an expression start: the caller skips
 		e = ["var", t]
 		path = t
 		_pos += 1
 	elif ty == T_OP and t == "(":
+		var open_at := _pos
 		_pos += 1
 		e = _parse_or()
 		if _op(")"):
 			_pos += 1
+		else:
+			_finding(mini(_pos, _count - 1), "syntax", "`)` expected to close the `(` on line %d, not `%s`" % [_lines[open_at], _tok(_pos)])
 	elif ty == T_OP and t == "{":
 		return ["tbl", parse_table()]
 	else:
+		if t != "..." and t != "~":            # the lint's vararg / bitwise
+			_finding(_pos, "syntax", "an expression is expected, not `%s`" % t)
 		_pos += 1
 		return ["unsupported", t]
 	while _pos < _count and _types[_pos] == T_OP:
@@ -621,17 +730,22 @@ func _parse_suffixed() -> Array:
 			path = (path + "." + key) if path != "" else ""
 			_pos += 2
 		elif op == "[":
+			var bracket_at := _pos
 			_pos += 1
 			var k := _parse_or()
 			if _op("]"):
 				_pos += 1
+			else:
+				_finding(mini(_pos, _count - 1), "syntax", "`]` expected to close the `[` on line %d, not `%s`" % [_lines[bracket_at], _tok(_pos)])
 			e = ["index", e, k]
 			path = ""
 		elif op == "(":
+			var call_at := _pos
 			var args := _parse_args()
 			if path != "":
 				e = ["call", path, args]
 			else:
+				_finding(call_at, "unsupported", "only `api.<name>(...)` calls are evaluated: this call answers nil")
 				e = ["unsupported", "call"]
 			path = ""
 		elif op == ":" and _pos + 1 < _count and _types[_pos + 1] == T_NAME:
@@ -663,6 +777,8 @@ func _parse_args() -> Array:
 			_pos += 1
 		else:
 			# unexpected tokens inside the argument list (arithmetic ...): skip to the closing bracket
+			if not (_types[_pos] == T_OP and (_texts[_pos] in _ARITH or _texts[_pos] == ":")):     # the lint's arithmetic / method_call
+				_finding(_pos, "syntax", "`,` or `)` expected in the argument list, not `%s`" % _texts[_pos])
 			var depth := 1
 			while _pos < _count and depth > 0:
 				if _types[_pos] == T_OP:
@@ -676,6 +792,19 @@ func _parse_args() -> Array:
 
 
 # ------------------------------------------------------------------------------------------------ helpers
+
+func _finding(at: int, rule: String, message: String) -> void:
+	findings.append({"line": _lines[at] if at >= 0 and at < _count else (_lines[_count - 1] if _count > 0 else 1), "rule": rule, "token": _tok(at), "message": message})
+
+
+func _top_level_finding(at: int, message: String) -> void:
+	_finding(at, "top_level", message)
+
+
+## the text of token `at`, or a readable stand-in past the end
+func _tok(at: int) -> String:
+	return _texts[at] if at >= 0 and at < _count else "<end of file>"
+
 
 func _kw(word: String) -> bool:
 	return _pos < _count and _types[_pos] == T_NAME and _texts[_pos] == word

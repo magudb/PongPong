@@ -60,8 +60,14 @@ godot --headless --path . -s res://tools/lua/lint.gd -- --files=res://lua/quests
 
 Prints `PASS <file>` or `FAIL <file>:<line>:<rule> <message>` per finding and a `lint: N file(s), M finding(s)` line.
 Rules: `else elseif loop long_bracket local_function module_function escape length stdlib method_call vararg arithmetic
-bitwise mixed_table reserved_key table_value nil_value kind_missing kind_unknown unbalanced unterminated_string stray_character`
-(and, from the loader: `duplicate_key rarity tables_header registry_header`). `LuaRuntime.lint_source(text)` lints a string (docs, tests).
+bitwise mixed_table reserved_key table_value nil_value kind_missing kind_unknown unbalanced unterminated_string stray_character
+unknown_function` over the tokens, the grammar findings of the parser `syntax local_list field_assignment function_value
+unsupported top_level` (what it could not use: `!=`, `if a = b then`, `retrun x`, a statement after `return`, `t.x = v`,
+`local f = function() ... end`, a call that is not `api.<name>(...)` ...), and, from the loader: `duplicate_key rarity
+tables_header registry_header`. `LuaRuntime.lint_source(text)` lints a string (docs, tests).
+The lint is a deny-list; the independent gate is real Lua: `data.lua_real_syntax` runs `luac5.4 -p` over every file under
+`res://lua` (the playtest workflow installs lua5.4; without it the check is skipped locally and fails on CI).
+`LuaRuntime` lints at load only in debug builds (`lint_on_load`); a release build keeps the loader's data-level checks.
 
 ## `gen_probe_ref.sh` - reference values from REAL Lua
 
