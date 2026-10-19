@@ -42,12 +42,19 @@ func run(t) -> void:
 	_retry_reuses_download(t, updates)
 	_prune_downloads(t, updates)
 	await _helpers_end_to_end(t, updates)
-	updates.available.clear()
-	updates._set_state("current")
-	updates.checked = true
+	# A fresh session, as after the helper relaunched the game: the title builds before the service reads the result.
+	var result := ProjectSettings.globalize_path(ReleaseUpdates.CACHE).path_join("install-2.json")
+	_write(result, '{"status":"failed","reason":"locked"}')
+	t.tree.root.remove_child(updates)
+	t.tree.root.remove_meta("tt_release_updates")
+	updates.queue_free()
 	await t.go_menu()
+	updates = ReleaseUpdates.inst()
 	# The previous session's install outcome is shown on the title until the player has seen the panel.
 	var row: Button = t.tree.current_scene.find_child("UpdatesButton", true, false)
+	t.check("title_reports_previous_session", row.visible and row.text == TranslationServer.translate("UPDATE_REPORT_FAILED") and not FileAccess.file_exists(result), row.text)
+	updates._set_state("current")
+	updates.checked = true
 	updates.report = {"status": "failed", "reason": "locked"}
 	updates.changed.emit()
 	t.check("title_reports_failed_install", row.visible and row.text == TranslationServer.translate("UPDATE_REPORT_FAILED"), row.text)

@@ -48,6 +48,8 @@ func _ready() -> void:
 	add_child(_request)
 	_request.request_completed.connect(_completed)
 	report = take_report()
+	# The title has already drawn itself: the service is added to the tree deferred, after its first inst() call.
+	if not report.is_empty(): changed.emit()
 	prune_downloads()
 
 func _set_state(value: String) -> void:
