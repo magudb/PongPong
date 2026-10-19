@@ -1,6 +1,6 @@
 extends RefCounted
 ## Regressions from the 2026-10-19 review of player interaction, combat input and world hosts:
-## telegraph-only damage (DUN-01) and dodge direction (GAP3-06).
+## telegraph-only damage (DUN-01), dodge direction (GAP3-06) and the buffered dodge across a pause (GAP3-12).
 const SECTION := "interaction_review"
 const TIMEOUT_S := 180.0
 
@@ -17,6 +17,7 @@ func run(t) -> void:
 	DungeonRun.apply_preset("none")
 	await _telegraph_only(t)
 	await _dodge_direction(t)
+	await _buffer_across_pause(t)
 	gm.clear_config_overrides()
 
 
@@ -82,3 +83,21 @@ func _dodge_direction(t) -> void:
 	await t.seconds(float(GameData.combat("dodge_time", 0.3)) + 0.1)
 	player.combat.cooldowns.dodge = 0
 
+
+## GAP3-12: a dodge buffered just before a pause or modal is dropped instead of firing on resume.
+func _buffer_across_pause(t) -> void:
+	var gm: Node = t.autoload("GameManager")
+	var player: Player2D = t.world().player
+	for pauses in [true, false]:
+		player.state = PlayerBody2D.S.FREE
+		player.combat.cooldowns.dodge = 0.05
+		player.combat.request(&"dodge")
+		var buffered: bool = player.combat._buffer == &"dodge" and player.state == PlayerBody2D.S.FREE
+		gm.push_modal(&"interaction_review", pauses)
+		await t.physics(3)
+		gm.pop_modal(&"interaction_review")
+		player.combat.cooldowns.dodge = 0
+		await t.physics(3)
+		t.check("buffered_dodge_dropped_by_%s_modal" % ("pausing" if pauses else "open"), buffered and player.state != PlayerBody2D.S.DODGE and player.combat._buffer == &"",
+			"state %d buffer %s" % [player.state, player.combat._buffer])
+	player.state = PlayerBody2D.S.FREE

@@ -63,7 +63,10 @@ const GEM := "res://scripts/combat/lantern_gem.gd"
 func _ready() -> void:
 	EventBus.modal_changed.connect(func(stack):
 		if not stack.is_empty():
-			_farm_use_held = false)
+			_farm_use_held = false
+			# A pausing modal freezes _physics_process, so its paused branch never runs.
+			if combat != null:
+				combat.clear_buffer())
 	super._ready()
 	refresh_stats()
 	stamina = max_stamina
@@ -229,6 +232,7 @@ func _physics_process(delta: float) -> void:
 	if paused:
 		_farm_use_held = false
 		combat.attack_held = false
+		combat.clear_buffer()
 		_climb_up = false
 		_climb_down = false
 		velocity = Vector2.ZERO
