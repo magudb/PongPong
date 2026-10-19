@@ -523,7 +523,7 @@ func travel(area_id: StringName, spawn: StringName) -> void:
 	traveling = false
 	last_travel_profile.total_ms = (Time.get_ticks_usec()-began)/1000.0
 	_flush_rebuild()                         # one that arrived during the fade-in
-	if _pass_out_pending:
+	if _pass_out_pending and not _faint_pending:  # a faint that waits for this travel wakes the player itself
 		_pass_out_pending = false
 		await _sleep_sequence(true)
 
@@ -683,11 +683,12 @@ func sleep() -> void:
 	await _sleep_sequence(false)
 
 
-## Pass-out at 24:00: the clock crossed midnight (GameManager emits game_event midnight_passed), the day already rolled.
+## Pass-out at the day end: the clock crossed it (GameManager emits game_event midnight_passed), the day already rolled.
+## A faint that is under way owns the night: its own wake-up brings the morning, a pass-out on top would wake the player twice.
 func _on_game_event(event_name: StringName, _payload: Dictionary) -> void:
 	if event_name != &"midnight_passed":
 		return
-	if sleeping or player == null or area == null or area.projection != &"iso":
+	if sleeping or _faint_pending or player == null or area == null or area.projection != &"iso":
 		return
 	if traveling:
 		_pass_out_pending = true
@@ -760,6 +761,7 @@ func _on_player_defeated() -> void:
 	if _faint_pending:
 		return
 	_faint_pending = true
+	var faint_day: int = GameManager.total_day()
 	await get_tree().create_timer(1.3).timeout
 	# travel() refuses while a fade / sleep sequence runs: wait it out so the rescue teleport is not silently skipped
 	var guard := 0
@@ -773,7 +775,10 @@ func _on_player_defeated() -> void:
 	var floors: Variant = Svc.static_call("res://scripts/dungeon/floors/dungeon_floors.gd", &"inst", [])
 	if floors is Node and floors.has_method("end_run"):
 		floors.call("end_run", &"defeated")
-	GameManager.sleep_until_morning()
+	# One wake-up per night: when the calendar already rolled since the defeat (the day end passed during the delay above) and the
+	# clock is at the morning, a second sleep_until_morning() would run end_day() and skip a whole day.
+	if GameManager.total_day() == faint_day or int(GameManager.hour) < GameManager.day_start_hour():
+		GameManager.sleep_until_morning()
 	var loss := floori(float(EconomyManager.gold) * clampf(float(GameData.cfg("dungeon.defeat.gold_loss_pct", 10)), 0.0, 100.0) / 100.0)
 	EconomyManager.spend_gold(loss)
 	_enter(_wake_area(), StringName(str(GameData.cfg("dungeon.hub.wake_spawn", "from_home"))))

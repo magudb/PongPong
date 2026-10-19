@@ -6,7 +6,7 @@ extends RefCounted
 ##
 ## Named checks (all prefixed clock26.): config_day_runs_06_to_26, day_end_hour_config_edges, advance_time_conserves_calendar_minutes, hours_24_25_are_the_same_game_day,
 ## real_time_day_is_10_minutes, display_hours_wrap, game_hour_normaliser, from_dict_old_and_new_saves, save_payload_at_01_40, night_rules_after_midnight, date_and_shop_day_until_the_roll,
-## shop_opening_weekday_after_midnight, towns_hours_after_midnight (SKIP until T-towns-core), no_pass_out_at_midnight, whole_day_passes_out_at_02_00, pass_out_at_02_00, bed_after_midnight_passes_one_day, bed_after_the_roll_skips_no_second_day,
+## shop_opening_weekday_after_midnight, towns_hours_after_midnight (SKIP until T-towns-core), no_pass_out_at_midnight, whole_day_passes_out_at_02_00, pass_out_at_02_00, bed_after_midnight_passes_one_day, bed_after_the_roll_skips_no_second_day, faint_just_before_02_00_rolls_one_day,
 ## bed_hours_18_to_06, night_after_midnight (day / night look and glow), windowed: night_look_is_continuous_across_midnight.
 ## The section is a sandbox: it drives the autoloads synchronously for the pure part (no frame passes between a state change and its assertion), then starts the real world for the pass-out.
 ## Which clock the section runs at (DT55 of TOWNS_FARM_SOCIAL_ADDENDUM): this section is NOT about the opening-hours rule, so the one check that asks ShopSystem.is_open runs with the switch
@@ -374,6 +374,26 @@ func _pass_out_and_bed() -> void:
 	Engine.time_scale = 1.0
 	t.check("bed_after_the_roll_skips_no_second_day", after_done and gm.total_day() == day_after and gm.hour == gm.day_start_hour() and _names(w["log"]).is_empty(),
 		"bed at raw 03:10 (after the 02:00 roll, before the wake-up): same date, wakes at 06:00, no day_ended: total_day %d -> %d" % [day_after, gm.total_day()])
+	# --- a faint at raw 25:59 (iso combat): the day end passes during the faint's delay; the pass-out must not start a second night, and the
+	# faint's own wake-up must not roll the calendar again (review SYS-01: the second sleep_until_morning() at 06:00 ran end_day)
+	notes.clear()
+	w["log"].clear()
+	_world._enter(&"_fixture_iso", &"default")
+	gm.set("hour", gm.day_end_hour() - 1)
+	gm.set("minute", 59)
+	var day_faint: int = gm.total_day()
+	tm.pause_time()
+	Engine.time_scale = 4.0
+	bus.player_defeated.emit()
+	gm.advance_time(2)                        # 26:00 = the roll + midnight_passed, inside the 1.3 s before the faint fades out
+	await t.frames(2)
+	var pass_out_started: bool = _world.sleeping
+	var faint_done: bool = await t.until(func() -> bool: return not _world._faint_pending and not _world.sleeping and not _world.traveling, 12.0)
+	Engine.time_scale = 1.0
+	tm.resume_time()
+	t.check("faint_just_before_02_00_rolls_one_day", faint_done and not pass_out_started and gm.total_day() == day_faint + 1 and gm.hour == gm.day_start_hour() and _names(w["log"]).count("day_ended") == 1,
+		"defeated at raw 25:59, the roll at 26:00 inside the faint delay: pass-out started %s, faint finished %s, total_day %d -> %d, %02d:%02d, %s" % [pass_out_started, faint_done, day_faint, gm.total_day(), gm.hour, gm.minute, _names(w["log"])])
+	_world._enter(&"_fixture_iso", &"default")
 	# --- the bed hours: 18:00 until the wake-up, including the raw hours 24 / 25 and the transient 2..5; never in the day
 	var sweep := ""
 	var bed_ok := true
