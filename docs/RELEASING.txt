@@ -110,7 +110,10 @@ Drafts, prereleases, downgrades, wrong-platform assets, untrusted asset URLs,
 missing SHA-256 digests and oversized packages are ignored.
 
 After confirmation, the game downloads to user://updates and verifies GitHub's
-asset digest. The install helper independently rechecks the archive, validates
+asset digest. That folder keeps at most one archive: a new download removes
+older ones, every start removes archives of the installed or older versions
+(a newer one stays for a retry), and an archive the helper rejects is
+deleted at once. The install helper independently rechecks the archive, validates
 and stages it, then signals that the running game may exit. A playing session
 must autosave successfully first. The helper waits for the process to exit,
 swaps only the installed game folder/bundle (retrying a folder that a virus

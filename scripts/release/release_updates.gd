@@ -48,6 +48,7 @@ func _ready() -> void:
 	add_child(_request)
 	_request.request_completed.connect(_completed)
 	report = take_report()
+	prune_downloads()
 
 func _set_state(value: String) -> void:
 	state = value
@@ -55,7 +56,20 @@ func _set_state(value: String) -> void:
 
 func _fail(reason: String) -> void:
 	failure = reason if FAILURES.has(reason) else ""
+	# The helper found the archive itself unusable: a retry has to download it again.
+	if failure in ["checksum", "package"] and FileAccess.file_exists(downloaded_path): DirAccess.remove_absolute(downloaded_path)
 	_set_state("install_failed")
+
+## Update archives are about 400 MB each and sit next to the saves. Keep at most one: the download being made (`keep`),
+## or else one of a release newer than this build, which a failed install can retry; an installed one is removed.
+func prune_downloads(keep := "") -> void:
+	var folder := ProjectSettings.globalize_path(CACHE)
+	if not DirAccess.dir_exists_absolute(folder): return
+	for version in DirAccess.get_directories_at(folder):
+		if version == keep or keep.is_empty() and Version.newer(version, current_version()): continue
+		var path := folder.path_join(version)
+		for file in DirAccess.get_files_at(path): DirAccess.remove_absolute(path.path_join(file))
+		DirAccess.remove_absolute(path)
 
 ## The message for the current install failure, or for the one reported from the previous session.
 static func failure_key(reason: String) -> String:
@@ -139,6 +153,7 @@ func _completed(result: int, code: int, _headers: PackedStringArray, body: Packe
 
 func download() -> void:
 	if state not in ["available", "download_failed", "install_failed"] or available.is_empty(): return
+	prune_downloads(available.version)
 	var path := ProjectSettings.globalize_path(CACHE.path_join(available.version))
 	if DirAccess.make_dir_recursive_absolute(path) != OK:
 		_set_state("download_failed")

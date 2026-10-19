@@ -40,6 +40,7 @@ func run(t) -> void:
 	t.check("tampered_download_removed", updates.state == "download_failed" and not FileAccess.file_exists(download))
 	_install_results(t, updates)
 	_retry_reuses_download(t, updates)
+	_prune_downloads(t, updates)
 	updates.available.clear()
 	updates._set_state("current")
 	updates.checked = true
@@ -115,6 +116,27 @@ func _retry_reuses_download(t, updates: ReleaseUpdates) -> void:
 	t.check("retry_reuses_verified_download", updates.state == "ready" and updates.downloaded_path == payload, updates.state)
 	DirAccess.remove_absolute(payload)
 	DirAccess.remove_absolute(folder)
+
+## Old update archives do not pile up next to the saves: an installed or unknown version goes at startup, a newer one
+## stays for a retry until another download starts, and an archive the helper rejected is removed at once.
+func _prune_downloads(t, updates: ReleaseUpdates) -> void:
+	var folder := ProjectSettings.globalize_path(ReleaseUpdates.CACHE)
+	for version in [ReleaseUpdates.current_version(), "junk", "9.9.9"]:
+		DirAccess.make_dir_recursive_absolute(folder.path_join(version))
+		var file := FileAccess.open(folder.path_join(version).path_join("Traetoppen-v%s-windows.zip" % version), FileAccess.WRITE)
+		file.store_string("archive")
+		file.close()
+	updates.prune_downloads()
+	t.check("startup_prunes_installed_downloads", Array(DirAccess.get_directories_at(folder)) == ["9.9.9"], DirAccess.get_directories_at(folder))
+	updates.downloaded_path = folder.path_join("9.9.9").path_join("Traetoppen-v9.9.9-windows.zip")
+	updates._fail("locked")
+	t.check("failed_install_keeps_download_for_retry", FileAccess.file_exists(updates.downloaded_path))
+	updates._fail("checksum")
+	t.check("rejected_archive_is_removed", not FileAccess.file_exists(updates.downloaded_path))
+	updates.prune_downloads("9.9.10")
+	t.check("new_download_replaces_older_ones", DirAccess.get_directories_at(folder).is_empty(), DirAccess.get_directories_at(folder))
+	updates.downloaded_path = ""
+	updates._set_state("current")
 
 func run_windowed(t) -> void:
 	await run(t)
