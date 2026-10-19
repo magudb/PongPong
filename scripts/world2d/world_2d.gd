@@ -671,10 +671,19 @@ func _rebuild_area() -> void:
 
 # ------------------------------------------------------------------ sleep / pass out / faint / celebrate
 
-## The earliest hour the bed accepts (config time.sleep_from_hour, default 18:00); the night after midnight counts too.
+## The earliest hour the bed accepts: config time.sleep_from_hour (default 18:00), held later while a festival with bed_hold runs
+## (SocialManager.bed_hold_hour, the window end); the night after midnight counts too.
 func can_sleep_now() -> bool:
 	var h: int = int(GameManager.hour)
-	return h >= int(GameManager.config_value("time.sleep_from_hour", 18)) or h < GameManager.day_start_hour()
+	return h >= sleep_from_hour() or h < GameManager.day_start_hour()
+
+
+static func sleep_from_hour() -> int:
+	var from := int(GameManager.config_value("time.sleep_from_hour", 18))
+	var social := Svc.node("SocialManager")
+	if social != null and social.has_method("bed_hold_hour"):
+		from = maxi(from, int(social.call("bed_hold_hour")))
+	return from
 
 
 ## E on the bed: sleep clip, fade out, next day (the farm grows), fade in. Energy and hearts are restored. Before 18:00 the bed

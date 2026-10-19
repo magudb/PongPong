@@ -2,6 +2,7 @@ class_name SocialEventRunner
 extends Node
 ## Scene data is read-only. Effects commit with the seen stamp at the end, including skip.
 signal finished(id: String, skipped: bool)
+const _LuaRuntime := preload("res://scripts/autoload/lua_runtime.gd")     # static refuses_owner_flag(): the flags an event may not write
 const STEPS := ["fade","stand","walk","face","camera","clip","emote","say","choice","give","points","flag","wait","time","sfx","end"]
 var active := ""
 var skipped_directives := 0
@@ -233,7 +234,8 @@ func _commit(id: String) -> void:
 					points[npc] = mini(100,int(points.get(npc,0))+maxi(0,int(step.get("amount",step.get("points",0)))))
 				"flag":
 					var key := str(step.get("key",step.get("flag","")))
-					if key != "": flags[key] = step.get("value",true)
+					# a flag that mirrors its owner (home_tier, friend_<npc> ...) is not the event's to write (ARCH-07)
+					if key != "" and not _LuaRuntime.refuses_owner_flag(key,"event %s flag" % id): flags[key] = step.get("value",true)
 				"time": minutes += maxi(0,int(step.get("minutes",0)))
 		SocialManager.owe_event_items(items)
 		GameManager.set_flags(flags)

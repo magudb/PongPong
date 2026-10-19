@@ -102,7 +102,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 90
+    "rows": 92
   },
   "localization/levels.csv": {
     "status": "draft",
@@ -137,7 +137,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 147
+    "rows": 149
   },
   "localization/social_sys.csv": {
     "status": "draft",
@@ -955,7 +955,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 19
+    "rows": 21
   },
   "localization/dialogue.csv": {
     "status": "draft",

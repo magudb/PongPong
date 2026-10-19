@@ -837,6 +837,16 @@ func _spots() -> void:
 	var vault: Dictionary = ls.claim_spot("zz_vault")
 	t.expect(lacking == &"locked" and half == &"locked" and bool(vault["ok"]) and eco.count_item(&"moss") == 0 and eco.count_item(&"stone") == 0 and eco.count_item(&"gem_bag") == 1 and moss_before == 2, "requires.items + consume: locked while one item is missing, then the claim takes exactly the required items and delivers the keepsake")
 	t.expect(ls.missing_items("zz_vault").size() == 2, "missing_items lists what the vault still lacks once the items are gone (moss, stone)")
+	# SYS-06: a worn garment is owned (has_items) but remove_items never takes it: the claim is refused whole, nothing delivered, nothing committed, the rng put back
+	_fresh(33)
+	var worn_spots := {"spots": {"zz_wardrobe": {"zone": "zz", "item": "gem_bag", "name_key": "FIND_SPOT_X", "hint_key": "ITEM_BED_TOADSTOOL_HINT", "once": true, "requires": {"items": {"hat_chef_white": 1}}, "consume": true}}}
+	ls.set_loot_config(_pool_cfg(["wood"], 1, "material", "normal", worn_spots))
+	eco.add_item(&"hat_chef_white", 1, true)
+	var worn_ok: bool = t.autoload("WardrobeManager").equip(&"hat_chef_white")
+	var rng_state: int = ls.rng.state
+	var worn: Dictionary = ls.claim_spot("zz_wardrobe")
+	t.check("refused_consumption_delivers_nothing", worn_ok and not bool(worn["ok"]) and worn["reason"] == &"missing_items" and eco.count_item(&"gem_bag") == 0 and not ls.claimed.has("zz_wardrobe") and eco.count_item(&"hat_chef_white") == 1 and ls.rng.state == rng_state,
+		"a spot that would consume the worn hat answers missing_items: no gem bag, the spot stays open, the hat stays worn, the rng is where it was (%s)" % str(worn))
 
 
 # ============================================================================================ gifts, capstones

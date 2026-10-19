@@ -42,6 +42,8 @@ const MAX_PARTY := 6
 const NO_VISIT_WEEK := -1
 ## a visit container that opens empty is opened again (fresh uid) up to this many times in all
 const VISIT_ATTEMPTS := 3
+## the most guest gifts that wait at the door for room in the backpack (a week of the castle's visits and then some)
+const MAX_VISITS_OWED := 7
 
 ## the chest content changed (deposit / withdraw / paying a build from it)
 signal chest_changed()
@@ -67,6 +69,8 @@ var _captured_loot: Array = []              # results of the loot_rolled signal 
 var _loot_reason: String = ""               # LootService's reason for the last visit container ("" = a find, "nothing" = it was empty, else why it refused)
 var _loot_refused: bool = false             # LootService answered ok = false (full backpack, cooldown ...): no second attempt
 var last_visit: Dictionary = {}             # {ok, reason, day, npc?, item?}: what the last visit attempt did (tests and the Husbyggeri card read it)
+var _visits_owed: Array[Dictionary] = []    # [{week, index, npc}]: gifts a FULL backpack refused; they wait at the door (saved) until there is room
+var _owed_retry_queued := false
 
 
 func _ready() -> void:
@@ -76,6 +80,7 @@ func _ready() -> void:
 	EventBus.new_game_started.connect(reset)
 	EventBus.dialogue_started.connect(_on_dialogue_started)
 	EventBus.dialogue_ended.connect(_on_dialogue_ended)
+	EventBus.player_inventory_changed.connect(_on_inventory_changed)
 
 
 # ---------------------------------------------------------------------------------------------------------------- data access
@@ -285,6 +290,7 @@ func finish_upgrade() -> void:
 
 func _on_day_started(_day: int, _season: StringName) -> void:
 	_retry_pending_gifts()
+	_retry_owed_visit()
 	if is_under_construction():
 		if GameManager.total_day() >= int(construction["ready_day"]):
 			finish_upgrade()
@@ -491,6 +497,18 @@ func _roll_weekly_visit() -> void:
 		last_visit = {"ok": false, "reason": "no_loot_service", "day": td}
 		return
 	var npc := _visitor_for(week, index)
+	if not _deliver_visit(loot, week, index, npc) and _loot_reason == "full":
+		# a full backpack does not cost the week's gift (SYS-10): it waits at the door, the toast names the guest
+		if _visits_owed.size() < MAX_VISITS_OWED:
+			_visits_owed.append({"week": week, "index": index, "npc": npc})
+		last_visit = {"ok": false, "reason": "full", "day": td, "npc": npc}
+		_toast("HOME_UNLOCK_GUEST_VISITS", tr("HOME_GUEST_GIFT_WAITING_FMT") % tr(_npc_name_key(npc)) if npc != "" else tr("HOME_GUEST_GIFT_WAITING"))
+
+
+## Opens the visit container (up to VISIT_ATTEMPTS times) and, with a find, records the visit and announces it. False when nothing came: last_visit
+## and _loot_reason tell why (LootService's "full" = the backpack had no room).
+func _deliver_visit(loot: Node, week: int, index: int, npc: String) -> bool:
+	var td := GameManager.total_day()
 	var result: Dictionary = {}
 	for attempt in VISIT_ATTEMPTS:
 		# a container that opens and holds nothing (the farm has no uncommon or rare pool, so about 3 of 10 `trae` openings are empty) is opened again with a fresh uid;
@@ -500,13 +518,40 @@ func _roll_weekly_visit() -> void:
 			break
 	if result.is_empty():
 		last_visit = {"ok": false, "reason": "nothing_left", "day": td, "loot_reason": _loot_reason}
-		return
+		return false
 	var item := str(result.get("id", ""))
 	visit_week = week
-	_visit = {"npc": npc, "item": item, "week": week, "index": index}
+	if _visit_day == td and _visit.is_empty():
+		_visit = {"npc": npc, "item": item, "week": week, "index": index}      # the guest of today (a gift that waited is only handed over)
 	last_visit = {"ok": true, "reason": "ok", "day": td, "npc": npc, "item": item}
 	EventBus.visitor_gift.emit(StringName(npc), StringName(item))
 	_toast("HOME_UNLOCK_GUEST_VISITS", tr("PARTNER_VISITOR") % tr(_npc_name_key(npc)) if npc != "" else _format(tr("FIND_UI_FOUND_FMT"), [tr("ITEM_%s" % item.to_upper())]))
+	return true
+
+
+## The gifts that wait at the door are handed over, oldest first, as soon as the backpack has a free slot again (an inventory change, or the next
+## morning, before that day's visit is rolled); a second full refusal keeps them waiting without another toast, any other answer (nothing in it, a cooldown) ends that gift.
+func _retry_owed_visit() -> void:
+	_owed_retry_queued = false
+	if _visits_owed.is_empty() or is_under_construction():
+		return
+	var loot := _Svc.node("LootService")
+	if loot == null or not loot.has_method("open_container"):
+		return
+	while not _visits_owed.is_empty() and EconomyManager.free_slots() > 0:
+		var owed: Dictionary = _visits_owed[0]
+		var before := last_visit
+		if not _deliver_visit(loot, int(owed["week"]), int(owed["index"]), str(owed["npc"])) and _loot_reason == "full":
+			last_visit = before
+			return
+		_visits_owed.remove_at(0)
+
+
+func _on_inventory_changed(_inventory: Dictionary) -> void:
+	if _visits_owed.is_empty() or _owed_retry_queued:
+		return
+	_owed_retry_queued = true
+	_retry_owed_visit.call_deferred()
 
 
 func _visitor_for(week: int, index: int) -> String:
@@ -516,7 +561,7 @@ func _visitor_for(week: int, index: int) -> String:
 	return str(sm.call("pick_visitor", week, index))
 
 
-## Opens the visit container and returns the first result {id, amount, ...}; {} when nothing came out. LootService.open_container(zone, container_id, uid)
+## Opens the visit container and returns the first result {id, amount, ...}; {} when nothing came out. LootService.open_container(zone, container_id, uid, ctx)
 ## answers {ok, results: [{id, amount, rarity, kind}], reason}; a plain Array of results and/or the loot_rolled signal are accepted as well. The reason of a
 ## refused open (cooldown, full backpack ...) is kept in _loot_reason.
 func _open_visit_container(loot: Node, uid: String) -> Dictionary:
@@ -524,7 +569,8 @@ func _open_visit_container(loot: Node, uid: String) -> Dictionary:
 	_loot_reason = ""
 	_loot_refused = false
 	EventBus.loot_rolled.connect(_on_loot_rolled)
-	var answer: Variant = loot.call("open_container", _HomeData.VISIT_ZONE, _HomeData.VISIT_CONTAINER, uid)
+	# quiet_full: a refusal for a full backpack is told by the guest's own toast (or, on a retry, not again), not by LootService's generic one
+	var answer: Variant = loot.call("open_container", _HomeData.VISIT_ZONE, _HomeData.VISIT_CONTAINER, uid, {"quiet_full": true})
 	EventBus.loot_rolled.disconnect(_on_loot_rolled)
 	var results: Array = []
 	if answer is Array:
@@ -659,7 +705,7 @@ func _quest_completed(quest_id: String) -> bool:
 	return qm != null and qm.has_method("is_completed") and bool(qm.call("is_completed", StringName(quest_id)))
 
 
-## whole hearts of a citizen: the world flag friend_<npc> (SocialManager mirrors its hearts into it)
+## whole hearts of a citizen: the world flag friend_<npc> (SocialManager mirrors its hearts into it after every change and load; Lua may not write it)
 func hearts_of(npc_id: String) -> int:
 	return GameManager.flag_int(StringName("friend_%s" % npc_id), 0)
 
@@ -697,6 +743,7 @@ func reset() -> void:
 	_pending_gifts = []
 	_visit_day = 0
 	_visit = {}
+	_visits_owed = []
 	_dialogue_npc = &""
 	last_visit = {}
 	_sync_flags()
@@ -719,6 +766,8 @@ func to_dict() -> Dictionary:
 		out["party"] = _party.duplicate()
 	if not _pending_gifts.is_empty():
 		out["gifts_pending"] = _pending_gifts.duplicate()
+	if not _visits_owed.is_empty():
+		out["visits_owed"] = _visits_owed.duplicate(true)
 	return out
 
 
@@ -754,15 +803,18 @@ func from_dict(d: Dictionary) -> bool:
 	var saved_week := _Codec.to_int(visit.get("week",-1),-1)
 	if _visit_day>0 and str(visit.get("item",""))!="" and visit_index>=0 and visit_index<7 and saved_week>=0:
 		_visit = {"npc":str(visit.get("npc","")),"item":str(visit.item),"week":saved_week,"index":visit_index}
+	_visits_owed = []
+	for raw in _Data.arr(d.get("visits_owed", [])):
+		var owed := _Data.dict(raw)
+		var owed_index := _Codec.to_int(owed.get("index", -1), -1)
+		var owed_week := _Codec.to_int(owed.get("week", -1), -1)
+		if owed_index >= 0 and owed_index < 7 and owed_week >= 0 and _visits_owed.size() < MAX_VISITS_OWED:
+			_visits_owed.append({"week": owed_week, "index": owed_index, "npc": str(owed.get("npc", ""))})
 	last_visit = {}
 	_dialogue_npc = &""
-	# the `game` section (applied before this one) brought home_tier from the same moment of the same save: a usable value (1..10) is kept exactly as it was
-	# loaded (P15's JSON round trip test of world flags uses it as its int flag); a missing or unusable one is repaired from this section. home_building and
-	# home_castle_built are derived, home_upgrade_done is present.
-	var saved_flag := GameManager.flag_int(GameManager.FLAG_HOME_TIER, 0)
-	if saved_flag < 1 or saved_flag > last_tier() or not GameManager.world_flags.has(GameManager.FLAG_HOME_TIER):
-		GameManager.set_flag(GameManager.FLAG_HOME_TIER, tier)
-	_sync_derived_flags()
+	# home_tier, home_building and home_castle_built are MIRRORS of this section: always rewritten from it, so a flag that disagrees with the tier (a
+	# damaged save, an old writer) can never make the gates that read the flag disagree with the ones that read `tier` (ARCH-07); home_upgrade_done is present.
+	_sync_flags()
 	if not GameManager.world_flags.has(GameManager.FLAG_HOME_UPGRADE_DONE):
 		GameManager.set_flag(GameManager.FLAG_HOME_UPGRADE_DONE, 0)
 	return true

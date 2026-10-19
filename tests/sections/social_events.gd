@@ -39,6 +39,8 @@ func _run(t,native: bool) -> void:
 			{"act":"wait","time":0.01},{"act":"sfx","id":"unavailable_test_cue"},{"act":"end"}],"rewards":{"points":40,"flag":"event_end_flag"}},
 		"event_missing_actor":{"meta":{"npc":NPC,"hearts":1},"steps":[{"act":"walk","who":"missing_actor","mark":"missing"},{"act":"clip","who":"missing_actor","clip":"idle"},{"act":"emote","who":"missing_actor","kind":"heart"},{"act":"say","who":NPC,"text_key":"SOC_GARDENER_HOPPE_FIRST_1_V"}],"rewards":{"points":10}},
 		"event_yearly":{"meta":{"trigger":"festival","once_per_year":true},"steps":[{"act":"say","who":NPC,"text_key":"SOC_GARDENER_HOPPE_FIRST_1_V"}],"rewards":{"items":{"wood":1}}},
+		"event_owner_flags":{"meta":{"npc":NPC,"hearts":1},"steps":[{"act":"say","who":NPC,"text_key":"SOC_GARDENER_HOPPE_FIRST_1_V"},
+			{"act":"flag","key":"friend_"+NPC,"value":9},{"act":"flag","key":"home_tier","value":7},{"act":"flag","key":"event_plain_flag"}]},
 		"event_cancel":{"meta":{"npc":NPC,"hearts":1},"steps":[{"act":"say","who":NPC,"text_key":"SOC_GARDENER_HOPPE_FIRST_1_V"},{"act":"flag","key":"event_cancelled_flag"}]},
 	}
 	SocialFixture.install({}, {"events":definitions,"festivals":{}})
@@ -105,6 +107,15 @@ func _run(t,native: bool) -> void:
 	await _finish_dialogue(t)
 	t.check("missing_actor_api_is_skipped_not_fatal",runner.skipped_directives-skipped_before == 3 and SocialManager.event_seen("event_missing_actor"))
 	t.check("ordinary_scene_points_paid",SocialManager.points(NPC) == 200)
+	# ARCH-07: an event's flag effect may not write a flag that mirrors its owner (hearts, home tier); its other flags still commit
+	t.allow("event event_owner_flags flag(\"friend_%s\") refused" % NPC)
+	t.allow("event event_owner_flags flag(\"home_tier\") refused")
+	var hearts_flag: Variant = GameManager.get_flag(StringName("friend_"+NPC),null)
+	var tier_flag: Variant = GameManager.get_flag(&"home_tier",null)
+	t.check("owner_flag_scene_starts",director.request("event_owner_flags"))
+	await _finish_dialogue(t)
+	t.check("event_cannot_write_owner_flags",SocialManager.event_seen("event_owner_flags") and GameManager.get_flag(StringName("friend_"+NPC),null) == hearts_flag and GameManager.get_flag(&"home_tier",null) == tier_flag and GameManager.get_flag(&"event_plain_flag",false),
+		"friend_ %s -> %s, home_tier %s -> %s" % [str(hearts_flag),str(GameManager.get_flag(StringName("friend_"+NPC),null)),str(tier_flag),str(GameManager.get_flag(&"home_tier",null))])
 	# A full backpack keeps the reward in the existing social save, then claims it once.
 	EconomyManager.inventory.clear()
 	for i in 24: EconomyManager.inventory.append({"id":&"stone","amount":99,"meta":{}})

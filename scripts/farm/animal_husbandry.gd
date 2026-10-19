@@ -187,19 +187,16 @@ const BUILDINGS := {
 		"name_key": "BUILDING_COOP",
 		"capacity": 4,
 		"build_cost": {"wood": 20, "stone": 10, "gold": 500},
-		"build_days": 2,
 	},
 	"barn": {
 		"name_key": "BUILDING_BARN",
 		"capacity": 6,
 		"build_cost": {"wood": 40, "stone": 25, "gold": 1200},
-		"build_days": 4,
 	},
 	"house": {
 		"name_key": "BUILDING_HOUSE",
 		"capacity": 3,
 		"build_cost": {"wood": 15, "stone": 8, "gold": 350},
-		"build_days": 1,
 	},
 }
 
@@ -301,9 +298,30 @@ func _ready() -> void:
 	_load_husbandry_config()
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.new_game_started.connect(reset)
-	EventBus.item_purchased.connect(func(id, _amount, _total):
-		if _item_to_species(id) != &"" and _has_space_for(_item_to_species(id)):
-			adopt_animal(id))
+	EventBus.item_purchased.connect(_on_item_purchased)
+
+
+## Bought baby animals move in one by one while a building has a free place; the rest wait in the backpack (adopted later with "Brug") and
+## adopt_animal's no-space toast says so (GAP4-05).
+func _on_item_purchased(item_id: StringName, amount: int, _total: int) -> void:
+	if _item_to_species(item_id) == &"":
+		return
+	for i in amount:
+		if not adopt_animal(item_id):
+			return
+
+
+## How many babies of this item the buildings can still take (-1 = the item is not a baby animal): the shop caps its amount with it.
+func room_for_item(item_id: StringName) -> int:
+	var species := _item_to_species(item_id)
+	if species == &"" or not species_data.has(str(species)):
+		return -1
+	var needed := StringName(str(species_data[str(species)]["building"]))
+	var room := 0
+	for b in buildings.values():
+		if b.building_type == needed and b.is_built:
+			room += maxi(building_capacity(b) - b.animals_inside.size(), 0)
+	return room
 
 
 ## Replaces the fallback tables with lua/config/husbandry.lua (`husbandry.species` / `husbandry.buildings`).
@@ -564,6 +582,8 @@ func collection_reason(animal_id: StringName) -> String:
 
 # --- Buildings ---
 
+## An animal building is finished at once: the materials and gold are paid and the animals move in today (GAP4-08: there is no construction
+## time and no `build_days` setting; the upgrades of an existing building are what take days, see upgrade_building).
 func build_building(building_type: StringName, free := false) -> bool:
 	var spec: Dictionary = buildings_data.get(str(building_type), {})
 	if spec.is_empty() or has_building(building_type):
@@ -764,14 +784,6 @@ func _random_animal_name() -> String:
 		"Egern", "Mospus", "Lyng", "Klokke", "Solsort", "Musling", "Perle",
 	]
 	return names[randi() % names.size()]
-
-
-func _notify_cannot_afford() -> void:
-	EventBus.notification_posted.emit(
-		tr("NOTIF_NO_GOLD_TITLE"),
-		tr("NOTIF_NO_GOLD_MSG"),
-		"gold"
-	)
 
 
 func get_all_animals() -> Array:

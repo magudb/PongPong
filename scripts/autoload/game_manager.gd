@@ -526,6 +526,14 @@ func advance_time(minutes: int) -> void:
 	EventBus.time_of_day_changed.emit(hour, minute)
 
 
+## Puts the clock at hour:minute of the same day (clamped to the day's hours) and announces it; no time passes, nothing grows. The one way
+## a scene sets the clock (the first-morning tutorial), so time_of_day_changed is only ever emitted here.
+func set_clock(p_hour: int, p_minute: int) -> void:
+	hour = clampi(p_hour, day_start_hour(), day_end_hour() - 1)
+	minute = clampi(p_minute, 0, 59)
+	EventBus.time_of_day_changed.emit(hour, minute)
+
+
 ## Ends the current day now and starts the next morning at day_start_hour: day_ended, then day_started.
 func end_day() -> void:
 	EventBus.day_ended.emit(day, season)

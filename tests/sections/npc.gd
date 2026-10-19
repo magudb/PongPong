@@ -59,6 +59,7 @@ func run(t) -> void:
 	await _input_and_actions(t, dialogue, ui)
 	await _lifetime_and_schedule(t, dialogue)
 	await _extensions(t, dialogue)
+	await _bubble_refresh(t)
 	await _quests(t, dialogue)
 	await _journal(t, ui.get_screen(&"quest_journal"))
 	await _turn_ins(t, dialogue)
@@ -178,6 +179,39 @@ func _input_and_actions(t, dialogue: Control, ui: GameUI) -> void:
 	await t.frames(3)
 	t.check("temporary_actor_disposal_ends_once", ends.size() == 4 and not dialogue.is_open() and t.player().state == PlayerBody2D.S.FREE)
 	bus.dialogue_ended.disconnect(counter)
+
+## SYS-04: a storm of broadcasts (a load emits one flag_changed per flag) queues ONE bubble refresh per NPC for the next frame, and the giver index of
+## QuestManager answers what a scan over every definition answers.
+func _bubble_refresh(t) -> void:
+	var qm: Node = t.autoload("QuestManager")
+	var gm: Node = t.autoload("GameManager")
+	var npc := _spawn(t, "baker_maja")
+	await t.frames(2)
+	var shown: String = npc._bubble_label.text
+	for i in 40:
+		gm.set_flag(StringName("zz_bubble_%d" % i), true)
+	var queued_once: bool = npc._bubble_queued
+	await t.frames(1)
+	t.check("bubble_refresh_coalesced", queued_once and not npc._bubble_queued and npc._bubble_label.text == shown, "40 flag changes in one frame queue one refresh (queued %s), the next frame shows the same bubble '%s'" % [queued_once, npc._bubble_label.text])
+	for i in 40:
+		gm.clear_flag(StringName("zz_bubble_%d" % i))
+	var wrong: Array = []
+	for id in t.autoload("LuaRuntime").get_npcs():
+		var want: Array[StringName] = []
+		for q in LuaData.strings(LuaData.dict(t.autoload("LuaRuntime").get_npc(str(id))).get("quests_offered", [])):
+			var giver := str(LuaData.dict(qm.get_quest_def(StringName(q)).get("meta", {})).get("giver", ""))
+			if qm.quest_defs.has(StringName(q)) and (giver == "" or giver == str(id)) and not StringName(q) in want:
+				want.append(StringName(q))
+		var named: Array[String] = []
+		for q in qm.quest_defs:
+			if str(LuaData.dict(LuaData.dict(qm.quest_defs[q]).get("meta", {})).get("giver", "")) == str(id) and not StringName(str(q)) in want:
+				named.append(str(q))
+		named.sort()
+		for q in named:
+			want.append(StringName(q))
+		if qm._quests_of_giver(str(id)) != want:
+			wrong.append(str(id))
+	t.check("giver_index_matches_full_scan", wrong.is_empty(), "the quests of every giver from the index equal a scan over every definition: %s" % str(wrong))
 
 func _quests(t, dialogue: Control) -> void:
 	var gm: Node = t.autoload("GameManager")

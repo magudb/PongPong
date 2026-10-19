@@ -154,6 +154,21 @@ func _run(t) -> void:
 		t.check("species_%s_uses_approved_actor" % species,yard.actors.has(&"animal_preview") and yard.actors[&"animal_preview"].visual.resolved_id == Animal2D.VISUALS[species][1])
 	ah.from_dict(original)
 	await t.frames(2)
+	# GAP4-05: several babies bought at once move in one per free place; the rest wait in the backpack and the no-space toast says so
+	var coop: Variant = ah.building_of(&"coop")
+	var free_places: int = ah.building_capacity(coop) - coop.animals_inside.size()
+	var titles: Array = []
+	var catch := func(title: String, _message: String, _icon: String) -> void: titles.append(title)
+	EventBus.notification_posted.connect(catch)
+	eco.add_gold(5000)
+	var herd: int = ah.animals.size()
+	var bought: bool = eco.buy_item(&"baby_chick", free_places + 1, 10)
+	EventBus.notification_posted.disconnect(catch)
+	t.check("several_babies_adopt_one_per_free_place", free_places > 0 and ah.room_for_item(&"baby_chick") == 0 and bought and ah.animals.size() == herd + free_places and eco.count_item(&"baby_chick") == 1 and titles.has(tr("NOTIF_NO_SPACE_TITLE")),
+		"%d free places, %d chicks bought: %d moved in, %d waits in the backpack, toasts %s" % [free_places, free_places + 1, ah.animals.size() - herd, eco.count_item(&"baby_chick"), str(titles)])
+	ah.from_dict(original)
+	eco.remove_item(&"baby_chick", 1)
+	await t.frames(2)
 	if native:
 		world.game_ui.get_screen(&"hud").toasts.clear()
 		world.player.camera_focus(yard,0.65,0.0)

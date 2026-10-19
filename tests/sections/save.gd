@@ -2381,7 +2381,7 @@ func _test_roundtrip_all_systems() -> void:
 	gm.hour = 14
 	gm.minute = 5
 	gm.play_time_seconds = 1234.5
-	gm.set_flag(&"home_tier", 3)
+	t.autoload("HomeManager").set_tier(3)        # home_tier is HomeManager's mirror (rewritten on load, ARCH-07): the int flag of this round trip
 	gm.set_flag(&"ratio", 0.5)
 	gm.set_flag(&"nickname", "Mia æøå")
 	gm.unlock_zone(&"dark_forest")

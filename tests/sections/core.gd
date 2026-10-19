@@ -113,6 +113,7 @@ const FEATURE_SIGNALS := {
 const REVIEW_SIGNALS := {
 	"flag_changed": "flag:StringName,value:Nil",
 	"save_failed": "slot:int,code:String",
+	"crop_auto_watered": "plot_id:StringName,source:StringName",
 }
 
 var t

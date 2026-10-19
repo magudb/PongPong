@@ -77,7 +77,7 @@ func _morning(_day: int, _season: StringName) -> void:
 		var model: FarmGrid = world.farm_for_area(StringName(str(piece.get("area", "farm"))))
 		var cell := Vector2i(int(piece.cell[0]), int(piece.cell[1]))
 		for offset in offsets:
-			model.water(cell + Vector2i(int(offset[0]), int(offset[1])), 6.0)
+			model.water(cell + Vector2i(int(offset[0]), int(offset[1])), 6.0, &"sprinkler")
 
 static func load_crop(piece: Dictionary, crop: StringName) -> bool:
 	if piece.is_empty() or piece.has("batch") or not FarmGrid.crop_definitions().has(str(crop)):

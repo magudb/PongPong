@@ -43,7 +43,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | ghostfamily_quests.csv | draft | 26 | 163 | 0.4 |
 | ghostfamily_seek.csv | draft | 25 | 291 | 0.7 |
 | heart_events.csv | draft | 280 | 1987 | 5.0 |
-| home.csv | draft | 90 | 497 | 1.2 |
+| home.csv | draft | 92 | 534 | 1.3 |
 | home_amenities.csv | draft | 20 | 164 | 0.4 |
 | home_ui.csv | draft | 62 | 269 | 0.7 |
 | home_world.csv | draft | 7 | 30 | 0.1 |
@@ -59,10 +59,10 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | nav.csv | draft | 56 | 86 | 0.2 |
 | partner.csv | draft | 54 | 555 | 1.4 |
 | post.csv | draft | 77 | 222 | 0.6 |
-| quests.csv | draft | 147 | 1058 | 2.6 |
+| quests.csv | draft | 149 | 1066 | 2.7 |
 | rel_ui.csv | draft | 40 | 171 | 0.4 |
 | secret_garden.csv | draft | 64 | 740 | 1.9 |
-| shop_ui.csv | draft | 19 | 69 | 0.2 |
+| shop_ui.csv | draft | 21 | 78 | 0.2 |
 | social_events.csv | draft | 27 | 131 | 0.3 |
 | social_sys.csv | draft | 10 | 32 | 0.1 |
 | traetoppen.csv | draft | 21 | 58 | 0.1 |

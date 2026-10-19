@@ -35,7 +35,8 @@ signal modal_changed(stack: Array)
 
 # --- Farm ---
 signal crop_planted(plot_id: StringName, crop_id: StringName)
-signal crop_watered(plot_id: StringName)
+signal crop_watered(plot_id: StringName)                 # the PLAYER watered (the can): quests and tutorial hints count it
+signal crop_auto_watered(plot_id: StringName, source: StringName)   # a crop watered without the player: rain, sprinkler, supply, partner
 signal crop_harvested(plot_id: StringName, crop_id: StringName, amount: int)
 signal crop_stage_changed(plot_id: StringName, stage: int)
 signal plot_unlocked(plot_id: StringName)

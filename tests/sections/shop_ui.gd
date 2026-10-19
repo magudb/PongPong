@@ -344,6 +344,13 @@ func _all_shops(t, screen: Control) -> void:
 			screen.buy_btn.pressed.emit()
 			await t.frames(3)
 			t.check("sell_control_" + str(id), eco.gold == before + price and eco.count_item(item) == owned - 1)
+			if str(id) == "seed_shop":
+				# a full wallet (SYS-08): the sale whose pay cannot fit is not offered, the footer names the cap
+				var gold_keep: int = eco.gold
+				eco.add_gold(eco.MAX_GOLD)
+				await t.frames(3)
+				t.check("sell_disabled_at_gold_cap", screen.buy_btn.disabled and screen.total_label.text == tr("STORE_WALLET_FULL_FMT") % screen.Fmt.thousands(eco.MAX_GOLD), screen.total_label.text)
+				eco.gold = gold_keep
 		else:
 			t.check("no_sellable_" + str(id), screen._rows.is_empty() and screen.buy_btn.disabled)
 		screen.close()
