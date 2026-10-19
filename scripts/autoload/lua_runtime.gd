@@ -628,53 +628,74 @@ func _invoke_function(sid: String, fname: String, args: Array) -> Variant:
 		scope[str(params[i])] = args[i] if i < args.size() else null
 	if not func_def.has("ast"):
 		func_def["ast"] = _Parser.compile_body(str(func_def.get("body", "")), int(func_def.get("body_line", 1)))     # lazily, once
-	var outcome: Variant = _exec_block(func_def["ast"], scope)
+	var outcome: Variant = _exec_block(func_def["ast"], [scope])
 	if outcome == null:
 		return null
 	return (outcome as Array)[0]
 
 
-## Executes a block of statements. Returns null when the block ran to its end, or [value] when a `return` was hit.
-func _exec_block(stmts: Array, scope: Dictionary) -> Variant:
+## Executes a block of statements in a scope of its own: `scopes` is the chain of the enclosing blocks, the parameters first,
+## so a `local` inside a block ends with the block and shadows the outer name only there (Lua's rule). An assignment to a
+## name sets the innermost local of that name, else a name of the call (scopes[0]: Lua would set a global).
+## Returns null when the block ran to its end, or [value] when a `return` was hit.
+func _exec_block(stmts: Array, scopes: Array) -> Variant:
+	scopes.push_back({})
+	var outcome: Variant = _run_statements(stmts, scopes)
+	scopes.pop_back()
+	return outcome
+
+
+func _run_statements(stmts: Array, scopes: Array) -> Variant:
 	for s in stmts:
 		match str(s[0]):
-			"local", "assign":
-				scope[str(s[1])] = _ev(s[2], scope)
+			"local":
+				var value: Variant = _ev(s[2], scopes)              # evaluated before the name exists (`local x = x`)
+				(scopes.back() as Dictionary)[str(s[1])] = value
+			"assign":
+				_assign(str(s[1]), _ev(s[2], scopes), scopes)
 			"call":
-				_ev(s[1], scope)
+				_ev(s[1], scopes)
 			"if":
 				var taken := false
 				for branch in s[1]:
-					if _truthy(_ev(branch[0], scope)):
+					if _truthy(_ev(branch[0], scopes)):
 						taken = true
-						var r: Variant = _exec_block(branch[1], scope)
+						var r: Variant = _exec_block(branch[1], scopes)
 						if r != null:
 							return r
 						break
 				if not taken and s[2] != null:
-					var r2: Variant = _exec_block(s[2], scope)
+					var r2: Variant = _exec_block(s[2], scopes)
 					if r2 != null:
 						return r2
 			"return":
-				return [null if s[1] == null else _ev(s[1], scope)]
+				return [null if s[1] == null else _ev(s[1], scopes)]
 			"unsupported":
 				_log_once("unsupported Lua statement (%s) is skipped: see LuaRuntime.lint_report" % str(s[1]))
 	return null
 
 
+func _assign(var_name: String, value: Variant, scopes: Array) -> void:
+	for i in range(scopes.size() - 1, -1, -1):
+		if (scopes[i] as Dictionary).has(var_name):
+			scopes[i][var_name] = value
+			return
+	scopes[0][var_name] = value
+
+
 # =============================================================================================== expression evaluation
 
-func _ev(e: Array, scope: Dictionary) -> Variant:
+func _ev(e: Array, scopes: Array) -> Variant:
 	match str(e[0]):
 		"lit":
 			return e[1]
 		"var":
-			return _lookup(str(e[1]), scope)
+			return _lookup(str(e[1]), scopes)
 		"field":
-			return _field(_ev(e[1], scope), str(e[2]))
+			return _field(_ev(e[1], scopes), str(e[2]))
 		"index":
-			var base: Variant = _ev(e[1], scope)
-			var key: Variant = _ev(e[2], scope)
+			var base: Variant = _ev(e[1], scopes)
+			var key: Variant = _index_key(_ev(e[2], scopes))
 			if typeof(base) == TYPE_DICTIONARY:
 				return (base as Dictionary).get(key if typeof(key) == TYPE_STRING else str(key))
 			if typeof(base) == TYPE_ARRAY and typeof(key) == TYPE_INT and int(key) >= 1 and int(key) <= (base as Array).size():
@@ -683,7 +704,7 @@ func _ev(e: Array, scope: Dictionary) -> Variant:
 		"call":
 			var args: Array = []
 			for a in e[2]:
-				args.append(_ev(a, scope))
+				args.append(_ev(a, scopes))
 			return _call(str(e[1]), args)
 		"tbl":
 			var v: Variant = e[1]
@@ -691,30 +712,39 @@ func _ev(e: Array, scope: Dictionary) -> Variant:
 				return v.duplicate(true)
 			return v
 		"or":
-			var l: Variant = _ev(e[1], scope)
-			return l if _truthy(l) else _ev(e[2], scope)
+			var l: Variant = _ev(e[1], scopes)
+			return l if _truthy(l) else _ev(e[2], scopes)
 		"and":
-			var l2: Variant = _ev(e[1], scope)
-			return _ev(e[2], scope) if _truthy(l2) else l2
+			var l2: Variant = _ev(e[1], scopes)
+			return _ev(e[2], scopes) if _truthy(l2) else l2
 		"not":
-			return not _truthy(_ev(e[1], scope))
+			return not _truthy(_ev(e[1], scopes))
 		"neg":
-			var n: Variant = _ev(e[1], scope)
+			var n: Variant = _ev(e[1], scopes)
 			return -n if (typeof(n) == TYPE_INT or typeof(n) == TYPE_FLOAT) else null
 		"cmp":
-			return _compare(str(e[1]), _ev(e[2], scope), _ev(e[3], scope))
+			return _compare(str(e[1]), _ev(e[2], scopes), _ev(e[3], scopes))
 		"cat":
-			return _tostr(_ev(e[1], scope)) + _tostr(_ev(e[2], scope))
+			return _tostr(_ev(e[1], scopes)) + _tostr(_ev(e[2], scopes))
 		"unsupported":
 			_log_once("unsupported Lua construct (%s) evaluates to nil: see LuaRuntime.lint_report" % str(e[1]))
 			return null
 	return null
 
 
-## Name resolution: a local or parameter first, then the world flag of that name (nil when unset).
-func _lookup(var_name: String, scope: Dictionary) -> Variant:
-	if scope.has(var_name):
-		return scope[var_name]
+## Lua normalises a float key with an integral value to the integer (t[2.0] is t[2]); numbers that came through JSON (a save,
+## the world flags) are floats, so names[stage] must not miss after a load.
+func _index_key(key: Variant) -> Variant:
+	if typeof(key) == TYPE_FLOAT and is_finite(key) and absf(key) < ARG_INT_LIMIT and float(key) == floorf(key):
+		return int(key)
+	return key
+
+
+## Name resolution: the innermost local or parameter first, then the world flag of that name (nil when unset).
+func _lookup(var_name: String, scopes: Array) -> Variant:
+	for i in range(scopes.size() - 1, -1, -1):
+		if (scopes[i] as Dictionary).has(var_name):
+			return scopes[i][var_name]
 	if var_name == "gold":
 		var eco := _node("EconomyManager")
 		return eco.get("gold") if eco != null else null

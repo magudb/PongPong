@@ -102,4 +102,13 @@ return {
   -- p23: statements before and after an if
   c("p23_stmt_around_if", "on_accept", { { x = true } }, {}, "x true", "exact"),
   c("p23_stmt_around_if", "on_accept", { { x = false } }, {}, "x false", "exact"),
+  -- p24 / p25: block scopes and integral float keys (LUA-07)
+  c("p24_block_scope", "get_dialogue", { { up = true } }, {}, "an inner local shadows only inside its block", "exact"),
+  c("p24_block_scope", "get_dialogue", { {} }, {}, "branch not taken", "exact"),
+  c("p24_block_scope", "assign_outer", { { up = true } }, {}, "an assignment in a block sets the outer local", "exact"),
+  c("p24_block_scope", "shadow_param", { { up = true } }, {}, "a local may shadow a parameter inside a block", "exact"),
+  c("p25_float_index", "get_dialogue", { { stage = 2.0 } }, {}, "array index by an integral float", "exact"),
+  c("p25_float_index", "get_dialogue", { { stage = 4 } }, {}, "array index by an integer", "exact"),
+  c("p25_float_index", "get_dialogue", { { stage = 2.5 } }, {}, "a fractional index misses", "exact"),
+  c("p25_float_index", "by_key", { { stage = 3.0 } }, {}, "[n] = key by an integral float", "exact"),
 }
