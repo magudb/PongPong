@@ -54,6 +54,10 @@ var mode: StringName = MODE_FARM
 ## Load DEBUG_SCREENS? A debug build (the editor, the harness) or an export with the custom feature `cheats`; tests may switch it off.
 var debug_tools: bool = debug_tools_enabled()
 
+## The PackedScenes of SCENE_DIR loaded this run, kept for the next world (a load, title -> Fortsæt): instancing them is cheap, loading
+## them (scripts, theme, textures: ~1.4 s for all screens, measured headless) is not. warm_step() fills it while the title is idle.
+static var _scenes: Dictionary = {}      # path -> PackedScene
+
 var _screens: Dictionary = {}            # id -> Node
 var _order: Array[StringName] = SCREEN_ORDER
 var _dir: String = SCENE_DIR
@@ -87,6 +91,31 @@ static func debug_tools_enabled() -> bool:
 	return OS.is_debug_build() or OS.has_feature("cheats")
 
 
+## PERF-02: loads the next screen scene that is not cached yet; true when every screen is. The title calls it once per frame while
+## it sits idle, so Fortsæt / Bekræft no longer freeze the window while GameUI loads all screens in one go. One scene per frame, on
+## the main thread: worker-thread loading (ResourceLoader.load_threaded_request) leaks GDScript parser objects at exit in 4.7.2
+## (two in-function preloads of ui_fixtures.gd and social_layout.gd in one script are enough), which fails the harness.
+static func warm_step() -> bool:
+	for id in SCREEN_ORDER:
+		var path := scene_path(id)
+		if _scenes.has(path) or (id in DEBUG_SCREENS and not debug_tools_enabled()) or not ResourceLoader.exists(path):
+			continue
+		if _packed(path) == null:
+			_scenes[path] = null        # a broken scene is reported once (load_screens reports it again in the world)
+		return false
+	return true
+
+
+## The scene at `path`: the cached one, or a plain load (cached for SCENE_DIR).
+static func _packed(path: String) -> PackedScene:
+	if _scenes.has(path):
+		return _scenes[path]
+	var ps := load(path) as PackedScene
+	if ps != null and path.begins_with(SCENE_DIR):
+		_scenes[path] = ps
+	return ps
+
+
 ## Scene path of a screen id.
 static func scene_path(screen_id: StringName, dir: String = SCENE_DIR) -> String:
 	return "%s%s.tscn" % [dir, screen_id]
@@ -109,7 +138,7 @@ func load_screens(dir: String = "", order: Array = []) -> Array[StringName]:
 		var path := scene_path(id, _dir)
 		if not ResourceLoader.exists(path):
 			continue
-		var ps := load(path) as PackedScene
+		var ps := _packed(path)
 		if ps == null:
 			push_error("GameUI: %s exists but is not a scene" % path)
 			continue

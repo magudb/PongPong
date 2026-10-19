@@ -3,6 +3,7 @@ extends Control
 var _rows: Array = []
 var _last_row: Control
 var _updates_button: Button
+var _shown_frames := 0
 
 func _ready() -> void:
 	GameManager.pop_all_modals()
@@ -45,6 +46,13 @@ func _ready() -> void:
 	# starts after the real title has finished its normal startup.
 	if DisplayServer.get_name() == "headless" and "--release-smoke" in OS.get_cmdline_user_args():
 		get_tree().root.add_child.call_deferred(load("res://scripts/release/export_smoke.gd").new())
+
+## While the title waits for the player, GameUI's screens load one per frame (PERF-02), not all at once after Fortsæt / Bekræft.
+## The first frames draw the title before anything loads.
+func _process(_delta: float) -> void:
+	_shown_frames += 1
+	if _shown_frames > 2 and GameUI.warm_step():
+		set_process(false)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():

@@ -17,6 +17,14 @@ func run(t) -> void:
 	var title: Control = t.tree.current_scene
 	await t.frames(3)
 	t.check("initial_focus_title", title.get_viewport().gui_get_focus_owner() == title.get_node("%NewGameButton"))
+	# PERF-02: the idle title loads GameUI's screens one per frame, so entering the world only instances them.
+	var warmed: bool = await t.until(func(): return not title.is_processing(), 60.0)
+	var cold: Array = []
+	for id in GameUI.SCREEN_ORDER:
+		var path := GameUI.scene_path(id)
+		if ResourceLoader.exists(path) and not GameUI._scenes.get(path) is PackedScene:
+			cold.append(id)
+	t.check("title_warms_game_ui_screens", warmed and cold.is_empty(), "not loaded by the title: %s" % str(cold))
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(2)
 	t.check("title_esc_inert", t.tree.current_scene == title)
