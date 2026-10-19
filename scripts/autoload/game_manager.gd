@@ -81,6 +81,9 @@ var _modals: Array[Dictionary] = []          # [{name: StringName, pauses: bool}
 var _config_overrides: Dictionary = {}       # path -> value; tests and the debug console only, never saved
 var _quitting := false
 var _quit_asking := false                    # save_before_quit is waiting for the answer to the failed-save question
+## Test seam (no behaviour of its own): when valid, quit_game calls it with the exit code instead of ending the process, after
+## everything quit_game decides (the save, the question); the game keeps running.
+var quit_seam: Callable = Callable()
 
 
 func _ready() -> void:
@@ -96,6 +99,9 @@ func quit_game(code := 0, save := true, asker: Control = null) -> void:
 	if _quitting or _quit_asking:return
 	if save and not await save_before_quit(asker):return
 	if _quitting:return
+	if quit_seam.is_valid():
+		quit_seam.call(code)
+		return
 	_quitting = true
 	get_tree().paused = true
 	var audio := get_node_or_null("/root/AudioManager")

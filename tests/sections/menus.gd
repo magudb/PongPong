@@ -295,7 +295,7 @@ func _save_flows(t, pause: TTScreen, game_ui: GameUI) -> void:
 
 ## ARCH-04: every way out (the window's close button, Cmd+Q / Alt+F4, the pause menu's Quit) goes through GameManager.quit_game,
 ## whose save_before_quit autosaves a running world and asks before a quit that would lose progress. (quit_game itself ends the
-## process, so the check drives save_before_quit, and the wiring is checked on the signal and the pause menu row.)
+## process: the checks drive save_before_quit, the signal wiring, and the pause menu's Quit row with GameManager.quit_seam set.)
 func _quit_saves(t) -> void:
 	var sm: Node = t.autoload("SaveManager")
 	var gm: Node = t.autoload("GameManager")
@@ -331,9 +331,24 @@ func _quit_saves(t) -> void:
 	await t.frames(3)
 	t.check("quit_failed_save_ok_quits", answers == [false, true], "OK answers true: %s" % [answers])
 	DirAccess.remove_absolute(sm.slot_path(sm.AUTO_SLOT) + ".tmp")
+	# the pause menu's Quit row, pressed: quit_game saves first and then ends (the seam stands in for the end of the process)
 	var pause: TTScreen = t.world().game_ui.get_screen(&"pause_menu")
-	var source: String = (pause.get_script() as Script).source_code
-	t.check("pause_quit_uses_quit_game", source.contains("GameManager.quit_game(0, true, self)"), "the pause menu's Quit hands the save to quit_game")
+	sm.delete_save(sm.AUTO_SLOT)
+	eco.add_gold(5)
+	var quit_codes: Array = []
+	gm.quit_seam = func(code: int) -> void: quit_codes.append(code)
+	pause.open()
+	await t.frames(3)
+	var quit_row: Button = pause._rows.filter(func(row: Control) -> bool: return str(row.name) == "QuitGameButton").front()
+	quit_row.pressed.emit()
+	await t.frames(3)
+	gm.quit_seam = Callable()
+	t.check("pause_quit_uses_quit_game", quit_codes == [0] and sm.has_save(sm.AUTO_SLOT) and int(sm.get_save_summary(sm.AUTO_SLOT).get("gold", -1)) == eco.gold,
+		"Quit in the pause menu reached quit_game's end (%s) after the autosave (auto slot gold %s, want %d)" % [quit_codes, sm.get_save_summary(sm.AUTO_SLOT).get("gold", -1), eco.gold])
+	if pause.is_open():
+		pause.close()
+	gm.pop_all_modals()
+	await t.frames(2)
 	sm.delete_save(sm.AUTO_SLOT)
 	sm.save_dir = dir_before
 
