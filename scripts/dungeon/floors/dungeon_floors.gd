@@ -22,6 +22,8 @@ var _generation := 0
 ## The deepest floor number a save may name at all (structure). How deep the dungeon goes TODAY is cfg.max_floor; a save made
 ## when it went deeper is clamped by from_dict, never rejected as damaged.
 const SAVED_FLOOR_LIMIT := 999
+## The version of the "dungeon" section this build writes and reads (SaveManager: a newer "v" makes the slot "newer", not damaged).
+const SECTION_VERSION := 1
 ## The run record of a save made during a run ("run" in the section: the player's hearts, stamina and oil and the RunWatch
 ## statistics), waiting for the player of the loaded world (EventBus.player_spawned). The world builds the player at full vitals; without
 ## this a Continue on floor 10 would be a free heal and refuel, and the end-of-run summary would count only the floors after it.
@@ -284,7 +286,7 @@ func to_dict() -> Dictionary:
 		var values: Array = done[number].duplicate()
 		values.sort()
 		cells[str(number)] = values
-	var out := {"v":1,"gen":gen,"spec":spec,"world_seed":world_seed,"seed_day":seed_day,"active":active,"floor":floor,"deepest":deepest,"stones":_sorted(stones),"seen":_sorted(seen),"done":cells,"reveal":_sorted(reveal)}
+	var out := {"v":SECTION_VERSION,"gen":gen,"spec":spec,"world_seed":world_seed,"seed_day":seed_day,"active":active,"floor":floor,"deepest":deepest,"stones":_sorted(stones),"seen":_sorted(seen),"done":cells,"reveal":_sorted(reveal)}
 	var run := _run_record()
 	if not run.is_empty(): out["run"] = run
 	return out
@@ -369,7 +371,7 @@ func _flags(values: Array) -> Dictionary:
 		if _valid_floor(int(value)): flags[int(value)] = true
 	return flags
 func validate_dict(data: Dictionary) -> bool:
-	if not _whole(data.get("v",1),1,1) or not _whole(data.get("gen",gen),1,100000): return false
+	if not _whole(data.get("v",1),1,SECTION_VERSION) or not _whole(data.get("gen",gen),1,100000): return false
 	if not data.get("world_seed",world_seed) is String or not str(data.get("world_seed",world_seed)).is_valid_int(): return false
 	if not _whole(data.get("seed_day",0),0,1000000000) or not _whole(data.get("deepest",0),0,SAVED_FLOOR_LIMIT) or not _whole(data.get("floor",0),0,SAVED_FLOOR_LIMIT): return false
 	if not data.get("active",false) is bool or (data.get("active",false) and int(data.get("floor",0)) == 0): return false

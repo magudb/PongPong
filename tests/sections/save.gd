@@ -1646,6 +1646,18 @@ func _test_section_versions() -> void:
 		(real["wardrobe"] as Dictionary)["v"] = 99
 		_put(2, real)
 		t.check("real_section_newer_version_is_newer_slot", sm.inspect_slot(2)["state"] == &"newer", "a wardrobe section of version 99: the slot says 'needs a newer version' instead of failing at apply")
+	if sm.has_section("dungeon"):
+		var deep := _payload()
+		_put(2, deep)
+		var today_state: StringName = sm.inspect_slot(2)["state"]
+		(deep["dungeon"] as Dictionary)["v"] = 99
+		_put(2, deep)
+		t.check("dungeon_section_newer_version_is_newer_slot", today_state == &"ok" and sm.inspect_slot(2)["state"] == &"newer",
+			"a dungeon section of version 99 inspects as newer, not damaged (today's own version inspects as %s)" % today_state)
+	var quests_doc := _payload()
+	(quests_doc["quests"] as Dictionary)["v"] = 99
+	_put(2, quests_doc)
+	t.check("quests_section_newer_version_is_newer_slot", sm.inspect_slot(2)["state"] == &"newer", "a quests section of version 99")
 	# a file that passes every check but that a section refuses: its .bak is applied instead
 	_set_state(200, 3)
 	versioned.data = {"v": 2, "n": 4}
