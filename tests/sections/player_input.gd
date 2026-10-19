@@ -192,7 +192,8 @@ func _keyboard_tool_key(t, world: WorldRoot2D, p: Player2D) -> void:
 	t.check("x_key_attacks_in_action_area", swung and not p.combat.attack_held)
 	_free(p)
 
-## GAP3-11: pad A is interact and jump; with nothing in front it hops, with a host in front it interacts.
+## GAP3-11: pad A is interact and jump; with nothing in front it hops, with a host in front it interacts, and a target
+## that refuses (a ripe crop that cannot be harvested) does not make it hop.
 func _hop_on_pad_a(t, world: WorldRoot2D, p: Player2D) -> void:
 	world.call("_enter", &"farm", &"default")
 	p.set_physics_process(false)
@@ -210,6 +211,33 @@ func _hop_on_pad_a(t, world: WorldRoot2D, p: Player2D) -> void:
 		return
 	p._unhandled_input(_pad(JOY_BUTTON_A))
 	t.check("pad_a_hops_with_nothing_in_front", p.is_jumping)
+	_free(p)
+	p.is_jumping = false
+	p._vertical_speed = 0.0
+	# A ripe crop that cannot be harvested (here the farm is mid-harvest, as with a full bag) refuses A: no hop.
+	var cell := Vector2i(-1, -1)
+	for c in world.farm.farmable_cells():
+		p.global_position = world.area.cell_to_global(c - world.area.facing_step(p.facing8))
+		if world.farm.can_till(c) and p.target_cell() == c and p.nearest_interactable() == null:
+			cell = c
+			break
+	var tilled_here: bool = cell != Vector2i(-1, -1) and world.farm.till(cell)
+	var plot: FarmGrid.PlotData = world.farm.get_plot(cell) if tilled_here else null
+	if plot == null or world.farm.crop_defs.is_empty():
+		t.skip("no tillable farm cell with nothing else in front")
+	else:
+		var before := [plot.crop_id, plot.state]
+		plot.crop_id = StringName(str(world.farm.crop_defs.keys()[0]))
+		plot.state = FarmGrid.State.READY
+		world.farm._busy = true
+		p._unhandled_input(_pad(JOY_BUTTON_A))
+		world.farm._busy = false
+		t.check("pad_a_refused_crop_does_not_hop", not p.is_jumping and world.farm.state_of(cell) == FarmGrid.State.READY, "jumping %s, state %d" % [p.is_jumping, world.farm.state_of(cell)])
+		plot.crop_id = before[0]
+		plot.state = before[1]
+		if tilled_here:
+			world.farm.plots.erase(cell)
+			world.farm.plot_changed.emit(cell)
 	_free(p)
 	p.global_position = spot
 

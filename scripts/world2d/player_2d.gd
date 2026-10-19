@@ -204,8 +204,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif event.is_action_pressed("fly_toggle"):
 			toggle_flight()
 	elif event.is_action_pressed("interact"):
-		# Pad A is interact and jump: with nothing to talk to or use it hops (GAP3-11).
-		if not try_interact() and event.is_action_pressed("jump"):
+		# Pad A is interact and jump: with nothing to talk to or use it hops (GAP3-11). A target that refuses
+		# (a ripe crop with a full bag) is not "nothing", so it does not hop.
+		if not try_interact() and event.is_action_pressed("jump") and not _interaction_target_in_front():
 			hop()
 	elif event.is_action_pressed("fly_toggle"):
 		toggle_flight()
@@ -239,6 +240,10 @@ func _tool_target_in_front() -> bool:
 		return false
 	var host := nearest_interactable()
 	return host != null and host.has_method("tool_hit")
+
+## Something E could act on is in front: an interactable host or a ripe crop.
+func _interaction_target_in_front() -> bool:
+	return nearest_interactable() != null or (_at_farm() and farm.state_of(target_cell()) == FarmGrid.State.READY)
 
 func _is_action_area() -> bool:
 	return area != null and area.projection == &"ortho"
