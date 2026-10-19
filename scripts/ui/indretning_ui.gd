@@ -18,6 +18,7 @@ var _preview: Node2D
 var _refreshing := false
 var _filters: Array[Button] = []
 var pickup_button: Button
+var hint: Label
 func _init() -> void:
 	super._init()
 	screen_id = &"indretning"
@@ -61,7 +62,8 @@ func _ready() -> void:
 	choose_button.pressed.connect(_start_placing)
 	pickup_button = L.button(body,"INDRET_PICKUP_MODE","ButtonSecondaryS")
 	pickup_button.pressed.connect(func(): placing = true; UiNav.release_world_focus())
-	L.label(body,"INDRET_HINT","Muted14",true)
+	hint = L.label(body,"","Muted14",true)
+	UiNav.watcher().device_changed.connect(func(_device): _refresh_hint())
 	EventBus.furniture_changed.connect(func(_why):
 		if is_open(): _refresh_texts.call_deferred())
 func _world() -> Node:
@@ -90,8 +92,13 @@ func _initial_focus() -> Control:
 	return close_button
 func _wants_focus() -> bool:
 	return not placing
+## The keys come from the live InputMap of the device in use (review UX-14): R / RB rotate, X picks up, H / Back close.
+func _refresh_hint() -> void:
+	if hint == null: return
+	hint.text = tr("INDRET_HINT") % [UiHints.glyph_set([&"ui_up",&"ui_down",&"ui_left",&"ui_right"]),UiHints.glyph(&"interact"),UiHints.glyph(&"rotate_item"),UiHints.glyph(&"pickup_item"),UiHints.glyph(&"decorate")]
 func _refresh_texts() -> void:
 	if listing == null: return
+	_refresh_hint()
 	var level := HomeData.hygge_level(FurnitureManager.hygge_level_index())
 	hygge.text = tr("INDRET_HYGGE_FMT") % [tr(str(level.get("name_key",""))),FurnitureManager.hygge_score(),FurnitureManager.ensure_grid().placements.size(),HomeManager.furniture_capacity()]
 	var active: Array[String] = []
@@ -166,8 +173,8 @@ func _input(event: InputEvent) -> void:
 		elif event.is_action_pressed("ui_up",true): cell.y -= 1
 		elif event.is_action_pressed("ui_down",true): cell.y += 1
 		elif event.is_action_pressed("interact") or event.is_action_pressed("ui_accept"): _place()
-		elif (event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_R) or (event is InputEventJoypadButton and event.pressed and event.button_index == JOY_BUTTON_Y): _rotate(1)
-		elif (event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_X) or (event is InputEventJoypadButton and event.pressed and event.button_index == JOY_BUTTON_X): _pickup()
+		elif event.is_action_pressed("rotate_item"): _rotate(1)
+		elif event.is_action_pressed("pickup_item") and not event is InputEventMouseButton: _pickup()
 		else: handled = false
 		if handled:
 			cell.x = clampi(cell.x,-1,30)
