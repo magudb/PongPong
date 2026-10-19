@@ -139,6 +139,8 @@ func _run(t,native: bool) -> void:
 	t.check("cancelled_scene_can_retry",director.request("event_cancel"))
 	await _finish_dialogue(t)
 	t.check("time_stops_before_the_live_day_roll",GameManager.hour == GameManager.day_end_hour()-1 and GameManager.minute == 59)
+	await _confirm_pauses_scene(t)
+	await _freed_actor_releases_scene(t)
 	GameManager.push_modal(&"test_pause",true)
 	for i in 6:
 		var id := "queued_%d" % i
@@ -152,6 +154,56 @@ func _run(t,native: bool) -> void:
 	SocialFixture.uninstall()
 	director.reset()
 	t.new_game()
+
+## Esc during a staged step opens the skip confirm; the scene waits under it, and "Fortsæt" shows every page instead of answering them unseen.
+func _confirm_pauses_scene(t) -> void:
+	var id := "event_confirm_pause"
+	var definition := {"meta":{"trigger":"automatic"},"steps":[{"act":"wait","time":0.3},{"act":"say","who":NPC,"text_key":"SOC_GARDENER_HOPPE_FIRST_1_V"},
+		{"act":"choice","options":[{"id":"first","text_key":"SOC_EV_CONTINUE","flag":"event_pause_first"},{"id":"second","text_key":"SOC_EV_SKIP","flag":"event_pause_second"}]}]}
+	t.check("confirm_scene_starts",director.request(id,true,definition))
+	await t.until(func():return runner.active == id,3.0)
+	var overlay: Node = t.world().game_ui.get_screen(&"event_overlay")
+	overlay.request_skip()
+	await t.frames(2)
+	var confirms := _confirms(t.tree.root)
+	await t.seconds(0.8)
+	t.check("scene_waits_under_the_skip_confirm",confirms.size() == 1 and runner.active == id and not ui.is_open() and not SocialManager.event_seen(id) and GameManager.top_modal() == &"confirm",
+		"active '%s' dialogue open %s seen %s top %s" % [runner.active,ui.is_open(),SocialManager.event_seen(id),GameManager.top_modal()])
+	if not confirms.is_empty(): confirms[0]._finish(false)
+	await t.until(func():return ui.is_open(),3.0)
+	var shown: bool = ui.is_open()
+	for i in 400:
+		await t.frames(1)
+		if ui.is_open() and GameManager.top_modal() == &"dialogue":
+			if ui._wants_focus(): ui._pick(ui._choices[1])
+			else: ui._advance()
+		if runner.active == "": break
+	t.check("continue_after_confirm_shows_the_pages",shown and SocialManager.event_seen(id) and GameManager.get_flag(&"event_pause_second",false) and not GameManager.get_flag(&"event_pause_first",false))
+	if runner.active != "": runner.cancel()
+
+## A walk awaited on an actor that is freed mid-step must not leave the scene (and every later scene) waiting forever.
+func _freed_actor_releases_scene(t) -> void:
+	var script := GDScript.new()
+	script.source_code = "extends Node2D\nfunc event_walk_to(_point: Vector2, _speed: float) -> bool:\n\twhile true:\n\t\tawait get_tree().process_frame\n\treturn true\n"
+	script.reload()
+	var fake: Node2D = script.new()
+	t.tree.root.add_child(fake)
+	var walker: WeakRef = weakref(fake)
+	runner.actor_resolver = func(who: String) -> Node:
+		if who == "fake_walker": return walker.get_ref()
+		return t.player() if who == "player" else NpcDirector.node_of(who)
+	var id := "event_freed_walker"
+	t.check("freed_walker_scene_starts",director.request(id,true,{"meta":{"trigger":"automatic"},"steps":[{"act":"walk","who":"fake_walker"},{"act":"flag","key":"event_walker_done"}]}))
+	await t.until(func():return runner.active == id,3.0)
+	await t.frames(3)
+	fake.queue_free()
+	await t.until(func():return runner.active == "",3.0)
+	t.check("freed_actor_releases_the_scene",runner.active == "" and SocialManager.event_seen(id) and GameManager.get_flag(&"event_walker_done",false) and not GameManager.is_modal_open(&"event"))
+	if runner.active != "": runner.cancel()
+	runner.actor_resolver = Callable()
+	director._starting = true
+	director.reset()
+	t.check("director_reset_clears_the_start_latch",not director._starting)
 
 func _finish_dialogue(t) -> void:
 	for i in 400:
