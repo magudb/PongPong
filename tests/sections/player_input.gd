@@ -42,6 +42,7 @@ func _free(p: Player2D) -> void:
 	p._cancel_flight()
 
 func run(t) -> void:
+	_pad_families(t)
 	await t.start_world()
 	var world: WorldRoot2D = t.world()
 	var p: Player2D = world.player as Player2D
@@ -194,3 +195,18 @@ func _aim_follows_device(t, world: WorldRoot2D, p: Player2D) -> void:
 	t.check("aim_device_mouse_then_pad", by_mouse and by_stick and jitter_ignored and by_click and release_kept and by_button and follows,
 		"mouse move %s, stick %s, jitter ignored %s, click %s, a release keeps it %s, pad button %s, the swing follows the stick %s" % [by_mouse, by_stick, jitter_ignored, by_click, release_kept, by_button, follows])
 	_free(p)
+
+## UX-18: the pad hints follow the pad family (Godot names the face buttons by position).
+func _pad_families(t) -> void:
+	var names := {"DualSense Wireless Controller": UiHints.PLAYSTATION, "PS4 Controller": UiHints.PLAYSTATION, "Nintendo Switch Pro Controller": UiHints.NINTENDO,
+		"Xbox Series X Controller": UiHints.XBOX, "": UiHints.XBOX}
+	var families_ok := true
+	for n in names:
+		families_ok = families_ok and UiHints.pad_family_of(n) == names[n]
+	var labels := {}
+	for f in [UiHints.XBOX, UiHints.PLAYSTATION, UiHints.NINTENDO]:
+		labels[f] = [UiHints.glyph(&"interact", &"gamepad", f), UiHints.glyph(&"light", &"gamepad", f), UiHints.glyph(&"pause", &"gamepad", f), UiHints.glyph(&"ui_page_up", &"gamepad", f)]
+	var labels_ok: bool = labels[UiHints.XBOX] == ["A", "Y", str(TranslationServer.translate("NAV_PAD_START")), "LB"] \
+		and labels[UiHints.PLAYSTATION] == [str(TranslationServer.translate("NAV_PAD_PS_CROSS")), str(TranslationServer.translate("NAV_PAD_PS_TRIANGLE")), str(TranslationServer.translate("NAV_PAD_PS_OPTIONS")), "L1"] \
+		and labels[UiHints.NINTENDO] == ["B", "X", "+", "L"]
+	t.check("pad_glyphs_follow_family", families_ok and labels_ok and UiHints.glyph(&"interact", &"gamepad") == "A", "families %s, labels %s" % [families_ok, labels])

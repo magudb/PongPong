@@ -5,7 +5,7 @@ extends Node
 ## It does three jobs and nothing else:
 ##  * tracks the LAST REAL input device (a key, a mouse button or a real mouse movement = `keyboard`; a pad button or a stick pushed
 ##    past 0.5 = `gamepad`; an InputEventAction is synthetic and never counts) and announces a change with `device_changed`, so key hints
-##    (UiHints / HintBar / PromptPill) flip between "E" and "A";
+##    (UiHints / HintBar / PromptPill) flip between "E" and "A"; the name of the last pad picks its button labels (`pad_name`);
 ##  * forwards focus moves and the accept / cancel presses as signals (P24 may play a sound from them);
 ##  * the echo guard of the rings (3.4): a held arrow key repeats (echo events) and Godot's focus navigation does not wrap on a fresh press
 ##    only, so an echo `ui_up/down/left/right` that would leave the control at a ring end the WRAPPING way is swallowed here. wire_ring /
@@ -28,6 +28,8 @@ const MOUSE_MOVE_MIN := 2.0
 const WRAP_META := {&"ui_up": &"tt_wrap_up", &"ui_down": &"tt_wrap_down", &"ui_left": &"tt_wrap_left", &"ui_right": &"tt_wrap_right"}
 
 var device: StringName = KEYBOARD
+## The SDL name of the pad that was used last ("" before any): UiHints.pad_family() picks the button labels from it.
+var pad_name: String = ""
 
 
 func _init() -> void:
@@ -80,7 +82,12 @@ func _track_device(event: InputEvent) -> void:
 	elif event is InputEventJoypadMotion:
 		if absf((event as InputEventJoypadMotion).axis_value) >= STICK_THRESHOLD:
 			now = GAMEPAD
-	if now != &"" and now != device:
+	# Another pad family (a DualSense after an Xbox pad) relabels the hints just like a device change.
+	var renamed := false
+	if now == GAMEPAD and Input.get_joy_name(event.device) != pad_name:
+		pad_name = Input.get_joy_name(event.device)
+		renamed = true
+	if now != &"" and (now != device or renamed):
 		device = now
 		device_changed.emit(device)
 

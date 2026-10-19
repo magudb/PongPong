@@ -1,6 +1,6 @@
 keys,da,en
 ; --- Navigation foundation (package P28-ui-nav-foundation, docs/design/UI_NAVIGATION.md Appendix A and B). Families: NAV_* (UiConfirm answers, key-cap names) and HINT_* (HintBar words).
-; NAV_KEY_* / NAV_PAD_* are the short names UiHints.glyph prints on a KeyCap (the letter keys and the pad letters A B X Y LB RB are symbols, not copy, and stay in code). HINT_CONTINUE has a %s for the key glyph.
+; NAV_KEY_* / NAV_PAD_* are the short names UiHints.glyph prints on a KeyCap (the letter keys and the pad letters A B X Y LB RB / L1 R1 / L R ZL ZR are symbols, not copy, and stay in code; the PlayStation shapes have no glyph in the game fonts, so NAV_PAD_PS_* name them). HINT_CONTINUE has a %s for the key glyph.
 NAV_OK,"OK","OK"
 NAV_CANCEL,"Fortryd","Cancel"
 HINT_MOVE,"Vælg","Select"
@@ -33,3 +33,9 @@ NAV_KEY_DELETE,"Delete","Delete"
 NAV_PAD_START,"Start","Start"
 NAV_PAD_BACK,"Back","Back"
 NAV_PAD_DPAD,"D-pad","D-pad"
+NAV_PAD_PS_CROSS,"Kryds","Cross"
+NAV_PAD_PS_CIRCLE,"Cirkel","Circle"
+NAV_PAD_PS_SQUARE,"Firkant","Square"
+NAV_PAD_PS_TRIANGLE,"Trekant","Triangle"
+NAV_PAD_PS_OPTIONS,"Options","Options"
+NAV_PAD_PS_CREATE,"Create","Create"
