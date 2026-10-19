@@ -85,6 +85,17 @@ class FakeSection extends Node:
 		data = {"v": 1, "n": day}
 
 
+## A section that declares its save version (SAVE-10) and refuses one value of "n" (a section whose from_dict says no).
+class VersionedSection extends FakeSection:
+	const SECTION_VERSION := 2
+	var refuse_n := -1
+
+	func from_dict(d: Dictionary) -> Variant:
+		if int(d.get("n", 0)) == refuse_n:
+			return false
+		return super.from_dict(d)
+
+
 ## SaveManager with two virtual seams pinned: the time zone (the offset of the machine the test runs on would otherwise decide
 ## the v1 time stamp checks) and the byte store (a disk that loses half of the bytes without reporting an error).
 class ProbeManager extends "res://scripts/autoload/save_manager.gd":
@@ -207,6 +218,7 @@ func run(p_t) -> void:
 	await _test_autosave()
 	_test_auto_runs()
 	_test_inspect_cache()
+	_test_section_versions()
 	_test_summaries()
 	_test_summary_types()
 	_test_latest_slot()
@@ -1514,6 +1526,60 @@ func _test_auto_runs() -> void:
 	t.check("auto_quarantine_keeps_newest", kept == ["save_auto.damaged-5001.json", "save_auto.damaged-5002.json", "save_auto.damaged-5003.json"] and _read_json(_scratch.path_join(kept[0]))["economy"].has("inventory"),
 		"an invalid and two newer-build auto files were quarantined too; only the newest %d are kept: %s" % [sm.QUARANTINE_KEEP, kept])
 	sm.clock_override = -1.0
+
+
+# ================================================================ section versions, apply failure, unknown sections (SAVE-10)
+
+func _test_section_versions() -> void:
+	_fresh()
+	var versioned := VersionedSection.new()
+	versioned.tag = "versioned"
+	versioned.log = _log
+	sm.register_section("versioned", versioned)
+	_set_state(100, 2)
+	versioned.data = {"v": 2, "n": 4}
+	var doc := _payload()
+	doc["versioned"] = {"v": 3, "n": 9}
+	_put(1, doc)
+	var info: Dictionary = sm.inspect_slot(1)
+	versioned.apply_calls = 0
+	var loaded: bool = sm.load_game(1)
+	t.check("section_newer_version_is_newer_slot", info["state"] == &"newer" and not loaded and sm.last_error.get("code") == "version" and versioned.apply_calls == 0 and versioned.data["n"] == 4,
+		"a section written by a newer build: the slot inspects as newer (%s), the load stops before any section applies" % info["state"])
+	doc["versioned"] = {"v": 2, "n": 9}
+	_put(1, doc)
+	t.check("section_same_version_loads", sm.inspect_slot(1)["state"] == &"ok" and sm.load_game(1) and versioned.data["n"] == 9, "")
+	if sm.has_section("wardrobe"):
+		var real := _payload()
+		(real["wardrobe"] as Dictionary)["v"] = 99
+		_put(2, real)
+		t.check("real_section_newer_version_is_newer_slot", sm.inspect_slot(2)["state"] == &"newer", "a wardrobe section of version 99: the slot says 'needs a newer version' instead of failing at apply")
+	# a file that passes every check but that a section refuses: its .bak is applied instead
+	_set_state(200, 3)
+	versioned.data = {"v": 2, "n": 4}
+	sm.save_game(0)
+	versioned.data = {"v": 2, "n": 13}
+	eco.gold = 300
+	sm.save_game(0)
+	versioned.refuse_n = 13
+	_notes.clear()
+	var recovered: bool = sm.load_game(0)
+	t.check("apply_failure_falls_back_to_backup", recovered and versioned.data["n"] == 4 and eco.gold == 200 and _notes.size() == 1 and str(_notes[0][0]) == sm.tr("NOTIF_LOAD_BACKUP_TITLE"),
+		"save_0.json was refused by a section: save_0.bak.json loaded (n %s, gold %d) and the player was told" % [versioned.data["n"], eco.gold])
+	versioned.refuse_n = -1
+	sm.unregister_section("versioned")
+	versioned.free()
+	# a top-level section no part of this build owns is carried into the next save unchanged, and dropped by a new game
+	_set_state(400, 4)
+	var future := _payload()
+	future["future_feature"] = {"v": 1, "beans": [1, 2, 3]}
+	_put(3, future)
+	var future_loaded: bool = sm.load_game(3)
+	sm.save_game(4)
+	var written: Variant = _read_json(sm.slot_path(4))
+	t.check("unknown_section_is_carried", future_loaded and written is Dictionary and _eq((written as Dictionary).get("future_feature"), {"v": 1, "beans": [1, 2, 3]}), "future_feature: %s" % [(written as Dictionary).get("future_feature") if written is Dictionary else "-"])
+	_set_state(1, 1)
+	t.check("unknown_section_dropped_by_new_game", not sm.gather_payload().has("future_feature"), "")
 
 
 # ================================================================ inspect_slot memo (SAVE-12)

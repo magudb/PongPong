@@ -4,6 +4,8 @@ extends Node
 signal owned_changed
 signal presets_changed
 const PRESETS := ["work", "forest", "festival"]
+## Version of the "wardrobe" save section (SaveManager refuses a newer one at inspection, see SECTION VERSIONS there).
+const SECTION_VERSION := 1
 var owned: Dictionary = {}
 var equipped: Dictionary = {}
 var presets: Dictionary = {}
@@ -162,10 +164,10 @@ func adopt_from_backpack() -> void:
 	EconomyManager.adopt_misrouted(ItemKinds.CLOTHING)
 
 func to_dict() -> Dictionary:
-	return {"v": 1, "owned": owned.duplicate(), "equipped": outfit(), "presets": presets.duplicate(true)}
+	return {"v": SECTION_VERSION, "owned": owned.duplicate(), "equipped": outfit(), "presets": presets.duplicate(true)}
 
 func from_dict(data: Dictionary) -> bool:
-	if LuaData.int_of(data.get("v", 1), -1) != 1 or not data.get("owned", {}) is Dictionary or not data.get("equipped", {}) is Dictionary or not data.get("presets", {}) is Dictionary:
+	if LuaData.int_of(data.get("v", 1), -1) != SECTION_VERSION or not data.get("owned", {}) is Dictionary or not data.get("equipped", {}) is Dictionary or not data.get("presets", {}) is Dictionary:
 		return false
 	var next_owned := {}
 	for id in data.get("owned", {}):

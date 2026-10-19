@@ -2,6 +2,8 @@ extends Node
 ## Owns furniture stock and the pure placement grid. A placement transaction
 ## commits ownership before publishing events, so observers always see one copy.
 const NUDGE_RADIUS := 4
+## Version of the "furniture" save section (SaveManager refuses a newer one at inspection, see SECTION VERSIONS there).
+const SECTION_VERSION := 1
 var stock: Dictionary = {}
 var grid: FurnitureGrid
 var _grid_tier := 0
@@ -235,10 +237,10 @@ func _nearest_any(id: String) -> Dictionary:
 
 func to_dict() -> Dictionary:
 	ensure_grid()
-	return {"v": 1, "stock": stock.duplicate(), "placed": grid.to_save()}
+	return {"v": SECTION_VERSION, "stock": stock.duplicate(), "placed": grid.to_save()}
 
 func from_dict(data: Dictionary) -> bool:
-	if LuaData.int_of(data.get("v", 1), -1) != 1 or not data.get("stock", {}) is Dictionary or not data.get("placed", []) is Array:
+	if LuaData.int_of(data.get("v", 1), -1) != SECTION_VERSION or not data.get("stock", {}) is Dictionary or not data.get("placed", []) is Array:
 		return false
 	var next_stock := {}
 	for id in data.get("stock", {}):

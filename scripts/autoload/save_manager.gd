@@ -31,6 +31,10 @@ extends Node
 ## to_dict() -> Dictionary, from_dict(d) (may return false to reject the data) and reset(); each section carries its own
 ## "v" (the payload version stays 2). gather = {name: node.to_dict()}. An optional pure validate_dict(d) -> bool
 ## checks nested records during slot inspection, before any live state changes or a backup is rotated.
+## SECTION VERSIONS, one policy: a section's script declares its version as SECTION_VERSION (or SAVE_VERSION / SAVE_V), its data
+## carries it as "v" ("version" in the game dict). Data NEWER than the running build's declaration makes the slot &"newer" at
+## inspection (shown as such, never loaded half-way); older data is the section's own migration. A top-level key of a save that
+## no section of this build owns (a feature of a newer or a removed build) is carried along unchanged into the next save.
 ##
 ## LOADING. load_game(slot) VALIDATES first (root is an object, meta.version is a whole number <= PAYLOAD_VERSION,
 ## older versions go through the _migrate chain, required sections are objects with their required keys), then
@@ -145,6 +149,8 @@ var _gather_failures: Array[String] = []
 var _auto_file_seen: Dictionary = {}
 ## slot -> {key, info}: the last inspect_slot() verdict and what it was made from (see inspect_slot).
 var _inspect_cache: Dictionary = {}
+## Top-level keys of the loaded save that no section of this build owns: written back unchanged by gather_payload().
+var _carried_sections: Dictionary = {}
 
 
 ## Counts the script/engine ERRORS that the main thread raises while sections apply a save (warnings are tolerated).
@@ -199,6 +205,7 @@ func reset() -> void:
 	pending_world = {}
 	last_error = {}
 	save_failing = false
+	_carried_sections = {}
 
 
 # ------------------------------------------------------------------ slots and paths
@@ -360,6 +367,12 @@ func load_game(slot: int = 0) -> bool:
 		&"corrupt":
 			return _fail_load(slot, str(info["code"]), str(info["detail"]))
 	var applied := _apply_payload(info["payload"])
+	if not applied["ok"] and not info["from_backup"]:
+		# the file passed every check and still did not apply (a section refused it): its .bak is the next best thing
+		var backup := _inspect_backup(slot)
+		if not backup.is_empty() and _apply_payload(backup["payload"])["ok"]:
+			info = backup
+			applied = {"ok": true, "detail": ""}
 	if not applied["ok"]:
 		return _fail_load(slot, "apply", str(applied["detail"]))
 	if is_manual_slot(slot):                   # the auto slots are not places the player saves to: keep the manual slot of this run
@@ -478,18 +491,30 @@ func _inspect_uncached(slot: int) -> Dictionary:
 			return out
 		failure = {"code": checked["code"], "detail": checked["detail"]}
 	var bak_path := backup_path(slot)
-	if bak_path != "" and FileAccess.file_exists(bak_path):
-		var backup := _read_json_file(bak_path)
-		if backup["state"] == "ok":
-			var bak_checked := validate_payload(backup["data"])
-			if bak_checked["ok"]:
-				return _inspect_result(out, &"backup", bak_checked["payload"], true)
+	var backup := _inspect_backup(slot)
+	if not backup.is_empty():
+		return backup
 	if primary["state"] == "missing" and (bak_path == "" or not FileAccess.file_exists(bak_path)):
 		return out
 	out["state"] = &"corrupt"
 	out["code"] = failure["code"]
 	out["detail"] = failure["detail"]
 	return out
+
+
+## inspect_slot's verdict for the .bak of a manual slot alone (state &"backup"), {} when there is none that loads.
+func _inspect_backup(slot: int) -> Dictionary:
+	var bak_path := backup_path(slot)
+	if bak_path == "" or not FileAccess.file_exists(bak_path):
+		return {}
+	var backup := _read_json_file(bak_path)
+	if backup["state"] != "ok":
+		return {}
+	var checked := validate_payload(backup["data"])
+	if not checked["ok"]:
+		return {}
+	var out := {"state": &"empty", "code": "missing", "detail": "", "payload": {}, "from_backup": false, "saved_at": 0.0}
+	return _inspect_result(out, &"backup", checked["payload"], true)
 
 
 func _inspect_result(out: Dictionary, state: StringName, payload: Dictionary, from_backup: bool) -> Dictionary:
@@ -696,6 +721,9 @@ func gather_payload() -> Dictionary:
 			continue
 		payload[entry["name"]] = _json_safe(data, str(entry["name"]))
 	_strip_quest_defs(payload)
+	for key in _carried_sections:
+		if not payload.has(key):
+			payload[key] = (_carried_sections[key] as Variant)
 	payload["world"] = _json_safe(_gather_world(), "world")
 	var stamp := clock_override if clock_override >= 0.0 else Time.get_unix_time_from_system()
 	payload["meta"] = {
@@ -799,6 +827,10 @@ func validate_payload(data: Variant) -> Dictionary:
 				if not _has_type((section as Dictionary)[key], str(keys[key])):
 					return _verdict(false, "invalid", "section '%s': '%s' should be %s" % [section_name, key, keys[key]])
 			var node := _node_of(entry)
+			var declared := _declared_version(node)
+			var written: Variant = (section as Dictionary).get("v", (section as Dictionary).get("version"))
+			if declared > 0 and _is_number(written) and float(written) > float(declared):
+				return _verdict(false, "version", "section '%s' has version %s, this build reads up to %d" % [section_name, str(written), declared])
 			if node != null and node.has_method("validate_dict") and not bool(node.call("validate_dict", section)):
 				return _verdict(false, "invalid", "section '%s' contains invalid records" % section_name)
 		elif entry.get("required", false):
@@ -813,6 +845,18 @@ func validate_payload(data: Variant) -> Dictionary:
 	if not SvcLib.static_call("res://scripts/farm/farm_equipment.gd", &"validate_placed", [saved_world.get("placed", [])], true):
 		return _verdict(false, "invalid", "world contains invalid farm equipment")
 	return _verdict(true, "", "", payload)
+
+
+## The section version a node's script declares (SECTION_VERSION, SAVE_VERSION or SAVE_V), 0 when it declares none.
+func _declared_version(node: Node) -> int:
+	var script: Script = node.get_script() if node != null else null
+	if script == null:
+		return 0
+	var constants := script.get_script_constant_map()
+	for name in ["SECTION_VERSION", "SAVE_VERSION", "SAVE_V"]:
+		if constants.get(name) is int:
+			return int(constants[name])
+	return 0
 
 
 func _verdict(ok: bool, code: String, detail: String, payload: Dictionary = {}) -> Dictionary:
@@ -1028,6 +1072,11 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 			break
 	if failure == "":
 		pending_world = _dict_of(payload.get("world")).duplicate(true)
+		var known := section_names()
+		_carried_sections = {}
+		for key in payload:
+			if not (str(key) in known) and not (str(key) in RESERVED_SECTION_NAMES):
+				_carried_sections[str(key)] = payload[key].duplicate(true) if payload[key] is Dictionary or payload[key] is Array else payload[key]
 	else:
 		for entry in touched:                      # sections that were never reached still hold their own state
 			var node := _node_of(entry)
