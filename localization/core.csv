@@ -54,5 +54,3 @@ ZONE_FOREST_EDGE,"Skovkanten","The Forest Edge"
 ZONE_DYBE_BREGNER,"Dybe Bregner","Deep Ferns"
 ZONE_MUSHROOM_GROVE,"Svampelunden","Mushroom Grove"
 ZONE_CRYSTAL_CAVE,"Krystalgrotten","Crystal Cave"
-; --- developer tools (debug builds only): the F9 Lua hot reload ---
-NOTIF_LUA_RELOADED_LINT,"Lua-lint: %d fund (se konsollen)","Lua lint: %d finding(s) (see the console)"

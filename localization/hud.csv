@@ -7,3 +7,5 @@ HUD_ITEM_USING,I brug,Using
 HUD_ITEM_WEAPON,Våben,Weapon
 HUD_ITEM_EMPTY,Tomme hænder,Empty hands
 HUD_ITEM_UNAVAILABLE,Ikke i tasken,Not in backpack
+; --- developer tools (debug builds only): the toast of the F9 Lua hot reload (its title and count are NOTIF_LUA_RELOADED_* in da.csv) ---
+NOTIF_LUA_RELOADED_LINT,"Lua-lint: %d fund (se konsollen)","Lua lint: %d finding(s) (see the console)"
