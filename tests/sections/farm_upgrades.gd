@@ -78,7 +78,12 @@ func _run(t) -> void:
 	var bad: Dictionary = JSON.parse_string(JSON.stringify(ah.to_dict()))
 	var first: String = bad.buildings.keys()[0]
 	bad.buildings[first].tier = 99
-	t.check("invalid_building_tier_rejected", not ah.validate_dict(bad))
+	# SAVE-07: a tier above today's maximum is content drift (an upgrade step was removed), not damage: it loads clamped
+	# (this check used to pin a rejection of the whole husbandry section)
+	var live: Dictionary = JSON.parse_string(JSON.stringify(ah.to_dict()))
+	var top_tier: int = int(live.buildings[first].tier)
+	t.check("building_tier_above_max_is_clamped", ah.validate_dict(bad) and ah.from_dict(bad) and ah.buildings[StringName(first)].tier == top_tier and ah.buildings[StringName(first)].upgrade_ready_day == 0)
+	ah.from_dict(live)
 	menu._selected_building = &"coop"
 	menu.open()
 	await t.frames(2)

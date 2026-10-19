@@ -90,7 +90,9 @@ func run(t) -> void:
 	payload["deepest"] = 7
 	t.check("floors.spec_or_gen_mismatch_drops_run_keeps_stones",floors.from_dict(payload) and not floors.active and floors.deepest == 7 and floors.stones.has(3) and floors.done.is_empty())
 	var before: Dictionary = floors.to_dict()
-	t.check("floors.malformed_load_is_atomic",not floors.from_dict({"active":true,"floor":99}) and floors.to_dict() == before)
+	# floor 99 used to be "malformed" here (the depth was hard-coded to 12); since SAVE-07 only a floor no build can have is
+	t.check("floors.malformed_load_is_atomic",not floors.from_dict({"active":true,"floor":5000}) and not floors.from_dict({"active":true,"floor":-1}) and floors.to_dict() == before)
+	t.check("floors.deeper_saved_dungeon_is_not_damage",floors.validate_dict({"active":false,"floor":0,"deepest":40,"stones":[3,40]}))
 	# The delta section stores consumed marker cells, never a generated map.
 	var complete := before.duplicate(true)
 	complete.done = {}

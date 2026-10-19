@@ -115,8 +115,12 @@ func run(t) -> void:
 	eco.inventory.clear()
 	t.check("fertilizer_bonus_yield", grid.harvest(cell) >= 2 and not grid.get_plot(cell).fertilizer)
 	var unchanged := grid.to_dict()
-	for corrupt in [{"plots": []}, {"plots": {"oops": {}}}, {"plots": {"1,1": {"state": 999}}}, {"plots": {"1,1": {"growth_days": -1}}}, {"plots": {"1,1": {"watered": "yes"}}}, {"plots": {"1,1": {"state": 4, "crop_id": "unknown"}}}]:
+	# (an unknown crop id used to be in this list; since SAVE-07 it is content drift that loads as a tilled plot, checked below)
+	for corrupt in [{"plots": []}, {"plots": {"oops": {}}}, {"plots": {"1,1": {"state": 999}}}, {"plots": {"1,1": {"growth_days": -1}}}, {"plots": {"1,1": {"watered": "yes"}}}, {"plots": {"1,1": {"state": 4, "crop_id": ""}}}]:
 		t.expect(not grid.from_dict(corrupt) and grid.to_dict() == unchanged, "Corrupt save leaves crops unchanged")
+	var drift := {"plots": {"%d,%d" % [cell.x, cell.y]: {"state": 4, "crop_id": "unknown"}}}
+	t.check("unknown_crop_loads_as_tilled_plot", grid.from_dict(drift) and grid.get_plot(cell) != null and grid.get_plot(cell).crop_id == &"" and grid.state_of(cell) == FarmGrid.State.TILLED)
+	grid.from_dict(unchanged)
 	var changed: Array = []
 	grid.plot_changed.connect(func(c: Vector2i) -> void: changed.append(c))
 	grid.from_dict({"plots": {}})

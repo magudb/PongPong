@@ -57,6 +57,8 @@ var sleeping: bool = false
 var _pass_out_pending: bool = false
 ## Items placed in the world by PlacementService (P20): [{item, cell}], saved by to_dict().
 var placed_items: Array = []
+## Placed records of a save whose item this build cannot place (content drift): kept in the save, adopted again when it can.
+var placed_orphans: Array = []
 ## Per-area JSON-safe flags: area id -> {key: value} (opened chests, picked nodes ...), saved by to_dict().
 var area_flags: Dictionary = {}
 var last_travel_error: String = ""
@@ -874,6 +876,8 @@ func to_dict() -> Dictionary:
 		"placed": placed_items.duplicate(true),
 		"area_flags": area_flags.duplicate(true),
 	}
+	if not placed_orphans.is_empty():
+		d["placed_orphans"] = placed_orphans.duplicate(true)
 	if farm != null and farm.has_method("to_dict"):
 		d["farm"] = farm.call("to_dict")
 	if greenhouse_farm != null:
@@ -893,7 +897,11 @@ func from_dict(d: Dictionary) -> void:
 
 
 func _apply_saved(d: Dictionary) -> void:
-	placed_items = (d.get("placed", []) as Array).duplicate(true) if d.get("placed", []) is Array else []
+	var saved_placed: Array = d.get("placed", []) if d.get("placed", []) is Array else []
+	var saved_orphans: Array = d.get("placed_orphans", []) if d.get("placed_orphans", []) is Array else []
+	var repaired: Dictionary = FarmEquipment.repair_placed(saved_placed, saved_orphans)
+	placed_items = repaired["placed"]
+	placed_orphans = repaired["orphans"]
 	area_flags = (d.get("area_flags", {}) as Dictionary).duplicate(true) if d.get("area_flags", {}) is Dictionary else {}
 	if farm != null and farm.has_method("from_dict") and d.has("farm"):
 		farm.call("from_dict", d["farm"])

@@ -219,6 +219,7 @@ func run(p_t) -> void:
 	_test_auto_runs()
 	_test_inspect_cache()
 	_test_section_versions()
+	_test_content_drift()
 	_test_summaries()
 	_test_summary_types()
 	_test_latest_slot()
@@ -1526,6 +1527,54 @@ func _test_auto_runs() -> void:
 	t.check("auto_quarantine_keeps_newest", kept == ["save_auto.damaged-5001.json", "save_auto.damaged-5002.json", "save_auto.damaged-5003.json"] and _read_json(_scratch.path_join(kept[0]))["economy"].has("inventory"),
 		"an invalid and two newer-build auto files were quarantined too; only the newest %d are kept: %s" % [sm.QUARANTINE_KEEP, kept])
 	sm.clock_override = -1.0
+
+
+# ================================================================ content drift (SAVE-07)
+
+## save.survives_content_drift: records that the CURRENT Lua catalogue does not know (a crop, a species, a building type, a farm
+## machine renamed or removed; a building tier or a dungeon depth that was cut) leave the slot loadable; the owners repair them
+## (tilled plot, orphans bucket, clamp) instead of every validator calling the whole file damaged.
+func _test_content_drift() -> void:
+	_fresh()
+	_set_state(500, 5)
+	var doc := _payload()
+	doc["husbandry"] = {"v": 2, "counter": 4,
+		"animals": {
+			"animal_1": {"id": "animal_1", "species": "dodo", "building_id": "building_1", "name": "Dodo"},
+			"animal_2": {"id": "animal_2", "species": "chicken", "building_id": "building_2", "name": "Høne"}},
+		"buildings": {
+			"building_1": {"id": "building_1", "building_type": "coop", "tier": 99, "animals_inside": ["animal_1"], "cell": [-1, -1]},
+			"building_2": {"id": "building_2", "building_type": "ark", "tier": 1, "animals_inside": ["animal_2"], "cell": [-1, -1]}}}
+	doc["world"] = {"v": 1, "area": "farm", "player_pos": [0, 0], "area_flags": {},
+		"farm": {"plots": {"3,4": {"state": 3, "crop_id": "retired_crop", "growth_days": 1.5}}},
+		"placed": [{"item": "retired_machine", "area": "farm", "cell": [5, 5]}]}
+	if sm.has_section("dungeon"):
+		doc["dungeon"] = (doc["dungeon"] as Dictionary).merged({"deepest": 40, "stones": [3, 40]}, true)
+	_put(1, doc)
+	var info: Dictionary = sm.inspect_slot(1)
+	var loaded: bool = sm.load_game(1)
+	var kept: Dictionary = ah.get("orphans") if "orphans" in ah else {}
+	var coop: Variant = ah.buildings.get(&"building_1")
+	t.check("survives_content_drift", info["state"] == &"ok" and loaded, "an unknown crop, species, building type and machine and a cut tier / depth: the slot is %s and loads (%s)" % [info["state"], sm.last_error])
+	t.check("content_drift_orphans_and_clamps", (kept.get("animals", {}) as Dictionary).has("animal_1") and (kept.get("animals", {}) as Dictionary).has("animal_2") and (kept.get("buildings", {}) as Dictionary).has("building_2")
+		and coop != null and int(coop.tier) < 99 and not ah.animals.has(&"animal_1"),
+		"the dodo and the animal of the unknown 'ark' wait in the orphans bucket with the ark; the coop is clamped to tier %s" % [coop.tier if coop != null else "-"])
+	var again: Dictionary = ah.to_dict()
+	t.check("content_drift_orphans_are_saved", again.has("orphans") and (again["orphans"]["animals"] as Dictionary).has("animal_1"), "the next save still holds the orphaned records")
+	if sm.has_section("dungeon"):
+		var floors: Node = sm.section_node("dungeon")
+		t.check("content_drift_dungeon_depth_clamped", int(floors.get("deepest")) <= int((floors.get("cfg") as Dictionary).get("max_floor", 12)) and not (floors.get("stones") as Dictionary).has(40), "deepest %s" % floors.get("deepest"))
+	# the world's parts: FarmGrid and the placed records repair themselves when the world applies the save
+	var grid := FarmGrid.new()
+	t.root.add_child(grid)
+	var farm_cell: Vector2i = grid.farmable_cells()[0] if not grid.farmable_cells().is_empty() else Vector2i(3, 4)
+	var grid_ok: bool = grid.from_dict({"plots": {"%d,%d" % [farm_cell.x, farm_cell.y]: {"state": 3, "crop_id": "retired_crop", "growth_days": 1.5}}})
+	var plot: Variant = grid.get_plot(farm_cell)
+	t.check("content_drift_unknown_crop_leaves_tilled_plot", grid_ok and plot != null and plot.crop_id == &"" and plot.state == FarmGrid.State.TILLED, "plot %s: %s" % [farm_cell, plot.to_dict() if plot != null else "-"])
+	grid.free()
+	var mended: Dictionary = FarmEquipment.repair_placed(doc["world"]["placed"])
+	t.check("content_drift_unknown_machine_is_orphaned", mended.placed.is_empty() and mended.orphans.size() == 1 and mended.orphans[0].item == "retired_machine", "%s" % [mended])
+	_clear_husbandry()
 
 
 # ================================================================ section versions, apply failure, unknown sections (SAVE-10)

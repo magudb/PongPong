@@ -19,6 +19,9 @@ var _texts: Dictionary = {}
 var _registered: Dictionary = {}
 var _tasks: Dictionary = {}
 var _generation := 0
+## The deepest floor number a save may name at all (structure). How deep the dungeon goes TODAY is cfg.max_floor; a save made
+## when it went deeper is clamped by from_dict, never rejected as damaged.
+const SAVED_FLOOR_LIMIT := 999
 
 static func inst() -> DungeonFloors:
 	var loot := Svc.node("LootService")
@@ -285,16 +288,18 @@ func from_dict(data: Dictionary) -> bool:
 	_invalidate()
 	world_seed = str(data.get("world_seed",world_seed))
 	seed_day = int(data.get("seed_day",0))
-	deepest = int(data.get("deepest",0))
+	var top := int(cfg.get("max_floor",12))
+	deepest = mini(int(data.get("deepest",0)),top)
 	stones = _flags(data.get("stones",[]))
 	seen = _flags(data.get("seen",[]))
 	reveal = _flags(data.get("reveal",[]))
 	done.clear()
 	var compatible := int(data.get("gen",gen)) == gen and str(data.get("spec",spec)) == spec
 	active = bool(data.get("active",false)) and compatible
-	floor = int(data.get("floor",0)) if active else 0
+	floor = mini(int(data.get("floor",0)),top) if active else 0
 	if compatible:
 		for key in data.get("done",{}):
+			if not _valid_floor(int(key)): continue
 			var cells: Array = []
 			for index in data.done[key]:
 				if int(index) not in cells: cells.append(int(index))
@@ -308,20 +313,21 @@ func from_dict(data: Dictionary) -> bool:
 	return true
 func _flags(values: Array) -> Dictionary:
 	var flags := {}
-	for value in values: flags[int(value)] = true
+	for value in values:
+		if _valid_floor(int(value)): flags[int(value)] = true
 	return flags
 func validate_dict(data: Dictionary) -> bool:
 	if not _whole(data.get("v",1),1,1) or not _whole(data.get("gen",gen),1,100000): return false
 	if not data.get("world_seed",world_seed) is String or not str(data.get("world_seed",world_seed)).is_valid_int(): return false
-	if not _whole(data.get("seed_day",0),0,1000000000) or not _whole(data.get("deepest",0),0,12) or not _whole(data.get("floor",0),0,12): return false
+	if not _whole(data.get("seed_day",0),0,1000000000) or not _whole(data.get("deepest",0),0,SAVED_FLOOR_LIMIT) or not _whole(data.get("floor",0),0,SAVED_FLOOR_LIMIT): return false
 	if not data.get("active",false) is bool or (data.get("active",false) and int(data.get("floor",0)) == 0): return false
 	if not data.get("spec",spec) is String or not data.get("done",{}) is Dictionary: return false
 	for key in ["stones","seen","reveal"]:
 		if not data.get(key,[]) is Array: return false
 		for value in data.get(key,[]):
-			if not _whole(value,1,12): return false
+			if not _whole(value,1,SAVED_FLOOR_LIMIT): return false
 	for key in data.get("done",{}):
-		if not str(key).is_valid_int() or not _valid_floor(int(key)) or not data.done[key] is Array: return false
+		if not str(key).is_valid_int() or not _whole(int(key),1,SAVED_FLOOR_LIMIT) or not data.done[key] is Array: return false
 		for value in data.done[key]:
 			if not _whole(value,0,65535): return false
 	return true
