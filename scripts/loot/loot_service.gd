@@ -597,9 +597,12 @@ func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNum
 		return _answer(false, [], &"full")
 	var out_rows: Array = []
 	var sold: Array = []
+	var refused := [false]
 	EconomyManager.defer_notifications(func() -> void:
-		if not consume.is_empty():
-			EconomyManager.remove_items(consume)
+		# has_items counts placed and worn copies, which remove_items never takes: the consumption decides, before anything is delivered (SYS-06)
+		if not consume.is_empty() and not EconomyManager.remove_items(consume):
+			refused[0] = true
+			return
 		if fee > 0:
 			EconomyManager.spend_gold(fee)
 		var prior := _source
@@ -615,6 +618,9 @@ func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNum
 		_source = prior
 		_commit(plan)
 	)
+	if refused[0]:
+		_restore(r, rng_before, own_stream)
+		return _answer(false, [], &"missing_items")
 	if not orbs and not out_rows.is_empty():
 		_announce_after_transaction(&"loot_rolled",[source,out_rows])
 	_announce_cap()
