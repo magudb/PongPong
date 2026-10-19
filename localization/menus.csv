@@ -11,6 +11,7 @@ NOTIF_SAVE_FAILED_MSG,Spillet blev ikke gemt i slot %d. Tjek diskpladsen.,The ga
 SETTINGS_LANGUAGE,Sprog,Language
 SETTINGS_SIZE,Vindue,Window
 SAVELOAD_AUTO,Automatisk gemning,Autosave
+SAVELOAD_AUTO_PREVIOUS,Automatisk gemning (forrige spil),Autosave (previous game)
 SAVELOAD_SLOT,Plads %d,Slot %d
 SAVELOAD_EMPTY,Tom plads,Empty slot
 SAVELOAD_DELETE,Slet,Delete
@@ -33,3 +34,5 @@ SETTINGS_DA,"Dansk","Dansk"
 SETTINGS_EN,"English","English"
 SELECT_HERO_BERTIL,"Bertil","Bertil"
 SELECT_HERO_BODIL,"Bodil","Bodil"
+TITLE_NEW_GAME_TITLE,Nyt spil?,New game?
+TITLE_NEW_GAME_CONFIRM,"Vil du starte et nyt spil? »%s« (dag %d) bliver ikke slettet. Du kan indlæse det igen under »Indlæs spil«.","Start a new game? “%s” (day %d) is not deleted. You can load it again from Load Game."

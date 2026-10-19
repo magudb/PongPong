@@ -315,6 +315,26 @@ func _title_states(t) -> void:
 	sm.save_game(1)
 	title._refresh_labels()
 	t.check("title_multiple_saves_and_latest_day", title.get_node("%LoadButton").visible and title.get_node("%ContinueInfo").text.contains("7"))
+	# SAVE-01: with a save on disk, New game asks first, names the run and defaults to Cancel
+	title.get_node("%NewGameButton").grab_focus()
+	t.tap_key(KEY_ENTER)
+	await t.frames(3)
+	var dialog: Node = title.find_children("*", "UiConfirm", true, false).front() if not title.find_children("*", "UiConfirm", true, false).is_empty() else null
+	var asked: bool = dialog != null and gm.top_modal() == UiConfirm.MODAL and t.tree.current_scene == title
+	var names_run: bool = dialog != null and (dialog.get_node("%TextLabel") as Label).text.contains(gm.farm_name) and (dialog.get_node("%TextLabel") as Label).text.contains("7")
+	t.check("title_new_game_asks_when_a_save_exists", asked and names_run and title.get_viewport().gui_get_focus_owner() == dialog.get_node("%CancelButton"), "a confirm naming '%s' (day 7) with Cancel focused" % gm.farm_name)
+	t.tap_key(KEY_ENTER)
+	await t.frames(3)
+	t.check("title_new_game_cancel_stays", t.tree.current_scene == title and not gm.is_modal_open() and title.get_viewport().gui_get_focus_owner() == title.get_node("%NewGameButton"), "Cancel keeps the title and its focus")
+	t.tap_key(KEY_ENTER)
+	await t.frames(3)
+	t.tap_key(KEY_LEFT)
+	t.tap_key(KEY_ENTER)
+	await t.frames(4)
+	t.check("title_new_game_confirm_opens_select", t.tree.current_scene.scene_file_path == SELECT, "OK goes on to the character select")
+	await t.go_menu()
+	title = t.tree.current_scene
+	await t.frames(2)
 	# Files can disappear after the title enabled Continue. The failure needs visible feedback.
 	sm.delete_save(0)
 	sm.delete_save(1)
@@ -325,6 +345,19 @@ func _title_states(t) -> void:
 	title._refresh_labels()
 	await t.frames(2)
 	t.check("title_returns_focus_after_save_removal", title.get_viewport().gui_get_focus_owner() == title.get_node("%NewGameButton"))
+	# SAVE-02: an auto save that cannot be read is not hidden: Load opens the list that names its state
+	var f := FileAccess.open(sm.slot_path(sm.AUTO_SLOT), FileAccess.WRITE)
+	f.store_string("{ damaged")
+	f.close()
+	title._refresh_labels()
+	t.check("title_shows_unreadable_save", title.get_node("%LoadButton").visible and not title.get_node("%LoadButton").disabled and title.get_node("%ContinueButton").disabled, "Continue stays off, Load is offered for the damaged autosave")
+	sm.delete_save(sm.AUTO_SLOT)
+	title._refresh_labels()
+	title.get_node("%NewGameButton").grab_focus()
+	t.tap_key(KEY_ENTER)
+	await t.frames(4)
+	t.check("title_new_game_without_saves_does_not_ask", t.tree.current_scene.scene_file_path == SELECT, "no confirm when nothing is saved: straight to the character select")
+	await t.go_menu()
 	sm.clock_override = clock
 	sm.save_dir = previous
 

@@ -1,5 +1,6 @@
 extends TTScreen
-## Six manual slots and a read-only autosave. SaveManager owns validation, summaries and feedback.
+## Six manual slots, a read-only autosave and (when there is one) the read-only autosave of the previous game. SaveManager owns
+## validation, summaries and feedback.
 signal slot_selected(slot: int, is_save: bool)
 enum Mode { SAVE, LOAD }
 var mode: int = Mode.LOAD
@@ -73,7 +74,7 @@ func _refresh_texts() -> void:
 		var title := Label.new()
 		title.theme_type_variation = &"Display20"
 		title.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		title.text = tr("SAVELOAD_AUTO") if descriptor.is_auto else tr("SAVELOAD_SLOT") % (slot + 1)
+		title.text = tr("SAVELOAD_AUTO_PREVIOUS") if descriptor.get("is_previous", false) else tr("SAVELOAD_AUTO") if descriptor.is_auto else tr("SAVELOAD_SLOT") % (slot + 1)
 		labels.add_child(title)
 		var detail := Label.new()
 		detail.theme_type_variation = &"Muted13"

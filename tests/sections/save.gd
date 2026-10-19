@@ -199,6 +199,7 @@ func run(p_t) -> void:
 	_test_load_keeps_manual_slot()
 	_test_write_failure()
 	await _test_autosave()
+	_test_auto_runs()
 	_test_summaries()
 	_test_summary_types()
 	_test_latest_slot()
@@ -1434,6 +1435,73 @@ func _test_write_failure() -> void:
 	t.check("save_recreates_missing_directory", made_again and _gold_in(sm.slot_path(1)) == 555, "the scratch directory was removed, save_game(1) wrote save_1.json anyway")
 
 
+# ================================================================ the autosave of another run, damaged auto files (SAVE-01, SAVE-02)
+
+func _quarantined() -> Array:
+	return _files().filter(func(f: String) -> bool: return f.begins_with("save_auto.damaged-"))
+
+
+func _test_auto_runs() -> void:
+	_fresh()
+	var prev: String = sm.slot_path(sm.PREV_AUTO_SLOT)
+	_set_state(100, 1, "Ada")
+	var run_a: String = sm.run_id
+	sm.autosave()
+	sm.autosave()
+	t.check("auto_same_run_keeps_no_previous", not FileAccess.file_exists(prev) and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 100 and run_a != "" and str(_read_json(sm.slot_path(sm.AUTO_SLOT))["meta"]["run_id"]) == run_a,
+		"two autosaves of one run: no save_auto.prev.json, meta.run_id %s" % run_a)
+	# New game: the first autosave of the new run keeps the old run's autosave as save_auto.prev.json
+	_set_state(200, 2, "Bo")
+	var run_b: String = sm.run_id
+	sm.autosave()
+	t.check("auto_new_run_keeps_previous", run_b != run_a and _gold_in(prev) == 100 and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 200,
+		"save_auto.prev.json holds the old run (gold %d), save_auto.json the new one (gold %d)" % [_gold_in(prev), _gold_in(sm.slot_path(sm.AUTO_SLOT))])
+	sm.autosave()
+	t.check("auto_previous_survives_later_autosaves", _gold_in(prev) == 100, "the second autosave of the new run leaves save_auto.prev.json alone")
+	var rows: Array[Dictionary] = sm.describe_slots()
+	t.check("auto_previous_is_listed_read_only", rows.size() == 8 and rows[7]["slot"] == sm.PREV_AUTO_SLOT and rows[7]["is_auto"] and rows[7]["is_previous"] and rows[7]["state"] == &"ok" and rows[7]["summary"].get("gold") == 100
+		and sm.get_latest_slot() == sm.AUTO_SLOT and not sm.save_game(sm.PREV_AUTO_SLOT),
+		"an 8th row (slot %d, is_previous, gold %s); Continue still picks the auto slot; save_game cannot write it" % [rows[-1]["slot"], rows[-1]["summary"].get("gold")])
+	# loading the previous game makes it the running one: the next autosave swaps the two
+	_set_state(1, 1)
+	var loaded: bool = sm.load_game(sm.PREV_AUTO_SLOT)
+	t.check("auto_previous_loads", loaded and eco.gold == 100 and gm.player_name == "Ada" and sm.run_id == run_a and sm.current_slot == sm.NO_SLOT, "gold %d, run %s, current_slot %d" % [eco.gold, sm.run_id, sm.current_slot])
+	sm.autosave()
+	t.check("auto_previous_swaps", _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 100 and _gold_in(prev) == 200, "auto gold %d, previous gold %d" % [_gold_in(sm.slot_path(sm.AUTO_SLOT)), _gold_in(prev)])
+	# loading a manual slot of another run is a run change too
+	_set_state(300, 3, "Cy")
+	sm.save_game(0)
+	sm.load_game(0)
+	sm.autosave()
+	t.check("auto_manual_load_of_other_run_keeps_previous", _gold_in(prev) == 100 and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 300, "after loading slot 0 (run Cy) the autosave of run Ada went to the previous file")
+	# a save written before run ids existed belongs to the run with its player, farm and hero
+	var legacy: Dictionary = _read_json(sm.slot_path(sm.AUTO_SLOT))
+	(legacy["meta"] as Dictionary).erase("run_id")
+	_put(sm.AUTO_SLOT, legacy)
+	var prev_bytes := _read_text(prev)
+	sm.load_game(sm.AUTO_SLOT)
+	sm.autosave()
+	t.check("auto_legacy_file_same_run", _read_text(prev) == prev_bytes and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 300, "Continue of a save without meta.run_id, then an autosave: the previous file is untouched")
+	# a damaged or unreadable auto file is quarantined, never overwritten; the newest QUARANTINE_KEEP are kept
+	_write_text(sm.slot_path(sm.AUTO_SLOT), "{ damaged 1")
+	sm.clock_override = 5000.0
+	var saved: bool = sm.autosave()
+	var kept: Array = _quarantined()
+	t.check("auto_damaged_file_quarantined", saved and kept.size() == 1 and _read_text(_scratch.path_join(kept[0])) == "{ damaged 1" and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 300 and _read_text(prev) == prev_bytes,
+		"the autosave was written and the damaged file kept as %s; the previous file is untouched" % [kept])
+	var drifted: Dictionary = _read_json(sm.slot_path(sm.AUTO_SLOT))
+	(drifted["economy"] as Dictionary).erase("gold")          # stands in for content the current build no longer accepts
+	for i in 3:
+		_put(sm.AUTO_SLOT, drifted if i == 0 else {"meta": {"version": 99}})
+		sm.clock_override = 5001.0 + i
+		sm.autosave()
+	kept = _quarantined()
+	kept.sort()
+	t.check("auto_quarantine_keeps_newest", kept == ["save_auto.damaged-5001.json", "save_auto.damaged-5002.json", "save_auto.damaged-5003.json"] and _read_json(_scratch.path_join(kept[0]))["economy"].has("inventory"),
+		"an invalid and two newer-build auto files were quarantined too; only the newest %d are kept: %s" % [sm.QUARANTINE_KEEP, kept])
+	sm.clock_override = -1.0
+
+
 # ================================================================ autosave (task 2)
 
 func _test_autosave() -> void:
@@ -1729,7 +1797,7 @@ func _put_and_summarize(doc: Dictionary, slot: int) -> Dictionary:
 ## A summary without the keys get_save_summary adds (slot, is_auto, timestamp, saved_at, from_backup).
 func _without_slot_fields(summary: Dictionary) -> Dictionary:
 	var out := summary.duplicate()
-	for key in ["slot", "is_auto", "timestamp", "saved_at", "from_backup"]:
+	for key in ["slot", "is_auto", "is_previous", "timestamp", "saved_at", "from_backup"]:
 		out.erase(key)
 	return out
 

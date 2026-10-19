@@ -56,11 +56,15 @@ func _refresh_labels() -> void:
 	%LanguageButton.text = tr("MENU_VERSION_TAG")
 	UiNav.set_enabled(%ContinueButton, SaveManager.has_any_save())
 	var loadable := 0
+	var unreadable := false
 	for descriptor in SaveManager.describe_slots():
 		if descriptor.state in ["ok", "backup"]:
 			loadable += 1
-	%LoadButton.visible = loadable >= 2
-	UiNav.set_enabled(%LoadButton, loadable >= 2)
+		elif descriptor.state in ["newer", "corrupt"]:
+			unreadable = true
+	# A save that cannot be read is shown too (the load screen names its state): it must never look as if there were none.
+	%LoadButton.visible = loadable >= 2 or unreadable
+	UiNav.set_enabled(%LoadButton, %LoadButton.visible)
 	var latest: int = SaveManager.get_latest_slot()
 	%ContinueInfo.text = tr("MENU_CONTINUE_DAY") % int(SaveManager.get_save_summary(latest).get("total_day", 1)) if latest >= 0 else ""
 	_rows = [%ContinueButton, %LoadButton, %NewGameButton, %SettingsButton, %QuitButton]
@@ -98,8 +102,18 @@ func _input(event: InputEvent) -> void:
 func _remember(row: Control) -> void:
 	UiNav.remember(&"title", row.name)
 
+## A save already exists: ask first (Cancel is the default) and name the run, so nobody starts over by accident. The run is kept
+## either way (its manual slot, or its autosave as SaveManager.PREV_AUTO_SLOT), which the question says.
 func _on_new_game() -> void:
 	_remember(%NewGameButton)
+	var latest: int = SaveManager.get_latest_slot()
+	if latest != SaveManager.NO_SLOT:
+		var summary: Dictionary = SaveManager.get_save_summary(latest)
+		var run_name := str(summary.get("farm_name", ""))
+		if run_name == "":
+			run_name = str(summary.get("player_name", ""))
+		if not await UiConfirm.ask(self, "TITLE_NEW_GAME_TITLE", "TITLE_NEW_GAME_CONFIRM", "MENU_NEW_GAME", "NAV_CANCEL", &"cancel", [run_name, int(summary.get("total_day", 1))]):
+			return
 	get_tree().change_scene_to_file("res://scenes/ui/character_select.tscn")
 
 func _on_continue() -> void:
