@@ -30,11 +30,6 @@ func setup(town: String, festival_id: String, evening: bool = false, dressed: bo
 		rank = CityData.rank_of(CityData.load_data(), "torvet")
 		var city := CityBuilder.of(area)
 		city.night.set_factor(1.0 if evening else 0.0)
-		if is_instance_valid(city.preview_hints):
-			city.preview_hints.queue_free()
-		for node in area.objects.get_children():
-			if str(node.name).begins_with("Preview_"):
-				node.hide()
 		for id in ["h7", "h8", "h9"]:
 			var building := CityData.record(CityData.load_data(), "buildings", id)
 			if building.has("door"):
