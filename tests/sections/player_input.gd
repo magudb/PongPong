@@ -138,6 +138,18 @@ func _attack_before_tool(t, world: WorldRoot2D, p: Player2D, eco: Node) -> void:
 		p._unhandled_input(_mouse(MOUSE_BUTTON_LEFT, false))
 		var mined: bool = p.state == PlayerBody2D.S.USING and ore.hp == hp - 1 and used == [[&"pickaxe_wooden", true]] and not p.combat.attack_held
 		t.check("action_area_pickaxe_mines_ore_in_front", mined, "state %d, ore hp %d -> %d, tool_used %s" % [p.state, hp, ore.hp, used])
+		# The ore takes only the pickaxe (accepts_tool, GAP3-03): with an axe selected the same click attacks.
+		_free(p)
+		eco.add_item(&"axe_wooden", 1, true)
+		p.hotbar.assign(0, &"axe_wooden")
+		p.hotbar.select(0)
+		hp = ore.hp
+		p._unhandled_input(_mouse(MOUSE_BUTTON_LEFT))
+		var axe_attacked: bool = p.state == PlayerBody2D.S.SWING and ore.hp == hp and used.size() == 1
+		p._unhandled_input(_mouse(MOUSE_BUTTON_LEFT, false))
+		t.check("action_area_axe_attacks_beside_ore", axe_attacked, "state %d, ore hp %d -> %d, tool_used %s" % [p.state, hp, ore.hp, used])
+		p.hotbar.assign(0, &"pickaxe_wooden")
+		p.hotbar.select(0)
 		ore.queue_free()
 		_free(p)
 		await t.physics(2)

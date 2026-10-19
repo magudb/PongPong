@@ -246,15 +246,16 @@ func _track_aim_device(event: InputEvent) -> void:
 			or (event is InputEventKey and event.pressed and event.is_action("attack")):
 		mouse_aim = false
 
-## The selected hotbar tool (pickaxe, axe) and a host it can hit are in front, so an action-area press mines
-## instead of swinging. A consumable or a weapon in the slot never takes the press (DUN-07).
+## The selected hotbar tool (pickaxe, axe) and a host in reach that takes it (_takes_tool) are there, so an action-area
+## press mines instead of swinging. A consumable or a weapon in the slot never takes the press (DUN-07), and neither does
+## a host that takes another tool: an axe beside a rock still attacks.
 func _tool_target_in_front() -> bool:
 	var item := hotbar.current()
 	var def := GameData.item_def(item)
-	if str(def.get("category", "")) != "tool" or str(def.get("tool_type", "")) == "" or not GameData.eco().has_item(item):
+	var tool := str(def.get("tool_type", ""))
+	if str(def.get("category", "")) != "tool" or tool == "" or not GameData.eco().has_item(item):
 		return false
-	var host := nearest_interactable()
-	return host != null and host.has_method("tool_hit")
+	return nearest_interactable(func(h: Node) -> bool: return _takes_tool(h, tool)) != null
 
 ## Something E could act on is in front: an interactable host or a ripe crop.
 func _interaction_target_in_front() -> bool:
