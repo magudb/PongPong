@@ -54,10 +54,12 @@ func _refresh_labels() -> void:
 	if not is_node_ready():
 		return
 	%LanguageButton.text = tr("MENU_VERSION_TAG")
-	UiNav.set_enabled(%ContinueButton, SaveManager.has_any_save())
+	var rows: Array[Dictionary] = SaveManager.describe_slots()      # once per refresh: every value below comes from these rows
+	var latest: int = SaveManager.latest_slot_of(rows)
+	UiNav.set_enabled(%ContinueButton, latest != SaveManager.NO_SLOT)
 	var loadable := 0
 	var unreadable := false
-	for descriptor in SaveManager.describe_slots():
+	for descriptor in rows:
 		if descriptor.state in ["ok", "backup"]:
 			loadable += 1
 		elif descriptor.state in ["newer", "corrupt"]:
@@ -65,8 +67,8 @@ func _refresh_labels() -> void:
 	# A save that cannot be read is shown too (the load screen names its state): it must never look as if there were none.
 	%LoadButton.visible = loadable >= 2 or unreadable
 	UiNav.set_enabled(%LoadButton, %LoadButton.visible)
-	var latest: int = SaveManager.get_latest_slot()
-	%ContinueInfo.text = tr("MENU_CONTINUE_DAY") % int(SaveManager.get_save_summary(latest).get("total_day", 1)) if latest >= 0 else ""
+	var latest_summary: Dictionary = rows.filter(func(row: Dictionary) -> bool: return int(row.slot) == latest).front().summary if latest >= 0 else {}
+	%ContinueInfo.text = tr("MENU_CONTINUE_DAY") % int(latest_summary.get("total_day", 1)) if latest >= 0 else ""
 	_rows = [%ContinueButton, %LoadButton, %NewGameButton, %SettingsButton, %QuitButton]
 	_updates_button.visible = ReleaseUpdates.inst().state in ["available", "ready"]
 	_updates_button.text = tr("UPDATE_AVAILABLE") % str(ReleaseUpdates.inst().available.get("version", ""))

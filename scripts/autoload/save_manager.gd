@@ -139,6 +139,8 @@ var _section_seq: int = 0
 var _gather_failures: Array[String] = []
 ## sha256 and run id of the auto file this session wrote last: the next autosave need not read it again to know whose it is.
 var _auto_file_seen: Dictionary = {}
+## slot -> {key, info}: the last inspect_slot() verdict and what it was made from (see inspect_slot).
+var _inspect_cache: Dictionary = {}
 
 
 ## Counts the script/engine ERRORS that the main thread raises while sections apply a save (warnings are tolerated).
@@ -185,6 +187,7 @@ func _process(delta: float) -> void:
 ## New game (EventBus.new_game_started): no current slot, timers zero, nothing waits for a world, no stale error.
 func reset() -> void:
 	_backup_validation.clear()
+	_inspect_cache.clear()
 	run_id = _new_run_id()
 	current_slot = NO_SLOT
 	_auto_save_timer = 0.0
@@ -411,8 +414,36 @@ func _load_fail_text(code: String) -> String:
 ## State of one slot without loading it: {state, code, detail, payload, from_backup, saved_at}.
 ## state: &"empty" (no file), &"ok", &"backup" (the file is damaged but its .bak loads), &"newer" (written by a newer
 ## build), &"corrupt" (neither file loads; code corrupt or invalid). `payload` (validated, migrated, whole numbers
-## as ints) is set for ok and backup.
+## as ints) is set for ok and backup. The verdict is memoised by the sha256 of the slot's file and .bak, the section nodes that
+## validated it and the time zone that dated a v1 stamp (_inspect_cache), so the title and the slot list do not parse and validate
+## every file again on every refresh.
 func inspect_slot(slot: int) -> Dictionary:
+	if not is_readable_slot(slot):
+		return _inspect_uncached(slot)
+	var bak_path := backup_path(slot)
+	var key := "%s|%s|%s|%d" % [_file_digest(slot_path(slot)), _file_digest(bak_path) if bak_path != "" else "", _validator_key(), _system_bias_minutes()]
+	var cached: Dictionary = _inspect_cache.get(slot, {})
+	if str(cached.get("key", "")) != key:
+		cached = {"key": key, "info": _inspect_uncached(slot)}
+		_inspect_cache[slot] = cached
+	return (cached["info"] as Dictionary).duplicate(true)
+
+
+## "" for a missing file, else its sha256.
+func _file_digest(path: String) -> String:
+	return FileAccess.get_sha256(path) if FileAccess.file_exists(path) else ""
+
+
+## Which nodes validate a payload right now (a section registered, replaced or overridden changes the verdict of the same bytes).
+func _validator_key() -> String:
+	var ids: Array[String] = []
+	for entry in _ordered_entries():
+		var node := _node_of(entry)
+		ids.append("%s:%d" % [entry["name"], node.get_instance_id() if node != null else 0])
+	return ",".join(ids)
+
+
+func _inspect_uncached(slot: int) -> Dictionary:
 	var out := {"state": &"empty", "code": "missing", "detail": "", "payload": {}, "from_backup": false, "saved_at": 0.0}
 	if not is_readable_slot(slot):
 		out["detail"] = "slot %d does not exist" % slot
@@ -487,13 +518,18 @@ func _summary_of(info: Dictionary, slot: int) -> Dictionary:
 ## meta.saved_at (meta.timestamp for v1 saves); a tie goes to the lower manual slot, then to the auto slot.
 ## Damaged slots without a usable .bak, and saves of a newer build, are skipped: Continue never picks them.
 func get_latest_slot() -> int:
+	return latest_slot_of(describe_slots())
+
+
+## get_latest_slot() over rows of describe_slots() that the caller already has (the title reads the slots once per refresh).
+static func latest_slot_of(rows: Array[Dictionary]) -> int:
 	var best := NO_SLOT
 	var best_time := -INF
-	for slot in all_slots():
-		var info := inspect_slot(slot)
-		if info["state"] != &"ok" and info["state"] != &"backup":
+	for row in rows:
+		var slot := int(row["slot"])
+		if not is_valid_slot(slot) or (row["state"] != &"ok" and row["state"] != &"backup"):
 			continue
-		var stamp := float(info["saved_at"])
+		var stamp := float((row["summary"] as Dictionary).get("saved_at", 0.0))
 		if stamp > best_time:
 			best_time = stamp
 			best = slot
@@ -520,6 +556,7 @@ func describe_slots() -> Array[Dictionary]:
 ## order. Returns false (with an error) for a bad name, a node without the three methods, or a built-in/reserved name.
 func register_section(section_name: String, node: Node, order: int = DEFAULT_SECTION_ORDER) -> bool:
 	_backup_validation.clear()
+	_inspect_cache.clear()
 	var rx := RegEx.new()
 	rx.compile("^[a-z][a-z0-9_]{0,31}$")
 	if rx.search(section_name) == null:
@@ -548,6 +585,7 @@ func register_section(section_name: String, node: Node, order: int = DEFAULT_SEC
 
 func unregister_section(section_name: String) -> void:
 	_backup_validation.clear()
+	_inspect_cache.clear()
 	for i in range(_sections.size() - 1, -1, -1):
 		if _sections[i]["name"] == section_name:
 			_sections.remove_at(i)

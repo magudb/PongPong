@@ -96,6 +96,12 @@ class ProbeManager extends "res://scripts/autoload/save_manager.gd":
 	func _system_bias_minutes() -> int:
 		return bias_minutes
 
+	var reads := 0                             # files parsed (SAVE-12: the slot list must not parse unchanged files again)
+
+	func _read_json_file(path: String) -> Dictionary:
+		reads += 1
+		return super._read_json_file(path)
+
 	func _replace_file(source: String, destination: String) -> Error:
 		if fail_temp_moves and source.ends_with(".tmp"):
 			if delete_target_first and FileAccess.file_exists(destination):
@@ -200,6 +206,7 @@ func run(p_t) -> void:
 	_test_write_failure()
 	await _test_autosave()
 	_test_auto_runs()
+	_test_inspect_cache()
 	_test_summaries()
 	_test_summary_types()
 	_test_latest_slot()
@@ -1500,6 +1507,47 @@ func _test_auto_runs() -> void:
 	t.check("auto_quarantine_keeps_newest", kept == ["save_auto.damaged-5001.json", "save_auto.damaged-5002.json", "save_auto.damaged-5003.json"] and _read_json(_scratch.path_join(kept[0]))["economy"].has("inventory"),
 		"an invalid and two newer-build auto files were quarantined too; only the newest %d are kept: %s" % [sm.QUARANTINE_KEEP, kept])
 	sm.clock_override = -1.0
+
+
+# ================================================================ inspect_slot memo (SAVE-12)
+
+func _test_inspect_cache() -> void:
+	_fresh()
+	var probe := _new_probe()
+	for slot in [0, 2, 4]:
+		_set_state(100 + slot, 3)
+		probe.save_game(slot)
+	probe.reads = 0
+	var rows: Array[Dictionary] = probe.describe_slots()
+	var first := probe.reads
+	probe.reads = 0
+	for i in 5:
+		probe.describe_slots()
+		probe.has_any_save()
+		probe.get_latest_slot()
+		probe.get_save_summary(2)
+		probe.inspect_slot(4)
+	t.check("inspect_cache_reuses_unchanged_files", first >= 3 and probe.reads == 0 and sm.latest_slot_of(rows) == probe.get_latest_slot(), "the first listing parsed %d files, 25 more queries of unchanged files parsed %d" % [first, probe.reads])
+	# the same size and the same second: the cache key is the content, not the time stamp
+	var doc: Dictionary = _read_json(probe.slot_path(2))
+	doc["economy"]["gold"] = 777
+	doc["meta"]["summary"]["gold"] = 777
+	_put(2, doc)
+	t.check("inspect_cache_sees_new_content", int(probe.get_save_summary(2).get("gold", -1)) == 777 and probe.reads >= 1, "a rewritten save_2.json is read again (gold %s)" % probe.get_save_summary(2).get("gold", -1))
+	var info: Dictionary = probe.inspect_slot(2)
+	info["payload"]["economy"]["gold"] = 1
+	t.check("inspect_cache_hands_out_copies", int(probe.inspect_slot(2)["payload"]["economy"]["gold"]) == 777, "changing a returned payload does not change the memo")
+	probe.delete_save(2)
+	t.check("inspect_cache_follows_delete", probe.inspect_slot(2)["state"] == &"empty", "")
+	var fake := FakeSection.new()
+	fake.tag = "memo"
+	fake.log = _log
+	var valid_before: bool = probe.inspect_slot(0)["state"] == &"ok"
+	probe.register_section("memo", fake)
+	probe.unregister_section("memo")
+	fake.free()
+	t.check("inspect_cache_dropped_by_registry", valid_before and probe._inspect_cache.is_empty(), "register / unregister forget every verdict")
+	probe.free()
 
 
 # ================================================================ autosave (task 2)

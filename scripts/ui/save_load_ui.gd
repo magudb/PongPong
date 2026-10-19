@@ -137,7 +137,7 @@ func _on_slot_pressed(slot: int) -> void:
 	if _busy or slot < 0 or slot >= _rows.size() or not UiNav.is_stop(_rows[slot]):
 		return
 	_busy = true
-	var needs_confirm: bool = mode == Mode.LOAD and get_tree().get_first_node_in_group("world_2d") != null or mode == Mode.SAVE and SaveManager.describe_slots()[slot].state != "empty"
+	var needs_confirm: bool = mode == Mode.LOAD and get_tree().get_first_node_in_group("world_2d") != null or mode == Mode.SAVE and SaveManager.inspect_slot(slot).state != "empty"
 	var accepted := true
 	if needs_confirm:
 		accepted = await UiConfirm.ask(self, "SAVELOAD_CONFIRM", tr("SAVELOAD_OVERWRITE" if mode == Mode.SAVE else "SAVELOAD_LOAD_CONFIRM"), "NAV_OK")
