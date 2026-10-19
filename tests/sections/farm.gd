@@ -107,6 +107,9 @@ func run(t) -> void:
 	t.check("auto_water_three_days_and_ripe", grid.state_of(cell) == FarmGrid.State.READY and grid.get_plot(cell).auto_water_days == 0)
 	# GAP4-03: rain, a supply and the partner water without the player: EventBus.crop_auto_watered(plot, source) for a plot with a crop; only the can
 	# sends crop_watered (the event quests and tutorial hints count)
+	# The day_started loop above rolled the weather of its last day (seeded by the world and the day the earlier sections left):
+	# a seed planted in regn/torden is wet at once, silently, and the rain below would find no dry crop to announce.
+	tm.set_weather(&"klart")
 	var keep_plots := grid.to_dict()
 	var by_player: Array = []
 	var by_auto: Array = []
