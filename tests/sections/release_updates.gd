@@ -67,6 +67,37 @@ func run(t) -> void:
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(2)
 	t.check("escape_returns_to_settings", not panel.is_open() and settings.is_open() and settings.get_viewport().gui_get_focus_owner() == settings.updates_button)
+	# REL-09: a download runs in the background. Closing the panel keeps it, the panel shows MB and per cent, "Stop" cancels it,
+	# and only a download that stalls (no byte for STALL_SECONDS) fails; there is no total time limit.
+	updates.available = {"version": "9.9.9", "size": 418 * 1048576, "sha256": "a".repeat(64)}
+	updates.downloaded_path = ProjectSettings.globalize_path("user://updater-test-partial.zip")
+	updates._downloading = true
+	updates._set_state("downloading")
+	settings.updates_button.pressed.emit()
+	await t.frames(2)
+	t.check("download_shows_megabytes", panel.is_open() and panel.status_label.text.contains("418") and panel.progress_bar.visible and panel.progress_bar.show_percentage, panel.status_label.text)
+	t.check("download_offers_stop", panel.primary.text == TranslationServer.translate("UPDATE_STOP") and not panel.primary.disabled)
+	t.tap_key(KEY_ESCAPE)
+	await t.frames(2)
+	t.check("closing_keeps_download", not panel.is_open() and updates.state == "downloading")
+	settings.updates_button.pressed.emit()
+	await t.frames(2)
+	panel.primary.grab_focus()
+	t.tap_key(KEY_ENTER)
+	await t.frames(2)
+	t.check("stop_cancels_download", updates.state == "available" and not updates._downloading)
+	t.tap_key(KEY_ESCAPE)
+	await t.frames(2)
+	updates._downloading = true
+	updates._set_state("downloading")
+	updates._last_bytes = updates.downloaded_bytes()
+	updates._stalled = 0.0
+	updates._watch(ReleaseUpdates.STALL_SECONDS * 0.5)
+	var alive: bool = updates.state == "downloading"
+	updates._watch(ReleaseUpdates.STALL_SECONDS * 0.5 + 0.1)
+	t.check("stalled_download_fails", alive and updates.state == "download_failed" and not updates._downloading)
+	updates.available.clear()
+	updates._set_state("current")
 	settings.close()
 	await UiAudit.audit_screen(t, "updates")
 
