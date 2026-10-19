@@ -1509,14 +1509,32 @@ func _test_auto_runs() -> void:
 	var prev_bytes := _read_text(prev)
 	sm.load_game(sm.AUTO_SLOT)
 	sm.autosave()
+	var fresh_run: String = str(_read_json(sm.slot_path(sm.AUTO_SLOT))["meta"]["run_id"])
 	t.check("auto_legacy_file_same_run", _read_text(prev) == prev_bytes and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 300, "Continue of a save without meta.run_id, then an autosave: the previous file is untouched")
+	t.check("auto_legacy_run_gets_a_new_id", fresh_run == sm.run_id and fresh_run != "" and not fresh_run.begins_with(sm.LEGACY_RUN_PREFIX), "the run of a save without meta.run_id saves on as %s" % fresh_run)
+	# two runs of before run ids with the same names and hero (siblings on one machine): loading one never overwrites the other's autosave
+	var sibling: Dictionary = _read_json(sm.slot_path(sm.AUTO_SLOT))
+	(sibling["meta"] as Dictionary).erase("run_id")
+	(sibling["economy"] as Dictionary)["gold"] = 444
+	_put(sm.AUTO_SLOT, sibling)
+	var own: Dictionary = sibling.duplicate(true)
+	(own["economy"] as Dictionary)["gold"] = 555
+	_put(1, own)
+	sm.load_game(1)
+	sm.autosave()
+	t.check("auto_legacy_sibling_keeps_previous", _gold_in(prev) == 444 and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 555,
+		"a legacy manual slot loaded over another legacy autosave of the same names: that autosave went to the previous file (gold %d)" % _gold_in(prev))
+	prev_bytes = _read_text(prev)
 	# a damaged or unreadable auto file is quarantined, never overwritten; the newest QUARANTINE_KEEP are kept
 	_write_text(sm.slot_path(sm.AUTO_SLOT), "{ damaged 1")
 	sm.clock_override = 5000.0
+	_notes.clear()
 	var saved: bool = sm.autosave()
 	var kept: Array = _quarantined()
-	t.check("auto_damaged_file_quarantined", saved and kept.size() == 1 and _read_text(_scratch.path_join(kept[0])) == "{ damaged 1" and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 300 and _read_text(prev) == prev_bytes,
+	t.check("auto_damaged_file_quarantined", saved and kept.size() == 1 and _read_text(_scratch.path_join(kept[0])) == "{ damaged 1" and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 555 and _read_text(prev) == prev_bytes,
 		"the autosave was written and the damaged file kept as %s; the previous file is untouched" % [kept])
+	t.check("auto_damaged_file_player_told", _notes.size() == 1 and str(_notes[0][0]) == sm.tr("NOTIF_AUTO_SET_ASIDE_TITLE") and kept.size() == 1 and str(_notes[0][1]).contains(str(kept[0])),
+		"one toast that names the file it was kept as: %s" % [_notes])
 	var drifted: Dictionary = _read_json(sm.slot_path(sm.AUTO_SLOT))
 	(drifted["economy"] as Dictionary).erase("gold")          # stands in for content the current build no longer accepts
 	for i in 3:

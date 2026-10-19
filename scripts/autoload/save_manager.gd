@@ -4,11 +4,12 @@ extends Node
 ## FILES (user://saves). save_0.json .. save_5.json are the six MANUAL slots, save_auto.json is the one AUTO slot
 ## (AUTO_SLOT = 6, an int so it travels through EventBus.save_completed(slot: int)). A manual save rolls the previous
 ## file of its slot to save_N.bak.json first (only when that file is a valid save payload); the auto slot has no backup.
-## RUNS. Every game has a run id (meta.run_id; a new one on new_game_started, the loaded save's on a load). Before an autosave
+## RUNS. Every game has a run id (meta.run_id; a new one on new_game_started, the loaded save's on a load, a new one for a save
+## written before run ids existed: its derived "legacy:" id cannot tell two runs of the same names and hero apart). Before an autosave
 ## replaces save_auto.json it looks at that file: the autosave of ANOTHER run moves to save_auto.prev.json (PREV_AUTO_SLOT, read
 ## only, listed by describe_slots() when it exists, never picked by Continue), so "New game" never destroys the only autosave of
 ## the run before it; a file that does not load (damaged, content drift, a newer build) is kept as save_auto.damaged-<unix>.json
-## (the newest QUARANTINE_KEEP of them) instead of being overwritten.
+## (the newest QUARANTINE_KEEP of them) instead of being overwritten, and the player is told the file name (NOTIF_AUTO_SET_ASIDE_*).
 ## Every write goes to <file>.tmp, is read back and compared, and only then renamed over the real file: a crash or a
 ## full disk never leaves half a save behind and never replaces a good save with a bad one (on Windows the old file is moved
 ## to <file>.old first, see _commit_temp; start-up finishes an interrupted replacement, see _recover_interrupted_writes).
@@ -78,6 +79,8 @@ const BACKUP_FILE := "save_%d.bak.json"
 const AUTO_FILE := "save_auto.json"
 const PREV_AUTO_FILE := "save_auto.prev.json"
 const QUARANTINE_FILE := "save_auto.damaged-%d.json"
+## The run id of a save written before run ids existed starts with this (see _run_id_of).
+const LEGACY_RUN_PREFIX := "legacy:"
 const QUARANTINE_KEEP := 3
 const PAYLOAD_VERSION := 2
 const MANUAL_SLOTS := 6
@@ -116,7 +119,7 @@ var save_dir: String = SAVE_DIR
 ## Manual slot (0..5) of the last manual save or of the last load from a manual slot, NO_SLOT (-1) after a new game.
 ## Autosaves and loads of the auto slot never change it, and it is never AUTO_SLOT.
 var current_slot: int = NO_SLOT
-## Identity of the running game (meta.run_id): a new one per new game, the loaded save's after a load.
+## Identity of the running game (meta.run_id): a new one per new game, the loaded save's after a load (a new one when the save has none).
 var run_id: String = ""
 ## The world state of the loaded save, waiting for WorldRoot2D._ready (opaque: SaveManager never looks inside).
 var pending_world: Dictionary = {}
@@ -378,6 +381,10 @@ func load_game(slot: int = 0) -> bool:
 	if is_manual_slot(slot):                   # the auto slots are not places the player saves to: keep the manual slot of this run
 		current_slot = slot
 	run_id = _run_id_of(info["payload"])
+	if run_id.begins_with(LEGACY_RUN_PREFIX):
+		run_id = _new_run_id()                 # written into every later save of this run: one derived id must never join two runs for good
+	if slot == AUTO_SLOT:
+		_auto_file_seen = {"hash": FileAccess.get_sha256(slot_path(slot)), "run": run_id}   # the auto file IS this run
 	_auto_save_timer = 0.0
 	if info["from_backup"]:
 		_toast(tr("NOTIF_LOAD_BACKUP_TITLE"), tr("NOTIF_LOAD_BACKUP_MSG"), slot + 1)
@@ -1092,13 +1099,15 @@ func _new_run_id() -> String:
 	return Crypto.new().generate_random_bytes(8).hex_encode()
 
 
-## meta.run_id of a payload; a save written before run ids existed is told apart by who played it (name, farm, hero).
+## meta.run_id of a payload; a save written before run ids existed gets LEGACY_RUN_PREFIX + who played it (name, farm, hero). That
+## derived id never equals the id of a running game (load_game gives such a run a new one), so an old auto file is only ever
+## overwritten without a copy when this session loaded that very file (_auto_file_seen).
 func _run_id_of(payload: Dictionary) -> String:
 	var meta: Dictionary = _dict_of(payload.get("meta"))
 	if meta.get("run_id") is String and str(meta["run_id"]) != "":
 		return str(meta["run_id"])
 	var game: Dictionary = _dict_of(payload.get("game"))
-	return "legacy:%s|%s|%s" % [str(game.get("player_name", "")), str(game.get("farm_name", "")), str(game.get("character_type", ""))]
+	return LEGACY_RUN_PREFIX + "%s|%s|%s" % [str(game.get("player_name", "")), str(game.get("farm_name", "")), str(game.get("character_type", ""))]
 
 
 ## Before an autosave replaces save_auto.json (see RUNS in the header): the autosave of another run becomes save_auto.prev.json,
@@ -1132,6 +1141,8 @@ func _quarantine_auto_file(path: String) -> void:
 		target = save_dir.path_join(QUARANTINE_FILE % stamp)
 	if _replace_file(path, target) != OK:
 		return
+	print("[Save] the auto file did not load; it was kept as %s" % ProjectSettings.globalize_path(target))
+	EventBus.notification_posted.emit(tr("NOTIF_AUTO_SET_ASIDE_TITLE"), tr("NOTIF_AUTO_SET_ASIDE_MSG") % target.get_file(), "save")
 	var kept: Array[String] = []
 	for file_name in DirAccess.get_files_at(save_dir):
 		if file_name.begins_with("save_auto.damaged-") and file_name.ends_with(".json"):
