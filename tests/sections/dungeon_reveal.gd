@@ -44,11 +44,17 @@ func _run(t,native: bool) -> void:
 		await t.capture("unique_card")
 	await t.seconds(.85)
 	t.check("unique_card_skippable",reveal.can_skip())
+	# DUN-09: a calm card is a non-pausing modal (Esc reaches it, not the pause menu) and an attack press does not dismiss it.
+	var attack := InputEventAction.new()
+	attack.action = &"attack"
+	attack.pressed = true
+	reveal._input(attack)
+	t.check("calm_card_is_modal_and_ignores_attack",not reveal.compact and gm.is_modal_open(Reveal.MODAL) and not gm.is_modal_open(&"pause") and not reveal.active.is_empty())
 	var skip := InputEventAction.new()
 	skip.action = &"interact"
 	skip.pressed = true
 	reveal._input(skip)
-	t.check("skip_keeps_owned_item",reveal.active.is_empty() and not reveal._root.visible and eco.count_item(&"gem_owl_eye") == 1)
+	t.check("skip_keeps_owned_item",reveal.active.is_empty() and not reveal._root.visible and eco.count_item(&"gem_owl_eye") == 1 and not gm.is_modal_open(Reveal.MODAL))
 	loot.deliver(&"gem_owl_eye",1)
 	await t.frames(2)
 	t.check("no_reveal_for_duplicate_keepsake",reveal.active.is_empty() and own_before_signal.size() == 1)
@@ -80,6 +86,20 @@ func _run(t,native: bool) -> void:
 	near.stun(5)
 	reveal.finish()
 	t.check("skip_preserves_a_later_combat_stun",near.state == Enemy2D.S.STUN and near.remaining == 5)
+	# DUN-09: a unique found mid-fight is a compact card at the top: no modal, no input taken, and its timer waits under a pause.
+	reveal.enqueue(&"gem_owl_eye",&"unique")
+	await t.frames(2)
+	t.check("fight_unique_is_compact_top_card",reveal.tier == 2 and reveal.compact and not gm.is_modal_open(Reveal.MODAL) and reveal._card.position.y < 200,"compact %s y %.0f" % [reveal.compact,reveal._card.position.y if is_instance_valid(reveal._card) else -1.0])
+	await t.seconds(.9)
+	reveal._input(attack)
+	reveal._input(skip)
+	t.check("compact_card_takes_no_input",not reveal.active.is_empty() and not reveal.can_skip())
+	gm.push_modal(&"pause_probe",true)
+	var waited: float = reveal.elapsed
+	await t.seconds(.4)
+	t.check("reveal_timer_waits_while_paused",is_equal_approx(reveal.elapsed,waited) and not reveal.active.is_empty())
+	gm.pop_modal(&"pause_probe")
+	reveal.finish()
 	DungeonRun.set_assist("assist_reduce_flash",true)
 	reveal.enqueue(&"gem_rune_heart",&"legendary")
 	await t.frames(2)
