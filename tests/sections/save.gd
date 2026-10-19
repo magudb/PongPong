@@ -1617,6 +1617,27 @@ func _test_drift_buckets() -> void:
 	_notes.clear()
 	eco.deliver_owed()
 	t.check("drift_owed_handed_back_with_room", eco.used_slots() == 24 and eco.owed.size() == 2 and _notes.size() == 2, "a morning with 4 free slots: 4 owed slots come back, 2 still wait; both are told (%d notes)" % _notes.size())
+	# an owed slot keeps its meta, and a furniture id owed by an overflowing backpack reaches its store (not a backpack room it never needs)
+	_set_state(1, 1)
+	eco.inventory.clear()
+	eco.owed.assign([{"id": &"wood", "amount": 2, "meta": {"quality": 2}}])
+	eco.deliver_owed()
+	var with_meta: Array = eco.inventory.filter(func(slot: Dictionary) -> bool: return slot["id"] == &"wood" and (slot["meta"] as Dictionary).get("quality") == 2)
+	t.check("drift_owed_keeps_its_meta", eco.owed.is_empty() and with_meta.size() == 1 and int(with_meta[0]["amount"]) == 2, "inventory after the hand-back: %s" % [eco.inventory])
+	if sm.has_section("furniture"):
+		var furniture: Node = sm.section_node("furniture")
+		var before: int = furniture.count_total("chair_pine")
+		eco.owed.assign([{"id": &"chair_pine", "amount": 1, "meta": {}}])
+		eco.deliver_owed()
+		t.check("drift_owed_furniture_reaches_its_store", eco.owed.is_empty() and furniture.count_total("chair_pine") == before + 1 and eco._backpack_count(&"chair_pine") == 0,
+			"owed %s, chairs in the store %d -> %d" % [eco.owed, before, furniture.count_total("chair_pine")])
+	# a loaded world: the owed slots come back when its player spawns, not only on the next morning
+	eco.inventory.clear()
+	eco.owed.assign([{"id": &"stone", "amount": 3, "meta": {}}])
+	var spawned := Node2D.new()
+	bus.player_spawned.emit(spawned)
+	spawned.free()
+	t.check("drift_owed_handed_back_when_a_loaded_world_spawns", eco.owed.is_empty() and eco.count_item(&"stone") == 3, "owed %s" % [eco.owed])
 	_set_state(1, 1)
 
 
