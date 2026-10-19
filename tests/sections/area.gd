@@ -1894,6 +1894,17 @@ func _farm_sized_map(t) -> void:
 	t.check("farm_sized_map_builds", a.map.id == &"_t_big" and a.map.width == 44 and a.map.height == 44 and a.farmable.size() == 84 and a.prop_nodes.size() > 40 and a.unknown_chars.is_empty() and ms < 2500 and _world.player.get_parent() == a.objects,
 		"44 x 44 cells, 84 tillable, %d props, %d skirts, built in %d ms with the placeholders cached, %d ground cells, %d physics bodies" % [a.prop_nodes.size(), a.skirt_nodes.size(), ms, a.ground.get_used_cells().size(), a.colliders.get_child_count()])
 	t.check("farm_sized_map_camera_limits", a.camera_rect().size.x > 5000.0 and a.camera_rect().size.y > 2800.0, "camera rect %s" % [a.camera_rect()])
+	# tile painting looks each terrain up once per build, not once per cell (review REND-05): the per-build cache is gone afterwards and
+	# every probed cell carries the source and atlas coords of the uncached lookups (grass, tillable soil, path, each water frame)
+	var painted_ok: bool = a._tile_cache.is_empty() and not a._painting
+	for c in [Vector2i(5, 5), Vector2i(10, 14), Vector2i(22, 16)]:
+		var kind: StringName = a.cell_kind(c)
+		painted_ok = painted_ok and kind != &"" and a.ground.get_cell_source_id(c) == AreaTileSet.source_for(&"iso", kind) and a.ground.get_cell_atlas_coords(c) == AreaTileSet.atlas_coords_for(kind, c)
+	var wc := Vector2i(8, 21)
+	for i in a.water_layers.size():
+		var wid: StringName = AreaTileSet.WATER_FRAMES[i]
+		painted_ok = painted_ok and a.water_layers[i].get_cell_source_id(wc) == AreaTileSet.source_for(&"iso", wid) and a.water_layers[i].get_cell_atlas_coords(wc) == AreaTileSet.atlas_coords_for(wid, wc)
+	t.check("tile_painting_caches_terrains_per_build", painted_ok and a.water_layers.size() == 4, "cached sources and atlas coords match the per-cell lookups; the cache is released after the build")
 	_world._enter(&"_fixture_iso", &"default")
 	_world._cache.erase(&"_t_big")
 	if is_instance_valid(a):
