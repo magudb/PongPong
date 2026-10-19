@@ -42,6 +42,20 @@ func run(t) -> void:
 	shop.buy_btn.pressed.emit()
 	await t.frames(3)
 	t.check("buy_via_control", eco.gold == before - total and eco.count_item(item) == owned + 1)
+	# UIC-01: Up out of the item grid lands on the CURRENT tab; entering the tab row never selects the first tab.
+	shop._on_page(1)
+	await t.frames(3)
+	if shop._tab > 0 and not shop._rows.is_empty():
+		var current: int = shop._tab
+		shop._rows[0].grab_focus()
+		await t.frames(1)
+		t.tap_key(KEY_UP)
+		await t.frames(3)
+		var landed: Control = shop.get_viewport().gui_get_focus_owner()
+		t.check("up_from_grid_lands_on_current_tab", shop._tab == current and landed == shop._tab_buttons[current],
+			"tab %d (was %d), focus %s" % [shop._tab, current, landed.name if landed != null else "none"])
+	else:
+		t.check("up_from_grid_lands_on_current_tab", false, "the seed shop has no second tab with items")
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(3)
 	t.check("esc_closes_and_restores", not shop.is_open() and not t.tree.paused and shop.get_viewport().gui_get_focus_owner() == null)

@@ -235,6 +235,19 @@ func _journal(t, journal: Control) -> void:
 	t.tap_key(KEY_RIGHT)
 	await t.frames(3)
 	t.check("journal_list_right_changes_tab", journal._tab == 1)
+	# UIC-01: Up out of the calendar (day grid -> season chips -> tab row) lands on the CURRENT tab, not on the first one.
+	if journal._calendar != null:
+		journal._on_page(1)
+		await t.frames(3)
+		journal._calendar.cells[0].grab_focus()
+		await t.frames(1)
+		t.tap_key(KEY_UP)
+		await t.frames(2)
+		t.tap_key(KEY_UP)
+		await t.frames(2)
+		var landed: Control = t.tree.root.gui_get_focus_owner()
+		t.check("journal_up_from_calendar_keeps_tab", journal._tab == 2 and landed == journal.get_node("%TabCalendar"),
+			"tab %d, focus %s" % [journal._tab, landed.name if landed != null else "none"])
 	t.tap_key(KEY_J)
 	await t.frames(3)
 	t.check("journal_j_closes_in_gui", not journal.is_open() and not t.tree.paused)

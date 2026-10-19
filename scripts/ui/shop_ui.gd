@@ -144,6 +144,7 @@ func _refresh_texts() -> void:
 	_clear(%TabRow)
 	_tab_buttons.clear()
 	var group := ButtonGroup.new()
+	group.set_meta(UiNav.TAB_ROW_META, true)
 	for index in _tabs.size():
 		var tab := Button.new()
 		tab.name = "Tab_" + str(_tabs[index].id)

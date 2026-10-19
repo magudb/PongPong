@@ -26,6 +26,7 @@ func _init() -> void:
 func _ready() -> void:
 	super._ready()
 	_tabs = [%ActiveTab, %CompletedTab]
+	_group.set_meta(UiNav.TAB_ROW_META, true)
 	if ResourceLoader.exists(CALENDAR):
 		_calendar = load(CALENDAR).instantiate()
 		%CalendarHost.add_child(_calendar)

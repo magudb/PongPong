@@ -177,6 +177,7 @@ func run(t) -> void:
 	await t.frames(3)
 	await _disabled_not_focusable(t)
 	await _wire_helpers(t)
+	await _radio_group_entry(t)
 	await _hover_focus_lists(t)
 	await _text_field_yields_updown(t)
 	await _no_wrap_on_echo(t)
@@ -431,6 +432,44 @@ func _wire_helpers(t) -> void:
 	var real_ok: bool = _owner_name(t) == "C10"
 	t.check("wire_helpers", ok_l and marks_ok and no_wrap_ok and row_ok and grid_ok and groups_ok and memory_ok and wrap_marks_ok and tab_order_ok and rewire_ok and real_ok,
 		"L ring %s, wrap marks %s, no-wrap %s, T row %s, G grid (22 in 6, clamped short row) %s, groups %s, focus memory %s, ring wrap marks %s, Tab order %s, re-wire %s, a real Down press lands on %s" % [ok_l, marks_ok, no_wrap_ok, row_ok, grid_ok, groups_ok, memory_ok, wrap_marks_ok, tab_order_ok, rewire_ok, _owner_name(t)])
+	await _finish_test(t)
+
+
+## UIC-01: without focus memory a move INTO a tab row (a ButtonGroup marked TAB_ROW_META) lands on its pressed tab, so leaving a list
+## upwards never selects the first tab; a group without one still lands on its first stop.
+func _radio_group_entry(t) -> void:
+	var host := _fresh(t)
+	var hb := HBoxContainer.new()
+	host.add_child(hb)
+	var radio := ButtonGroup.new()
+	radio.set_meta(UiNav.TAB_ROW_META, true)
+	var tabs: Array = []
+	for i in 3:
+		var tab := _add(hb, "R%d" % i)
+		tab.toggle_mode = true
+		tab.button_group = radio
+		tabs.append(tab)
+	var close := _add(hb, "RClose")
+	var vb := VBoxContainer.new()
+	vb.position = Vector2(0, 100)
+	host.add_child(vb)
+	var rows: Array = []
+	for i in 3:
+		rows.append(_add(vb, "RRow%d" % i))
+	await t.frames(1)
+	(tabs[2] as Button).set_pressed_no_signal(true)
+	UiNav.wire_row(tabs + [close])
+	UiNav.wire_ring(rows)
+	UiNav.wire_groups([tabs + [close], rows], true, false)
+	var up_ok: bool = _path_of(rows[0], (rows[0] as Control).focus_neighbor_top) == tabs[2]
+	var wrap_ok: bool = _path_of(rows[2], (rows[2] as Control).focus_neighbor_bottom) == tabs[2]
+	var down_ok: bool = _path_of(tabs[2], (tabs[2] as Control).focus_neighbor_bottom) == rows[0]
+	(rows[0] as Control).grab_focus()
+	await t.frames(1)
+	await _tap(t, KEY_UP)
+	var real_ok: bool = _owner_name(t) == "R2"
+	t.check("radio_group_entry", up_ok and wrap_ok and down_ok and real_ok,
+		"Up from the list -> pressed tab %s, ring wrap -> pressed tab %s, Down -> first row %s, a real Up press lands on %s" % [up_ok, wrap_ok, down_ok, _owner_name(t)])
 	await _finish_test(t)
 
 
