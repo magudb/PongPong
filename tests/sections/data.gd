@@ -1214,6 +1214,19 @@ func _svc() -> void:
 	t.check("svc_static_call_fallbacks", fox == 1360 and hobbit == 1280 and alone == 1440 and missing_script == "fallback" and missing_method == "fallback" and instance_method == "fallback" and res_missing == 42 and real_class == 3 and (no_args as Array).size() == 5, "1600 gold: %s / %s / %s (1360 / 1280 / 1440); missing script, missing method, instance method and missing res:// script give the fallback; a real static class answers" % [fox, hobbit, alone])
 	t.expect_clean_since(mark, "static_call of a missing script logs no engine error")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+	# a res:// answer is remembered (QUAL-01: resolving cost 24-77 µs a call on per-tick paths); a user:// probe is not
+	Svc.static_call("res://scripts/data/rarity.gd", &"rank", ["rare"], -1)
+	var calls := 2000
+	var t0 := Time.get_ticks_usec()
+	for i in calls:
+		Svc.static_call("res://scripts/data/rarity.gd", &"rank", ["rare"], -1)
+	var per_call := float(Time.get_ticks_usec() - t0) / float(calls)
+	t.check("svc_static_call_memoised", Svc._resolved.get("res://scripts/data/rarity.gd::rank", null) is Script and not Svc._resolved.has(path + "::final_price") and t.perf_ok("svc_static_call_us", per_call, 6.0), "a res:// static function is resolved once and then costs %.1f µs a call (reference 6 µs; the user:// probe is not remembered)" % per_call)
+	# a shipped script without the static function is a broken contract: the fallback, and ONE engine warning (QUAL-08)
+	t.allow("Svc.static_call: res://scripts/data/rarity.gd has no static function no_such_function()")
+	var broken_a: Variant = Svc.static_call("res://scripts/data/rarity.gd", &"no_such_function", [], "fallback")
+	var broken_b: Variant = Svc.static_call("res://scripts/data/rarity.gd", &"no_such_function", [], "fallback")
+	t.check("svc_static_call_warns_once_on_a_broken_contract", broken_a == "fallback" and broken_b == "fallback" and t.allowed_count("Svc.static_call: res://scripts/data/rarity.gd has no static function no_such_function()") == 1, "a res:// script without the static function answers the fallback and warns once (%d warning(s))" % t.allowed_count("Svc.static_call: res://scripts/data/rarity.gd has no static function no_such_function()"))
 	# autoload lookup, overrides
 	t.expect(Svc.node("LuaRuntime") == _lr and Svc.node("DefinitelyNoAutoload") == null and Svc.lua_config("player.walk_speed", 0) == 285 and Svc.lua_config("no.such.path", "d") == "d", "Svc.node / Svc.lua_config look the autoload up at call time")
 	var fake := Node.new()

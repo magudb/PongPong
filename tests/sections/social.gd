@@ -1066,7 +1066,7 @@ func _when() -> void:
 	m.director_path = SocialManager.DIRECTOR
 	t.check("when_away_kind_asks_npc_director", asks and logged and no_director, "away:<npc> asks NpcDirector.is_away, at:<npc> asks is_present (a node injected with Svc.override first, then the static facade by path); with NO director at: is true and away: is false (the D2 hub marker of Fru Ugle needs exactly that)")
 	# the static facade BY PATH (what the real npc_director.gd is): a probe script under user:// with static is_absent / is_away / is_present, then one whose method is an INSTANCE method
-	# (a facade that is not static is refused like Svc.static_call refuses it: the safe default); the loaded script is remembered per path and method
+	# (a facade that is not static is refused like Svc.static_call refuses it: the safe default); Svc remembers the resolved res:// script per path and method
 	var probe := _user_path("probe_director.gd")
 	_write(probe, "static func is_absent(npc):\n\treturn npc == \"rasmus\"\n\nstatic func is_away(npc):\n\treturn npc == \"appraiser_fru_ugle\"\n\nstatic func is_present(npc):\n\treturn npc == \"baker_maja\"\n")
 	var probe_inst := _user_path("probe_director_instance.gd")
@@ -1078,8 +1078,10 @@ func _when() -> void:
 	m.director_path = "res://scripts/towns/no_such_director.gd"
 	var absent_again = not m.eval_when("away:baker_maja") and m.eval_when("at:baker_maja")
 	m.director_path = probe
-	var cached_again = m.eval_when("away:appraiser_fru_ugle") and m._dir_script != null and bool(m._dir_static.get(&"is_away", false))
+	var cached_again = m.eval_when("away:appraiser_fru_ugle")
 	m.director_path = SocialManager.DIRECTOR
+	m.eval_when("away:appraiser_fru_ugle")
+	cached_again = cached_again and Svc._resolved.get(SocialManager.DIRECTOR + "::is_away", null) is Script
 	t.check("when_director_facade_by_path", by_path and instance_refused and absent_again and cached_again, "a static facade script by path answers is_absent / is_away / is_present (%s), an instance method is refused with the safe default (%s), a missing script and a changed path re-resolve (%s %s)" % [by_path, instance_refused, absent_again, cached_again])
 	# the consumer: IsoArea.evaluate_when / when_errors (P04's RT6) delegate to this manager (the real one, not a fake)
 	m.debug_set_hearts("mayor_lyra", 2)
