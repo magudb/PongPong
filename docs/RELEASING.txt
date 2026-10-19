@@ -22,6 +22,12 @@ per screen), including its intentional focus/localization frame waits. Native
 runs keep the authored reference limits. Game-time
 assertions, geometry counts and correctness checks stay unchanged. Each export
 runner tests the update installer and boots the actual packaged executable.
+The installer tests run both helpers against a dummy game process they must
+wait for, with a recording launcher (result written before the launch, a
+failed launch rolled back, a locked folder retried and the previous game
+relaunched); the release_updates section starts the real helpers with the
+game's own command line and handshake (the Windows one through pwsh where
+PowerShell exists, including the Linux playtest runners).
 Windows then installs the NSIS setup EXE, checks its Start menu shortcut and
 Apps & Features entry, applies a ZIP update from the game's working folder,
 checks that reinstalling remembers the selected location, boots the game, and
@@ -39,11 +45,21 @@ Push a canonical vX.Y.Z tag, for example:
   git push origin v0.1.0
 
 The tag's version is injected into the game and native application metadata.
-Tags with suffixes, leading zeroes or additional components are rejected.
+Tags with suffixes, leading zeroes or additional components are rejected, and
+so is a tag whose commit is not on main. The build jobs receive only the six
+macOS signing secrets by name. Publishing runs in the "release" environment:
+give it required reviewers (Settings > Environments) so a person approves each
+release after its checks pass, and protect v* tags with a tag ruleset that
+restricts who may create them. Both are repository settings, not files.
 Production release waits for all four character gates and both native export
 and smoke checks. The GitHub release is created with the Windows setup EXE,
 macOS DMG and both update ZIPs together, their JSON build records and
-SHA256SUMS. Failed checks never publish a release. The existing v0.1.0 assets
+SHA256SUMS. Each build job reports its package digests as a job output; the
+publish job downloads the two artifacts by exact name, refuses any package or
+file that does not match those digests, and records GitHub build provenance
+for every package (check one with
+"gh attestation verify FILE --repo magudb/PongPong"). Failed checks never
+publish a release. The existing v0.1.0 assets
 remain unchanged; the next production tag adds the native installers.
 
 Packages:
@@ -100,12 +116,22 @@ Drafts, prereleases, downgrades, wrong-platform assets, untrusted asset URLs,
 missing SHA-256 digests and oversized packages are ignored.
 
 After confirmation, the game downloads to user://updates and verifies GitHub's
-asset digest. The install helper independently rechecks the archive, validates
+asset digest. That folder keeps at most one archive: a new download removes
+older ones, every start removes archives of the installed or older versions
+(a newer one stays for a retry), and an archive the helper rejects is
+deleted at once. The install helper independently rechecks the archive, validates
 and stages it, then signals that the running game may exit. A playing session
 must autosave successfully first. The helper waits for the process to exit,
-swaps only the installed game folder/bundle, and relaunches it. A failed swap
-or launch restores the previous installation. Failed preparation leaves the
-running game open. Cancellation removes a partial download. Read-only and
+swaps only the installed game folder/bundle (retrying a folder that a virus
+scan still holds for about eight seconds), writes its result and then
+relaunches the game. A failed swap or launch restores the previous
+installation, and after the handshake the helper always starts the previous
+or unchanged game again. Every result names a reason (folder, checksum,
+package, game_running, locked, launch); failed preparation leaves the running
+game open with that reason's message, and the next start reads the newest
+install-*.json and shows "Opdateret til version X" or why the update was not
+installed. A verified download survives a failed install, so trying again
+does not download it twice. Cancellation removes a partial download. Read-only and
 unexpected install locations are refused; move/extract the release to a
 writable normal installation folder before updating.
 

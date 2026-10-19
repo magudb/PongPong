@@ -18,11 +18,20 @@ ROOT = Path(__file__).resolve().parents[2]
 VERSION = re.compile(r"(?:0|[1-9][0-9]{0,8})\.(?:0|[1-9][0-9]{0,8})\.(?:0|[1-9][0-9]{0,8})\Z")
 REPOSITORY = re.compile(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+\Z")
 RUNTIME = ("assets", "data", "localization", "lua", "scenes", "scripts", "shaders")
+# Update payload and native installer of each platform, as published.
+PACKAGES = {"windows": ("windows.zip", "windows-setup.exe"), "macos": ("macos.zip", "macos.dmg")}
 
 
 def validate_version(value):
     if not VERSION.fullmatch(value):
         raise ValueError("Version must be X.Y.Z with canonical nonnegative integers")
+    return value
+
+
+def validate_tag(value):
+    if not value.startswith("v"):
+        raise ValueError("Production tags must use vX.Y.Z")
+    validate_version(value[1:])
     return value
 
 
@@ -32,6 +41,13 @@ def metadata(ref, event):
     if production and not ref.startswith("refs/tags/v"):
         raise ValueError("Production tags must use vX.Y.Z")
     return {"version": version, "production": str(production).lower(), "tag": "v" + version if production else "", "event": event}
+
+
+def require_released_from(commit, branch, repository=ROOT):
+    """A production tag must point at reviewed history: its commit has to be on the release branch."""
+    result = subprocess.run(["git", "-C", str(repository), "merge-base", "--is-ancestor", commit, branch], capture_output=True, text=True)
+    if result.returncode:
+        raise ValueError(f"Production tags must point at a commit on {branch}")
 
 
 def sha256(path):
@@ -140,6 +156,34 @@ def record(package, args, signed, purpose):
     print(f"Built {package}", flush=True)
 
 
+def package_names(tag, platform_name):
+    return [f"Traetoppen-{tag}-{suffix}" for suffix in PACKAGES[platform_name]]
+
+
+def digests(directory, version, platform_name):
+    """The build job's record of its packages; it reaches publishing as a job output, not inside the artifacts."""
+    return {name: sha256(directory / name) for name in package_names("v" + version, platform_name)}
+
+
+def verify_publish(directory, tag, expected):
+    """Check downloaded artifacts against the build jobs' digests, write SHA256SUMS and return the files to publish."""
+    packages = [name for platform_name in PACKAGES for name in package_names(tag, platform_name)]
+    if sorted(expected) != sorted(packages):
+        raise ValueError("Build digests must name exactly the packages of both platforms")
+    allowed = {name + suffix for name in packages for suffix in ("", ".sha256", ".json")}
+    present = {path.name for path in directory.iterdir()}
+    if present != allowed:
+        raise ValueError(f"Unexpected release files: missing {sorted(allowed - present)}, extra {sorted(present - allowed)}")
+    for name in packages:
+        digest = expected[name]
+        record = json.loads((directory / (name + ".json")).read_text())
+        if sha256(directory / name) != digest or (directory / (name + ".sha256")).read_text() != f"{digest}  {name}\n" or record.get("sha256") != digest or record.get("file") != name:
+            raise ValueError(f"{name} does not match the digest its build job reported")
+    (directory / "SHA256SUMS").write_text("".join(f"{expected[name]}  {name}\n" for name in sorted(packages)))
+    # The per-package .sha256 files are folded into SHA256SUMS, as before.
+    return sorted(name + suffix for name in packages for suffix in ("", ".json")) + ["SHA256SUMS"]
+
+
 def build(args):
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
@@ -196,6 +240,16 @@ def main():
     meta = commands.add_parser("metadata")
     meta.add_argument("--ref", default=os.environ.get("GITHUB_REF", ""))
     meta.add_argument("--event", default=os.environ.get("GITHUB_EVENT_NAME", "local"))
+    meta.add_argument("--commit", default=os.environ.get("GITHUB_SHA", "HEAD"))
+    meta.add_argument("--require-on", metavar="BRANCH", help="refuse a production tag whose commit is not on BRANCH")
+    record_digests = commands.add_parser("digests")
+    record_digests.add_argument("--platform", choices=tuple(PACKAGES), required=True)
+    record_digests.add_argument("--version", type=validate_version, required=True)
+    record_digests.add_argument("--output", type=Path, default=ROOT / "dist")
+    publish = commands.add_parser("verify-publish")
+    publish.add_argument("--tag", required=True)
+    publish.add_argument("--dir", type=Path, required=True)
+    publish.add_argument("--digests", action="append", required=True, help="one platform's JSON object from its build job")
     export = commands.add_parser("build")
     export.add_argument("--platform", choices=("windows", "macos"), required=True)
     export.add_argument("--version", type=validate_version, required=True)
@@ -208,10 +262,23 @@ def main():
     args = parser.parse_args()
     if args.command == "metadata":
         values = metadata(args.ref, args.event)
+        if values["production"] == "true" and args.require_on:
+            require_released_from(args.commit, args.require_on)
         if "GITHUB_OUTPUT" in os.environ:
             with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as target:
                 target.write("".join(f"{key}={value}\n" for key, value in values.items()))
         print(json.dumps(values))
+    elif args.command == "digests":
+        values = json.dumps(digests(args.output.resolve(), args.version, args.platform), sort_keys=True)
+        if "GITHUB_OUTPUT" in os.environ:
+            with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as target:
+                target.write(f"{args.platform}={values}\n")
+        print(values)
+    elif args.command == "verify-publish":
+        expected = {}
+        for values in args.digests:
+            expected.update(json.loads(values))
+        print("\n".join(verify_publish(args.dir, validate_tag(args.tag), expected)))
     else:
         build(args)
 

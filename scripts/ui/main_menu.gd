@@ -78,9 +78,13 @@ func _refresh_labels() -> void:
 	var latest_summary: Dictionary = rows.filter(func(row: Dictionary) -> bool: return int(row.slot) == latest).front().summary if latest >= 0 else {}
 	%ContinueInfo.text = tr("MENU_CONTINUE_DAY") % int(latest_summary.get("total_day", 1)) if latest >= 0 else ""
 	_rows = [%ContinueButton, %LoadButton, %NewGameButton, %SettingsButton, %QuitButton]
-	# A background download that failed keeps the row: the panel offers the retry.
-	_updates_button.visible = ReleaseUpdates.inst().state in ["available", "downloading", "ready", "download_failed"] and not ReleaseUpdates.inst().available.is_empty()
-	_updates_button.text = tr("UPDATE_AVAILABLE") % str(ReleaseUpdates.inst().available.get("version", ""))
+	# A background download (and one that failed: the panel offers the retry) keeps the row; so does the outcome of the last install.
+	var updates := ReleaseUpdates.inst()
+	var offered := updates.state in ["available", "downloading", "ready", "download_failed"] and not updates.available.is_empty()
+	_updates_button.visible = offered or not updates.report.is_empty()
+	_updates_button.text = tr("UPDATE_AVAILABLE") % str(updates.available.get("version", ""))
+	if not offered and not updates.report.is_empty():
+		_updates_button.text = tr("UPDATE_REPORT_INSTALLED") % ReleaseUpdates.current_version() if updates.report.status == "installed" else tr("UPDATE_REPORT_FAILED")
 	if _updates_button.visible: _rows.insert(_rows.size() - 1, _updates_button)
 	UiNav.wire_ring(_rows)
 	UiNav.wire_row([%LanguageButton])

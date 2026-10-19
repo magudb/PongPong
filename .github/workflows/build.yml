@@ -13,6 +13,26 @@ on:
       production:
         type: boolean
         default: false
+    outputs:
+      windows:
+        description: SHA-256 of each Windows package, as recorded by its build job
+        value: ${{ jobs.export.outputs.windows }}
+      macos:
+        description: SHA-256 of each macOS package, as recorded by its build job
+        value: ${{ jobs.export.outputs.macos }}
+    secrets:
+      MACOS_CERTIFICATE_P12:
+        required: false
+      MACOS_CERTIFICATE_PASSWORD:
+        required: false
+      MACOS_SIGNING_IDENTITY:
+        required: false
+      APPLE_ID:
+        required: false
+      APPLE_APP_PASSWORD:
+        required: false
+      APPLE_TEAM_ID:
+        required: false
 
 permissions:
   contents: read
@@ -34,6 +54,10 @@ jobs:
             runner: windows-latest
           - platform: macos
             runner: macos-latest
+    # Each platform sets only its own output, so the matrix keeps both.
+    outputs:
+      windows: ${{ steps.digests.outputs.windows }}
+      macos: ${{ steps.digests.outputs.macos }}
     defaults:
       run:
         shell: bash
@@ -72,6 +96,9 @@ jobs:
           production=()
           if [[ "$RELEASE_PRODUCTION" == true ]]; then production+=(--production); fi
           python tools/release/release.py build --platform "$RELEASE_PLATFORM" --version "$RELEASE_VERSION" --repository "$RELEASE_REPOSITORY" --smoke "${production[@]}"
+      - name: Report package digests to the publish job
+        id: digests
+        run: python tools/release/release.py digests --platform "${{ matrix.platform }}" --version "$RELEASE_VERSION"
       - name: Upload native installer, update payload and checksums
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
