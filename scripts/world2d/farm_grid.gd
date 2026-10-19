@@ -194,7 +194,7 @@ func _water(p: PlotData, hour: float) -> void:
 		p.state = State.WATERED
 
 ## `source` = &"player" (the can: EventBus.crop_watered, which quests and hints count) or the automation that watered it (&"sprinkler" ...:
-## EventBus.crop_auto_watered, only for a plot with a crop; GAP4-03).
+## EventBus.crop_auto_watered). Either is sent only for a plot with a crop: wet bare soil waters no crop (GAP4-03).
 func water(cell: Vector2i, at_hour: float = -1.0, source: StringName = &"player") -> bool:
 	var p := get_plot(cell)
 	if _busy or p == null or p.state in [State.EMPTY, State.WITHERED] or not can_till(cell):
@@ -210,9 +210,11 @@ func water(cell: Vector2i, at_hour: float = -1.0, source: StringName = &"player"
 
 
 func _announce_water(cell: Vector2i, p: PlotData, source: StringName) -> void:
+	if p.crop_id == &"":
+		return
 	if source == &"player":
 		EventBus.crop_watered.emit(plot_id(cell))
-	elif p.crop_id != &"":
+	else:
 		EventBus.crop_auto_watered.emit(plot_id(cell), source)
 
 func apply_supply(cell: Vector2i, item: StringName) -> bool:

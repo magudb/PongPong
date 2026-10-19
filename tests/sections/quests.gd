@@ -1712,6 +1712,23 @@ func _forste_dage() -> void:
 		elif not (qm.FILTERS.has(on) or on == "manual" or on == "state" or qm.GAME_EVENT_SUGAR.has(on)):
 			bad.append("%s binds %s" % [od.get("id", ""), on])
 	t.check("forste_dage_binds_only_known_events", bad.is_empty(), "every objective of lua/quests/forste_dage.lua uses a binding of the vocabulary and, for game_event, a name of the events list %s" % str(bad))
+	# GAP4-03: the can on bare tilled soil waters no crop, so "Vand tre afgrøder" counts only a plot with a crop in it
+	_fresh()
+	var grid := FarmGrid.new()
+	t.tree.root.add_child(grid)
+	var cells: Array = grid.farmable_cells()
+	qm.accept_quest(&"forste_dage")
+	var accepted: bool = qm.is_active(&"forste_dage")
+	grid.till(cells[0])
+	var bare_watered: bool = grid.water(cells[0], 12.0)
+	var after_bare := _cur("forste_dage", "water")
+	grid.till(cells[1])
+	eco.add_item(&"carrot_seeds", 1, true)
+	grid.plant(cells[1], &"carrot_seeds")
+	grid.water(cells[1], 12.0)
+	t.check("water_objective_counts_only_crops", accepted and bare_watered and after_bare == 0 and _cur("forste_dage", "water") == 1, "watering bare soil leaves forste_dage.water at %d, watering the planted carrot gives %d (want 0, then 1)" % [after_bare, _cur("forste_dage", "water")])
+	grid.free()
+	qm.reset()
 
 func _generated_floor(number: int,seed_value: int) -> AreaMap:
 	var cfg := LuaData.dict(Svc.lua_config("dungeon",{}))
