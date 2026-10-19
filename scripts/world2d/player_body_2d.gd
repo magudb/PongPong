@@ -195,7 +195,8 @@ func _physics_process(delta: float) -> void:
 	var in_dir := Vector2.ZERO
 	if state == S.FREE:
 		in_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	_zoom_stick(delta)
+	if not GameData.gm().is_modal_open():
+		_zoom_stick(delta)
 	var speed: float = _run if Input.is_action_pressed("run") else _walk
 	_gvel = _gvel.move_toward(in_dir * speed, (_accel if in_dir != Vector2.ZERO else _decel) * delta)
 	velocity = Iso.to_screen(_gvel)
