@@ -474,9 +474,12 @@ func _ability_slot(t) -> void:
 	for i in 4:
 		var slot: VBoxContainer = slots[i]
 		var side := 78.0 if i == 0 else 64.0
-		applied = applied and slot.action == ABILITY_ACTIONS[i] and slot.icon.item_id == ABILITY_IDS[i] and slot.frame.custom_minimum_size == Vector2(side, side) \
+		applied = applied and slot.action == ABILITY_ACTIONS[i] and slot.icon.item_id == AbilitySlotScript.art_for(ABILITY_IDS[i]) and slot.icon.icon_path() != "" and slot.frame.custom_minimum_size == Vector2(side, side) \
 			and slot.key_label.text != "" and slot.cd_label.text == str(i) and is_equal_approx(slot.veil.offset_top, -(side - 4.0) * 0.25 * i)
-	t.expect(applied, "four ability slots built before add_child: size, icon id, key cap, cooldown veil and number are applied when each is ready")
+	t.expect(applied, "four ability slots built before add_child: size, icon picture (UX-19), key cap, cooldown veil and number are applied when each is ready")
+	var pictures := {}
+	for slot in slots: pictures[slot.icon.icon_path()] = true
+	t.expect(pictures.size() == 4, "the four abilities draw four different pictures: %s" % str(pictures.keys()))
 	t.expect(slots[0].key_label.text == TranslationServer.translate("KEY_MOUSE_LEFT"), "the primary attack's key cap reads the InputMap: %s" % slots[0].key_label.text)
 	var cd_only: VBoxContainer = scene.instantiate()
 	cd_only.set_cooldown(1.0, "9")
@@ -489,7 +492,7 @@ func _ability_slot(t) -> void:
 	twice.setup(&"dodge", &"dodge", 78.0)
 	t.root.add_child(twice)
 	await t.frames(1)
-	t.expect(twice.icon.item_id == &"dodge" and twice.frame.custom_minimum_size.x == 78.0 and twice.action == &"dodge", "two setup() calls before ready: the last one wins")
+	t.expect(twice.icon.item_id == AbilitySlotScript.art_for(&"dodge") and twice.frame.custom_minimum_size.x == 78.0 and twice.action == &"dodge", "two setup() calls before ready: the last one wins")
 	twice.queue_free()
 	t.expect_clean_since(mark, "ability_slot setup / set_cooldown before add_child raise no script error")
 	t.check("ability_slot_before_ready", t.failed == failed_before, "ability_slot.setup / set_cooldown are safe before add_child (the forest HUD builds its four slots that way)")

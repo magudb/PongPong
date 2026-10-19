@@ -112,9 +112,17 @@ func _ready() -> void:
 		abilities[spec[0]] = slot
 	drink_count = L.label(abilities.drink.get_node("Frame/Inner"),"","Display15Owl")
 	drink_count.set_anchors_and_offsets_preset(PRESET_BOTTOM_RIGHT)
-	drink_count.offset_left = -26
+	drink_count.offset_left = -30
 	drink_count.offset_top = -20
 	drink_count.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	# A night badge keeps the count readable on top of the tonic picture.
+	var badge := StyleBoxFlat.new()
+	badge.bg_color = C.NIGHT_PANEL
+	badge.set_corner_radius_all(6)
+	badge.content_margin_left = 4
+	badge.content_margin_right = 4
+	drink_count.add_theme_stylebox_override("normal",badge)
+	drink_count.grow_horizontal = GROW_DIRECTION_BEGIN
 	current_item_badge = CurrentItemBadge.new()
 	current_item_badge.name = "CurrentItemBadge"
 	add_child(current_item_badge)

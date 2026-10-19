@@ -49,6 +49,22 @@ func run(t) -> void:
 	await world.travel(&"moerkeskoven_f2",&"default")
 	await t.until(func(): return WorldRoot2D.has_area(&"moerkeskoven_f3"),10.0)
 	t.check("floors.register_ahead_neighbours_and_unregister_far",WorldRoot2D.has_area(&"moerkeskoven_f1") and WorldRoot2D.has_area(&"moerkeskoven_f3") and not WorldRoot2D.has_area(&"moerkeskoven_f5"),"area=%s floor=%s registered=%s tasks=%s texts=%s error=%s" % [world.area.map.id,floors.floor,floors._registered,floors._tasks.keys(),floors._texts.keys(),floors.last_error])
+	# DUN-12: the canopy settles, then only the crowns over the player animate (and settle again).
+	var canopy: CanopyFade = world.area.get_children().filter(func(n): return n is CanopyFade).front()
+	await t.seconds(.3)
+	var settled_idle := canopy._fading.is_empty()
+	var crown: Dictionary = canopy._crowns.front()
+	var parked: Vector2 = world.player.global_position
+	world.player.global_position = world.area.cell_to_global(crown.cell)
+	var moving := 0
+	var watch_until: float = t.game_seconds()+.3
+	while t.game_seconds() < watch_until:
+		await t.frames(1)
+		moving = maxi(moving,canopy._fading.size())
+	await t.seconds(.2)
+	var faded: bool = crown.nodes.all(func(n): return not is_instance_valid(n) or is_equal_approx(n.modulate.a,.45))
+	t.check("floors.canopy_fades_only_crowns_over_player",settled_idle and moving >= 1 and moving < 12 and faded and canopy._fading.is_empty(),"crowns=%d idle=%s moving=%d faded=%s left=%d" % [canopy._crowns.size(),settled_idle,moving,faded,canopy._fading.size()])
+	world.player.global_position = parked
 	var synchronous := DungeonGen.build_text(floors.cfg,3,floors.floor_seed(3),floors._context(3))
 	t.check("floors.prefetch_equals_sync",synchronous.text == floors.floor_text(3))
 	await world.travel(&"moerkeskoven_f3",&"default")
@@ -82,9 +98,14 @@ func run(t) -> void:
 	gm.end_day()
 	t.check("floors.new_day_clears_done_and_seen",floors.done.is_empty() and floors.seen.is_empty() and floors.reveal.is_empty() and floors.stones.has(3))
 	t.check("floors.day_started_prunes_when_outside",not WorldRoot2D.has_area(&"moerkeskoven_f3"))
-	floors.enter(3)
+	# DUN-10: a rune start on an ungenerated floor queues a worker instead of generating inside the click, and the floor above
+	# arrives from a worker too, already parsed.
+	var queued := floors.enter(3)
+	t.check("floors.rune_start_generates_on_a_worker",queued and floors._tasks.has(3) and floors._pending_entry == 3 and not floors._texts.has(3) and not WorldRoot2D.has_area(&"moerkeskoven_f3"))
 	await t.until(func(): return world.area.map.id == &"moerkeskoven_f3" and not world.traveling,10.0)
 	t.check("floors.runestone_reentry_uses_authored_spawn",world.player.global_position.distance_to(world.area.get_spawn("rune")) < 2)
+	await t.until(func(): return WorldRoot2D.has_area(&"moerkeskoven_f2") and WorldRoot2D.has_area(&"moerkeskoven_f4"),10.0)
+	t.check("floors.neighbours_registered_from_workers",WorldRoot2D.has_area(&"moerkeskoven_f2") and WorldRoot2D.has_area(&"moerkeskoven_f4") and floors._maps.is_empty() and WorldRoot2D.load_map(&"moerkeskoven_f2").errors.is_empty(),"tasks=%s maps=%s error=%s" % [floors._tasks.keys(),floors._maps.keys(),floors.last_error])
 	# SAVE-08: a save during a run keeps the hearts, stamina and oil and the run statistics; Continue is no free heal and refuel
 	var keep_dir: String = save.save_dir
 	save.save_dir = "user://dungeon-floors-run"
