@@ -298,6 +298,23 @@ func _flag_changed_signal() -> void:
 	gm.clear_flag(&"review_flag")           # not there: no fire
 	bus.flag_changed.disconnect(cb)
 	t.check("flag_changed_fires", seen == [["review_flag", true], ["review_flag", 7], ["review_flag", false]], str(seen))
+	# ARCH-07: the flags that mirror an owner are not Lua's to write; HomeManager's load always re-mirrors its tier
+	var lr: Node = t.autoload("LuaRuntime")
+	var hm: Node = t.autoload("HomeManager")
+	t.allow("api.set_flag(\"home_tier\") refused")
+	t.allow("api.set_flag(\"friend_baker_maja\") refused")
+	var tier_before: int = gm.flag_int(&"home_tier", 1)
+	var hearts_before: Variant = gm.get_flag(&"friend_baker_maja", null)
+	lr.lua_set_flag("home_tier", tier_before + 3)
+	lr.lua_set_flag("friend_baker_maja", 9)
+	lr.lua_set_flag("review_lua_flag", 2)
+	t.check("lua_cannot_write_owner_flags", gm.flag_int(&"home_tier", 1) == tier_before and gm.get_flag(&"friend_baker_maja", null) == hearts_before and gm.flag_int(&"review_lua_flag") == 2 and lr.is_owner_flag("friend_last_x") and not lr.is_owner_flag("friendly_note"),
+		"api.set_flag refuses home_tier and friend_<npc> (the owners write them), any other flag is written")
+	gm.clear_flag(&"review_lua_flag")
+	var section: Dictionary = hm.to_dict()
+	gm.set_flag(&"home_tier", int(hm.tier) % 10 + 1)
+	hm.from_dict(section)
+	t.check("home_load_remirrors_tier_flag", gm.flag_int(&"home_tier", 0) == int(hm.tier), "a usable home_tier flag that disagrees with the tier is rewritten on load (flag %d, tier %d)" % [gm.flag_int(&"home_tier", 0), int(hm.tier)])
 
 
 func _new_game() -> void:

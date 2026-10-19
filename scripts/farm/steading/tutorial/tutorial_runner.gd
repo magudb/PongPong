@@ -40,10 +40,8 @@ func play() -> bool:
 		return false
 	active = true
 	var hour := float(GameManager.config_value("farm_tutorial.first_morning.hour", 6))
-	GameManager.hour = clampi(int(hour), GameManager.day_start_hour(), GameManager.day_end_hour() - 1)
-	GameManager.minute = int(round(fmod(hour, 1) * 60))
 	TimeManager.set_weather(&"klart")
-	EventBus.time_of_day_changed.emit(GameManager.hour, GameManager.minute)
+	GameManager.set_clock(int(hour), int(round(fmod(hour, 1) * 60)))
 	gate = SkipGate.new()
 	gate.session = self
 	gate.name = "FirstMorningInput"

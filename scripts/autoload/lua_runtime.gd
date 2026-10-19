@@ -283,7 +283,25 @@ func lua_get_flag(flag: String, default_value: Variant = false) -> Variant:
 	return gm.get_flag(StringName(flag), default_value)
 
 
+## Flags that MIRROR an owner's state (HomeManager's tier and construction, SocialManager's hearts): Lua reads them, writing one would make the
+## readers of the flag disagree with the readers of the owner, so api.set_flag refuses them (ARCH-07).
+const OWNER_FLAGS: Array[String] = ["home_tier", "home_building", "home_castle_built", "home_upgrade_done"]
+const OWNER_FLAG_PREFIXES: Array[String] = ["friend_"]
+
+
+static func is_owner_flag(flag: String) -> bool:
+	if flag in OWNER_FLAGS:
+		return true
+	for prefix in OWNER_FLAG_PREFIXES:
+		if flag.begins_with(prefix):
+			return true
+	return false
+
+
 func lua_set_flag(flag: String, value: Variant) -> void:
+	if is_owner_flag(flag):
+		push_warning("LuaRuntime: api.set_flag(\"%s\") refused: the flag mirrors its owner (HomeManager / SocialManager), change the owner instead" % flag)
+		return
 	var gm := _node("GameManager")
 	if gm != null:
 		gm.set_flag(StringName(flag), value)

@@ -729,7 +729,7 @@ func _flag_mirror(t) -> void:
 	_ck(_gm.flag_int(&"home_tier", 0) == 4 and typeof(_gm.get_flag(&"home_tier")) == TYPE_INT, "load: a text flag is repaired too", bag)
 	_gm.set_flag(&"home_tier", 3.0)
 	_hm.from_dict(_hm.to_dict())
-	_ck(_gm.flag_int(&"home_tier", 0) == 3, "load: a usable value of the game section (the float of a JSON round trip) is kept as it was loaded", bag)
+	_ck(_gm.flag_int(&"home_tier", 0) == 4 and typeof(_gm.get_flag(&"home_tier")) == TYPE_INT, "load: a usable value of the game section that disagrees with the tier (3.0 for tier 4) is rewritten from the section too: the flag is a mirror (ARCH-07)", bag)
 	_gm.set_flag(&"home_tier", 4)
 	_gm.set_flag(&"home_building", 8)
 	_gm.set_flag(&"home_castle_built", true)

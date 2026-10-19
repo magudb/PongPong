@@ -704,7 +704,7 @@ func _quest_completed(quest_id: String) -> bool:
 	return qm != null and qm.has_method("is_completed") and bool(qm.call("is_completed", StringName(quest_id)))
 
 
-## whole hearts of a citizen: the world flag friend_<npc> (SocialManager mirrors its hearts into it)
+## whole hearts of a citizen: the world flag friend_<npc> (SocialManager mirrors its hearts into it after every change and load; Lua may not write it)
 func hearts_of(npc_id: String) -> int:
 	return GameManager.flag_int(StringName("friend_%s" % npc_id), 0)
 
@@ -811,13 +811,9 @@ func from_dict(d: Dictionary) -> bool:
 			_visits_owed.append({"week": owed_week, "index": owed_index, "npc": str(owed.get("npc", ""))})
 	last_visit = {}
 	_dialogue_npc = &""
-	# the `game` section (applied before this one) brought home_tier from the same moment of the same save: a usable value (1..10) is kept exactly as it was
-	# loaded (P15's JSON round trip test of world flags uses it as its int flag); a missing or unusable one is repaired from this section. home_building and
-	# home_castle_built are derived, home_upgrade_done is present.
-	var saved_flag := GameManager.flag_int(GameManager.FLAG_HOME_TIER, 0)
-	if saved_flag < 1 or saved_flag > last_tier() or not GameManager.world_flags.has(GameManager.FLAG_HOME_TIER):
-		GameManager.set_flag(GameManager.FLAG_HOME_TIER, tier)
-	_sync_derived_flags()
+	# home_tier, home_building and home_castle_built are MIRRORS of this section: always rewritten from it, so a flag that disagrees with the tier (a
+	# damaged save, an old writer) can never make the gates that read the flag disagree with the ones that read `tier` (ARCH-07); home_upgrade_done is present.
+	_sync_flags()
 	if not GameManager.world_flags.has(GameManager.FLAG_HOME_UPGRADE_DONE):
 		GameManager.set_flag(GameManager.FLAG_HOME_UPGRADE_DONE, 0)
 	return true
