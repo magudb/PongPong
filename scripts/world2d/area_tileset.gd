@@ -118,8 +118,19 @@ static func _add_blocker(ts: TileSet, projection: StringName) -> void:
 	_add_poly(td, 0, rect_points() if projection == &"ortho" else diamond_points())
 
 
+## The source ids of the live TileSet of a projection, read without building get_set()'s resident dictionary ({} once the set is gone).
+static func _live_sources(projection: StringName) -> Dictionary:
+	var stored: Variant = _sets.get(&"ortho" if projection == &"ortho" else &"iso")
+	if stored is Dictionary and ((stored as Dictionary)["tileset"] as WeakRef).get_ref() != null:
+		return (stored as Dictionary)["sources"]
+	return {}
+
+
 ## The source id of a terrain (added on first use). Unknown ids still get a source (ArtCatalog serves a placeholder).
 static func source_for(projection: StringName, terrain_id: StringName) -> int:
+	var live: Dictionary = _live_sources(projection)
+	if live.has(terrain_id):
+		return live[terrain_id]
 	var set_data: Dictionary = get_set(projection)
 	var sources: Dictionary = set_data["sources"]
 	if sources.has(terrain_id):
@@ -156,9 +167,12 @@ static func atlas_coords_for(terrain_id: StringName, cell: Vector2i) -> Vector2i
 ## A source holding ONE tile made of a wall prop (ortho walls): y-sorted at the cell's bottom edge, solid on layer `world`.
 ## Returns the source id; the tile sits at atlas coords (0, 0).
 static func wall_source_for(prop_id: StringName) -> int:
+	var key := StringName("wall:%s" % prop_id)
+	var live: Dictionary = _live_sources(&"ortho")
+	if live.has(key):
+		return live[key]
 	var set_data: Dictionary = get_set(&"ortho")
 	var sources: Dictionary = set_data["sources"]
-	var key := StringName("wall:%s" % prop_id)
 	if sources.has(key):
 		return sources[key]
 	var ts: TileSet = set_data["tileset"]

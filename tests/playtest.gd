@@ -108,6 +108,10 @@ func _initialize() -> void:
 	_t.rng.seed = _seed
 	seed(_seed)
 	_load_known_issues()
+	# The pause menu opens on a window focus loss (UX-07): a windowed run's window loses focus to the machine, not to the sections.
+	var pause_script: Variant = load("res://scripts/ui/pause_menu.gd")
+	if pause_script is GDScript:
+		(pause_script as GDScript).set("auto_pause", false)
 	var isolated := OS.get_environment("PLAYTEST_ISOLATED") == "1"
 	print("PLAYTEST start mode=%s character=%s sections=%s only=%s" % ["windowed" if _windowed else "headless", _character, _sections_dir, ",".join(_only) if not _only.is_empty() else "*"])
 	print("  info  user dir %s (%s)" % [_t.user_dir, "throwaway" if isolated else "REAL user dir: run tests/run_playtest.sh for an isolated one"])

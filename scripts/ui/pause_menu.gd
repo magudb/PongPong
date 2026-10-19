@@ -1,5 +1,9 @@
 extends TTScreen
 ## Pause transfers close their modal before opening a peer; save/load/settings nest above it.
+## Focus loss and a pad disconnect open this menu over a free world (review UX-07): alt-tabbed or with the pad gone, the clock, the lantern oil
+## and the enemies would run on. The Settings toggle SET_AUTO_PAUSE ([game] pause_on_focus_loss) switches it off for a player; the test harness
+## switches the static off for its runs (a windowed run's real window loses focus to whatever the machine does), and the sections call auto_open() directly.
+static var auto_pause := true
 var _rows: Array[Button] = []
 var _row_specs: Array = []
 var _leaving := false
@@ -28,6 +32,25 @@ func _ready() -> void:
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("pause", Callable(get_script(), &"fixture_setup"))
 	%HintBar.set_hints([{"pair": [&"ui_up", &"ui_down"], "key": "HINT_MOVE"}, {"action": &"ui_accept", "key": "HINT_OK"}, {"action": &"ui_cancel", "key": "HINT_RESUME"}])
 	UiNav.watcher().device_changed.connect(func(_device): _refresh_texts())
+	Input.joy_connection_changed.connect(_on_joy_connection_changed)
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT and auto_pause:
+		auto_open()
+
+func _on_joy_connection_changed(_device: int, connected: bool) -> void:
+	if not connected and auto_pause:
+		auto_open()
+
+## Opens the menu for a focus loss or a pad disconnect, only where Esc could open it (a free world, no travel, night or other screen).
+## Returns whether it opened.
+func auto_open() -> bool:
+	if is_open() or not is_inside_tree() or not UiNav.world_is_free() or not _hotkey_open_allowed():
+		return false
+	if not SettingsUI.pause_on_focus_loss():
+		return false
+	open()
+	return is_open()
 
 func _initial_focus() -> Control:
 	return get_node("%ResumeButton")

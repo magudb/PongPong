@@ -715,6 +715,8 @@ class NightFx extends Node:
 ## zooms out: at the game zoom (0.4) its fringe takes FRACTION_FULL of the screen height, at the area's minimum zoom (0.2, the whole composition of
 ## the sketch) only FRACTION_MIN, so the top platforms A and B (disc tops at 252 and 402 world px, huts above) stay in view under it; in between it
 ## follows the zoom linearly. The strip is opaque art (V5), so what is not shown is slid out of the top of the screen, not faded.
+## A CanvasModulate tints only its own canvas, so the frame copies the world's DayNight colour itself (as the farm canopy does), or it stays
+## daylight green over a night-blue city (review REND-01).
 class CanopyFrame extends CanvasLayer:
 	const FRACTION_FULL := 0.16
 	const FRACTION_MIN := 0.04
@@ -725,6 +727,7 @@ class CanopyFrame extends CanvasLayer:
 	var fraction: float = FRACTION_FULL
 	var _zoom: float = -1.0
 	var _view: Vector2 = Vector2.ZERO
+	var _world: Node
 
 	## The share of the screen height the fringe takes at a camera zoom (clamped to the two ends).
 	static func fraction_for(zoom: float) -> float:
@@ -737,11 +740,18 @@ class CanopyFrame extends CanvasLayer:
 		sprite.centered = false
 		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 		add_child(sprite)
+		_world = get_tree().get_first_node_in_group("world_2d")
 		_fit()
+		_tint()
 
 	func _process(_delta: float) -> void:
 		if _zoom != _camera_zoom() or _view != get_viewport().get_visible_rect().size:
 			_fit()
+		_tint()
+
+	func _tint() -> void:
+		if is_instance_valid(_world) and _world.day_night != null and sprite.modulate != _world.day_night.color:
+			sprite.modulate = _world.day_night.color
 
 	func _camera_zoom() -> float:
 		var cam: Camera2D = get_viewport().get_camera_2d()

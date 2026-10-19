@@ -136,10 +136,14 @@ func _run(t) -> void:
 	t.check("placeable_commits_one_owned_copy",placed and world.placed_items.size() == 1 and eco.count_item(&"fence") == 1)
 	t.check("occupied_cell_refuses_duplicate",not PlacementService.place(&"fence",location) and eco.count_item(&"fence") == 1)
 	var saved_world: Dictionary = world.to_dict()
+	var drawn: Array = world.area.find_markers("building_slot")[0].node._placed_visuals.duplicate()
 	await world.travel(&"hyggebyen",&"default")
 	await world.travel(&"farm",&"default")
 	await t.frames(3)
 	t.check("placeables_replay_without_duplication",world.to_dict().placed == saved_world.placed and world.area.find_markers("building_slot")[0].node._placed_visuals.size() == 1)
+	# the parked farm comes back with the same prop nodes: re-entry reconciles instead of tearing down and rebuilding (review GAP4-06)
+	var redrawn: Array = world.area.find_markers("building_slot")[0].node._placed_visuals
+	t.check("placeables_survive_reentry_unrebuilt",drawn.size() == 1 and redrawn.size() == 1 and redrawn[0] == drawn[0] and is_instance_valid(drawn[0]) and not drawn[0].is_queued_for_deletion())
 	var stored_visuals: Array = world.area.find_markers("building_slot")[0].node._placed_visuals
 	var decoration: Node = stored_visuals[0].get_children().filter(func(n): return n is Interactable2D)[0]
 	decoration.interact(world.player)

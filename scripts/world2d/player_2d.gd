@@ -162,7 +162,13 @@ func enter_area(target: IsoArea, at: Vector2) -> void:
 	_update_lantern()
 
 func world_input_allowed() -> bool:
-	return area != null and not GameData.gm().is_modal_open() and state not in [S.TALKING, S.FAINTED] and not _event_active
+	return area != null and not GameData.gm().is_modal_open() and state not in [S.TALKING, S.FAINTED] and not _event_active and not _world_in_transition()
+
+## A travel, the night or a faint runs behind the black fade (WorldRoot2D.traveling / sleeping): E on a counter would open its screen
+## UNDER the fade, where the next keys act on it blind (review GAP1-03). Hotkey screens already refuse then (UiNav.world_is_free).
+func _world_in_transition() -> bool:
+	var world := get_tree().get_first_node_in_group("world_2d") if is_inside_tree() else null
+	return world != null and (bool(world.get("traveling")) or bool(world.get("sleeping")))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("use_tool"):

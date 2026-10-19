@@ -5,13 +5,23 @@ extends Node
 var world: Node
 var pending: Array[String] = []
 var staged: Dictionary = {}
+## Loads of a destination the player turned away from: nobody waits for them, _poll only collects their results.
+var abandoned: Array[String] = []
 var _clock := 0.0
 var _target: StringName
 
 func request(id: StringName) -> void:
-	if (id not in [&"traetoppen", &"hyggebyen"] and not str(id).begins_with("int_")) or not pending.is_empty() or _target == id:
+	if _target == id:
 		return
+	# A new destination: the old one's loads must not hold this fade (finish() waits only for `pending`).
+	abandoned.append_array(pending)
+	pending.clear()
 	release()
+	if id not in [&"traetoppen", &"hyggebyen"] and not str(id).begins_with("int_"):
+		return
+	# A parked area kept its nodes and with them its textures: nothing to parse or stage.
+	if world is WorldRoot2D and (world as WorldRoot2D).is_parked(id):
+		return
 	_target = id
 	var paths: Dictionary = {}
 	var art_ids: Array = []
@@ -81,6 +91,12 @@ func request(id: StringName) -> void:
 			pending.append(path)
 
 func _poll() -> void:
+	for path in abandoned.duplicate():
+		var done := ResourceLoader.load_threaded_get_status(path)
+		if done == ResourceLoader.THREAD_LOAD_LOADED:
+			ResourceLoader.load_threaded_get(path)
+		if done != ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+			abandoned.erase(path)
 	for path in pending.duplicate():
 		var status := ResourceLoader.load_threaded_get_status(path)
 		if status == ResourceLoader.THREAD_LOAD_LOADED:
@@ -120,7 +136,8 @@ func _process(delta: float) -> void:
 func _exit_tree() -> void:
 	# Join the engine's outstanding requests; no orphan coroutine or retained
 	# loader result survives a cancelled approach/world.
-	for path in pending:
+	for path in pending + abandoned:
 		ResourceLoader.load_threaded_get(path)
 	pending.clear()
+	abandoned.clear()
 	release()

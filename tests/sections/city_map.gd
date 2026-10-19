@@ -945,6 +945,20 @@ func _fix_round_checks(t) -> void:
 		live.append("%.2f -> %.3f" % [z, share])
 		if absf(share - CityBuilder.CanopyFrame.fraction_for(float(z))) > 0.002:
 			curve_ok = false
+	# --- the canopy frame (CanvasLayer 3) follows the night colour: the world's CanvasModulate does not reach its canvas (review REND-01)
+	var dn: DayNight = _world.day_night
+	dn.override_hour = 22.0
+	dn.snap()
+	await t.frames(2)
+	var night_tint: Color = canopy.sprite.modulate
+	var night_ok: bool = night_tint == dn.color and night_tint.get_luminance() < 0.8
+	dn.override_hour = 12.0
+	dn.snap()
+	await t.frames(2)
+	var day_ok: bool = canopy.sprite.modulate == dn.color
+	dn.override_hour = -1.0
+	dn.snap()
+	t.check("canopy_frame_follows_night_colour", night_ok and day_ok, "22:00: the frame's tint %s = the city's night colour (luminance %.2f); noon: back to %s" % [night_tint, night_tint.get_luminance(), canopy.sprite.modulate])
 	t.check("canopy_gives_way_when_zoomed_out", curve_ok,
 		"the canopy fringe takes %.0f percent of the screen height at the game zoom 0.4 and only %.0f percent at the area's minimum zoom 0.2 (linear in between, clamped beyond; %s): the live strip follows the camera zoom frame by frame (zoom -> share of the screen: %s)" % [frac[2] * 100.0, frac[0] * 100.0, frac, live])
 	# --- the camera may look above the sketch: a player on the north rim of A or B at the game zoom stands below the canopy, head included

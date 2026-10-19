@@ -42,6 +42,8 @@ const NPC_WARM_CLIPS: Array[String] = ["idle", "talk", "hover"]
 ## Rooms that change with the home tier or the furniture are rebuilt when one of these furniture_changed reasons arrives.
 const REBUILD_REASONS: Array[StringName] = [&"placed", &"removed", &"tier", &"load"]
 const FADE_OUT := 0.22
+## The longest one sprite's warm-up may hold the black screen (wall clock): the warm-up only saves a hitch, it must never strand a travel.
+const WARM_TIMEOUT_MS := 5000
 const FADE_IN := 0.25
 
 var player: Node2D
@@ -77,6 +79,7 @@ var _fade: ColorRect
 var _vignette: CanvasLayer
 var _vignette_rect: TextureRect
 var _faint_pending: bool = false
+var _wakes: int = 0                         # bumped by every night's wake-up (_sleep_sequence): a faint reads it to wake only once
 var _zone: StringName = &""
 var _rebuild_queued: bool = false
 
@@ -376,6 +379,11 @@ static func is_parkable(a: IsoArea) -> bool:
 	return a.projection == &"iso" and not a.map.is_builder()
 
 
+## Is `id` a parked area (left earlier, kept alive with its nodes outside the tree)?
+func is_parked(id: StringName) -> bool:
+	return _cache.has(id)
+
+
 func _enter(id: StringName, spawn: StringName) -> bool:
 	if not has_area(id):
 		last_travel_error = "no such area: %s" % id
@@ -509,11 +517,8 @@ func travel(area_id: StringName, spawn: StringName) -> void:
 	last_travel_profile = {}
 	art_prefetch.request(area_id)
 	last_travel_profile.request_ms = (Time.get_ticks_usec()-began)/1000.0
-	var tw: Tween = create_tween()
-	tw.tween_property(_fade, "color:a", 1.0, FADE_OUT)
+	var tw := _fade_tween(1.0, FADE_OUT)
 	await tw.finished
-	await art_prefetch.finish()
-	art_prefetch.request(area_id)
 	await art_prefetch.finish()
 	last_travel_profile.prefetch_and_fade_ms = (Time.get_ticks_usec()-began)/1000.0
 	last_travel_profile.prepared_paths = art_prefetch.staged.keys()
@@ -523,13 +528,12 @@ func travel(area_id: StringName, spawn: StringName) -> void:
 	art_prefetch.release()
 	last_travel_profile.warmed_ms = (Time.get_ticks_usec()-began)/1000.0
 	_flush_rebuild()                         # a tier / furniture change that arrived since _enter: rebuilt behind the black screen
-	var tw2: Tween = create_tween()
-	tw2.tween_property(_fade, "color:a", 0.0, FADE_IN)
+	var tw2 := _fade_tween(0.0, FADE_IN)
 	await tw2.finished
 	traveling = false
 	last_travel_profile.total_ms = (Time.get_ticks_usec()-began)/1000.0
 	_flush_rebuild()                         # one that arrived during the fade-in
-	if _pass_out_pending:
+	if _pass_out_pending and not _faint_pending:  # a faint that waits for this travel wakes the player itself
 		_pass_out_pending = false
 		await _sleep_sequence(true)
 
@@ -576,8 +580,33 @@ func warm_clips() -> void:
 	if DisplayServer.get_name() == "headless" and not warm_in_headless:
 		warm_skipped += 1
 		return
-	for j in warm_jobs():
-		await (j[0] as Object).call("warm_clips", j[1])
+	await warm_each(warm_jobs())
+
+
+## Warms the jobs of warm_jobs() one after the other. The list is taken before the first await, so a later sprite can be freed while an
+## earlier one warms (TownDirector at a routine boundary): it is skipped, as a freed object cannot even be passed to warm_one().
+func warm_each(jobs: Array) -> void:
+	for j in jobs:
+		if is_instance_valid(j[0]):
+			await warm_one(j[0], j[1])
+
+
+## One sprite's warm-up, safe against the sprite being freed while it runs. Awaiting the sprite's own coroutine is not: TownDirector can
+## free a citizen during its 1-2 frame warm-up (a routine boundary), and a coroutine whose owner is freed never completes, so the awaiting
+## travel would keep the screen black for good (review GAP1-01). The sprite's coroutine marks a ticket instead, and this polls the ticket,
+## the sprite's life and WARM_TIMEOUT_MS.
+func warm_one(visual: Object, clips: Array) -> void:
+	var ticket := {"done": false}
+	_run_warm(visual, clips, ticket)
+	var deadline: int = Time.get_ticks_msec() + WARM_TIMEOUT_MS
+	while not bool(ticket["done"]) and is_instance_valid(visual) and Time.get_ticks_msec() < deadline:
+		await get_tree().process_frame
+
+
+## Not awaited by anyone: when `visual` is freed mid-way this coroutine is simply dropped with it.
+func _run_warm(visual: Object, clips: Array, ticket: Dictionary) -> void:
+	await visual.call("warm_clips", clips)
+	ticket["done"] = true
 
 
 func _in_view(n: Node2D) -> bool:
@@ -698,11 +727,12 @@ func sleep() -> void:
 	await _sleep_sequence(false)
 
 
-## Pass-out at 24:00: the clock crossed midnight (GameManager emits game_event midnight_passed), the day already rolled.
+## Pass-out at the day end: the clock crossed it (GameManager emits game_event midnight_passed), the day already rolled.
+## A faint that is under way owns the night: its own wake-up brings the morning, a pass-out on top would wake the player twice.
 func _on_game_event(event_name: StringName, _payload: Dictionary) -> void:
 	if event_name != &"midnight_passed":
 		return
-	if sleeping or player == null or area == null or area.projection != &"iso":
+	if sleeping or _faint_pending or player == null or area == null or area.projection != &"iso":
 		return
 	if traveling:
 		_pass_out_pending = true
@@ -714,12 +744,12 @@ func _sleep_sequence(passed_out: bool) -> void:
 	sleeping = true
 	traveling = true
 	_pose_for_sleep()
-	var tw: Tween = create_tween()
-	tw.tween_property(_fade, "color:a", 1.0, 0.7)
+	var tw := _fade_tween(1.0, 0.7)
 	await tw.finished
 	# The day roll: builders finish (home_upgraded / furniture_changed), crops grow, the weather is rolled. `traveling` is set for the
 	# whole night, so a room that has to change is only QUEUED here and rebuilt below, behind the black screen, before the fade-in.
 	GameManager.sleep_until_morning()
+	_wakes += 1
 	if passed_out:
 		_enter(_wake_area(), StringName(str(GameData.cfg("dungeon.hub.wake_spawn", "from_home"))))
 		_pose_for_sleep()
@@ -733,8 +763,7 @@ func _sleep_sequence(passed_out: bool) -> void:
 	if _rebuild_queued:
 		_flush_rebuild()
 		_pose_for_sleep()                    # enter_area() of the new room must not wake the player before the fade-in
-	var tw2: Tween = create_tween()
-	tw2.tween_property(_fade, "color:a", 0.0, 0.6)
+	var tw2 := _fade_tween(0.0, 0.6)
 	await tw2.finished
 	player.call("end_talk")
 	if "forced_clip" in player:
@@ -779,20 +808,39 @@ func _on_player_defeated() -> void:
 	if _faint_pending:
 		return
 	_faint_pending = true
-	await get_tree().create_timer(1.3).timeout
+	var faint_day: int = GameManager.total_day()
+	# A night under way (a pass-out fading out, the bed) wakes the player at home itself, before or after this point.
+	var night_owned: bool = sleeping
+	var wakes_at_defeat: int = _wakes
+	await get_tree().create_timer(1.3, false).timeout    # the player lies fainted: a pause holds it, like the rest of the world
 	# travel() refuses while a fade / sleep sequence runs: wait it out so the rescue teleport is not silently skipped
 	var guard := 0
 	while (traveling or sleeping) and guard < 600:
 		await get_tree().process_frame
 		guard += 1
+	# One wake-up per night (review SYS-01): a night that woke the player since the defeat already brought the morning and took the
+	# player home. A second sleep_until_morning() at 06:00 would run end_day() and skip a whole day, and a second fade, teleport and
+	# fee would rescue a player who is awake in bed. Only the run is closed and the player stood up where the night left them.
+	if night_owned or _wakes != wakes_at_defeat:
+		var run: Variant = Svc.static_call("res://scripts/dungeon/floors/dungeon_floors.gd", &"inst", [])
+		if run is Node and run.has_method("end_run"):
+			run.call("end_run", &"defeated")
+		if player.has_method("revive"):
+			player.call("revive", player.global_position)
+		_restore_player()
+		_pass_out_pending = false
+		_faint_pending = false
+		return
 	traveling = true
-	var fade_out := create_tween()
-	fade_out.tween_property(_fade, "color:a", 1.0, FADE_OUT)
+	var fade_out := _fade_tween(1.0, FADE_OUT)
 	await fade_out.finished
 	var floors: Variant = Svc.static_call("res://scripts/dungeon/floors/dungeon_floors.gd", &"inst", [])
 	if floors is Node and floors.has_method("end_run"):
 		floors.call("end_run", &"defeated")
-	GameManager.sleep_until_morning()
+	# The calendar can also roll without a night: the day end passed during the delay above (midnight_passed is ignored while a faint
+	# is pending). With the clock at the morning a sleep_until_morning() would run end_day() and skip a whole day.
+	if GameManager.total_day() == faint_day or int(GameManager.hour) < GameManager.day_start_hour():
+		GameManager.sleep_until_morning()
 	var loss := floori(float(EconomyManager.gold) * clampf(float(GameData.cfg("dungeon.defeat.gold_loss_pct", 10)), 0.0, 100.0) / 100.0)
 	EconomyManager.spend_gold(loss)
 	_enter(_wake_area(), StringName(str(GameData.cfg("dungeon.hub.wake_spawn", "from_home"))))
@@ -803,8 +851,7 @@ func _on_player_defeated() -> void:
 	Svc.static_call("res://scripts/dungeon_run/dungeon_run.gd", &"after_defeat", [loss])
 	if SaveManager.autosave_enabled:
 		SaveManager.autosave()
-	var fade_in := create_tween()
-	fade_in.tween_property(_fade, "color:a", 0.0, FADE_IN)
+	var fade_in := _fade_tween(0.0, FADE_IN)
 	await fade_in.finished
 	traveling = false
 	_pass_out_pending = false
@@ -843,6 +890,14 @@ func _build_vignette() -> void:
 	_vignette.add_child(_vignette_rect)
 	_vignette.visible = false
 	add_child(_vignette)
+
+
+## A tween of the black fade (travel, the night, a faint). It runs through a pause, as the frame waits of the same sequences do (review
+## GAP1-03): a pausing screen that opens meanwhile must not freeze the screen half black while the area swaps beneath it.
+func _fade_tween(alpha: float, seconds: float) -> Tween:
+	var tw: Tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tw.tween_property(_fade, "color:a", alpha, seconds)
+	return tw
 
 
 func _build_fade() -> void:
