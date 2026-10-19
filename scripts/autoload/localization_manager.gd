@@ -93,10 +93,7 @@ func _apply_locale(locale: String) -> void:
 
 
 static func _saved_locale() -> String:
-	var cfg := ConfigFile.new()
-	if cfg.load(SETTINGS_PATH) != OK:
-		return DEFAULT_LOCALE
-	var loc := normalize_locale(str(cfg.get_value(SETTINGS_SECTION, SETTINGS_KEY, DEFAULT_LOCALE)))
+	var loc := normalize_locale(str(SettingsStore.value(SETTINGS_SECTION, SETTINGS_KEY, DEFAULT_LOCALE)))
 	return DEFAULT_LOCALE if loc == "" else loc
 
 

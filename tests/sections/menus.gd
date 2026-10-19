@@ -163,6 +163,10 @@ func _settings(t, settings: TTScreen) -> void:
 	config.load(SettingsUI.PATH)
 	config.set_value("other_owner", "kept", "unchanged")
 	config.save(SettingsUI.PATH)
+	# The rest timer is paused while the four buses are stepped: a busy runner can take longer than SAVE_DELAY between two taps,
+	# and the check is about "no write per step", not about wall-clock speed.
+	var rest: Timer = settings._save_timer
+	rest.paused = true
 	for bus in SettingsUI.BUSES:
 		var slider: TTSlider = settings.get_node("%" + bus + "Slider")
 		slider.grab_focus()
@@ -174,7 +178,8 @@ func _settings(t, settings: TTScreen) -> void:
 		t.expect(is_equal_approx(live, slider.value), bus + " slider sets its AudioManager bus at once (%.2f)" % live)
 	# REPO-09: a slider step is heard at once but saved once the slider rests, in ONE write.
 	config.load(SettingsUI.PATH)
-	t.check("slider_save_waits_for_rest", not is_equal_approx(float(config.get_value("audio", "master", 0.8)), 0.75))
+	t.check("slider_save_waits_for_rest", not is_equal_approx(float(config.get_value("audio", "master", 0.8)), 0.75) and settings._unsaved.get("audio", {}).size() == SettingsUI.BUSES.size() and not rest.is_stopped(), str(settings._unsaved))
+	rest.paused = false
 	await t.seconds(SettingsUI.SAVE_DELAY + 0.2)
 	config.load(SettingsUI.PATH)
 	t.check("slider_saves_after_rest", is_equal_approx(float(config.get_value("audio", "master", 0.8)), 0.75) and is_equal_approx(float(config.get_value("audio", "voice", 0.8)), 0.75))
