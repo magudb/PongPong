@@ -419,14 +419,14 @@ func use_selected() -> bool:
 		_using_item = item
 		_sync_equipment_display()
 		var dig := maxf(0.1, float(SpeciesPerks.current("dig_speed", 1.0)))
-		_tool_time = 0.34 / dig
+		_tool_time = float(GameData.player_cfg("tool_seconds", 0.34)) / dig
 		visual.play_action(&"interact", 1.4 * dig)
 	tool_used.emit(item, cell, ok)
 	return ok
 
 func _spend_stamina(amount: float) -> void:
 	stamina = maxf(0.0, stamina - maxf(0.0, amount))
-	_regen_delay = 1.0
+	_regen_delay = float(GameData.player_cfg("stamina_regen_delay", 1.0))
 
 func _emit_stats_on_bus() -> void:
 	var values := {"half_hearts": half_hearts, "max_half_hearts": max_half_hearts, "stamina": stamina, "max_stamina": max_stamina}
@@ -542,22 +542,16 @@ func revive(at: Vector2) -> void:
 func _update_oil(delta: float) -> void:
 	if not oil_draining:
 		return
+	# The oil rules are called directly: their old late-binding fallbacks re-implemented them differently (they ignored
+	# the auto-refuel and oil assists, review QUAL-11).
 	var owned := {"lantern_oil": GameData.eco().count_item(&"lantern_oil"), "lysdraabe": GameData.eco().count_item(&"lysdraabe")}
-	var refill: Variant = Svc.static_call(RULES, &"auto_refuel_item", [oil, owned], null)
-	if refill == null:
-		refill = ""
-		if oil <= 15.0:
-			for item in ["lantern_oil", "lysdraabe"]:
-				if owned[item] > 0:
-					refill = item
-					break
-	if str(refill) != "":
-		GameData.eco().use_item(StringName(str(refill)))
+	var refill := DungeonOilRules.auto_refuel_item(oil, owned)
+	if refill != &"":
+		GameData.eco().use_item(refill)
 	var before := oil
 	var gem := _gem_effects()
-	var mult := float(GameData.perk("oil_use_mult", 1.0)) * float(gem.get("oil_mult", 1.0))
 	var context := {"paused": false, "on_floor": oil_draining, "race_mult": float(GameData.perk("oil_use_mult", 1.0)), "gem_mult": float(gem.get("oil_mult", 1.0)), "assist_oil": _assist_oil()}
-	oil = clampf(float(Svc.static_call(RULES, &"oil_step", [oil, delta, context], maxf(0.0, oil - delta * mult))), 0.0, max_oil)
+	oil = clampf(DungeonOilRules.step(oil, delta, context), 0.0, max_oil)
 	if int(before) != int(oil):
 		EventBus.player_oil_changed.emit(oil, max_oil)
 	if oil / max_oil < float(GameData.combat("oil_whisper_ratio", 0.2)) and not _oil_low_said:
@@ -565,15 +559,14 @@ func _update_oil(delta: float) -> void:
 		EventBus.whisper_requested.emit("WHISPER_OIL_LOW")
 	if oil == 0.0:
 		_oil_empty_time += delta
-		var interval := float(GameData.cfg("adventure.oil_empty_hurt_interval", 12))
-		if bool(Svc.static_call(RULES, &"bite_due", [oil, half_hearts, _oil_empty_time], interval > 0.0 and _oil_empty_time >= interval)):
+		if DungeonOilRules.bite_due(oil, half_hearts, _oil_empty_time):
 			_oil_empty_time = 0.0
 			if half_hearts > 2:
 				take_damage(1, global_position)
 	_update_lantern()
 
 func _assist_oil() -> Variant:
-	return Svc.static_call(RULES, &"assist", ["assist_oil"], false)
+	return DungeonRun.assist("assist_oil")
 
 func _gem_effects() -> Dictionary:
 	var equipped: Variant = Svc.static_call(GEM, &"equipped", [], "")
@@ -582,8 +575,7 @@ func _gem_effects() -> Dictionary:
 func _update_lantern() -> void:
 	if lantern == null:
 		return
-	var fallback := lerpf(float(GameData.combat("oil_min_light", 0.35)), 1.0, clampf(oil / max_oil, 0.0, 1.0))
-	var ratio := float(Svc.static_call(RULES, &"light_ratio", [oil], fallback))
+	var ratio := DungeonOilRules.light_ratio(oil)
 	var gem := _gem_effects()
 	lantern.texture_scale = 630.0 / 128.0 * ratio * float(GameData.perk("dark_light_mult", 1.0)) * float(gem.get("radius_mult", 1.0))
 	lantern.color = Color.from_string(str(gem.get("tint", GameData.cfg("forest_look.lantern.color", "ffe9a8"))), Color("ffe9a8"))
@@ -615,7 +607,7 @@ func toggle_flight() -> void:
 		_try_land(false)
 	elif _landing:
 		return                                   # the descent finishes first; a take-off now would leave _landing pinning the fairy (GAP3-01)
-	elif state == S.FREE and can_fly_here() and stamina >= 15.0:
+	elif state == S.FREE and can_fly_here() and stamina >= float(GameData.player_cfg("flight_min_stamina", 15)):
 		is_flying = true
 		is_jumping = false
 		_flight_time = 0.0

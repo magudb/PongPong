@@ -68,6 +68,7 @@ func run(t) -> void:
 	_take_off_while_landing(t, world, p)
 	await _prompt_follows_gate(t, world, p)
 	_forced_landing_search(t, world, p)
+	_oil_rules_direct(t, world, p, eco)
 	world.call("_enter", &"farm", &"default")
 	p.restore_after_sleep()
 	_free(p)
@@ -382,3 +383,28 @@ func _forced_landing_search(t, world: WorldRoot2D, p: Player2D) -> void:
 	p.global_position = spots[0]
 	_free(p)
 
+## QUAL-11: the lantern follows DungeonOilRules itself: the auto-refuel assist decides, and the tuning comes from game_balance.lua.
+func _oil_rules_direct(t, world: WorldRoot2D, p: Player2D, eco: Node) -> void:
+	world.call("_enter", &"_fixture_ortho", &"default")
+	p.set_physics_process(false)
+	_free(p)
+	var draining := p.oil_draining
+	var before_assist: Variant = DungeonRun.assist("assist_auto_refuel")
+	eco.remove_item(&"lysdraabe", eco.count_item(&"lysdraabe"))
+	eco.add_item(&"lantern_oil", 2, true)
+	var flasks: int = eco.count_item(&"lantern_oil")
+	p.oil_draining = true
+	DungeonRun.set_assist("assist_auto_refuel", 0)
+	p.oil = 5.0
+	p._update_oil(0.01)
+	var off_kept: bool = eco.count_item(&"lantern_oil") == flasks
+	DungeonRun.set_assist("assist_auto_refuel", 1)
+	p._update_oil(0.01)
+	var on_used: bool = eco.count_item(&"lantern_oil") == flasks - 1
+	DungeonRun.set_assist("assist_auto_refuel", before_assist)
+	p.oil_draining = draining
+	p.restore_oil()
+	var tuned: bool = is_equal_approx(float(GameData.player_cfg("flight_min_stamina", -1)), 15.0) and is_equal_approx(float(GameData.player_cfg("stamina_regen_delay", -1)), 1.0) \
+		and is_equal_approx(float(GameData.player_cfg("tool_seconds", -1)), 0.34)
+	t.check("oil_rules_called_directly", off_kept and on_used and tuned, "auto-refuel off keeps the flask %s, on uses one %s; the three literals are Lua config %s" % [off_kept, on_used, tuned])
+	_free(p)
