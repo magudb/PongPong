@@ -6,7 +6,7 @@ extends RefCounted
 ##
 ## A finding is {path, line, rule, token, message}. "Lint clean" means lint() returned an empty array.
 ## Rules (rule id: what it flags):
-##   else elseif      `else` / `elseif`            loop       `for` `while` `repeat` `goto` `break`
+##   loop             `for` `while` `repeat` `goto` `break`   (`if ... elseif ... else ... end` is part of the subset)
 ##   long_bracket     `[[ ]]` long strings and `--[[ ]]` block comments
 ##   local_function   `local function f`          module_function  `function M.f` / `function obj:m`
 ##   escape           a backslash inside a string (escaped quotes, \n ...)
@@ -15,7 +15,8 @@ extends RefCounted
 ##   arithmetic       binary `+ - * / % ^ //`      bitwise    `& | ~ << >>`
 ##   mixed_table      a table with `name = value` AND positional entries (the positional ones are silently dropped)
 ##   reserved_key     a Lua reserved word as a table key (`{ until = 18 }`: real Lua rejects it; routines use leave / stay / from)
-##   table_value      a table value that is not a literal (identifier, call, expression: it is NOT evaluated)
+##   table_value      a value of a DATA table (outside a function) that is not a literal (identifier, call, expression:
+##                    it is NOT evaluated); a table built inside a function evaluates its values (LuaParser's ctor)
 ##   nil_value        `nil` as a table value (leave the key out)
 ##   kind_missing / kind_unknown   the `kind = "..."` header (config items quest dialogue recipes shops registry)
 ##   unbalanced       `if` / `function` / `do` not closed by `end`, or a stray `end`
@@ -111,10 +112,6 @@ static func _token_rules(tk: Dictionary, path: String, out: Array[Dictionary]) -
 		var ln := lines[i]
 		if ty == _Tokens.NAME:
 			match t:
-				"else":
-					out.append(_mk(path, ln, "else", t, "`else` is not part of the supported Lua subset: write separate `if ... then return ... end` blocks"))
-				"elseif":
-					out.append(_mk(path, ln, "elseif", t, "`elseif` is not part of the supported Lua subset: write separate `if ... then return ... end` blocks"))
 				"for", "while", "repeat", "goto", "break":
 					out.append(_mk(path, ln, "loop", t, "`%s` is not supported: Lua data files have no loops or jumps" % t))
 				"local":
@@ -192,20 +189,33 @@ static func _ends_operand(types: PackedInt32Array, texts: PackedStringArray, i: 
 
 # ------------------------------------------------------------------------------------------------ table rules
 
+## Every table constructor; one inside a function body is an expression whose values are evaluated (no table_value there).
 static func _table_rules(tk: Dictionary, path: String, out: Array[Dictionary]) -> void:
 	var count: int = tk["count"]
 	var types: PackedInt32Array = tk["type"]
 	var texts: PackedStringArray = tk["text"]
+	var blocks: Array[bool] = []               # every open function / if / do: true for a function
+	var functions := 0
 	var i := 0
 	while i < count:
 		if types[i] == _Tokens.OP and texts[i] == "{":
-			i = _table(tk, i, path, out)
-		else:
-			i += 1
+			i = _table(tk, i, path, out, functions > 0)
+			continue
+		if types[i] == _Tokens.NAME:
+			var t := texts[i]
+			if t == "function":
+				blocks.append(true)
+				functions += 1
+			elif t == "if" or t == "do":
+				blocks.append(false)
+			elif t == "end" and not blocks.is_empty() and blocks.pop_back():
+				functions -= 1
+		i += 1
 
 
-## Checks one table constructor that starts at token `i` ("{"); returns the index after its closing "}".
-static func _table(tk: Dictionary, i: int, path: String, out: Array[Dictionary]) -> int:
+## Checks one table constructor that starts at token `i` ("{"); returns the index after its closing "}". `evaluated`: the
+## table is built inside a function, so a value may be any expression.
+static func _table(tk: Dictionary, i: int, path: String, out: Array[Dictionary], evaluated: bool = false) -> int:
 	var count: int = tk["count"]
 	var types: PackedInt32Array = tk["type"]
 	var texts: PackedStringArray = tk["text"]
@@ -225,18 +235,18 @@ static func _table(tk: Dictionary, i: int, path: String, out: Array[Dictionary])
 			if texts[j] in _KEYWORDS:
 				out.append(_mk(path, lines[j], "reserved_key", texts[j], _reserved_key_message(texts[j])))
 			named += 1
-			j = _value(tk, j + 2, path, out)
+			j = _value(tk, j + 2, path, out, evaluated)
 		elif types[j] == _Tokens.OP and texts[j] == "[":
 			var close := _matching(tk, j)
 			if close > 0 and close + 1 < count and types[close + 1] == _Tokens.OP and texts[close + 1] == "=":
 				named += 1
-				j = _value(tk, close + 2, path, out)
+				j = _value(tk, close + 2, path, out, evaluated)
 			else:
 				positional += 1
-				j = _value(tk, j, path, out)
+				j = _value(tk, j, path, out, evaluated)
 		else:
 			positional += 1
-			j = _value(tk, j, path, out)
+			j = _value(tk, j, path, out, evaluated)
 	if named > 0 and positional > 0:
 		out.append(_mk(path, lines[i], "mixed_table", "{", "table mixes `name = value` and positional entries: the positional entries are silently dropped"))
 	return j
@@ -248,7 +258,7 @@ static func _reserved_key_message(word: String) -> String:
 
 
 ## Checks the value that starts at token `j`; returns the index of the token that ends it ("," ";" or "}", not consumed).
-static func _value(tk: Dictionary, j: int, path: String, out: Array[Dictionary]) -> int:
+static func _value(tk: Dictionary, j: int, path: String, out: Array[Dictionary], evaluated: bool = false) -> int:
 	var count: int = tk["count"]
 	if j >= count:
 		return count
@@ -260,7 +270,7 @@ static func _value(tk: Dictionary, j: int, path: String, out: Array[Dictionary])
 	var k := j
 	var literal := false
 	if ty == _Tokens.OP and t == "{":
-		k = _table(tk, j, path, out)
+		k = _table(tk, j, path, out, evaluated)
 		literal = true
 	elif ty == _Tokens.STRING or ty == _Tokens.NUMBER:
 		k = j + 1
@@ -276,6 +286,8 @@ static func _value(tk: Dictionary, j: int, path: String, out: Array[Dictionary])
 		return _skip_value(tk, j + 1)
 	if literal and (k >= count or (types[k] == _Tokens.OP and (texts[k] == "," or texts[k] == ";" or texts[k] == "}"))):
 		return k
+	if evaluated:
+		return _skip_value(tk, k)              # an expression: the token rules and the parser check it
 	out.append(_mk(path, lines[j], "table_value", t, "table values must be literals (string, number, true, false, table): identifiers, calls and expressions are not evaluated"))
 	return _skip_value(tk, k)
 

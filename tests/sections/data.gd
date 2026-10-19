@@ -661,8 +661,6 @@ config = {
 func _lint_rules() -> void:
 	var t = _t
 	var cases := [
-		["else", "function f(c)\n  if c then\n    return 1\n  else\n    return 2\n  end\nend", "else"],
-		["elseif", "function f(c)\n  if c then\n    return 1\n  elseif c then\n    return 2\n  end\nend", "elseif"],
 		["for", "function f()\n  for i = 1, 3 do\n    api.add_gold(1)\n  end\nend", "loop"],
 		["while", "function f(c)\n  while c do\n    c = false\n  end\nend", "loop"],
 		["repeat", "function f()\n  repeat\n    api.add_gold(1)\n  until true\nend", "loop"],
@@ -685,6 +683,7 @@ func _lint_rules() -> void:
 		["nil value", "config = { a = nil }", "nil_value"],
 		["identifier value", "config = { a = some_name }", "table_value"],
 		["call value", "config = { a = f(1) }", "table_value"],
+		["expression in a data table", "config = { a = 1, b = c.n or 2 }", "table_value"],
 		["concat value", "config = { a = \"x\" .. \"y\" }", "table_value"],
 		["unclosed if", "function f(c)\n  if c then\n    return 1\nend", "unbalanced"],
 		["stray end", "function f()\nend\nend", "unbalanced"],
@@ -730,6 +729,8 @@ func _lint_rules() -> void:
 		["api calls and bare queries", "function f(c)\n  if api.has_flag(\"x\") and has_item(\"y\", 2) then\n    api.add_gold(1)\n  end\n  return api.get_flag(\"z\")\nend"],
 		["do block and a return with ;", "function f(c)\n  do\n    local x = c.n\n  end\n  return 1;\nend"],
 		["assignment to a name", "function f(c)\n  local n = 1\n  n = c.n or n\n  return n\nend"],
+		["else and elseif", "function f(c)\n  if c.a then\n    return 1\n  elseif c.b then\n    return 2\n  else\n    return 3\n  end\nend"],
+		["a table built in a function evaluates its values", "function f(c)\n  local key = c.k or \"A\"\n  return { text_key = key, n = c.n, seen = api.has_flag(\"x\"), nested = { who = c.who }, [\"k\"] = c.k }\nend"],
 	]
 	for c in clean_cases:
 		var findings: Array = _lr.lint_source("kind = \"config\"\n" + str(c[1]) + "\n", "res://x.lua")
@@ -796,7 +797,7 @@ func _lint_clean() -> void:
 	for f in _lr.lint_report:
 		summary.append(str(f["path"]).get_file() + ":" + str(f["line"]) + " " + str(f["rule"]))
 	t.check("lint_clean", _lr.lint_report.is_empty(), "every Lua file under res://lua lints clean (%d scripts); findings: %s" % [_lr.get_all_script_ids().size(), str(summary.slice(0, 8))])
-	for fx in ["lint_clean_sample.lua", "flag_identifiers.lua", "semantics.lua", "shops_extra.lua", "recipes_extra.lua", "data/data_config.lua", "data/data_items.lua", "p01_empty_fn.lua", "p04_nested_if.lua", "p05_oneline_if.lua", "p08_paren_in_string.lua", "p09_emit_payload.lua", "p14_two_ifs.lua", "p18_compare_and_or.lua", "p19_return_expr.lua", "p20_local_in_untaken.lua", "p21_multiline_api.lua", "p23_stmt_around_if.lua"]:
+	for fx in ["lint_clean_sample.lua", "flag_identifiers.lua", "semantics.lua", "shops_extra.lua", "recipes_extra.lua", "data/data_config.lua", "data/data_items.lua", "p01_empty_fn.lua", "p02_else.lua", "p03_elseif.lua", "p04_nested_if.lua", "p06_ternary.lua", "p10_get_flag.lua", "p17_ifelse_api.lua", "p24_block_scope.lua", "p25_float_index.lua", "p26_table_values.lua", "p05_oneline_if.lua", "p08_paren_in_string.lua", "p09_emit_payload.lua", "p14_two_ifs.lua", "p18_compare_and_or.lua", "p19_return_expr.lua", "p20_local_in_untaken.lua", "p21_multiline_api.lua", "p23_stmt_around_if.lua"]:
 		var findings: Array = _lr.lint_source(FileAccess.get_file_as_string(FIX + fx), FIX + fx)
 		t.expect(findings.is_empty(), "fixture %s is inside the subset and lints clean %s" % [fx, str(_rules_of(findings))])
 	_real_lua_syntax()
@@ -807,7 +808,7 @@ func _lint_clean() -> void:
 	# negative control: the tool fails on the fixture directory (which contains the probes outside the subset)
 	var neg: Dictionary = t.run_godot_script("res://tools/lua/lint.gd", PackedStringArray(["--root=res://tests/fixtures/lua", "--quiet"]))
 	var out: String = str(neg["output"])
-	t.check("lint_tool_fails_on_bad_files", int(neg["code"]) == 1 and out.contains("FAIL res://tests/fixtures/lua/p02_else.lua:") and out.contains(":else ") and out.contains(":loop ") and not out.contains("lint_clean_sample.lua"), "tools/lua/lint.gd exits 1 and names file:line:rule for the probes outside the subset")
+	t.check("lint_tool_fails_on_bad_files", int(neg["code"]) == 1 and out.contains("FAIL res://tests/fixtures/lua/p07_arith.lua:") and out.contains(":arithmetic ") and out.contains(":loop ") and not out.contains("lint_clean_sample.lua"), "tools/lua/lint.gd exits 1 and names file:line:rule for the probes outside the subset")
 
 
 ## Real Lua as an independent gate (LUA-01): the subset is a subset of Lua 5.4, so `luac -p` must accept every file under

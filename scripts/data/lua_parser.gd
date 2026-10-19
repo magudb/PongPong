@@ -19,10 +19,14 @@ extends RefCounted
 ##     LuaData.arr() / LuaData.dict() accept either;
 ##   * values are literals: string, number, true/false, nested table; anything else is kept as its SOURCE TEXT (a string)
 ##     and reported by the lint (`table_value`); `nil` is simply absent (as in Lua).
+## A table constructor INSIDE a function is an expression: its values are evaluated when it runs (`{ text_key = key }`
+## reads the local `key`), with the same rules for the table it builds (table_of); one whose keys and values are all
+## literals is folded into a constant at parse time.
 ##
 ## AST (arrays, first element is the node kind)
 ##   expressions: [lit, v] [var, name] [field, e, key] [index, e, k] [call, "api.name"|"name", [args]] [tbl, const]
-##                [or, a, b] [and, a, b] [not, a] [neg, a] [cmp, op, a, b] [cat, a, b] [unsupported, why]
+##                [ctor, [[kind, key, value_expr], ...]] (kind "name": key is the String, "expr": key is an expression,
+##                "pos": key is null) [or, a, b] [and, a, b] [not, a] [neg, a] [cmp, op, a, b] [cat, a, b] [unsupported, why]
 ##   statements : [local, name, e] [assign, name, e] [call, call_expr] [if, [[cond, block], ...], else_block|null]
 ##                [return, e|null] [unsupported, why]        (a block is an Array of statements; the LAST element of
 ##                every statement is the source line it starts on)
@@ -304,7 +308,7 @@ func parse_table() -> Variant:
 				_pos += 1
 				var keyed: Variant = parse_data_value()
 				if keyed != null:
-					dict[str(key)] = keyed
+					dict[key_text(key)] = keyed
 			elif key != null:
 				arr.append(key)
 		else:
@@ -316,6 +320,33 @@ func parse_table() -> Variant:
 	if not arr.is_empty():
 		return arr
 	return {}
+
+
+## The table a constructor builds from its evaluated [key, value] pairs (key null = a positional value), by the rules of a
+## data table: named entries make a Dictionary (positional ones next to them are dropped, the lint's mixed_table),
+## positional ones an Array, a nil value is absent, and no entry at all is the empty Dictionary.
+static func table_of(pairs: Array) -> Variant:
+	var dict := {}
+	var arr: Array = []
+	for pair in pairs:
+		if pair[1] == null:
+			continue
+		if pair[0] == null:
+			arr.append(pair[1])
+		else:
+			dict[key_text(pair[0])] = pair[1]
+	if not dict.is_empty():
+		return dict
+	if not arr.is_empty():
+		return arr
+	return {}
+
+
+## A table key as the String the tables use; an integral number is its integer (Lua's t[2.0] is t[2]).
+static func key_text(key: Variant) -> String:
+	if typeof(key) == TYPE_FLOAT and is_finite(key) and absf(key) < 1.0e15 and float(key) == floorf(key):
+		return str(int(key))
+	return str(key)
 
 
 ## The single token of a `[key] = value` entry: string, number or true/false (anything else: null).
@@ -716,7 +747,7 @@ func _parse_suffixed() -> Array:
 		else:
 			_finding(mini(_pos, _count - 1), "syntax", "`)` expected to close the `(` on line %d, not `%s`" % [_lines[open_at], _tok(_pos)])
 	elif ty == T_OP and t == "{":
-		return ["tbl", parse_table()]
+		return _parse_ctor()
 	else:
 		if t != "..." and t != "~":            # the lint's vararg / bitwise
 			_finding(_pos, "syntax", "an expression is expected, not `%s`" % t)
@@ -756,6 +787,104 @@ func _parse_suffixed() -> Array:
 			path = ""
 		else:
 			break
+	return e
+
+
+## A table constructor in a function (_pos at "{"): [ctor, entries], or [tbl, constant] when every key and value is a
+## literal (the constant is copied on every evaluation, as before).
+func _parse_ctor() -> Array:
+	var open_at := _pos
+	_pos += 1
+	var entries: Array = []
+	var constant := true
+	var closed := false
+	while _pos < _count:
+		if _op("}"):
+			_pos += 1
+			closed = true
+			break
+		if _op(",") or _op(";"):
+			_pos += 1
+			continue
+		var entry: Array
+		if _types[_pos] == T_NAME and _pos + 1 < _count and _types[_pos + 1] == T_OP and _texts[_pos + 1] == "=":
+			var key := _texts[_pos]
+			_pos += 2
+			entry = ["name", key, _ctor_value()]
+		elif _op("["):
+			var bracket_at := _pos
+			_pos += 1
+			var k := _parse_or()
+			if _op("]"):
+				_pos += 1
+			else:
+				_finding(mini(_pos, _count - 1), "syntax", "`]` expected to close the `[` on line %d, not `%s`" % [_lines[bracket_at], _tok(_pos)])
+			if _op("="):
+				_pos += 1
+			else:
+				_finding(mini(_pos, _count - 1), "syntax", "`=` expected after the `[key]` of a table entry, not `%s`" % _tok(_pos))
+			entry = ["expr", k, _ctor_value()]
+			constant = constant and k[0] == "lit"
+		else:
+			entry = ["pos", null, _ctor_value()]
+		var value: Array = entry[2]
+		constant = constant and (value[0] == "lit" or value[0] == "tbl")
+		entries.append(entry)
+		if not (_op(",") or _op(";") or _op("}")) and _pos < _count:
+			_finding(_pos, "syntax", "`,` or `}` expected in the table of line %d, not `%s`" % [_lines[open_at], _texts[_pos]])
+			_raw_value(_pos)                   # resume at the next `,` / `}`
+	if not closed:
+		_finding(open_at, "syntax", "the table of line %d is not closed by `}`" % _lines[open_at])
+	if not constant:
+		return ["ctor", entries]
+	var pairs: Array = []
+	for entry in entries:
+		var value_node: Array = entry[2]
+		match str(entry[0]):
+			"pos":
+				pairs.append([null, value_node[1]])
+			"name":
+				pairs.append([entry[1], value_node[1]])
+			_:
+				if (entry[1] as Array)[1] != null:
+					pairs.append([(entry[1] as Array)[1], value_node[1]])
+	return ["tbl", table_of(pairs)]
+
+
+## One value of a constructor: a literal followed by `,` `;` `}` directly (the bulk of every dialogue page), a nested
+## constructor, or an expression. Arithmetic is the lint's: the value becomes [unsupported] and the parser resumes at the
+## end of the entry.
+func _ctor_value() -> Array:
+	if _pos >= _count:
+		return ["lit", null]
+	var ty := _types[_pos]
+	var t := _texts[_pos]
+	if ty == T_OP and t == "{":
+		return _parse_ctor()
+	var next := _pos + 1
+	var value: Variant = null
+	var literal := true
+	if ty == T_STRING:
+		value = t
+	elif ty == T_NUMBER:
+		value = _number(t)
+	elif ty == T_NAME and (t == "true" or t == "false"):
+		value = t == "true"
+	elif ty == T_NAME and t == "nil":
+		value = null
+	elif ty == T_OP and t == "-" and _pos + 1 < _count and _types[_pos + 1] == T_NUMBER:
+		var n: Variant = _number(_texts[_pos + 1])
+		value = -n if (typeof(n) == TYPE_INT or typeof(n) == TYPE_FLOAT) else n
+		next = _pos + 2
+	else:
+		literal = false
+	if literal and (next >= _count or (_types[next] == T_OP and (_texts[next] == "," or _texts[next] == ";" or _texts[next] == "}"))):
+		_pos = next
+		return ["lit", value]
+	var e := _parse_expr()
+	if _pos < _count and _types[_pos] == T_OP and (_texts[_pos] in _ARITH):
+		_raw_value(_pos)
+		return ["unsupported", "arithmetic"]
 	return e
 
 

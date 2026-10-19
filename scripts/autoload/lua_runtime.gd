@@ -2,7 +2,8 @@ extends Node
 ## Bridge to Lua for quests, dialogue, items, shops, recipes and the game's data tables (D13, D14).
 ##
 ## A pure-GDScript interpreter of a documented Lua SUBSET (no GDExtension): top-level assignments of literal tables and
-## top-level functions with `local`, `if/return`, the `api.*` calls and the expression operators `and or not == ~= < <= > >= ..`.
+## top-level functions with `local`, `if/elseif/else`, `return`, the `api.*` calls, table constructors (evaluated inside a
+## function) and the expression operators `and or not == ~= < <= > >= ..`.
 ## The parser lives in scripts/data/lua_parser.gd (+ lua_tokens.gd); the load-time lint in scripts/data/lua_lint.gd and
 ## `tools/lua/lint.gd`. Everything outside the subset is reported in `lint_report` at load - never as an engine warning.
 ## Each file is tokenized once; the lint reads the same tokens as the parser and runs in debug builds only (`lint_on_load`):
@@ -711,6 +712,20 @@ func _ev(e: Array, scopes: Array) -> Variant:
 			if typeof(v) == TYPE_DICTIONARY or typeof(v) == TYPE_ARRAY:
 				return v.duplicate(true)
 			return v
+		"ctor":
+			var pairs: Array = []
+			for entry in e[1]:
+				var value: Variant = _ev(entry[2], scopes)
+				match str(entry[0]):
+					"pos":
+						pairs.append([null, value])
+					"name":
+						pairs.append([entry[1], value])
+					_:
+						var key: Variant = _ev(entry[1], scopes)
+						if key != null:                     # Lua raises on a nil key; the entry is left out
+							pairs.append([key, value])
+			return _Parser.table_of(pairs)
 		"or":
 			var l: Variant = _ev(e[1], scopes)
 			return l if _truthy(l) else _ev(e[2], scopes)
