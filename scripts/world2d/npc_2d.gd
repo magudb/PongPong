@@ -92,8 +92,9 @@ func _ready() -> void:
 	visual.name = "Visual"
 	visual.scale = Vector2.ONE * float(_row.get("scale", 1.0))
 	add_child(visual)
-	# WorldRoot2D/TownDirector own awaitable warming behind the fade. A fire-and-forget
-	# preload here leaves unused threaded requests alive when citizens leave the area.
+	# WorldRoot2D warms the citizens in view behind the fade; TownDirector stages a mid-visit
+	# arrival's sheets on worker threads before it spawns him. A fire-and-forget preload here
+	# would leave unused threaded requests alive when citizens leave the area.
 	face(str(_params.get("facing", _row.get("facing", "S"))))
 	_interact = Area2D.new()
 	_interact.name = "InteractArea"

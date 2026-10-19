@@ -58,7 +58,9 @@ func run(t, suite) -> void:
 	ctx.hour = 15.5
 	ctx["hearts"] = {"gardener_hoppe": 1}
 	var locked := NpcDirector.where_is("gardener_hoppe", ctx)
+	# A live day keeps the plan it started with (SIM-06): the second heart opens the visit from the next Wednesday.
 	ctx.hearts.gardener_hoppe = 2
+	ctx.total_day = 10
 	var unlocked := NpcDirector.where_is("gardener_hoppe", ctx)
 	suite._check(t, "L12", "l12_hoppe_wednesday_visit", str(locked.area) != "farm" and str(unlocked.place) == "farm.hoppe_fence", str(locked) + " / " + str(unlocked))
 	ctx.hour = 25.99

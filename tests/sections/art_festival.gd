@@ -136,6 +136,12 @@ func run(t) -> void:
 	t.root.add_child(studio)
 	t.check("studio_opens", studio.get("_view") != null and before == EconomyManager.to_dict(), "developer art studio opens without granting items or starting a festival")
 	studio.free()
+	for town in ["hyggebyen", "traetoppen"]:
+		var view := View.new()
+		t.root.add_child(view)
+		view.setup(town, EXAMPLES[0])
+		t.check("fixture_builds_%s" % town, view.decor != null and view.camera != null and view.find_children("FestivalReviewHost", "", true, false).size() == 1, "the %s art fixture builds its decor, guests and camera on the installed town (the windowed studies use it)" % town)
+		view.free()
 	var weak := _released_art(t, posts)
 	await t.frames(2)
 	t.check("art_freed_with_host", weak[0].get_ref() == null and weak[1].get_ref() == null, "art root and selected texture resource are released with their owner; GPU pool allocations are separate")

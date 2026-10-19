@@ -63,8 +63,9 @@ func show_lines(speaker: Dictionary, lines: Array, choices: Array = []) -> Dicti
 	_clear_choices()
 	super.open()
 	if not is_open():
+		# Refused (another modal is on top): nothing was shown or answered.
 		_session = false
-		return {"completed": false, "lines_shown": 0, "choice": {}}
+		return {"completed": false, "lines_shown": 0, "choice": {}, "refused": true}
 	# This frameless overlay dispatches advance in _input; the panel/choice buttons
 	# own GUI clicks. World actions remain guarded by the dialogue modal/phase.
 	mouse_filter = Control.MOUSE_FILTER_IGNORE

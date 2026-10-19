@@ -3,6 +3,14 @@ extends Node
 ## Scene data is read-only. Effects commit with the seen stamp at the end, including skip.
 signal finished(id: String, skipped: bool)
 const _LuaRuntime := preload("res://scripts/autoload/lua_runtime.gd")     # static refuses_owner_flag(): the flags an event may not write
+## Resolves when an actor's own coroutine returns, or when the actor leaves the tree first.
+class ActorTicket extends RefCounted:
+	signal finished
+	var resolved := false
+	func done() -> void:
+		if resolved: return
+		resolved = true
+		finished.emit()
 const STEPS := ["fade","stand","walk","face","camera","clip","emote","say","choice","give","points","flag","wait","time","sfx","end"]
 var active := ""
 var skipped_directives := 0
@@ -51,6 +59,8 @@ func play(id: String, definition: Dictionary) -> bool:
 	var steps := eligible_steps(definition)
 	var index := 0
 	while index < steps.size() and generation == _generation:
+		await _hold(generation)
+		if generation != _generation: return false
 		var step := LuaData.dict(steps[index])
 		var act := str(step.get("act",""))
 		if act == "say":
@@ -65,18 +75,18 @@ func play(id: String, definition: Dictionary) -> bool:
 				index += 1
 			var choice: Dictionary = choices[0] if not choices.is_empty() else {}
 			if not _skip:
-				var result := await _say(who,lines,choices)
+				var result := await _say(who,lines,choices,generation)
 				if not _skip: choice = LuaData.dict(result.get("choice",{}))
 			if generation != _generation: return false
 			_choice(choice,who)
-			if not _skip and str(choice.get("reply_key","")) != "": await _say(who,[{"text_key":str(choice.reply_key)}],[])
+			if not _skip and str(choice.get("reply_key","")) != "": await _say(who,[{"text_key":str(choice.reply_key)}],[],generation)
 			continue
 		if act == "choice":
 			var choices := LuaData.arr(step.get("options",[]))
 			if not choices.is_empty():
 				var chosen: Dictionary = choices[0]
 				if not _skip:
-					var result := await _say(npc,[],choices)
+					var result := await _say(npc,[],choices,generation)
 					if not _skip: chosen = LuaData.dict(result.get("choice",{}))
 				_choice(chosen,npc)
 		elif act in ["give","points","flag","time"]:
@@ -111,7 +121,15 @@ func _choice(option: Dictionary, who: String) -> void:
 	var flag := str(option.get("flag",""))
 	if flag != "": _effects.append({"act":"flag","key":flag,"value":true})
 
-func _say(who: String, lines: Array, choices: Array) -> Dictionary:
+## True while another modal (the skip confirm) sits on top of the scene: the scene waits for it instead of running on unseen.
+func _covered() -> bool:
+	return GameManager.is_modal_open(&"event") and GameManager.top_modal() != &"event"
+
+func _hold(generation: int) -> void:
+	while generation == _generation and not _skip and _covered():
+		await get_tree().process_frame
+
+func _say(who: String, lines: Array, choices: Array, generation: int) -> Dictionary:
 	_take_actor(_actor(who))
 	_dialogue = get_tree().get_first_node_in_group("dialogue_ui")
 	if _dialogue == null: return {"choice":choices[0] if not choices.is_empty() else {}}
@@ -120,7 +138,14 @@ func _say(who: String, lines: Array, choices: Array) -> Dictionary:
 	_dialogue.nested_under = &"event"
 	var speaker := {"id":who,"name_key":SocialData.npc_row(who).get("name_key","")}
 	if who == "player": speaker = {"id":"player","name_key":"SOC_EV_YOU","portrait":null}
-	var result: Dictionary = await _dialogue.show_lines(speaker,lines,choices)
+	# A refused page was never shown, so it is never an answer: wait until the scene is on top again and show it then.
+	var result: Dictionary = {}
+	while generation == _generation and not _skip:
+		await _hold(generation)
+		if generation != _generation or _skip or not is_instance_valid(_dialogue): break
+		result = await _dialogue.show_lines(speaker,lines,choices)
+		if not bool(result.get("refused",false)): break
+		await get_tree().process_frame
 	if is_instance_valid(_dialogue): _dialogue.nested_under = _nested_before
 	return result
 
@@ -185,7 +210,7 @@ func _directive(step: Dictionary, generation: int) -> void:
 		match act:
 			"walk":
 				var point := _point(step,actor)
-				if point != Vector2.INF: await actor.call(method,point,float(step.get("speed",185)))
+				if point != Vector2.INF: await _await_actor(actor,method,[point,float(step.get("speed",185))])
 			"stand":
 				var point := _point(step,actor)
 				if point != Vector2.INF: actor.event_stand(point,str(step.get("facing","S")))
@@ -201,7 +226,7 @@ func _directive(step: Dictionary, generation: int) -> void:
 				if target != null and not (target is Vector2 and target == Vector2.INF):
 					if target is Node: _take_actor(target)
 					_camera_used = true
-					await actor.camera_focus(target,float(step.get("zoom",0.7)),float(step.get("time",step.get("seconds",0.25))))
+					await _await_actor(actor,"camera_focus",[target,float(step.get("zoom",0.7)),float(step.get("time",step.get("seconds",0.25)))])
 	elif act == "sfx": AudioManager.play_sfx(str(step.get("id","")))
 	elif act in ["wait","fade"]:
 		var seconds := clampf(float(step.get("time",step.get("seconds",0.25))),0.0,10.0)
@@ -211,7 +236,7 @@ func _directive(step: Dictionary, generation: int) -> void:
 		var elapsed := 0.0
 		while elapsed < seconds and generation == _generation and not _skip:
 			await get_tree().process_frame
-			elapsed += get_process_delta_time()
+			if not _covered(): elapsed += get_process_delta_time()
 	else: skipped_directives += 1
 
 func _commit(id: String) -> void:
@@ -252,9 +277,22 @@ func skip() -> void:
 		var actor: Node = ref.get_ref()
 		if actor != null and actor.has_method("event_end"): actor.event_end()
 
+## Await a coroutine that another node owns (a walk, a camera move) through a ticket: a node freed mid-await never resumes
+## its callers, so the actor leaving the tree also ends the wait and the scene goes on.
+func _await_actor(actor: Node, method: String, args: Array) -> void:
+	var ticket := ActorTicket.new()
+	actor.tree_exiting.connect(ticket.done,CONNECT_ONE_SHOT)
+	_run_actor(ticket,actor,method,args)
+	if not ticket.resolved: await ticket.finished
+	if is_instance_valid(actor) and actor.tree_exiting.is_connected(ticket.done): actor.tree_exiting.disconnect(ticket.done)
+
+func _run_actor(ticket: ActorTicket, actor: Node, method: String, args: Array) -> void:
+	await actor.callv(method,args)
+	ticket.done()
+
 func _release() -> void:
 	var player := _actor("player")
-	if _camera_used and player != null and player.has_method("camera_release"): await player.camera_release(0.0 if _skip else 0.25)
+	if _camera_used and player != null and player.has_method("camera_release"): await _await_actor(player,"camera_release",[0.0 if _skip else 0.25])
 	for ref in _actors:
 		var actor: Node = ref.get_ref()
 		if actor != null and actor.has_method("event_end"): actor.event_end()

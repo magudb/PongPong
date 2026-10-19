@@ -78,8 +78,11 @@ func run(t) -> void:
 	for day in range(1, 8):
 		gm.day = day
 		DailyFlags.refresh()
-		var weekend: bool = t.autoload("TimeManager").weekday_index() in [5, 6]
+		var weekday: int = t.autoload("TimeManager").weekday_index()
+		var weekend: bool = weekday in [5, 6]
 		t.check("market_weekday_" + str(day), gm.flag_int(&"brumme_at_stall") == int(weekend) and gm.flag_int(&"brumme_at_work") == int(not weekend))
+		# The stall's opening days and Brumme's routine are the two remaining sources: they must agree (SIM-09).
+		t.check("stall_hours_follow_brumme_" + str(day), (not weekday in Hours.closed_days(Hours.building("torvestanden"))) == DailyFlags.keeps_stall_today())
 	# All service markers also build through the actual room builder.
 	gm.set_config_override("towns.hours_enabled", false)
 	for id in ["int_postkontoret", "int_raadhuset", "int_badehuset"]:
