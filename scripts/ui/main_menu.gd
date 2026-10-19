@@ -72,7 +72,8 @@ func _refresh_labels() -> void:
 	var latest: int = SaveManager.get_latest_slot()
 	%ContinueInfo.text = tr("MENU_CONTINUE_DAY") % int(SaveManager.get_save_summary(latest).get("total_day", 1)) if latest >= 0 else ""
 	_rows = [%ContinueButton, %LoadButton, %NewGameButton, %SettingsButton, %QuitButton]
-	_updates_button.visible = ReleaseUpdates.inst().state in ["available", "downloading", "ready"]
+	# A background download that failed keeps the row: the panel offers the retry.
+	_updates_button.visible = ReleaseUpdates.inst().state in ["available", "downloading", "ready", "download_failed"] and not ReleaseUpdates.inst().available.is_empty()
 	_updates_button.text = tr("UPDATE_AVAILABLE") % str(ReleaseUpdates.inst().available.get("version", ""))
 	if _updates_button.visible: _rows.insert(_rows.size() - 1, _updates_button)
 	UiNav.wire_ring(_rows)

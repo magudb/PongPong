@@ -70,10 +70,19 @@ func _watch(delta: float) -> void:
 		return
 	_stalled += delta
 	if _stalled >= STALL_SECONDS:
-		_request.cancel_request()
-		_downloading = false
-		if FileAccess.file_exists(downloaded_path): DirAccess.remove_absolute(downloaded_path)
+		_drop_partial()
 		_set_state("download_failed")
+
+## Quitting during a background download leaves no partial archive behind in user://updates (it never resumes, so it is only waste).
+func _exit_tree() -> void:
+	if state == "downloading":
+		_drop_partial()
+		state = "available"
+
+func _drop_partial() -> void:
+	_request.cancel_request()
+	_downloading = false
+	if FileAccess.file_exists(downloaded_path): DirAccess.remove_absolute(downloaded_path)
 
 func _set_state(value: String) -> void:
 	state = value
@@ -214,7 +223,5 @@ func install() -> bool:
 
 func cancel_download() -> void:
 	if state != "downloading": return
-	_request.cancel_request()
-	_downloading = false
-	if FileAccess.file_exists(downloaded_path): DirAccess.remove_absolute(downloaded_path)
+	_drop_partial()
 	_set_state("available")

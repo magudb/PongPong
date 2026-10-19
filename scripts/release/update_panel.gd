@@ -54,8 +54,9 @@ func open(opener: Control = null) -> void:
 	super.open(opener)
 	if is_open() and not service.checked: service.check()
 
+## During a download the primary button is "Stop": reopening the panel lands on "Luk", so one more Enter never throws the progress away.
 func _initial_focus() -> Control:
-	return primary if not primary.disabled else back
+	return primary if not primary.disabled and service.state != "downloading" else back
 
 ## Closing keeps a download running in the background (the title and the panel show it again); only "Stop" cancels it. A download
 ## that finishes while the panel is closed waits for the player to press "Hent og opdater" again: it never restarts the game by itself.

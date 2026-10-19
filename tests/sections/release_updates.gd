@@ -82,6 +82,9 @@ func run(t) -> void:
 	t.check("closing_keeps_download", not panel.is_open() and updates.state == "downloading")
 	settings.updates_button.pressed.emit()
 	await t.frames(2)
+	# Reopened mid-download the panel lands on "Luk", not on "Stop": one more Enter must not throw the progress away.
+	var reopened_focus := panel.get_viewport().gui_get_focus_owner()
+	t.check("reopened_download_focuses_close", reopened_focus == panel.back, str(reopened_focus))
 	panel.primary.grab_focus()
 	t.tap_key(KEY_ENTER)
 	await t.frames(2)
@@ -96,6 +99,22 @@ func run(t) -> void:
 	var alive: bool = updates.state == "downloading"
 	updates._watch(ReleaseUpdates.STALL_SECONDS * 0.5 + 0.1)
 	t.check("stalled_download_fails", alive and updates.state == "download_failed" and not updates._downloading)
+	# A download that failed in the background keeps the title's "Ny version" row, the way back to the retry.
+	var title_row: Button = t.tree.current_scene._updates_button
+	t.check("failed_download_keeps_title_row", title_row.visible and title_row in t.tree.current_scene._rows)
+	# Quitting during a download leaves no partial archive behind (it never resumes).
+	var leaving := ReleaseUpdates.new()
+	t.tree.root.add_child(leaving)
+	var leftover := ProjectSettings.globalize_path("user://updater-test-leftover.zip")
+	var partial := FileAccess.open(leftover, FileAccess.WRITE)
+	partial.store_string("half an archive")
+	partial.close()
+	leaving.downloaded_path = leftover
+	leaving._downloading = true
+	leaving.state = "downloading"
+	t.tree.root.remove_child(leaving)
+	t.check("quit_removes_partial_download", not FileAccess.file_exists(leftover) and not leaving._downloading)
+	leaving.free()
 	updates.available.clear()
 	updates._set_state("current")
 	settings.close()
