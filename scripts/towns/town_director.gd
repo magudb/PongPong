@@ -102,6 +102,8 @@ func _finish_initialize() -> void:
 		if _city_nav == null:
 			_city_nav = LevelNav.make()
 		level_nav = _city_nav
+		# The shared nav outlives the entry; its snap record describes this one.
+		level_nav.snap_stats.clear()
 		_window_perches.clear()
 		for marker in CityData.markers_of(CityBuilder.of(area).data, "npc"):
 			if bool(marker.get("window", false)):

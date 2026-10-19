@@ -135,6 +135,8 @@ func _park(t) -> void:
 	for name in city.anchors:
 		if str(name).begins_with("fest_"):
 			posts[name] = city.anchors[name]
+	# The shared nav's snap record must not grow over a session: an entry starts it again (a stale marker is gone).
+	city_nav.snap_stats.append(-1.0)
 	await t.world().travel(&"hyggebyen", &"default")
 	await t.frames(3)
 	await t.world().travel(&"traetoppen", &"default")
@@ -142,6 +144,7 @@ func _park(t) -> void:
 	var again := _director(t)
 	var same_posts := not posts.is_empty() and posts.keys().all(func(name): return again.anchors.get(name) == posts[name])
 	t.check("city_reentry_reuses_static_geometry", again != city and city_nav != null and again.level_nav == city_nav and same_posts, "re-entry initialization %.3f ms" % again.init_ms)
+	t.check("city_nav_snap_record_per_entry", not city_nav.snap_stats.has(-1.0), "%d snaps recorded for this entry" % city_nav.snap_stats.size())
 	await t.world().travel(&"hyggebyen", &"default")
 	await t.frames(3)
 	var started := Time.get_ticks_usec()
