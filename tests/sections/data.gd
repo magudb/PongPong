@@ -808,6 +808,7 @@ func _lint_clean() -> void:
 		var findings: Array = _lr.lint_source(FileAccess.get_file_as_string(FIX + fx), FIX + fx)
 		t.expect(findings.is_empty(), "fixture %s is inside the subset and lints clean %s" % [fx, str(_rules_of(findings))])
 	_real_lua_syntax()
+	_doc_examples()
 	# the tool, run like a human would: PASS line per file, exit code 0
 	var result: Dictionary = t.run_godot_script("res://tools/lua/lint.gd")
 	t.expect_tool_ids(result, "tools/lua/lint.gd")
@@ -816,6 +817,41 @@ func _lint_clean() -> void:
 	var neg: Dictionary = t.run_godot_script("res://tools/lua/lint.gd", PackedStringArray(["--root=res://tests/fixtures/lua", "--quiet"]))
 	var out: String = str(neg["output"])
 	t.check("lint_tool_fails_on_bad_files", int(neg["code"]) == 1 and out.contains("FAIL res://tests/fixtures/lua/p07_arith.lua:") and out.contains(":arithmetic ") and out.contains(":loop ") and not out.contains("lint_clean_sample.lua"), "tools/lua/lint.gd exits 1 and names file:line:rule for the probes outside the subset")
+
+
+## The authoring docs stay true (LUA-05): every ```lua block of docs/lua_api.md and tools/lua/README.md is a complete file
+## that lints clean, an item rarity in them is on the ladder, and the api table of docs/lua_api.md names exactly the api
+## functions of the runtime (LuaLint.API_FUNCTIONS).
+func _doc_examples() -> void:
+	var t = _t
+	var problems: Array[String] = []
+	var blocks := 0
+	for doc in ["res://docs/lua_api.md", "res://tools/lua/README.md"]:
+		var text := FileAccess.get_file_as_string(doc)
+		var parts := text.split("```lua\n")
+		for i in range(1, parts.size()):
+			var block := parts[i].get_slice("```", 0)
+			blocks += 1
+			var rules := _rules_of(_lr.lint_source(block, doc))
+			if not rules.is_empty():
+				problems.append("%s block %d: %s" % [doc.get_file(), i, str(rules)])
+			var items: Variant = _lr.parse_lua_source(block, doc).get("items", {})
+			for id in (items as Dictionary if items is Dictionary else {}):
+				var rarity := str(LuaData.dict(items[id]).get("rarity", ""))
+				if rarity != "" and not (rarity in _lr._RARITY_IDS):
+					problems.append("%s: item %s has rarity %s" % [doc.get_file(), id, rarity])
+	var api_doc := FileAccess.get_file_as_string("res://docs/lua_api.md").get_slice("## API functions", 1).get_slice("\n## ", 0)
+	var named := {}
+	var rx := RegEx.create_from_string("`api\\.([a-z_]+)\\(")
+	for m in rx.search_all(api_doc):
+		named[m.get_string(1)] = true
+	var listed: Array = named.keys()
+	listed.sort()
+	var runtime: Array = LuaLint.API_FUNCTIONS.duplicate()
+	runtime.sort()
+	if listed != runtime:
+		problems.append("the api table names %s, the runtime has %s" % [str(listed), str(runtime)])
+	t.check("lua_api_doc_examples", problems.is_empty() and blocks >= 7, "%d lua blocks of the docs lint clean, rarities on the ladder, the api table matches the runtime: %s" % [blocks, str(problems)])
 
 
 ## Real Lua as an independent gate (LUA-01): the subset is a subset of Lua 5.4, so `luac -p` must accept every file under

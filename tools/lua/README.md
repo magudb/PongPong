@@ -3,6 +3,8 @@
 The game reads its data (config, items, quests, dialogue, shops, recipes, registries) from `lua/**` through `LuaRuntime`
 (`scripts/autoload/lua_runtime.gd`), a pure-GDScript interpreter of a small, documented Lua **subset**.
 Everything outside the subset is reported at load time by the lint (`LuaRuntime.lint_report`), never as an engine warning.
+The authoring reference (what a file of each kind looks like, the quest hooks, the dialogue actions, the api) is
+`docs/lua_api.md`; this file is the subset and its tooling.
 
 ## The subset in one paragraph
 
