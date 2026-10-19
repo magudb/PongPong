@@ -68,6 +68,10 @@ var gold: int = DEFAULT_STARTING_GOLD
 var inventory: Array[Dictionary] = []
 ## slot -> item id (&"" = nothing): tool_hoe tool_watering tool_pickaxe tool_axe tool_scythe weapon accessory
 var equipment: Dictionary = {}
+## Backpack slots a load could not fit any more (content drift: a smaller max_stack since the save made more slots than there are):
+## [{id, amount, meta}], saved as "owed" and handed back by deliver_owed() every morning and when the player of a loaded world spawns,
+## as far as there is room.
+var owed: Array[Dictionary] = []
 
 var _misrouted: bool = false          # a furniture / clothing item may sit in the backpack (its store did not exist yet)
 var _consuming: bool = false
@@ -82,6 +86,8 @@ func _ready() -> void:
 	arsenal.name = "Arsenal"
 	add_child(arsenal)
 	EventBus.new_game_started.connect(reset)
+	EventBus.day_started.connect(func(_day: int, _season: StringName) -> void: deliver_owed())
+	EventBus.player_spawned.connect(func(_player: Node2D) -> void: deliver_owed())   # a loaded world: its HUD is up to say so
 
 
 # ================================================================================================ new game
@@ -90,6 +96,7 @@ func _ready() -> void:
 func reset() -> void:
 	gold = _gold_of(_Svc.lua_config("economy.starting_gold", DEFAULT_STARTING_GOLD), DEFAULT_STARTING_GOLD)
 	inventory.clear()
+	owed.clear()
 	if arsenal != null: arsenal.reset()
 	equipment = _empty_equipment()
 	_misrouted = false
@@ -733,17 +740,65 @@ func to_dict() -> Dictionary:
 	var equipped := {}
 	for key in equipment:
 		equipped[str(key)] = str(equipment[key])
-	return {"v": SAVE_VERSION, "gold": gold, "inventory": slots, "equipment": equipped, "arsenal":arsenal.to_dict() if arsenal != null else {}}
+	var out := {"v": SAVE_VERSION, "gold": gold, "inventory": slots, "equipment": equipped, "arsenal":arsenal.to_dict() if arsenal != null else {}}
+	if not owed.is_empty():
+		out["owed"] = _json_slots(owed)
+	return out
+
+
+## Slots as plain JSON values (String ids, deep-copied meta).
+func _json_slots(source: Array) -> Array:
+	var out: Array = []
+	for slot in source:
+		out.append({"id": str(slot["id"]), "amount": int(slot["amount"]), "meta": (slot.get("meta", {}) as Dictionary).duplicate(true)})
+	return out
+
+
+## Hands back what is owed (see `owed`) as far as the backpack has room, with the meta it was saved with, and says so: every
+## morning and when the player of a loaded world spawns. A furniture or clothing id comes back as a misrouted copy that its store
+## adopts at once (one its store refuses waits in the backpack like any misrouted copy), so it never waits for backpack room forever.
+func deliver_owed() -> void:
+	if owed.is_empty():
+		return
+	var given := 0
+	var left: Array[Dictionary] = []
+	for slot in owed:
+		var id := StringName(str(slot["id"]))
+		var amount := int(slot["amount"])
+		var meta: Dictionary = slot.get("meta", {}) if typeof(slot.get("meta")) == TYPE_DICTIONARY else {}
+		var room := free_slots() * max_stack_of(id) if not meta.is_empty() else backpack_room_for(id)
+		var fits := mini(amount, room)
+		if fits > 0:
+			_stack_into_backpack(id, fits, meta)
+			if _Kinds.storage_of(id) != _Kinds.BACKPACK:
+				_misrouted = true
+			given += fits
+			amount -= fits
+		if amount > 0:
+			left.append({"id": id, "amount": amount, "meta": meta})
+	owed = left
+	if given > 0:
+		adopt_misrouted()
+		_publish(&"player_inventory_changed", [get_inventory_dict()])
+	var waiting := 0
+	for slot in owed:
+		waiting += int(slot["amount"])
+	if given > 0:
+		_publish(&"notification_posted", [tr("TOAST_OWED_TITLE"), tr("TOAST_OWED_DELIVERED") % given, "inventory"])
+	if waiting > 0:
+		_publish(&"notification_posted", [tr("TOAST_OWED_TITLE"), tr("TOAST_OWED_WAITING") % waiting, "inventory"])
 
 
 ## Rebuilds the state after the JSON round trip (every number is a float or an int, ids are plain Strings). Invalid slots
-## (not a dictionary, no id, an amount <= 0 after coercion) are dropped, a slot above max_stack is split, more than
-## INVENTORY_SLOTS slots keep the first ones. Returns true.
+## (not a dictionary, no id, an amount <= 0 after coercion) are dropped, a slot above max_stack is split; what does not fit into
+## INVENTORY_SLOTS any more (a smaller max_stack since the save, or what was still owed) goes to `owed` instead of being lost.
+## Returns true.
 func from_dict(data: Dictionary) -> bool:
 	_misrouted = false
 	if arsenal != null: arsenal.from_dict(_Data.dict(data.get("arsenal",{})))
 	gold = _gold_of(data.get("gold", DEFAULT_STARTING_GOLD), DEFAULT_STARTING_GOLD)
 	inventory.clear()
+	owed.clear()
 	var raw: Variant = data.get("inventory", [])
 	var entries: Array = []
 	if typeof(raw) == TYPE_ARRAY:
@@ -751,6 +806,8 @@ func from_dict(data: Dictionary) -> bool:
 	elif typeof(raw) == TYPE_DICTIONARY:                 # {id: amount} is accepted too
 		for id in (raw as Dictionary):
 			entries.append({"id": id, "amount": (raw as Dictionary)[id]})
+	if typeof(data.get("owed")) == TYPE_ARRAY:
+		entries = entries + (data["owed"] as Array)
 	var dropped := 0
 	for entry in entries:
 		if typeof(entry) != TYPE_DICTIONARY:
@@ -765,14 +822,14 @@ func from_dict(data: Dictionary) -> bool:
 		var ms := max_stack_of(id)
 		while amount > 0:
 			if inventory.size() >= INVENTORY_SLOTS:
-				dropped += 1
+				owed.append({"id": id, "amount": amount, "meta": meta.duplicate(true)})
 				amount = 0
 				break
 			var take := mini(amount, ms)
 			inventory.append({"id": id, "amount": take, "meta": meta.duplicate(true)})
 			amount -= take
 	if dropped > 0:
-		_log_once("from_dict dropped %d invalid or surplus slot(s)" % dropped)
+		_log_once("from_dict dropped %d invalid slot(s)" % dropped)
 	# The player's own choice wins: a slot the save names (a weaker tool picked on purpose, or "" = deliberately empty) is restored
 	# as it was. Only a slot the save does not decide (an old save without `equipment`, an entry that is not owned any more or
 	# does not fit the slot) gets the best tool the player owns.
@@ -819,12 +876,13 @@ func _backpack_count(item_id: StringName) -> int:
 	return n
 
 
-## Fills the half-empty stacks of the item first, then opens new slots. The caller checked the room.
-func _stack_into_backpack(item_id: StringName, amount: int) -> void:
+## Fills the half-empty stacks of the item first, then opens new slots. The caller checked the room. Copies with a `meta` of their
+## own (owed slots handed back) only go into new slots, which keep a copy of it.
+func _stack_into_backpack(item_id: StringName, amount: int, meta: Dictionary = {}) -> void:
 	var ms := max_stack_of(item_id)
 	var left := amount
 	for slot in inventory:
-		if left <= 0:
+		if left <= 0 or not meta.is_empty():
 			break
 		if slot["id"] == item_id and int(slot["amount"]) < ms:
 			var take := mini(ms - int(slot["amount"]), left)
@@ -832,7 +890,7 @@ func _stack_into_backpack(item_id: StringName, amount: int) -> void:
 			left -= take
 	while left > 0:
 		var take := mini(ms, left)
-		inventory.append({"id": item_id, "amount": take, "meta": {}})
+		inventory.append({"id": item_id, "amount": take, "meta": meta.duplicate(true)})
 		left -= take
 
 

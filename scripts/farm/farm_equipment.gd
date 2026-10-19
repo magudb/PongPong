@@ -108,16 +108,15 @@ static func pickup(area: IsoArea, cell: Vector2i, picture: Node2D) -> bool:
 	model.plot_changed.emit(cell)
 	return true
 
-## Save preflight rejects malformed jobs before any live owner is replaced.
+## Save preflight rejects malformed jobs before any live owner is replaced. STRUCTURE only: an item that is no longer a farm
+## placeable or a job whose recipe changed is content drift, which repair_placed() mends when the world applies the save.
 static func validate_placed(value: Variant) -> bool:
 	if not value is Array: return false
 	var seen := {}
-	var crops := FarmGrid.crop_definitions()
 	for piece in value:
 		if not piece is Dictionary or not piece.get("item", "") is String or not piece.get("area", "farm") is String:
 			return false
-		var def := GameData.item_def(StringName(str(piece.item)))
-		if str(def.get("placeable", "")) != "farm" or str(piece.get("area", "farm")) not in ["farm", "greenhouse"]:
+		if str(piece.get("area", "farm")) not in ["farm", "greenhouse"]:
 			return false
 		var cell: Variant = piece.get("cell", [])
 		if not cell is Array or cell.size() != 2: return false
@@ -129,11 +128,37 @@ static func validate_placed(value: Variant) -> bool:
 		seen[key] = true
 		if piece.has("batch"):
 			var batch: Variant = piece.batch
-			var row := spec(StringName(str(piece.item)))
-			if not batch is Dictionary or str(row.get("output_prefix", "")) == "": return false
+			if not batch is Dictionary: return false
 			if not batch.get("input", "") is String or not batch.get("output", "") is String: return false
-			if not crops.has(str(batch.input)) or str(batch.output) != str(row.output_prefix) + str(batch.input): return false
 			var ready: Variant = batch.get("ready_day", 0)
 			if not (ready is int or ready is float) or not is_finite(float(ready)) or float(ready) < 1 or float(ready) != floorf(float(ready)) or float(ready) > 2147483647:
 				return false
 	return true
+
+
+## The placed records of a save against today's catalogue: {placed, orphans}. A piece whose item is no longer a farm placeable is
+## set aside as an orphan (kept in the save, adopted again once the item is placeable again and its cell is free); a job whose
+## machine no longer processes, or whose crop is gone, is dropped; a job whose recipe was renamed gets today's output name.
+static func repair_placed(pieces: Array, orphans: Array = []) -> Dictionary:
+	var crops := FarmGrid.crop_definitions()
+	var placed: Array = []
+	var kept: Array = []
+	var taken := {}
+	for piece in pieces + orphans:
+		if not piece is Dictionary:
+			continue
+		var record: Dictionary = (piece as Dictionary).duplicate(true)
+		var key := "%s:%s" % [str(record.get("area", "farm")), str(record.get("cell", []))]
+		if str(GameData.item_def(StringName(str(record.get("item", "")))).get("placeable", "")) != "farm" or taken.has(key):
+			kept.append(record)
+			continue
+		if record.has("batch") and record.batch is Dictionary:
+			var prefix := str(spec(StringName(str(record.item))).get("output_prefix", ""))
+			var input := str(record.batch.get("input", ""))
+			if prefix == "" or (not crops.is_empty() and not crops.has(input)):
+				record.erase("batch")
+			else:
+				record.batch["output"] = prefix + input
+		taken[key] = true
+		placed.append(record)
+	return {"placed": placed, "orphans": kept}

@@ -1,10 +1,12 @@
 extends TTScreen
-## Six manual slots and a read-only autosave. SaveManager owns validation, summaries and feedback.
+## Six manual slots, a read-only autosave and (when there is one) the read-only autosave of the previous game. SaveManager owns
+## validation, summaries and feedback.
 signal slot_selected(slot: int, is_save: bool)
 enum Mode { SAVE, LOAD }
 var mode: int = Mode.LOAD
 var _rows: Array[Button] = []
 var _deletes: Array[Button] = []
+var _details: Array[Label] = []
 var _busy := false
 var _focused_slot := -1
 
@@ -18,7 +20,8 @@ func _ready() -> void:
 	super._ready()
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("saveload", Callable(get_script(), &"fixture_setup"))
 	%CloseButton.pressed.connect(close)
-	%HintBar.set_hints([{"action": &"ui_accept", "key": "HINT_OK"}, {"action": &"ui_cancel", "key": "HINT_BACK"}])
+	%CloseButton.focus_entered.connect(_refresh_hints)
+	_refresh_hints()
 
 func open_mode(value: int, opener: Control = null) -> void:
 	mode = value
@@ -49,6 +52,7 @@ func _refresh_texts() -> void:
 		child.queue_free()
 	_rows.clear()
 	_deletes.clear()
+	_details.clear()
 	for descriptor in SaveManager.describe_slots():
 		var slot := int(descriptor.slot)
 		var row := HBoxContainer.new()
@@ -73,7 +77,7 @@ func _refresh_texts() -> void:
 		var title := Label.new()
 		title.theme_type_variation = &"Display20"
 		title.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		title.text = tr("SAVELOAD_AUTO") if descriptor.is_auto else tr("SAVELOAD_SLOT") % (slot + 1)
+		title.text = tr("SAVELOAD_AUTO_PREVIOUS") if descriptor.get("is_previous", false) else tr("SAVELOAD_AUTO") if descriptor.is_auto else tr("SAVELOAD_SLOT") % (slot + 1)
 		labels.add_child(title)
 		var detail := Label.new()
 		detail.theme_type_variation = &"Muted13"
@@ -82,9 +86,10 @@ func _refresh_texts() -> void:
 		if descriptor.state in ["newer", "corrupt", "backup"]:
 			detail.add_theme_color_override("font_color", preload("res://scripts/ui/theme/tt_colors.gd").THORNBERRY)
 		labels.add_child(detail)
+		_details.append(detail)
 		UiNav.set_enabled(button, (not descriptor.is_auto) if mode == Mode.SAVE else descriptor.state in ["ok", "backup"])
 		button.pressed.connect(func(): _on_slot_pressed(slot))
-		button.focus_entered.connect(func(): _focused_slot = slot)
+		button.focus_entered.connect(func(): _focused_slot = slot; _refresh_hints())
 		_rows.append(button)
 		var remove := Button.new()
 		remove.name = "Delete%d" % slot
@@ -97,7 +102,7 @@ func _refresh_texts() -> void:
 		UiNav.set_enabled(remove, not descriptor.is_auto and descriptor.state != "empty")
 		remove.modulate.a = 0.0 if descriptor.is_auto else 1.0
 		remove.pressed.connect(func(): _on_delete_pressed(slot))
-		remove.focus_entered.connect(func(): _focused_slot = slot)
+		remove.focus_entered.connect(func(): _focused_slot = slot; _refresh_hints())
 		_deletes.append(remove)
 	_wire()
 
@@ -109,7 +114,51 @@ func _summary(descriptor: Dictionary) -> String:
 		return tr("SAVELOAD_STATE_" + state.to_upper())
 	var summary: Dictionary = descriptor.summary
 	var info := "%s · %s · %s %d · %d %s · %s" % [summary.player_name, summary.farm_name, tr("UI_DAY"), summary.total_day, summary.gold, tr("UI_GOLD"), preload("res://scripts/ui/theme/tt_format.gd").clock(summary.hour, summary.minute)]
+	# when it was saved in the real world and how long it has been played: two "Dag 12" saves of siblings tell apart
+	for part in [saved_ago(float(summary.get("saved_at", 0.0)), _now()), played(float(summary.get("play_time_seconds", 0.0)))]:
+		if part != "":
+			info += " · " + part
 	return info + (" · " + tr("SAVELOAD_STATE_BACKUP") if state == "backup" else "")
+
+## The run of a slot as a confirm names it: "Rosenhaven, dag 12 · gemt for 2 t. siden" (the player's name for a farm without one).
+func run_name(slot: int) -> String:
+	var summary: Dictionary = SaveManager.get_save_summary(slot)
+	if summary.is_empty():
+		return tr("SAVELOAD_SLOT") % (slot + 1)
+	var who := str(summary.get("farm_name", ""))
+	var text: String = tr("SAVELOAD_RUN_NAME") % [who if who != "" else str(summary.get("player_name", "")), int(summary.get("total_day", 1))]
+	var ago := saved_ago(float(summary.get("saved_at", 0.0)), _now())
+	return text + (" · " + ago if ago != "" else "")
+
+func _now() -> float:
+	return SaveManager.clock_override if SaveManager.clock_override >= 0.0 else Time.get_unix_time_from_system()
+
+## "gemt for 2 t. siden": the real time since `saved_at` (unix seconds); "" when the save does not know it. Older than a month: the date.
+func saved_ago(saved_at: float, now: float) -> String:
+	if saved_at <= 0.0:
+		return ""
+	var seconds := maxf(0.0, now - saved_at)
+	if seconds < 60.0:
+		return tr("SAVELOAD_SAVED_NOW")
+	if seconds < 3600.0:
+		return tr("SAVELOAD_SAVED_MINUTES") % int(seconds / 60.0)
+	if seconds < 86400.0:
+		return tr("SAVELOAD_SAVED_HOURS") % int(seconds / 3600.0)
+	if seconds < 2.0 * 86400.0:
+		return tr("SAVELOAD_SAVED_YESTERDAY")
+	if seconds < 31.0 * 86400.0:
+		return tr("SAVELOAD_SAVED_DAYS") % int(seconds / 86400.0)
+	var date := Time.get_date_dict_from_unix_time(int(saved_at + float(Time.get_time_zone_from_system().get("bias", 0)) * 60.0))
+	return tr("SAVELOAD_SAVED_DATE") % ("%d.%d.%d" % [date.day, date.month, date.year])
+
+## "spillet 3 t. 12 min.": the play time of a save; "" before the first minute.
+func played(seconds: float) -> String:
+	var minutes := int(seconds / 60.0)
+	if minutes <= 0:
+		return ""
+	if minutes < 60:
+		return tr("SAVELOAD_PLAYED_MINUTES") % minutes
+	return tr("SAVELOAD_PLAYED_HOURS") % [minutes / 60, minutes % 60]
 
 func _wire() -> void:
 	UiNav.wire_ring(_rows + [%CloseButton])
@@ -124,38 +173,67 @@ func _wire() -> void:
 	UiNav.link(%CloseButton, &"down", enabled_rows[0] if not enabled_rows.is_empty() else %CloseButton)
 	UiNav.hover_focus(_rows + _deletes + [%CloseButton])
 
+## The delete keys are the InputMap's ui_text_delete (Delete) and ui_text_backspace (the key a Mac labels "delete"). They act on the
+## row that HAS focus right now (its slot button or its Slet), never on a row focused earlier: on Luk they do nothing. A pad reaches
+## the same Slet button with the D-pad (the frozen P01 input contract has no pad binding to spare for it).
 func _input(event: InputEvent) -> void:
-	if is_open() and is_top() and event is InputEventKey and event.pressed and (event.keycode == KEY_DELETE or event.physical_keycode == KEY_DELETE):
-		if _focused_slot >= 0 and UiNav.is_stop(_deletes[_focused_slot]):
-			_on_delete_pressed(_focused_slot)
+	if is_open() and is_top() and _is_delete_key(event):
+		var slot := _slot_of(get_viewport().gui_get_focus_owner())
+		if slot >= 0 and UiNav.is_stop(_deletes[slot]):
+			_on_delete_pressed(slot)
 		get_viewport().set_input_as_handled()
 		return
 	super._input(event)
+
+static func _is_delete_key(event: InputEvent) -> bool:
+	return event.is_action_pressed(&"ui_text_delete") or event.is_action_pressed(&"ui_text_backspace")
+
+## The slot whose row `control` belongs to (its button or its Slet), -1 for anything else.
+func _slot_of(control: Control) -> int:
+	var at := _rows.find(control)
+	return at if at >= 0 else _deletes.find(control)
+
+func _refresh_hints() -> void:
+	var hints: Array = [{"action": &"ui_accept", "key": "HINT_OK"}]
+	var slot := _slot_of(get_viewport().gui_get_focus_owner()) if is_inside_tree() else -1
+	if slot >= 0 and slot < _deletes.size() and UiNav.is_stop(_deletes[slot]):
+		hints.append({"action": &"ui_text_delete", "key": "HINT_DELETE"})          # only while the focused row has a Slet
+	hints.append({"action": &"ui_cancel", "key": "HINT_BACK"})
+	%HintBar.set_hints(hints)
 
 func _on_slot_pressed(slot: int) -> void:
 	if _busy or slot < 0 or slot >= _rows.size() or not UiNav.is_stop(_rows[slot]):
 		return
 	_busy = true
-	var needs_confirm: bool = mode == Mode.LOAD and get_tree().get_first_node_in_group("world_2d") != null or mode == Mode.SAVE and SaveManager.describe_slots()[slot].state != "empty"
+	var needs_confirm: bool = mode == Mode.LOAD and get_tree().get_first_node_in_group("world_2d") != null or mode == Mode.SAVE and SaveManager.inspect_slot(slot).state != "empty"
 	var accepted := true
 	if needs_confirm:
-		accepted = await UiConfirm.ask(self, "SAVELOAD_CONFIRM", tr("SAVELOAD_OVERWRITE" if mode == Mode.SAVE else "SAVELOAD_LOAD_CONFIRM"), "NAV_OK")
+		accepted = await UiConfirm.ask(self, "SAVELOAD_CONFIRM", tr("SAVELOAD_OVERWRITE") % run_name(slot) if mode == Mode.SAVE else tr("SAVELOAD_LOAD_CONFIRM"), "NAV_OK")
 	if accepted and is_open():
 		if mode == Mode.SAVE:
 			if SaveManager.save_game(slot):
 				slot_selected.emit(slot, true)
 				_refresh_texts()
 				_initial_focus().grab_focus()
+			else:
+				_show_failure(slot)
 		else:
 			if SaveManager.load_and_enter(slot):
 				slot_selected.emit(slot, false)
 	_busy = false
 
+## A save that failed says so on its own row: the toast of SaveManager may be hidden behind this screen.
+func _show_failure(slot: int) -> void:
+	if slot < 0 or slot >= _details.size():
+		return
+	_details[slot].text = tr("NOTIF_SAVE_FAILED_MSG") % (slot + 1)
+	_details[slot].add_theme_color_override("font_color", preload("res://scripts/ui/theme/tt_colors.gd").THORNBERRY)
+
 func _on_delete_pressed(slot: int) -> void:
 	if _busy or slot < 0 or slot >= SaveManager.MANUAL_SLOTS or not UiNav.is_stop(_deletes[slot]):
 		return
 	_busy = true
-	var accepted := await UiConfirm.ask(self, "SAVELOAD_CONFIRM", tr("SAVELOAD_DELETE_CONFIRM") % (slot + 1), "SAVELOAD_DELETE")
+	var accepted := await UiConfirm.ask(self, "SAVELOAD_CONFIRM", tr("SAVELOAD_DELETE_CONFIRM") % [run_name(slot), slot + 1], "SAVELOAD_DELETE")
 	if accepted and is_open():
 		SaveManager.delete_save(slot)
 		_refresh_texts()

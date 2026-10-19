@@ -8,9 +8,13 @@ NOTIF_LOAD_BACKUP_TITLE,Gemning gendannet,Save recovered
 NOTIF_LOAD_BACKUP_MSG,Gemningen i slot %d var beskadiget. Den forrige version blev indlæst.,The save in slot %d was damaged. The previous version was loaded.
 NOTIF_SAVE_FAILED_TITLE,Kunne ikke gemme,Could not save
 NOTIF_SAVE_FAILED_MSG,Spillet blev ikke gemt i slot %d. Tjek diskpladsen.,The game was not saved in slot %d. Check your disk space.
+NOTIF_SAVE_FAILED_AUTO_MSG,Den automatiske gemning mislykkedes. Spillet prøver igen om lidt; du kan også gemme selv i en plads.,The autosave failed. The game tries again shortly; you can also save to a slot yourself.
+NOTIF_AUTO_SET_ASIDE_TITLE,Automatisk gemning lagt til side,Autosave set aside
+NOTIF_AUTO_SET_ASIDE_MSG,Den automatiske gemning kunne ikke indlæses i denne udgave. Den er ikke overskrevet; den ligger i gemmemappen som %s.,This version could not load the autosave. It was not overwritten; it is kept in the saves folder as %s.
 SETTINGS_LANGUAGE,Sprog,Language
 SETTINGS_SIZE,Vindue,Window
 SAVELOAD_AUTO,Automatisk gemning,Autosave
+SAVELOAD_AUTO_PREVIOUS,Automatisk gemning (forrige spil),Autosave (previous game)
 SAVELOAD_SLOT,Plads %d,Slot %d
 SAVELOAD_EMPTY,Tom plads,Empty slot
 SAVELOAD_DELETE,Slet,Delete
@@ -18,9 +22,18 @@ SAVELOAD_STATE_NEWER,Kræver en nyere udgave,Needs a newer version
 SAVELOAD_STATE_CORRUPT,Kan ikke læses,Cannot be read
 SAVELOAD_STATE_BACKUP,Fra sikkerhedskopi,From backup
 SAVELOAD_CONFIRM,Er du sikker?,Are you sure?
-SAVELOAD_OVERWRITE,Vil du erstatte denne gemning?,Replace this save?
+SAVELOAD_OVERWRITE,Vil du erstatte »%s«?,Replace “%s”?
 SAVELOAD_LOAD_CONFIRM,Vil du indlæse gemningen? Dit nuværende spil bliver erstattet.,Load this save? It will replace your current game.
-SAVELOAD_DELETE_CONFIRM,Vil du slette gemningen i plads %d?,Delete the save in slot %d?
+SAVELOAD_DELETE_CONFIRM,Vil du slette »%s« i plads %d?,Delete “%s” in slot %d?
+SAVELOAD_RUN_NAME,"%s, dag %d","%s, day %d"
+SAVELOAD_SAVED_NOW,gemt lige nu,saved just now
+SAVELOAD_SAVED_MINUTES,gemt for %d min. siden,saved %d min ago
+SAVELOAD_SAVED_HOURS,gemt for %d t. siden,saved %d h ago
+SAVELOAD_SAVED_YESTERDAY,gemt i går,saved yesterday
+SAVELOAD_SAVED_DAYS,gemt for %d dage siden,saved %d days ago
+SAVELOAD_SAVED_DATE,gemt %s,saved %s
+SAVELOAD_PLAYED_HOURS,spillet %d t. %d min.,played %d h %d min
+SAVELOAD_PLAYED_MINUTES,spillet %d min.,played %d min
 SELECT_HERO_PREFIX,Udseende:,Appearance:
 SELECT_TITLE,Hvem er du?,Who are you?
 PAUSE_PEOPLE,Folk,People
@@ -33,3 +46,5 @@ SETTINGS_DA,"Dansk","Dansk"
 SETTINGS_EN,"English","English"
 SELECT_HERO_BERTIL,"Bertil","Bertil"
 SELECT_HERO_BODIL,"Bodil","Bodil"
+TITLE_NEW_GAME_TITLE,Nyt spil?,New game?
+TITLE_NEW_GAME_CONFIRM,"Vil du starte et nyt spil? »%s« (dag %d) bliver ikke slettet. Du kan indlæse det igen under »Indlæs spil«.","Start a new game? “%s” (day %d) is not deleted. You can load it again from Load Game."

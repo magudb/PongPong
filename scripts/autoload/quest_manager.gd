@@ -45,6 +45,8 @@ const _Data := preload("res://scripts/data/lua_data.gd")
 const QUEST_LUA_DIR := "res://lua/quests"
 const FRIEND_CAP := 10
 const DEFAULT_TRACKED := 3
+## The version of the "quests" section this build writes (SaveManager: a newer "v" makes the slot "newer", not damaged).
+const SECTION_VERSION := 2
 const QUEST_TAGS: Array[String] = ["FIND", "HØST", "BYG", "SKOV", "LÆR", "VENSKAB"]
 
 ## on = <kind> -> the objective fields that must equal the same-named entry of the event. `dialogue_started` also reads any_of, the
@@ -1201,7 +1203,7 @@ func to_dict() -> Dictionary:
 	for qid in active_quests:
 		active[qid] = (active_quests[qid] as QuestRuntime).to_dict()
 	return {
-		"v": 2,
+		"v": SECTION_VERSION,
 		"active": active,
 		"completed": completed_quests.duplicate(),
 		"failed": failed_quests.duplicate(),

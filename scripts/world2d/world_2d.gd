@@ -22,6 +22,10 @@ extends Node2D
 ## GameManager.sleep_until_morning().
 
 signal area_ready(area_id: StringName)
+## The saved world state (placed items, area flags, crops, hotbar) has been applied: after a Continue / load in _ready, and on from_dict.
+## The area is entered BEFORE the state arrives, and EventBus.load_completed fired before the world scene even existed, so world-owned
+## scenery that reads area flags (the greenhouse) redraws on this signal.
+signal state_applied
 
 const MAP_DIR := "res://data/maps/"
 const PLAYER_SCENE_PATH := "res://scenes/world2d/player_2d.tscn"
@@ -53,6 +57,8 @@ var sleeping: bool = false
 var _pass_out_pending: bool = false
 ## Items placed in the world by PlacementService (P20): [{item, cell}], saved by to_dict().
 var placed_items: Array = []
+## Placed records of a save whose item this build cannot place (content drift): kept in the save, adopted again when it can.
+var placed_orphans: Array = []
 ## Per-area JSON-safe flags: area id -> {key: value} (opened chests, picked nodes ...), saved by to_dict().
 var area_flags: Dictionary = {}
 var last_travel_error: String = ""
@@ -710,6 +716,10 @@ func _sleep_sequence(passed_out: bool) -> void:
 		_pose_for_sleep()
 		EventBus.notification_posted.emit(tr("NOTIF_PASSED_OUT_TITLE"), tr("NOTIF_PASSED_OUT"), "sleep")
 	_restore_player()
+	# The day-end autosave of a pass-out ran at 02:00 where the player collapsed; the morning at home is what a Continue must resume
+	# (sleep_until_morning emits no second day_ended). The bed's own day end is saved after its clock already reads the morning.
+	if passed_out and SaveManager.autosave_enabled:
+		SaveManager.autosave()
 	await get_tree().create_timer(0.9).timeout
 	if _rebuild_queued:
 		_flush_rebuild()
@@ -866,6 +876,8 @@ func to_dict() -> Dictionary:
 		"placed": placed_items.duplicate(true),
 		"area_flags": area_flags.duplicate(true),
 	}
+	if not placed_orphans.is_empty():
+		d["placed_orphans"] = placed_orphans.duplicate(true)
 	if farm != null and farm.has_method("to_dict"):
 		d["farm"] = farm.call("to_dict")
 	if greenhouse_farm != null:
@@ -885,7 +897,11 @@ func from_dict(d: Dictionary) -> void:
 
 
 func _apply_saved(d: Dictionary) -> void:
-	placed_items = (d.get("placed", []) as Array).duplicate(true) if d.get("placed", []) is Array else []
+	var saved_placed: Array = d.get("placed", []) if d.get("placed", []) is Array else []
+	var saved_orphans: Array = d.get("placed_orphans", []) if d.get("placed_orphans", []) is Array else []
+	var repaired: Dictionary = FarmEquipment.repair_placed(saved_placed, saved_orphans)
+	placed_items = repaired["placed"]
+	placed_orphans = repaired["orphans"]
 	area_flags = (d.get("area_flags", {}) as Dictionary).duplicate(true) if d.get("area_flags", {}) is Dictionary else {}
 	if farm != null and farm.has_method("from_dict") and d.has("farm"):
 		farm.call("from_dict", d["farm"])
@@ -904,6 +920,7 @@ func _apply_saved(d: Dictionary) -> void:
 		player.global_position = _inside_area(saved_pos as Vector2) if saved_pos is Vector2 else area.get_spawn("default")
 		if "camera" in player and player.get("camera") is Camera2D:
 			(player.get("camera") as Camera2D).reset_smoothing()
+	state_applied.emit()
 
 
 ## `[x, y]` of a saved dictionary as a Vector2; null for anything else (not an Array, too short, an element that is no number -

@@ -89,7 +89,6 @@ config = {
     first_weekday = 0,             -- weekday of day 1 of every season: 0 = Monday ... 6 = Sunday
     night_start_hour = 20,         -- is_night(): hour >= night_start_hour or hour < night_end_hour (the raw hours 24 and 25 count as night)
     night_end_hour = 5,
-    auto_save_minutes = 30,
     -- weather rolled once per day: weights per season (normalised by the roller); ids klart regn taage sne torden
     weather_chances = {
       foraar = { klart = 0.60, regn = 0.25, taage = 0.15 },

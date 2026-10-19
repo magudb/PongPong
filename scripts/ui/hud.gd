@@ -16,6 +16,12 @@ var _social_space: Control
 var current_item_badge: CurrentItemBadge
 @onready var construction: Control = %ConstructionChip
 @onready var toasts: ToastStack = %ToastStack
+## Bottom-left chip: "Gemt" for SAVED_SHOW_SECONDS after a save, "! Ikke gemt" from a failed save until the next one succeeds
+## (a toast may be hidden under a screen, this one is not missed).
+const SAVED_SHOW_SECONDS := 2.5
+var save_chip: PanelContainer
+var _save_text: Label
+var _saved_shown := 0
 var _entries: Array = []
 var _selected := 0
 var _hour := 6
@@ -54,6 +60,7 @@ func _ready() -> void:
 	current_item_badge.offset_top = -156
 	current_item_badge.offset_bottom = -114
 	tool_name_label.visible = false
+	_build_save_chip()
 	toasts.z_index = 100
 	EventBus.modal_changed.connect(func(_stack): toasts.visible = not GameManager.is_modal_open())
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("hud", Callable(get_script(), &"fixture_setup"))
@@ -68,6 +75,8 @@ func _ready() -> void:
 	EventBus.player_spawned.connect(_player_spawned)
 	EventBus.new_game_started.connect(_refresh_all)
 	EventBus.load_completed.connect(func(_slot: int): _refresh_all())
+	EventBus.save_completed.connect(func(_slot: int): _show_save_state())
+	EventBus.save_failed.connect(func(_slot: int, _code: String): _show_save_state())
 	EventBus.quest_accepted.connect(_quests_changed)
 	EventBus.quest_completed.connect(_quests_changed)
 	EventBus.quest_failed.connect(_quests_changed)
@@ -91,6 +100,8 @@ func _ready() -> void:
 			if mode == &"action":
 				toasts.clear())
 	_refresh_all()
+	if SaveManager.save_failing:
+		_show_save_state()                   # a HUD built while saving fails (a load from the pause menu) shows it from the start
 
 func _refresh_all() -> void:
 	if not is_inside_tree() or is_queued_for_deletion():
@@ -222,6 +233,39 @@ func _refresh_quests() -> void:
 			label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			row.add_child(label)
+
+func _build_save_chip() -> void:
+	save_chip = PanelContainer.new()
+	save_chip.name = "SaveChip"
+	save_chip.theme_type_variation = &"PillGold"
+	save_chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	save_chip.anchor_top = 1.0
+	save_chip.anchor_bottom = 1.0
+	save_chip.offset_left = 40
+	save_chip.offset_top = -84
+	save_chip.offset_bottom = -40
+	save_chip.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	save_chip.visible = false
+	_save_text = Label.new()
+	_save_text.name = "SaveText"
+	_save_text.theme_type_variation = &"Bold15Gold"
+	save_chip.add_child(_save_text)
+	add_child(save_chip)
+
+## SaveManager.save_failing decides: the failure stays until a save succeeds; a success shows "Gemt" briefly.
+func _show_save_state() -> void:
+	if not is_inside_tree() or is_queued_for_deletion():
+		return
+	var failing := bool(SaveManager.save_failing)
+	_save_text.text = tr("HUD_SAVE_FAILED" if failing else "HUD_SAVED")
+	save_chip.visible = true
+	_saved_shown += 1
+	if failing:
+		return
+	var shown := _saved_shown
+	await get_tree().create_timer(SAVED_SHOW_SECONDS, true).timeout
+	if is_instance_valid(save_chip) and shown == _saved_shown and not SaveManager.save_failing:
+		save_chip.visible = false
 
 func _refresh_construction() -> void:
 	var home := Svc.node("HomeManager")

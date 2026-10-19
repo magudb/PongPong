@@ -344,9 +344,10 @@ func to_dict() -> Dictionary:
 		out["%d,%d" % [cell.x, cell.y]] = (plots[cell] as PlotData).to_dict()
 	return {"plots": out}
 
-## Reject malformed saves before touching the live model; older valid plots default new fields.
+## Reject malformed saves before touching the live model; older valid plots default new fields. STRUCTURE only: a crop that the
+## current Lua catalogue no longer has (renamed, removed, no longer regrowing) is content drift, not damage, and from_dict repairs it
+## (see _repair_drift); rejecting it here would make the whole save unreadable.
 static func validate_dict(value: Variant) -> bool:
-	var definitions := crop_definitions()
 	if not value is Dictionary or not value.get("plots", {}) is Dictionary:
 		return false
 	for key in value.get("plots", {}):
@@ -369,13 +370,26 @@ static func validate_dict(value: Variant) -> bool:
 		if int(row.get("state", 0)) > State.WITHERED or not row.get("crop_id", "") is String:
 			return false
 		var crop := str(row.get("crop_id", ""))
-		if crop != "" and not definitions.has(crop):
-			return false
 		if int(row.get("state", 0)) >= State.PLANTED and crop == "":
 			return false
-		if bool(row.get("regrowing", false)) and (crop == "" or int(definitions[crop].get("regrow_days", 0)) <= 0):
+		if bool(row.get("regrowing", false)) and crop == "":
 			return false
 	return true
+
+
+## A loaded plot against today's crop catalogue: a crop that no longer exists leaves a tilled plot behind, a crop that no longer
+## regrows stops regrowing (it grows on as a fresh planting).
+static func _repair_drift(p: PlotData, definitions: Dictionary) -> void:
+	if definitions.is_empty():                # no catalogue loaded at all (a tool, a broken Lua): nothing to compare against
+		return
+	if p.crop_id != &"" and not definitions.has(String(p.crop_id)):
+		p.crop_id = &""
+		p.state = State.TILLED
+		p.growth_days = 0.0
+		p.yield_amount = 0
+		p.regrowing = false
+	elif p.regrowing and int((definitions[String(p.crop_id)] as Dictionary).get("regrow_days", 0)) <= 0:
+		p.regrowing = false
 
 func validate_save(value: Variant) -> bool:
 	return validate_dict(value)
@@ -384,6 +398,7 @@ func from_dict(value: Dictionary) -> bool:
 	if not validate_save(value):
 		return false
 	configure_map(map)
+	var definitions := crop_definitions()
 	var dirty := plots.duplicate()
 	var loaded := {}
 	for key in value.get("plots", {}):
@@ -404,6 +419,7 @@ func from_dict(value: Dictionary) -> bool:
 		p.auto_water_days = int(row.get("auto_water_days", 0))
 		p.yield_amount = int(row.get("yield_amount", 0))
 		p.regrowing = bool(row.get("regrowing", false))
+		_repair_drift(p, definitions)
 		loaded[cell] = p
 		dirty[cell] = p
 	plots = loaded

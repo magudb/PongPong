@@ -87,6 +87,8 @@ signal notification_posted(title: String, message: String, icon: String)
 ## An open/close REQUEST that the owning panel acts on (it is not a state report; GameManager.modal_changed is).
 signal ui_panel_toggled(panel_name: StringName, is_open: bool)
 signal save_completed(slot: int)
+## A save could not be written (SaveManager.last_error carries the detail). code: write | gather.
+signal save_failed(slot: int, code: String)
 signal load_completed(slot: int)
 
 # --- Feature addendum 3.1: home, hygge, furniture, wardrobe, loot, friends ---

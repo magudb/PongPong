@@ -80,6 +80,10 @@ var _base_phase: GamePhase = GamePhase.MENU
 var _modals: Array[Dictionary] = []          # [{name: StringName, pauses: bool}] in push order
 var _config_overrides: Dictionary = {}       # path -> value; tests and the debug console only, never saved
 var _quitting := false
+var _quit_asking := false                    # save_before_quit is waiting for the answer to the failed-save question
+## Test seam (no behaviour of its own): when valid, quit_game calls it with the exit code instead of ending the process, after
+## everything quit_game decides (the save, the question); the game keeps running.
+var quit_seam: Callable = Callable()
 
 
 func _ready() -> void:
@@ -88,13 +92,50 @@ func _ready() -> void:
 	get_tree().auto_accept_quit = false
 	get_tree().root.close_requested.connect(quit_game)
 
-func quit_game(code := 0) -> void:
+## The one way out of the game: the window's close button, Cmd+Q / Alt+F4 (close_requested), the title's and the pause menu's
+## Quit, the updater. `save` = true first autosaves a running world (save_before_quit); when the player answers the failed-save
+## question with Cancel the game keeps running. The updater (it has just saved) and the release smoke pass `save` = false.
+func quit_game(code := 0, save := true, asker: Control = null) -> void:
+	if _quitting or _quit_asking:return
+	if save and not await save_before_quit(asker):return
 	if _quitting:return
+	if quit_seam.is_valid():
+		quit_seam.call(code)
+		return
 	_quitting = true
 	get_tree().paused = true
 	var audio := get_node_or_null("/root/AudioManager")
 	if audio!=null and audio.has_method("prepare_shutdown"):await audio.prepare_shutdown()
 	get_tree().quit(code)
+
+
+## Autosaves a running world before the game closes; true = go on and quit. Nothing to save (no world: the title, the
+## character select) and an event scene in progress (its effects have not committed, SaveManager refuses) are true at once.
+## A failed save asks PAUSE_SAVE_FAILED_CONFIRM on `asker` with Cancel as the default; without an asker (the window's close
+## button) the question gets a host Control of its own on the GameUI layer (the HUDs cannot host it: their controls never take focus).
+func save_before_quit(asker: Control = null) -> bool:
+	if get_tree().get_first_node_in_group("world_2d") == null or is_modal_open(&"event"):
+		return true
+	var saves := get_node_or_null("/root/SaveManager")
+	if saves == null or not saves.has_method("autosave") or bool(saves.call("autosave")):
+		return true
+	var host: Control = null
+	if asker == null or not asker.is_visible_in_tree():
+		host = Control.new()
+		host.name = "QuitQuestion"
+		host.process_mode = Node.PROCESS_MODE_ALWAYS
+		host.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var layer := get_tree().get_first_node_in_group("game_ui")
+		(layer if layer != null else get_tree().root).add_child(host)
+		host.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		asker = host
+	_quit_asking = true
+	var confirm: Script = load("res://scripts/ui/components/ui_confirm.gd")
+	var accepted: bool = await confirm.call("ask", asker, "NOTIF_SAVE_FAILED_TITLE", "PAUSE_SAVE_FAILED_CONFIRM", "NAV_OK")
+	_quit_asking = false
+	if host != null:
+		host.queue_free()
+	return accepted
 
 
 func _process(delta: float) -> void:

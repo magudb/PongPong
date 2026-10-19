@@ -85,14 +85,40 @@ class FakeSection extends Node:
 		data = {"v": 1, "n": day}
 
 
+## A section that declares its save version (SAVE-10) and refuses one value of "n" (a section whose from_dict says no).
+class VersionedSection extends FakeSection:
+	const SECTION_VERSION := 2
+	var refuse_n := -1
+
+	func from_dict(d: Dictionary) -> Variant:
+		if int(d.get("n", 0)) == refuse_n:
+			return false
+		return super.from_dict(d)
+
+
 ## SaveManager with two virtual seams pinned: the time zone (the offset of the machine the test runs on would otherwise decide
 ## the v1 time stamp checks) and the byte store (a disk that loses half of the bytes without reporting an error).
 class ProbeManager extends "res://scripts/autoload/save_manager.gd":
 	var bias_minutes := 0
 	var lose_bytes := false
+	var fail_temp_moves := false               # moving a .tmp into place fails (an antivirus or backup tool holds it)
+	var delete_target_first := false           # ... after the destination was deleted, as the engine's Windows rename does
 
 	func _system_bias_minutes() -> int:
 		return bias_minutes
+
+	var reads := 0                             # files parsed (SAVE-12: the slot list must not parse unchanged files again)
+
+	func _read_json_file(path: String) -> Dictionary:
+		reads += 1
+		return super._read_json_file(path)
+
+	func _replace_file(source: String, destination: String) -> Error:
+		if fail_temp_moves and source.ends_with(".tmp"):
+			if delete_target_first and FileAccess.file_exists(destination):
+				DirAccess.remove_absolute(destination)
+			return ERR_FILE_CANT_WRITE
+		return super._replace_file(source, destination)
 
 	func _store_text(file: FileAccess, text: String) -> void:
 		file.store_string(text.substr(0, int(text.length() / 2.0)) if lose_bytes else text)
@@ -190,6 +216,11 @@ func run(p_t) -> void:
 	_test_load_keeps_manual_slot()
 	_test_write_failure()
 	await _test_autosave()
+	_test_auto_runs()
+	_test_inspect_cache()
+	_test_section_versions()
+	_test_content_drift()
+	_test_drift_buckets()
 	_test_summaries()
 	_test_summary_types()
 	_test_latest_slot()
@@ -784,15 +815,33 @@ func _test_json_rules() -> void:
 	t.check("json_keys_are_sorted_in_the_file", precise_text.find("\"alpha\"") >= 0 and precise_text.find("\"alpha\"") < precise_text.find("\"stamp\"") and precise_text.find("\"stamp\"") < precise_text.find("\"zeta\""), "alpha, stamp, zeta in the text of the file")
 	t.check("json_huge_numbers_stay_floats", typeof(pd["big"]) == TYPE_FLOAT and typeof(pd["edge"]) == TYPE_FLOAT and typeof(pd["whole"]) == TYPE_INT, "1e20 and 2^53 stay float, 2.0 becomes int 2")
 	_clear_fakes()
-	# a section whose to_dict() is not a Dictionary is left out of the save, with an error, and the rest still saves and loads
+	# a section whose to_dict() is not a Dictionary is left out of the gathered payload, with an error ...
 	var bad := BadSection.new()
 	sm.register_section("bad_dict", bad)
 	t.allow("did not return a Dictionary")
 	var payload_bad: Dictionary = sm.gather_payload()
 	t.check("section_with_bad_to_dict_is_left_out", not payload_bad.has("bad_dict") and payload_bad.has("economy") and payload_bad.has("meta"), "gather skips it and keeps the other sections")
 	t.expect_allowed("did not return a Dictionary", 1, "the bad to_dict() is reported once")
-	t.check("section_with_bad_to_dict_save_and_load_work", sm.save_game(0) and sm.load_game(0), "the save is still written and loads")
+	# ... and save_game refuses such a payload (SAVE-11; it used to write it, and the next load reset the missing section to new-game
+	# state): false, last_error "gather", the slot's file and .bak stay byte for byte, a manual save says so, an autosave writes nothing
 	sm.unregister_section("bad_dict")
+	sm.save_game(0)
+	_set_state(4321, 7)
+	sm.save_game(0)
+	var file_before := _read_text(sm.slot_path(0))
+	var bak_before := _read_text(sm.backup_path(0))
+	sm.register_section("bad_dict", bad)
+	_notes.clear()
+	_saved_slots.clear()
+	var refused: bool = not sm.save_game(0)
+	var refused_auto: bool = not sm.autosave()
+	t.expect_allowed("did not return a Dictionary", 3, "each refused save reports the bad to_dict() again")
+	t.check("section_with_bad_to_dict_refuses_the_save", refused and refused_auto and sm.last_error.get("code") == "gather" and str(sm.last_error.get("detail", "")).contains("bad_dict")
+		and _read_text(sm.slot_path(0)) == file_before and _read_text(sm.backup_path(0)) == bak_before and not sm.has_save(sm.AUTO_SLOT) and _saved_slots.is_empty(),
+		"save_game(0) and autosave() return false (last_error %s); save_0.json and save_0.bak.json are unchanged, no auto slot, no save_completed" % sm.last_error)
+	t.check("section_with_bad_to_dict_manual_feedback", _notes.size() >= 1 and str(_notes[0][0]) == sm.tr("NOTIF_SAVE_FAILED_TITLE"), "the manual save posts NOTIF_SAVE_FAILED (%d notes)" % _notes.size())
+	sm.unregister_section("bad_dict")
+	t.check("section_with_bad_to_dict_control", sm.save_game(0) and sm.load_game(0) and eco.gold == 4321, "without the broken section the same save is written and loads")
 	bad.free()
 	# nesting deeper than 64 levels is cut off with a warning, not a stack overflow
 	var deep: Dictionary = {"v": 1}
@@ -1192,8 +1241,57 @@ func _test_slots_and_backup() -> void:
 	second.save_dir = _scratch
 	t.root.add_child(second)
 	t.check("stale_temp_files_swept", not FileAccess.file_exists(sm.save_dir.path_join("save_4.json.tmp")) and _read_text(sm.save_dir.path_join("save_4.json")) == "keep me",
-		"a crash leftover (.tmp) is removed when SaveManager starts, real saves stay")
+		"a crash leftover (.tmp) next to its intact file is removed when SaveManager starts, real saves stay")
 	second.free()
+	_test_interrupted_replacement()
+
+
+## SAVE-03: a verified temp file is never deleted while its target is missing, the Windows replacement goes through <file>.old,
+## and start-up finishes whatever an interrupted replacement left behind.
+func _test_interrupted_replacement() -> void:
+	_fresh()
+	_set_state(100, 1)
+	sm.save_game(1)
+	# the engine's Windows rename deleted the target, then the move failed: the verified temp stays, it is the only copy
+	var windowsish := _new_probe()
+	windowsish.fail_temp_moves = true
+	windowsish.delete_target_first = true
+	_set_state(200, 2)
+	var failed: bool = not windowsish.save_game(1)
+	t.check("failed_move_keeps_verified_temp", failed and not FileAccess.file_exists(sm.slot_path(1)) and _gold_in(sm.slot_path(1) + ".tmp") == 200 and windowsish.last_error.get("code") == "write",
+		"target deleted, move failed: save_game false, save_1.json.tmp (gold %d) is kept" % _gold_in(sm.slot_path(1) + ".tmp"))
+	windowsish.free()
+	var recovered := _new_probe()
+	t.check("orphan_temp_promoted_at_start", _gold_in(sm.slot_path(1)) == 200 and not FileAccess.file_exists(sm.slot_path(1) + ".tmp") and recovered.inspect_slot(1)["state"] == &"ok",
+		"the next start makes the orphaned temp the save (gold %d)" % _gold_in(sm.slot_path(1)))
+	recovered.free()
+	# a temp that does not parse (a crash while the very first save of a slot was written) is garbage, not a save
+	_write_text(sm.slot_path(5) + ".tmp", "{ half")
+	var swept := _new_probe()
+	t.check("orphan_damaged_temp_removed", not FileAccess.file_exists(sm.slot_path(5) + ".tmp") and not FileAccess.file_exists(sm.slot_path(5)), "a damaged orphan .tmp is removed, no save_5.json appears")
+	swept.free()
+	# the Windows protocol: old file aside, temp in, .old gone; a failed move puts the old file back
+	var aside := _new_probe()
+	aside.replace_via_old = true
+	_set_state(300, 3)
+	var moved: bool = aside.save_game(1)
+	t.check("replace_via_old_saves", moved and _gold_in(sm.slot_path(1)) == 300 and not FileAccess.file_exists(sm.slot_path(1) + ".old") and not FileAccess.file_exists(sm.slot_path(1) + ".tmp") and _gold_in(sm.backup_path(1)) == 200,
+		"save_1.json gold %d, .bak gold %d, no .old or .tmp left" % [_gold_in(sm.slot_path(1)), _gold_in(sm.backup_path(1))])
+	aside.fail_temp_moves = true
+	_set_state(400, 4)
+	var refused: bool = not aside.save_game(1)
+	t.check("replace_via_old_failure_restores_target", refused and _gold_in(sm.slot_path(1)) == 300 and not FileAccess.file_exists(sm.slot_path(1) + ".old") and not FileAccess.file_exists(sm.slot_path(1) + ".tmp"),
+		"the move of the temp failed: the old file is back in place (gold %d), nothing left over" % _gold_in(sm.slot_path(1)))
+	aside.free()
+	# a crash between the two moves: only save_1.json.old (and no usable temp) is left: start-up puts it back; next to a file it is removed
+	DirAccess.rename_absolute(sm.slot_path(1), sm.slot_path(1) + ".old")
+	_write_text(sm.slot_path(2) + ".old", "older")
+	_set_state(500, 5)
+	sm.save_game(2)
+	var restorer := _new_probe()
+	t.check("old_file_restored_at_start", _gold_in(sm.slot_path(1)) == 300 and not FileAccess.file_exists(sm.slot_path(1) + ".old") and _gold_in(sm.slot_path(2)) == 500 and not FileAccess.file_exists(sm.slot_path(2) + ".old"),
+		"save_1.json.old became save_1.json (gold %d); save_2.json.old next to save_2.json was removed" % _gold_in(sm.slot_path(1)))
+	restorer.free()
 
 
 ## current_slot is a MANUAL slot or NO_SLOT, never the auto slot: a caller doing save_game(current_slot) after Continue /
@@ -1303,12 +1401,18 @@ func _test_write_failure() -> void:
 	_notes.clear()
 	DirAccess.make_dir_recursive_absolute(sm.slot_path(sm.AUTO_SLOT) + ".tmp")
 	sm._auto_save_timer = 100.0
+	sm.save_failing = false                                           # the manual failure above began a streak: start a fresh one
+	var failures := _listen(bus.save_failed)
 	var auto_ok: bool = sm.autosave()
-	t.check("write_failure_autosave_is_silent", not auto_ok and _notes.is_empty(), "no toast for a failed autosave")
-	t.check("write_failure_autosave_restarts_countdown", is_zero_approx(sm._auto_save_timer), "a failed autosave does not retry every frame: the timer starts again (%s)" % sm._auto_save_timer)
+	var auto_again: bool = sm.autosave()
+	# SAVE-05: a failed autosave used to say nothing and wait a whole interval; now the first failure of a streak toasts (the HUD keeps
+	# showing it), the next ones do not, and it is tried again AUTOSAVE_RETRY_SECONDS later
+	t.check("write_failure_autosave_toasts_once", not auto_ok and not auto_again and _notes.size() == 1 and str(_notes[0][1]) == sm.tr("NOTIF_SAVE_FAILED_AUTO_MSG") and sm.save_failing
+		and failures.size() == 2 and failures[0][0] == sm.AUTO_SLOT and failures[0][1] == "write", "two failed autosaves: one toast (%d), save_failed %s" % [_notes.size(), failures])
+	t.check("write_failure_autosave_retries_soon", is_equal_approx(sm._auto_save_timer, sm.auto_save_interval_seconds - sm.AUTOSAVE_RETRY_SECONDS), "a failed autosave does not retry every frame, nor wait a whole interval: the next try is %s s away" % (sm.auto_save_interval_seconds - sm._auto_save_timer))
 	DirAccess.remove_absolute(sm.slot_path(3) + ".tmp")
 	DirAccess.remove_absolute(sm.slot_path(sm.AUTO_SLOT) + ".tmp")
-	t.check("write_recovers_after_failure", sm.save_game(3) and _gold_in(sm.slot_path(3)) == 777 and sm.last_error.is_empty(), "after a failed write the next good save clears last_error")
+	t.check("write_recovers_after_failure", sm.save_game(3) and _gold_in(sm.slot_path(3)) == 777 and sm.last_error.is_empty() and not sm.save_failing, "after a failed write the next good save clears last_error and save_failing")
 	# the rename itself fails (a directory with a file in it sits where the save belongs): reported, nothing left behind
 	var blocked: String = sm.slot_path(2)
 	DirAccess.make_dir_recursive_absolute(blocked)
@@ -1344,8 +1448,9 @@ func _test_write_failure() -> void:
 	t.check("short_write_feedback", _notes.size() == 1 and str(_notes[0][0]) == sm.tr("NOTIF_SAVE_FAILED_TITLE"), "the player is told (NOTIF_SAVE_FAILED)")
 	DirAccess.remove_absolute(sm.slot_path(sm.AUTO_SLOT))
 	_notes.clear()
+	writer.save_failing = false                                       # a fresh streak: the first autosave failure toasts
 	var short_auto: bool = writer.autosave()
-	t.check("short_write_autosave_leaves_no_file", not short_auto and not sm.has_save(sm.AUTO_SLOT) and _notes.is_empty() and not FileAccess.file_exists(sm.slot_path(sm.AUTO_SLOT) + ".tmp"), "a lossy autosave writes no auto slot at all (a half file would later be 'damaged') and says nothing")
+	t.check("short_write_autosave_leaves_no_file", not short_auto and not sm.has_save(sm.AUTO_SLOT) and _notes.size() == 1 and not FileAccess.file_exists(sm.slot_path(sm.AUTO_SLOT) + ".tmp"), "a lossy autosave writes no auto slot at all (a half file would later be 'damaged'); the failure is told once")
 	writer.lose_bytes = false
 	var whole_ok: bool = writer.save_game(3)
 	t.check("short_write_control_saves", whole_ok and _gold_in(sm.slot_path(3)) == 555 and _gold_in(sm.backup_path(3)) == 777, "the same probe with intact bytes saves (gold 555), the previous save is the .bak (777)")
@@ -1356,6 +1461,309 @@ func _test_write_failure() -> void:
 	var made_again: bool = sm.save_game(1) and FileAccess.file_exists(sm.slot_path(1))
 	DirAccess.make_dir_recursive_absolute(_scratch)                  # (a no-op when the save made it)
 	t.check("save_recreates_missing_directory", made_again and _gold_in(sm.slot_path(1)) == 555, "the scratch directory was removed, save_game(1) wrote save_1.json anyway")
+
+
+# ================================================================ the autosave of another run, damaged auto files (SAVE-01, SAVE-02)
+
+func _quarantined() -> Array:
+	return _files().filter(func(f: String) -> bool: return f.begins_with("save_auto.damaged-"))
+
+
+func _test_auto_runs() -> void:
+	_fresh()
+	var prev: String = sm.slot_path(sm.PREV_AUTO_SLOT)
+	_set_state(100, 1, "Ada")
+	var run_a: String = sm.run_id
+	sm.autosave()
+	sm.autosave()
+	t.check("auto_same_run_keeps_no_previous", not FileAccess.file_exists(prev) and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 100 and run_a != "" and str(_read_json(sm.slot_path(sm.AUTO_SLOT))["meta"]["run_id"]) == run_a,
+		"two autosaves of one run: no save_auto.prev.json, meta.run_id %s" % run_a)
+	# New game: the first autosave of the new run keeps the old run's autosave as save_auto.prev.json
+	_set_state(200, 2, "Bo")
+	var run_b: String = sm.run_id
+	sm.autosave()
+	t.check("auto_new_run_keeps_previous", run_b != run_a and _gold_in(prev) == 100 and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 200,
+		"save_auto.prev.json holds the old run (gold %d), save_auto.json the new one (gold %d)" % [_gold_in(prev), _gold_in(sm.slot_path(sm.AUTO_SLOT))])
+	sm.autosave()
+	t.check("auto_previous_survives_later_autosaves", _gold_in(prev) == 100, "the second autosave of the new run leaves save_auto.prev.json alone")
+	var rows: Array[Dictionary] = sm.describe_slots()
+	t.check("auto_previous_is_listed_read_only", rows.size() == 8 and rows[7]["slot"] == sm.PREV_AUTO_SLOT and rows[7]["is_auto"] and rows[7]["is_previous"] and rows[7]["state"] == &"ok" and rows[7]["summary"].get("gold") == 100
+		and sm.get_latest_slot() == sm.AUTO_SLOT and not sm.save_game(sm.PREV_AUTO_SLOT),
+		"an 8th row (slot %d, is_previous, gold %s); Continue still picks the auto slot; save_game cannot write it" % [rows[-1]["slot"], rows[-1]["summary"].get("gold")])
+	# loading the previous game makes it the running one: the next autosave swaps the two
+	_set_state(1, 1)
+	var loaded: bool = sm.load_game(sm.PREV_AUTO_SLOT)
+	t.check("auto_previous_loads", loaded and eco.gold == 100 and gm.player_name == "Ada" and sm.run_id == run_a and sm.current_slot == sm.NO_SLOT, "gold %d, run %s, current_slot %d" % [eco.gold, sm.run_id, sm.current_slot])
+	sm.autosave()
+	t.check("auto_previous_swaps", _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 100 and _gold_in(prev) == 200, "auto gold %d, previous gold %d" % [_gold_in(sm.slot_path(sm.AUTO_SLOT)), _gold_in(prev)])
+	# loading a manual slot of another run is a run change too
+	_set_state(300, 3, "Cy")
+	sm.save_game(0)
+	sm.load_game(0)
+	sm.autosave()
+	t.check("auto_manual_load_of_other_run_keeps_previous", _gold_in(prev) == 100 and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 300, "after loading slot 0 (run Cy) the autosave of run Ada went to the previous file")
+	# a save written before run ids existed belongs to the run with its player, farm and hero
+	var legacy: Dictionary = _read_json(sm.slot_path(sm.AUTO_SLOT))
+	(legacy["meta"] as Dictionary).erase("run_id")
+	_put(sm.AUTO_SLOT, legacy)
+	var prev_bytes := _read_text(prev)
+	sm.load_game(sm.AUTO_SLOT)
+	sm.autosave()
+	var fresh_run: String = str(_read_json(sm.slot_path(sm.AUTO_SLOT))["meta"]["run_id"])
+	t.check("auto_legacy_file_same_run", _read_text(prev) == prev_bytes and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 300, "Continue of a save without meta.run_id, then an autosave: the previous file is untouched")
+	t.check("auto_legacy_run_gets_a_new_id", fresh_run == sm.run_id and fresh_run != "" and not fresh_run.begins_with(sm.LEGACY_RUN_PREFIX), "the run of a save without meta.run_id saves on as %s" % fresh_run)
+	# two runs of before run ids with the same names and hero (siblings on one machine): loading one never overwrites the other's autosave
+	var sibling: Dictionary = _read_json(sm.slot_path(sm.AUTO_SLOT))
+	(sibling["meta"] as Dictionary).erase("run_id")
+	(sibling["economy"] as Dictionary)["gold"] = 444
+	_put(sm.AUTO_SLOT, sibling)
+	var own: Dictionary = sibling.duplicate(true)
+	(own["economy"] as Dictionary)["gold"] = 555
+	_put(1, own)
+	sm.load_game(1)
+	sm.autosave()
+	t.check("auto_legacy_sibling_keeps_previous", _gold_in(prev) == 444 and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 555,
+		"a legacy manual slot loaded over another legacy autosave of the same names: that autosave went to the previous file (gold %d)" % _gold_in(prev))
+	prev_bytes = _read_text(prev)
+	# a damaged or unreadable auto file is quarantined, never overwritten; the newest QUARANTINE_KEEP are kept
+	_write_text(sm.slot_path(sm.AUTO_SLOT), "{ damaged 1")
+	sm.clock_override = 5000.0
+	_notes.clear()
+	var saved: bool = sm.autosave()
+	var kept: Array = _quarantined()
+	t.check("auto_damaged_file_quarantined", saved and kept.size() == 1 and _read_text(_scratch.path_join(kept[0])) == "{ damaged 1" and _gold_in(sm.slot_path(sm.AUTO_SLOT)) == 555 and _read_text(prev) == prev_bytes,
+		"the autosave was written and the damaged file kept as %s; the previous file is untouched" % [kept])
+	t.check("auto_damaged_file_player_told", _notes.size() == 1 and str(_notes[0][0]) == sm.tr("NOTIF_AUTO_SET_ASIDE_TITLE") and kept.size() == 1 and str(_notes[0][1]).contains(str(kept[0])),
+		"one toast that names the file it was kept as: %s" % [_notes])
+	var drifted: Dictionary = _read_json(sm.slot_path(sm.AUTO_SLOT))
+	(drifted["economy"] as Dictionary).erase("gold")          # stands in for content the current build no longer accepts
+	for i in 3:
+		_put(sm.AUTO_SLOT, drifted if i == 0 else {"meta": {"version": 99}})
+		sm.clock_override = 5001.0 + i
+		sm.autosave()
+	kept = _quarantined()
+	kept.sort()
+	t.check("auto_quarantine_keeps_newest", kept == ["save_auto.damaged-5001.json", "save_auto.damaged-5002.json", "save_auto.damaged-5003.json"] and _read_json(_scratch.path_join(kept[0]))["economy"].has("inventory"),
+		"an invalid and two newer-build auto files were quarantined too; only the newest %d are kept: %s" % [sm.QUARANTINE_KEEP, kept])
+	sm.clock_override = -1.0
+
+
+# ================================================================ content drift (SAVE-07)
+
+## save.survives_content_drift: records that the CURRENT Lua catalogue does not know (a crop, a species, a building type, a farm
+## machine renamed or removed; a building tier or a dungeon depth that was cut) leave the slot loadable; the owners repair them
+## (tilled plot, orphans bucket, clamp) instead of every validator calling the whole file damaged.
+func _test_content_drift() -> void:
+	_fresh()
+	_set_state(500, 5)
+	var doc := _payload()
+	doc["husbandry"] = {"v": 2, "counter": 4,
+		"animals": {
+			"animal_1": {"id": "animal_1", "species": "dodo", "building_id": "building_1", "name": "Dodo"},
+			"animal_2": {"id": "animal_2", "species": "chicken", "building_id": "building_2", "name": "Høne"}},
+		"buildings": {
+			"building_1": {"id": "building_1", "building_type": "coop", "tier": 99, "animals_inside": ["animal_1"], "cell": [-1, -1]},
+			"building_2": {"id": "building_2", "building_type": "ark", "tier": 1, "animals_inside": ["animal_2"], "cell": [-1, -1]}}}
+	doc["world"] = {"v": 1, "area": "farm", "player_pos": [0, 0], "area_flags": {},
+		"farm": {"plots": {"3,4": {"state": 3, "crop_id": "retired_crop", "growth_days": 1.5}}},
+		"placed": [{"item": "retired_machine", "area": "farm", "cell": [5, 5]}]}
+	if sm.has_section("dungeon"):
+		doc["dungeon"] = (doc["dungeon"] as Dictionary).merged({"deepest": 40, "stones": [3, 40]}, true)
+	_put(1, doc)
+	var info: Dictionary = sm.inspect_slot(1)
+	var loaded: bool = sm.load_game(1)
+	var kept: Dictionary = ah.get("orphans") if "orphans" in ah else {}
+	var coop: Variant = ah.buildings.get(&"building_1")
+	t.check("survives_content_drift", info["state"] == &"ok" and loaded, "an unknown crop, species, building type and machine and a cut tier / depth: the slot is %s and loads (%s)" % [info["state"], sm.last_error])
+	t.check("content_drift_orphans_and_clamps", (kept.get("animals", {}) as Dictionary).has("animal_1") and (kept.get("animals", {}) as Dictionary).has("animal_2") and (kept.get("buildings", {}) as Dictionary).has("building_2")
+		and coop != null and int(coop.tier) < 99 and not ah.animals.has(&"animal_1"),
+		"the dodo and the animal of the unknown 'ark' wait in the orphans bucket with the ark; the coop is clamped to tier %s" % [coop.tier if coop != null else "-"])
+	var again: Dictionary = ah.to_dict()
+	t.check("content_drift_orphans_are_saved", again.has("orphans") and (again["orphans"]["animals"] as Dictionary).has("animal_1"), "the next save still holds the orphaned records")
+	if sm.has_section("dungeon"):
+		var floors: Node = sm.section_node("dungeon")
+		t.check("content_drift_dungeon_depth_clamped", int(floors.get("deepest")) <= int((floors.get("cfg") as Dictionary).get("max_floor", 12)) and not (floors.get("stones") as Dictionary).has(40), "deepest %s" % floors.get("deepest"))
+	# the world's parts: FarmGrid and the placed records repair themselves when the world applies the save
+	var grid := FarmGrid.new()
+	t.root.add_child(grid)
+	var farm_cell: Vector2i = grid.farmable_cells()[0] if not grid.farmable_cells().is_empty() else Vector2i(3, 4)
+	var grid_ok: bool = grid.from_dict({"plots": {"%d,%d" % [farm_cell.x, farm_cell.y]: {"state": 3, "crop_id": "retired_crop", "growth_days": 1.5}}})
+	var plot: Variant = grid.get_plot(farm_cell)
+	t.check("content_drift_unknown_crop_leaves_tilled_plot", grid_ok and plot != null and plot.crop_id == &"" and plot.state == FarmGrid.State.TILLED, "plot %s: %s" % [farm_cell, plot.to_dict() if plot != null else "-"])
+	grid.free()
+	var mended: Dictionary = FarmEquipment.repair_placed(doc["world"]["placed"])
+	t.check("content_drift_unknown_machine_is_orphaned", mended.placed.is_empty() and mended.orphans.size() == 1 and mended.orphans[0].item == "retired_machine", "%s" % [mended])
+	_clear_husbandry()
+
+
+## SAVE-06: what a load cannot hold any more is kept, not pruned: furniture, clothing and weapons the catalogue lost (or copies above
+## today's cap) wait in their section's orphans bucket, saved and adopted again later; backpack slots beyond the 24 (a smaller
+## max_stack) are owed and handed back on a morning with room.
+func _test_drift_buckets() -> void:
+	_fresh()
+	if sm.has_section("furniture"):
+		var fm: Node = sm.section_node("furniture")
+		var cap: int = fm.max_stack_of("chair_pine")
+		fm.from_dict({"v": 1, "stock": {"retired_chair": 2, "chair_pine": cap + 5}, "placed": [{"item": "retired_lamp", "cell": [1, 1], "rot": 0}]})
+		var kept: Dictionary = fm.to_dict().get("orphans", {})
+		t.check("drift_furniture_kept_in_orphans", int(kept.get("stock", {}).get("retired_chair", 0)) == 2 and int(kept.get("stock", {}).get("chair_pine", 0)) == 5 and (kept.get("placed", []) as Array).size() == 1 and fm.count_total("chair_pine") == cap,
+			"unknown pieces and the copies above the stack of %d wait in the orphans bucket: %s" % [cap, kept])
+		var wire: Dictionary = JSON.parse_string(JSON.stringify(fm.to_dict()))
+		fm.from_dict(wire)
+		t.check("drift_furniture_orphans_survive_a_reload", _eq(fm.to_dict().get("orphans", {}), wire.get("orphans", {})), "saved and loaded again, the bucket neither grows nor shrinks")
+	if sm.has_section("wardrobe"):
+		var wm: Node = sm.section_node("wardrobe")
+		wm.from_dict({"v": 1, "owned": {"hat_retired": 1}, "equipped": {}, "presets": {}})
+		t.check("drift_wardrobe_kept_in_orphans", (wm.to_dict().get("orphans", {}) as Dictionary).has("hat_retired") and not wm.owned.has("hat_retired"), "a hat the catalogue lost: %s" % wm.to_dict().get("orphans", {}))
+	var store := Arsenal.new()
+	store.from_dict({"retired_blade": 2, "iron_sword": 12})
+	var again := Arsenal.new()
+	again.from_dict(JSON.parse_string(JSON.stringify(store.to_dict())))
+	t.check("drift_arsenal_kept_in_orphans", store.orphans.get("retired_blade") == 2 and store.orphans.get("iron_sword") == 3 and store.count_total("iron_sword") == 9 and again.orphans == store.orphans and again.count_total("iron_sword") == 9,
+		"an unknown weapon and the copies above the cap of 9: %s (and again after a JSON round trip)" % [store.orphans])
+	store.free()
+	again.free()
+	var many: Array = []
+	for i in 30:
+		many.append({"id": "wood" if i == 0 else "item_%d" % i, "amount": 3})
+	eco.from_dict({"gold": 5, "inventory": many})
+	var owed_wire: Dictionary = JSON.parse_string(JSON.stringify(eco.to_dict()))
+	t.check("drift_backpack_overflow_is_owed", eco.used_slots() == 24 and eco.owed.size() == 6 and (owed_wire.get("owed", []) as Array).size() == 6, "24 slots in the backpack, 6 owed (saved as `owed`)")
+	eco.from_dict(owed_wire)
+	for i in 4:
+		eco.inventory.remove_at(eco.inventory.size() - 1)
+	_notes.clear()
+	eco.deliver_owed()
+	t.check("drift_owed_handed_back_with_room", eco.used_slots() == 24 and eco.owed.size() == 2 and _notes.size() == 2, "a morning with 4 free slots: 4 owed slots come back, 2 still wait; both are told (%d notes)" % _notes.size())
+	# an owed slot keeps its meta, and a furniture id owed by an overflowing backpack reaches its store (not a backpack room it never needs)
+	_set_state(1, 1)
+	eco.inventory.clear()
+	eco.owed.assign([{"id": &"wood", "amount": 2, "meta": {"quality": 2}}])
+	eco.deliver_owed()
+	var with_meta: Array = eco.inventory.filter(func(slot: Dictionary) -> bool: return slot["id"] == &"wood" and (slot["meta"] as Dictionary).get("quality") == 2)
+	t.check("drift_owed_keeps_its_meta", eco.owed.is_empty() and with_meta.size() == 1 and int(with_meta[0]["amount"]) == 2, "inventory after the hand-back: %s" % [eco.inventory])
+	if sm.has_section("furniture"):
+		var furniture: Node = sm.section_node("furniture")
+		var before: int = furniture.count_total("chair_pine")
+		eco.owed.assign([{"id": &"chair_pine", "amount": 1, "meta": {}}])
+		eco.deliver_owed()
+		t.check("drift_owed_furniture_reaches_its_store", eco.owed.is_empty() and furniture.count_total("chair_pine") == before + 1 and eco._backpack_count(&"chair_pine") == 0,
+			"owed %s, chairs in the store %d -> %d" % [eco.owed, before, furniture.count_total("chair_pine")])
+	# a loaded world: the owed slots come back when its player spawns, not only on the next morning
+	eco.inventory.clear()
+	eco.owed.assign([{"id": &"stone", "amount": 3, "meta": {}}])
+	var spawned := Node2D.new()
+	bus.player_spawned.emit(spawned)
+	spawned.free()
+	t.check("drift_owed_handed_back_when_a_loaded_world_spawns", eco.owed.is_empty() and eco.count_item(&"stone") == 3, "owed %s" % [eco.owed])
+	_set_state(1, 1)
+
+
+# ================================================================ section versions, apply failure, unknown sections (SAVE-10)
+
+func _test_section_versions() -> void:
+	_fresh()
+	var versioned := VersionedSection.new()
+	versioned.tag = "versioned"
+	versioned.log = _log
+	sm.register_section("versioned", versioned)
+	_set_state(100, 2)
+	versioned.data = {"v": 2, "n": 4}
+	var doc := _payload()
+	doc["versioned"] = {"v": 3, "n": 9}
+	_put(1, doc)
+	var info: Dictionary = sm.inspect_slot(1)
+	versioned.apply_calls = 0
+	var loaded: bool = sm.load_game(1)
+	t.check("section_newer_version_is_newer_slot", info["state"] == &"newer" and not loaded and sm.last_error.get("code") == "version" and versioned.apply_calls == 0 and versioned.data["n"] == 4,
+		"a section written by a newer build: the slot inspects as newer (%s), the load stops before any section applies" % info["state"])
+	doc["versioned"] = {"v": 2, "n": 9}
+	_put(1, doc)
+	t.check("section_same_version_loads", sm.inspect_slot(1)["state"] == &"ok" and sm.load_game(1) and versioned.data["n"] == 9, "")
+	if sm.has_section("wardrobe"):
+		var real := _payload()
+		(real["wardrobe"] as Dictionary)["v"] = 99
+		_put(2, real)
+		t.check("real_section_newer_version_is_newer_slot", sm.inspect_slot(2)["state"] == &"newer", "a wardrobe section of version 99: the slot says 'needs a newer version' instead of failing at apply")
+	if sm.has_section("dungeon"):
+		var deep := _payload()
+		_put(2, deep)
+		var today_state: StringName = sm.inspect_slot(2)["state"]
+		(deep["dungeon"] as Dictionary)["v"] = 99
+		_put(2, deep)
+		t.check("dungeon_section_newer_version_is_newer_slot", today_state == &"ok" and sm.inspect_slot(2)["state"] == &"newer",
+			"a dungeon section of version 99 inspects as newer, not damaged (today's own version inspects as %s)" % today_state)
+	var quests_doc := _payload()
+	(quests_doc["quests"] as Dictionary)["v"] = 99
+	_put(2, quests_doc)
+	t.check("quests_section_newer_version_is_newer_slot", sm.inspect_slot(2)["state"] == &"newer", "a quests section of version 99")
+	# a file that passes every check but that a section refuses: its .bak is applied instead
+	_set_state(200, 3)
+	versioned.data = {"v": 2, "n": 4}
+	sm.save_game(0)
+	versioned.data = {"v": 2, "n": 13}
+	eco.gold = 300
+	sm.save_game(0)
+	versioned.refuse_n = 13
+	_notes.clear()
+	var recovered: bool = sm.load_game(0)
+	t.check("apply_failure_falls_back_to_backup", recovered and versioned.data["n"] == 4 and eco.gold == 200 and _notes.size() == 1 and str(_notes[0][0]) == sm.tr("NOTIF_LOAD_BACKUP_TITLE"),
+		"save_0.json was refused by a section: save_0.bak.json loaded (n %s, gold %d) and the player was told" % [versioned.data["n"], eco.gold])
+	versioned.refuse_n = -1
+	sm.unregister_section("versioned")
+	versioned.free()
+	# a top-level section no part of this build owns is carried into the next save unchanged, and dropped by a new game
+	_set_state(400, 4)
+	var future := _payload()
+	future["future_feature"] = {"v": 1, "beans": [1, 2, 3]}
+	_put(3, future)
+	var future_loaded: bool = sm.load_game(3)
+	sm.save_game(4)
+	var written: Variant = _read_json(sm.slot_path(4))
+	t.check("unknown_section_is_carried", future_loaded and written is Dictionary and _eq((written as Dictionary).get("future_feature"), {"v": 1, "beans": [1, 2, 3]}), "future_feature: %s" % [(written as Dictionary).get("future_feature") if written is Dictionary else "-"])
+	_set_state(1, 1)
+	t.check("unknown_section_dropped_by_new_game", not sm.gather_payload().has("future_feature"), "")
+
+
+# ================================================================ inspect_slot memo (SAVE-12)
+
+func _test_inspect_cache() -> void:
+	_fresh()
+	var probe := _new_probe()
+	for slot in [0, 2, 4]:
+		_set_state(100 + slot, 3)
+		probe.save_game(slot)
+	probe.reads = 0
+	var rows: Array[Dictionary] = probe.describe_slots()
+	var first := probe.reads
+	probe.reads = 0
+	for i in 5:
+		probe.describe_slots()
+		probe.has_any_save()
+		probe.get_latest_slot()
+		probe.get_save_summary(2)
+		probe.inspect_slot(4)
+	t.check("inspect_cache_reuses_unchanged_files", first >= 3 and probe.reads == 0 and sm.latest_slot_of(rows) == probe.get_latest_slot(), "the first listing parsed %d files, 25 more queries of unchanged files parsed %d" % [first, probe.reads])
+	# the same size and the same second: the cache key is the content, not the time stamp
+	var doc: Dictionary = _read_json(probe.slot_path(2))
+	doc["economy"]["gold"] = 777
+	doc["meta"]["summary"]["gold"] = 777
+	_put(2, doc)
+	t.check("inspect_cache_sees_new_content", int(probe.get_save_summary(2).get("gold", -1)) == 777 and probe.reads >= 1, "a rewritten save_2.json is read again (gold %s)" % probe.get_save_summary(2).get("gold", -1))
+	var info: Dictionary = probe.inspect_slot(2)
+	info["payload"]["economy"]["gold"] = 1
+	t.check("inspect_cache_hands_out_copies", int(probe.inspect_slot(2)["payload"]["economy"]["gold"]) == 777, "changing a returned payload does not change the memo")
+	probe.delete_save(2)
+	t.check("inspect_cache_follows_delete", probe.inspect_slot(2)["state"] == &"empty", "")
+	var fake := FakeSection.new()
+	fake.tag = "memo"
+	fake.log = _log
+	var valid_before: bool = probe.inspect_slot(0)["state"] == &"ok"
+	probe.register_section("memo", fake)
+	probe.unregister_section("memo")
+	fake.free()
+	t.check("inspect_cache_dropped_by_registry", valid_before and probe._inspect_cache.is_empty(), "register / unregister forget every verdict")
+	probe.free()
 
 
 # ================================================================ autosave (task 2)
@@ -1653,7 +2061,7 @@ func _put_and_summarize(doc: Dictionary, slot: int) -> Dictionary:
 ## A summary without the keys get_save_summary adds (slot, is_auto, timestamp, saved_at, from_backup).
 func _without_slot_fields(summary: Dictionary) -> Dictionary:
 	var out := summary.duplicate()
-	for key in ["slot", "is_auto", "timestamp", "saved_at", "from_backup"]:
+	for key in ["slot", "is_auto", "is_previous", "timestamp", "saved_at", "from_backup"]:
 		out.erase(key)
 	return out
 

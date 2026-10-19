@@ -168,7 +168,7 @@ func install() -> bool:
 		_set_state("install_failed")
 		return false
 	DirAccess.remove_absolute(ready)
-	GameManager.quit_game()
+	GameManager.quit_game(0, false)                 # saved above, before the helper started
 	return true
 
 func cancel_download() -> void:
