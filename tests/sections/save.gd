@@ -220,6 +220,7 @@ func run(p_t) -> void:
 	_test_inspect_cache()
 	_test_section_versions()
 	_test_content_drift()
+	_test_drift_buckets()
 	_test_summaries()
 	_test_summary_types()
 	_test_latest_slot()
@@ -1575,6 +1576,48 @@ func _test_content_drift() -> void:
 	var mended: Dictionary = FarmEquipment.repair_placed(doc["world"]["placed"])
 	t.check("content_drift_unknown_machine_is_orphaned", mended.placed.is_empty() and mended.orphans.size() == 1 and mended.orphans[0].item == "retired_machine", "%s" % [mended])
 	_clear_husbandry()
+
+
+## SAVE-06: what a load cannot hold any more is kept, not pruned: furniture, clothing and weapons the catalogue lost (or copies above
+## today's cap) wait in their section's orphans bucket, saved and adopted again later; backpack slots beyond the 24 (a smaller
+## max_stack) are owed and handed back on a morning with room.
+func _test_drift_buckets() -> void:
+	_fresh()
+	if sm.has_section("furniture"):
+		var fm: Node = sm.section_node("furniture")
+		var cap: int = fm.max_stack_of("chair_pine")
+		fm.from_dict({"v": 1, "stock": {"retired_chair": 2, "chair_pine": cap + 5}, "placed": [{"item": "retired_lamp", "cell": [1, 1], "rot": 0}]})
+		var kept: Dictionary = fm.to_dict().get("orphans", {})
+		t.check("drift_furniture_kept_in_orphans", int(kept.get("stock", {}).get("retired_chair", 0)) == 2 and int(kept.get("stock", {}).get("chair_pine", 0)) == 5 and (kept.get("placed", []) as Array).size() == 1 and fm.count_total("chair_pine") == cap,
+			"unknown pieces and the copies above the stack of %d wait in the orphans bucket: %s" % [cap, kept])
+		var wire: Dictionary = JSON.parse_string(JSON.stringify(fm.to_dict()))
+		fm.from_dict(wire)
+		t.check("drift_furniture_orphans_survive_a_reload", _eq(fm.to_dict().get("orphans", {}), wire.get("orphans", {})), "saved and loaded again, the bucket neither grows nor shrinks")
+	if sm.has_section("wardrobe"):
+		var wm: Node = sm.section_node("wardrobe")
+		wm.from_dict({"v": 1, "owned": {"hat_retired": 1}, "equipped": {}, "presets": {}})
+		t.check("drift_wardrobe_kept_in_orphans", (wm.to_dict().get("orphans", {}) as Dictionary).has("hat_retired") and not wm.owned.has("hat_retired"), "a hat the catalogue lost: %s" % wm.to_dict().get("orphans", {}))
+	var store := Arsenal.new()
+	store.from_dict({"retired_blade": 2, "iron_sword": 12})
+	var again := Arsenal.new()
+	again.from_dict(JSON.parse_string(JSON.stringify(store.to_dict())))
+	t.check("drift_arsenal_kept_in_orphans", store.orphans.get("retired_blade") == 2 and store.orphans.get("iron_sword") == 3 and store.count_total("iron_sword") == 9 and again.orphans == store.orphans and again.count_total("iron_sword") == 9,
+		"an unknown weapon and the copies above the cap of 9: %s (and again after a JSON round trip)" % [store.orphans])
+	store.free()
+	again.free()
+	var many: Array = []
+	for i in 30:
+		many.append({"id": "wood" if i == 0 else "item_%d" % i, "amount": 3})
+	eco.from_dict({"gold": 5, "inventory": many})
+	var owed_wire: Dictionary = JSON.parse_string(JSON.stringify(eco.to_dict()))
+	t.check("drift_backpack_overflow_is_owed", eco.used_slots() == 24 and eco.owed.size() == 6 and (owed_wire.get("owed", []) as Array).size() == 6, "24 slots in the backpack, 6 owed (saved as `owed`)")
+	eco.from_dict(owed_wire)
+	for i in 4:
+		eco.inventory.remove_at(eco.inventory.size() - 1)
+	_notes.clear()
+	eco.deliver_owed()
+	t.check("drift_owed_handed_back_with_room", eco.used_slots() == 24 and eco.owed.size() == 2 and _notes.size() == 2, "a morning with 4 free slots: 4 owed slots come back, 2 still wait; both are told (%d notes)" % _notes.size())
+	_set_state(1, 1)
 
 
 # ================================================================ section versions, apply failure, unknown sections (SAVE-10)

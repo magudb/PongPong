@@ -5,6 +5,9 @@ const NUDGE_RADIUS := 4
 ## Version of the "furniture" save section (SaveManager refuses a newer one at inspection, see SECTION VERSIONS there).
 const SECTION_VERSION := 1
 var stock: Dictionary = {}
+## What a save holds that this build cannot (content drift): {"stock": {id: amount}, "placed": [record]}: pieces the catalogue no
+## longer has and copies above today's stack. Saved as they were, adopted again by the load that can hold them (like SocialManager's).
+var orphans: Dictionary = {"stock": {}, "placed": []}
 var grid: FurnitureGrid
 var _grid_tier := 0
 var last_rebuild: Dictionary = {}
@@ -210,6 +213,7 @@ func adopt_from_backpack() -> void:
 
 func reset() -> void:
 	stock.clear()
+	orphans = {"stock": {}, "placed": []}
 	_build_grid()
 	decorate_mode = false
 	_last_hygge = -1
@@ -237,29 +241,49 @@ func _nearest_any(id: String) -> Dictionary:
 
 func to_dict() -> Dictionary:
 	ensure_grid()
-	return {"v": SECTION_VERSION, "stock": stock.duplicate(), "placed": grid.to_save()}
+	var out := {"v": SECTION_VERSION, "stock": stock.duplicate(), "placed": grid.to_save()}
+	if not (orphans.stock as Dictionary).is_empty() or not (orphans.placed as Array).is_empty():
+		out["orphans"] = orphans.duplicate(true)
+	return out
 
 func from_dict(data: Dictionary) -> bool:
 	if LuaData.int_of(data.get("v", 1), -1) != SECTION_VERSION or not data.get("stock", {}) is Dictionary or not data.get("placed", []) is Array:
 		return false
+	var kept: Dictionary = data.get("orphans", {}) if data.get("orphans", {}) is Dictionary else {}
+	var next_orphans := {"stock": {}, "placed": []}
+	var all_stock: Dictionary = {}
+	for source in [data.get("stock", {}), kept.get("stock", {})]:
+		if source is Dictionary:
+			for id in source:
+				all_stock[str(id)] = int(all_stock.get(str(id), 0)) + maxi(0, LuaData.int_of(source[id]))
 	var next_stock := {}
-	for id in data.get("stock", {}):
-		if FurnitureCatalog.contains(id):
-			var amount := LuaData.int_of(data.stock[id])
-			if amount > 0:
-				next_stock[str(id)] = mini(amount, max_stack_of(id))
+	for id in all_stock:
+		var amount := int(all_stock[id])
+		if amount <= 0:
+			continue
+		var fits := mini(amount, max_stack_of(id)) if FurnitureCatalog.contains(id) else 0
+		if fits > 0:
+			next_stock[id] = fits
+		if amount > fits and not (fits > 0 and ItemKinds.is_one_of_a_kind(id)):     # a second keepsake is a duplicate, not drift
+			next_orphans.stock[id] = amount - fits
 	stock = next_stock
 	_build_grid()
 	var entries: Array = []
 	var totals := stock.duplicate()
-	for raw in data.get("placed", []):
-		if not raw is Dictionary or not FurnitureCatalog.contains(raw.get("item", "")):
+	for raw in data.get("placed", []) + (kept.get("placed", []) if kept.get("placed", []) is Array else []):
+		if not raw is Dictionary:
 			continue
-		var id := str(raw.item)
+		var id := str(raw.get("item", ""))
+		if not FurnitureCatalog.contains(id):
+			next_orphans.placed.append(raw)
+			continue
 		if int(totals.get(id, 0)) >= max_stack_of(id):
+			if not ItemKinds.is_one_of_a_kind(id):
+				next_orphans.stock[id] = int(next_orphans.stock.get(id, 0)) + 1
 			continue
 		totals[id] = int(totals.get(id, 0)) + 1
 		entries.append(raw)
+	orphans = next_orphans
 	for entry in grid.load_save(entries):
 		stock[str(entry.item)] = count_stock(entry.item) + 1
 	decorate_mode = false

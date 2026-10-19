@@ -9,6 +9,9 @@ const SECTION_VERSION := 1
 var owned: Dictionary = {}
 var equipped: Dictionary = {}
 var presets: Dictionary = {}
+## Clothing of a save that this build has no slot for (content drift: renamed, removed, moved to another slot): {id: 1}. Saved as it
+## was and owned again by the load whose catalogue knows it.
+var orphans: Dictionary = {}
 var _checking_sets := false
 
 func _ready() -> void:
@@ -147,6 +150,7 @@ func reset() -> void:
 	owned.clear()
 	equipped.clear()
 	presets.clear()
+	orphans.clear()
 	# A pre-wardrobe save may have genuine clothing in its backpack. Adopt it
 	# before filling missing starter pieces, so no owned piece disappears.
 	adopt_from_backpack()
@@ -164,16 +168,27 @@ func adopt_from_backpack() -> void:
 	EconomyManager.adopt_misrouted(ItemKinds.CLOTHING)
 
 func to_dict() -> Dictionary:
-	return {"v": SECTION_VERSION, "owned": owned.duplicate(), "equipped": outfit(), "presets": presets.duplicate(true)}
+	var out := {"v": SECTION_VERSION, "owned": owned.duplicate(), "equipped": outfit(), "presets": presets.duplicate(true)}
+	if not orphans.is_empty():
+		out["orphans"] = orphans.duplicate()
+	return out
 
 func from_dict(data: Dictionary) -> bool:
 	if LuaData.int_of(data.get("v", 1), -1) != SECTION_VERSION or not data.get("owned", {}) is Dictionary or not data.get("equipped", {}) is Dictionary or not data.get("presets", {}) is Dictionary:
 		return false
 	var next_owned := {}
-	for id in data.get("owned", {}):
-		if slot_of(id) != "" and LuaData.int_of(data.owned[id]) > 0:
-			next_owned[str(id)] = 1
+	var next_orphans := {}
+	var kept: Variant = data.get("orphans", {})
+	for source in [data.get("owned", {}), kept if kept is Dictionary else {}]:
+		for id in source:
+			if LuaData.int_of(source[id]) <= 0:
+				continue
+			if slot_of(id) != "":
+				next_owned[str(id)] = 1
+			else:
+				next_orphans[str(id)] = 1
 	owned = next_owned
+	orphans = next_orphans
 	equipped = _valid_outfit(data.get("equipped", {}), true)
 	presets.clear()
 	for key in PRESETS:
