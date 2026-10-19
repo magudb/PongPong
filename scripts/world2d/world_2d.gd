@@ -22,6 +22,10 @@ extends Node2D
 ## GameManager.sleep_until_morning().
 
 signal area_ready(area_id: StringName)
+## The saved world state (placed items, area flags, crops, hotbar) has been applied: after a Continue / load in _ready, and on from_dict.
+## The area is entered BEFORE the state arrives, and EventBus.load_completed fired before the world scene even existed, so world-owned
+## scenery that reads area flags (the greenhouse) redraws on this signal.
+signal state_applied
 
 const MAP_DIR := "res://data/maps/"
 const PLAYER_SCENE_PATH := "res://scenes/world2d/player_2d.tscn"
@@ -908,6 +912,7 @@ func _apply_saved(d: Dictionary) -> void:
 		player.global_position = _inside_area(saved_pos as Vector2) if saved_pos is Vector2 else area.get_spawn("default")
 		if "camera" in player and player.get("camera") is Camera2D:
 			(player.get("camera") as Camera2D).reset_smoothing()
+	state_applied.emit()
 
 
 ## `[x, y]` of a saved dictionary as a Vector2; null for anything else (not an Array, too short, an element that is no number -

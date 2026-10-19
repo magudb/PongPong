@@ -230,6 +230,18 @@ func _run(t) -> void:
 	gm.advance_time(1)
 	t.check("sprinklers_use_six_am_even_on_raw_two_am_roll", indoor.get_plot(moon_cell).watered and indoor.get_plot(moon_cell).watered_hour == 6.0 and not indoor.get_plot(moon_cell).eligible_water)
 	await LoopClock.settle(t)
+	# GAP4-01: a Continue on the farm with the greenhouse built draws the greenhouse (not the build stake) and puts its door where the
+	# painted door is, through the real path: load_and_enter -> scene change -> the new world enters the farm, then applies the save.
+	w._enter(&"farm", &"default")
+	await t.frames(2)
+	var old_world := w.get_instance_id()
+	var entered: bool = sm.save_game(0) and sm.load_and_enter(0)
+	var arrived: bool = await t.until(func(): return t.world() != null and t.world().get_instance_id() != old_world and t.world().get("ready_for_play") == true, 20.0)
+	var loaded_world: WorldRoot2D = t.world()
+	var loaded_door: Greenhouse2D = loaded_world.area.find_markers("greenhouse_slot")[0].node if arrived and loaded_world.area.map.id == &"farm" else null
+	t.check("greenhouse_drawn_after_continue", entered and arrived and loaded_door != null and loaded_door._built and FarmEquipment.greenhouse_built()
+		and loaded_door.position.is_equal_approx(loaded_world.area.objects.to_local(loaded_world.area.cell_to_global(loaded_door.cell - Vector2i(2, 0)))),
+		"after load_and_enter the greenhouse marker is built (%s) with its door at the painted door" % [loaded_door._built if loaded_door != null else "no marker"])
 	sm.save_dir=directory
 
 func _machine(area: IsoArea, cell: Vector2i) -> FarmMachine2D:
