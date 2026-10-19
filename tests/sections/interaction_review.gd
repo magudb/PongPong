@@ -76,6 +76,7 @@ func run(t) -> void:
 	await _spent_hosts(t)
 	await _tool_targets(t)
 	await _hotbar_auto_assign(t)
+	await _warp_after_tool_use(t)
 	await world.travel(&"farm", &"default")
 	WorldRoot2D.unregister_map(&"_t_interaction")
 	await _axe_on_crops(t)
@@ -375,3 +376,48 @@ func _hotbar_auto_assign(t) -> void:
 	t.check("free_slot_takes_item_in_hand", bar.slots[3] == &"scarecrow" and bar.selected == 3 and bar.slots[2] == &"axe_wooden")
 	EventBus.whisper_requested.disconnect(listen)
 	bar.from_dict(before)
+
+
+## GAP3-08: a warp stepped on during a tool use fires once the use ends (still on it); combat actions keep the "step out and walk
+## back in" rule, and doors share the gate (they had none: a dodge into a door travelled).
+func _warp_after_tool_use(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var home: Vector2i = area.global_to_cell(player.global_position)
+	var warp := Warp2D.new()
+	warp.setup({"to": "interaction_warp_contract", "r": "0"}, area, home + Vector2i(3, 0))
+	area.triggers.add_child(warp)
+	warp.global_position = area.cell_to_global(home + Vector2i(3, 0))
+	var requests: Array = []
+	var listen := func(id: StringName, _spawn: StringName) -> void:
+		if id == &"interaction_warp_contract": requests.append(id)
+	EventBus.area_change_requested.connect(listen)
+	await t.physics(3)
+	player.state = PlayerBody2D.S.USING
+	player._tool_time = 0.2
+	player.global_position = warp.global_position
+	await t.physics(4)
+	var held: bool = requests.is_empty() and player.state == PlayerBody2D.S.USING
+	await t.seconds(0.3)
+	await t.physics(2)
+	t.check("warp_fires_when_tool_use_ends_on_it", held and requests.size() == 1 and player.state == PlayerBody2D.S.FREE, "held %s, requests %s, state %d" % [held, requests, player.state])
+	player.global_position = area.cell_to_global(home)
+	await t.physics(4)
+	requests.clear()
+	player.state = PlayerBody2D.S.DODGE
+	warp._on_body_entered(player)
+	player.state = PlayerBody2D.S.FREE
+	await t.physics(3)
+	t.check("dodge_onto_warp_still_needs_a_fresh_step", requests.is_empty())
+	var door := Door2D.new()
+	door.always_open = true
+	door.to_area = &"interaction_warp_contract"
+	for state in [PlayerBody2D.S.DODGE, PlayerBody2D.S.FREE]:
+		player.state = state
+		door._on_body_entered(player)
+	t.check("door_shares_the_warp_gate", requests.size() == 1, str(requests))
+	door.free()
+	player.state = PlayerBody2D.S.FREE
+	EventBus.area_change_requested.disconnect(listen)
+	warp.queue_free()
+	await t.physics(2)

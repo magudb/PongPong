@@ -20,6 +20,8 @@ var reach: float = 0.0
 var armed: bool = true
 
 var _told: bool = false
+## The player who stepped on the warp in the middle of a tool use: it travels once that use ends, still standing here.
+var _waiting: PlayerBody2D
 
 
 func setup(m: Dictionary, area: IsoArea, _cell: Vector2i) -> void:
@@ -62,6 +64,8 @@ func set_enabled(on: bool) -> void:
 	armed = on
 	visible = on
 	set_deferred("monitoring", on)
+	if not on:
+		_stop_waiting()
 
 
 func _on_body_entered(body: Node) -> void:
@@ -70,8 +74,18 @@ func _on_body_entered(body: Node) -> void:
 	# Enter deliberately on foot. A dodge or combat knockback can cross a
 	# stair while the player is fighting beside it; travelling then also
 	# disposes the live encounter. Step out and walk back in after the action.
+	# A tool use (hoe hold-repeat walks at reduced speed) is not combat: that
+	# player travels as soon as the use ends, if still standing on the warp.
 	if body is PlayerBody2D and body.state != PlayerBody2D.S.FREE:
+		if body.state == PlayerBody2D.S.USING:
+			_waiting = body
+			set_physics_process(true)
 		return
+	_enter()
+
+
+## Every door and warp shares the gate above; this is what happens once the player is through it.
+func _enter() -> void:
 	if not is_open():
 		if not _told:
 			_told = true
@@ -81,5 +95,23 @@ func _on_body_entered(body: Node) -> void:
 	EventBus.area_change_requested.emit(to_area, to_spawn)
 
 
-func _on_body_exited(_body: Node) -> void:
+## Runs only while a player waits on the warp (the first tick after _ready switches it off again).
+func _physics_process(_delta: float) -> void:
+	if not is_instance_valid(_waiting) or not armed:
+		_stop_waiting()
+	elif _waiting.state == PlayerBody2D.S.FREE:
+		_stop_waiting()
+		_enter()
+	elif _waiting.state != PlayerBody2D.S.USING:
+		_stop_waiting()
+
+
+func _stop_waiting() -> void:
+	_waiting = null
+	set_physics_process(false)
+
+
+func _on_body_exited(body: Node) -> void:
 	_told = false
+	if body == _waiting:
+		_stop_waiting()

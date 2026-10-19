@@ -153,9 +153,8 @@ func whisper_text() -> String:
 	return tr(closed_key())
 
 
-func _on_body_entered(body: Node) -> void:
-	if not armed or not body.is_in_group("player"):
-		return
+## Behind Warp2D's gate: a player in the middle of an action does not walk through a door either.
+func _enter() -> void:
 	if not is_open():
 		if not _told:
 			_told = true
