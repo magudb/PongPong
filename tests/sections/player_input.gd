@@ -407,6 +407,18 @@ func _prompt_follows_gate(t, world: WorldRoot2D, p: Player2D) -> void:
 	p._update_prompt(0.0)
 	var back: bool = p._prompt == "E: Probe" and p.try_interact() and host.used == 1
 	t.check("prompt_and_e_share_one_gate", shown and hidden_in_flight and back, "prompt on the ground %s, none and no E in flight %s, back at once on landing %s" % [shown, hidden_in_flight, back])
+	# A swing or a tool use only lasts a moment: the prompt stays instead of blinking; a talk hides it.
+	var steady := true
+	for brief in PlayerBody2D.BRIEF_STATES:
+		p.state = brief
+		p._update_prompt(PlayerBody2D.PROMPT_REFRESH_S)
+		steady = steady and p._prompt == "E: Probe"
+	p.state = PlayerBody2D.S.TALKING
+	p._update_prompt(PlayerBody2D.PROMPT_REFRESH_S)
+	var hidden_in_talk: bool = p._prompt == ""
+	p.state = PlayerBody2D.S.FREE
+	p._update_prompt(0.0)
+	t.check("prompt_steady_through_brief_actions", steady and hidden_in_talk and p._prompt == "E: Probe", "kept through swing/use/dodge/hurt %s, hidden in a talk %s" % [steady, hidden_in_talk])
 	host.queue_free()
 	_free(p)
 

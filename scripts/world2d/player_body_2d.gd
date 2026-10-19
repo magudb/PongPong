@@ -39,6 +39,8 @@ var _prompt_last_facing: int = -1
 var _prompt_last_ready := false
 var _prompt_stale: float = 0.0
 const PROMPT_REFRESH_S := 0.5
+## The short action states during which the E prompt keeps its last text (E itself still waits for FREE).
+const BRIEF_STATES: Array[S] = [S.USING, S.DODGE, S.SWING, S.HURT]
 ## One mouse-wheel notch of zoom; a trackpad pan counts its delta in notches.
 const ZOOM_STEP := 0.05
 
@@ -308,6 +310,10 @@ func try_interact() -> bool:
 
 func _update_prompt(delta: float = 0.0) -> void:
 	_prompt_stale += delta
+	# A swing, a tool use, a dodge or a hit lasts a moment: keep the last prompt through it instead of blinking
+	# the pill off and on with every action. Only a lasting refusal (flight, a talk, fainting) hides it.
+	if state in BRIEF_STATES:
+		return
 	# The prompt only changes when the player moves, turns or can / cannot interact any more (take-off, the end of
 	# a talk); skip the physics query otherwise, but still refresh at PROMPT_REFRESH_S so a newly-available
 	# interactable is not missed.
