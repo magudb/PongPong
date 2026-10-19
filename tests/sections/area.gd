@@ -1778,6 +1778,18 @@ func _area_switch_and_cache(t) -> void:
 	var travelled: bool = _world.area.map.id == &"_fixture_ortho" and not _world.traveling and _world._fade.color.a == 0.0
 	await _world.travel(&"_fixture_iso", &"default")
 	t.check("travel_fades_and_ends_clear", travelled and _world.area.map.id == &"_fixture_iso" and not _world.traveling and _world._fade.color.a == 0.0, "fade out 0.22 s, swap, fade in 0.25 s")
+	# during a travel E cannot open a screen under the fade, and a pause does not freeze the fade half black (review GAP1-03)
+	_world.travel(&"_fixture_ortho", &"default")
+	await t.frames(2)
+	var blocked: bool = _world.traveling and not p.world_input_allowed()
+	t.tree.paused = true
+	var through_pause: bool = await t.until(func() -> bool: return _world._fade.color.a >= 0.999 or not _world.traveling, 3.0)
+	t.tree.paused = false
+	var ended: bool = await t.until(func() -> bool: return not _world.traveling, 5.0)
+	var free_after: bool = p.world_input_allowed()
+	await _world.travel(&"_fixture_iso", &"default")
+	t.check("travel_blocks_world_input_and_fades_through_a_pause", blocked and through_pause and ended and free_after and _world._fade.color.a == 0.0,
+		"input refused while traveling %s, the fade went on under a paused tree %s, travel ended %s, input back afterwards %s" % [blocked, through_pause, ended, free_after])
 	if FileAccess.file_exists("res://data/maps/farm.map") and WorldRoot2D.has_area(&"farm"):
 		_world._enter(&"farm", &"default")
 		var farm_ok: bool = _world.area.map.id == &"farm"
