@@ -19,6 +19,8 @@ var _refreshing := false
 var _filters: Array[Button] = []
 var pickup_button: Button
 var hint: Label
+## INDRET_READY with the live glyph of interact (E / A), rebuilt with the hint on a device change.
+var _ready_text := ""
 func _init() -> void:
 	super._init()
 	screen_id = &"indretning"
@@ -96,6 +98,7 @@ func _wants_focus() -> bool:
 func _refresh_hint() -> void:
 	if hint == null: return
 	hint.text = tr("INDRET_HINT") % [UiHints.glyph_set([&"ui_up",&"ui_down",&"ui_left",&"ui_right"]),UiHints.glyph(&"interact"),UiHints.glyph(&"rotate_item"),UiHints.glyph(&"pickup_item"),UiHints.glyph(&"decorate")]
+	_ready_text = tr("INDRET_READY") % UiHints.glyph(&"interact")
 func _refresh_texts() -> void:
 	if listing == null: return
 	_refresh_hint()
@@ -150,7 +153,7 @@ func _process(dt: float) -> void:
 		_preview = load("res://scripts/home/placement_controller.gd").new()
 		world.area.add_child(_preview)
 	var check: Dictionary = _preview.update_preview(selected,cell,rot)
-	reason.text = tr(str(check.get("text_key",""))) if not check.ok else tr("INDRET_READY")
+	reason.text = tr(str(check.get("text_key",""))) if not check.ok else _ready_text
 func _input(event: InputEvent) -> void:
 	if not is_open() or not is_top():
 		super._input(event)

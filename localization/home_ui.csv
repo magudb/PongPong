@@ -31,7 +31,7 @@ INDRET_HINT,Vælg et møbel. %s flytter · %s placerer · %s drejer · %s samler
 INDRET_HYGGE_FMT,%s · %d hygge · %d / %d møbler,%s · %d cosiness · %d / %d furniture
 INDRET_EMPTY,Ingen møbler i dette udvalg. Køb eller byg flere hos dine naboer.,No furniture in this selection. Buy or craft more with your neighbours.
 INDRET_CHOOSE,Vælg et møbel fra magasinet.,Choose furniture from storage.
-INDRET_READY,Her er plads. E eller klik placerer.,This fits. E or click to place.
+INDRET_READY,Her er plads. %s eller klik placerer.,This fits. %s or click to place.
 INDRET_MOVED_TO_STORAGE,"Nogle møbler er flyttet til magasinet, så der er fri passage.",Some furniture returned to storage to keep the paths clear.
 INDRET_LAYER_ALL,Alle,All
 INDRET_LAYER_FLOOR,Gulv,Floor
