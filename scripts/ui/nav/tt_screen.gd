@@ -263,10 +263,10 @@ func _input(event: InputEvent) -> void:
 		if _is_press(event, &"ui_cancel") or _is_press(event, &"pause"):
 			_on_cancel()
 			vp.set_input_as_handled()
-		elif _is_press(event, &"ui_page_up"):
+		elif UiNav.page_pressed(event, &"ui_page_up", vp):
 			_on_page(-1)
 			vp.set_input_as_handled()
-		elif _is_press(event, &"ui_page_down"):
+		elif UiNav.page_pressed(event, &"ui_page_down", vp):
 			_on_page(1)
 			vp.set_input_as_handled()
 		elif hotkey_action != &"" and _is_press(event, hotkey_action) and not UiNav.text_field_focused(vp):

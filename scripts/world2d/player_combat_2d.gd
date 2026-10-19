@@ -23,6 +23,8 @@ var _swing_half: float = 1.0
 var _hit: Dictionary = {}
 var _buffer: StringName = &""
 var _buffer_time: float = 0.0
+## The weapon a buffered or held slash swings ("" = the equipped one; a hotbar weapon in an iso area names itself).
+var _buffer_item: StringName = &""
 var _last_spark: bool = false
 var _burst: PointLight2D
 var _query := PhysicsShapeQueryParameters2D.new()
@@ -63,17 +65,18 @@ func _assist(key: String, fallback: Variant = 0.0) -> Variant:
 func _feel(key: String, fallback: Variant) -> Variant:
 	return GameData.cfg("dungeon_run.feel." + key, fallback)
 
-func request(ability: StringName) -> void:
+func request(ability: StringName, item: StringName = &"") -> void:
 	_buffer = ability
 	_buffer_time = float(_feel("input_buffer", 0.15))
 	if ability == &"slash":
+		_buffer_item = item
 		attack_held = true
 	_attempt_buffer()
 
 func _attempt_buffer() -> void:
 	if _buffer == &"":
 		return
-	var ok := swing() if _buffer == &"slash" else dodge()
+	var ok := swing(_buffer_item) if _buffer == &"slash" else dodge()
 	if ok:
 		_buffer = &""
 		_buffer_time = 0.0
@@ -93,7 +96,7 @@ func tick(delta: float) -> void:
 		if _buffer_time <= 0.0:
 			_buffer = &""
 	if attack_held and bool(_assist("assist_auto_swing", false)) and player.world_input_allowed():
-		swing()
+		swing(_buffer_item)
 	var flash_reduced := bool(_assist("assist_reduce_flash", false))
 	player.visual.modulate.a = 0.6 if _iframes > 0 and player.state != S.DODGE and not flash_reduced and int(_iframes * 14.0) % 2 == 0 else 1.0
 	if _shake > 0.0:
@@ -329,6 +332,7 @@ func cancel_action() -> void:
 	_hit.clear()
 	_buffer = &""
 	_buffer_time = 0.0
+	_buffer_item = &""
 	attack_held = false
 	hit_stop = 0
 	extra_altitude = 0.0

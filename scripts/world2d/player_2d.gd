@@ -158,6 +158,7 @@ func world_input_allowed() -> bool:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("use_tool"):
 		_farm_use_held = false
+	_track_aim_device(event)
 	if not world_input_allowed():
 		return
 	if event.is_action_released("attack"):
@@ -172,8 +173,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if is_flying and event.is_action_pressed("fly_descend"):
 		_climb_down = true
 		return
-	if event is InputEventMouseMotion:
-		mouse_aim = true
 	if event.is_action_pressed(&"hotbar_previous") or event.is_action_pressed(&"hotbar_next"):
 		hotbar.cycle(-1 if event.is_action_pressed(&"hotbar_previous") else 1)
 		get_viewport().set_input_as_handled()
@@ -183,12 +182,32 @@ func _unhandled_input(event: InputEvent) -> void:
 			hotbar.select(index) # 9/0 remain defined inputs; this eight-slot layout ignores them.
 			get_viewport().set_input_as_handled()
 			return
-	if event.is_action_pressed("zoom_in"):
-		_set_zoom(_target_zoom + 0.05)
-	elif event.is_action_pressed("zoom_out"):
-		_set_zoom(_target_zoom - 0.05)
+	if _zoom_input(event):
+		get_viewport().set_input_as_handled()
+		return
+	if _is_action_area():
+		# attack and use_tool share every binding: in an action area the press is an attack through the
+		# buffer (and Cozy auto-swing), unless the selected tool has something to mine or chop in front (DUN-07).
+		if event.is_action_pressed("attack") or event.is_action_pressed("use_tool"):
+			if _tool_target_in_front():
+				use_selected()
+			else:
+				combat.request(&"slash")
+		elif event.is_action_pressed("dodge"):
+			combat.request(&"dodge")
+		elif event.is_action_pressed("light"):
+			fairy_light()
+		elif event.is_action_pressed("drink"):
+			drink()
+		elif event.is_action_pressed("interact"):
+			try_interact()
+		elif event.is_action_pressed("fly_toggle"):
+			toggle_flight()
 	elif event.is_action_pressed("interact"):
-		try_interact()
+		# Pad A is interact and jump: with nothing to talk to or use it hops (GAP3-11). A target that refuses
+		# (a ripe crop with a full bag) is not "nothing", so it does not hop.
+		if not try_interact() and event.is_action_pressed("jump") and not _interaction_target_in_front():
+			hop()
 	elif event.is_action_pressed("fly_toggle"):
 		toggle_flight()
 	elif event.is_action_pressed("use_tool"):
@@ -196,21 +215,35 @@ func _unhandled_input(event: InputEvent) -> void:
 		_farm_use_cell = target_cell()
 		_farm_use_item = hotbar.current()
 		use_selected()
-	elif _is_action_area():
-		if event.is_action_pressed("attack"):
-			combat.request(&"slash")
-		elif event.is_action_pressed("dodge"):
-			combat.request(&"dodge")
-		elif event.is_action_pressed("light"):
-			fairy_light()
-		elif event.is_action_pressed("drink"):
-			drink()
 	elif event.is_action_pressed("jump"):
 		hop()
-	for action in ["zoom_in", "zoom_out", "interact", "fly_toggle", "attack", "dodge", "light", "drink", "jump", "use_tool"]:
+	for action in ["interact", "fly_toggle", "attack", "dodge", "light", "drink", "jump", "use_tool"]:
 		if event.is_action_pressed(action):
 			get_viewport().set_input_as_handled()
 			break
+
+## Swings aim at the cursor only while the mouse is the device in use: a real mouse move or a click picks it,
+## a pad input or a keyboard attack hands the aim back to the walking direction (GAP3-05).
+func _track_aim_device(event: InputEvent) -> void:
+	if (event is InputEventMouseMotion and (event as InputEventMouseMotion).relative.length() >= UiNavWatcher.MOUSE_MOVE_MIN) or (event is InputEventMouseButton and event.pressed):
+		mouse_aim = true
+	elif (event is InputEventJoypadButton and event.pressed) or (event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) >= UiNavWatcher.STICK_THRESHOLD) \
+			or (event is InputEventKey and event.pressed and event.is_action("attack")):
+		mouse_aim = false
+
+## The selected hotbar tool (pickaxe, axe) and a host it can hit are in front, so an action-area press mines
+## instead of swinging. A consumable or a weapon in the slot never takes the press (DUN-07).
+func _tool_target_in_front() -> bool:
+	var item := hotbar.current()
+	var def := GameData.item_def(item)
+	if str(def.get("category", "")) != "tool" or str(def.get("tool_type", "")) == "" or not GameData.eco().has_item(item):
+		return false
+	var host := nearest_interactable()
+	return host != null and host.has_method("tool_hit")
+
+## Something E could act on is in front: an interactable host or a ripe crop.
+func _interaction_target_in_front() -> bool:
+	return nearest_interactable() != null or (_at_farm() and farm.state_of(target_cell()) == FarmGrid.State.READY)
 
 func _is_action_area() -> bool:
 	return area != null and area.projection == &"ortho"
@@ -236,6 +269,7 @@ func _physics_process(delta: float) -> void:
 		_update_prompt(delta)
 		return
 	combat.tick(delta)
+	_zoom_stick(delta)
 	if combat.hit_stop > 0 or combat.stopped_this_tick:
 		return
 	_tool_time = maxf(0.0, _tool_time - delta)
@@ -315,14 +349,17 @@ func _farm_repeat_allowed() -> bool:
 func _at_farm() -> bool:
 	return farm != null and area != null and farm.map != null and area.map.id == farm.map.id
 
+func can_interact_now() -> bool:
+	return state == S.FREE and not is_flying
+
 func interaction_text(it: Node) -> String:
-	if state == S.FREE and not is_flying and _at_farm() and farm.state_of(target_cell()) == FarmGrid.State.READY:
+	if can_interact_now() and _at_farm() and farm.state_of(target_cell()) == FarmGrid.State.READY:
 		var crop: StringName = farm.get_plot(target_cell()).crop_id
 		return tr("FARMSITE_HARVEST_FMT") % tr(str(GameData.item_def(crop).get("name_key", "")))
 	return super.interaction_text(it)
 
 func try_interact() -> bool:
-	if not world_input_allowed() or state != S.FREE or is_flying:
+	if not world_input_allowed() or not can_interact_now():
 		return false
 	if _at_farm() and farm.state_of(target_cell()) == FarmGrid.State.READY:
 		return farm.harvest(target_cell()) > 0
@@ -386,7 +423,9 @@ func use_selected() -> bool:
 		"consumable", "food":
 			ok = GameData.eco().use_item(item)
 		"weapon":
-			return combat.swing(item)
+			# The same path as the attack action: the input buffer and Cozy auto-swing apply (DUN-07).
+			combat.request(&"slash", item)
+			return state == S.SWING
 		_:
 			if str(def.get("placeable", "")) == "farm":
 				ok = bool(Svc.static_call("res://scripts/farm/placement_service.gd", &"place", [item, cell], false))
@@ -398,14 +437,14 @@ func use_selected() -> bool:
 		_using_item = item
 		_sync_equipment_display()
 		var dig := maxf(0.1, float(SpeciesPerks.current("dig_speed", 1.0)))
-		_tool_time = 0.34 / dig
+		_tool_time = float(GameData.player_cfg("tool_seconds", 0.34)) / dig
 		visual.play_action(&"interact", 1.4 * dig)
 	tool_used.emit(item, cell, ok)
 	return ok
 
 func _spend_stamina(amount: float) -> void:
 	stamina = maxf(0.0, stamina - maxf(0.0, amount))
-	_regen_delay = 1.0
+	_regen_delay = float(GameData.player_cfg("stamina_regen_delay", 1.0))
 
 func _emit_stats_on_bus() -> void:
 	var values := {"half_hearts": half_hearts, "max_half_hearts": max_half_hearts, "stamina": stamina, "max_stamina": max_stamina}
@@ -521,22 +560,16 @@ func revive(at: Vector2) -> void:
 func _update_oil(delta: float) -> void:
 	if not oil_draining:
 		return
+	# The oil rules are called directly: their old late-binding fallbacks re-implemented them differently (they ignored
+	# the auto-refuel and oil assists, review QUAL-11).
 	var owned := {"lantern_oil": GameData.eco().count_item(&"lantern_oil"), "lysdraabe": GameData.eco().count_item(&"lysdraabe")}
-	var refill: Variant = Svc.static_call(RULES, &"auto_refuel_item", [oil, owned], null)
-	if refill == null:
-		refill = ""
-		if oil <= 15.0:
-			for item in ["lantern_oil", "lysdraabe"]:
-				if owned[item] > 0:
-					refill = item
-					break
-	if str(refill) != "":
-		GameData.eco().use_item(StringName(str(refill)))
+	var refill := DungeonOilRules.auto_refuel_item(oil, owned)
+	if refill != &"":
+		GameData.eco().use_item(refill)
 	var before := oil
 	var gem := _gem_effects()
-	var mult := float(GameData.perk("oil_use_mult", 1.0)) * float(gem.get("oil_mult", 1.0))
 	var context := {"paused": false, "on_floor": oil_draining, "race_mult": float(GameData.perk("oil_use_mult", 1.0)), "gem_mult": float(gem.get("oil_mult", 1.0)), "assist_oil": _assist_oil()}
-	oil = clampf(float(Svc.static_call(RULES, &"oil_step", [oil, delta, context], maxf(0.0, oil - delta * mult))), 0.0, max_oil)
+	oil = clampf(DungeonOilRules.step(oil, delta, context), 0.0, max_oil)
 	if int(before) != int(oil):
 		EventBus.player_oil_changed.emit(oil, max_oil)
 	if oil / max_oil < float(GameData.combat("oil_whisper_ratio", 0.2)) and not _oil_low_said:
@@ -544,15 +577,14 @@ func _update_oil(delta: float) -> void:
 		EventBus.whisper_requested.emit("WHISPER_OIL_LOW")
 	if oil == 0.0:
 		_oil_empty_time += delta
-		var interval := float(GameData.cfg("adventure.oil_empty_hurt_interval", 12))
-		if bool(Svc.static_call(RULES, &"bite_due", [oil, half_hearts, _oil_empty_time], interval > 0.0 and _oil_empty_time >= interval)):
+		if DungeonOilRules.bite_due(oil, half_hearts, _oil_empty_time):
 			_oil_empty_time = 0.0
 			if half_hearts > 2:
 				take_damage(1, global_position)
 	_update_lantern()
 
 func _assist_oil() -> Variant:
-	return Svc.static_call(RULES, &"assist", ["assist_oil"], false)
+	return DungeonRun.assist("assist_oil")
 
 func _gem_effects() -> Dictionary:
 	var equipped: Variant = Svc.static_call(GEM, &"equipped", [], "")
@@ -561,8 +593,7 @@ func _gem_effects() -> Dictionary:
 func _update_lantern() -> void:
 	if lantern == null:
 		return
-	var fallback := lerpf(float(GameData.combat("oil_min_light", 0.35)), 1.0, clampf(oil / max_oil, 0.0, 1.0))
-	var ratio := float(Svc.static_call(RULES, &"light_ratio", [oil], fallback))
+	var ratio := DungeonOilRules.light_ratio(oil)
 	var gem := _gem_effects()
 	lantern.texture_scale = 630.0 / 128.0 * ratio * float(GameData.perk("dark_light_mult", 1.0)) * float(gem.get("radius_mult", 1.0))
 	lantern.color = Color.from_string(str(gem.get("tint", GameData.cfg("forest_look.lantern.color", "ffe9a8"))), Color("ffe9a8"))
@@ -592,7 +623,9 @@ func hop() -> bool:
 func toggle_flight() -> void:
 	if is_flying:
 		_try_land(false)
-	elif state == S.FREE and can_fly_here() and stamina >= 15.0:
+	elif _landing:
+		return                                   # the descent finishes first; a take-off now would leave _landing pinning the fairy (GAP3-01)
+	elif state == S.FREE and can_fly_here() and stamina >= float(GameData.player_cfg("flight_min_stamina", 15)):
 		is_flying = true
 		is_jumping = false
 		_flight_time = 0.0
@@ -644,23 +677,54 @@ func _try_land(forced: bool) -> bool:
 		if not forced:
 			EventBus.whisper_requested.emit("UI_NO_ROOM_TO_LAND")
 			return false
-		var candidates: Array[Vector2] = []
-		for y in area.map.height:
-			for x in area.map.width:
-				if area.is_walkable(Vector2i(x, y)):
-					candidates.append(area.cell_to_global(Vector2i(x, y)))
-		candidates.sort_custom(func(a: Vector2, b: Vector2): return Iso.ground_dist(global_position, a) < Iso.ground_dist(global_position, b))
-		var found := false
-		for at in candidates:
-			if _landing_safe(at):
-				_landing_at = at
-				found = true
-				break
-		if not found:
+		var found: Variant = _nearest_landing()
+		if found == null:
 			return false
+		_landing_at = found
 	is_flying = false
 	_landing = true
 	return true
+
+## The nearest safe landing spot (a cell centre, by ground distance) or null. Searches square rings of cells outward and
+## stops once a ring cannot hold anything nearer than the best spot found: sorting the whole map cost ~19 ms on the farm (GAP3-09).
+func _nearest_landing() -> Variant:
+	var origin := area.global_to_cell(global_position)
+	var step := minf(Iso.ground_dist(area.cell_to_global(origin), area.cell_to_global(origin + Vector2i.RIGHT)),
+		Iso.ground_dist(area.cell_to_global(origin), area.cell_to_global(origin + Vector2i.DOWN)))
+	var slack := Iso.ground_dist(global_position, area.cell_to_global(origin))
+	var best: Variant = null
+	var best_d := INF
+	for r in maxi(area.map.width, area.map.height) + 1:
+		# every cell of ring r is at least r steps from the origin cell, the player at most `slack` away from its centre
+		if r * step - slack > best_d:
+			break
+		var ring: Array[Vector2] = []
+		for cell in _ring_cells(origin, r):
+			if cell.x >= 0 and cell.y >= 0 and cell.x < area.map.width and cell.y < area.map.height and area.is_walkable(cell):
+				ring.append(area.cell_to_global(cell))
+		ring.sort_custom(func(a: Vector2, b: Vector2): return Iso.ground_dist(global_position, a) < Iso.ground_dist(global_position, b))
+		for at in ring:
+			var d := Iso.ground_dist(global_position, at)
+			if d >= best_d:
+				break
+			if _landing_safe(at):
+				best = at
+				best_d = d
+				break
+	return best
+
+## The cells at Chebyshev distance r around `origin` (the border of a (2r+1)-square).
+static func _ring_cells(origin: Vector2i, r: int) -> Array[Vector2i]:
+	if r == 0:
+		return [origin]
+	var cells: Array[Vector2i] = []
+	for i in range(-r, r + 1):
+		cells.append(origin + Vector2i(i, -r))
+		cells.append(origin + Vector2i(i, r))
+	for j in range(-r + 1, r):
+		cells.append(origin + Vector2i(-r, j))
+		cells.append(origin + Vector2i(r, j))
+	return cells
 
 func _cancel_flight() -> void:
 	is_flying = false

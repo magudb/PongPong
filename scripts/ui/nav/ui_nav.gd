@@ -82,6 +82,14 @@ static func text_field_focused(vp: Viewport = null) -> bool:
 	return false
 
 
+## A press of ui_page_up / ui_page_down that pages a screen. The pair also has letter keys (Q / E, for keyboards without PgUp / PgDn,
+## review UX-16): while a text field has focus those letters are typing, so only PgUp / PgDn and the pad page then.
+static func page_pressed(event: InputEvent, action: StringName, vp: Viewport = null, allow_echo := false) -> bool:
+	if not InputMap.has_action(action) or not event.is_action_pressed(action, allow_echo):
+		return false
+	return not (event is InputEventKey and text_field_focused(vp) and (event as InputEventKey).keycode not in [KEY_PAGEUP, KEY_PAGEDOWN])
+
+
 ## Leaves NO focus owner, so Space / Enter / the arrows act on the world again (a modal opened from the world gives focus back like this).
 static func release_world_focus() -> void:
 	var v := _vp()

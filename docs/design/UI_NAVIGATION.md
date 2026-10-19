@@ -157,8 +157,8 @@ Bindings are physical keys unless written otherwise. "Stage" says where the scre
 | `pause` | Esc | Start | on the world with no modal: open the pause menu. With a modal open: close the top modal (same as `ui_cancel`) | I | echo ignored |
 | `interact` | E, Enter | A | in the world: talk / use / sleep / harvest. In dialogue: same as `ui_accept` (advance, complete typing, pick the focused choice). In Indretning: place | U (world); I (dialogue and Indretning PLACE only: they dispatch the press themselves, F4) | echo ignored |
 | `jump` / `dodge` | Space | A / B | world only; **refused while a modal is open** | U | - |
-| `run`, `fly_toggle`, `fly_descend`, `light`, `drink` | Shift, F, Ctrl, Q, R | - / - / - / Y / RB | world only | U / poll | - |
-| `use_tool` / `attack` | LMB | X | world only; a click on a UI Control never reaches it (the Control consumes the mouse, 3.7) | U | - |
+| `run`, `fly_toggle`, `fly_descend`, `light`, `drink` | Shift, F, Shift (in flight; not Ctrl, which switches Spaces on macOS), Q, R | LT / Y / LT (in flight) / Y / RB (review UX-04; Y is light only in action areas, flight only outside them) | world only | U / poll | - |
+| `use_tool` / `attack` | LMB, X | X | world only; in an action area the press is `attack` (buffer, Cozy auto-swing) unless the selected hotbar tool has a node it can hit in front, which it then mines or chops (review DUN-07); a click on a UI Control never reaches it (the Control consumes the mouse, 3.7) | U | - |
 | `slot_1` .. `slot_10` | 1-9, 0 | - (D-pad left / right cycle, P06 amendment) | select the hotbar slot; in the backpack with an item selected: assign it to that slot; in a modal otherwise ignored | U | echo ignored |
 | `inventory` | I, Tab | - (pause-menu row) | open / close the backpack. Opening is refused while another modal is open. **Closing is read in `_input`**, because Tab is also `ui_focus_next` and the GUI stage eats it while a Control has focus (F1, F2) | I | echo ignored |
 | `journal` | J | - (pause-menu row) | open / close the quest book (same stage rule) | I | echo ignored |
@@ -168,15 +168,15 @@ Bindings are physical keys unless written otherwise. "Stage" says where the scre
 | `collection` | C | pause-menu row | Samlerbog (only if F9 ships) | I | echo ignored |
 | `rotate_item` | R | RB | Indretning PLACE mode only | I | echo ignored |
 | `pickup_item` | X, RMB | X | Indretning only | I | echo ignored |
-| `zoom_in` / `zoom_out` | mouse wheel | - | camera zoom; **ignored while any modal is open**; Indretning consumes the wheel itself (rotate) | U | - |
+| `zoom_in` / `zoom_out` | mouse wheel; trackpad pan / pinch (gestures, not actions) | right stick up / down (held, polled) | camera zoom; **ignored while any modal is open**; Indretning consumes the wheel itself (rotate) | U | - |
 | `ui_focus_next` / `ui_focus_prev` | Tab / Shift+Tab | - | next / previous focus stop; in the backpack Tab belongs to `inventory` | G | echo repeats |
-| `ui_page_up` / `ui_page_down` | PageUp / PageDown | **LB / RB (added)** | previous / next tab or page: shop tabs, quest tabs, Garderobe filters, Indretning filters (BROWSE), Vælg figur page 2 / 1; settings: nothing | I | echo ignored |
+| `ui_page_up` / `ui_page_down` | Q / E, PageUp / PageDown (Q / E: a MacBook has no PgUp / PgDn; `UiNav.page_pressed` leaves them to a focused text field) | **LB / RB (added)** | previous / next tab or page: shop tabs, quest tabs, Garderobe filters, Indretning filters (BROWSE), Vælg figur page 2 / 1; settings: nothing | I | echo ignored |
 | `ui_home` / `ui_end` | Home / End | - | not used | - | - |
-| Delete | Delete | - | save/load: delete the focused slot (confirm) | I | echo ignored |
+| Delete | Delete, Backspace (the Mac delete key) | - | save/load: delete the focused slot (confirm) | I | echo ignored |
 | LMB / RMB / wheel | click / secondary / scroll | - | click presses; RMB only in Indretning (`pickup_item`); wheel scrolls a `ScrollContainer` under the pointer in a modal | G | - |
 
 Rules on the table:
-* **Shared bindings are intentional** (the P01 contract lists them): Esc `pause`+`ui_cancel`, Enter `interact`+`ui_accept`, Space `jump`+`dodge`+`ui_accept`, LMB `use_tool`+`attack`, A `interact`+`jump`+`ui_accept`, X `use_tool`+`attack`+`pickup_item`, R / RB `drink`+`rotate_item`. The rule that keeps them from firing twice: **the top layer consumes the event** - Esc, the page keys and the hotkeys in `_input`; `ui_accept` / `interact` / `jump` / `dodge` by letting the focused Button press in the GUI stage and marking the event handled in `_unhandled_input` (F4); the world reads gameplay actions in `_unhandled_input` (event-driven, not `Input.is_action_just_pressed` polling, except movement `Input.get_vector`) and checks `GameManager.is_modal_open()` first.
+* **Shared bindings are intentional** (the P01 contract lists them): Esc `pause`+`ui_cancel`, Enter `interact`+`ui_accept`, Space `jump`+`dodge`+`ui_accept`, LMB `use_tool`+`attack`, A `interact`+`jump`+`ui_accept`, X (key and pad) `use_tool`+`attack`+`pickup_item`, R / RB `drink`+`rotate_item`. The rule that keeps them from firing twice: **the top layer consumes the event** - Esc, the page keys and the hotkeys in `_input`; `ui_accept` / `interact` / `jump` / `dodge` by letting the focused Button press in the GUI stage and marking the event handled in `_unhandled_input` (F4); the world reads gameplay actions in `_unhandled_input` (event-driven, not `Input.is_action_just_pressed` polling, except movement `Input.get_vector`) and checks `GameManager.is_modal_open()` first.
 * **Hotkeys never act while a text field has focus** (3.6) and never while their own modal is not allowed (opening is refused while another modal is open; Esc is the only key that works at every depth).
 * **Gamepad coverage (honest scope):** every screen is reachable and closable with a pad: farm actions on A / B / X / Y / RB, `pause` on Start, `decorate` on Back, the other screens through pause-menu rows (Rygsæk, Opgavebog, **Byg** on the farm, Garderobe, Samlerbog), and menu navigation with D-pad / stick, A, B, LB / RB. `build_menu` (B) is the one screen no pad button opens, so the pause row Byg is what lets a pad player build a coop or a barn. The plan labelled gamepad a "stub"; this document makes it a tested path (`zz_acceptance.gamepad_only_flow`) without new gameplay actions.
 
@@ -266,7 +266,7 @@ Fields exist on Vælg figur page 2 (`%NameInput` max 20, `%FarmNameInput` max 24
 
 ### 3.8 Gamepad
 
-* D-pad and left stick navigate (`ui_*` defaults), A accepts, B cancels, Start pauses, LB / RB switch tabs and pages (`ui_page_up/down`), Back opens / closes Indretning. In the world: A interact / jump, B dodge, X use / attack / pick up, Y light, RB drink / rotate, D-pad left / right cycle the hotbar slot. Rotate is RB only in Indretning PLACE mode; in BROWSE the same RB switches the filter.
+* D-pad and left stick navigate (`ui_*` defaults), A accepts, B cancels, Start pauses, LB / RB switch tabs and pages (`ui_page_up/down`), Back opens / closes Indretning. In the world: A interact (jump / hop when there is nothing to interact with), B dodge, X use / attack / pick up, Y light (action areas) / flight (elsewhere), LT run (descend in flight), right stick zoom, RB drink / rotate, D-pad left / right cycle the hotbar slot. Rotate is RB only in Indretning PLACE mode; in BROWSE the same RB switches the filter.
 * Key hints switch to pad glyphs on the first pad event and back to keyboard glyphs on the first key or mouse-button event (stick noise below 0.5 does not flip it).
 * A gamepad can reach: title, Vælg figur (defaults), settings, pause, save / load, every modal through the pause rows or its own button, shop and dialogue through the world's A button. Text entry is the only thing that needs a keyboard (3.6).
 
@@ -458,6 +458,7 @@ Each card: **Layout** (design px from the guide or the plan), **Focus** (initial
 * **Focus.** Initial `%ResumeButton`. Pattern L, one ring, hover focuses (H). Left / Right consumed.
 * **Keys.** Opens on `pause` only on the free world (3.5). Fortsæt / Esc / Start / B closes. Rygsæk / Opgavebog / Byg / Garderobe / Samlerbog: close pause, then open the target (transfer). Gem / Indlæs / Indstillinger: nested (focus returns to the row). Til titelskærmen: `SaveManager.autosave()`, `GameManager.pop_all_modals()`, `change_phase(MENU)`, scene to the title (a live, unpaused menu). Afslut spil: autosave, quit.
 * **Hint.** `[↑↓] Vælg · [Enter] OK · [Esc] Fortsæt` below the panel.
+* **Styring** (review UX-17): Indstillinger has a footer button `NAV_CONTROLS_TITLE` that nests a read-only page (`scripts/ui/controls_panel.gd`, registry row `controls` in `tests/lib/ui_screens.d/controls.json`): every world control with its keyboard / mouse and pad bindings, read from the live InputMap through `UiHints.glyph_all`; a screen without a pad button names the pause menu. The row key hints above are built from `ROW_HOTKEYS` in `pause_menu.gd` (keyboard only). `slot_9` / `slot_10` and `collection` stay bound but unlisted (Q1 and F9 keep them reserved).
 * **Checks.** `menus.pause_resume_on_second_esc`, `menus.pause_opens_only_on_free_world`, `menus.pause_refused_while_sleeping_or_traveling`, `menus.pause_rows_optional_screens`, `menus.pause_build_row_farm_only`, `menus.pause_rows_transfer_vs_nest` (P16's clone has none of the target scenes: the check registers stub screens through `GameUI.load_screens` with its own folder and proves transfer for every row and nesting for Gem / Indlæs / Indstillinger), `menus.quit_to_menu_is_live`, `menus.cursor_always_visible`, `escape_chain`, focus_walk, rule_report, `panel_pixels`, the keyboard-only walk of `zz_acceptance.keyboard_only_flow`.
 
 #### S08 `confirm` (P28)
@@ -870,17 +871,17 @@ The glyph is read from the live InputMap (the first event of the action that mat
 | `ui_up` + `ui_down` | ↑↓ | D-pad |
 | `ui_left` + `ui_right` | ←→ | D-pad |
 | four directions | ↑↓←→ | D-pad |
-| `ui_page_up` / `ui_page_down` | PgUp / PgDn | LB / RB |
+| `ui_page_up` / `ui_page_down` | Q / E, PgUp / PgDn | LB / RB |
 | `ui_focus_next` | Tab | - |
 | `jump` | Mellemrum | A |
 | `dodge` | Mellemrum | B |
-| `use_tool`, `attack` | Venstre klik | X |
+| `use_tool`, `attack` | Venstre klik, X | X |
 | `light` / `drink` | Q / R | Y / RB |
 | `rotate_item` / `pickup_item` | R / X or Højre klik | RB / X |
 | `decorate` | H | Back |
 | `wardrobe`, `inventory`, `journal`, `build_menu`, `collection` | G, I, J, B, C | pause-menu row (Garderobe, Rygsæk, Opgavebog, **Byg** - farm only -, Samlerbog) |
 | `slot_1 .. slot_10` | 1 .. 0 | D-pad ◂ ▸ (cycle) |
-| Delete (save / load) | Delete | - |
+| Delete (save / load) | Delete, Backspace | - |
 
 ## Appendix B - localization families and strings
 

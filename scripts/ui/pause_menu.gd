@@ -3,6 +3,10 @@ extends TTScreen
 var _rows: Array[Button] = []
 var _row_specs: Array = []
 var _leaving := false
+## The world hotkey of a transfer row, shown right-aligned on it (UI_NAVIGATION.md S07, review UX-17). The glyph is read from the
+## live InputMap; a pad has none of these buttons, so its rows show none.
+const ROW_HOTKEYS := {"InventoryButton": &"inventory", "MapButton": &"map", "JournalButton": &"journal", "PeopleButton": &"people",
+	"BuildButton": &"build_menu", "WardrobeButton": &"wardrobe", "CollectionButton": &"collection"}
 
 func _init() -> void:
 	super._init()
@@ -23,6 +27,7 @@ func _ready() -> void:
 	resized.connect(_fit_panel)
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("pause", Callable(get_script(), &"fixture_setup"))
 	%HintBar.set_hints([{"pair": [&"ui_up", &"ui_down"], "key": "HINT_MOVE"}, {"action": &"ui_accept", "key": "HINT_OK"}, {"action": &"ui_cancel", "key": "HINT_RESUME"}])
+	UiNav.watcher().device_changed.connect(func(_device): _refresh_texts())
 
 func _initial_focus() -> Control:
 	return get_node("%ResumeButton")
@@ -73,9 +78,21 @@ func _refresh_texts() -> void:
 			button.owner = self
 			button.unique_name_in_owner = true
 			button.pressed.connect(spec[2])
+			if ROW_HOTKEYS.has(spec[0]):
+				var hotkey := Label.new()
+				hotkey.name = "Hotkey"
+				hotkey.theme_type_variation = &"Bold15Mono"
+				hotkey.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				hotkey.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+				hotkey.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+				button.add_child(hotkey)
+				hotkey.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+				hotkey.offset_right = -button.get_theme_stylebox("normal").content_margin_right
 			_rows.append(button)
 	for row in _rows:
 		row.text = tr(str(row.get_meta(&"copy_key")))
+		if ROW_HOTKEYS.has(str(row.name)):
+			row.get_node("Hotkey").text = UiHints.glyph(ROW_HOTKEYS[str(row.name)])
 	UiNav.wire_ring(_rows)
 	UiNav.hover_focus(_rows)
 	_fit_panel.call_deferred()

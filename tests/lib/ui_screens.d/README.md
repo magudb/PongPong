@@ -8,6 +8,7 @@ in file-name order, so a package registers its screens without editing a file it
 | `social.json` | S-ui | people, gift, calendar, social_hud |
 | `social_events.json` | S-events | event_overlay |
 | `towns.json` | T-post-office | post |
+| `controls.json` | Review fixes (input) | controls (Styring, nested in Settings) |
 
 A file is `{"screens": [row, ...]}` with the row schema of `ui_screens.json` (see its `_doc` and the header of
 `tests/sections/ui_audit.gd`: id, title, kind, scene, fixture, package, guide, focus, modal, esc_depth, compare, checks, options;

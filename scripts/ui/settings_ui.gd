@@ -7,6 +7,7 @@ const BUSES := ["Master", "Music", "Sfx", "Voice"]
 var _applying := false
 var forest_help_button: Button
 var updates_button: Button
+var controls_button: Button
 
 func _init() -> void:
 	super._init()
@@ -39,6 +40,9 @@ func _ready() -> void:
 	forest_help_button.pressed.connect(_open_forest_help)
 	updates_button = preload("res://scripts/ui/social/social_layout.gd").button(footer,"UPDATE_TITLE","ButtonSecondaryS")
 	updates_button.pressed.connect(_open_updates)
+	controls_button = preload("res://scripts/ui/social/social_layout.gd").button(footer,"NAV_CONTROLS_TITLE","ButtonSecondaryS")
+	controls_button.name = "ControlsButton"
+	controls_button.pressed.connect(_open_controls)
 	footer.move_child(%CloseButton, footer.get_child_count() - 1)
 	_refresh_texts()
 
@@ -48,6 +52,14 @@ func _open_updates() -> void:
 		screen = load("res://scenes/ui/update_panel.tscn").instantiate()
 		add_child(screen)
 	screen.open(updates_button)
+
+## Styring: the read-only list of every key and pad button (review UX-17).
+func _open_controls() -> void:
+	var screen := get_node_or_null("Controls")
+	if screen == null:
+		screen = load("res://scenes/ui/controls_panel.tscn").instantiate()
+		add_child(screen)
+	screen.open(controls_button)
 
 func _open_forest_help() -> void:
 	var screen := get_node_or_null("ForestHelp")
@@ -155,6 +167,7 @@ func _update_sizes() -> void:
 	var footer: Array = []
 	if forest_help_button != null and forest_help_button.visible: footer.append(forest_help_button)
 	if updates_button != null: footer.append(updates_button)
+	if controls_button != null: footer.append(controls_button)
 	footer.append(%CloseButton)
 	rows.append(footer)
 	for row in rows:
