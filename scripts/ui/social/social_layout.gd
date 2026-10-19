@@ -3,6 +3,8 @@ extends RefCounted
 ## Theme-only layout helpers shared by the social screens.
 const Portraits := preload("res://scripts/ui/theme/tt_portraits.gd")
 const Fmt := preload("res://scripts/ui/theme/tt_format.gd")
+## The design canvas every code-built rect is written in (project.godot viewport); aspect = expand grows the real canvas beyond it.
+const DESIGN := Vector2(1280, 720)
 static var _chip_theme: Theme
 
 static func label(parent: Node, text: String, variation := "Body", wrap := false) -> Label:
@@ -33,9 +35,26 @@ static func panel(parent: Node, variation: String, rect := Rect2()) -> PanelCont
 	node.theme_type_variation = StringName(variation)
 	parent.add_child(node)
 	if rect.size != Vector2.ZERO:
-		node.position = rect.position
-		node.size = rect.size
+		place(node, rect)
 	return node
+
+## Puts `node` at `rect` of the 1280 x 720 design canvas inside its full-rect parent. An axis on which the rect is centred stays centred on any
+## window shape (UIC-02: with aspect = expand a 16:10 fullscreen or a 21:9 window is taller / wider than the design, and a fixed position hugs
+## the top-left corner); an off-centre axis keeps its distance from the top / left edge (side panels, HUD plates). Identical at 1280 x 720.
+static func place(node: Control, rect: Rect2) -> void:
+	var centre := rect.get_center()
+	var anchor := Vector2(0.5 if absf(centre.x - DESIGN.x / 2) <= 1.0 else 0.0, 0.5 if absf(centre.y - DESIGN.y / 2) <= 1.0 else 0.0)
+	var origin := DESIGN * anchor
+	node.anchor_left = anchor.x
+	node.anchor_right = anchor.x
+	node.anchor_top = anchor.y
+	node.anchor_bottom = anchor.y
+	node.grow_horizontal = Control.GROW_DIRECTION_BOTH if anchor.x > 0 else Control.GROW_DIRECTION_END
+	node.grow_vertical = Control.GROW_DIRECTION_BOTH if anchor.y > 0 else Control.GROW_DIRECTION_END
+	node.offset_left = rect.position.x - origin.x
+	node.offset_top = rect.position.y - origin.y
+	node.offset_right = rect.end.x - origin.x
+	node.offset_bottom = rect.end.y - origin.y
 
 static func margin(parent: Node, amount: int) -> MarginContainer:
 	var node := MarginContainer.new()

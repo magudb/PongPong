@@ -53,6 +53,7 @@ func run(t) -> void:
 	_item_icon_dirs(t)
 	await _game_ui(t)
 	await _game_ui_new_ids(t)
+	await _code_built_panels_centre(t)
 	_tt_helpers(t)
 	_quest_text(t)
 	_quest_text_title(t)
@@ -620,6 +621,43 @@ func _empty_cell_and_icon_dir(t) -> void:
 			hits.append("%s x%d" % [f.get_file(), n])
 	t.expect(hits.size() == 1 and hits[0] == "tt_item_icon.gd x%d" % TTItemIcon.DIRS.size(), "the icon directories are spelled out once (TTItemIcon.DIRS: items, home, wardrobe), nowhere else in scripts/ui %s" % str(hits))
 	t.check("icon_dir_constant_gone", t.failed == failed_before, "no second copy of the icon directory in scripts/ui")
+
+
+# ---------------------------------------------------------------------------------------------------- window shapes
+
+## UIC-02: the code-built books (SocialLayout.panel with a 1280 x 720 rect) stay centred when aspect = expand grows the canvas: a 16:10
+## fullscreen (1280 x 800) and a 21:9 window (1720 x 720); at 1280 x 720 they sit exactly at their design rect.
+const CODE_BUILT_SCREENS: Array[String] = ["garderobe", "husbyggeri", "build_menu_ui", "home_chest", "home_amenities", "animal_care_ui", "people",
+	"gift_ui", "post", "cheat_menu", "appraisal_ui", "rune_picker", "forest_help"]
+
+func _code_built_panels_centre(t) -> void:
+	var off: Array[String] = []
+	var measured := 0
+	for shape in [Vector2(1280, 720), Vector2(1280, 800), Vector2(1720, 720)]:
+		for id in CODE_BUILT_SCREENS:
+			var path := "res://scenes/ui/%s.tscn" % id
+			if not ResourceLoader.exists(path):
+				continue
+			var host := Control.new()
+			host.size = shape
+			t.root.add_child(host)
+			var screen: Control = (load(path) as PackedScene).instantiate()
+			host.add_child(screen)
+			screen.visible = true
+			await t.frames(1)
+			var book: Control = null
+			for child in screen.get_children():
+				if child is PanelContainer and (book == null or (child as Control).size.x > book.size.x):
+					book = child
+			if book != null:
+				measured += 1
+				var rect := book.get_global_rect()
+				var centred := absf(rect.get_center().x - shape.x / 2) <= 2.0 and absf(rect.get_center().y - shape.y / 2) <= 2.0
+				var inside := Rect2(Vector2.ZERO, shape).encloses(rect)
+				if not centred or not inside:
+					off.append("%s at %s: %s" % [id, shape, rect])
+			host.free()
+	t.check("code_built_books_centre_on_any_window_shape", measured >= 3 * 10 and off.is_empty(), "%d books measured, off centre: %s" % [measured, str(off)])
 
 
 # ---------------------------------------------------------------------------------------------------- contrast
