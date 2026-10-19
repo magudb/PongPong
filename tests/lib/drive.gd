@@ -96,6 +96,15 @@ func game_seconds() -> float:
 	return float(Engine.get_physics_frames()) / float(Engine.physics_ticks_per_second)
 
 
+## True when the harness runs with `--fast` (run_playtest.sh --fast): frames are not paced by the wall clock
+## (`--fixed-fps 60`). Set by tests/playtest.gd from the user args — engine flags are not in OS.get_cmdline_args().
+## Monte Carlo sections (tools/ci/sections.py SIMULATIONS) use this to keep their full sample counts under --fast and
+## a reduced smoke sample at normal pace, so the plain `--strict` gate still exercises them without simulating an hour of play.
+var fast: bool = false
+func fixed_fps() -> bool:
+	return fast
+
+
 ## Seconds of unscaled frame time (Engine.time_scale does not apply). That is the wall clock in a normal run; under `run_playtest.sh --fast` (--fixed-fps 60)
 ## every frame counts 1/60 s whatever it costs, so the wait runs ahead of the wall clock like everything else the engine animates. A wait for something
 ## outside the engine loop (a thread, a child process) is `until(cond, timeout)`, which counts the wall clock.

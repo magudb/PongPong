@@ -63,6 +63,7 @@ var _report := ""
 var _seed := 424242
 var _verbose := false
 var _strict := false
+var _fast := false
 var _known_paths: Array[String] = ["res://tests/lib/known_issues.txt"]
 
 var _t0 := 0
@@ -104,6 +105,7 @@ func _initialize() -> void:
 	_t.windowed = _windowed
 	_t.out_dir = _out
 	_t.verbose = _verbose
+	_t.fast = _fast
 	_t.user_dir = OS.get_user_data_dir()
 	_t.rng.seed = _seed
 	seed(_seed)
@@ -520,6 +522,8 @@ func _parse_args(args: PackedStringArray) -> String:
 			_verbose = true
 		elif a == "--strict":
 			_strict = true
+		elif a == "--fast":
+			_fast = true
 		elif a.begins_with("--known-issues="):
 			var kp := a.get_slice("=", 1)
 			_known_paths.append(kp if kp.begins_with("res://") or kp.begins_with("user://") else "res://" + kp)
@@ -538,5 +542,5 @@ func _absolute(path: String) -> String:
 
 func _print_usage() -> void:
 	print("usage: tests/run_playtest.sh [--character=animal|fairy|hobbit|ghost] [--only=a,b] [--list] [--windowed] [--out=DIR]")
-	print("       [--no-boot] [--play-seconds=N] [--section-timeout=N] [--max-seconds=N] [--report=FILE] [--seed=N] [--verbose] [--strict]")
+	print("       [--no-boot] [--play-seconds=N] [--section-timeout=N] [--max-seconds=N] [--report=FILE] [--seed=N] [--verbose] [--strict] [--fast]")
 	print("       wrapper only (tests/run_playtest.sh): [--fast] [--no-import] [--timeout=SECS] [--keep-home]")

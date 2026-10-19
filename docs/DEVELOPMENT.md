@@ -50,7 +50,7 @@ same walk costs about 0.05 s, because the frames run back to back and every fram
   (`t.until(cond, timeout)`) only for things outside the engine loop (a thread, a child process);
 * the harness watchdogs (`TIMEOUT_S` of a section, `--section-timeout=`, `--max-seconds=`) count wall-clock seconds in both modes;
 * `--fast` is ignored by a windowed run (a real window is watched in real time), and an own `--fixed-fps` in `GODOT_EXTRA_ARGS` is kept;
-* Ordinary gameplay sections run with normal pacing in CI. The two seeded Monte Carlo sections, `combat_acceptance` and `dungeon_fights`, run with `--fast`: they measure physics-derived game time and simulate more than an hour of play per character. Their full sample counts and game-time assertions stay enabled. The ordinary harness costs about the same
+* Ordinary gameplay sections run with normal pacing in CI. The two seeded Monte Carlo sections, `combat_acceptance` and `dungeon_fights`, run with `--fast`: they measure physics-derived game time and simulate more than an hour of play per character. Their full sample counts and game-time assertions stay enabled under `--fast`. At normal pace (`t.fixed_fps()` false) they run a reduced smoke sample of the same paths so the plain `--strict` gate finishes in wall-clock time; the statistical windows only apply to the full sample. The ordinary harness costs about the same
   with it (most of its time is child processes and imports), and a section that times an animation with the wall clock fails under it
   (measured when the flag was added: `city_levels.monkey_climbs_faster` and `city_levels.lift_requests_area_change` read 0.01 s for 1.1 s).
 
