@@ -945,8 +945,6 @@ func place_prop(prop_id: String, cell: Vector2i, params: Dictionary = {}) -> Nod
 	# building strip is nearest. Its pivot is the same footprint centre.
 	var ground_contact: Sprite2D = _attach_ground_contact(art, pivot_pos, prop_id)
 	prop_nodes.append({"id": prop_id, "cell": cell, "nodes": nodes, "body": body, "ground": ground_contact})
-	if night_factor > 0.0:
-		_apply_night()
 	return first
 
 
@@ -1299,6 +1297,7 @@ func _make_light(m: Dictionary, pos: Vector2) -> Node2D:
 	l.position = Vector2(0, -float(m.get("h", 40)))
 	holder.add_child(l)
 	_lights.append({"node": l, "base": 0.9 if kind == "lantern" else 0.8})
+	_apply_night_one(_lights.back())
 	var halo := Sprite2D.new()
 	halo.texture = Glow.halo_texture()
 	halo.scale = Vector2.ONE * (radius / 128.0) * 0.5
@@ -1307,6 +1306,7 @@ func _make_light(m: Dictionary, pos: Vector2) -> Node2D:
 	halo.material = Glow.additive_material()
 	holder.add_child(halo)
 	_glows.append({"node": halo, "base": 0.55})
+	_apply_night_one(_glows.back())
 	objects.add_child(holder)
 	var prop_id := StringName(str(m.get("prop", "")))
 	if prop_id != &"":

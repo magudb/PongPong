@@ -626,6 +626,17 @@ func _fixture_build(t) -> void:
 		if (l["node"] as PointLight2D).energy < 0.4:
 			lights_on = false
 	t.check("glow_and_lights_ramp_with_night", halo_off and halo_on and lights_on and a._glows.size() >= 2 and a._lights.size() >= 2, "%d additive glows and %d PointLights: hidden at factor 0, on at 1" % [a._glows.size(), a._lights.size()])
+	# a prop placed at night lights only its own records: an existing glow keeps a marker alpha (review REND-06: place_prop re-walked them all)
+	var marker_node := a._glows[0]["node"] as CanvasItem
+	marker_node.modulate.a = 0.123
+	var glows_before: int = a._glows.size()
+	var night_prop := a.place_prop("house_farm", Vector2i(2, 2))
+	var new_lit: bool = a._glows.size() > glows_before
+	for g3 in a._glows.slice(glows_before):
+		new_lit = new_lit and (g3["node"] as CanvasItem).visible and (g3["node"] as CanvasItem).modulate.a > 0.4
+	t.check("place_prop_at_night_lights_only_its_own_glow", new_lit and is_equal_approx(marker_node.modulate.a, 0.123),
+		"the new house's glow is on (%s), an existing glow was not re-walked (alpha %.3f)" % [new_lit, marker_node.modulate.a])
+	a.remove_prop(night_prop)
 	a.set_night_factor(0.0)
 	# the Objects layer holds the props, y-sorted; the player stands in it
 	t.check("objects_layer_holds_props_and_player", a.objects.get_child_count() >= a.prop_nodes.size() and _world.player.get_parent() == a.objects, "%d children of Objects" % a.objects.get_child_count())
