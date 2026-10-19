@@ -27,7 +27,8 @@ extends Node
 ## Flags: `after_others = true` (a turn-in: counts only when every objective that is not itself a turn-in was done BEFORE the event),
 ## `have = true` (on = item_gained: progress = how many the player owns, stays done once reached), `needs = { item = n }` (+ `consume = true`: a
 ## delivery - the items leave the backpack in the same commit as the progress; also read by item_in_use for quest_spot objectives).
-## completed_flag names an already-earned saved achievement that also satisfies an event objective on acceptance/load.
+## completed_flag names an already-earned saved achievement that also satisfies an event objective on acceptance/load (the whole target; while
+## the flag is unset the objective counts its events as usual).
 ## An objective without `on` is manual, except for the old id convention that review_regressions pins: harvest_<crop> / harvest_any are fed by
 ## crop_harvested and collect_<item> by item_gained or resource_node_depleted (for direct node loot).
 ##
@@ -1001,8 +1002,10 @@ func _refresh_quest(quest_id: StringName) -> void:
 			value = _have_value(od)
 		elif str(od.get("completed_flag", "")) != "":
 			# Event objectives may also accept a permanent, previously earned
-			# achievement on acceptance/load. The original live event still counts.
-			value = int(bool(GameManager.get_flag(StringName(str(od.completed_flag)), false)))
+			# achievement on acceptance/load: the flag fills the objective, an unset one leaves the live event progress alone (SYS-05).
+			if not bool(GameManager.get_flag(StringName(str(od.completed_flag)), false)):
+				continue
+			value = int(obj["target"])
 		if value < 0:
 			continue
 		if bool(od.get("after_others", false)) and not _non_turn_ins_done(rt, defs):

@@ -722,6 +722,22 @@ func _turn_ins_have_and_delivery() -> void:
 	bus.notification_posted.disconnect(catch)
 	qm.reset()
 	t.check("delivery_consumes_the_goods", problems.is_empty(), "needs + consume = the goods leave the backpack with the progress, a missing good blocks it with a toast: %s" % str(problems.slice(0, 3)))
+	# completed_flag (SYS-05): while the flag is unset the live event progress stays where it is; the flag fills the whole target
+	problems.clear()
+	_fresh()
+	q = _start("zz_p13_flagged", [{"id": "bats", "target": 3, "on": "enemy_defeated", "kind": "bat", "completed_flag": "zz_p13_bats_done"}])
+	bus.enemy_defeated.emit(&"e1", &"bat", [])
+	bus.enemy_defeated.emit(&"e2", &"bat", [])
+	eco.add_item(&"wood", 1)
+	await t.frames(1)
+	qm.refresh_objectives()
+	_need(problems, _cur(q, "bats") == 2, "a refresh with the flag unset changed the live progress 2/3 (%d)" % _cur(q, "bats"))
+	gm.set_flag(&"zz_p13_bats_done", true)
+	qm.refresh_objectives()
+	_need(problems, _cur(q, "bats") == 3 and _done(q, "bats"), "the earned flag did not fill the objective (%d/3)" % _cur(q, "bats"))
+	gm.clear_flag(&"zz_p13_bats_done")
+	qm.reset()
+	t.check("completed_flag_keeps_live_progress", problems.is_empty(), "completed_flag only raises progress: an unset flag never resets 2/3 to 0, a set one completes the objective: %s" % str(problems.slice(0, 3)))
 
 
 func _legacy_ids_and_double_counting() -> void:
