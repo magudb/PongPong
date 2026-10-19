@@ -710,6 +710,10 @@ func _sleep_sequence(passed_out: bool) -> void:
 		_pose_for_sleep()
 		EventBus.notification_posted.emit(tr("NOTIF_PASSED_OUT_TITLE"), tr("NOTIF_PASSED_OUT"), "sleep")
 	_restore_player()
+	# The day-end autosave of a pass-out ran at 02:00 where the player collapsed; the morning at home is what a Continue must resume
+	# (sleep_until_morning emits no second day_ended). The bed's own day end is saved after its clock already reads the morning.
+	if passed_out and SaveManager.autosave_enabled:
+		SaveManager.autosave()
 	await get_tree().create_timer(0.9).timeout
 	if _rebuild_queued:
 		_flush_rebuild()

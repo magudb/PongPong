@@ -347,6 +347,12 @@ func _pass_out_and_bed() -> void:
 	# --- the pass-out at the day end: 01:50 + 20 min crosses 26:00 = 02:00 -> sleep, fade, toast, wake at 06:00, exactly one new day
 	notes.clear()
 	w["log"].clear()
+	var keep_dir: String = sm.save_dir
+	var keep_autosave: bool = sm.autosave_enabled
+	sm.save_dir = "user://clock26-pass-out"
+	DirAccess.make_dir_recursive_absolute(sm.save_dir)
+	sm.delete_save(sm.AUTO_SLOT)
+	sm.autosave_enabled = true
 	gm.set("hour", gm.day_end_hour() - 1)
 	gm.set("minute", 50)
 	var day_pass: int = gm.total_day()
@@ -361,6 +367,13 @@ func _pass_out_and_bed() -> void:
 		toast = toast or (n[2] == "sleep" and n[1] == _world.tr("NOTIF_PASSED_OUT"))
 	t.check("pass_out_at_02_00", passing and pass_done and gm.total_day() == day_pass + 1 and gm.hour == gm.day_start_hour() and gm.minute < 10 and toast and _names(w["log"]).count("day_ended") == 1 and _names(w["log"]).count("day_started") == 1,
 		"raw 25:50 + 20 min: sleeping %s, awake again %s, total_day %d -> %d (ONE day: the roll, then sleep_until_morning skips none), %02d:%02d, NOTIF_PASSED_OUT %s, %s" % [passing, pass_done, day_pass, gm.total_day(), gm.hour, gm.minute, toast, _names(w["log"])])
+	# SAVE-09: the day-end autosave of the roll records 02:00 where the player collapsed; the wake-up at home is saved again
+	var woke: Dictionary = sm.get_save_summary(sm.AUTO_SLOT)
+	t.check("pass_out_saves_the_wake_up", int(woke.get("hour", -1)) == gm.day_start_hour() and int(woke.get("total_day", -1)) == day_pass + 1 and str(woke.get("area", "")) == String(_world.area.map.id) and String(_world.area.map.id) == String(_world._wake_area()),
+		"the auto slot holds %02d:%02d of day %s in '%s' (the wake area is '%s'), not the collapse at 02:00" % [int(woke.get("hour", -1)), int(woke.get("minute", -1)), woke.get("total_day", "-"), woke.get("area", ""), _world._wake_area()])
+	sm.delete_save(sm.AUTO_SLOT)
+	sm.autosave_enabled = keep_autosave
+	sm.save_dir = keep_dir
 	# --- the bed after the roll (a save resumed at 02:xx awake, a roll during a travel): it must not skip a SECOND day
 	notes.clear()
 	w["log"].clear()
