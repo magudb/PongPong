@@ -115,6 +115,8 @@ func _run(t,native: bool) -> void:
 	t.check("cues_by_rarity_and_directory",audio.calls == [["sfx","pickup_soft"],["sfx","loot_rare"],["sfx","loot_unique"],["sfx","loot_legendary"],["music","dungeon_act2",1.0]])
 	Svc.clear_overrides()
 	audio.free()
+	# DUN-02: only the boss floors (4, 8, 12) score a boss fight; the rest play their act.
+	t.check("floor_music_by_act_and_boss",Cues.floor_music(1) == "music/dungeon_act1" and Cues.floor_music(3) == "music/dungeon_act1" and Cues.floor_music(4) == "music/boss" and Cues.floor_music(5) == "music/dungeon_act2" and Cues.floor_music(8) == "music/boss" and Cues.floor_music(11) == "music/dungeon_act4" and Cues.floor_music(12) == "music/boss_final")
 	Cues.play("sfx/zz_missing_cue")
 	Cues.play("music/zz_missing_track")
 	t.check("missing_audio_is_silent",true)

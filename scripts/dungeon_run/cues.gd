@@ -36,7 +36,11 @@ func _event(id: StringName, data: Dictionary) -> void:
 			play("music/rune_rest")
 		&"dungeon_floor_entered":
 			play("sfx/hulen_descend")
-			var number := int(data.get("floor",1))
-			var floors := DungeonFloors.inst()
-			var spec := DungeonSpec.spec_for(floors.cfg,number) if floors != null else {}
-			play("music/boss_final" if str(spec.get("boss","")) != "" and number == int(DungeonRun.cfg("max_floor",12)) else "music/boss" if str(spec.get("boss","")) != "" else "music/dungeon_act%d" % ceili(number/3.0))
+			play(floor_music(int(data.get("floor",1))))
+## Boss floors score the fight (the last one its own track); every other floor plays its act (floors 1-3 = act 1).
+static func floor_music(number: int) -> String:
+	var floors := DungeonFloors.inst()
+	var spec := DungeonSpec.spec_for(floors.cfg,number) if floors != null else {}
+	if bool(spec.get("boss",false)):
+		return "music/boss_final" if number == int(DungeonRun.cfg("max_floor",12)) else "music/boss"
+	return "music/dungeon_act%d" % ceili(number/3.0)
