@@ -1,6 +1,6 @@
 extends RefCounted
 ## Regressions from the 2026-10-19 review of player interaction, combat input and world hosts; each group of checks names
-## its finding id (DUN-01, GAP3-02/03/06/08/10/12/13, GAP4-02/04, SIM-03).
+## its finding id (DUN-01, GAP3-02/03/06/08/10/12/13, GAP4-02/04, SIM-03, REPO-04).
 const SECTION := "interaction_review"
 const TIMEOUT_S := 180.0
 
@@ -83,6 +83,7 @@ func run(t) -> void:
 	WorldRoot2D.unregister_map(&"_t_interaction")
 	await _axe_on_crops(t)
 	await _placement_reasons(t)
+	await _camera_on_physics_tick(t)
 	gm.clear_config_overrides()
 
 
@@ -498,4 +499,40 @@ func _actors_block_player(t) -> void:
 		and (animal.collision_mask & Iso.LAYER_PLAYER) != 0 and (animal.collision_mask & Iso.LAYER_NPC) == 0 and (Iso.MASK_WALKING & Iso.LAYER_NPC) != 0)
 	animal.queue_free()
 	npc.queue_free()
+	await t.physics(2)
+
+
+## REPO-04: the camera follows the body on the physics tick. Bodies move only on ticks; a camera smoothed every rendered frame moved
+## between them, so on 120/144 Hz displays the hero juddered against the scrolling background.
+func _camera_on_physics_tick(t) -> void:
+	var player: Player2D = t.world().player
+	var camera: Camera2D = player.camera
+	var home: Vector2 = player.global_position
+	t.hold(&"move_left")
+	await t.physics(6)
+	await t.frames(1)                                          # sample after the tick's own camera update
+	var last: Vector2 = camera.get_screen_center_position()
+	var tick: int = Engine.get_physics_frames()
+	var moved := 0
+	var between := 0
+	var frames := 0
+	var ticks := 0
+	var start_tick: int = tick
+	var start: Vector2 = player.global_position
+	while Engine.get_physics_frames() - start_tick < 40 and frames < 20000:
+		await t.frames(1)
+		var centre: Vector2 = camera.get_screen_center_position()
+		var now: int = Engine.get_physics_frames()
+		frames += 1
+		ticks += 1 if now != tick else 0
+		if not centre.is_equal_approx(last):
+			moved += 1
+			between += 1 if now == tick else 0
+		last = centre
+		tick = now
+	t.release(&"move_left")
+	t.check("camera_moves_only_on_physics_ticks", camera.process_callback == Camera2D.CAMERA2D_PROCESS_PHYSICS and moved > 0 and between == 0,
+		"%d frames, %d with a physics tick, camera moved in %d, %d of them between ticks; the player walked %.0f px" % [frames, ticks, moved, between, player.global_position.distance_to(start)])
+	await t.physics(10)
+	player.global_position = home
 	await t.physics(2)

@@ -60,6 +60,9 @@ func _ready() -> void:
 	add_child(cs)
 	camera = Camera2D.new()
 	camera.name = "Camera2D"
+	# Bodies move on the 60 Hz physics tick. A camera that smoothed every rendered frame moved between
+	# those steps, so on a 120/144 Hz display the hero and the citizens juddered against the background.
+	camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 6.0
 	camera.limit_smoothed = true
