@@ -3,6 +3,8 @@ extends Node
 ## Technical masks reuse approved seamless paintings. Terrain and its physics
 ## remain authoritative; removing the decals restores the normal tile art.
 const SHADER := preload("res://scripts/forest_look/soft_ground.gdshader")
+## Cells of empty mask kept around a feature's bounds: the cubic upscale softens the edge by well under one cell.
+const MARGIN := 2
 const FEATURES := {"path":{"chars":["p","x"],"art":"path_tile_o"},"pond":{"chars":["~"],"art":"pond_water_o"},"glow":{"chars":["g"],"terrain":"forest_floor_glow_o"}}
 var masks: Dictionary = {}
 var sprites: Array[Sprite2D] = []
@@ -16,11 +18,15 @@ func build(target: IsoArea) -> void:
 		var image := Image.create(area.map.width,area.map.height,false,Image.FORMAT_L8)
 		image.fill(Color.BLACK)
 		var count := 0
+		var low := Vector2i(area.map.width,area.map.height)
+		var high := Vector2i(-1,-1)
 		for y in area.map.height:
 			for x in area.map.width:
 				if area.map.ground_at(Vector2i(x,y)) in FEATURES[feature].chars:
 					image.set_pixel(x,y,Color.WHITE)
 					count += 1
+					low = low.min(Vector2i(x,y))
+					high = high.max(Vector2i(x,y))
 		masks[feature] = image.duplicate()
 		if count == 0: continue
 		var painting: Dictionary
@@ -32,17 +38,23 @@ func build(target: IsoArea) -> void:
 			painting = ArtCatalog.prop(id)
 		if not painting.get("real",false): continue
 		var texture: Texture2D = painting.texture
-		image.resize(area.map.width*8,area.map.height*8,Image.INTERPOLATE_CUBIC)
+		# The decal covers the feature's cells plus MARGIN, not the whole map: fragments outside it were blended at alpha 0 (review REND-07).
+		# The painting stays anchored to the map's corner through `origin`, so cropping moves no pigment.
+		var crop := Rect2i(low-Vector2i.ONE*MARGIN,high-low+Vector2i.ONE*(1+2*MARGIN)).intersection(Rect2i(0,0,area.map.width,area.map.height))
+		var part := image.get_region(crop)
+		part.resize(crop.size.x*8,crop.size.y*8,Image.INTERPOLATE_CUBIC)
+		var cell := Vector2(Iso.ORTHO_W,Iso.ORTHO_H)
 		var picture := Sprite2D.new()
 		picture.name = str(feature).capitalize()+"Decal"
-		picture.texture = ImageTexture.create_from_image(image)
+		picture.texture = ImageTexture.create_from_image(part)
 		picture.centered = false
-		picture.position = area.ground_fx.to_local(area.cell_to_global(Vector2i.ZERO))-Vector2(Iso.ORTHO_W,Iso.ORTHO_H)*.5
-		picture.scale = Vector2(Iso.ORTHO_W,Iso.ORTHO_H)/8.0
+		picture.position = area.ground_fx.to_local(area.cell_to_global(crop.position))-cell*.5
+		picture.scale = cell/8.0
 		var material := ShaderMaterial.new()
 		material.shader = SHADER
 		material.set_shader_parameter("paint",texture)
-		material.set_shader_parameter("repeats",Vector2(area.map.width*Iso.ORTHO_W,area.map.height*Iso.ORTHO_H)/texture.get_size())
+		material.set_shader_parameter("repeats",Vector2(crop.size)*cell/texture.get_size())
+		material.set_shader_parameter("origin",Vector2(crop.position)*cell/texture.get_size())
 		picture.material = material
 		area.ground_fx.add_child(picture)
 		sprites.append(picture)

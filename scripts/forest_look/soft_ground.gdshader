@@ -1,6 +1,8 @@
 shader_type canvas_item;
 uniform sampler2D paint : source_color, filter_linear_mipmap, repeat_enable;
 uniform vec2 repeats = vec2(1.0);
+// The decal's top-left corner in painting repeats from the map's corner (a cropped decal keeps the map-anchored pigment).
+uniform vec2 origin = vec2(0.0);
 varying vec4 vmod;
 void vertex() { vmod = COLOR; }
 float noise(vec2 p) {
@@ -12,8 +14,12 @@ float noise(vec2 p) {
 }
 void fragment() {
 	float mask = texture(TEXTURE,UV).r;
-	float edge = smoothstep(.45,.55,mask+(noise(UV*repeats*9.0)-.5)*.035);
-	vec4 pigment = texture(paint,UV*repeats);
+	vec2 at = origin+UV*repeats;
+	float edge = smoothstep(.45,.55,mask+(noise(at*9.0)-.5)*.035);
+	vec4 pigment = texture(paint,at);    // before the discard: the mipmapped fetch needs the whole quad's derivatives
+	if (edge <= 0.0) {
+		discard;
+	}
 	COLOR = pigment * vmod;
 	COLOR.a *= edge;
 }
