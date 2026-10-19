@@ -4,8 +4,13 @@ extends Node
 signal changed
 const Version := preload("res://scripts/release/release_version.gd")
 const CACHE := "user://updates"
+## Reason codes the install helpers write into their result file, and the message each one shows.
+const FAILURES := {"folder": "UPDATE_FAIL_FOLDER", "checksum": "UPDATE_FAIL_CHECKSUM", "package": "UPDATE_FAIL_PACKAGE", "game_running": "UPDATE_FAIL_GAME_RUNNING", "locked": "UPDATE_FAIL_LOCKED", "launch": "UPDATE_FAIL_LAUNCH"}
 var state := "idle"
 var available: Dictionary = {}
+var failure := ""
+## Outcome of the install a previous session handed to its helper: {} or {"status": "installed"|"failed", "reason": code}.
+var report: Dictionary = {}
 var downloaded_path := ""
 var checked := false
 var _request: HTTPRequest
@@ -42,9 +47,49 @@ func _ready() -> void:
 	_request.max_redirects = 5
 	add_child(_request)
 	_request.request_completed.connect(_completed)
+	report = take_report()
 
 func _set_state(value: String) -> void:
 	state = value
+	changed.emit()
+
+func _fail(reason: String) -> void:
+	failure = reason if FAILURES.has(reason) else ""
+	_set_state("install_failed")
+
+## The message for the current install failure, or for the one reported from the previous session.
+static func failure_key(reason: String) -> String:
+	return FAILURES.get(reason, "UPDATE_STATE_INSTALL_FAILED")
+
+## A helper result file: {"status": "installed"|"rolled_back"|"failed", "reason": known code or ""}, or {} when unreadable.
+static func read_result(path: String) -> Dictionary:
+	if not FileAccess.file_exists(path): return {}
+	var json := JSON.new()
+	# Windows PowerShell writes UTF-8 with a byte order mark.
+	if json.parse(FileAccess.get_file_as_string(path).trim_prefix("\ufeff")) != OK or not json.data is Dictionary: return {}
+	var status := str(json.data.get("status", ""))
+	if status not in ["installed", "rolled_back", "failed"]: return {}
+	var reason := str(json.data.get("reason", ""))
+	return {"status": status, "reason": reason if FAILURES.has(reason) else ""}
+
+## Reads and removes the result files install helpers left behind; the newest one is the outcome to tell the player.
+func take_report() -> Dictionary:
+	var folder := ProjectSettings.globalize_path(CACHE)
+	if not DirAccess.dir_exists_absolute(folder): return {}
+	var newest := ""
+	for file in DirAccess.get_files_at(folder):
+		if not file.begins_with("install-"): continue
+		var path := folder.path_join(file)
+		if file.get_extension() == "json" and (newest.is_empty() or FileAccess.get_modified_time(path) >= FileAccess.get_modified_time(newest)): newest = path
+	var outcome := read_result(newest) if not newest.is_empty() else {}
+	for file in DirAccess.get_files_at(folder):
+		if file.begins_with("install-") and file.get_extension() in ["json", "ready"]: DirAccess.remove_absolute(folder.path_join(file))
+	if outcome.is_empty(): return {}
+	return {"status": "installed", "reason": ""} if outcome.status == "installed" else {"status": "failed", "reason": outcome.reason}
+
+func acknowledge_report() -> void:
+	if report.is_empty(): return
+	report.clear()
 	changed.emit()
 
 func check(automatic := false) -> void:
@@ -93,12 +138,16 @@ func _completed(result: int, code: int, _headers: PackedStringArray, body: Packe
 	accept_release(json.data)
 
 func download() -> void:
-	if state not in ["available", "download_failed"] or available.is_empty(): return
+	if state not in ["available", "download_failed", "install_failed"] or available.is_empty(): return
 	var path := ProjectSettings.globalize_path(CACHE.path_join(available.version))
 	if DirAccess.make_dir_recursive_absolute(path) != OK:
 		_set_state("download_failed")
 		return
 	downloaded_path = path.path_join(available.name)
+	# A verified download outlives a failed install, so trying again does not fetch it twice.
+	if FileAccess.file_exists(downloaded_path) and FileAccess.get_sha256(downloaded_path) == available.get("sha256", ""):
+		_set_state("ready")
+		return
 	_request.timeout = 1800
 	_request.body_size_limit = 1073741824
 	_request.download_file = downloaded_path
@@ -122,7 +171,7 @@ func install_target() -> String:
 
 func install() -> bool:
 	if state != "ready" or install_target().is_empty():
-		_set_state("install_failed")
+		_fail("folder")
 		return false
 	if not FileAccess.file_exists(downloaded_path) or FileAccess.get_sha256(downloaded_path) != available.get("sha256", ""):
 		_set_state("download_failed")
@@ -130,7 +179,7 @@ func install() -> bool:
 	var parent := install_target().get_base_dir()
 	var probe := parent.path_join(".Traetoppen-write-" + str(OS.get_process_id()))
 	if DirAccess.make_dir_absolute(probe) != OK:
-		_set_state("install_failed")
+		_fail("folder")
 		return false
 	DirAccess.remove_absolute(probe)
 	var world := get_tree().get_first_node_in_group("world_2d")
@@ -141,7 +190,7 @@ func install() -> bool:
 	var helper := ProjectSettings.globalize_path(CACHE.path_join("install." + extension))
 	var file := FileAccess.open(helper, FileAccess.WRITE)
 	if file == null:
-		_set_state("install_failed")
+		_fail("")
 		return false
 	file.store_string(FileAccess.get_file_as_string("res://scripts/release/install_windows.ps1" if extension == "ps1" else "res://scripts/release/install_macos.sh"))
 	file.close()
@@ -155,7 +204,7 @@ func install() -> bool:
 		args = PackedStringArray(["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", helper, "-ParentProcessId", str(OS.get_process_id()), "-Archive", downloaded_path, "-Target", install_target(), "-ExpectedSha", available.sha256, "-Result", result])
 	var process := OS.create_process(command, args)
 	if process < 0:
-		_set_state("install_failed")
+		_fail("")
 		return false
 	_set_state("installing")
 	# Allow large packages to finish validation and extraction before the game exits.
@@ -163,9 +212,12 @@ func install() -> bool:
 		if FileAccess.file_exists(ready): break
 		if not OS.is_process_running(process): break
 		await get_tree().create_timer(0.1, true).timeout
-	if not FileAccess.file_exists(ready) or FileAccess.get_file_as_string(ready) != "ready":
+	if not FileAccess.file_exists(ready) or FileAccess.get_file_as_string(ready).trim_prefix("\ufeff") != "ready":
 		if OS.is_process_running(process): OS.kill(process)
-		_set_state("install_failed")
+		# The helper names why it refused; the game is still running, so this session reports it.
+		var outcome := read_result(result)
+		if FileAccess.file_exists(result): DirAccess.remove_absolute(result)
+		_fail(outcome.get("reason", ""))
 		return false
 	DirAccess.remove_absolute(ready)
 	GameManager.quit_game()

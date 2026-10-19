@@ -8,6 +8,8 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import threading
+import time
 import unittest
 from unittest import mock
 import zipfile
@@ -170,20 +172,96 @@ class ToolchainTests(unittest.TestCase):
                 module.extract_editor(archive, root, "linux")
 
 
+COMPLETE = {"Traetoppen/Traetoppen.exe": b"new executable", "Traetoppen/Traetoppen.pck": b"new data"}
+# The helpers' launch lines and recording stand-ins for them. A stub logs what was launched and what the result
+# file said at that moment; the first TT_TEST_LAUNCH_FAILS launches fail.
+WINDOWS_LAUNCH = "if (!$NoLaunch) { Start-Process -FilePath (Join-Path $Target 'Traetoppen.exe') -WorkingDirectory $Target }"
+WINDOWS_STUB = ("if (!$NoLaunch) { $seen = if (Test-Path -LiteralPath $Result) { (Get-Content -Raw -LiteralPath $Result).Trim() } else { 'none' }; "
+                "Add-Content -LiteralPath $env:TT_TEST_LAUNCHES -Value ((Get-Content -Raw -LiteralPath (Join-Path $Target 'Traetoppen.exe')) + '|' + $seen); "
+                "if (@(Get-Content -LiteralPath $env:TT_TEST_LAUNCHES).Count -le [int]$env:TT_TEST_LAUNCH_FAILS) { throw 'launch refused' } }")
+MACOS_LAUNCH = '/usr/bin/open -n "$target"'
+MACOS_STUB = '"$TT_TEST_OPEN" -n "$target"'
+MACOS_OPEN = """#!/bin/bash
+version=$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' "$2/Contents/Info.plist")
+seen=$(cat "$TT_TEST_RESULT" 2>/dev/null || echo none)
+echo "$version|$seen" >> "$TT_TEST_LAUNCHES"
+[[ $(wc -l < "$TT_TEST_LAUNCHES") -gt $TT_TEST_LAUNCH_FAILS ]]
+"""
+
+
 class InstallerTests(unittest.TestCase):
     def setUp(self):
-        self.directory = tempfile.TemporaryDirectory(prefix="traetoppen-updater-test-")
-        self.root = Path(self.directory.name)
+        directory = tempfile.TemporaryDirectory(prefix="traetoppen-updater-test-")
+        self.addCleanup(directory.cleanup)
+        self.root = Path(directory.name)
+        # The installation's parent folder; results and archives live outside it, like user data.
+        self.games = self.root / "games"
+        self.games.mkdir()
+        self.addCleanup(self.games.chmod, 0o755)
         self.result = self.root / "result.json"
+        self.launches = self.root / "launches.txt"
         self.powershell = shutil.which("pwsh") or shutil.which("powershell")
 
-    def tearDown(self):
-        self.directory.cleanup()
+    def helper(self, name, launch, stub):
+        text = (ROOT / "scripts/release" / name).read_text(encoding="utf-8")
+        self.assertEqual(text.count(launch), 1, "the helper's launch line changed")
+        path = self.root / name
+        path.write_text(text.replace(launch, stub), encoding="utf-8")
+        return path
 
-    def windows(self, entries, bad_hash=False):
+    def environment(self, fails):
+        return dict(os.environ, TT_TEST_LAUNCHES=str(self.launches), TT_TEST_LAUNCH_FAILS=str(fails), TT_TEST_RESULT=str(self.result), TT_TEST_OPEN=str(self.root / "open"))
+
+    def launched(self):
+        """(what was launched, the result file at that moment) for every launch."""
+        lines = self.launches.read_text(encoding="utf-8-sig").splitlines() if self.launches.exists() else []
+        return [(launched, json.loads(seen) if seen != "none" else None) for launched, seen in (line.split("|", 1) for line in lines)]
+
+    def outcome(self):
+        return json.loads(self.result.read_text(encoding="utf-8-sig"))
+
+    def dummy_parent(self):
+        """Stands in for the running game: the helper must not touch the installation until it exits."""
+        process = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(120)"])
+        self.addCleanup(process.wait)
+        self.addCleanup(process.kill)
+        return process
+
+    def lock(self, target):
+        """Holds the installation the way a virus scan does, so the folder cannot be renamed; returns the release."""
+        if os.name == "nt":
+            handle = (target / "Traetoppen.pck").open("rb")
+            self.addCleanup(handle.close)
+            return handle.close
+        self.games.chmod(0o555)
+        return lambda: self.games.chmod(0o755)
+
+    def run_helper(self, command, cwd, fails, parent, before_exit):
+        helper = subprocess.Popen(command, cwd=cwd, env=self.environment(fails), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            if parent:
+                ready = Path(str(self.result) + ".ready")
+                deadline = time.monotonic() + 60
+                while not ready.exists() and helper.poll() is None and time.monotonic() < deadline:
+                    time.sleep(0.05)
+                self.assertEqual(ready.read_bytes() if ready.exists() else b"", b"ready", "helper never signalled ready")
+                time.sleep(0.5)
+                self.assertIsNone(helper.poll(), "helper must wait for the game to exit")
+                if before_exit:
+                    before_exit()
+                parent.kill()
+                parent.wait()
+            stdout, stderr = helper.communicate(timeout=90)
+        finally:
+            if helper.poll() is None:
+                helper.kill()
+                helper.wait()
+        return subprocess.CompletedProcess(command, helper.returncode, stdout, stderr)
+
+    def windows(self, entries, bad_hash=False, folder="Traetoppen", parent=None, launch=False, fails=0, before_exit=None):
         if not self.powershell:
             self.skipTest("PowerShell is tested on the Windows export runner")
-        target = self.root / "Traetoppen"
+        target = self.games / folder
         target.mkdir(exist_ok=True)
         (target / "Traetoppen.exe").write_bytes(b"previous executable")
         (target / "Traetoppen.pck").write_bytes(b"previous data")
@@ -192,26 +270,29 @@ class InstallerTests(unittest.TestCase):
             for name, value in entries.items():
                 package.writestr(name, value)
         digest = hashlib.sha256(archive.read_bytes()).hexdigest()
-        command = [self.powershell, "-NoProfile", "-File", str(ROOT / "scripts/release/install_windows.ps1"), "-ParentProcessId", "0", "-Archive", str(archive), "-Target", str(target), "-ExpectedSha", "0" * 64 if bad_hash else digest, "-Result", str(self.result), "-NoLaunch"]
-        result = subprocess.run(command, cwd=target, capture_output=True, text=True, timeout=30)
-        return result, target
+        script = self.helper("install_windows.ps1", WINDOWS_LAUNCH, WINDOWS_STUB) if launch else ROOT / "scripts/release/install_windows.ps1"
+        command = [self.powershell, "-NoProfile", "-File", str(script), "-ParentProcessId", str(parent.pid if parent else 0), "-Archive", str(archive), "-Target", str(target), "-ExpectedSha", "0" * 64 if bad_hash else digest, "-Result", str(self.result)]
+        if not launch:
+            command.append("-NoLaunch")
+        return self.run_helper(command, target, fails, parent, before_exit and (lambda: before_exit(target))), target
 
     def test_windows_replaces_complete_package(self):
-        result, target = self.windows({"Traetoppen/Traetoppen.exe": b"new executable", "Traetoppen/Traetoppen.pck": b"new data"})
+        result, target = self.windows(COMPLETE)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual((target / "Traetoppen.exe").read_bytes(), b"new executable")
-        self.assertEqual(json.loads(self.result.read_text(encoding="utf-8-sig"))["status"], "installed")
+        self.assertEqual(self.outcome(), {"status": "installed", "reason": ""})
 
     def test_windows_bad_hash_keeps_previous(self):
         result, target = self.windows({"Traetoppen/Traetoppen.exe": b"bad"}, bad_hash=True)
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual((target / "Traetoppen.exe").read_bytes(), b"previous executable")
+        self.assertEqual(self.outcome(), {"status": "failed", "reason": "checksum"})
 
     def test_windows_update_preserves_setup_uninstaller(self):
-        target = self.root / "Traetoppen"
+        target = self.games / "Traetoppen"
         target.mkdir()
         (target / "Uninstall.exe").write_bytes(b"setup-generated uninstaller")
-        result, target = self.windows({"Traetoppen/Traetoppen.exe": b"new executable", "Traetoppen/Traetoppen.pck": b"new data"})
+        result, target = self.windows(COMPLETE)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual((target / "Uninstall.exe").read_bytes(), b"setup-generated uninstaller")
 
@@ -219,16 +300,53 @@ class InstallerTests(unittest.TestCase):
         result, target = self.windows({"Traetoppen/Traetoppen.exe": b"incomplete"})
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual((target / "Traetoppen.pck").read_bytes(), b"previous data")
+        self.assertEqual(self.outcome(), {"status": "failed", "reason": "package"})
 
     def test_windows_path_traversal_keeps_previous(self):
         result, target = self.windows({"Traetoppen/../../escaped.txt": b"escape", "Traetoppen/Traetoppen.exe": b"bad"})
         self.assertNotEqual(result.returncode, 0)
+        self.assertFalse((self.root / "escaped.txt").exists())
         self.assertFalse((self.root.parent / "escaped.txt").exists())
         self.assertEqual((target / "Traetoppen.exe").read_bytes(), b"previous executable")
+        self.assertEqual(self.outcome()["reason"], "package")
 
-    @unittest.skipUnless(sys.platform == "darwin", "macOS installer is exercised on macOS")
-    def test_macos_replaces_signed_bundle(self):
-        target = self.root / "Traetoppen.app"
+    def test_windows_unexpected_folder_is_refused(self):
+        result, target = self.windows(COMPLETE, folder="Game")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual((target / "Traetoppen.exe").read_bytes(), b"previous executable")
+        self.assertEqual(self.outcome(), {"status": "failed", "reason": "folder"})
+
+    def test_windows_waits_for_the_game_and_reports_before_launching(self):
+        result, target = self.windows(COMPLETE, parent=self.dummy_parent(), launch=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.launched(), [("new executable", {"status": "installed", "reason": ""})])
+
+    def test_windows_failed_launch_restores_and_relaunches_previous(self):
+        result, target = self.windows(COMPLETE, parent=self.dummy_parent(), launch=True, fails=1)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual((target / "Traetoppen.exe").read_bytes(), b"previous executable")
+        self.assertEqual(self.outcome(), {"status": "rolled_back", "reason": "launch"})
+        self.assertEqual([launched for launched, seen in self.launched()], ["new executable", "previous executable"])
+        self.assertEqual(list(self.games.glob(".Traetoppen-update.*")), [])
+
+    def test_windows_retries_a_briefly_locked_installation(self):
+        def hold(target):
+            threading.Timer(1.0, self.lock(target)).start()
+        result, target = self.windows(COMPLETE, parent=self.dummy_parent(), launch=True, before_exit=hold)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual((target / "Traetoppen.exe").read_bytes(), b"new executable")
+
+    def test_windows_locked_installation_relaunches_previous(self):
+        result, target = self.windows(COMPLETE, parent=self.dummy_parent(), launch=True, before_exit=self.lock)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual((target / "Traetoppen.exe").read_bytes(), b"previous executable")
+        self.assertEqual(self.outcome(), {"status": "failed", "reason": "locked"})
+        self.assertEqual(self.launched(), [("previous executable", {"status": "failed", "reason": "locked"})])
+
+    def macos(self, bad_hash=False, parent=None, launch=False, fails=0, before_exit=None):
+        if sys.platform != "darwin":
+            self.skipTest("macOS installer is exercised on macOS")
+        target = self.games / "Traetoppen.app"
         replacement = self.root / "incoming/Traetoppen.app"
         for bundle, version in ((target, "0.1.0"), (replacement, "0.2.0")):
             executable = bundle / "Contents/MacOS/Trætoppen"
@@ -240,11 +358,53 @@ class InstallerTests(unittest.TestCase):
             subprocess.run(["codesign", "--force", "--sign", "-", str(bundle)], check=True, capture_output=True)
         archive = self.root / "update.zip"
         subprocess.run(["ditto", "-c", "-k", "--keepParent", str(replacement), str(archive)], check=True)
-        digest = hashlib.sha256(archive.read_bytes()).hexdigest()
-        result = subprocess.run(["bash", str(ROOT / "scripts/release/install_macos.sh"), "0", str(archive), str(target), digest, str(self.result), "--no-launch"], capture_output=True, text=True, timeout=30)
+        digest = "0" * 64 if bad_hash else hashlib.sha256(archive.read_bytes()).hexdigest()
+        script = ROOT / "scripts/release/install_macos.sh"
+        if launch:
+            script = self.helper("install_macos.sh", MACOS_LAUNCH, MACOS_STUB)
+            stub = self.root / "open"
+            stub.write_text(MACOS_OPEN)
+            stub.chmod(0o755)
+        command = ["bash", str(script), str(parent.pid if parent else 0), str(archive), str(target), digest, str(self.result)]
+        if not launch:
+            command.append("--no-launch")
+        return self.run_helper(command, self.root, fails, parent, before_exit and (lambda: before_exit(target))), target
+
+    def version(self, bundle):
+        with (bundle / "Contents/Info.plist").open("rb") as file:
+            return plistlib.load(file)["CFBundleShortVersionString"]
+
+    def test_macos_replaces_signed_bundle(self):
+        result, target = self.macos()
         self.assertEqual(result.returncode, 0, result.stderr)
-        with (target / "Contents/Info.plist").open("rb") as file:
-            self.assertEqual(plistlib.load(file)["CFBundleShortVersionString"], "0.2.0")
+        self.assertEqual(self.version(target), "0.2.0")
+        self.assertEqual(self.outcome(), {"status": "installed", "reason": ""})
+
+    def test_macos_bad_hash_reports_its_reason(self):
+        result, target = self.macos(bad_hash=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.version(target), "0.1.0")
+        self.assertEqual(self.outcome(), {"status": "failed", "reason": "checksum"})
+
+    def test_macos_waits_for_the_game_and_reports_before_launching(self):
+        result, target = self.macos(parent=self.dummy_parent(), launch=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.launched(), [("0.2.0", {"status": "installed", "reason": ""})])
+
+    def test_macos_failed_launch_restores_and_relaunches_previous(self):
+        result, target = self.macos(parent=self.dummy_parent(), launch=True, fails=1)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.version(target), "0.1.0")
+        self.assertEqual(self.outcome(), {"status": "rolled_back", "reason": "launch"})
+        self.assertEqual([launched for launched, seen in self.launched()], ["0.2.0", "0.1.0"])
+        self.assertEqual(list(self.games.glob(".Traetoppen-update.*")), [])
+
+    def test_macos_locked_installation_relaunches_previous(self):
+        result, target = self.macos(parent=self.dummy_parent(), launch=True, before_exit=self.lock)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.version(target), "0.1.0")
+        self.assertEqual(self.outcome(), {"status": "failed", "reason": "locked"})
+        self.assertEqual(self.launched(), [("0.1.0", {"status": "failed", "reason": "locked"})])
 
 
 if __name__ == "__main__":

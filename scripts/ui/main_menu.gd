@@ -64,8 +64,11 @@ func _refresh_labels() -> void:
 	var latest: int = SaveManager.get_latest_slot()
 	%ContinueInfo.text = tr("MENU_CONTINUE_DAY") % int(SaveManager.get_save_summary(latest).get("total_day", 1)) if latest >= 0 else ""
 	_rows = [%ContinueButton, %LoadButton, %NewGameButton, %SettingsButton, %QuitButton]
-	_updates_button.visible = ReleaseUpdates.inst().state in ["available", "ready"]
-	_updates_button.text = tr("UPDATE_AVAILABLE") % str(ReleaseUpdates.inst().available.get("version", ""))
+	var updates := ReleaseUpdates.inst()
+	_updates_button.visible = updates.state in ["available", "ready"] or not updates.report.is_empty()
+	_updates_button.text = tr("UPDATE_AVAILABLE") % str(updates.available.get("version", ""))
+	if updates.state not in ["available", "ready"] and not updates.report.is_empty():
+		_updates_button.text = tr("UPDATE_REPORT_INSTALLED") % ReleaseUpdates.current_version() if updates.report.status == "installed" else tr("UPDATE_REPORT_FAILED")
 	if _updates_button.visible: _rows.insert(_rows.size() - 1, _updates_button)
 	UiNav.wire_ring(_rows)
 	UiNav.wire_row([%LanguageButton])

@@ -39,6 +39,8 @@ func _ready() -> void:
 	UiNav.wire_ring([primary, back])
 	UiNav.hover_focus([primary, back])
 	service.changed.connect(_changed)
+	# Seeing the panel once is how the player takes note of the last install's outcome.
+	closed.connect(service.acknowledge_report)
 	_refresh_texts()
 
 func open(opener: Control = null) -> void:
@@ -64,21 +66,32 @@ func _process(delta: float) -> void:
 	super._process(delta)
 	if is_open() and service.state == "downloading": progress_bar.value = service.progress()
 
+## A known release is waiting to be (re)installed: the primary button downloads and installs it.
+func _installs() -> bool:
+	return service.state in ["available", "ready", "download_failed"] or service.state == "install_failed" and not service.available.is_empty()
+
 func _refresh_texts() -> void:
 	if not is_node_ready() or service == null: return
 	version_label.text = tr("UPDATE_VERSION") % ReleaseUpdates.current_version()
 	var key := "UPDATE_STATE_" + service.state.to_upper()
+	if service.state == "install_failed": key = ReleaseUpdates.failure_key(service.failure)
 	status_label.text = tr(key)
 	if service.state in ["available", "ready"]: status_label.text = tr(key) % str(service.available.get("version", ""))
+	if not service.report.is_empty(): status_label.text = report_text(service.report) + "\n" + status_label.text
 	var installable := not service.install_target().is_empty()
 	if not installable and service.state in ["available", "ready"]: status_label.text += "\n" + tr("UPDATE_INSTALLED_ONLY")
-	primary.text = tr("UPDATE_INSTALL" if service.state in ["available", "ready", "download_failed"] else "UPDATE_CHECK")
-	UiNav.set_enabled(primary, service.state not in ["checking", "downloading", "installing"] and (installable or service.state not in ["available", "ready", "download_failed"]))
+	primary.text = tr("UPDATE_INSTALL" if _installs() else "UPDATE_CHECK")
+	UiNav.set_enabled(primary, service.state not in ["checking", "downloading", "installing"] and (installable or not _installs()))
 	progress_bar.visible = service.state == "downloading"
 	UiNav.set_enabled(back, service.state != "installing")
 
+## What the last session's install did, for the panel; the title row shows the first line.
+static func report_text(report: Dictionary) -> String:
+	if report.get("status") == "installed": return TranslationServer.translate("UPDATE_REPORT_INSTALLED") % ReleaseUpdates.current_version()
+	return TranslationServer.translate("UPDATE_REPORT_FAILED") + "\n" + TranslationServer.translate(ReleaseUpdates.failure_key(report.get("reason", "")))
+
 func _action() -> void:
-	if service.state in ["available", "ready", "download_failed"]:
+	if _installs():
 		var accepted := await UiConfirm.ask(self, "UPDATE_CONFIRM_TITLE", tr("UPDATE_CONFIRM") % str(service.available.get("version", "")), "UPDATE_INSTALL")
 		if not accepted: return
 		_confirmed = true

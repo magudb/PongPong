@@ -113,9 +113,16 @@ After confirmation, the game downloads to user://updates and verifies GitHub's
 asset digest. The install helper independently rechecks the archive, validates
 and stages it, then signals that the running game may exit. A playing session
 must autosave successfully first. The helper waits for the process to exit,
-swaps only the installed game folder/bundle, and relaunches it. A failed swap
-or launch restores the previous installation. Failed preparation leaves the
-running game open. Cancellation removes a partial download. Read-only and
+swaps only the installed game folder/bundle (retrying a folder that a virus
+scan still holds for about eight seconds), writes its result and then
+relaunches the game. A failed swap or launch restores the previous
+installation, and after the handshake the helper always starts the previous
+or unchanged game again. Every result names a reason (folder, checksum,
+package, game_running, locked, launch); failed preparation leaves the running
+game open with that reason's message, and the next start reads the newest
+install-*.json and shows "Opdateret til version X" or why the update was not
+installed. A verified download survives a failed install, so trying again
+does not download it twice. Cancellation removes a partial download. Read-only and
 unexpected install locations are refused; move/extract the release to a
 writable normal installation folder before updating.
 
