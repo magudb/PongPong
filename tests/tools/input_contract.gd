@@ -30,8 +30,9 @@ const ACTIONS: Dictionary = {
 	"run": {"keys": [KEY_SHIFT]},
 	"fly_toggle": {"keys": [KEY_F]},
 	"fly_descend": {"keys": [KEY_CTRL]},
-	"use_tool": {"mouse": [MOUSE_BUTTON_LEFT], "joy": [JOY_BUTTON_X]},
-	"attack": {"mouse": [MOUSE_BUTTON_LEFT], "joy": [JOY_BUTTON_X]},
+	# X is the keyboard tool / attack key (review UX-03: mouse-free play), the same letter as the pad button
+	"use_tool": {"keys": [KEY_X], "mouse": [MOUSE_BUTTON_LEFT], "joy": [JOY_BUTTON_X]},
+	"attack": {"keys": [KEY_X], "mouse": [MOUSE_BUTTON_LEFT], "joy": [JOY_BUTTON_X]},
 	"light": {"keys": [KEY_Q], "joy": [JOY_BUTTON_Y]},
 	"drink": {"keys": [KEY_R], "joy": [JOY_BUTTON_RIGHT_SHOULDER]},
 	"slot_1": {"keys": [KEY_1]},
@@ -113,6 +114,7 @@ static func expected_shared() -> Dictionary:
 		"mouse:%d" % MOUSE_BUTTON_LEFT: ["attack", "use_tool"],
 		"joy:%d" % JOY_BUTTON_A: ["interact", "jump"],
 		"joy:%d" % JOY_BUTTON_X: ["attack", "pickup_item", "use_tool"],
+		"key:%d" % KEY_X: ["attack", "pickup_item", "use_tool"],
 		"key:%d" % KEY_R: ["drink", "rotate_item"],
 		"joy:%d" % JOY_BUTTON_RIGHT_SHOULDER: ["drink", "rotate_item"],
 	}

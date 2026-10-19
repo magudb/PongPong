@@ -158,7 +158,7 @@ Bindings are physical keys unless written otherwise. "Stage" says where the scre
 | `interact` | E, Enter | A | in the world: talk / use / sleep / harvest. In dialogue: same as `ui_accept` (advance, complete typing, pick the focused choice). In Indretning: place | U (world); I (dialogue and Indretning PLACE only: they dispatch the press themselves, F4) | echo ignored |
 | `jump` / `dodge` | Space | A / B | world only; **refused while a modal is open** | U | - |
 | `run`, `fly_toggle`, `fly_descend`, `light`, `drink` | Shift, F, Ctrl, Q, R | - / - / - / Y / RB | world only | U / poll | - |
-| `use_tool` / `attack` | LMB | X | world only; a click on a UI Control never reaches it (the Control consumes the mouse, 3.7) | U | - |
+| `use_tool` / `attack` | LMB, X | X | world only; in an action area the press is `attack` (checked first, review DUN-07); a click on a UI Control never reaches it (the Control consumes the mouse, 3.7) | U | - |
 | `slot_1` .. `slot_10` | 1-9, 0 | - (D-pad left / right cycle, P06 amendment) | select the hotbar slot; in the backpack with an item selected: assign it to that slot; in a modal otherwise ignored | U | echo ignored |
 | `inventory` | I, Tab | - (pause-menu row) | open / close the backpack. Opening is refused while another modal is open. **Closing is read in `_input`**, because Tab is also `ui_focus_next` and the GUI stage eats it while a Control has focus (F1, F2) | I | echo ignored |
 | `journal` | J | - (pause-menu row) | open / close the quest book (same stage rule) | I | echo ignored |
@@ -176,7 +176,7 @@ Bindings are physical keys unless written otherwise. "Stage" says where the scre
 | LMB / RMB / wheel | click / secondary / scroll | - | click presses; RMB only in Indretning (`pickup_item`); wheel scrolls a `ScrollContainer` under the pointer in a modal | G | - |
 
 Rules on the table:
-* **Shared bindings are intentional** (the P01 contract lists them): Esc `pause`+`ui_cancel`, Enter `interact`+`ui_accept`, Space `jump`+`dodge`+`ui_accept`, LMB `use_tool`+`attack`, A `interact`+`jump`+`ui_accept`, X `use_tool`+`attack`+`pickup_item`, R / RB `drink`+`rotate_item`. The rule that keeps them from firing twice: **the top layer consumes the event** - Esc, the page keys and the hotkeys in `_input`; `ui_accept` / `interact` / `jump` / `dodge` by letting the focused Button press in the GUI stage and marking the event handled in `_unhandled_input` (F4); the world reads gameplay actions in `_unhandled_input` (event-driven, not `Input.is_action_just_pressed` polling, except movement `Input.get_vector`) and checks `GameManager.is_modal_open()` first.
+* **Shared bindings are intentional** (the P01 contract lists them): Esc `pause`+`ui_cancel`, Enter `interact`+`ui_accept`, Space `jump`+`dodge`+`ui_accept`, LMB `use_tool`+`attack`, A `interact`+`jump`+`ui_accept`, X (key and pad) `use_tool`+`attack`+`pickup_item`, R / RB `drink`+`rotate_item`. The rule that keeps them from firing twice: **the top layer consumes the event** - Esc, the page keys and the hotkeys in `_input`; `ui_accept` / `interact` / `jump` / `dodge` by letting the focused Button press in the GUI stage and marking the event handled in `_unhandled_input` (F4); the world reads gameplay actions in `_unhandled_input` (event-driven, not `Input.is_action_just_pressed` polling, except movement `Input.get_vector`) and checks `GameManager.is_modal_open()` first.
 * **Hotkeys never act while a text field has focus** (3.6) and never while their own modal is not allowed (opening is refused while another modal is open; Esc is the only key that works at every depth).
 * **Gamepad coverage (honest scope):** every screen is reachable and closable with a pad: farm actions on A / B / X / Y / RB, `pause` on Start, `decorate` on Back, the other screens through pause-menu rows (Rygsæk, Opgavebog, **Byg** on the farm, Garderobe, Samlerbog), and menu navigation with D-pad / stick, A, B, LB / RB. `build_menu` (B) is the one screen no pad button opens, so the pause row Byg is what lets a pad player build a coop or a barn. The plan labelled gamepad a "stub"; this document makes it a tested path (`zz_acceptance.gamepad_only_flow`) without new gameplay actions.
 
@@ -874,7 +874,7 @@ The glyph is read from the live InputMap (the first event of the action that mat
 | `ui_focus_next` | Tab | - |
 | `jump` | Mellemrum | A |
 | `dodge` | Mellemrum | B |
-| `use_tool`, `attack` | Venstre klik | X |
+| `use_tool`, `attack` | Venstre klik, X | X |
 | `light` / `drink` | Q / R | Y / RB |
 | `rotate_item` / `pickup_item` | R / X or Højre klik | RB / X |
 | `decorate` | H | Back |

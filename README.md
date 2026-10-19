@@ -129,7 +129,7 @@ tools/dev/play.sh --throwaway   # same, with a temporary profile that is deleted
 |---|---|
 | Move / run | WASD or arrows / Shift |
 | Interact, talk | E or Enter |
-| Use tool / attack | Left mouse |
+| Use tool / attack | Left mouse or X |
 | Jump / dodge | Space |
 | Fairy flight / descend | F / Ctrl |
 | Fairy light / drink a supply | Q / R |

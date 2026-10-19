@@ -53,6 +53,7 @@ func run(t) -> void:
 	p.restore_after_sleep()
 	await _attack_before_tool(t, world, p, eco)
 	_hop_on_pad_a(t, world, p)
+	_keyboard_tool_key(t, world, p)
 	_aim_follows_device(t, world, p)
 	world.call("_enter", &"farm", &"default")
 	p.restore_after_sleep()
@@ -109,6 +110,39 @@ func _attack_before_tool(t, world: WorldRoot2D, p: Player2D, eco: Node) -> void:
 	p._unhandled_input(_mouse(MOUSE_BUTTON_LEFT, false))
 	_free(p)
 	p.hotbar.assign(0, &"hoe_wooden")
+
+## UX-03: mouse-free play: the X key tills on the farm and attacks in the forest.
+func _keyboard_tool_key(t, world: WorldRoot2D, p: Player2D) -> void:
+	world.call("_enter", &"farm", &"default")
+	p.set_physics_process(false)
+	_free(p)
+	var spot: Vector2 = p.global_position
+	var cell := Vector2i(-1, -1)
+	for c in world.farm.farmable_cells():
+		if world.farm.can_till(c):
+			cell = c
+			break
+	if cell == Vector2i(-1, -1):
+		t.skip("no tillable farm cell")
+		return
+	p.facing8 = 0
+	p.facing_vec = Iso.dir8_vector(0)
+	p.global_position = world.area.cell_to_global(cell - world.area.facing_step(0))
+	p.hotbar.assign(0, &"hoe_wooden")
+	p.hotbar.select(0)
+	p._unhandled_input(_key(KEY_X))
+	p._unhandled_input(_key(KEY_X, false))
+	t.check("x_key_tills", world.farm.state_of(cell) == FarmGrid.State.TILLED)
+	_free(p)
+	p.global_position = spot
+	world.call("_enter", &"_fixture_ortho", &"default")
+	p.set_physics_process(false)
+	_free(p)
+	p._unhandled_input(_key(KEY_X))
+	var swung: bool = p.state == PlayerBody2D.S.SWING and p.combat.attack_held
+	p._unhandled_input(_key(KEY_X, false))
+	t.check("x_key_attacks_in_action_area", swung and not p.combat.attack_held)
+	_free(p)
 
 ## GAP3-11: pad A is interact and jump; with nothing in front it hops, with a host in front it interacts.
 func _hop_on_pad_a(t, world: WorldRoot2D, p: Player2D) -> void:

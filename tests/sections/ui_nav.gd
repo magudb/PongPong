@@ -1002,7 +1002,7 @@ func _hint_glyphs_follow_device(t) -> void:
 		"jump": UiHints.glyph(&"jump"), "page": UiHints.glyph_pair(&"ui_page_up", &"ui_page_down"), "updown": UiHints.glyph_pair(&"ui_up", &"ui_down"),
 		"leftright": UiHints.glyph_pair(&"ui_left", &"ui_right"), "dirs": UiHints.glyph_set([&"ui_up", &"ui_down", &"ui_left", &"ui_right"]), "use_tool": UiHints.glyph(&"use_tool")}
 	var kb_ok: bool = kb["interact"] == "E" and kb["ui_accept"] == "Enter" and kb["ui_cancel"] == "Esc" and kb["pause"] == "Esc" and kb["page"] == "PgUp PgDn" \
-		and kb["updown"] == "↑↓" and kb["leftright"] == "←→" and kb["dirs"] == "↑↓←→" and kb["jump"] == TranslationServer.translate("KEY_SPACE") and kb["use_tool"] == TranslationServer.translate("KEY_MOUSE_LEFT")
+		and kb["updown"] == "↑↓" and kb["leftright"] == "←→" and kb["dirs"] == "↑↓←→" and kb["jump"] == TranslationServer.translate("KEY_SPACE") and kb["use_tool"] == "X"
 	await UiAudit.device_swap(t, "pad")
 	var flipped := UiNav.device() == &"gamepad"
 	var pad := {"interact": UiHints.glyph(&"interact"), "ui_accept": UiHints.glyph(&"ui_accept"), "ui_cancel": UiHints.glyph(&"ui_cancel"), "pause": UiHints.glyph(&"pause"),
