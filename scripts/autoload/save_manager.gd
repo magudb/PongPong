@@ -103,7 +103,7 @@ var pending_world: Dictionary = {}
 var auto_save_interval_seconds: float = AUTOSAVE_INTERVAL_SECONDS
 ## Switch for BOTH autosave triggers (the timer and the day end); tests of other packages may turn it off.
 var autosave_enabled: bool = true
-## {slot, code, detail} of the last failed load or save, {} after a success. code: missing corrupt invalid version apply scene slot write.
+## {slot, code, detail} of the last failed load or save, {} after a success. code: missing corrupt invalid version apply scene slot write gather event.
 var last_error: Dictionary = {}
 ## Test seam: a value >= 0 replaces Time.get_unix_time_from_system() as the time stamp of a save.
 var clock_override: float = -1.0
@@ -118,6 +118,8 @@ var _sections: Array[Dictionary] = []     # registered sections: {name, node, or
 ## Section registration/reset invalidates every cached validator result.
 var _backup_validation: Dictionary = {}
 var _section_seq: int = 0
+## Sections whose to_dict() failed during the last gather_payload() (save_game refuses to write such a payload).
+var _gather_failures: Array[String] = []
 
 
 ## Counts the script/engine ERRORS that the main thread raises while sections apply a save (warnings are tolerated).
@@ -233,7 +235,15 @@ func save_game(slot: int = 0, is_auto: bool = false) -> bool:
 		last_error = {"slot": slot, "code": "slot", "detail": "slot %d does not exist" % slot}
 		return false
 	var silent := slot == AUTO_SLOT
-	var text := JSON.stringify(gather_payload(), "\t", true, true)
+	var payload := gather_payload()
+	if not _gather_failures.is_empty():
+		# A section that could not describe itself would be missing from the file and reset to new-game state on the next load:
+		# nothing is written, the file of the slot (and its .bak) stays as it was.
+		last_error = {"slot": slot, "code": "gather", "detail": "to_dict() failed for %s" % ", ".join(_gather_failures)}
+		if not silent:
+			_toast(tr("NOTIF_SAVE_FAILED_TITLE"), tr("NOTIF_SAVE_FAILED_MSG"), slot + 1)
+		return false
+	var text := JSON.stringify(payload, "\t", true, true)
 	_ensure_dir()
 	if not silent:
 		_roll_backup(slot)
@@ -577,9 +587,11 @@ func _node_of(entry: Dictionary) -> Node:
 # ------------------------------------------------------------------ payload: gather
 
 ## The save as a dictionary: meta, every section's to_dict() (sanitized: arrays instead of vectors, plain Strings) and
-## the world. `quests` carries no Lua definitions.
+## the world. `quests` carries no Lua definitions. A section whose to_dict() does not return a Dictionary is left out and
+## named in _gather_failures, which makes save_game() refuse to write the payload.
 func gather_payload() -> Dictionary:
 	var payload: Dictionary = {}
+	_gather_failures.clear()
 	for entry in _ordered_entries():
 		var node := _node_of(entry)
 		if node == null or not node.has_method("to_dict"):
@@ -587,6 +599,7 @@ func gather_payload() -> Dictionary:
 		var data: Variant = node.call("to_dict")
 		if typeof(data) != TYPE_DICTIONARY:
 			push_error("SaveManager: %s.to_dict() did not return a Dictionary, the section '%s' is not saved" % [node.name, entry["name"]])
+			_gather_failures.append(str(entry["name"]))
 			continue
 		payload[entry["name"]] = _json_safe(data, str(entry["name"]))
 	_strip_quest_defs(payload)

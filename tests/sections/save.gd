@@ -784,15 +784,33 @@ func _test_json_rules() -> void:
 	t.check("json_keys_are_sorted_in_the_file", precise_text.find("\"alpha\"") >= 0 and precise_text.find("\"alpha\"") < precise_text.find("\"stamp\"") and precise_text.find("\"stamp\"") < precise_text.find("\"zeta\""), "alpha, stamp, zeta in the text of the file")
 	t.check("json_huge_numbers_stay_floats", typeof(pd["big"]) == TYPE_FLOAT and typeof(pd["edge"]) == TYPE_FLOAT and typeof(pd["whole"]) == TYPE_INT, "1e20 and 2^53 stay float, 2.0 becomes int 2")
 	_clear_fakes()
-	# a section whose to_dict() is not a Dictionary is left out of the save, with an error, and the rest still saves and loads
+	# a section whose to_dict() is not a Dictionary is left out of the gathered payload, with an error ...
 	var bad := BadSection.new()
 	sm.register_section("bad_dict", bad)
 	t.allow("did not return a Dictionary")
 	var payload_bad: Dictionary = sm.gather_payload()
 	t.check("section_with_bad_to_dict_is_left_out", not payload_bad.has("bad_dict") and payload_bad.has("economy") and payload_bad.has("meta"), "gather skips it and keeps the other sections")
 	t.expect_allowed("did not return a Dictionary", 1, "the bad to_dict() is reported once")
-	t.check("section_with_bad_to_dict_save_and_load_work", sm.save_game(0) and sm.load_game(0), "the save is still written and loads")
+	# ... and save_game refuses such a payload (SAVE-11; it used to write it, and the next load reset the missing section to new-game
+	# state): false, last_error "gather", the slot's file and .bak stay byte for byte, a manual save says so, an autosave writes nothing
 	sm.unregister_section("bad_dict")
+	sm.save_game(0)
+	_set_state(4321, 7)
+	sm.save_game(0)
+	var file_before := _read_text(sm.slot_path(0))
+	var bak_before := _read_text(sm.backup_path(0))
+	sm.register_section("bad_dict", bad)
+	_notes.clear()
+	_saved_slots.clear()
+	var refused: bool = not sm.save_game(0)
+	var refused_auto: bool = not sm.autosave()
+	t.expect_allowed("did not return a Dictionary", 3, "each refused save reports the bad to_dict() again")
+	t.check("section_with_bad_to_dict_refuses_the_save", refused and refused_auto and sm.last_error.get("code") == "gather" and str(sm.last_error.get("detail", "")).contains("bad_dict")
+		and _read_text(sm.slot_path(0)) == file_before and _read_text(sm.backup_path(0)) == bak_before and not sm.has_save(sm.AUTO_SLOT) and _saved_slots.is_empty(),
+		"save_game(0) and autosave() return false (last_error %s); save_0.json and save_0.bak.json are unchanged, no auto slot, no save_completed" % sm.last_error)
+	t.check("section_with_bad_to_dict_manual_feedback", _notes.size() >= 1 and str(_notes[0][0]) == sm.tr("NOTIF_SAVE_FAILED_TITLE"), "the manual save posts NOTIF_SAVE_FAILED (%d notes)" % _notes.size())
+	sm.unregister_section("bad_dict")
+	t.check("section_with_bad_to_dict_control", sm.save_game(0) and sm.load_game(0) and eco.gold == 4321, "without the broken section the same save is written and loads")
 	bad.free()
 	# nesting deeper than 64 levels is cut off with a warning, not a stack overflow
 	var deep: Dictionary = {"v": 1}
