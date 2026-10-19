@@ -38,6 +38,8 @@ const NPC_WARM_CLIPS: Array[String] = ["idle", "talk", "hover"]
 ## Rooms that change with the home tier or the furniture are rebuilt when one of these furniture_changed reasons arrives.
 const REBUILD_REASONS: Array[StringName] = [&"placed", &"removed", &"tier", &"load"]
 const FADE_OUT := 0.22
+## The longest one sprite's warm-up may hold the black screen (wall clock): the warm-up only saves a hitch, it must never strand a travel.
+const WARM_TIMEOUT_MS := 5000
 const FADE_IN := 0.25
 
 var player: Node2D
@@ -574,7 +576,25 @@ func warm_clips() -> void:
 		warm_skipped += 1
 		return
 	for j in warm_jobs():
-		await (j[0] as Object).call("warm_clips", j[1])
+		await warm_one(j[0], j[1])
+
+
+## One sprite's warm-up, safe against the sprite being freed while it runs. Awaiting the sprite's own coroutine is not: TownDirector can
+## free a citizen during its 1-2 frame warm-up (a routine boundary), and a coroutine whose owner is freed never completes, so the awaiting
+## travel would keep the screen black for good (review GAP1-01). The sprite's coroutine marks a ticket instead, and this polls the ticket,
+## the sprite's life and WARM_TIMEOUT_MS.
+func warm_one(visual: Object, clips: Array) -> void:
+	var ticket := {"done": false}
+	_run_warm(visual, clips, ticket)
+	var deadline: int = Time.get_ticks_msec() + WARM_TIMEOUT_MS
+	while not bool(ticket["done"]) and is_instance_valid(visual) and Time.get_ticks_msec() < deadline:
+		await get_tree().process_frame
+
+
+## Not awaited by anyone: when `visual` is freed mid-way this coroutine is simply dropped with it.
+func _run_warm(visual: Object, clips: Array, ticket: Dictionary) -> void:
+	await visual.call("warm_clips", clips)
+	ticket["done"] = true
 
 
 func _in_view(n: Node2D) -> bool:

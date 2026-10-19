@@ -150,6 +150,7 @@ func run(t) -> void:
 	await _sleep_and_passout(t)
 	await _save_dict_and_intro(t)
 	_warm_jobs(t)
+	await _warm_one_survives_a_freed_sprite(t)
 	await _art_prefetch_targets(t)
 	await _clear_colour_after_quit(t)
 	_cleanup(t)
@@ -2659,6 +2660,44 @@ func _art_prefetch_targets(t) -> void:
 	var staged_fresh: int = pf.staged.size()
 	pf.release()
 	t.check("prefetch_skips_a_parked_area", skipped and staged_fresh > 0, "parked: nothing parsed or staged; not parked: %d paths staged" % staged_fresh)
+
+
+## A citizen freed during its warm-up (TownDirector at a routine boundary) must not strand the travel that warms it (review GAP1-01): the
+## awaiting chain of a coroutine whose owner is freed never resumes, so warm_one() polls a ticket and the sprite's life instead.
+func _warm_one_survives_a_freed_sprite(t) -> void:
+	var w: WorldRoot2D = _world as WorldRoot2D
+	var slow := SlowVisual.new()
+	w.area.objects.add_child(slow)
+	var kept := {"done": false}
+	_warm_probe(w, slow, kept)
+	await t.frames(3)
+	var waiting: bool = not bool(kept["done"])
+	var finished: bool = await t.until(func() -> bool: return bool(kept["done"]), 5.0)
+	t.check("warm_one_waits_for_the_sprite", waiting and finished and slow.finished, "the warm-up of %d frames is awaited to its end (still waiting after 3 frames: %s, done %s)" % [SlowVisual.FRAMES, waiting, finished])
+	var doomed := SlowVisual.new()
+	w.area.objects.add_child(doomed)
+	var freed := {"done": false}
+	_warm_probe(w, doomed, freed)
+	await t.frames(2)
+	doomed.queue_free()
+	var resumed: bool = await t.until(func() -> bool: return bool(freed["done"]), 3.0)
+	t.check("warm_one_survives_a_freed_sprite", resumed, "the sprite was freed two frames into its warm-up: warm_one() returned (%s) instead of keeping the travel on a black screen" % resumed)
+	slow.queue_free()
+
+
+func _warm_probe(w: WorldRoot2D, visual: Object, box: Dictionary) -> void:
+	await w.warm_one(visual, ["idle", "talk"])
+	box["done"] = true
+
+
+class SlowVisual extends Node:
+	const FRAMES := 12
+	var finished := false
+
+	func warm_clips(_clips: Array) -> void:
+		for i in FRAMES:
+			await get_tree().process_frame
+		finished = true
 
 
 class FakeVisual extends RefCounted:
