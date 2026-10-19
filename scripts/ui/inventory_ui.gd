@@ -158,10 +158,15 @@ func _activate_slot(index: int) -> void:
 			return
 
 func _can_discard(id: StringName) -> bool:
+	return _discardable(id) > 0
+
+## How many of `id` may be thrown away (the last tool or weapon of a kind is kept).
+func _discardable(id: StringName) -> int:
 	if id == &"" or not EconomyManager.is_sellable(id) or QuestManager.item_in_use(id):
-		return false
+		return 0
+	var count: int = EconomyManager.count_item(id)
 	var category := str(ItemKinds.def(id).get("category", ""))
-	return category not in ["tool", "weapon"] or EconomyManager.count_item(id) > 1
+	return count - 1 if category in ["tool", "weapon"] else count
 
 func _use() -> void:
 	if _busy or not is_open() or not is_top() or %UseButton.disabled:
@@ -190,9 +195,18 @@ func _discard() -> void:
 		return
 	_busy = true
 	var name := tr(str(ItemKinds.def(id).get("name_key", "")))
-	var confirmed := await UiConfirm.ask(self, "STORE_DISCARD", tr("STORE_DISCARD_CONFIRM_FMT") % name, "STORE_DISCARD")
-	if confirmed and is_inside_tree() and _can_discard(id):
-		EconomyManager.remove_item(id, 1)
+	var most := _discardable(id)
+	# A stack gets a stepper that starts at the whole stack; a single item keeps the plain question.
+	var amount := 0
+	if most > 1:
+		amount = await UiConfirm.ask_amount(self, "STORE_DISCARD", tr("STORE_DISCARD_AMOUNT_FMT") % name, "STORE_DISCARD", 1, most, most)
+	else:
+		var confirmed := await UiConfirm.ask(self, "STORE_DISCARD", tr("STORE_DISCARD_CONFIRM_FMT") % name, "STORE_DISCARD")
+		amount = 1 if confirmed else 0
+	if amount > 0 and is_inside_tree():
+		amount = mini(amount, _discardable(id))
+		if amount > 0:
+			EconomyManager.remove_item(id, amount)
 	_busy = false
 	if is_inside_tree():
 		_refresh()

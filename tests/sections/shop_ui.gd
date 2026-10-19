@@ -385,10 +385,32 @@ func _discard_and_equip(t, inventory: Control) -> void:
 		confirm = inventory.find_child("UiConfirm", true, false)
 	t.check("discard_confirmation_present", confirm != null)
 	if confirm != null:
+		# UX-20: a stack is discarded through an amount stepper that starts at the whole stack (one confirmation, not one per item);
+		# the stepper has focus, Accept on it only moves to Kassér, so the destructive answer still takes a second press.
+		var stepper: Control = confirm.find_child("AmountStepper", true, false)
+		var starts_whole: bool = stepper != null and stepper.has_focus() and int(stepper.get("value")) == count
+		t.tap_key(KEY_LEFT)
+		await t.frames(2)
+		t.tap_key(KEY_ENTER)
+		await t.frames(2)
+		var second_press: bool = confirm.get_node("%OkButton").has_focus() and eco.count_item(&"carrot") == count
+		UiAudit.press_pad(t, JOY_BUTTON_A)
+		await t.frames(3)
+		t.check("discard_stack_takes_chosen_amount", starts_whole and second_press and eco.count_item(&"carrot") == 1 and inventory.is_open(),
+			"stepper starts at the stack %s, Accept on it only focuses Kassér %s, %d of %d left" % [starts_whole, second_press, eco.count_item(&"carrot"), count])
+	# The last one gets the plain question (no stepper) and removes exactly one.
+	_select_item(inventory, &"carrot")
+	inventory.get_node("%DropButton").pressed.emit()
+	await t.frames(3)
+	confirm = inventory.find_child("UiConfirm", true, false)
+	if confirm != null:
+		var plain: bool = confirm.find_child("AmountStepper", true, false) == null
 		confirm.get_node("%OkButton").grab_focus()
 		UiAudit.press_pad(t, JOY_BUTTON_A)
 		await t.frames(3)
-		t.check("discard_confirm_removes_exactly_one", eco.count_item(&"carrot") == count - 1 and inventory.is_open())
+		t.check("discard_confirm_removes_exactly_one", plain and eco.count_item(&"carrot") == 0 and inventory.is_open())
+	else:
+		t.check("discard_confirm_removes_exactly_one", false, "no confirmation for the last carrot")
 	_select_item(inventory, &"hoe_wooden")
 	var slot: String = eco.equip_slot_of(&"hoe_wooden")
 	eco.equip(StringName(slot), &"")
