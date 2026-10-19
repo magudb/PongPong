@@ -48,7 +48,12 @@ restricts who may create them. Both are repository settings, not files.
 Production release waits for all four character gates and both native export
 and smoke checks. The GitHub release is created with the Windows setup EXE,
 macOS DMG and both update ZIPs together, their JSON build records and
-SHA256SUMS. Failed checks never publish a release. The existing v0.1.0 assets
+SHA256SUMS. Each build job reports its package digests as a job output; the
+publish job downloads the two artifacts by exact name, refuses any package or
+file that does not match those digests, and records GitHub build provenance
+for every package (check one with
+"gh attestation verify FILE --repo magudb/PongPong"). Failed checks never
+publish a release. The existing v0.1.0 assets
 remain unchanged; the next production tag adds the native installers.
 
 Packages:

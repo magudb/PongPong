@@ -72,6 +72,57 @@ class VersionTests(unittest.TestCase):
         self.assertNotIn("export_presets.cfg", (ROOT / ".gitignore").read_text())
 
 
+class PublishTests(unittest.TestCase):
+    def setUp(self):
+        self.directory = tempfile.TemporaryDirectory(prefix="traetoppen-publish-test-")
+        self.dist = Path(self.directory.name)
+        self.digests = {}
+        for platform_name in ("windows", "macos"):
+            args = mock.Mock(version="1.2.3", platform=platform_name)
+            for name in release.package_names("v1.2.3", platform_name):
+                package = self.dist / name
+                package.write_bytes(name.encode())
+                release.record(package, args, False, "test")
+            self.digests.update(release.digests(self.dist, "1.2.3", platform_name))
+
+    def tearDown(self):
+        self.directory.cleanup()
+
+    def test_matching_artifacts_publish_with_job_digests(self):
+        files = release.verify_publish(self.dist, "v1.2.3", self.digests)
+        self.assertEqual(len(files), 9)
+        self.assertFalse(any(name.endswith(".sha256") for name in files))
+        self.assertEqual((self.dist / "SHA256SUMS").read_text(), "".join(f"{self.digests[name]}  {name}\n" for name in sorted(self.digests)))
+
+    def test_substituted_package_with_its_own_checksums_is_refused(self):
+        # A replacement that carries a self-consistent .sha256 and .json record must still fail.
+        package = self.dist / "Traetoppen-v1.2.3-windows.zip"
+        package.write_bytes(b"substituted")
+        release.record(package, mock.Mock(version="1.2.3", platform="windows"), False, "test")
+        with self.assertRaises(ValueError):
+            release.verify_publish(self.dist, "v1.2.3", self.digests)
+
+    def test_extra_or_missing_files_are_refused(self):
+        (self.dist / "Traetoppen-v1.2.3-linux.zip").write_bytes(b"extra")
+        with self.assertRaises(ValueError):
+            release.verify_publish(self.dist, "v1.2.3", self.digests)
+        (self.dist / "Traetoppen-v1.2.3-linux.zip").unlink()
+        (self.dist / "Traetoppen-v1.2.3-macos.dmg.json").unlink()
+        with self.assertRaises(ValueError):
+            release.verify_publish(self.dist, "v1.2.3", self.digests)
+
+    def test_one_platform_digest_is_not_enough(self):
+        windows_only = {name: digest for name, digest in self.digests.items() if "windows" in name}
+        with self.assertRaises(ValueError):
+            release.verify_publish(self.dist, "v1.2.3", windows_only)
+
+    def test_release_workflow_downloads_exact_artifacts(self):
+        workflow = (ROOT / ".github/workflows/release.yml").read_text()
+        self.assertNotIn("pattern:", workflow)
+        self.assertNotIn("merge-multiple", workflow)
+        self.assertIn("verify-publish", workflow)
+
+
 class CoverageTests(unittest.TestCase):
     def test_ci_shards_run_every_section_exactly_once(self):
         spec = importlib.util.spec_from_file_location("ci_sections", ROOT / "tools/ci/sections.py")

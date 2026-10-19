@@ -52,26 +52,41 @@ jobs:
     environment: release
     permissions:
       contents: write
+      id-token: write
+      attestations: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Exact artifact names: nothing else uploaded in this run can be merged into the release.
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
-          pattern: release-*-v${{ needs.version.outputs.version }}
+          name: release-windows-v${{ needs.version.outputs.version }}
           path: dist
-          merge-multiple: true
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release-macos-v${{ needs.version.outputs.version }}
+          path: dist
+      - name: Check every package against the digest its build job reported
+        id: verified
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+          WINDOWS_DIGESTS: ${{ needs.builds.outputs.windows }}
+          MACOS_DIGESTS: ${{ needs.builds.outputs.macos }}
+        run: |
+          set -euo pipefail
+          files="$(python3 tools/release/release.py verify-publish --tag "$RELEASE_TAG" --dir dist --digests "$WINDOWS_DIGESTS" --digests "$MACOS_DIGESTS")"
+          { echo "files<<EOF"; echo "$files"; echo "EOF"; } >> "$GITHUB_OUTPUT"
+      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-checksums: dist/SHA256SUMS
       - name: Publish both platforms together after every check passes
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_FILES: ${{ steps.verified.outputs.files }}
         run: |
           set -euo pipefail
-          test -f "dist/Traetoppen-${RELEASE_TAG}-windows.zip"
-          test -f "dist/Traetoppen-${RELEASE_TAG}-macos.zip"
-          test -f "dist/Traetoppen-${RELEASE_TAG}-windows-setup.exe"
-          test -f "dist/Traetoppen-${RELEASE_TAG}-macos.dmg"
           cd dist
-          sha256sum --check ./*.sha256
-          cat ./*.sha256 > SHA256SUMS
+          mapfile -t files <<< "$RELEASE_FILES"
           python3 - <<'PY'
           import json, os
           from pathlib import Path
@@ -90,4 +105,4 @@ jobs:
               notes += ["The macOS build is ad-hoc signed and **not notarized**. See the [macOS installation guidance](https://docs.godotengine.org/en/stable/tutorials/export/running_on_macos.html) if macOS blocks its first launch.", ""]
           Path("RELEASE_NOTES.txt").write_text("\n".join(notes), encoding="utf-8")
           PY
-          gh release create "$RELEASE_TAG" ./*.exe ./*.dmg ./*.zip ./*.json SHA256SUMS --verify-tag --latest --generate-notes --notes-file RELEASE_NOTES.txt --title "Trætoppen $RELEASE_TAG"
+          gh release create "$RELEASE_TAG" "${files[@]}" --verify-tag --latest --generate-notes --notes-file RELEASE_NOTES.txt --title "Trætoppen $RELEASE_TAG"
