@@ -13,6 +13,8 @@ var _calendar: Control
 var _mother_journal: MotherJournal
 var _mother_tab: Button
 var _group := ButtonGroup.new()
+## the quest rows are their own radio group: one shared group would un-press the current tab whenever a quest is selected
+var _row_group := ButtonGroup.new()
 var _refresh_pending := false
 
 func _init() -> void:
@@ -137,7 +139,7 @@ func _make_row(id: StringName) -> Button:
 	row.name = "Quest_" + str(id)
 	row.theme_type_variation = &"RowButton"
 	row.toggle_mode = true
-	row.button_group = _group
+	row.button_group = _row_group
 	row.custom_minimum_size = Vector2(0, 68)
 	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.pressed.connect(_select.bind(id))

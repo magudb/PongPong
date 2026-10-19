@@ -224,6 +224,13 @@ func _journal(t, journal: Control) -> void:
 		var rules := UiAudit.rule_report(journal)
 		t.check("journal_rules_" + locale, rules.ok, str(rules.defects))
 	t.autoload("LocalizationManager").set_locale("da")
+	# UIC-03: a clicked quest row toggles inside its own radio group and leaves the current tab pressed.
+	var clicked: Button = journal._rows[0]
+	clicked.set_pressed_no_signal(false)
+	clicked.button_pressed = true
+	await t.frames(1)
+	t.check("journal_row_click_keeps_tab_pressed", journal._tabs[0].button_pressed and clicked.button_pressed and journal._tab == 0,
+		"tab pressed %s, row pressed %s, tab %d" % [journal._tabs[0].button_pressed, clicked.button_pressed, journal._tab])
 	journal._rows[0].grab_focus()
 	t.tap_key(KEY_RIGHT)
 	await t.frames(3)
