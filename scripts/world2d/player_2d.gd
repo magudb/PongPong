@@ -158,6 +158,7 @@ func world_input_allowed() -> bool:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("use_tool"):
 		_farm_use_held = false
+	_track_aim_device(event)
 	if not world_input_allowed():
 		return
 	if event.is_action_released("attack"):
@@ -172,8 +173,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if is_flying and event.is_action_pressed("fly_descend"):
 		_climb_down = true
 		return
-	if event is InputEventMouseMotion:
-		mouse_aim = true
 	if event.is_action_pressed(&"hotbar_previous") or event.is_action_pressed(&"hotbar_next"):
 		hotbar.cycle(-1 if event.is_action_pressed(&"hotbar_previous") else 1)
 		get_viewport().set_input_as_handled()
@@ -187,16 +186,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		_set_zoom(_target_zoom + 0.05)
 	elif event.is_action_pressed("zoom_out"):
 		_set_zoom(_target_zoom - 0.05)
-	elif event.is_action_pressed("interact"):
-		try_interact()
-	elif event.is_action_pressed("fly_toggle"):
-		toggle_flight()
-	elif event.is_action_pressed("use_tool"):
-		_farm_use_held = _farm_repeat_allowed()
-		_farm_use_cell = target_cell()
-		_farm_use_item = hotbar.current()
-		use_selected()
 	elif _is_action_area():
+		# attack and use_tool share every binding: in an action area the press is an attack through the
+		# buffer (and Cozy auto-swing), never the hidden hotbar item (DUN-07).
 		if event.is_action_pressed("attack"):
 			combat.request(&"slash")
 		elif event.is_action_pressed("dodge"):
@@ -205,12 +197,36 @@ func _unhandled_input(event: InputEvent) -> void:
 			fairy_light()
 		elif event.is_action_pressed("drink"):
 			drink()
+		elif event.is_action_pressed("interact"):
+			try_interact()
+		elif event.is_action_pressed("fly_toggle"):
+			toggle_flight()
+	elif event.is_action_pressed("interact"):
+		# Pad A is interact and jump: with nothing to talk to or use it hops (GAP3-11).
+		if not try_interact() and event.is_action_pressed("jump"):
+			hop()
+	elif event.is_action_pressed("fly_toggle"):
+		toggle_flight()
+	elif event.is_action_pressed("use_tool"):
+		_farm_use_held = _farm_repeat_allowed()
+		_farm_use_cell = target_cell()
+		_farm_use_item = hotbar.current()
+		use_selected()
 	elif event.is_action_pressed("jump"):
 		hop()
 	for action in ["zoom_in", "zoom_out", "interact", "fly_toggle", "attack", "dodge", "light", "drink", "jump", "use_tool"]:
 		if event.is_action_pressed(action):
 			get_viewport().set_input_as_handled()
 			break
+
+## Swings aim at the cursor only while the mouse is the device in use: a real mouse move or a click picks it,
+## a pad input or a keyboard attack hands the aim back to the walking direction (GAP3-05).
+func _track_aim_device(event: InputEvent) -> void:
+	if (event is InputEventMouseMotion and (event as InputEventMouseMotion).relative.length() >= UiNavWatcher.MOUSE_MOVE_MIN) or (event is InputEventMouseButton and event.pressed):
+		mouse_aim = true
+	elif (event is InputEventJoypadButton and event.pressed) or (event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) >= UiNavWatcher.STICK_THRESHOLD) \
+			or (event is InputEventKey and event.pressed and event.is_action("attack")):
+		mouse_aim = false
 
 func _is_action_area() -> bool:
 	return area != null and area.projection == &"ortho"
@@ -386,7 +402,9 @@ func use_selected() -> bool:
 		"consumable", "food":
 			ok = GameData.eco().use_item(item)
 		"weapon":
-			return combat.swing(item)
+			# The same path as the attack action: the input buffer and Cozy auto-swing apply (DUN-07).
+			combat.request(&"slash", item)
+			return state == S.SWING
 		_:
 			if str(def.get("placeable", "")) == "farm":
 				ok = bool(Svc.static_call("res://scripts/farm/placement_service.gd", &"place", [item, cell], false))
