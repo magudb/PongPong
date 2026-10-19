@@ -69,6 +69,34 @@ class CoverageTests(unittest.TestCase):
                 module.partitions(invalid)
 
 
+class ToolchainTests(unittest.TestCase):
+    def test_editor_is_the_pinned_executable_in_a_fresh_folder(self):
+        sys.path.insert(0, str(ROOT / "tools/ci"))
+        spec = importlib.util.spec_from_file_location("ci_install_godot", ROOT / "tools/ci/install_godot.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "editor"
+            # A previous pin left its editor behind; it sorts first and is not a console wrapper.
+            (root / module.CONFIG["version"]).mkdir(parents=True)
+            (root / module.CONFIG["version"] / "Godot_v4.0.0-stable_win64.exe").write_bytes(b"old editor")
+            for host in ("windows", "linux"):
+                with self.subTest(host=host):
+                    name = module.editor_executable(host)
+                    archive = Path(temporary) / (host + ".zip")
+                    with zipfile.ZipFile(archive, "w") as package:
+                        package.writestr(name.replace(".exe", "") + "_console" + (".exe" if name.endswith(".exe") else ""), b"console")
+                        package.writestr(name, b"pinned editor")
+                    binary = module.extract_editor(archive, root, host)
+                    self.assertEqual(binary.name, name)
+                    self.assertEqual(binary.read_bytes(), b"pinned editor")
+                    self.assertEqual(sorted(p.name for p in binary.parent.iterdir()), sorted(zipfile.ZipFile(archive).namelist()))
+            with zipfile.ZipFile(archive, "w") as package:
+                package.writestr("Godot_v4.0.0-stable_linux.x86_64", b"wrong version")
+            with self.assertRaises(ValueError):
+                module.extract_editor(archive, root, "linux")
+
+
 class InstallerTests(unittest.TestCase):
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory(prefix="traetoppen-updater-test-")
