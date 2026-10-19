@@ -125,10 +125,11 @@ func run(t) -> void:
 		plot.crop_id = &"turnip"
 		farm.plots[cells[i]] = plot
 	var water_observed: Array = []
-	var water_obs := func(_id):water_observed.append(farm.plots.values().filter(func(p):return p.watered).size()==12 and int(SocialManager.partner().get("chore_day",0))==SocialManager.today())
-	EventBus.crop_watered.connect(water_obs)
+	# the partner's watering is EventBus.crop_auto_watered(plot, &"partner"), never the player's crop_watered (GAP4-03)
+	var water_obs := func(_id, source):water_observed.append(source == &"partner" and farm.plots.values().filter(func(p):return p.watered).size()==12 and int(SocialManager.partner().get("chore_day",0))==SocialManager.today())
+	EventBus.crop_auto_watered.connect(water_obs)
 	VISITS.daily_chore()
-	EventBus.crop_watered.disconnect(water_obs)
+	EventBus.crop_auto_watered.disconnect(water_obs)
 	t.check("daily_help_water_twelve_atomic",water_observed.size()==12 and water_observed.all(func(v):return v) and int(SocialManager.partner().get("chore_count",0))==12)
 	VISITS.daily_chore()
 	t.check("daily_help_cannot_repeat",farm.plots.values().filter(func(p):return p.watered).size()==12)

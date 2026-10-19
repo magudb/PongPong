@@ -193,7 +193,9 @@ func _water(p: PlotData, hour: float) -> void:
 	if p.state == State.PLANTED:
 		p.state = State.WATERED
 
-func water(cell: Vector2i, at_hour: float = -1.0) -> bool:
+## `source` = &"player" (the can: EventBus.crop_watered, which quests and hints count) or the automation that watered it (&"sprinkler" ...:
+## EventBus.crop_auto_watered, only for a plot with a crop; GAP4-03).
+func water(cell: Vector2i, at_hour: float = -1.0, source: StringName = &"player") -> bool:
 	var p := get_plot(cell)
 	if _busy or p == null or p.state in [State.EMPTY, State.WITHERED] or not can_till(cell):
 		return false
@@ -202,9 +204,16 @@ func water(cell: Vector2i, at_hour: float = -1.0) -> bool:
 	if p.watered and (p.eligible_water or not in_water_window(hour, p.crop_id)):
 		return false
 	_water(p, hour)
-	EventBus.crop_watered.emit(plot_id(cell))
+	_announce_water(cell, p, source)
 	plot_changed.emit(cell)
 	return true
+
+
+func _announce_water(cell: Vector2i, p: PlotData, source: StringName) -> void:
+	if source == &"player":
+		EventBus.crop_watered.emit(plot_id(cell))
+	elif p.crop_id != &"":
+		EventBus.crop_auto_watered.emit(plot_id(cell), source)
 
 func apply_supply(cell: Vector2i, item: StringName) -> bool:
 	var p := get_plot(cell)
@@ -275,6 +284,7 @@ func clear_crop(cell: Vector2i, dead_only: bool = true) -> bool:
 	plot_changed.emit(cell)
 	return true
 
+## Waters up to max_n crops that are not watered yet (the partner's daily chore): crop_auto_watered(plot, &"partner"), never the player's event.
 func water_unwatered(max_n: int) -> int:
 	if _busy:return 0
 	var changed: Array[Vector2i] = []
@@ -286,12 +296,15 @@ func water_unwatered(max_n: int) -> int:
 	# The entire batch is visible before the first crop observer can save.
 	for cell in changed:
 		EconomyManager.after_transaction(func() -> void:
-			EventBus.crop_watered.emit(plot_id(cell))
+			EventBus.crop_auto_watered.emit(plot_id(cell), &"partner")
 			plot_changed.emit(cell))
 	return changed.size()
 
 func _rain() -> bool:
-	return not indoor and (GameData.tm().is_raining() or GameData.tm().weather == &"torden")
+	if indoor:
+		return false
+	var tm := GameData.tm()
+	return tm.is_raining() or tm.weather == &"torden"
 
 func _on_time_changed(hour: int, _minute: int) -> void:
 	# New-day automation runs at logical 06:00, never at the transient 02:00 roll.
@@ -303,15 +316,27 @@ func _on_weather_changed(_weather: StringName) -> void:
 	if GameData.gm().total_day() == _last_day:
 		_auto_water(maxf(6.0, float(GameData.gm().hour)))
 
+## Rain (and thunder) waters every tilled plot, a watering supply its own plot (auto_water_days). Runs every game minute: the weather is asked ONCE
+## per call and a dry day without a supplied plot leaves at once (GAP4-07).
 func _auto_water(hour: float) -> void:
+	var rain := _rain()
+	if not rain and not _has_auto_water():
+		return
 	for cell in plots:
 		var p: PlotData = plots[cell]
-		if p.state in [State.EMPTY, State.WITHERED]:
+		if p.state == State.EMPTY or p.state == State.WITHERED:
 			continue
-		if (_rain() or p.auto_water_days > 0) and (not p.watered or not p.eligible_water and in_water_window(hour, p.crop_id)):
+		if (rain or p.auto_water_days > 0) and (not p.watered or not p.eligible_water and in_water_window(hour, p.crop_id)):
 			_water(p, hour)
-			EventBus.crop_watered.emit(plot_id(cell))
+			_announce_water(cell, p, &"rain" if rain else &"supply")
 			plot_changed.emit(cell)
+
+
+func _has_auto_water() -> bool:
+	for p in plots.values():
+		if p.auto_water_days > 0:
+			return true
+	return false
 
 func _on_day_started(_day: int, _season: StringName) -> void:
 	var today: int = GameData.gm().total_day()

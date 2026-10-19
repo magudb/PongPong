@@ -112,6 +112,7 @@ const FEATURE_SIGNALS := {
 ## The devin-review fix round: flags are event-driven (IsoArea used to poll them at 4 Hz).
 const REVIEW_SIGNALS := {
 	"flag_changed": "flag:StringName,value:Nil",
+	"crop_auto_watered": "plot_id:StringName,source:StringName",
 }
 
 var t

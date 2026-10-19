@@ -105,6 +105,37 @@ func run(t) -> void:
 		gm.day += 1
 		bus.day_started.emit(gm.day, gm.season)
 	t.check("auto_water_three_days_and_ripe", grid.state_of(cell) == FarmGrid.State.READY and grid.get_plot(cell).auto_water_days == 0)
+	# GAP4-03: rain, a supply and the partner water without the player: EventBus.crop_auto_watered(plot, source) for a plot with a crop; only the can
+	# sends crop_watered (the event quests and tutorial hints count)
+	var keep_plots := grid.to_dict()
+	var by_player: Array = []
+	var by_auto: Array = []
+	var on_player := func(id: StringName) -> void: by_player.append(id)
+	var on_auto := func(id: StringName, source: StringName) -> void: by_auto.append([id, source])
+	bus.crop_watered.connect(on_player)
+	bus.crop_auto_watered.connect(on_auto)
+	var farm_cells: Array = grid.farmable_cells()
+	grid.from_dict({"plots": {}})
+	grid.till(farm_cells[1])
+	grid.till(farm_cells[2])
+	eco.add_item(&"turnip_seeds", 2, true)
+	grid.plant(farm_cells[2], &"turnip_seeds")
+	tm.set_weather(&"regn")
+	grid._auto_water(13.0)
+	var rain_ok: bool = by_player.is_empty() and by_auto == [[grid.plot_id(farm_cells[2]), &"rain"]] and grid.get_plot(farm_cells[1]).watered and grid.get_plot(farm_cells[2]).watered
+	tm.set_weather(&"klart")
+	by_auto.clear()
+	grid.from_dict({"plots": {}})
+	grid.till(farm_cells[1])
+	grid.plant(farm_cells[1], &"turnip_seeds")
+	var partner_ok: bool = grid.water_unwatered(4) == 1 and by_player.is_empty() and by_auto == [[grid.plot_id(farm_cells[1]), &"partner"]]
+	grid.from_dict({"plots": {}})
+	grid.till(farm_cells[1])
+	var player_ok: bool = grid.water(farm_cells[1]) and by_player == [grid.plot_id(farm_cells[1])]
+	bus.crop_watered.disconnect(on_player)
+	bus.crop_auto_watered.disconnect(on_auto)
+	t.check("auto_watering_is_not_the_players_event", rain_ok and partner_ok and player_ok, "rain wets bare soil quietly and announces the crop as rain, the partner's chore as partner, only the can sends crop_watered (player %s, auto %s)" % [str(by_player), str(by_auto)])
+	grid.from_dict(keep_plots)
 	var original := grid.to_dict()
 	var saved: Dictionary = JSON.parse_string(JSON.stringify(original))
 	t.check("json_roundtrip", grid.from_dict(saved) and grid.to_dict() == original)
