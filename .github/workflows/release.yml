@@ -19,9 +19,11 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          # Commit history only: enough to prove the tag is on main without the art blobs.
+          # Full commit history to prove the tag is on main. The blob filter skips the files of older commits and the
+          # sparse checkout limits the tagged tree to the release tooling, so the art is never downloaded.
           fetch-depth: 0
           filter: blob:none
+          sparse-checkout: tools/release
       - name: Require a strict vX.Y.Z production tag on main
         id: metadata
         run: python3 tools/release/release.py metadata --require-on origin/main
