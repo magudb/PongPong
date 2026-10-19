@@ -130,7 +130,9 @@ func _ready() -> void:
 	backpack_chip.position = Vector2(40,160)
 	assist_badge = L.label(self,"","OwlEye15")
 	assist_badge.position = Vector2(40,192)
-	add_child(preload("res://scenes/ui/components/whisper_line.tscn").instantiate())
+	var whisper := preload("res://scenes/ui/components/whisper_line.tscn").instantiate()
+	whisper.z_index = ToastStack.ABOVE_MODALS_Z
+	add_child(whisper)
 	var prompt := preload("res://scenes/ui/components/prompt_pill.tscn").instantiate()
 	add_child(prompt)
 	# Leave a full row between the equipped item and the interaction prompt.
@@ -138,6 +140,7 @@ func _ready() -> void:
 	prompt.get_node("Pill").offset_bottom = -196
 	toasts = preload("res://scenes/ui/components/toast_stack.tscn").instantiate()
 	toasts.item_toasts = false
+	toasts.z_index = ToastStack.ABOVE_MODALS_Z
 	add_child(toasts)
 	add_child(preload("res://scenes/ui/dungeon/loot_reveal.tscn").instantiate())
 	preload("res://scripts/dungeon_run/cues.gd").attach(self)
@@ -148,7 +151,7 @@ func _ready() -> void:
 	EventBus.area_changed.connect(_area_changed)
 	EventBus.player_inventory_changed.connect(_inventory)
 	EventBus.game_event.connect(_event)
-	EventBus.modal_changed.connect(func(_stack): toasts.visible = not GameManager.is_modal_open())
+	EventBus.modal_changed.connect(func(stack): toasts.visible = ToastStack.shown_with_modals(stack))
 	_spawned(get_tree().get_first_node_in_group("player"))
 	_inventory({})
 	_assist()

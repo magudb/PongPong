@@ -54,8 +54,9 @@ func _ready() -> void:
 	current_item_badge.offset_top = -156
 	current_item_badge.offset_bottom = -114
 	tool_name_label.visible = false
-	toasts.z_index = 100
-	EventBus.modal_changed.connect(func(_stack): toasts.visible = not GameManager.is_modal_open())
+	toasts.z_index = ToastStack.ABOVE_MODALS_Z
+	%WhisperLine.z_index = ToastStack.ABOVE_MODALS_Z
+	EventBus.modal_changed.connect(func(stack): toasts.visible = ToastStack.shown_with_modals(stack))
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("hud", Callable(get_script(), &"fixture_setup"))
 	EventBus.gold_changed.connect(_gold)
 	EventBus.time_of_day_changed.connect(_time)

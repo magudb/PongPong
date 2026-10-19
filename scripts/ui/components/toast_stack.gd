@@ -14,6 +14,10 @@ extends Control
 ##    legendary find shows its `_night` icon on the night tile). An "item" notification is paired with the `item_gained` that EconomyManager emits just
 ##    before it, so the toast of a find carries the item and its rarity although the signal only says "item".
 ## `item_toasts = false` (the forest HUD: item finds go to the loot feed there) leaves the item notifications out.
+##
+## Inside a modal (UX-10): a HUD's stack (and its whisper) draws at ABOVE_MODALS_Z, above the scrims of the screens of the same GameUI layer, and
+## stays visible (shown_with_modals) so feedback given inside a panel is seen: a hotbar assignment in the backpack, a save from the pause menu,
+## a refused buy. Only the cinematic modals of QUIET_MODALS (the dialogue box, an event scene) keep the toasts hidden.
 
 const TOAST_SCENE := "res://scenes/ui/components/notification_toast.tscn"
 const MAX_TOASTS := 3
@@ -23,6 +27,10 @@ const ITEM_KIND := "item"
 const TILE_SIZE := 48.0
 ## notification kinds that are NOT an item id (what the emitters pass today)
 const KINDS: Array[String] = ["item", "farm", "save", "shop", "gold", "inventory", "zone", "welcome", "lua", "sleep", "quest", "language", "info", ""]
+## z_index of a HUD's toast stack and whisper line: above every modal screen's scrim (the screens draw at z 0)
+const ABOVE_MODALS_Z := 100
+## modal names under which a HUD's toasts stay hidden
+const QUIET_MODALS: Array[StringName] = [&"dialogue", &"event"]
 
 ## false: item notifications are left to the loot feed (forest HUD)
 @export var item_toasts := true
@@ -37,6 +45,14 @@ var _pending_item := {}                       # {id, frame} of the last item_gai
 var _connected := false
 var _queue: Array[Dictionary] = []
 var _clearing := false
+
+
+## Is a HUD's toast stack shown with this modal stack open (GameManager.modal_stack())?
+static func shown_with_modals(stack: Array) -> bool:
+	for modal in stack:
+		if StringName(str(modal)) in QUIET_MODALS:
+			return false
+	return true
 
 
 func _init() -> void:

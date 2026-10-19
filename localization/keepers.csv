@@ -62,6 +62,9 @@ KEEP_LANTERN_HOUSE_SAMPLE_1,Lidt olie holder lyset med selskab.,A little oil kee
 KEEP_ANY_THANKS,"Tak. Jeg håber, det bliver til glæde.",Thank you. I hope it brings you joy.
 KEEP_ANY_CANNOT_PAY,"Det kan vente. Kom igen, når du har mønterne.",It can wait. Come back when you have the coins.
 KEEP_ANY_SOLD_OUT,Den er der ikke flere af lige nu.,There are no more of those just now.
+KEEP_ANY_NO_ROOM,"Der er ikke plads i din rygsæk. Gør lidt plads, og kom så igen.",There is no room in your backpack. Make a little room and come back.
+KEEP_ANY_CLOSED,"Vi har lukket nu. Kom igen, når vi har åbent.","We are closed now. Come back when we are open."
+KEEP_ANY_CANNOT,Det kan jeg desværre ikke hjælpe med lige nu.,I am afraid I cannot help with that just now.
 KEEP_ANY_FAREWELL_1,God tur hjem.,Have a good journey home.
 KEEP_ANY_FAREWELL_2,Tak for besøget.,Thank you for visiting.
 KEEP_ANY_FAREWELL_3,Vi ses igen.,See you again.

@@ -48,7 +48,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | home_ui.csv | draft | 62 | 269 | 0.7 |
 | home_world.csv | draft | 7 | 30 | 0.1 |
 | hud.csv | draft | 8 | 20 | 0.1 |
-| keepers.csv | draft | 66 | 568 | 1.4 |
+| keepers.csv | draft | 69 | 601 | 1.5 |
 | levels.csv | draft | 3 | 12 | 0.0 |
 | life.csv | draft | 27 | 121 | 0.3 |
 | look.csv | draft | 4 | 25 | 0.1 |

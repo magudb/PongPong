@@ -66,7 +66,45 @@ func run(t) -> void:
 	await _inventory_checks(t, game_ui)
 	await _equipment_cards(t,game_ui,false)
 	await _dropped_stack_closes_shop(t, shop)
+	await _feedback_inside_panels(t, game_ui, shop)
 	gm.clear_config_overrides()
+
+## UX-10: feedback given inside a panel is seen. The HUD's toasts and whisper draw above the modal scrims and the toasts stay up in a panel
+## (hidden only under the dialogue / an event scene); a buy refused for a full backpack makes the keeper say so, not "sold out".
+func _feedback_inside_panels(t, game_ui: GameUI, shop: Control) -> void:
+	var gm: Node = t.autoload("GameManager")
+	var eco: Node = t.autoload("EconomyManager")
+	var hud: Control = game_ui.get_screen(&"hud")
+	gm.push_modal(&"ux10_panel", false)
+	await t.frames(1)
+	var in_panel: bool = hud.toasts.visible and hud.toasts.z_index >= ToastStack.ABOVE_MODALS_Z and hud.get_node("%WhisperLine").z_index >= ToastStack.ABOVE_MODALS_Z
+	gm.push_modal(&"dialogue", false)
+	await t.frames(1)
+	var quiet: bool = not hud.toasts.visible
+	gm.pop_all_modals()
+	await t.frames(1)
+	t.check("toasts_and_whispers_above_panels", in_panel and quiet and hud.toasts.visible, "shown above a panel %s, hidden under the dialogue %s" % [in_panel, quiet])
+	Fresh.new_game(t)
+	gm.set_config_override("towns.hours_enabled", false)
+	eco.gold = 100000
+	for i in EconomyManager.INVENTORY_SLOTS:
+		if eco.free_slots() == 0 or not eco.add_item(&"wood", 99, true):
+			break
+	t.autoload("ShopSystem").open_shop(&"seed_shop")
+	await t.frames(3)
+	var blocked: Button = null
+	for row in shop._rows:
+		if not eco.can_add_item(row.item_id, 1):
+			blocked = row
+			break
+	if blocked != null:
+		blocked.pressed.emit()
+		shop.buy_btn.pressed.emit()
+		await t.frames(2)
+	t.check("full_backpack_keeper_says_no_room", blocked != null and shop.keeper_speech.text == tr("KEEP_ANY_NO_ROOM") and t.autoload("ShopSystem").last_refusal == &"no_room",
+		"refused row %s, keeper: %s" % [blocked.item_id if blocked != null else "none", shop.keeper_speech.text])
+	shop.close()
+	Fresh.new_game(t)
 
 ## UIC-07: a dropped modal stack (quit to the title, load) ends the ShopSystem session and clears the rows like close() does.
 func _dropped_stack_closes_shop(t, shop: Control) -> void:

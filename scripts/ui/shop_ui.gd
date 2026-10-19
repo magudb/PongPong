@@ -7,6 +7,9 @@ const Row := preload("res://scripts/ui/components/shop_item_row.gd")
 const HoursText := preload("res://scripts/towns/hours.gd")
 const Prices := preload("res://scripts/economy/price_curve.gd")
 const Talk := "res://scripts/social/talk/social_talk.gd"
+## ShopSystem.last_refusal -> the keeper's line (KEEP_ANY_<kind>, keepers.csv); any other refusal is KEEP_ANY_CANNOT (UX-10: a full backpack
+## used to read "sold out")
+const REFUSAL_LINES := {&"no_gold": "CANNOT_PAY", &"no_stock": "SOLD_OUT", &"no_room": "NO_ROOM", &"closed": "CLOSED"}
 @onready var stepper: Control = %Stepper
 @onready var item_grid: GridContainer = %ItemGrid
 @onready var buy_btn: Button = %BuyButton
@@ -336,7 +339,7 @@ func _confirm() -> void:
 	var selling := _selling()
 	var success := ShopSystem.sell_item(current_shop, id, amount) if selling else ShopSystem.buy_item(current_shop, id, amount)
 	_busy = false
-	_greeting_key = _keeper_key("THANKS" if success else ("CANNOT_PAY" if ShopSystem.last_refusal == &"no_gold" else "SOLD_OUT"))
+	_greeting_key = _keeper_key("THANKS" if success else str(REFUSAL_LINES.get(ShopSystem.last_refusal, "CANNOT")))
 	keeper_speech.text = tr(_greeting_key)
 	_refresh()
 	if success:
@@ -347,8 +350,12 @@ func _confirm() -> void:
 			if equip_now and is_instance_valid(wardrobe):
 				wardrobe.call("equip", id)
 
+## The keeper's answer to a transaction: KEEP_ANY_<kind> itself, else its numbered variants (KEEP_ANY_<kind>_1 ...), else the greeting.
 func _keeper_key(kind: String) -> String:
-	var variants: Array = Svc.static_call(Talk, &"variants", ["KEEP_ANY_" + kind], [])
+	var key := "KEEP_ANY_" + kind
+	if LocalizationManager.has_key(key):
+		return key
+	var variants: Array = Svc.static_call(Talk, &"variants", [key], [])
 	return str(variants[0]) if not variants.is_empty() else str(_info.get("greeting_key", "SHOP_GREETING_DEFAULT"))
 
 func _clear(parent: Node) -> void:
