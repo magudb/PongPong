@@ -284,6 +284,10 @@ func _footer() -> void:
 	var limit := mini(99, available)
 	if not _selling() and unit > 0:
 		limit = mini(limit, int(EconomyManager.gold / unit))
+	var husbandry := Svc.node("AnimalHusbandry")
+	var animal_room := int(husbandry.call("room_for_item", _selected_id)) if not _selling() and husbandry != null and husbandry.has_method("room_for_item") else -1
+	if animal_room > 0:
+		limit = mini(limit, animal_room)      # baby animals: no more than the buildings can take at once (GAP4-05)
 	var wallet_full := _selling() and unit > 0 and EconomyManager.wallet_room() < unit
 	if _selling() and unit > 0:
 		limit = mini(limit, int(EconomyManager.wallet_room() / unit))      # the pay must fit below the gold cap

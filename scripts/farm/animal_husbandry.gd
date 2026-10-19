@@ -298,9 +298,30 @@ func _ready() -> void:
 	_load_husbandry_config()
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.new_game_started.connect(reset)
-	EventBus.item_purchased.connect(func(id, _amount, _total):
-		if _item_to_species(id) != &"" and _has_space_for(_item_to_species(id)):
-			adopt_animal(id))
+	EventBus.item_purchased.connect(_on_item_purchased)
+
+
+## Bought baby animals move in one by one while a building has a free place; the rest wait in the backpack (adopted later with "Brug") and
+## adopt_animal's no-space toast says so (GAP4-05).
+func _on_item_purchased(item_id: StringName, amount: int, _total: int) -> void:
+	if _item_to_species(item_id) == &"":
+		return
+	for i in amount:
+		if not adopt_animal(item_id):
+			return
+
+
+## How many babies of this item the buildings can still take (-1 = the item is not a baby animal): the shop caps its amount with it.
+func room_for_item(item_id: StringName) -> int:
+	var species := _item_to_species(item_id)
+	if species == &"" or not species_data.has(str(species)):
+		return -1
+	var needed := StringName(str(species_data[str(species)]["building"]))
+	var room := 0
+	for b in buildings.values():
+		if b.building_type == needed and b.is_built:
+			room += maxi(building_capacity(b) - b.animals_inside.size(), 0)
+	return room
 
 
 ## Replaces the fallback tables with lua/config/husbandry.lua (`husbandry.species` / `husbandry.buildings`).
