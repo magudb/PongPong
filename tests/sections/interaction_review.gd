@@ -73,6 +73,7 @@ func run(t) -> void:
 	WorldRoot2D.register_map(&"_t_interaction", AreaMap.parse_text(OPEN_MAP))
 	await world.travel(&"_t_interaction", &"default")
 	await _reach_touching(t)
+	await _facing_cell_decides(t)
 	await _spent_hosts(t)
 	await _tool_targets(t)
 	await _hotbar_auto_assign(t)
@@ -201,6 +202,47 @@ func _reach_touching(t) -> void:
 					missed.append([facing, s, u])
 	t.check("touching_host_found_from_anywhere_in_cell", found == total, "%d of %d found, first misses (facing, s, u) %s" % [found, total, missed])
 	probe.queue_free()
+	player.global_position = area.cell_to_global(home)
+	player.facing8 = 0
+	await t.physics(2)
+
+
+## GAP3-02: the facing cell stays authoritative. A host only the reach circle finds (a citizen beside the player, one touching the
+## back) never takes E from the sign on the facing cell; ranking every host by distance to the player let it win 108 of 108 samples.
+func _facing_cell_decides(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var home: Vector2i = area.global_to_cell(player.global_position)
+	var npc := _probe(t, Interactable2D.new(), player.global_position)
+	var sign_host := Interactable2D.new()                  # the default 60 x 30 ellipse of a sign, a chest or a shipping bin
+	area.objects.add_child(sign_host)
+	var won := 0
+	var total := 0
+	var lost: Array = []
+	for facing in [0, 2, 4, 6]:
+		sign_host.global_position = area.cell_to_global(home + area.facing_step(facing))
+		var ahead: Vector2 = Iso.to_ground(sign_host.global_position - area.cell_to_global(home)).normalized()
+		var places := {"left": Vector2(ahead.y, -ahead.x) * 70.0, "right": Vector2(-ahead.y, ahead.x) * 70.0, "back": -ahead * 50.0}
+		for s in [-0.25, 0.0, 0.25]:
+			for u in [-0.25, 0.0, 0.25]:
+				player.global_position = area.cell_to_global(home) + s * Vector2(64, 38) + u * Vector2(-64, 38)
+				player.facing8 = facing
+				for place in places:
+					npc.global_position = player.global_position + Iso.to_screen(places[place])
+					await t.physics(1)
+					total += 1
+					if player.nearest_interactable() == sign_host:
+						won += 1
+					elif lost.size() < 4:
+						lost.append([facing, s, u, place])
+	t.check("facing_host_beats_side_and_back_hosts", won == total, "%d of %d chose the facing host, first losses (facing, s, u, place) %s" % [won, total, lost])
+	# the reach circle still finds the touching host once nothing stands on the facing cell
+	sign_host.set_enabled(false)
+	npc.global_position = player.global_position + Iso.to_screen(Iso.to_ground(area.cell_to_global(home + area.facing_step(6)) - area.cell_to_global(home)).normalized() * 40.0)
+	await t.physics(2)
+	t.check("reach_host_answers_when_facing_cell_is_empty", player.nearest_interactable() == npc)
+	npc.queue_free()
+	sign_host.queue_free()
 	player.global_position = area.cell_to_global(home)
 	player.facing8 = 0
 	await t.physics(2)

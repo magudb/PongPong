@@ -244,31 +244,34 @@ func reach_global() -> Vector2:
 
 ## E-query (D20): the hosts on layer `interactable` whose area overlaps a circle of r = interaction_range ground px at
 ##   * the facing cell (what a tile tool acts on),
-##   * the reach point (reach_global): a host the body touches is found wherever the feet stand inside their cell,
-##   * the feet, for counter bands only (DT53: the small end host may be underfoot while the facing cell is behind the hatch).
-## The host nearest to the player wins. A spent host (is_spent(): an opened chest, a dug spot) wins only when nothing live
-## is in reach, so it still answers E with its resting whisper but never hides a live host. `accept` (host -> bool)
-## narrows the candidates for a tool: the pail looks for a cow, the axe for something that takes a tool hit.
+##   * the feet, for counter bands only (DT53: the small end host may be underfoot while the facing cell is behind the hatch),
+##   * the reach point (reach_global): a host the body touches is found wherever the feet stand inside their cell.
+## The facing and counter circles decide: among their hosts the one nearest to the player wins. A host only the reach circle
+## finds (an NPC beside or behind, a touching one when the facing circle sits far ahead) wins only when they find no live host,
+## so a citizen in the next cell never takes E from the notice board the player faces. A spent host (is_spent(): an opened
+## chest, a dug spot) wins only when nothing live is in reach, so it still answers E with its resting whisper but never hides
+## a live host. `accept` (host -> bool) narrows the candidates for a tool: the pail looks for a cow, the axe for a tree.
 func nearest_interactable(accept: Callable = Callable()) -> Node:
 	if state != S.FREE or area == null:
 		return null
 	_ensure_interact_query()
 	var hosts: Array[Node2D] = []
 	_query_hosts(target_global(), hosts, "")
-	_query_hosts(reach_global(), hosts, "world")
 	_query_hosts(global_position, hosts, "counter")
+	var facing_count := hosts.size()
+	_query_hosts(reach_global(), hosts, "world")
 	var best: Node2D = null
-	var best_d: float = INF
-	var best_spent := true
-	for host in hosts:
+	# Rank (spent, reach only, distance to the player); Vector3 compares x, then y, then z.
+	var best_rank := Vector3.INF
+	for i in hosts.size():
+		var host := hosts[i]
 		if accept.is_valid() and not bool(accept.call(host)):
 			continue
 		var spent: bool = host.has_method("is_spent") and bool(host.call("is_spent"))
-		var d: float = Iso.ground_dist(host.global_position, global_position)
-		if (best_spent and not spent) or (spent == best_spent and d < best_d):
+		var rank := Vector3(1.0 if spent else 0.0, 1.0 if i >= facing_count else 0.0, Iso.ground_dist(host.global_position, global_position))
+		if rank < best_rank:
 			best = host
-			best_d = d
-			best_spent = spent
+			best_rank = rank
 	return best
 
 
