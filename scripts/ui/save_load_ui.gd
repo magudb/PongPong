@@ -111,7 +111,51 @@ func _summary(descriptor: Dictionary) -> String:
 		return tr("SAVELOAD_STATE_" + state.to_upper())
 	var summary: Dictionary = descriptor.summary
 	var info := "%s · %s · %s %d · %d %s · %s" % [summary.player_name, summary.farm_name, tr("UI_DAY"), summary.total_day, summary.gold, tr("UI_GOLD"), preload("res://scripts/ui/theme/tt_format.gd").clock(summary.hour, summary.minute)]
+	# when it was saved in the real world and how long it has been played: two "Dag 12" saves of siblings tell apart
+	for part in [saved_ago(float(summary.get("saved_at", 0.0)), _now()), played(float(summary.get("play_time_seconds", 0.0)))]:
+		if part != "":
+			info += " · " + part
 	return info + (" · " + tr("SAVELOAD_STATE_BACKUP") if state == "backup" else "")
+
+## The run of a slot as a confirm names it: "Rosenhaven, dag 12 · gemt for 2 t. siden" (the player's name for a farm without one).
+func run_name(slot: int) -> String:
+	var summary: Dictionary = SaveManager.get_save_summary(slot)
+	if summary.is_empty():
+		return tr("SAVELOAD_SLOT") % (slot + 1)
+	var who := str(summary.get("farm_name", ""))
+	var text: String = tr("SAVELOAD_RUN_NAME") % [who if who != "" else str(summary.get("player_name", "")), int(summary.get("total_day", 1))]
+	var ago := saved_ago(float(summary.get("saved_at", 0.0)), _now())
+	return text + (" · " + ago if ago != "" else "")
+
+func _now() -> float:
+	return SaveManager.clock_override if SaveManager.clock_override >= 0.0 else Time.get_unix_time_from_system()
+
+## "gemt for 2 t. siden": the real time since `saved_at` (unix seconds); "" when the save does not know it. Older than a month: the date.
+func saved_ago(saved_at: float, now: float) -> String:
+	if saved_at <= 0.0:
+		return ""
+	var seconds := maxf(0.0, now - saved_at)
+	if seconds < 60.0:
+		return tr("SAVELOAD_SAVED_NOW")
+	if seconds < 3600.0:
+		return tr("SAVELOAD_SAVED_MINUTES") % int(seconds / 60.0)
+	if seconds < 86400.0:
+		return tr("SAVELOAD_SAVED_HOURS") % int(seconds / 3600.0)
+	if seconds < 2.0 * 86400.0:
+		return tr("SAVELOAD_SAVED_YESTERDAY")
+	if seconds < 31.0 * 86400.0:
+		return tr("SAVELOAD_SAVED_DAYS") % int(seconds / 86400.0)
+	var date := Time.get_date_dict_from_unix_time(int(saved_at + float(Time.get_time_zone_from_system().get("bias", 0)) * 60.0))
+	return tr("SAVELOAD_SAVED_DATE") % ("%d.%d.%d" % [date.day, date.month, date.year])
+
+## "spillet 3 t. 12 min.": the play time of a save; "" before the first minute.
+func played(seconds: float) -> String:
+	var minutes := int(seconds / 60.0)
+	if minutes <= 0:
+		return ""
+	if minutes < 60:
+		return tr("SAVELOAD_PLAYED_MINUTES") % minutes
+	return tr("SAVELOAD_PLAYED_HOURS") % [minutes / 60, minutes % 60]
 
 func _wire() -> void:
 	UiNav.wire_ring(_rows + [%CloseButton])
@@ -161,7 +205,7 @@ func _on_slot_pressed(slot: int) -> void:
 	var needs_confirm: bool = mode == Mode.LOAD and get_tree().get_first_node_in_group("world_2d") != null or mode == Mode.SAVE and SaveManager.inspect_slot(slot).state != "empty"
 	var accepted := true
 	if needs_confirm:
-		accepted = await UiConfirm.ask(self, "SAVELOAD_CONFIRM", tr("SAVELOAD_OVERWRITE" if mode == Mode.SAVE else "SAVELOAD_LOAD_CONFIRM"), "NAV_OK")
+		accepted = await UiConfirm.ask(self, "SAVELOAD_CONFIRM", tr("SAVELOAD_OVERWRITE") % run_name(slot) if mode == Mode.SAVE else tr("SAVELOAD_LOAD_CONFIRM"), "NAV_OK")
 	if accepted and is_open():
 		if mode == Mode.SAVE:
 			if SaveManager.save_game(slot):
@@ -177,7 +221,7 @@ func _on_delete_pressed(slot: int) -> void:
 	if _busy or slot < 0 or slot >= SaveManager.MANUAL_SLOTS or not UiNav.is_stop(_deletes[slot]):
 		return
 	_busy = true
-	var accepted := await UiConfirm.ask(self, "SAVELOAD_CONFIRM", tr("SAVELOAD_DELETE_CONFIRM") % (slot + 1), "SAVELOAD_DELETE")
+	var accepted := await UiConfirm.ask(self, "SAVELOAD_CONFIRM", tr("SAVELOAD_DELETE_CONFIRM") % [run_name(slot), slot + 1], "SAVELOAD_DELETE")
 	if accepted and is_open():
 		SaveManager.delete_save(slot)
 		_refresh_texts()

@@ -195,17 +195,28 @@ func _save_flows(t, pause: TTScreen, game_ui: GameUI) -> void:
 	await t.frames(2)
 	var slots: TTScreen = game_ui.get_screen(&"save_load_ui")
 	t.check("save_nests_under_pause", slots.is_open() and gm.modal_stack() == [&"pause", &"save_load"] and slots._rows.size() == 7)
+	# SAVE-13: the real time since a save and its play time, at a fixed clock
+	var now := 1_800_000_000.0
+	var ago: Array = [slots.saved_ago(now - 20, now), slots.saved_ago(now - 600, now), slots.saved_ago(now - 7300, now), slots.saved_ago(now - 90000, now), slots.saved_ago(now - 5 * 86400, now), slots.saved_ago(0.0, now)]
+	var want: Array = [str(TranslationServer.translate("SAVELOAD_SAVED_NOW")), TranslationServer.translate("SAVELOAD_SAVED_MINUTES") % 10, TranslationServer.translate("SAVELOAD_SAVED_HOURS") % 2,
+		str(TranslationServer.translate("SAVELOAD_SAVED_YESTERDAY")), TranslationServer.translate("SAVELOAD_SAVED_DAYS") % 5, ""]
+	t.check("slot_row_saved_ago", ago == want and slots.saved_ago(now - 90 * 86400, now).contains("."), "%s" % [ago])
+	t.check("slot_row_play_time", slots.played(30) == "" and slots.played(125) == TranslationServer.translate("SAVELOAD_PLAYED_MINUTES") % 2 and slots.played(3 * 3600 + 12 * 60) == TranslationServer.translate("SAVELOAD_PLAYED_HOURS") % [3, 12], "%s / %s" % [slots.played(125), slots.played(11520)])
 	t.check("autosave_row_read_only", not UiNav.is_stop(slots._rows[6]) and not UiNav.is_stop(slots._deletes[6]))
 	slots._rows[0].grab_focus()
 	t.tap_key(KEY_ENTER)
 	await t.frames(3)
 	t.check("empty_slot_saves_without_confirm", sm.has_save(0) and gm.modal_stack() == [&"pause", &"save_load"])
+	var row_text: String = (slots._rows[0].find_children("*", "Label", true, false)[1] as Label).text
+	t.check("slot_row_shows_save_time", row_text.contains(TranslationServer.translate("SAVELOAD_SAVED_NOW")), "row 0: '%s'" % row_text)
 	var saved_gold: int = eco.gold
 	eco.add_gold(77)
 	slots._rows[0].grab_focus()
 	t.tap_key(KEY_ENTER)
 	await t.frames(2)
 	t.check("overwrite_asks_confirm", gm.modal_stack().size() == 3)
+	var overwrite_text: String = (slots.find_children("*", "UiConfirm", true, false).back().get_node("%TextLabel") as Label).text
+	t.check("overwrite_confirm_names_the_save", overwrite_text.contains(gm.farm_name) and overwrite_text.contains(TranslationServer.translate("SAVELOAD_SAVED_NOW")), "SAVE-13: '%s'" % overwrite_text)
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(2)
 	t.check("overwrite_cancel_keeps_file", int(sm.get_save_summary(0).gold) == saved_gold and gm.modal_stack() == [&"pause", &"save_load"])
@@ -234,6 +245,8 @@ func _save_flows(t, pause: TTScreen, game_ui: GameUI) -> void:
 	t.tap_key(KEY_DELETE)
 	await t.frames(2)
 	t.check("delete_key_asks_confirm", gm.modal_stack().size() == 3)
+	var delete_text: String = (slots.find_children("*", "UiConfirm", true, false).back().get_node("%TextLabel") as Label).text
+	t.check("delete_confirm_names_the_save", delete_text.contains(gm.farm_name) and delete_text.contains("1"), "SAVE-13: '%s'" % delete_text)
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(2)
 	t.check("delete_cancel_keeps_file", sm.has_save(0))
