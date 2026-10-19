@@ -22,6 +22,10 @@ var _generation := 0
 ## The deepest floor number a save may name at all (structure). How deep the dungeon goes TODAY is cfg.max_floor; a save made
 ## when it went deeper is clamped by from_dict, never rejected as damaged.
 const SAVED_FLOOR_LIMIT := 999
+## The run record of a save made during a run ("run" in the section: the player's hearts, stamina and oil and the RunWatch
+## statistics), waiting for the player of the loaded world (EventBus.player_spawned). The world builds the player at full vitals; without
+## this a Continue on floor 10 would be a free heal and refuel, and the end-of-run summary would count only the floors after it.
+var _pending_run: Dictionary = {}
 
 static func inst() -> DungeonFloors:
 	var loot := Svc.node("LootService")
@@ -46,6 +50,7 @@ func _ready() -> void:
 	EventBus.area_change_requested.connect(_area_requested)
 	EventBus.day_started.connect(_morning)
 	EventBus.enemy_defeated.connect(_enemy_defeated)
+	EventBus.player_spawned.connect(_restore_run)
 	reset()
 func _exit_tree() -> void:
 	_drain_tasks()
@@ -60,6 +65,7 @@ func reset() -> void:
 	seen.clear()
 	done.clear()
 	reveal.clear()
+	_pending_run = {}
 func current_floor() -> int:
 	return floor
 func world_seed_text() -> String:
@@ -278,7 +284,52 @@ func to_dict() -> Dictionary:
 		var values: Array = done[number].duplicate()
 		values.sort()
 		cells[str(number)] = values
-	return {"v":1,"gen":gen,"spec":spec,"world_seed":world_seed,"seed_day":seed_day,"active":active,"floor":floor,"deepest":deepest,"stones":_sorted(stones),"seen":_sorted(seen),"done":cells,"reveal":_sorted(reveal)}
+	var out := {"v":1,"gen":gen,"spec":spec,"world_seed":world_seed,"seed_day":seed_day,"active":active,"floor":floor,"deepest":deepest,"stones":_sorted(stones),"seen":_sorted(seen),"done":cells,"reveal":_sorted(reveal)}
+	var run := _run_record()
+	if not run.is_empty(): out["run"] = run
+	return out
+## {half_hearts, stamina, oil, watch} of the run in progress; {} outside a run. A save taken before a world is playing (the load
+## hand-off) keeps the record that is still waiting; once a world plays, its player is the truth and a waiting record is stale.
+func _run_record() -> Dictionary:
+	if not active: return {}
+	var world := _world()
+	if world == null or not bool(world.get("ready_for_play")):
+		return _pending_run.duplicate(true)
+	_pending_run = {}
+	var player: Node = world.get("player")
+	if player == null or not "half_hearts" in player: return {}
+	var out := {"half_hearts": int(player.get("half_hearts")), "stamina": float(player.get("stamina")), "oil": float(player.get("oil")) if "oil" in player else -1.0}
+	var watch := _watch()
+	if watch != null and bool(watch.active):
+		var numbers: Array = watch.floors.keys()
+		numbers.sort()
+		out["watch"] = {"floors": numbers, "deepest": watch.deepest, "finds": watch.finds, "rare": watch.rare, "kills": watch.kills, "best": watch.best}
+	return out
+func _watch() -> DungeonRunWatch:
+	var world := _world()
+	return world.get_node_or_null("RunWatch") as DungeonRunWatch if world != null else null
+## The world being played: the current scene when it is one (a world on its way out may still be in the group), else the group's.
+func _world() -> Node:
+	if not is_inside_tree(): return null
+	var scene := get_tree().current_scene
+	return scene if scene != null and scene.is_in_group("world_2d") else get_tree().get_first_node_in_group("world_2d")
+## The loaded world's player takes the saved run record back: vitals (at least half a heart: a save is never a defeat) and the
+## run statistics of the RunWatch, which then does not start a new count on the floor the player arrives on.
+func _restore_run(player: Node) -> void:
+	if _pending_run.is_empty() or player == null: return
+	var run := _pending_run
+	_pending_run = {}
+	if not active: return
+	if "half_hearts" in player and "max_half_hearts" in player:
+		player.set("half_hearts", clampi(int(run.get("half_hearts", player.get("max_half_hearts"))), 1, int(player.get("max_half_hearts"))))
+	if "stamina" in player and "max_stamina" in player:
+		player.set("stamina", clampf(float(run.get("stamina", player.get("max_stamina"))), 0.0, float(player.get("max_stamina"))))
+	if "oil" in player and "max_oil" in player and float(run.get("oil", -1.0)) >= 0.0:
+		player.set("oil", clampf(float(run.oil), 0.0, float(player.get("max_oil"))))
+		EventBus.player_oil_changed.emit(float(player.get("oil")), float(player.get("max_oil")))
+	if player.has_method("heal_half"): player.call("heal_half", 0)          # publishes the stats (hearts, stamina) to the HUD
+	var watch := _watch()
+	if watch != null and run.get("watch") is Dictionary: watch.restore(run.watch)
 func _sorted(values: Dictionary) -> Array:
 	var result: Array = values.keys()
 	result.sort()
@@ -308,6 +359,7 @@ func from_dict(data: Dictionary) -> bool:
 		seen.clear()
 		reveal.clear()
 		EventBus.whisper_requested.emit("DUNGEON_RUN_RESET")
+	_pending_run = (data.run as Dictionary).duplicate(true) if active and data.get("run") is Dictionary else {}
 	if active:
 		for number in [floor-1,floor,floor+1]: _ensure(number)
 	return true
@@ -330,6 +382,15 @@ func validate_dict(data: Dictionary) -> bool:
 		if not str(key).is_valid_int() or not _whole(int(key),1,SAVED_FLOOR_LIMIT) or not data.done[key] is Array: return false
 		for value in data.done[key]:
 			if not _whole(value,0,65535): return false
+	var run: Variant = data.get("run",{})
+	if not run is Dictionary: return false
+	for key in ["half_hearts","stamina","oil"]:
+		var n: Variant = (run as Dictionary).get(key,0)
+		if not (n is int or n is float) or not is_finite(float(n)) or float(n) < -1.0 or float(n) > 1000000.0: return false
+	var watch: Variant = (run as Dictionary).get("watch",{})
+	if not watch is Dictionary or not (watch as Dictionary).get("floors",[]) is Array or not (watch as Dictionary).get("best","") is String: return false
+	for key in ["deepest","finds","rare","kills"]:
+		if not _whole((watch as Dictionary).get(key,0),0,1000000000): return false
 	return true
 static func _whole(value: Variant, minimum: int, maximum: int) -> bool:
 	return (value is int or value is float) and is_finite(float(value)) and float(value) == floorf(float(value)) and value >= minimum and value <= maximum

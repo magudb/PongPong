@@ -85,6 +85,25 @@ func run(t) -> void:
 	floors.enter(3)
 	await t.until(func(): return world.area.map.id == &"moerkeskoven_f3" and not world.traveling,10.0)
 	t.check("floors.runestone_reentry_uses_authored_spawn",world.player.global_position.distance_to(world.area.get_spawn("rune")) < 2)
+	# SAVE-08: a save during a run keeps the hearts, stamina and oil and the run statistics; Continue is no free heal and refuel
+	var keep_dir: String = save.save_dir
+	save.save_dir = "user://dungeon-floors-run"
+	var watch: DungeonRunWatch = world.get_node("RunWatch")
+	watch.kills = 4
+	world.player.half_hearts = 3
+	world.player.stamina = 40.0
+	world.player.oil = 20.0
+	var counted: Array = watch.floors.keys()
+	var old_world := world.get_instance_id()
+	var resumed: bool = save.save_game(0) and save.load_and_enter(0)
+	resumed = resumed and await t.until(func(): return t.world() != null and t.world().get_instance_id() != old_world and t.world().get("ready_for_play") == true, 20.0)
+	world = t.world()
+	var new_watch: DungeonRunWatch = world.get_node_or_null("RunWatch") if world != null else null
+	t.check("floors.run_vitals_survive_continue", resumed and floors.active and world.player.half_hearts == 3 and world.player.stamina >= 39.9 and world.player.stamina < 60.0 and world.player.oil <= 20.0 and world.player.oil > 15.0,
+		"after load_and_enter: hearts %s, stamina %s, oil %s (saved 3, 40, 20; stamina regrows and oil burns while the world settles)" % [world.player.half_hearts, world.player.stamina, world.player.oil])
+	t.check("floors.run_statistics_survive_continue", new_watch != null and new_watch.active and new_watch.kills == 4 and new_watch.floors.size() == counted.size(), "kills %s, floors %s (saved 4, %s)" % [new_watch.kills if new_watch != null else "-", new_watch.floors.keys() if new_watch != null else "-", counted])
+	save.delete_save(0)
+	save.save_dir = keep_dir
 	var payload: Dictionary = floors.to_dict()
 	payload["spec"] = "old-layout"
 	payload["deepest"] = 7
