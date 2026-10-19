@@ -23,7 +23,8 @@ extends Node
 ## of arguments is a contract violation and fails LOUDLY (an engine error in the gate of the package that broke it).
 ##
 ## STOCK. Fixed stock refreshes on EventBus.day_started (+restock, never above `stock`); rotation rows (ShopRotation) are cached
-## per game day and a bought count is kept until the item leaves the offer. OPENING HOURS (RT5): is_open asks the towns track's rule
+## per game day and a bought count belongs to ONE run of a slot (slot id + epoch = floor((day - 1) / the slot's period)): it is kept all
+## period long and forgotten when the item leaves the offer or the slot draws again, so an item redrawn next epoch comes back full. OPENING HOURS (RT5): is_open asks the towns track's rule
 ## first, through the helper ShopHoursGate (res://scripts/towns/hours.gd, buildings registry; true / false, or null = no building claims
 ## the shop, the config switch towns.hours_enabled is false, or the towns track is absent), then the def's own open_weekdays (0 = Monday).
 ## A closed shop: get_shop_info()["closed"] (+ closed_reason / opens_at / next_open_weekday when the hours rule closed it), buying and
@@ -36,7 +37,8 @@ extends Node
 ## Every refused buy / sell sets last_refusal: &"closed" &"unknown_shop" &"invalid_amount" &"not_offered" &"owned" &"no_stock"
 ## &"no_gold" &"no_room" (buying) and &"unsellable" &"not_owned" (selling).
 ##
-## SAVE (SaveManager section "shops"): to_dict() {v, stock {shop: {item: units}}, rotation_bought {shop: {item: units}}}.
+## SAVE (SaveManager section "shops"): to_dict() {v, stock {shop: {item: units}}, rotation_bought {shop: {item: {n, day, slot}}}} (day = the
+## total day of the last purchase, slot = the slot that offered it); a plain number (older saves) is a count of the offer of the day loaded.
 
 signal shop_transaction(shop_id: StringName, item_id: StringName, amount: int, is_buy: bool)
 
@@ -63,7 +65,7 @@ var last_refusal: StringName = &""
 var _transaction_active := false
 
 var _stock: Dictionary = {}           # shop id -> {item id (String) -> units left of the fixed stock}
-var _bought_rot: Dictionary = {}      # shop id -> {item id -> units bought of the current rotation offer}
+var _bought_rot: Dictionary = {}      # shop id -> {item id -> {n: units bought, day: total day bought, slot: slot id}} of a rotation offer
 var _rotation_cache: Dictionary = {}  # shop id -> {day: int, rows: Array}
 var _rotation_source: Callable = Callable()   # test seam, see set_rotation_source()
 var _curve_source: Callable = Callable()      # test seam, see set_price_curve_source()
@@ -400,7 +402,7 @@ func close_shop(shop_id: Variant) -> void:
 
 # ================================================================================================ day change and save
 
-## Every morning: the fixed shelves get their restock, rotation counts of items that left the offer are forgotten.
+## Every morning: the fixed shelves get their restock, rotation counts of offers that ended (the item left, or its slot drew again) are forgotten.
 func _on_day_started(_day: int, _season: StringName) -> void:
 	for shop_id in _stock.keys():
 		var d := _def(shop_id)
@@ -417,10 +419,11 @@ func _on_day_started(_day: int, _season: StringName) -> void:
 	_rotation_cache.clear()
 	for shop_id in _bought_rot.keys():
 		var offered := {}
-		for row in _rotation_rows(shop_id):
-			offered[str(row.get("item", row.get("item_id", "")))] = true
+		for offer in _offers(shop_id):
+			if offer["source"] == "rotation":
+				offered[offer["item"]] = offer
 		for item_id in (_bought_rot[shop_id] as Dictionary).keys():
-			if not offered.has(item_id):
+			if not offered.has(item_id) or not _same_run(shop_id, offered[item_id], _bought_rot[shop_id][item_id]):
 				(_bought_rot[shop_id] as Dictionary).erase(item_id)
 
 
@@ -430,7 +433,7 @@ func to_dict() -> Dictionary:
 		stock[str(shop_id)] = (_stock[shop_id] as Dictionary).duplicate()
 	var rotation := {}
 	for shop_id in _bought_rot:
-		rotation[str(shop_id)] = (_bought_rot[shop_id] as Dictionary).duplicate()
+		rotation[str(shop_id)] = (_bought_rot[shop_id] as Dictionary).duplicate(true)
 	return {"v": SAVE_VERSION, "stock": stock, "rotation_bought": rotation}
 
 
@@ -456,9 +459,12 @@ func from_dict(data: Dictionary) -> bool:
 			continue
 		var counts := {}
 		for item_id in _Data.dict(bought[shop_id]):
-			var n := _Data.int_of(bought[shop_id][item_id])
+			var raw: Variant = bought[shop_id][item_id]
+			# an older save kept a plain number: the count of whatever offers the item on the day it is loaded
+			var entry := _Data.dict(raw) if typeof(raw) == TYPE_DICTIONARY else {"n": raw, "day": _today(), "slot": ""}
+			var n := _Data.int_of(entry.get("n", 0))
 			if n > 0:
-				counts[str(item_id)] = n
+				counts[str(item_id)] = {"n": n, "day": _Data.int_of(entry.get("day", 0)), "slot": str(entry.get("slot", ""))}
 		_bought_rot[str(shop_id)] = counts
 	return true
 
@@ -539,8 +545,7 @@ func _remaining(shop_id: Variant, offer: Dictionary) -> int:
 	var key := str(resolve_shop_id(shop_id))
 	if offer["source"] == "fixed":
 		return int(_live(key).get(offer["item"], 0))
-	var bought := int(_Data.dict(_bought_rot.get(key, {})).get(offer["item"], 0))
-	return maxi(int(offer["max"]) - bought, 0)
+	return maxi(int(offer["max"]) - _bought_of(key, offer), 0)
 
 
 func _take_from_stock(shop_id: Variant, offer: Dictionary, amount: int) -> void:
@@ -551,7 +556,37 @@ func _take_from_stock(shop_id: Variant, offer: Dictionary, amount: int) -> void:
 	else:
 		if not _bought_rot.has(key):
 			_bought_rot[key] = {}
-		_bought_rot[key][offer["item"]] = int(_bought_rot[key].get(offer["item"], 0)) + amount
+		_bought_rot[key][offer["item"]] = {"n": _bought_of(key, offer) + amount, "day": _today(), "slot": offer["slot"]}
+
+
+## Units bought of this rotation offer; a count of an earlier run of the slot (or of another slot) is 0 (SYS-02).
+func _bought_of(key: String, offer: Dictionary) -> int:
+	var entry: Variant = _Data.dict(_bought_rot.get(key, {})).get(offer["item"], null)
+	if typeof(entry) != TYPE_DICTIONARY or not _same_run(key, offer, entry):
+		return 0
+	return _Data.int_of((entry as Dictionary).get("n", 0))
+
+
+## Was this bought count taken from the offer listed today: the same slot ("" = an older save: any slot) and the same epoch of its period?
+func _same_run(shop_id: Variant, offer: Dictionary, entry: Dictionary) -> bool:
+	var slot := str(entry.get("slot", ""))
+	if slot != "" and slot != str(offer["slot"]):
+		return false
+	var period := _slot_period(shop_id, str(offer["slot"]))
+	return floori(float(_Data.int_of(entry.get("day", 0)) - 1) / period) == floori(float(_today() - 1) / period)
+
+
+## The period in days of a rotation slot of the def (1 for a slot the def does not name: a row of the test seam).
+func _slot_period(shop_id: Variant, slot_id: String) -> int:
+	for s in _Data.arr(_def(shop_id).get("rotation", [])):
+		if typeof(s) == TYPE_DICTIONARY and str((s as Dictionary).get("id", "")) == slot_id:
+			return maxi(_Data.int_of((s as Dictionary).get("period", 1), 1), 1)
+	return 1
+
+
+func _today() -> int:
+	var gm := _Svc.node("GameManager")
+	return int(gm.call("total_day")) if gm != null and gm.has_method("total_day") else 1
 
 
 ## The rotation rows of today: [{item, stock, price?, slot?}] from the test seam or ShopRotation.stock(shop_id); cached per game day.
@@ -560,10 +595,7 @@ func _rotation_rows(shop_id: Variant) -> Array:
 	var has_rotation := not _Data.arr(_def(key).get("rotation", [])).is_empty()
 	if not has_rotation and not _rotation_source.is_valid():
 		return []
-	var day := 0
-	var gm := _Svc.node("GameManager")
-	if gm != null and gm.has_method("total_day"):
-		day = int(gm.call("total_day"))
+	var day := _today()
 	var cached: Variant = _rotation_cache.get(key, null)
 	if cached != null and int((cached as Dictionary)["day"]) == day:
 		return (cached as Dictionary)["rows"]

@@ -846,6 +846,7 @@ shops = {
     },
     rotation = {
       { id = "daily", period = 1, pick = 2, qty = 2, rarity = "normal", price_mult = 1.0, pool = { "cookie", "wood" } },
+      { id = "weekly", period = 7, pick = 1, qty = 2, rarity = "normal", price_mult = 1.0, pool = { "cookie", "wood" } },
     },
   },
   fixture_nobuy = {
@@ -1257,12 +1258,27 @@ func _rotation_and_curve() -> void:
 	# a curve that answers nothing falls back
 	_force_curve_off()
 	t.expect(shop.get_buy_price("fixture_rotating", &"lantern_oil") == 50, "a curve source that answers null falls back to base x multiplier x discount")
-	# counts of rotation rows survive the day while the item stays on offer and vanish when it leaves
+	# a bought count belongs to one run of its slot (SYS-02): the daily slot draws the cookie again tomorrow, and it is full again
 	gm.end_day()
-	t.expect(int(_row("fixture_rotating", &"cookie")["stock"]) == 0, "an item that is still on offer keeps its bought count over the day change")
+	t.check("rotation_redraw_is_full", int(_row("fixture_rotating", &"cookie")["stock"]) == 2, "the daily slot drew the sold-out cookie again the next day: a new offer with its full 2 units, not sold out")
+	# a weekly slot keeps the count all week long, through a save, and forgets it when the slot draws again
+	shop.set_rotation_source(func(_s: String) -> Array: return [{"item": "cookie", "stock": 2, "slot": "weekly"}])
+	var week_day: int = gm.total_day()
+	t.expect(week_day < 7 and shop.buy_item("fixture_rotating", &"cookie", 2) and int(_row("fixture_rotating", &"cookie")["stock"]) == 0, "the weekly cookie (day %d) is bought out" % week_day)
+	gm.end_day()
+	t.expect(int(_row("fixture_rotating", &"cookie")["stock"]) == 0, "an offer that runs all week keeps its bought count over the day change")
+	shop.from_dict(JSON.parse_string(JSON.stringify(shop.to_dict())))
+	t.expect(int(_row("fixture_rotating", &"cookie")["stock"]) == 0, "the bought count of the weekly offer survives the save round trip")
+	shop.from_dict({"rotation_bought": {"fixture_rotating": {"cookie": 1}}})
+	t.expect(int(_row("fixture_rotating", &"cookie")["stock"]) == 1, "an older save's plain count is the count of today's offer")
+	shop.buy_item("fixture_rotating", &"cookie", 1)
+	while gm.total_day() < 8:
+		gm.end_day()
+	t.check("rotation_new_epoch_is_full", int(_row("fixture_rotating", &"cookie")["stock"]) == 2, "day %d: the weekly slot drew again (epoch 1) and the same cookie is a fresh offer of 2" % gm.total_day())
+	shop.buy_item("fixture_rotating", &"cookie", 1)
 	shop.set_rotation_source(func(_s: String) -> Array: return [{"item": "wood", "stock": 3, "price": 8}])
 	gm.end_day()
-	shop.set_rotation_source(func(_s: String) -> Array: return [{"item": "cookie", "stock": 2}])
+	shop.set_rotation_source(func(_s: String) -> Array: return [{"item": "cookie", "stock": 2, "slot": "weekly"}])
 	t.expect(int(_row("fixture_rotating", &"cookie")["stock"]) == 2, "an item that left the offer comes back with its full count")
 	# the production path: no scripts of F4, or scripts with another signature, never break a price or a listing
 	shop.set_rotation_source(Callable())
