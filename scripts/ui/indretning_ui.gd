@@ -16,6 +16,8 @@ var choose_button: Button
 var close_button: Button
 var _preview: Node2D
 var _refreshing := false
+## a furniture_changed is waiting for its deferred listing rebuild (skipped when a direct refresh came first: one rebuild per placement)
+var _listing_dirty := false
 var _filters: Array[Button] = []
 var pickup_button: Button
 func _init() -> void:
@@ -63,7 +65,9 @@ func _ready() -> void:
 	pickup_button.pressed.connect(func(): placing = true; UiNav.release_world_focus())
 	L.label(body,"INDRET_HINT","Muted14",true)
 	EventBus.furniture_changed.connect(func(_why):
-		if is_open(): _refresh_texts.call_deferred())
+		if is_open() and not _listing_dirty:
+			_listing_dirty = true
+			_refresh_if_dirty.call_deferred())
 func _world() -> Node:
 	return get_tree().get_first_node_in_group("world_2d")
 func _hotkey_open_allowed() -> bool:
@@ -94,8 +98,12 @@ func _initial_focus() -> Control:
 	return close_button
 func _wants_focus() -> bool:
 	return not placing
+func _refresh_if_dirty() -> void:
+	if _listing_dirty and is_open(): _refresh_texts()
+	_listing_dirty = false
 func _refresh_texts() -> void:
 	if listing == null: return
+	_listing_dirty = false
 	var level := HomeData.hygge_level(FurnitureManager.hygge_level_index())
 	hygge.text = tr("INDRET_HYGGE_FMT") % [tr(str(level.get("name_key",""))),FurnitureManager.hygge_score(),FurnitureManager.ensure_grid().placements.size(),HomeManager.furniture_capacity()]
 	var active: Array[String] = []

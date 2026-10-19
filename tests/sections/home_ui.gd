@@ -72,9 +72,25 @@ func _run(t) -> void:
 	t.check("place_key_moves_one_owned_piece",fm.count_total("chair_pine") == owned and fm.count_placed("chair_pine") == 1)
 	t.check("placement_rebuild_keeps_preview_usable",is_instance_valid(decorate._preview) and decorate._preview.get_parent() == world.area)
 	if native: await t.capture("decorate_placed")
+	# UIC-06: an unchanged preview is not re-validated every frame; a pickup rebuilds the stock listing once, not twice.
+	await t.frames(2)
+	var evaluations: int = decorate._preview.evaluations
+	await t.frames(10)
+	var idle_ok: bool = decorate._preview.evaluations == evaluations
+	decorate.cell += Vector2i(1, 0)
+	await t.frames(2)
+	var moved_ok: bool = decorate._preview.evaluations == evaluations + 1
+	decorate.cell -= Vector2i(1, 0)
+	await t.frames(2)
+	var built := [0]
+	var count_rows := func(_node: Node): built[0] += 1
+	decorate.listing.child_entered_tree.connect(count_rows)
 	t.tap_key(KEY_X)
 	await t.frames(3)
+	decorate.listing.child_entered_tree.disconnect(count_rows)
 	t.check("pickup_key_returns_piece_to_store",fm.count_placed("chair_pine") == 0 and fm.count_total("chair_pine") == owned)
+	t.check("decorate_preview_memoised_and_listing_built_once",idle_ok and moved_ok and built[0] == decorate.listing.get_child_count(),
+		"idle frames re-validate nothing %s, a moved cell once %s; rows added %d for %d rows" % [idle_ok, moved_ok, built[0], decorate.listing.get_child_count()])
 	t.tap_key(KEY_R)
 	await t.frames(2)
 	t.check("rotate_key_rotates_preview",decorate.rot == 1)
