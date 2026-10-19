@@ -174,6 +174,13 @@ func _wants_focus() -> bool:
 	return true
 
 
+## The modal stack was dropped while the screen was open (pop_all_modals: quit to the title, load, new game): close() did NOT run, the screen
+## is already hidden and off the stack. A screen whose close() releases something else (the shop's ShopSystem session, Indretning's
+## decorate mode, a dialogue's awaited session, a picker's awaiter) does that here too. Default nothing.
+func _force_closed() -> void:
+	pass
+
+
 ## May the screen's HOTKEY open it now (on top of the free-world rule of UiNav.world_is_free())? Default yes.
 func _hotkey_open_allowed() -> bool:
 	return true
@@ -319,7 +326,8 @@ func _on_panel_toggled(panel_name: StringName, is_open_: bool) -> void:
 		close()
 
 
-## The stack was dropped under the screen (quit to the title, load, new game): it is closed without ceremony.
+## The stack was dropped under the screen (quit to the title, load, new game): it is closed without ceremony (no pop, no focus return), but
+## the screen's own teardown still runs through _force_closed() (UIC-07).
 func _on_modal_changed(stack: Array) -> void:
 	if _open and modal_name != &"" and not (modal_name in stack):
 		_open = false
@@ -328,4 +336,8 @@ func _on_modal_changed(stack: Array) -> void:
 		_last_good = null
 		visible = false
 		set_process(false)
+		var vp := get_viewport()
+		if vp != null and vp.gui_focus_changed.is_connected(_on_gui_focus_changed):
+			vp.gui_focus_changed.disconnect(_on_gui_focus_changed)
+		_force_closed()
 		closed.emit()

@@ -32,6 +32,7 @@ func run(t) -> void:
 	t.autoload("LocalizationManager").set_locale("da")
 	await t.frames(3)
 	t.check("initial_focus", shop.get_viewport().gui_get_focus_owner() == shop._rows[0])
+	_hint_contrast_on_scrim(t, game_ui)
 	var row: Button = shop._rows[0]
 	var item := StringName(str(row.item_id))
 	row.pressed.emit()
@@ -42,6 +43,20 @@ func run(t) -> void:
 	shop.buy_btn.pressed.emit()
 	await t.frames(3)
 	t.check("buy_via_control", eco.gold == before - total and eco.count_item(item) == owned + 1)
+	# UIC-01: Up out of the item grid lands on the CURRENT tab; entering the tab row never selects the first tab.
+	shop._on_page(1)
+	await t.frames(3)
+	if shop._tab > 0 and not shop._rows.is_empty():
+		var current: int = shop._tab
+		shop._rows[0].grab_focus()
+		await t.frames(1)
+		t.tap_key(KEY_UP)
+		await t.frames(3)
+		var landed: Control = shop.get_viewport().gui_get_focus_owner()
+		t.check("up_from_grid_lands_on_current_tab", shop._tab == current and landed == shop._tab_buttons[current],
+			"tab %d (was %d), focus %s" % [shop._tab, current, landed.name if landed != null else "none"])
+	else:
+		t.check("up_from_grid_lands_on_current_tab", false, "the seed shop has no second tab with items")
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(3)
 	t.check("esc_closes_and_restores", not shop.is_open() and not t.tree.paused and shop.get_viewport().gui_get_focus_owner() == null)
@@ -50,7 +65,88 @@ func run(t) -> void:
 	await _prices_and_tabs(t, shop)
 	await _inventory_checks(t, game_ui)
 	await _equipment_cards(t,game_ui,false)
+	await _dropped_stack_closes_shop(t, shop)
+	await _feedback_inside_panels(t, game_ui, shop)
 	gm.clear_config_overrides()
+
+## UX-10: feedback given inside a panel is seen. The HUD's toasts and whisper draw above the modal scrims and stay up in a panel
+## (hidden only under the dialogue / an event scene); a buy refused for a full backpack makes the keeper say so, not "sold out".
+func _feedback_inside_panels(t, game_ui: GameUI, shop: Control) -> void:
+	var gm: Node = t.autoload("GameManager")
+	var eco: Node = t.autoload("EconomyManager")
+	var hud: Control = game_ui.get_screen(&"hud")
+	gm.push_modal(&"ux10_panel", false)
+	await t.frames(1)
+	var whisper: WhisperLine = hud.get_node("%WhisperLine")
+	whisper.show_whisper("ux10 whisper in a panel")
+	var in_panel: bool = hud.toasts.visible and hud.toasts.z_index >= ToastStack.ABOVE_MODALS_Z and whisper.z_index >= ToastStack.ABOVE_MODALS_Z and whisper.visible
+	gm.push_modal(&"dialogue", false)
+	await t.frames(1)
+	# the whisper is quiet under the dialogue too (it would draw over the dialogue box), but keeps its timer
+	var quiet: bool = not hud.toasts.visible and not whisper.visible and whisper.is_showing()
+	gm.pop_all_modals()
+	await t.frames(1)
+	var back: bool = hud.toasts.visible and whisper.visible
+	whisper._hide()
+	t.check("toasts_and_whispers_above_panels", in_panel and quiet and back, "shown above a panel %s, hidden under the dialogue %s, back after %s" % [in_panel, quiet, back])
+	Fresh.new_game(t)
+	gm.set_config_override("towns.hours_enabled", false)
+	eco.gold = 100000
+	for i in EconomyManager.INVENTORY_SLOTS:
+		if eco.free_slots() == 0 or not eco.add_item(&"wood", 99, true):
+			break
+	t.autoload("ShopSystem").open_shop(&"seed_shop")
+	await t.frames(3)
+	var blocked: Button = null
+	for row in shop._rows:
+		if not eco.can_add_item(row.item_id, 1):
+			blocked = row
+			break
+	if blocked != null:
+		blocked.pressed.emit()
+		shop.buy_btn.pressed.emit()
+		await t.frames(2)
+	t.check("full_backpack_keeper_says_no_room", blocked != null and shop.keeper_speech.text == tr("KEEP_ANY_NO_ROOM") and t.autoload("ShopSystem").last_refusal == &"no_room",
+		"refused row %s, keeper: %s" % [blocked.item_id if blocked != null else "none", shop.keeper_speech.text])
+	shop.close()
+	Fresh.new_game(t)
+
+## UIC-07: a dropped modal stack (quit to the title, load) ends the ShopSystem session and clears the rows like close() does.
+func _dropped_stack_closes_shop(t, shop: Control) -> void:
+	var service: Node = t.autoload("ShopSystem")
+	service.open_shop(&"seed_shop")
+	await t.frames(3)
+	var ended: Array = []
+	var probe := func(id: StringName): ended.append(id)
+	t.autoload("EventBus").shop_closed.connect(probe)
+	var had_rows: bool = shop.is_open() and not shop._rows.is_empty()
+	t.autoload("GameManager").pop_all_modals()
+	await t.frames(2)
+	t.autoload("EventBus").shop_closed.disconnect(probe)
+	t.check("dropped_stack_ends_shop_session", had_rows and not shop.is_open() and ended == [&"seed_shop"] and shop._rows.is_empty() and shop._row_cache.is_empty(),
+		"had rows %s, open %s, shop_closed %s, rows %d" % [had_rows, shop.is_open(), str(ended), shop._rows.size()])
+
+## UX-13: the key-hint words of the screens that put their HintBar on the dark scrim (#3a3150) read at >= 4.5:1 and at 13 px or more.
+func _hint_contrast_on_scrim(t, game_ui: GameUI) -> void:
+	var Foundation := preload("res://tests/sections/ui_foundation.gd")
+	var scrim := Color("#3a3150")
+	var weak: Array[String] = []
+	var words := 0
+	for id in [&"shop_ui", &"inventory_ui", &"quest_journal"]:
+		var screen: Control = game_ui.get_screen(id)
+		var bar: HintBar = screen.get_node("%HintBar") if screen != null else null
+		if bar == null:
+			weak.append("%s: no HintBar" % id)
+			continue
+		for label in bar.get_children():
+			if not (label is Label) or (label as Label).theme_type_variation == &"KeyCap":
+				continue
+			words += 1
+			var ratio: float = Foundation._contrast((label as Label).get_theme_color(&"font_color"), scrim)
+			var px: int = (label as Label).get_theme_font_size(&"font_size")
+			if ratio < 4.5 or px < 13:
+				weak.append("%s %s %.1f:1 %d px" % [id, (label as Label).text, ratio, px])
+	t.check("hint_bar_readable_on_scrim", words > 0 and weak.is_empty(), "%d words, too faint: %s" % [words, str(weak)])
 
 func _equipment_cards(t,game_ui: GameUI,native: bool) -> void:
 	var shop: Control = game_ui.get_screen(&"shop_ui")
@@ -378,10 +474,32 @@ func _discard_and_equip(t, inventory: Control) -> void:
 		confirm = inventory.find_child("UiConfirm", true, false)
 	t.check("discard_confirmation_present", confirm != null)
 	if confirm != null:
+		# UX-20: a stack is discarded through an amount stepper that starts at the whole stack (one confirmation, not one per item);
+		# the stepper has focus, Accept on it only moves to Kassér, so the destructive answer still takes a second press.
+		var stepper: Control = confirm.find_child("AmountStepper", true, false)
+		var starts_whole: bool = stepper != null and stepper.has_focus() and int(stepper.get("value")) == count
+		t.tap_key(KEY_LEFT)
+		await t.frames(2)
+		t.tap_key(KEY_ENTER)
+		await t.frames(2)
+		var second_press: bool = confirm.get_node("%OkButton").has_focus() and eco.count_item(&"carrot") == count
+		UiAudit.press_pad(t, JOY_BUTTON_A)
+		await t.frames(3)
+		t.check("discard_stack_takes_chosen_amount", starts_whole and second_press and eco.count_item(&"carrot") == 1 and inventory.is_open(),
+			"stepper starts at the stack %s, Accept on it only focuses Kassér %s, %d of %d left" % [starts_whole, second_press, eco.count_item(&"carrot"), count])
+	# The last one gets the plain question (no stepper) and removes exactly one.
+	_select_item(inventory, &"carrot")
+	inventory.get_node("%DropButton").pressed.emit()
+	await t.frames(3)
+	confirm = inventory.find_child("UiConfirm", true, false)
+	if confirm != null:
+		var plain: bool = confirm.find_child("AmountStepper", true, false) == null
 		confirm.get_node("%OkButton").grab_focus()
 		UiAudit.press_pad(t, JOY_BUTTON_A)
 		await t.frames(3)
-		t.check("discard_confirm_removes_exactly_one", eco.count_item(&"carrot") == count - 1 and inventory.is_open())
+		t.check("discard_confirm_removes_exactly_one", plain and eco.count_item(&"carrot") == 0 and inventory.is_open())
+	else:
+		t.check("discard_confirm_removes_exactly_one", false, "no confirmation for the last carrot")
 	_select_item(inventory, &"hoe_wooden")
 	var slot: String = eco.equip_slot_of(&"hoe_wooden")
 	eco.equip(StringName(slot), &"")

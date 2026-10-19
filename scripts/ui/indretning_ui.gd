@@ -16,6 +16,8 @@ var choose_button: Button
 var close_button: Button
 var _preview: Node2D
 var _refreshing := false
+## a furniture_changed is waiting for its deferred listing rebuild (skipped when a direct refresh came first: one rebuild per placement)
+var _listing_dirty := false
 var _filters: Array[Button] = []
 var pickup_button: Button
 var hint: Label
@@ -67,7 +69,9 @@ func _ready() -> void:
 	hint = L.label(body,"","Muted14",true)
 	UiNav.watcher().device_changed.connect(func(_device): _refresh_hint())
 	EventBus.furniture_changed.connect(func(_why):
-		if is_open(): _refresh_texts.call_deferred())
+		if is_open() and not _listing_dirty:
+			_listing_dirty = true
+			_refresh_if_dirty.call_deferred())
 func _world() -> Node:
 	return get_tree().get_first_node_in_group("world_2d")
 func _hotkey_open_allowed() -> bool:
@@ -85,11 +89,15 @@ func open(opener: Control = null) -> void:
 		FurnitureManager.decorate_mode = true
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 func close() -> void:
+	_end_decorating()
+	super.close()
+func _force_closed() -> void:
+	_end_decorating()
+func _end_decorating() -> void:
 	placing = false
 	FurnitureManager.decorate_mode = false
 	if is_instance_valid(_preview): _preview.queue_free()
 	_preview = null
-	super.close()
 func _initial_focus() -> Control:
 	return close_button
 func _wants_focus() -> bool:
@@ -99,8 +107,12 @@ func _refresh_hint() -> void:
 	if hint == null: return
 	hint.text = tr("INDRET_HINT") % [UiHints.glyph_set([&"ui_up",&"ui_down",&"ui_left",&"ui_right"]),UiHints.glyph(&"interact"),UiHints.glyph(&"rotate_item"),UiHints.glyph(&"pickup_item"),UiHints.glyph(&"decorate")]
 	_ready_text = tr("INDRET_READY") % UiHints.glyph(&"interact")
+func _refresh_if_dirty() -> void:
+	if _listing_dirty and is_open(): _refresh_texts()
+	_listing_dirty = false
 func _refresh_texts() -> void:
 	if listing == null: return
+	_listing_dirty = false
 	_refresh_hint()
 	var level := HomeData.hygge_level(FurnitureManager.hygge_level_index())
 	hygge.text = tr("INDRET_HYGGE_FMT") % [tr(str(level.get("name_key",""))),FurnitureManager.hygge_score(),FurnitureManager.ensure_grid().placements.size(),HomeManager.furniture_capacity()]

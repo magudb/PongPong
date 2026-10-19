@@ -149,6 +149,12 @@ func _input_and_actions(t, dialogue: Control, ui: GameUI) -> void:
 	await t.frames(2)
 	await _to_choices(t, dialogue)
 	t.check("choice_focus", dialogue.get_viewport().gui_get_focus_owner() == dialogue._buttons[0])
+	# UX-12: a tap right after the choices appear answers nothing (the player has not seen them yet), and no continue button offers to pick one.
+	t.tap(&"interact")
+	await t.frames(1)
+	t.check("choice_grace_ignores_rapid_tap", dialogue.is_open() and dialogue._wants_focus() and ends.size() == 1 and not dialogue.get_node("%NextButton").visible,
+		"open %s, choices %s, ended %d, continue button %s" % [dialogue.is_open(), dialogue._wants_focus(), ends.size(), dialogue.get_node("%NextButton").visible])
+	await t.seconds(dialogue.CHOICE_GRACE_SECONDS + 0.05)
 	dialogue._buttons[-1].grab_focus()
 	t.tap_key(KEY_DOWN)
 	await t.frames(2)
@@ -167,6 +173,7 @@ func _input_and_actions(t, dialogue: Control, ui: GameUI) -> void:
 	npc.interact(t.player())
 	await t.frames(2)
 	await _to_choices(t, dialogue)
+	await t.seconds(dialogue.CHOICE_GRACE_SECONDS + 0.05)
 	dialogue._buttons[-1].grab_focus()
 	UiAudit.press_pad(t, JOY_BUTTON_A)
 	await t.frames(3)
@@ -258,10 +265,30 @@ func _journal(t, journal: Control) -> void:
 		var rules := UiAudit.rule_report(journal)
 		t.check("journal_rules_" + locale, rules.ok, str(rules.defects))
 	t.autoload("LocalizationManager").set_locale("da")
+	# UIC-03: a clicked quest row toggles inside its own radio group and leaves the current tab pressed.
+	var clicked: Button = journal._rows[0]
+	clicked.set_pressed_no_signal(false)
+	clicked.button_pressed = true
+	await t.frames(1)
+	t.check("journal_row_click_keeps_tab_pressed", journal._tabs[0].button_pressed and clicked.button_pressed and journal._tab == 0,
+		"tab pressed %s, row pressed %s, tab %d" % [journal._tabs[0].button_pressed, clicked.button_pressed, journal._tab])
 	journal._rows[0].grab_focus()
 	t.tap_key(KEY_RIGHT)
 	await t.frames(3)
 	t.check("journal_list_right_changes_tab", journal._tab == 1)
+	# UIC-01: Up out of the calendar (day grid -> season chips -> tab row) lands on the CURRENT tab, not on the first one.
+	if journal._calendar != null:
+		journal._on_page(1)
+		await t.frames(3)
+		journal._calendar.cells[0].grab_focus()
+		await t.frames(1)
+		t.tap_key(KEY_UP)
+		await t.frames(2)
+		t.tap_key(KEY_UP)
+		await t.frames(2)
+		var landed: Control = t.tree.root.gui_get_focus_owner()
+		t.check("journal_up_from_calendar_keeps_tab", journal._tab == 2 and landed == journal.get_node("%TabCalendar"),
+			"tab %d, focus %s" % [journal._tab, landed.name if landed != null else "none"])
 	t.tap_key(KEY_J)
 	await t.frames(3)
 	t.check("journal_j_closes_in_gui", not journal.is_open() and not t.tree.paused)
@@ -297,6 +324,13 @@ func _lifetime_and_schedule(t, dialogue: Control) -> void:
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(3)
 	t.check("dialogue_reentrant_second_result", outcomes.size() == 2 and outcomes[1].index == 2 and not dialogue.is_open())
+	# UIC-07: a dropped modal stack (quit to the title, load) still resolves the awaited session, so no NPC stays in its talk.
+	show_page.call(3)
+	await t.frames(2)
+	t.autoload("GameManager").pop_all_modals()
+	await t.frames(2)
+	t.check("dropped_stack_resolves_dialogue_session", outcomes.size() == 3 and outcomes[2].index == 3 and not outcomes[2].result.completed and not dialogue.is_open() and not dialogue._session,
+		str(outcomes))
 	var npc := _spawn(t, "mapseller_natteblik", {"reach": 420})
 	npc.global_position += Vector2(350, 0)
 	await t.frames(3)

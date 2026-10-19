@@ -3,6 +3,10 @@ extends TTScreen
 signal session_finished(result: Dictionary)
 signal choice_selected(action: String, data: Dictionary)
 const Portraits := preload("res://scripts/ui/theme/tt_portraits.gd")
+## Accept / interact presses are ignored this long after the choices appear (UX-12): a player tapping E through the lines must SEE the
+## choices before a press can answer one, instead of the next tap committing the first choice unseen. Mouse clicks on a choice are aimed
+## and are never delayed.
+const CHOICE_GRACE_SECONDS := 0.25
 var _speaker: Dictionary = {}
 var _lines: Array = []
 var _choices: Array = []
@@ -16,6 +20,7 @@ var _session := false
 var _voice_key := ""
 var _has_voice := false
 var _line_name_key := ""
+var _choice_grace := 0.0
 var chars_per_second := 40.0
 
 func _init() -> void:
@@ -77,6 +82,7 @@ func start_dialogue(speaker: Dictionary, lines: Array, choices: Array = []) -> D
 
 func _process(delta: float) -> void:
 	super._process(delta)
+	_choice_grace = maxf(0.0, _choice_grace - delta)
 	if _typing:
 		_elapsed += delta
 		%TextLabel.visible_characters = mini(int(_elapsed * maxf(chars_per_second, 1.0)), %TextLabel.get_total_character_count())
@@ -91,6 +97,8 @@ func _input(event: InputEvent) -> void:
 	if is_open() and is_top() and event.is_pressed() and not event.is_echo() and (event.is_action_pressed(&"interact") or event.is_action_pressed(&"ui_accept")):
 		get_viewport().set_input_as_handled()
 		if _wants_focus():
+			if _choice_grace > 0.0:
+				return
 			var focused := get_viewport().gui_get_focus_owner()
 			if focused is Button and focused in _buttons:
 				_pick(focused.get_meta("choice"))
@@ -148,8 +156,10 @@ func _advance() -> void:
 func _show_choices() -> void:
 	_typing = false
 	%TextLabel.visible_characters = -1
-	%NextButton.visible = true
+	# The "continue" button would answer a choice the player did not pick: the choices are the only way on.
+	%NextButton.visible = false
 	%ChoicesBox.visible = true
+	_choice_grace = CHOICE_GRACE_SECONDS
 	for choice in _choices:
 		var button := Button.new()
 		button.name = "Choice" + str(_buttons.size())
@@ -171,6 +181,10 @@ func _pick(choice: Dictionary) -> void:
 	_finish(true, choice)
 
 func close() -> void:
+	_finish(false)
+
+## A dropped stack must still resolve the awaited session, or the NPC that waits on it stays in its talk forever.
+func _force_closed() -> void:
 	_finish(false)
 
 func _on_cancel() -> void:

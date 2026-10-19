@@ -35,6 +35,7 @@ class TestScreen extends TTScreen:
 	var page_steps: Array[int] = []
 	var wants := true
 	var with_field := true
+	var force_closed_calls := 0
 
 	func _ready() -> void:
 		super()
@@ -72,6 +73,9 @@ class TestScreen extends TTScreen:
 
 	func _on_page(step: int) -> void:
 		page_steps.append(step)
+
+	func _force_closed() -> void:
+		force_closed_calls += 1
 
 
 ## Counts _refresh_texts: a language switch rebuilds an OPEN screen only (UIC-04).
@@ -185,6 +189,7 @@ func run(t) -> void:
 	await t.frames(3)
 	await _disabled_not_focusable(t)
 	await _wire_helpers(t)
+	await _radio_group_entry(t)
 	await _hover_focus_lists(t)
 	await _text_field_yields_updown(t)
 	await _no_wrap_on_echo(t)
@@ -443,6 +448,44 @@ func _wire_helpers(t) -> void:
 	await _finish_test(t)
 
 
+## UIC-01: without focus memory a move INTO a tab row (a ButtonGroup marked TAB_ROW_META) lands on its pressed tab, so leaving a list
+## upwards never selects the first tab; a group without one still lands on its first stop.
+func _radio_group_entry(t) -> void:
+	var host := _fresh(t)
+	var hb := HBoxContainer.new()
+	host.add_child(hb)
+	var radio := ButtonGroup.new()
+	radio.set_meta(UiNav.TAB_ROW_META, true)
+	var tabs: Array = []
+	for i in 3:
+		var tab := _add(hb, "R%d" % i)
+		tab.toggle_mode = true
+		tab.button_group = radio
+		tabs.append(tab)
+	var close := _add(hb, "RClose")
+	var vb := VBoxContainer.new()
+	vb.position = Vector2(0, 100)
+	host.add_child(vb)
+	var rows: Array = []
+	for i in 3:
+		rows.append(_add(vb, "RRow%d" % i))
+	await t.frames(1)
+	(tabs[2] as Button).set_pressed_no_signal(true)
+	UiNav.wire_row(tabs + [close])
+	UiNav.wire_ring(rows)
+	UiNav.wire_groups([tabs + [close], rows], true, false)
+	var up_ok: bool = _path_of(rows[0], (rows[0] as Control).focus_neighbor_top) == tabs[2]
+	var wrap_ok: bool = _path_of(rows[2], (rows[2] as Control).focus_neighbor_bottom) == tabs[2]
+	var down_ok: bool = _path_of(tabs[2], (tabs[2] as Control).focus_neighbor_bottom) == rows[0]
+	(rows[0] as Control).grab_focus()
+	await t.frames(1)
+	await _tap(t, KEY_UP)
+	var real_ok: bool = _owner_name(t) == "R2"
+	t.check("radio_group_entry", up_ok and wrap_ok and down_ok and real_ok,
+		"Up from the list -> pressed tab %s, ring wrap -> pressed tab %s, Down -> first row %s, a real Up press lands on %s" % [up_ok, wrap_ok, down_ok, _owner_name(t)])
+	await _finish_test(t)
+
+
 func _add(parent: Node, name: String) -> Button:
 	var b := Button.new()
 	b.name = name
@@ -667,7 +710,8 @@ func _screen_lifecycle(t) -> void:
 	# the stack dropped under the screen (quit to the title, load): closed without ceremony
 	_gm.call("pop_all_modals")
 	await t.frames(1)
-	var dropped_ok: bool = not s.is_open() and not s.visible and closed[0] == 3
+	# UIC-07: the screen's own teardown still runs (exactly once), and an ordinary close() does not call it
+	var dropped_ok: bool = not s.is_open() and not s.visible and closed[0] == 3 and s.force_closed_calls == 1
 	# siblings do not stack: opening is refused while another modal is open, unless the screen is nested under the one on top
 	var a := await _screen(t, host, &"nav_a")
 	var b := await _screen(t, host, &"nav_b")
@@ -1590,14 +1634,17 @@ func _whisper_line(t) -> void:
 	await t.frames(1)
 	var inert: bool = UiAudit.focusable_report(whisper, {"forbid_focus": true})["defects"].is_empty() and whisper.mouse_filter == Control.MOUSE_FILTER_IGNORE
 	var raw_ok: bool = t.find_raw_keys(whisper).is_empty()
-	# 3.5 s, then it fades (0.4 s) and goes
-	await t.seconds(3.0)
-	var still_there := whisper.is_showing()
-	await t.seconds(1.3)
+	# UX-12: it stays for its reading time (3.5 s for a short line, longer for a long one, at most 8 s), then it fades (0.4 s) and goes
+	var reading := WhisperLine.seconds_for(whisper.shown_text())
+	var scaled: bool = is_equal_approx(WhisperLine.seconds_for("OK"), WhisperLine.SECONDS) and reading > WhisperLine.SECONDS \
+		and WhisperLine.seconds_for("x".repeat(400)) == WhisperLine.MAX_SECONDS
+	await t.seconds(reading - 0.5)
+	var still_there: bool = whisper.is_showing() and scaled
+	await t.seconds(0.5 + WhisperLine.FADE_OUT + 0.4)
 	var gone := not whisper.is_showing()
 	var conns: int = _bus.whisper_requested.get_connections().filter(func(c: Dictionary) -> bool: return c["callable"].get_object() == whisper).size()
 	t.check("whisper_line", hidden_ok and shows and place_ok and long_ok and short_ok and replaced and en_ok and inert and raw_ok and still_there and gone and conns == 1,
-		"hidden at first (%s); whisper_requested(key) shows tr(key) in a PanelWhisper with the Whisper italic (%s) at left 40 / bottom 40, at most 360 wide (%s) and wraps a long text (%s), a short one hugs its text (%s); a second whisper replaces it (%s) and it follows the language (%s); inert (%s), no raw keys (%s); still there after 3 s (%s) and gone after 3.5 s + fade (%s); one connection (%d)" % [hidden_ok, shows, place_ok, long_ok, short_ok, replaced, en_ok, inert, raw_ok, still_there, gone, conns])
+		"hidden at first (%s); whisper_requested(key) shows tr(key) in a PanelWhisper with the Whisper italic (%s) at left 40 / bottom 40, at most 360 wide (%s) and wraps a long text (%s), a short one hugs its text (%s); a second whisper replaces it (%s) and it follows the language (%s); inert (%s), no raw keys (%s); still there for its reading time, which grows with the text (%s), and gone after it + fade (%s); one connection (%d)" % [hidden_ok, shows, place_ok, long_ok, short_ok, replaced, en_ok, inert, raw_ok, still_there, gone, conns])
 	await _finish_test(t)
 
 

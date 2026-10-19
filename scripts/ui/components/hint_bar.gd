@@ -13,6 +13,9 @@ extends HBoxContainer
 ## (UiNav.watcher().device_changed) and on a language switch (NOTIFICATION_TRANSLATION_CHANGED), connecting its signals once. It draws no
 ## background, takes no focus and no mouse, and hides itself when it has nothing to show.
 ##
+## `on_dark` is for a bar that sits on the dark screen scrim (#3a3150, journal / backpack / shop) instead of parchment: the words and separators
+## use `HintOnDark` (Plex Mono 13, chalk) because the parchment `Eyebrow` ink reads at ~1.8:1 there (UX-13). The key caps are unchanged.
+##
 ## `force_hidden` is for the guide-compare fixtures: the mocks have no hint line, so a `<screen>_guide` fixture hides the bar for good (a later
 ## device change must not show it again).
 
@@ -23,6 +26,11 @@ var force_hidden := false:
 	set(v):
 		force_hidden = v
 		_update_visibility()
+var on_dark := false:
+	set(v):
+		on_dark = v
+		if is_node_ready():
+			_render()
 var _watcher_connected := false
 var _render_queued := false
 
@@ -120,13 +128,14 @@ func _render() -> void:
 		remove_child(c)
 		c.queue_free()
 	var list := _resolved()
+	var words: StringName = &"HintOnDark" if on_dark else &"Eyebrow"
 	for i in list.size():
 		if i > 0:
-			_add_label(SEPARATOR, &"Eyebrow")
+			_add_label(SEPARATOR, words)
 		var cap := _add_label(str(list[i]["glyph"]), &"KeyCap")
 		cap.name = "Key%d" % i
 		cap.set_meta(&"tt_text_same_ok", true) # Physical key names are language invariant.
-		var word := _add_label(str(list[i]["text"]), &"Eyebrow")
+		var word := _add_label(str(list[i]["text"]), words)
 		word.name = "Word%d" % i
 		var loc := Svc.node("LocalizationManager")
 		var key := str(list[i].get("key", ""))

@@ -189,6 +189,7 @@ func _labels() -> void:
 	set_label_var("Whisper", f_italic, 18, Color("#e6f5f1"), 4)
 	set_label_var("Eyebrow", f_mono, 11, C.TEXT_MONO)       # "AKTIVE OPGAVER", "BELØNNING"
 	set_label_var("EyebrowL", f_mono, 13, C.TEXT_MONO)
+	set_label_var("HintOnDark", f_mono, 13, C.CHALK)        # HintBar words on the dark screen scrim (#3a3150): Eyebrow there is ~1.8:1
 	set_label_var("FilePath", f_mono, 12, C.TEXT_FAINT)
 	set_label_var("OwlEye15", f_heavy, 15, C.OWL_EYE)      # "Lygteolie"
 	set_label_var("RareTag", f_body, 14, C.RARE_TEXT)

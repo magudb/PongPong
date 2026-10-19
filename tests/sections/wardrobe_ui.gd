@@ -39,9 +39,20 @@ func _run(t, skin := "") -> void:
 	ui.open()
 	ui._activate("dress_sun_cream")
 	ui.equip_button.grab_focus()
+	# UIC-10: an equip refreshes the screen without freeing and instancing the filter column and the item grid again.
+	var buttons_before: Array = ui.item_buttons.duplicate()
+	var filters_before: Array = ui.filter_buttons.duplicate()
+	var added := [0]
+	var count_added := func(_node: Node): added[0] += 1
+	ui.grid.child_entered_tree.connect(count_added)
+	ui.filters.child_entered_tree.connect(count_added)
 	UiAudit.press_pad(t,JOY_BUTTON_A)
 	await t.frames(3)
+	ui.grid.child_entered_tree.disconnect(count_added)
+	ui.filters.child_entered_tree.disconnect(count_added)
 	t.check("equip_button_commits_one_complete_dress", w.equipped.has("dress") and not w.equipped.has("shirt") and not w.equipped.has("pants") and p.outfit_layers.current_outfit == w.outfit())
+	t.check("equip_refresh_reuses_filters_and_items", added[0] == 0 and ui.item_buttons == buttons_before and ui.filter_buttons == filters_before and not buttons_before.is_empty(),
+		"%d nodes added, items kept %s, filters kept %s" % [added[0], ui.item_buttons == buttons_before, ui.filter_buttons == filters_before])
 	if native:
 		world.game_ui.get_screen(&"hud").toasts.clear()
 		await t.capture("dress_"+p.visual.resolved_id)
