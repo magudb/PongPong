@@ -156,6 +156,7 @@ class QuestRuntime:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	EventBus.lua_event.connect(_on_lua_event)
+	EventBus.lua_reloaded.connect(_on_lua_reloaded)
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.new_game_started.connect(reset)
 	EventBus.player_inventory_changed.connect(_on_inventory_changed)
@@ -212,6 +213,16 @@ func register_quest_from_lua(quest_data: Dictionary) -> void:
 	_giver_index_size = -1
 	if str(quest_data.get("source_path", "")) != "":
 		_report_binding_findings(quest_data)
+
+
+## LuaRuntime re-read the files (F9): the definition of a quest whose file is gone or renamed is dropped (it would stay
+## registered and, without its is_available hook, always available). Definitions registered by code (no source_path) are
+## kept, and the progress of a quest is never touched; the objective cache is rebuilt on demand.
+func _on_lua_reloaded() -> void:
+	for quest_id in quest_defs.keys():
+		if str((quest_defs[quest_id] as Dictionary).get("source_path", "")) != "" and not LuaRuntime.has_quest(str(quest_id)):
+			quest_defs.erase(quest_id)
+	_objective_cache.clear()
 
 
 func get_quest_def(quest_id: StringName) -> Dictionary:

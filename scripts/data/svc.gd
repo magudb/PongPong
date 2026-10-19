@@ -11,6 +11,11 @@ extends RefCounted
 ##   Svc.lua_config("rarity_tiers", default)    LuaRuntime.get_config without naming the autoload
 
 static var _overrides: Dictionary = {}
+## "path::method" -> the Script whose STATIC function static_call / static_await may call, or null when there is none.
+## Resolving costs 24-77 µs (exists + load + the whole method list) and hot paths call it several times per physics tick,
+## so a res:// answer is remembered (a shipped script does not change while the game runs); user:// probe scripts of the
+## tests are resolved on every call (a test may rewrite one under the same path).
+static var _resolved: Dictionary = {}
 
 
 ## The autoload `autoload_name` (an injected fake wins), or null when it does not exist.
@@ -41,18 +46,14 @@ static func has_override(autoload_name: Variant) -> bool:
 
 
 ## Calls the static function `method` of the script at `path` (e.g. "res://scripts/economy/price_curve.gd") with `args`.
-## Late binding: the script is only loaded when ResourceLoader.exists(path); when the script or the method is missing
-## the `fallback` is returned (no error, no warning). Verified in Godot 4.7.2: Script.callv reaches static functions.
+## Late binding: the script is only loaded when ResourceLoader.exists(path); when the script is missing the `fallback` is
+## returned silently. A res:// script that exists but has no STATIC function of that name is a broken contract (a rename):
+## the caller gets the fallback and the engine warns once. Verified in Godot 4.7.2: Script.callv reaches static functions.
 static func static_call(path: String, method: StringName, args: Array = [], fallback: Variant = null) -> Variant:
-	if not ResourceLoader.exists(path):
+	var script := _static_script(path, method)
+	if script == null:
 		return fallback
-	var script: Variant = load(path)
-	if not (script is Script) or not (script as Script).has_method(method):
-		return fallback
-	for m in (script as Script).get_script_method_list():
-		if str(m["name"]) == str(method) and (int(m["flags"]) & METHOD_FLAG_STATIC) == 0:
-			return fallback                    # an instance method cannot be called on the script itself
-	return (script as Script).callv(method, args)
+	return script.callv(method, args)
 
 
 ## LuaRuntime.get_config(path, default) without naming the autoload; `default_value` when there is no LuaRuntime.
@@ -64,12 +65,30 @@ static func lua_config(path: String, default_value: Variant = null) -> Variant:
 ## Async counterpart: the late-bound caller must await callv itself. Returning
 ## an un-awaited coroutine through static_call loses its result in Godot 4.
 static func static_await(path: String, method: StringName, args: Array = [], fallback: Variant = null) -> Variant:
-	if not ResourceLoader.exists(path):
+	var script := _static_script(path, method)
+	if script == null:
 		return fallback
-	var script: Variant = load(path)
-	if not (script is Script) or not script.has_method(method):
-		return fallback
-	for entry in script.get_script_method_list():
-		if str(entry.name) == str(method) and (int(entry.flags) & METHOD_FLAG_STATIC) == 0:
-			return fallback
 	return await script.callv(method, args)
+
+
+## The script at `path` when it has a STATIC function `method`, else null (remembered for res://, see _resolved).
+static func _static_script(path: String, method: StringName) -> Script:
+	var key := "%s::%s" % [path, method]
+	if _resolved.has(key):
+		return _resolved[key]
+	var found: Script = null
+	if ResourceLoader.exists(path):
+		var script: Variant = load(path)
+		if script is Script:
+			var is_static := false
+			if (script as Script).has_method(method):
+				for m in (script as Script).get_script_method_list():
+					if str(m["name"]) == str(method):
+						is_static = (int(m["flags"]) & METHOD_FLAG_STATIC) != 0   # an instance method cannot be called on the script
+			if is_static:
+				found = script
+			elif path.begins_with("res://"):
+				push_warning("Svc.static_call: %s has no static function %s(): the caller gets its fallback" % [path, method])
+	if path.begins_with("res://"):
+		_resolved[key] = found
+	return found

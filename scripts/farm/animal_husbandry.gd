@@ -296,6 +296,7 @@ class BuildingData:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_load_husbandry_config()
+	EventBus.lua_reloaded.connect(_load_husbandry_config)
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.new_game_started.connect(reset)
 	EventBus.item_purchased.connect(_on_item_purchased)
@@ -326,8 +327,10 @@ func room_for_item(item_id: StringName) -> int:
 
 ## Replaces the fallback tables with lua/config/husbandry.lua (`husbandry.species` / `husbandry.buildings`).
 ## product_interval strings become ProductType enums so the rest of the file is unchanged. A missing or
-## partial config keeps the fallback rows for the species it does not name.
+## partial config keeps the fallback rows for the species it does not name. Runs again after a Lua reload (F9).
 func _load_husbandry_config() -> void:
+	species_data = SPECIES_DATA
+	buildings_data = BUILDINGS
 	var cfg: Variant = GameData.cfg("husbandry", {})
 	if not (cfg is Dictionary):
 		return

@@ -837,7 +837,7 @@ func from_dict(data: Dictionary) -> bool:
 			inventory.append({"id": id, "amount": take, "meta": meta.duplicate(true)})
 			amount -= take
 	if dropped > 0:
-		_log_once("from_dict dropped %d invalid slot(s)" % dropped)
+		_log_once("from_dict dropped %d invalid slot(s)" % dropped, true)
 	# The player's own choice wins: a slot the save names (a weaker tool picked on purpose, or "" = deliberately empty) is restored
 	# as it was. Only a slot the save does not decide (an old save without `equipment`, an entry that is not owned any more or
 	# does not fit the slot) gets the best tool the player owns.
@@ -915,8 +915,13 @@ func _gained(item_id: StringName, amount: int, silent: bool) -> void:
 	_publish(&"notification_posted", [tr("NOTIF_ITEM_GAINED_TITLE"), "%s x%d" % [tr(name_key), amount], "item"])
 
 
-func _log_once(message: String) -> void:
+## A data or contract error, once per message: an engine warning, an error when something the player owned was lost (both
+## reach the log file of an exported build, not only stdout).
+func _log_once(message: String, data_lost: bool = false) -> void:
 	if _logged.has(message):
 		return
 	_logged[message] = true
-	print("[Economy] ", message)
+	if data_lost:
+		push_error("EconomyManager: " + message)
+	else:
+		push_warning("EconomyManager: " + message)

@@ -159,34 +159,13 @@ func week() -> int:
 
 # ======================================================================================= late-bound siblings
 
-## The towns track's NpcDirector in the ONE form of decision DT11: a node injected by a test first, then the static facade by path (what Svc.static_call does, with the
-## loaded script and the "is it static" answer remembered per path and method: a festival day asks about 30 citizens per roster, and Svc.static_call alone costs
-## about 30 microseconds a call, measured; the answer for an absent script, an absent method and an instance method is the safe default, like Svc's).
-var _dir_path: String = "<unset>"
-var _dir_script: Script = null
-var _dir_static: Dictionary = {}
-
-
+## The towns track's NpcDirector in the ONE form of decision DT11: a node injected by a test first, then the static facade by path
+## (Svc.static_call remembers the resolved script per path and method: a festival day asks about 30 citizens per roster).
 func _director(method: StringName, npc: String, default_value: Variant) -> Variant:
 	var d := Svc.node("NpcDirector")
 	if d != null and d.has_method(method):
 		return d.call(method, npc)
-	if director_path != _dir_path:
-		_dir_path = director_path
-		_dir_static.clear()
-		_dir_script = (load(director_path) as Script) if ResourceLoader.exists(director_path) else null
-	if _dir_script == null:
-		return default_value
-	if not _dir_static.has(method):
-		var is_static := false
-		if _dir_script.has_method(method):
-			for m in _dir_script.get_script_method_list():
-				if str(m["name"]) == str(method):
-					is_static = (int(m["flags"]) & METHOD_FLAG_STATIC) != 0
-		_dir_static[method] = is_static
-	if not bool(_dir_static[method]):
-		return default_value
-	return _dir_script.callv(method, [npc])
+	return Svc.static_call(director_path, method, [npc], default_value)
 
 
 ## The hero-twin rule: the player chose this citizen's look, so he is not in the world and cannot be befriended.

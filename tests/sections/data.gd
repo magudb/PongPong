@@ -93,6 +93,7 @@ func run(t) -> void:
 	_semantics()
 	_kinds()
 	_passthrough()
+	_hot_reload_consumers()
 	_svc()
 	_helpers()
 	# leave the runtime and the game state as found (fixtures were loaded through load_file)
@@ -113,7 +114,8 @@ func _boot() -> void:
 	_lr.reload_scripts()
 	t.expect_clean_since(mark, "reload_scripts logs no engine error or warning (the untranslated-key format error of lua_runtime.gd:42 is gone)")
 	t.check("reload_idempotent", _lr.get_all_script_ids().size() == before_scripts and _lr.get_all_item_ids().size() == before_items and _lr._quest_modules.size() == before_quests, "%d scripts, %d items, %d quests before and after" % [before_scripts, before_items, before_quests])
-	t.expect(int(_lr.load_ms) < 5000, "loading every Lua file takes %d ms" % int(_lr.load_ms))
+	t.check("lua_load_time", t.perf_ok("lua_load_time", float(_lr.load_ms), 1500.0), "loading every Lua file (one tokenizer pass for lint and parser) takes %d ms, reference 1500 ms" % int(_lr.load_ms))
+	t.check("lint_on_load_only_in_debug_builds", _lr.lint_on_load == OS.is_debug_build(), "the load-time lint runs only when OS.is_debug_build() (%s); CI enforces lint_clean, a release build skips it" % str(OS.is_debug_build()))
 	t.check("f9_only_in_debug_builds", _lr.is_processing_unhandled_key_input() == OS.is_debug_build(), "F9 hot reload is bound only when OS.is_debug_build() (%s)" % str(OS.is_debug_build()))
 	t.expect(_lr.has_method("get_recipes") and _lr.has_method("get_shop") and _lr.has_method("get_npc") and _lr.has_method("reload_scripts") and _lr.has_method("lint_source"), "LuaRuntime exposes get_recipes, get_shop, get_npc, reload_scripts, lint_source")
 	# the announcement of an explicit reload (F9) carries the count and never trips over an untranslated key
@@ -133,6 +135,12 @@ func _boot() -> void:
 	_captured_notifs.clear()
 	_lr._unhandled_key_input(other)
 	t.expect(_captured_notifs.is_empty(), "any other key does nothing")
+	# a hot reload with lint findings says so in a second toast (LUA-04): F9 must not hide a broken file
+	_lr.lint_report.append({"path": "res://x.lua", "line": 1, "rule": "syntax", "token": "x", "message": "injected for the test"})
+	_captured_notifs.clear()
+	_lr._announce_reload()
+	t.check("f9_toast_names_lint_findings", _captured_notifs.size() == 2 and str(_captured_notifs[1][1]).contains("1") and str(_captured_notifs[1][1]) != "NOTIF_LUA_RELOADED_LINT", "the reload toast is followed by one that counts the lint findings: %s" % str(_captured_notifs))
+	_lr.reload_scripts()
 	t.expect_clean_since(mark, "explicit reloads log no engine error or warning")
 	# tr() of an untranslated key must never be formatted
 	var text: String = _lr._format_count("NOTIF_LUA_RELOADED_MSG", 7)
@@ -660,8 +668,6 @@ config = {
 func _lint_rules() -> void:
 	var t = _t
 	var cases := [
-		["else", "function f(c)\n  if c then\n    return 1\n  else\n    return 2\n  end\nend", "else"],
-		["elseif", "function f(c)\n  if c then\n    return 1\n  elseif c then\n    return 2\n  end\nend", "elseif"],
 		["for", "function f()\n  for i = 1, 3 do\n    api.add_gold(1)\n  end\nend", "loop"],
 		["while", "function f(c)\n  while c do\n    c = false\n  end\nend", "loop"],
 		["repeat", "function f()\n  repeat\n    api.add_gold(1)\n  until true\nend", "loop"],
@@ -684,10 +690,31 @@ func _lint_rules() -> void:
 		["nil value", "config = { a = nil }", "nil_value"],
 		["identifier value", "config = { a = some_name }", "table_value"],
 		["call value", "config = { a = f(1) }", "table_value"],
+		["expression in a data table", "config = { a = 1, b = c.n or 2 }", "table_value"],
 		["concat value", "config = { a = \"x\" .. \"y\" }", "table_value"],
 		["unclosed if", "function f(c)\n  if c then\n    return 1\nend", "unbalanced"],
 		["stray end", "function f()\nend\nend", "unbalanced"],
 		["unterminated string", "config = { a = \"abc\n}", "unterminated_string"],
+		# not Lua at all, or Lua the subset would run differently (LUA-01): the parser's grammar findings and the deny-list
+		["not equal written !=", "function f(c)\n  if c.n != 3 then\n    return 1\n  end\nend", "stray_character"],
+		["!= leaves the if without then", "function f(c)\n  if c.n != 3 then\n    return 1\n  end\nend", "syntax"],
+		["= in a condition", "function f(c)\n  if c.n = 3 then\n    return 1\n  end\nend", "syntax"],
+		["misspelt return", "function f(c)\n  retrun false\n  return true\nend", "syntax"],
+		["statement after return", "function f(c)\n  return 1\n  api.add_gold(1)\nend", "syntax"],
+		["unclosed parenthesis", "function f(c)\n  return (c.a or c.b\nend", "syntax"],
+		["local list", "function f(c)\n  local a, b = 1, 2\n  return a\nend", "local_list"],
+		["field assignment", "function f(c)\n  c.seen = true\n  return c\nend", "field_assignment"],
+		["function value", "function f(c)\n  local g = function() return 1 end\n  return g\nend", "function_value"],
+		["nested function", "function f(c)\n  function g()\n    return 1\n  end\nend", "function_value"],
+		["unknown api function", "function f(c)\n  api.add_gld(5)\nend", "unknown_function"],
+		["unknown bare function", "function f(c)\n  return helper(c)\nend", "unknown_function"],
+		["call of a field", "function f(c)\n  return c.compute(1)\nend", "unknown_function"],
+		["question mark", "function f(c)\n  return c ? 1\nend", "stray_character"],
+		["at sign", "function f(c)\n  return @c\nend", "stray_character"],
+		["break", "function f(c)\n  break\nend", "loop"],
+		["top-level local", "local x = 1", "top_level"],
+		["top-level expression", "x = \"a\" .. \"b\"", "top_level"],
+		["top-level call", "api.add_gold(1)", "top_level"],
 	]
 	var all_ok := true
 	for c in cases:
@@ -706,6 +733,11 @@ func _lint_rules() -> void:
 		["one-line if", "function f(c)\n  if c then return 1 end\nend"],
 		["exponent", "config = { a = 1e-3, b = 2E+5 }"],
 		["comments", "-- else for while\nconfig = { a = 1 } -- trailing # comment"],
+		["api calls and bare queries", "function f(c)\n  if api.has_flag(\"x\") and has_item(\"y\", 2) then\n    api.add_gold(1)\n  end\n  return api.get_flag(\"z\")\nend"],
+		["do block and a return with ;", "function f(c)\n  do\n    local x = c.n\n  end\n  return 1;\nend"],
+		["assignment to a name", "function f(c)\n  local n = 1\n  n = c.n or n\n  return n\nend"],
+		["else and elseif", "function f(c)\n  if c.a then\n    return 1\n  elseif c.b then\n    return 2\n  else\n    return 3\n  end\nend"],
+		["a table built in a function evaluates its values", "function f(c)\n  local key = c.k or \"A\"\n  return { text_key = key, n = c.n, seen = api.has_flag(\"x\"), nested = { who = c.who }, [\"k\"] = c.k }\nend"],
 	]
 	for c in clean_cases:
 		var findings: Array = _lr.lint_source("kind = \"config\"\n" + str(c[1]) + "\n", "res://x.lua")
@@ -727,6 +759,22 @@ func _lint_rules() -> void:
 				all_ok = false
 				_t.fail("%s: rule %s missing (got %s)" % [f, want, str(rules)])
 	t.check("lint_rules", all_ok, "%d bad snippets flagged by their rule, %d good snippets clean, 5 bad fixture files" % [cases.size(), clean_cases.size()])
+	# the review's cases (LUA-01): each ran silently wrong with an empty lint report before the grammar findings
+	var silently_wrong := {
+		"`!=`": "kind = \"dialogue\"\nfunction get_dialogue(context)\n  if context.weekday != 2 then\n    return { r = \"open\" }\n  end\n  return { r = \"closed\" }\nend\n",
+		"`if n = 3`": "kind = \"dialogue\"\nfunction get_dialogue(context)\n  if context.n = 3 then\n    return { r = \"three\" }\n  end\nend\n",
+		"`retrun`": "kind = \"quest\"\nfunction is_available(context)\n  retrun false\n  return true\nend\n",
+		"`local a, b`": "kind = \"dialogue\"\nfunction get_dialogue(context)\n  local a, b = 1, 2\n  return { r = a }\nend\n",
+		"field assignment": "kind = \"dialogue\"\nfunction get_dialogue(context)\n  context.seen = true\n  return { r = context.seen }\nend\n",
+		"function value": "kind = \"dialogue\"\nfunction get_dialogue(context)\n  local f = function() return 1 end\n  return { r = f }\nend\n",
+	}
+	var still_clean: Array[String] = []
+	for label in silently_wrong:
+		if _lr.lint_source(str(silently_wrong[label]), "res://x.lua").is_empty():
+			still_clean.append(str(label))
+	t.check("lint_rejects_invalid_lua", still_clean.is_empty(), "invalid or out-of-subset Lua is never lint clean (%d review cases); clean: %s" % [silently_wrong.size(), str(still_clean)])
+	var where: Array = _lr.lint_source("kind = \"quest\"\n\nfunction is_available(context)\n  local x = 1\n  retrun false\nend\n", "res://some/q.lua")
+	t.expect(where.size() == 1 and int(where[0]["line"]) == 5 and str(where[0]["rule"]) == "syntax" and str(where[0]["token"]) == "retrun", "a grammar finding names its line and token: %s" % str(where))
 	# findings carry what a tool needs
 	var one: Array = _lr.lint_source("kind = \"config\"\nfunction f()\n  return 1 + 2\nend\n", "res://some/file.lua")
 	t.expect(not one.is_empty() and one[0]["path"] == "res://some/file.lua" and int(one[0]["line"]) == 3 and str(one[0]["rule"]) == "arithmetic" and str(one[0]["message"]) != "", "a finding has path, line, rule, token and message (%s)" % str(one))
@@ -739,6 +787,14 @@ func _lint_rules() -> void:
 	t.expect_clean_since(mark, "loading files with lint findings logs no engine warning")
 	_lr.reload_scripts()
 	t.expect(_lr.lint_report.is_empty(), "reload_scripts clears the previous findings")
+	# a release build skips the subset lint at load but keeps the data-level checks of the loader
+	_lr.lint_on_load = false
+	_lr.load_file(FIX + "lint_bad_rarity.lua")
+	_lr.load_file(FIX + "p07_arith.lua")
+	var release_rules := _rules_of(_lr.lint_report)
+	_lr.lint_on_load = OS.is_debug_build()
+	_lr.reload_scripts()
+	t.check("lint_skipped_without_lint_on_load", release_rules == ["rarity"], "without lint_on_load only the data-level findings are reported (the arithmetic of p07 is not): %s" % str(release_rules))
 
 
 func _lint_clean() -> void:
@@ -748,9 +804,11 @@ func _lint_clean() -> void:
 	for f in _lr.lint_report:
 		summary.append(str(f["path"]).get_file() + ":" + str(f["line"]) + " " + str(f["rule"]))
 	t.check("lint_clean", _lr.lint_report.is_empty(), "every Lua file under res://lua lints clean (%d scripts); findings: %s" % [_lr.get_all_script_ids().size(), str(summary.slice(0, 8))])
-	for fx in ["lint_clean_sample.lua", "flag_identifiers.lua", "semantics.lua", "shops_extra.lua", "recipes_extra.lua", "data/data_config.lua", "data/data_items.lua", "p01_empty_fn.lua", "p04_nested_if.lua", "p05_oneline_if.lua", "p08_paren_in_string.lua", "p09_emit_payload.lua", "p14_two_ifs.lua", "p18_compare_and_or.lua", "p19_return_expr.lua", "p20_local_in_untaken.lua", "p21_multiline_api.lua", "p23_stmt_around_if.lua"]:
+	for fx in ["lint_clean_sample.lua", "flag_identifiers.lua", "semantics.lua", "shops_extra.lua", "recipes_extra.lua", "data/data_config.lua", "data/data_items.lua", "p01_empty_fn.lua", "p02_else.lua", "p03_elseif.lua", "p04_nested_if.lua", "p06_ternary.lua", "p10_get_flag.lua", "p17_ifelse_api.lua", "p24_block_scope.lua", "p25_float_index.lua", "p26_table_values.lua", "p05_oneline_if.lua", "p08_paren_in_string.lua", "p09_emit_payload.lua", "p14_two_ifs.lua", "p18_compare_and_or.lua", "p19_return_expr.lua", "p20_local_in_untaken.lua", "p21_multiline_api.lua", "p23_stmt_around_if.lua"]:
 		var findings: Array = _lr.lint_source(FileAccess.get_file_as_string(FIX + fx), FIX + fx)
 		t.expect(findings.is_empty(), "fixture %s is inside the subset and lints clean %s" % [fx, str(_rules_of(findings))])
+	_real_lua_syntax()
+	_doc_examples()
 	# the tool, run like a human would: PASS line per file, exit code 0
 	var result: Dictionary = t.run_godot_script("res://tools/lua/lint.gd")
 	t.expect_tool_ids(result, "tools/lua/lint.gd")
@@ -758,13 +816,81 @@ func _lint_clean() -> void:
 	# negative control: the tool fails on the fixture directory (which contains the probes outside the subset)
 	var neg: Dictionary = t.run_godot_script("res://tools/lua/lint.gd", PackedStringArray(["--root=res://tests/fixtures/lua", "--quiet"]))
 	var out: String = str(neg["output"])
-	t.check("lint_tool_fails_on_bad_files", int(neg["code"]) == 1 and out.contains("FAIL res://tests/fixtures/lua/p02_else.lua:") and out.contains(":else ") and out.contains(":loop ") and not out.contains("lint_clean_sample.lua"), "tools/lua/lint.gd exits 1 and names file:line:rule for the probes outside the subset")
+	t.check("lint_tool_fails_on_bad_files", int(neg["code"]) == 1 and out.contains("FAIL res://tests/fixtures/lua/p07_arith.lua:") and out.contains(":arithmetic ") and out.contains(":loop ") and not out.contains("lint_clean_sample.lua"), "tools/lua/lint.gd exits 1 and names file:line:rule for the probes outside the subset")
+
+
+## The authoring docs stay true (LUA-05): every ```lua block of docs/lua_api.md and tools/lua/README.md is a complete file
+## that lints clean, an item rarity in them is on the ladder, and the api table of docs/lua_api.md names exactly the api
+## functions of the runtime (LuaLint.API_FUNCTIONS).
+func _doc_examples() -> void:
+	var t = _t
+	var problems: Array[String] = []
+	var blocks := 0
+	for doc in ["res://docs/lua_api.md", "res://tools/lua/README.md"]:
+		var text := FileAccess.get_file_as_string(doc)
+		var parts := text.split("```lua\n")
+		for i in range(1, parts.size()):
+			var block := parts[i].get_slice("```", 0)
+			blocks += 1
+			var rules := _rules_of(_lr.lint_source(block, doc))
+			if not rules.is_empty():
+				problems.append("%s block %d: %s" % [doc.get_file(), i, str(rules)])
+			var items: Variant = _lr.parse_lua_source(block, doc).get("items", {})
+			for id in (items as Dictionary if items is Dictionary else {}):
+				var rarity := str(LuaData.dict(items[id]).get("rarity", ""))
+				if rarity != "" and not (rarity in _lr._RARITY_IDS):
+					problems.append("%s: item %s has rarity %s" % [doc.get_file(), id, rarity])
+	var api_doc := FileAccess.get_file_as_string("res://docs/lua_api.md").get_slice("## API functions", 1).get_slice("\n## ", 0)
+	var named := {}
+	var rx := RegEx.create_from_string("`api\\.([a-z_]+)\\(")
+	for m in rx.search_all(api_doc):
+		named[m.get_string(1)] = true
+	var listed: Array = named.keys()
+	listed.sort()
+	var runtime: Array = LuaLint.API_FUNCTIONS.duplicate()
+	runtime.sort()
+	if listed != runtime:
+		problems.append("the api table names %s, the runtime has %s" % [str(listed), str(runtime)])
+	t.check("lua_api_doc_examples", problems.is_empty() and blocks >= 7, "%d lua blocks of the docs lint clean, rarities on the ladder, the api table matches the runtime: %s" % [blocks, str(problems)])
+
+
+## Real Lua as an independent gate (LUA-01): the subset is a subset of Lua 5.4, so `luac -p` must accept every file under
+## res://lua. The playtest workflow installs lua5.4; a developer machine without it skips (brew install lua).
+func _real_lua_syntax() -> void:
+	var t = _t
+	var luac := ""
+	for exe in ["luac5.4", "luac"]:
+		if int(t.run_tool(exe, PackedStringArray(["-v"]))["code"]) == 0:
+			luac = exe
+			break
+	if luac == "":
+		if OS.get_environment("CI") != "":
+			t.fail("lua_real_syntax: no luac5.4 / luac on the PATH of this CI runner (the playtest workflow installs lua5.4)")
+		else:
+			t.skip("lua_real_syntax: no luac5.4 / luac on the PATH (brew install lua)")
+		return
+	var args := PackedStringArray(["-p"])
+	for sid in _lr.get_all_script_ids():
+		args.append(ProjectSettings.globalize_path(str(_lr._scripts[sid]["source_path"])))
+	var res: Dictionary = t.run_tool(luac, args)
+	t.check("lua_real_syntax", int(res["code"]) == 0 and args.size() > 200, "%s -p accepts all %d files under res://lua: %s" % [luac, args.size() - 1, str(res["output"]).strip_edges().left(300)])
+	# negative control: real Lua refuses the review's `!=` case
+	var bad := "user://lua_real_syntax_probe.lua"
+	var f := FileAccess.open(bad, FileAccess.WRITE)
+	f.store_string("function f(context)\n  if context.weekday != 2 then\n    return 1\n  end\nend\n")
+	f.close()
+	var neg: Dictionary = t.run_tool(luac, PackedStringArray(["-p", ProjectSettings.globalize_path(bad)]))
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(bad))
+	t.expect(int(neg["code"]) != 0, "(control) %s -p refuses `!=`: exit %d" % [luac, int(neg["code"])])
 
 
 # ---------------------------------------------------------------------------------------------------- the probes
 
 func _probes() -> void:
 	var t = _t
+	# the probes outside the subset make the interpreter say what it skipped: one engine warning each (QUAL-08), all of them
+	# naming a fixture file
+	t.allow("LuaRuntime: res://tests/fixtures/lua/")
 	var raw := FileAccess.get_file_as_string(FIX + "probe_expected.json")
 	var doc: Variant = JSON.parse_string(raw)
 	t.check("probe_fixture_loaded", typeof(doc) == TYPE_DICTIONARY and (doc as Dictionary).has("cases") and str(doc.get("generator", "")).begins_with("Lua 5.4"), "probe_expected.json holds %d cases generated with %s" % [(doc as Dictionary).get("cases", []).size() if typeof(doc) == TYPE_DICTIONARY else 0, str((doc as Dictionary).get("generator", "?")) if typeof(doc) == TYPE_DICTIONARY else "?"])
@@ -780,7 +906,7 @@ func _probes() -> void:
 		files[str(c["probe"])] = true
 		if not ok:
 			failed += 1
-	t.expect_clean_since(mark, "replaying every probe (also the ones outside the subset) raises no engine error or warning")
+	t.expect_clean_since(mark, "replaying every probe (also the ones outside the subset) raises no engine error and no warning but the runtime messages of the fixtures")
 	t.check("lua_probes", failed == 0, "%d cases over %d files: %d exact, %d best effort, %d flagged-only; %d failed" % [(doc["cases"] as Array).size(), files.size(), counts["exact"], counts["best_effort"], counts["flagged"], failed])
 
 
@@ -964,6 +1090,10 @@ func _flag_branch(flags: Dictionary, context: Dictionary, string_name_keys: bool
 
 func _semantics() -> void:
 	var t = _t
+	# the runtime messages of the inline scripts below are engine warnings (the first matching rule counts a message)
+	t.allow("LuaRuntime: res://x.lua:4 in u: unknown Lua function `nonexistent`")
+	t.allow("LuaRuntime: res://x.lua:")
+	t.allow("LuaRuntime: res://tests/where_")
 	# unknown api functions and constructs are logged once and never raise
 	var sid := "tests/fixtures/lua/semantics_inline"
 	_lr._scripts[sid] = _lr.parse_lua_source("kind = \"quest\"\nid = \"u\"\nfunction u(context)\n  api.nonexistent(\"x\")\n  local n = 3 * 4\n  api.nonexistent(\"y\")\n  return { ok = true, n = n }\nend\n", "res://x.lua")
@@ -972,9 +1102,34 @@ func _semantics() -> void:
 	var r1: Variant = _lr._invoke_function(sid, "u", [{}])
 	var logged_after_first: int = _lr._logged_once.size()
 	var r2: Variant = _lr._invoke_function(sid, "u", [{}])
-	t.check("unknown_identifiers_log_once", logged_after_first >= 1 and _lr._logged_once.size() == logged_after_first, "an unknown api function is logged once (%d messages after two calls) and never as an engine warning" % _lr._logged_once.size())
-	t.expect_clean_since(mark, "unknown api functions and unsupported constructs raise no engine error or warning")
+	t.check("unknown_identifiers_log_once", logged_after_first >= 1 and _lr._logged_once.size() == logged_after_first, "an unknown api function is logged once (%d messages after two calls), as an engine warning that names file, line and function" % _lr._logged_once.size())
+	t.expect_clean_since(mark, "unknown api functions and unsupported constructs raise no engine error and no other warning")
+	t.expect(t.allowed_count("LuaRuntime: res://x.lua:4 in u: unknown Lua function `nonexistent`") == 1, "the unknown function is ONE engine warning for two calls (%d)" % t.allowed_count("LuaRuntime: res://x.lua:4 in u: unknown Lua function `nonexistent`"))
 	t.expect(typeof(r1) == TYPE_DICTIONARY and r1["ok"] == true and r2 == r1, "the function still returns its table")
+	_lr._scripts.erase(sid)
+	# a runtime message names the file, line and function, and each script reports its own mistake once (LUA-04)
+	var where_src := "kind = \"quest\"\nid = \"w\"\n\nfunction w(context)\n  local x = 1\n  api.no_such_call(\"x\")\n  return x\nend\n"
+	_lr._scripts["tests/where_a"] = _lr.parse_lua_source(where_src, "res://tests/where_a.lua")
+	_lr._scripts["tests/where_b"] = _lr.parse_lua_source(where_src, "res://tests/where_b.lua")
+	_lr.runtime_report.clear()
+	_lr._logged_once.clear()
+	_lr._invoke_function("tests/where_a", "w", [{}])
+	_lr._invoke_function("tests/where_a", "w", [{}])
+	_lr._invoke_function("tests/where_b", "w", [{}])
+	var rows: Array = _lr.runtime_report.filter(func(r: Dictionary) -> bool: return str(r["message"]).begins_with("unknown Lua function `no_such_call`"))
+	t.check("runtime_messages_name_their_place", rows.size() == 2 and rows[0]["path"] == "res://tests/where_a.lua" and int(rows[0]["line"]) == 6 and rows[0]["function"] == "w" and rows[1]["path"] == "res://tests/where_b.lua", "one message per script, with path, line 6 and the function: %s" % str(rows))
+	_lr._scripts.erase("tests/where_a")
+	_lr._scripts.erase("tests/where_b")
+	# the bodies compiled at load (with the lint) and the ones compiled lazily (release) are the same statements, lines included
+	var grammar: Array[Dictionary] = []
+	var eager: Dictionary = LuaParser.parse_tokens(where_src, LuaTokens.tokenize(where_src), "", grammar)["functions"]["w"]
+	t.expect(eager.has("ast") and eager["ast"] == LuaParser.compile_body(str(eager["body"]), int(eager["body_line"])) and grammar.is_empty(), "eager and lazy compilation agree, lines included: %s" % str(eager.get("ast", [])))
+	# a statement outside the subset is skipped AND said at run time (it used to vanish without a word)
+	_lr._scripts[sid] = _lr.parse_lua_source("kind = \"quest\"\nid = \"u\"\nfunction u(context)\n  context.seen = true\n  return { ok = true }\nend\n", "res://x.lua")
+	_lr._logged_once.clear()
+	var r3: Variant = _lr._invoke_function(sid, "u", [{}])
+	var said: bool = _lr._logged_once.keys().any(func(m: String) -> bool: return m.begins_with("unsupported Lua statement (assignment to a field)"))
+	t.check("unsupported_statement_logged", said and typeof(r3) == TYPE_DICTIONARY and r3["ok"] == true, "a field assignment is skipped and logged once: %s" % str(_lr._logged_once.keys()))
 	_lr._scripts.erase(sid)
 	# truthiness, comparisons and precedence are covered by the real-Lua cases of lua_probes (semantics.lua);
 	# here the pieces that need the game: notification text through tr(), api.emit payload types
@@ -1005,6 +1160,39 @@ func _semantics() -> void:
 	t.expect(_lr._invoke_function("tests/inline_b", "b", [{}]) == false, "...also a numeric (float) flag, and 1.0 is true")
 	_lr._scripts.erase("tests/inline_b")
 	(_gm.world_flags as Dictionary).clear()
+
+
+# ---------------------------------------------------------------------------------------------------- hot reload
+
+## F9 (reload_scripts) tells the consumers that copied Lua data (LUA-03): EventBus.lua_reloaded once per reload; QuestManager
+## drops the definition of a quest whose file is gone (registered-by-code definitions stay); AnimalHusbandry re-reads its
+## config; ShopSystem forgets today's rotation rows.
+func _hot_reload_consumers() -> void:
+	var t = _t
+	var qm: Node = t.autoload("QuestManager")
+	var husbandry: Node = t.autoload("AnimalHusbandry")
+	var shop: Node = t.autoload("ShopSystem")
+	if qm == null or husbandry == null or shop == null:
+		t.skip("hot reload consumers: QuestManager / AnimalHusbandry / ShopSystem missing")
+		return
+	var reloads := [0]
+	var count := func() -> void: reloads[0] += 1
+	_bus.lua_reloaded.connect(count)
+	_lr.load_file(FIX + "semantics.lua")                        # kind quest, id "semantics": a file-based definition
+	qm.register_quest_from_lua({"id": "zz_lua03_by_code", "objectives": [], "rewards": {}, "meta": {}})
+	var registered: bool = qm.quest_defs.has(&"semantics") and qm.quest_defs.has(&"zz_lua03_by_code")
+	_gm.set_config_override("husbandry", {"species": {"zz_lua03_species": {"name_key": "X", "product_interval": "daily"}}})
+	shop._rotation_cache["seed_shop"] = {"day": -1, "rows": []}
+	_lr.reload_scripts()
+	var pruned: bool = not qm.quest_defs.has(&"semantics") and qm.quest_defs.has(&"zz_lua03_by_code") and qm.quest_defs.has(&"lost_cat")
+	var reread: bool = (husbandry.species_data as Dictionary).has("zz_lua03_species")
+	var rotation_dropped: bool = not (shop._rotation_cache as Dictionary).has("seed_shop")
+	_gm.clear_config_overrides()
+	_lr.reload_scripts()
+	var restored: bool = not (husbandry.species_data as Dictionary).has("zz_lua03_species") and (husbandry.species_data as Dictionary).has("chicken")
+	qm.quest_defs.erase(&"zz_lua03_by_code")
+	_bus.lua_reloaded.disconnect(count)
+	t.check("hot_reload_refreshes_consumers", registered and pruned and reread and rotation_dropped and restored and reloads[0] == 2, "two reloads, two lua_reloaded (%d); a removed quest file's definition is dropped, a code-registered one kept (%s); husbandry re-read (%s, back to the file %s); the rotation cache dropped (%s)" % [reloads[0], pruned, reread, restored, rotation_dropped])
 
 
 # ---------------------------------------------------------------------------------------------------- kinds
@@ -1104,6 +1292,19 @@ func _svc() -> void:
 	t.check("svc_static_call_fallbacks", fox == 1360 and hobbit == 1280 and alone == 1440 and missing_script == "fallback" and missing_method == "fallback" and instance_method == "fallback" and res_missing == 42 and real_class == 3 and (no_args as Array).size() == 5, "1600 gold: %s / %s / %s (1360 / 1280 / 1440); missing script, missing method, instance method and missing res:// script give the fallback; a real static class answers" % [fox, hobbit, alone])
 	t.expect_clean_since(mark, "static_call of a missing script logs no engine error")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+	# a res:// answer is remembered (QUAL-01: resolving cost 24-77 µs a call on per-tick paths); a user:// probe is not
+	Svc.static_call("res://scripts/data/rarity.gd", &"rank", ["rare"], -1)
+	var calls := 2000
+	var t0 := Time.get_ticks_usec()
+	for i in calls:
+		Svc.static_call("res://scripts/data/rarity.gd", &"rank", ["rare"], -1)
+	var per_call := float(Time.get_ticks_usec() - t0) / float(calls)
+	t.check("svc_static_call_memoised", Svc._resolved.get("res://scripts/data/rarity.gd::rank", null) is Script and not Svc._resolved.has(path + "::final_price") and t.perf_ok("svc_static_call_us", per_call, 6.0), "a res:// static function is resolved once and then costs %.1f µs a call (reference 6 µs; the user:// probe is not remembered)" % per_call)
+	# a shipped script without the static function is a broken contract: the fallback, and ONE engine warning (QUAL-08)
+	t.allow("Svc.static_call: res://scripts/data/rarity.gd has no static function no_such_function()")
+	var broken_a: Variant = Svc.static_call("res://scripts/data/rarity.gd", &"no_such_function", [], "fallback")
+	var broken_b: Variant = Svc.static_call("res://scripts/data/rarity.gd", &"no_such_function", [], "fallback")
+	t.check("svc_static_call_warns_once_on_a_broken_contract", broken_a == "fallback" and broken_b == "fallback" and t.allowed_count("Svc.static_call: res://scripts/data/rarity.gd has no static function no_such_function()") == 1, "a res:// script without the static function answers the fallback and warns once (%d warning(s))" % t.allowed_count("Svc.static_call: res://scripts/data/rarity.gd has no static function no_such_function()"))
 	# autoload lookup, overrides
 	t.expect(Svc.node("LuaRuntime") == _lr and Svc.node("DefinitelyNoAutoload") == null and Svc.lua_config("player.walk_speed", 0) == 285 and Svc.lua_config("no.such.path", "d") == "d", "Svc.node / Svc.lua_config look the autoload up at call time")
 	var fake := Node.new()

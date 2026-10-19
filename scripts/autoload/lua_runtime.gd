@@ -2,9 +2,12 @@ extends Node
 ## Bridge to Lua for quests, dialogue, items, shops, recipes and the game's data tables (D13, D14).
 ##
 ## A pure-GDScript interpreter of a documented Lua SUBSET (no GDExtension): top-level assignments of literal tables and
-## top-level functions with `local`, `if/return`, the `api.*` calls and the expression operators `and or not == ~= < <= > >= ..`.
+## top-level functions with `local`, `if/elseif/else`, `return`, the `api.*` calls, table constructors (evaluated inside a
+## function) and the expression operators `and or not == ~= < <= > >= ..`.
 ## The parser lives in scripts/data/lua_parser.gd (+ lua_tokens.gd); the load-time lint in scripts/data/lua_lint.gd and
 ## `tools/lua/lint.gd`. Everything outside the subset is reported in `lint_report` at load - never as an engine warning.
+## Each file is tokenized once; the lint reads the same tokens as the parser and runs in debug builds only (`lint_on_load`):
+## CI and tools/lua/lint.gd enforce a clean lint, so a release build does not pay for it at every launch.
 ## A real Lua GDExtension can replace the internals later: the public API below stays stable.
 ##
 ## Files are loaded from res://lua/** (any directory; the `kind = "..."` header decides what a file is):
@@ -24,7 +27,9 @@ extends Node
 ##   * A bare identifier that is not a local or parameter reads the WORLD FLAG of that name (`context.home_tier or home_tier or 1`).
 ##   * Comparing values of different types is false, never an engine error (`false == 3`).
 ##   * api.emit(name, payload) carries the payload; api.notification(title, message) runs both through tr().
-##   * Unknown api functions are logged once (print, not an engine warning) and answer nil.
+##   * Unknown api functions answer nil. A runtime message (an unknown api function, a skipped statement, a comparison of
+##     unlike types: real Lua would raise) is an engine WARNING, once per script and message, and names the file, the line
+##     and the function it comes from ("LuaRuntime: res://lua/x.lua:12 in get_dialogue: ..."); it is kept in runtime_report.
 ##   * The social functions (api.get_hearts / add_hearts / is_birthday / festival) are late-bound to the SocialManager autoload
 ##     (S-core): without it they answer nil and change nothing. `api.festival()` answers "" (a TRUTHY string in Lua) when no
 ##     festival is on: compare it (`api.festival() ~= ""`), never test it.
@@ -34,6 +39,7 @@ const ARG_INT_LIMIT := 1.0e15
 const LUA_ROOT := "res://lua"
 const API_VERSION := 2
 
+const _Tokens := preload("res://scripts/data/lua_tokens.gd")
 const _Parser := preload("res://scripts/data/lua_parser.gd")
 const _Lint := preload("res://scripts/data/lua_lint.gd")
 const _Data := preload("res://scripts/data/lua_data.gd")
@@ -52,15 +58,24 @@ var _shops: Dictionary = {}            # shop_id -> def (kind "shops")
 var _registries: Dictionary = {}       # registry name -> {id -> def} (kind "registry": routines, buildings, events, festivals ...)
 var _config_owner: Dictionary = {}     # top-level config key -> script id
 var _owner_of: Dictionary = {}         # "items:<id>" / "recipes:<id>" / "shops:<id>" / "registry:<name>:<id>" / "quest:<id>" / "dialogue:<id>" -> script id
-var _logged_once: Dictionary = {}
+var _logged_once: Dictionary = {}     # "<message> @<script id>" -> true: each script reports each mistake once
+var _cur_sid: String = ""              # the Lua function running now (runtime messages say where they come from)
+var _cur_fn: String = ""
+var _cur_line: int = 0
 var _hot_reload_enabled: bool = true
 
 ## Findings of LuaLint (plus data-level checks) for every file loaded by the last reload_scripts()/load_file():
-## Array of {path, line, rule, token, message}. Empty = lint clean.
+## Array of {path, line, rule, token, message}. Empty = lint clean. Without `lint_on_load` only the data-level checks are in it.
 var lint_report: Array[Dictionary] = []
+## Run LuaLint on every file that is loaded. On in debug builds (the editor, the test harness, tools); a release build skips it
+## (about 0.2 s of every launch) and keeps the data-level checks (duplicate_key, rarity, tables_header, registry_header).
+var lint_on_load: bool = OS.is_debug_build()
 ## Consistency notes that are not syntax: an id defined by two files (the later file wins). Same shape as lint_report; a clean
 ## lint does not depend on it (a duplicate is a content bug of the file that owns the id, not a Lua subset violation).
 var data_report: Array[Dictionary] = []
+## Messages of the Lua functions that ran since the last reload (an unknown api function, a skipped statement, a comparison
+## of unlike types ...): {path, line, function, message}, one per script and message, in order; each one is also an engine warning.
+var runtime_report: Array[Dictionary] = []
 ## Milliseconds the last reload_scripts() needed (tests assert it stays small).
 var load_ms: int = 0
 
@@ -97,6 +112,7 @@ func reload_scripts(announce: bool = false) -> void:
 	_config_owner.clear()
 	_owner_of.clear()
 	_logged_once.clear()
+	runtime_report.clear()
 	lint_report.clear()
 	data_report.clear()
 	_scan_dir(LUA_ROOT)
@@ -111,10 +127,23 @@ func reload_scripts(announce: bool = false) -> void:
 	var iso_area: Variant = load("res://scripts/world2d/iso_area.gd")
 	if iso_area is Script:
 		(iso_area as Script).callv(&"clear_handler_cache", [])
+	# the consumers that copied Lua data (QuestManager's definitions, AnimalHusbandry's tables, ShopSystem's rotation cache)
+	var bus := _node("EventBus")
+	if bus != null:
+		bus.emit_signal("lua_reloaded")
 	if announce:
-		var bus := _node("EventBus")
-		if bus != null:
-			bus.emit_signal("notification_posted", tr("NOTIF_LUA_RELOADED_TITLE"), _format_count(tr("NOTIF_LUA_RELOADED_MSG"), _scripts.size()), "lua")
+		_announce_reload()
+
+
+## The F9 toast: the script count, and a second toast with the number of lint findings when there are any (the list is in
+## the console and in lint_report), so a hot reload never hides a broken file.
+func _announce_reload() -> void:
+	var bus := _node("EventBus")
+	if bus == null:
+		return
+	bus.emit_signal("notification_posted", tr("NOTIF_LUA_RELOADED_TITLE"), _format_count(tr("NOTIF_LUA_RELOADED_MSG"), _scripts.size()), "lua")
+	if not lint_report.is_empty():
+		bus.emit_signal("notification_posted", tr("NOTIF_LUA_RELOADED_TITLE"), _format_count(tr("NOTIF_LUA_RELOADED_LINT"), lint_report.size()), "lua")
 
 
 ## Reads, lints, parses and registers ONE file (also from outside res://lua, e.g. a test fixture).
@@ -239,6 +268,11 @@ func has_script(script_id: String) -> bool:
 	return _scripts.has(script_id)
 
 
+## A `kind = "quest"` file defines this quest id (QuestManager drops the definitions of removed files after a reload).
+func has_quest(quest_id: String) -> bool:
+	return _quest_modules.has(quest_id)
+
+
 ## Lint of an arbitrary source text (docs examples, tests): same rules as the load-time lint. Empty = clean.
 func lint_source(source: String, path: String = "") -> Array[Dictionary]:
 	return _Lint.lint(source, path)
@@ -256,7 +290,11 @@ func lint_summary() -> String:
 
 ## Parses a Lua source (no registration). See scripts/data/lua_parser.gd for the shape of the result.
 func parse_lua_source(source: String, path: String = "") -> Dictionary:
-	var out: Dictionary = _Parser.parse_source(source, path)
+	return _with_kind(_Parser.parse_source(source, path), path)
+
+
+## Fills in `kind` and `id` of a parser result from its literal assignments (else the kind is detected from path and content).
+func _with_kind(out: Dictionary, path: String) -> Dictionary:
 	out["kind"] = str(out["table_assigns"].get("kind", ""))
 	out["id"] = str(out["table_assigns"].get("id", ""))
 	if out["kind"] == "":
@@ -376,7 +414,7 @@ func _scan_dir(path: String) -> void:
 		_scan_dir(path.path_join(d))
 
 
-## Reads + lints + parses one file into _scripts. Returns the script id ("" on a read error).
+## Reads + lints + parses one file into _scripts (one tokenizer pass for both). Returns the script id ("" on a read error).
 func _load_script(path: String) -> String:
 	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
@@ -384,8 +422,13 @@ func _load_script(path: String) -> String:
 		return ""
 	var source := file.get_as_text()
 	file.close()
-	lint_report.append_array(_Lint.lint(source, path))
-	var parsed := parse_lua_source(source, path)
+	var tk := _Tokens.tokenize(source)
+	# with the lint, the parser compiles every function body now (the grammar findings need it) and the runtime never
+	# compiles them again; without it the bodies are compiled the first time they run
+	var grammar: Variant = ([] as Array[Dictionary]) if lint_on_load else null
+	var parsed := _with_kind(_Parser.parse_tokens(source, tk, path, grammar), path)
+	if lint_on_load:
+		lint_report.append_array(_Lint.lint_tokens(tk, path, grammar))
 	var sid := _script_id(path)
 	_scripts[sid] = parsed
 	return sid
@@ -638,52 +681,84 @@ func _invoke_function(sid: String, fname: String, args: Array) -> Variant:
 	for i in params.size():
 		scope[str(params[i])] = args[i] if i < args.size() else null
 	if not func_def.has("ast"):
-		func_def["ast"] = _Parser.compile_body(str(func_def.get("body", "")))     # lazily, once
-	var outcome: Variant = _exec_block(func_def["ast"], scope)
+		func_def["ast"] = _Parser.compile_body(str(func_def.get("body", "")), int(func_def.get("body_line", 1)))     # lazily, once
+	# an api call can run another Lua function (offer_quest -> a quest hook): the location is restored afterwards
+	var outer := [_cur_sid, _cur_fn, _cur_line]
+	_cur_sid = sid
+	_cur_fn = fname
+	_cur_line = int(func_def.get("line", 0))
+	var outcome: Variant = _exec_block(func_def["ast"], [scope])
+	_cur_sid = outer[0]
+	_cur_fn = outer[1]
+	_cur_line = outer[2]
 	if outcome == null:
 		return null
 	return (outcome as Array)[0]
 
 
-## Executes a block of statements. Returns null when the block ran to its end, or [value] when a `return` was hit.
-func _exec_block(stmts: Array, scope: Dictionary) -> Variant:
+## Executes a block of statements in a scope of its own: `scopes` is the chain of the enclosing blocks, the parameters first,
+## so a `local` inside a block ends with the block and shadows the outer name only there (Lua's rule). An assignment to a
+## name sets the innermost local of that name, else a name of the call (scopes[0]: Lua would set a global).
+## Returns null when the block ran to its end, or [value] when a `return` was hit.
+func _exec_block(stmts: Array, scopes: Array) -> Variant:
+	scopes.push_back({})
+	var outcome: Variant = _run_statements(stmts, scopes)
+	scopes.pop_back()
+	return outcome
+
+
+func _run_statements(stmts: Array, scopes: Array) -> Variant:
 	for s in stmts:
+		_cur_line = int(s.back())
 		match str(s[0]):
-			"local", "assign":
-				scope[str(s[1])] = _ev(s[2], scope)
+			"local":
+				var value: Variant = _ev(s[2], scopes)              # evaluated before the name exists (`local x = x`)
+				(scopes.back() as Dictionary)[str(s[1])] = value
+			"assign":
+				_assign(str(s[1]), _ev(s[2], scopes), scopes)
 			"call":
-				_ev(s[1], scope)
+				_ev(s[1], scopes)
 			"if":
 				var taken := false
 				for branch in s[1]:
-					if _truthy(_ev(branch[0], scope)):
+					if _truthy(_ev(branch[0], scopes)):
 						taken = true
-						var r: Variant = _exec_block(branch[1], scope)
+						var r: Variant = _exec_block(branch[1], scopes)
 						if r != null:
 							return r
 						break
 				if not taken and s[2] != null:
-					var r2: Variant = _exec_block(s[2], scope)
+					var r2: Variant = _exec_block(s[2], scopes)
 					if r2 != null:
 						return r2
 			"return":
-				return [null if s[1] == null else _ev(s[1], scope)]
+				return [null if s[1] == null else _ev(s[1], scopes)]
+			"unsupported":
+				_log_once("unsupported Lua statement (%s) is skipped: see LuaRuntime.lint_report" % str(s[1]))
 	return null
+
+
+func _assign(var_name: String, value: Variant, scopes: Array) -> void:
+	for i in range(scopes.size() - 1, -1, -1):
+		if (scopes[i] as Dictionary).has(var_name):
+			scopes[i][var_name] = value
+			return
+	scopes[0][var_name] = value
 
 
 # =============================================================================================== expression evaluation
 
-func _ev(e: Array, scope: Dictionary) -> Variant:
+func _ev(e: Array, scopes: Array) -> Variant:
 	match str(e[0]):
 		"lit":
 			return e[1]
 		"var":
-			return _lookup(str(e[1]), scope)
+			return _lookup(str(e[1]), scopes)
 		"field":
-			return _field(_ev(e[1], scope), str(e[2]))
+			return _field(_ev(e[1], scopes), str(e[2]))
 		"index":
-			var base: Variant = _ev(e[1], scope)
-			var key: Variant = _ev(e[2], scope)
+			var base: Variant = _ev(e[1], scopes)
+			var key: Variant = _index_key(_ev(e[2], scopes))
 			if typeof(base) == TYPE_DICTIONARY:
 				return (base as Dictionary).get(key if typeof(key) == TYPE_STRING else str(key))
 			if typeof(base) == TYPE_ARRAY and typeof(key) == TYPE_INT and int(key) >= 1 and int(key) <= (base as Array).size():
@@ -692,38 +767,61 @@ func _ev(e: Array, scope: Dictionary) -> Variant:
 		"call":
 			var args: Array = []
 			for a in e[2]:
-				args.append(_ev(a, scope))
+				args.append(_ev(a, scopes))
 			return _call(str(e[1]), args)
 		"tbl":
 			var v: Variant = e[1]
 			if typeof(v) == TYPE_DICTIONARY or typeof(v) == TYPE_ARRAY:
 				return v.duplicate(true)
 			return v
+		"ctor":
+			var pairs: Array = []
+			for entry in e[1]:
+				var value: Variant = _ev(entry[2], scopes)
+				match str(entry[0]):
+					"pos":
+						pairs.append([null, value])
+					"name":
+						pairs.append([entry[1], value])
+					_:
+						var key: Variant = _ev(entry[1], scopes)
+						if key != null:                     # Lua raises on a nil key; the entry is left out
+							pairs.append([key, value])
+			return _Parser.table_of(pairs)
 		"or":
-			var l: Variant = _ev(e[1], scope)
-			return l if _truthy(l) else _ev(e[2], scope)
+			var l: Variant = _ev(e[1], scopes)
+			return l if _truthy(l) else _ev(e[2], scopes)
 		"and":
-			var l2: Variant = _ev(e[1], scope)
-			return _ev(e[2], scope) if _truthy(l2) else l2
+			var l2: Variant = _ev(e[1], scopes)
+			return _ev(e[2], scopes) if _truthy(l2) else l2
 		"not":
-			return not _truthy(_ev(e[1], scope))
+			return not _truthy(_ev(e[1], scopes))
 		"neg":
-			var n: Variant = _ev(e[1], scope)
+			var n: Variant = _ev(e[1], scopes)
 			return -n if (typeof(n) == TYPE_INT or typeof(n) == TYPE_FLOAT) else null
 		"cmp":
-			return _compare(str(e[1]), _ev(e[2], scope), _ev(e[3], scope))
+			return _compare(str(e[1]), _ev(e[2], scopes), _ev(e[3], scopes))
 		"cat":
-			return _tostr(_ev(e[1], scope)) + _tostr(_ev(e[2], scope))
+			return _tostr(_ev(e[1], scopes)) + _tostr(_ev(e[2], scopes))
 		"unsupported":
 			_log_once("unsupported Lua construct (%s) evaluates to nil: see LuaRuntime.lint_report" % str(e[1]))
 			return null
 	return null
 
 
-## Name resolution: a local or parameter first, then the world flag of that name (nil when unset).
-func _lookup(var_name: String, scope: Dictionary) -> Variant:
-	if scope.has(var_name):
-		return scope[var_name]
+## Lua normalises a float key with an integral value to the integer (t[2.0] is t[2]); numbers that came through JSON (a save,
+## the world flags) are floats, so names[stage] must not miss after a load.
+func _index_key(key: Variant) -> Variant:
+	if typeof(key) == TYPE_FLOAT and is_finite(key) and absf(key) < ARG_INT_LIMIT and float(key) == floorf(key):
+		return int(key)
+	return key
+
+
+## Name resolution: the innermost local or parameter first, then the world flag of that name (nil when unset).
+func _lookup(var_name: String, scopes: Array) -> Variant:
+	for i in range(scopes.size() - 1, -1, -1):
+		if (scopes[i] as Dictionary).has(var_name):
+			return scopes[i][var_name]
 	if var_name == "gold":
 		var eco := _node("EconomyManager")
 		return eco.get("gold") if eco != null else null
@@ -799,7 +897,7 @@ func _call_api(method: String, args: Array) -> Variant:
 			if qm2 != null:
 				qm2.complete_quest(StringName(_str_arg(args, 0)))
 			return null
-	_log_once("unknown Lua function `%s` evaluates to nil (api functions: add_gold add_item remove_item set_flag get_flag has_flag has_item get_gold notification unlock_zone emit log offer_quest complete_quest get_hearts add_hearts is_birthday festival)" % method)
+	_log_once("unknown Lua function `%s` evaluates to nil (api functions: %s)" % [method, " ".join(_Lint.API_FUNCTIONS)])
 	return null
 
 
@@ -916,8 +1014,20 @@ func _node(autoload_name: String) -> Node:
 	return get_node_or_null("/root/" + autoload_name)
 
 
+## A runtime message of the running Lua function, once per script and message, with the file, line and function it comes from.
 func _log_once(message: String) -> void:
-	if _logged_once.has(message):
+	var key := "%s @%s" % [message, _cur_sid]
+	if _logged_once.has(key):
 		return
-	_logged_once[message] = true
-	print("[Lua] ", message)
+	_logged_once[key] = true
+	var path := str((_scripts.get(_cur_sid, {}) as Dictionary).get("source_path", _cur_sid))
+	runtime_report.append({"path": path, "line": _cur_line, "function": _cur_fn, "message": message})
+	push_warning("LuaRuntime: " + _where() + message)
+
+
+## "res://lua/dialogue/x.lua:12 in get_dialogue: " for the running function, "" outside Lua.
+func _where() -> String:
+	if _cur_sid == "":
+		return ""
+	var path := str((_scripts.get(_cur_sid, {}) as Dictionary).get("source_path", _cur_sid))
+	return "%s:%d in %s: " % [path, _cur_line, _cur_fn]
