@@ -22,6 +22,12 @@ per screen), including its intentional focus/localization frame waits. Native
 runs keep the authored reference limits. Game-time
 assertions, geometry counts and correctness checks stay unchanged. Each export
 runner tests the update installer and boots the actual packaged executable.
+The installer tests run both helpers against a dummy game process they must
+wait for, with a recording launcher (result written before the launch, a
+failed launch rolled back, a locked folder retried and the previous game
+relaunched); the release_updates section starts the real helpers with the
+game's own command line and handshake (the Windows one through pwsh where
+PowerShell exists, including the Linux playtest runners).
 Windows then installs the NSIS setup EXE, checks its Start menu shortcut and
 Apps & Features entry, applies a ZIP update from the game's working folder,
 checks that reinstalling remembers the selected location, boots the game, and

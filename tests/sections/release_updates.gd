@@ -41,6 +41,7 @@ func run(t) -> void:
 	_install_results(t, updates)
 	_retry_reuses_download(t, updates)
 	_prune_downloads(t, updates)
+	await _helpers_end_to_end(t, updates)
 	updates.available.clear()
 	updates._set_state("current")
 	updates.checked = true
@@ -137,6 +138,81 @@ func _prune_downloads(t, updates: ReleaseUpdates) -> void:
 	t.check("new_download_replaces_older_ones", DirAccess.get_directories_at(folder).is_empty(), DirAccess.get_directories_at(folder))
 	updates.downloaded_path = ""
 	updates._set_state("current")
+
+## The real helpers, started with the command line install() builds and answered by its handshake, update a throwaway
+## installation: argument order, the "ready" file and the result file are one contract between game and helper.
+## The Windows helper runs wherever PowerShell does (pwsh on Linux and macOS); the macOS one needs codesign and ditto.
+func _helpers_end_to_end(t, updates: ReleaseUpdates) -> void:
+	var root := ProjectSettings.globalize_path("user://updater-e2e")
+	for platform in ["windows", "macos"]:
+		var program := _helper_program(platform)
+		if program.is_empty():
+			t.skip("helper_e2e_" + platform)
+			continue
+		_remove_tree(root)
+		DirAccess.make_dir_recursive_absolute(root.path_join("games"))
+		updates.failure = ""
+		var target := _fake_update(platform, root, updates)
+		var result := root.path_join("install-e2e.json")
+		var command := updates.helper_command(platform, ReleaseUpdates.write_helper(platform), target, result, 0, false)
+		var process := OS.create_process(program, command[1])
+		t.check("helper_e2e_%s_handshake" % platform, await updates.handshake(process, result), updates.failure)
+		await t.until(func(): return not OS.is_process_running(process), 60.0)
+		var installed := FileAccess.get_file_as_string(target.path_join("Traetoppen.pck" if platform == "windows" else "Contents/Resources/version.txt"))
+		t.check("helper_e2e_%s_installed" % platform, ReleaseUpdates.read_result(result) == {"status": "installed", "reason": ""} and installed == "new", installed)
+	_remove_tree(root)
+	updates.available.clear()
+	updates.downloaded_path = ""
+	updates._set_state("current")
+
+func _helper_program(platform: String) -> String:
+	var out := []
+	if platform == "windows":
+		if OS.get_name() == "Windows": return OS.get_environment("SystemRoot").path_join("System32/WindowsPowerShell/v1.0/powershell.exe")
+		OS.execute("/bin/sh", ["-c", "command -v pwsh"], out)
+		return str(out[0]).strip_edges() if not out.is_empty() else ""
+	return "/bin/bash" if OS.get_name() == "macOS" else ""
+
+## An installed "old" game and a verified update archive of a "new" one, set up as a finished download.
+func _fake_update(platform: String, root: String, updates: ReleaseUpdates) -> String:
+	var archive := root.path_join("update.zip")
+	var target := root.path_join("games/Traetoppen" if platform == "windows" else "games/Traetoppen.app")
+	if platform == "windows":
+		DirAccess.make_dir_recursive_absolute(target)
+		for name in ["Traetoppen.exe", "Traetoppen.pck"]: _write(target.path_join(name), "old")
+		var zip := ZIPPacker.new()
+		zip.open(archive)
+		for name in ["Traetoppen/Traetoppen.exe", "Traetoppen/Traetoppen.pck"]:
+			zip.start_file(name)
+			zip.write_file("new".to_utf8_buffer())
+			zip.close_file()
+		zip.close()
+	else:
+		var incoming := root.path_join("incoming/Traetoppen.app")
+		for pair in [[target, "old"], [incoming, "new"]]:
+			var bundle: String = pair[0]
+			DirAccess.make_dir_recursive_absolute(bundle.path_join("Contents/MacOS"))
+			DirAccess.make_dir_recursive_absolute(bundle.path_join("Contents/Resources"))
+			DirAccess.copy_absolute("/usr/bin/true", bundle.path_join("Contents/MacOS/Trætoppen"))
+			OS.execute("/bin/chmod", ["755", bundle.path_join("Contents/MacOS/Trætoppen")])
+			_write(bundle.path_join("Contents/Resources/version.txt"), pair[1])
+			_write(bundle.path_join("Contents/Info.plist"), '<?xml version="1.0" encoding="UTF-8"?>\n<plist version="1.0"><dict><key>CFBundleIdentifier</key><string>io.github.magudb.traetoppen</string><key>CFBundleExecutable</key><string>Trætoppen</string><key>CFBundlePackageType</key><string>APPL</string></dict></plist>\n')
+			OS.execute("/usr/bin/codesign", ["--force", "--sign", "-", bundle])
+		OS.execute("/usr/bin/ditto", ["-c", "-k", "--keepParent", incoming, archive])
+	updates.downloaded_path = archive
+	updates.available = {"version": "9.9.9", "name": archive.get_file(), "sha256": FileAccess.get_sha256(archive), "size": FileAccess.get_file_as_bytes(archive).size()}
+	return target
+
+func _remove_tree(path: String) -> void:
+	if not DirAccess.dir_exists_absolute(path): return
+	for folder in DirAccess.get_directories_at(path): _remove_tree(path.path_join(folder))
+	for file in DirAccess.get_files_at(path): DirAccess.remove_absolute(path.path_join(file))
+	DirAccess.remove_absolute(path)
+
+func _write(path: String, text: String) -> void:
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(text)
+	file.close()
 
 func run_windowed(t) -> void:
 	await run(t)

@@ -201,42 +201,62 @@ func install() -> bool:
 	if world != null and not SaveManager.autosave():
 		_set_state("save_failed")
 		return false
-	var extension := "ps1" if platform_name() == "windows" else "sh"
-	var helper := ProjectSettings.globalize_path(CACHE.path_join("install." + extension))
-	var file := FileAccess.open(helper, FileAccess.WRITE)
-	if file == null:
+	var helper := write_helper(platform_name())
+	if helper.is_empty():
 		_fail("")
 		return false
-	file.store_string(FileAccess.get_file_as_string("res://scripts/release/install_windows.ps1" if extension == "ps1" else "res://scripts/release/install_macos.sh"))
-	file.close()
 	var result := ProjectSettings.globalize_path(CACHE.path_join("install-" + str(OS.get_process_id()) + ".json"))
-	var ready := result + ".ready"
-	if FileAccess.file_exists(ready): DirAccess.remove_absolute(ready)
-	var args := PackedStringArray([helper, str(OS.get_process_id()), downloaded_path, install_target(), available.sha256, result])
-	var command := "/bin/bash"
-	if extension == "ps1":
-		command = OS.get_environment("SystemRoot").path_join("System32/WindowsPowerShell/v1.0/powershell.exe")
-		args = PackedStringArray(["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", helper, "-ParentProcessId", str(OS.get_process_id()), "-Archive", downloaded_path, "-Target", install_target(), "-ExpectedSha", available.sha256, "-Result", result])
-	var process := OS.create_process(command, args)
+	if FileAccess.file_exists(result + ".ready"): DirAccess.remove_absolute(result + ".ready")
+	var command := helper_command(platform_name(), helper, install_target(), result)
+	var process := OS.create_process(command[0], command[1])
 	if process < 0:
 		_fail("")
 		return false
 	_set_state("installing")
+	if not await handshake(process, result): return false
+	GameManager.quit_game()
+	return true
+
+## Copies the platform's install helper out of the package, where it cannot run; "" when that fails.
+static func write_helper(platform: String) -> String:
+	var extension := "ps1" if platform == "windows" else "sh"
+	var helper := ProjectSettings.globalize_path(CACHE.path_join("install." + extension))
+	var file := FileAccess.open(helper, FileAccess.WRITE)
+	if file == null: return ""
+	file.store_string(FileAccess.get_file_as_string("res://scripts/release/install_windows.ps1" if extension == "ps1" else "res://scripts/release/install_macos.sh"))
+	file.close()
+	return helper
+
+## The helper's command line as [program, arguments]. Only tests pass parent 0 (no game to wait for) and launch false.
+func helper_command(platform: String, helper: String, target: String, result: String, parent_pid := OS.get_process_id(), launch := true) -> Array:
+	if platform == "windows":
+		var options := PackedStringArray(["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", helper, "-ParentProcessId", str(parent_pid), "-Archive", downloaded_path, "-Target", target, "-ExpectedSha", available.sha256, "-Result", result])
+		if not launch: options.append("-NoLaunch")
+		return [OS.get_environment("SystemRoot").path_join("System32/WindowsPowerShell/v1.0/powershell.exe"), options]
+	var args := PackedStringArray([helper, str(parent_pid), downloaded_path, target, available.sha256, result])
+	if not launch: args.append("--no-launch")
+	return ["/bin/bash", args]
+
+## Waits until the helper has validated and staged the update and says "ready". A helper that refuses or never
+## answers fails the install with the reason from its result file; the game keeps running and reports it.
+func handshake(process: int, result: String) -> bool:
+	var ready := result + ".ready"
 	# Allow large packages to finish validation and extraction before the game exits.
 	for attempt in 1200:
-		if FileAccess.file_exists(ready): break
-		if not OS.is_process_running(process): break
+		if _says_ready(ready) or not OS.is_process_running(process): break
 		await get_tree().create_timer(0.1, true).timeout
-	if not FileAccess.file_exists(ready) or FileAccess.get_file_as_string(ready).trim_prefix("\ufeff") != "ready":
+	if not _says_ready(ready):
 		if OS.is_process_running(process): OS.kill(process)
-		# The helper names why it refused; the game is still running, so this session reports it.
 		var outcome := read_result(result)
 		if FileAccess.file_exists(result): DirAccess.remove_absolute(result)
 		_fail(outcome.get("reason", ""))
 		return false
 	DirAccess.remove_absolute(ready)
-	GameManager.quit_game()
 	return true
+
+static func _says_ready(path: String) -> bool:
+	# The file exists a moment before its text does, and Windows PowerShell may write a byte order mark.
+	return FileAccess.file_exists(path) and FileAccess.get_file_as_string(path).trim_prefix("\ufeff") == "ready"
 
 func cancel_download() -> void:
 	if state != "downloading": return
