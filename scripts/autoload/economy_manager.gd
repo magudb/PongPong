@@ -191,6 +191,11 @@ func can_afford(amount: int) -> bool:
 	return amount >= 0 and gold >= amount
 
 
+## How much more gold the wallet can hold (MAX_GOLD - gold).
+func wallet_room() -> int:
+	return MAX_GOLD - gold
+
+
 # ================================================================================================ item facts
 
 func item_def(item_id: Variant) -> Dictionary:
@@ -518,13 +523,16 @@ func buy_item(item_id: StringName, amount: int, unit_price: int) -> bool:
 	return true
 
 
-## The legacy shop primitive: takes the items and pays unit_price x amount. Nothing happens when the items cannot be taken.
+## The legacy shop primitive: takes the items and pays unit_price x amount. Nothing happens when the items cannot be taken, or when the
+## wallet cannot hold the pay (gold saturates at MAX_GOLD: the goods would go for nothing, SYS-08).
 func sell_item(item_id: StringName, amount: int, unit_price: int) -> bool:
 	if amount <= 0 or unit_price <= 0:
 		return false
+	var total := total_of(unit_price, amount)
+	if total > wallet_room():
+		return false
 	if not has_item(item_id, amount) or not remove_item(item_id, amount):
 		return false
-	var total := total_of(unit_price, amount)
 	add_gold(total)
 	_publish(&"item_sold", [item_id, amount, total])
 	return true

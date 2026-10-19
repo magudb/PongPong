@@ -284,8 +284,11 @@ func _footer() -> void:
 	var limit := mini(99, available)
 	if not _selling() and unit > 0:
 		limit = mini(limit, int(EconomyManager.gold / unit))
+	var wallet_full := _selling() and unit > 0 and EconomyManager.wallet_room() < unit
+	if _selling() and unit > 0:
+		limit = mini(limit, int(EconomyManager.wallet_room() / unit))      # the pay must fit below the gold cap
 	stepper.set_range(1, maxi(1, limit))
-	var enabled := not closed_shop and not owned and not _selected.is_empty() and available > 0 and unit > 0 and (_selling() or EconomyManager.gold >= unit)
+	var enabled := not closed_shop and not owned and not _selected.is_empty() and available > 0 and unit > 0 and (_selling() or EconomyManager.gold >= unit) and not wallet_full
 	stepper.focus_mode = Control.FOCUS_ALL if enabled else Control.FOCUS_NONE
 	stepper.mouse_filter = Control.MOUSE_FILTER_STOP if enabled else Control.MOUSE_FILTER_IGNORE
 	stepper.visible = not owned
@@ -297,6 +300,8 @@ func _footer() -> void:
 	total_label.text = (tr("SHOP_TOTAL") % Fmt.thousands(total)) if not _selected.is_empty() else ""
 	if available <= 0 and not _selected.is_empty():
 		total_label.text = tr("SHOP_UI_SOLD_OUT")
+	elif wallet_full and not _selected.is_empty():
+		total_label.text = tr("STORE_WALLET_FULL_FMT") % Fmt.thousands(EconomyManager.MAX_GOLD)
 
 func _wire() -> void:
 	var header: Array = _tab_buttons.duplicate()

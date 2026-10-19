@@ -35,7 +35,8 @@ extends Node
 ## SELLING. get_sell_price(shop, item) = max(1, sell_value x sell_multiplier); 0 = this shop does not buy it (price 0, quest and
 ## special items, keepsakes, categories outside the shop's `buys`, a sell_multiplier of 0). The sell list is EconomyManager.list_sellable().
 ## Every refused buy / sell sets last_refusal: &"closed" &"unknown_shop" &"invalid_amount" &"not_offered" &"owned" &"no_stock"
-## &"no_gold" &"no_room" (buying) and &"unsellable" &"not_owned" (selling).
+## &"no_gold" &"no_room" (buying) and &"unsellable" &"not_owned" &"wallet_full" (selling: the pay would not fit below EconomyManager.MAX_GOLD,
+## the toast STORE_WALLET_FULL_* names the cap; nothing is taken).
 ##
 ## SAVE (SaveManager section "shops"): to_dict() {v, stock {shop: {item: units}}, rotation_bought {shop: {item: {n, day, slot}}}} (day = the
 ## total day of the last purchase, slot = the slot that offered it); a plain number (older saves) is a count of the offer of the day loaded.
@@ -48,6 +49,7 @@ const _Data := preload("res://scripts/data/lua_data.gd")
 const _Kinds := preload("res://scripts/data/item_kinds.gd")
 const _Perks := preload("res://scripts/data/perks.gd")
 const _Economy := preload("res://scripts/autoload/economy_manager.gd")     # static total_of(): shop totals without int64 wrap-around
+const _Fmt := preload("res://scripts/ui/theme/tt_format.gd")
 
 const ROTATION_SCRIPT := "res://scripts/economy/shop_rotation.gd"
 const CURVE_SCRIPT := "res://scripts/economy/price_curve.gd"
@@ -373,6 +375,9 @@ func _sell(shop_id: Variant, item_id: Variant, amount: int) -> bool:
 		return _refuse(&"unknown_shop")
 	if not bool(eco.call("has_item", id, amount)):
 		return _refuse(&"not_owned")
+	if _Economy.total_of(unit, amount) > _Economy.MAX_GOLD - int(eco.get("gold")):
+		EventBus.notification_posted.emit(tr("STORE_WALLET_FULL_TITLE"), tr("STORE_WALLET_FULL_FMT") % _Fmt.thousands(_Economy.MAX_GOLD), "gold")
+		return _refuse(&"wallet_full")
 	var result := [false]
 	eco.call("defer_notifications", func() -> void:
 		if not bool(eco.call("sell_item", id, amount, unit)):

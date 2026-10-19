@@ -1024,6 +1024,21 @@ func _prices_and_selling() -> void:
 	_unwatch(sw)
 	t.expect(not shop.sell_item("seed_shop", &"turnip", 1) and shop.last_refusal == &"not_owned", "selling what you do not have is refused (not_owned)")
 	t.expect(not shop.sell_item("seed_shop", &"fern", 4) and eco.count_item(&"fern") == 3 and shop.last_refusal == &"not_owned", "selling more than you have is refused and takes nothing")
+	# the gold cap (SYS-08): a sale whose pay the wallet cannot hold is refused whole, nothing is taken; what fits still sells
+	var gold_keep: int = eco.gold
+	eco.add_item(&"turnip", 5, true)
+	eco.add_gold(eco.MAX_GOLD)
+	eco.add_gold(-100)
+	var toasts_cap := _watch(["notification_posted"])
+	var capped: bool = shop.sell_item("seed_shop", &"turnip", 3)
+	var cap_refusal: StringName = shop.last_refusal
+	var cap_toasted: bool = not _args(toasts_cap, "notification_posted").is_empty()
+	_unwatch(toasts_cap)
+	var fits: bool = shop.sell_item("seed_shop", &"turnip", 2)
+	t.check("sell_refused_at_gold_cap", not capped and cap_refusal == &"wallet_full" and cap_toasted and fits and eco.gold == eco.MAX_GOLD - 10 and eco.count_item(&"turnip") == 3 and not eco.sell_item(&"turnip", 1, 45) and eco.count_item(&"turnip") == 3,
+		"at 999 899 gold 3 turnips (135) do not fit: refused as wallet_full with a toast and kept; 2 (90) sell; EconomyManager.sell_item refuses the same way (gold %d, turnips %d)" % [eco.gold, eco.count_item(&"turnip")])
+	eco.remove_item(&"turnip", 3)
+	eco.add_gold(gold_keep - eco.gold)
 	var special_ok := true
 	eco.add_item(&"friendship_token", 1, true)
 	eco.add_item(&"flower_necklace", 1, true)
