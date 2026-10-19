@@ -100,6 +100,8 @@ func _ready() -> void:
 			if mode == &"action":
 				toasts.clear())
 	_refresh_all()
+	if SaveManager.save_failing:
+		_show_save_state()                   # a HUD built while saving fails (a load from the pause menu) shows it from the start
 
 func _refresh_all() -> void:
 	if not is_inside_tree() or is_queued_for_deletion():

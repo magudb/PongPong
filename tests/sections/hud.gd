@@ -61,6 +61,11 @@ func run(t) -> void:
 	t.check("save_chip_shows_failure", failed and hud.save_chip.visible and chip_text == TranslationServer.translate("HUD_SAVE_FAILED") and hud.save_chip.get_global_rect().end.y <= 720.0, "'%s' at %s" % [chip_text, hud.save_chip.get_global_rect()])
 	await t.seconds(hud.SAVED_SHOW_SECONDS + 0.5)
 	t.check("save_chip_failure_persists", hud.save_chip.visible, "")
+	var rebuilt: Control = (load("res://scenes/ui/hud.tscn") as PackedScene).instantiate()
+	t.root.add_child(rebuilt)                      # the HUD of a world loaded while saving fails
+	await t.frames(1)
+	t.check("save_chip_failure_shown_by_a_new_hud", rebuilt.save_chip.visible and rebuilt.save_chip.get_node("SaveText").text == TranslationServer.translate("HUD_SAVE_FAILED"), "")
+	rebuilt.queue_free()
 	DirAccess.remove_absolute(sm.slot_path(sm.AUTO_SLOT) + ".tmp")
 	var saved: bool = sm.autosave()
 	await t.frames(2)
