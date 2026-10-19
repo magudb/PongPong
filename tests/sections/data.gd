@@ -134,6 +134,12 @@ func _boot() -> void:
 	_captured_notifs.clear()
 	_lr._unhandled_key_input(other)
 	t.expect(_captured_notifs.is_empty(), "any other key does nothing")
+	# a hot reload with lint findings says so in a second toast (LUA-04): F9 must not hide a broken file
+	_lr.lint_report.append({"path": "res://x.lua", "line": 1, "rule": "syntax", "token": "x", "message": "injected for the test"})
+	_captured_notifs.clear()
+	_lr._announce_reload()
+	t.check("f9_toast_names_lint_findings", _captured_notifs.size() == 2 and str(_captured_notifs[1][1]).contains("1") and str(_captured_notifs[1][1]) != "NOTIF_LUA_RELOADED_LINT", "the reload toast is followed by one that counts the lint findings: %s" % str(_captured_notifs))
+	_lr.reload_scripts()
 	t.expect_clean_since(mark, "explicit reloads log no engine error or warning")
 	# tr() of an untranslated key must never be formatted
 	var text: String = _lr._format_count("NOTIF_LUA_RELOADED_MSG", 7)
@@ -1056,6 +1062,23 @@ func _semantics() -> void:
 	t.expect_clean_since(mark, "unknown api functions and unsupported constructs raise no engine error or warning")
 	t.expect(typeof(r1) == TYPE_DICTIONARY and r1["ok"] == true and r2 == r1, "the function still returns its table")
 	_lr._scripts.erase(sid)
+	# a runtime message names the file, line and function, and each script reports its own mistake once (LUA-04)
+	var where_src := "kind = \"quest\"\nid = \"w\"\n\nfunction w(context)\n  local x = 1\n  api.no_such_call(\"x\")\n  return x\nend\n"
+	_lr._scripts["tests/where_a"] = _lr.parse_lua_source(where_src, "res://tests/where_a.lua")
+	_lr._scripts["tests/where_b"] = _lr.parse_lua_source(where_src, "res://tests/where_b.lua")
+	_lr.runtime_report.clear()
+	_lr._logged_once.clear()
+	_lr._invoke_function("tests/where_a", "w", [{}])
+	_lr._invoke_function("tests/where_a", "w", [{}])
+	_lr._invoke_function("tests/where_b", "w", [{}])
+	var rows: Array = _lr.runtime_report.filter(func(r: Dictionary) -> bool: return str(r["message"]).begins_with("unknown Lua function `no_such_call`"))
+	t.check("runtime_messages_name_their_place", rows.size() == 2 and rows[0]["path"] == "res://tests/where_a.lua" and int(rows[0]["line"]) == 6 and rows[0]["function"] == "w" and rows[1]["path"] == "res://tests/where_b.lua", "one message per script, with path, line 6 and the function: %s" % str(rows))
+	_lr._scripts.erase("tests/where_a")
+	_lr._scripts.erase("tests/where_b")
+	# the bodies compiled at load (with the lint) and the ones compiled lazily (release) are the same statements, lines included
+	var grammar: Array[Dictionary] = []
+	var eager: Dictionary = LuaParser.parse_tokens(where_src, LuaTokens.tokenize(where_src), "", grammar)["functions"]["w"]
+	t.expect(eager.has("ast") and eager["ast"] == LuaParser.compile_body(str(eager["body"]), int(eager["body_line"])) and grammar.is_empty(), "eager and lazy compilation agree, lines included: %s" % str(eager.get("ast", [])))
 	# a statement outside the subset is skipped AND said at run time (it used to vanish without a word)
 	_lr._scripts[sid] = _lr.parse_lua_source("kind = \"quest\"\nid = \"u\"\nfunction u(context)\n  context.seen = true\n  return { ok = true }\nend\n", "res://x.lua")
 	_lr._logged_once.clear()
