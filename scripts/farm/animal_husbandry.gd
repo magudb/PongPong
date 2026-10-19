@@ -187,19 +187,16 @@ const BUILDINGS := {
 		"name_key": "BUILDING_COOP",
 		"capacity": 4,
 		"build_cost": {"wood": 20, "stone": 10, "gold": 500},
-		"build_days": 2,
 	},
 	"barn": {
 		"name_key": "BUILDING_BARN",
 		"capacity": 6,
 		"build_cost": {"wood": 40, "stone": 25, "gold": 1200},
-		"build_days": 4,
 	},
 	"house": {
 		"name_key": "BUILDING_HOUSE",
 		"capacity": 3,
 		"build_cost": {"wood": 15, "stone": 8, "gold": 350},
-		"build_days": 1,
 	},
 }
 
@@ -581,6 +578,8 @@ func collection_reason(animal_id: StringName) -> String:
 
 # --- Buildings ---
 
+## An animal building is finished at once: the materials and gold are paid and the animals move in today (GAP4-08: there is no construction
+## time and no `build_days` setting; the upgrades of an existing building are what take days, see upgrade_building).
 func build_building(building_type: StringName, free := false) -> bool:
 	var spec: Dictionary = buildings_data.get(str(building_type), {})
 	if spec.is_empty() or has_building(building_type):
@@ -781,14 +780,6 @@ func _random_animal_name() -> String:
 		"Egern", "Mospus", "Lyng", "Klokke", "Solsort", "Musling", "Perle",
 	]
 	return names[randi() % names.size()]
-
-
-func _notify_cannot_afford() -> void:
-	EventBus.notification_posted.emit(
-		tr("NOTIF_NO_GOLD_TITLE"),
-		tr("NOTIF_NO_GOLD_MSG"),
-		"gold"
-	)
 
 
 func get_all_animals() -> Array:

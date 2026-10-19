@@ -173,7 +173,6 @@ config = {
         name_key = "BUILDING_COOP",
         capacity = 4,
         build_cost = { wood = 20, stone = 10, gold = 500 },
-        build_days = 2,
         upgrades = {
           { capacity = 8, days = 2, cost = { wood = 40, stone = 20, gold = 1000 } },
           { capacity = 12, days = 3, cost = { wood = 80, stone = 40, gold = 2500 } },
@@ -183,7 +182,6 @@ config = {
         name_key = "BUILDING_BARN",
         capacity = 6,
         build_cost = { wood = 40, stone = 25, gold = 1200 },
-        build_days = 4,
         upgrades = {
           { capacity = 12, days = 3, cost = { wood = 80, stone = 50, gold = 2400 } },
           { capacity = 18, days = 4, cost = { wood = 160, stone = 100, gold = 6000 } },
@@ -193,7 +191,6 @@ config = {
         name_key = "BUILDING_HOUSE",
         capacity = 3,
         build_cost = { wood = 15, stone = 8, gold = 350 },
-        build_days = 1,
         upgrades = {
           { capacity = 6, days = 1, cost = { wood = 30, stone = 16, gold = 700 } },
           { capacity = 9, days = 2, cost = { wood = 60, stone = 32, gold = 1750 } },
