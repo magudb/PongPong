@@ -69,7 +69,7 @@ func run(t) -> void:
 	await _feedback_inside_panels(t, game_ui, shop)
 	gm.clear_config_overrides()
 
-## UX-10: feedback given inside a panel is seen. The HUD's toasts and whisper draw above the modal scrims and the toasts stay up in a panel
+## UX-10: feedback given inside a panel is seen. The HUD's toasts and whisper draw above the modal scrims and stay up in a panel
 ## (hidden only under the dialogue / an event scene); a buy refused for a full backpack makes the keeper say so, not "sold out".
 func _feedback_inside_panels(t, game_ui: GameUI, shop: Control) -> void:
 	var gm: Node = t.autoload("GameManager")
@@ -77,13 +77,18 @@ func _feedback_inside_panels(t, game_ui: GameUI, shop: Control) -> void:
 	var hud: Control = game_ui.get_screen(&"hud")
 	gm.push_modal(&"ux10_panel", false)
 	await t.frames(1)
-	var in_panel: bool = hud.toasts.visible and hud.toasts.z_index >= ToastStack.ABOVE_MODALS_Z and hud.get_node("%WhisperLine").z_index >= ToastStack.ABOVE_MODALS_Z
+	var whisper: WhisperLine = hud.get_node("%WhisperLine")
+	whisper.show_whisper("ux10 whisper in a panel")
+	var in_panel: bool = hud.toasts.visible and hud.toasts.z_index >= ToastStack.ABOVE_MODALS_Z and whisper.z_index >= ToastStack.ABOVE_MODALS_Z and whisper.visible
 	gm.push_modal(&"dialogue", false)
 	await t.frames(1)
-	var quiet: bool = not hud.toasts.visible
+	# the whisper is quiet under the dialogue too (it would draw over the dialogue box), but keeps its timer
+	var quiet: bool = not hud.toasts.visible and not whisper.visible and whisper.is_showing()
 	gm.pop_all_modals()
 	await t.frames(1)
-	t.check("toasts_and_whispers_above_panels", in_panel and quiet and hud.toasts.visible, "shown above a panel %s, hidden under the dialogue %s" % [in_panel, quiet])
+	var back: bool = hud.toasts.visible and whisper.visible
+	whisper._hide()
+	t.check("toasts_and_whispers_above_panels", in_panel and quiet and back, "shown above a panel %s, hidden under the dialogue %s, back after %s" % [in_panel, quiet, back])
 	Fresh.new_game(t)
 	gm.set_config_override("towns.hours_enabled", false)
 	eco.gold = 100000

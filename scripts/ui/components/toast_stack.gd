@@ -17,7 +17,8 @@ extends Control
 ##
 ## Inside a modal (UX-10): a HUD's stack (and its whisper) draws at ABOVE_MODALS_Z, above the scrims of the screens of the same GameUI layer, and
 ## stays visible (shown_with_modals) so feedback given inside a panel is seen: a hotbar assignment in the backpack, a save from the pause menu,
-## a refused buy. Only the cinematic modals of QUIET_MODALS (the dialogue box, an event scene) keep the toasts hidden.
+## a refused buy. Only the cinematic modals of QUIET_MODALS (the dialogue box, an event scene) keep the toasts and the whisper hidden: a whisper
+## raised under one (a refused gift, a whisper zone) keeps its timer and shows for what is left of it once the scene closes.
 
 const TOAST_SCENE := "res://scenes/ui/components/notification_toast.tscn"
 const MAX_TOASTS := 3
@@ -29,7 +30,7 @@ const TILE_SIZE := 48.0
 const KINDS: Array[String] = ["item", "farm", "save", "shop", "gold", "inventory", "zone", "welcome", "lua", "sleep", "quest", "language", "info", ""]
 ## z_index of a HUD's toast stack and whisper line: above every modal screen's scrim (the screens draw at z 0)
 const ABOVE_MODALS_Z := 100
-## modal names under which a HUD's toasts stay hidden
+## modal names under which a HUD's toasts and whisper stay hidden
 const QUIET_MODALS: Array[StringName] = [&"dialogue", &"event"]
 
 ## false: item notifications are left to the loot feed (forest HUD)

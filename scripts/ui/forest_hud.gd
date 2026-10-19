@@ -149,7 +149,10 @@ func _ready() -> void:
 	EventBus.area_changed.connect(_area_changed)
 	EventBus.player_inventory_changed.connect(_inventory)
 	EventBus.game_event.connect(_event)
-	EventBus.modal_changed.connect(func(stack): toasts.visible = ToastStack.shown_with_modals(stack))
+	EventBus.modal_changed.connect(func(stack):
+		# the whisper follows the toasts: above a panel, hidden under the dialogue and an event scene
+		toasts.visible = ToastStack.shown_with_modals(stack)
+		whisper.visible = toasts.visible)
 	_spawned(get_tree().get_first_node_in_group("player"))
 	_inventory({})
 	_assist()

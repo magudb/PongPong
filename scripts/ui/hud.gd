@@ -56,7 +56,10 @@ func _ready() -> void:
 	tool_name_label.visible = false
 	toasts.z_index = ToastStack.ABOVE_MODALS_Z
 	%WhisperLine.z_index = ToastStack.ABOVE_MODALS_Z
-	EventBus.modal_changed.connect(func(stack): toasts.visible = ToastStack.shown_with_modals(stack))
+	EventBus.modal_changed.connect(func(stack):
+		# the whisper follows the toasts: above a panel, hidden under the dialogue and an event scene
+		toasts.visible = ToastStack.shown_with_modals(stack)
+		%WhisperLine.visible = toasts.visible)
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("hud", Callable(get_script(), &"fixture_setup"))
 	EventBus.gold_changed.connect(_gold)
 	EventBus.time_of_day_changed.connect(_time)
