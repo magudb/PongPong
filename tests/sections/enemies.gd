@@ -116,6 +116,35 @@ func _run(t, native: bool) -> void:
 	t.check("hop_windup_holds_still",started and drift == 0 and lift == 0 and frog.state == Enemy2D.S.LUNGE,"started %s speed %.0f altitude %.0f state %d" % [started,drift,lift,frog.state])
 	frog.queue_free()
 	await t.frames(2)
+	# DUN-11: a thorn bolt breaks on a wall between the bush and the player; without the wall the same shot lands.
+	player.combat._iframes = 0
+	var wall := StaticBody2D.new()
+	wall.collision_layer = Iso.LAYER_WORLD
+	var wall_shape := CollisionShape2D.new()
+	wall_shape.shape = RectangleShape2D.new()
+	(wall_shape.shape as RectangleShape2D).size = Vector2(40,400)
+	wall.add_child(wall_shape)
+	area.objects.add_child(wall)
+	wall.global_position = player.global_position+Vector2(150,0)
+	await t.physics(2)
+	var shots := {}
+	for blocked in [true,false]:
+		if not blocked: wall.queue_free()
+		await t.physics(2)
+		var hearts_before: int = player.half_hearts
+		var bolt := EnemyHazard2D.new()
+		bolt.mode = "bolt"
+		bolt.direction = Vector2.LEFT
+		bolt.radius = 24
+		bolt.seconds = 4
+		area.ground_fx.add_child(bolt)
+		bolt.global_position = player.global_position+Vector2(300,0)
+		await t.seconds(1.6)
+		shots[blocked] = [player.half_hearts < hearts_before,not is_instance_valid(bolt)]
+		if is_instance_valid(bolt): bolt.queue_free()
+		player.half_hearts = hearts_before
+		player.combat._iframes = 0
+	t.check("thorn_bolt_breaks_on_walls",shots[true] == [false,true] and shots[false] == [true,true],str(shots))
 	if native:
 		await world.travel(&"_fixture_forest_fight",&"default")
 		area = world.area
