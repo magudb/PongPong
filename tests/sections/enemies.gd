@@ -99,6 +99,23 @@ func _run(t, native: bool) -> void:
 	for node in [normal,armoured,ambusher,fallback,reveal,replay]: node.queue_free()
 	EventBus.enemy_defeated.disconnect(record)
 	await t.frames(2)
+	# DUN-03: a frog that starts its wind-up mid-hop lands and holds still until the lunge. Velocity, not position:
+	# a manual tick outside the physics step moves the body by the process delta, which differs with --fast.
+	var frog := _spawn(area,"mosfroe",player.global_position+Vector2(220,0))
+	frog.state = Enemy2D.S.CHASE
+	frog.clock = .1
+	frog._physics_process(1.0/60)
+	var started := frog.state == Enemy2D.S.WINDUP
+	var drift := frog.ground_velocity.length()
+	var lift := absf(frog.hop_altitude)
+	while frog.state == Enemy2D.S.WINDUP:
+		frog._physics_process(1.0/60)
+		if frog.state == Enemy2D.S.WINDUP:
+			drift = maxf(drift,frog.ground_velocity.length())
+			lift = maxf(lift,absf(frog.hop_altitude))
+	t.check("hop_windup_holds_still",started and drift == 0 and lift == 0 and frog.state == Enemy2D.S.LUNGE,"started %s speed %.0f altitude %.0f state %d" % [started,drift,lift,frog.state])
+	frog.queue_free()
+	await t.frames(2)
 	if native:
 		await world.travel(&"_fixture_forest_fight",&"default")
 		area = world.area
