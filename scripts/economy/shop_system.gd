@@ -76,6 +76,14 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	EventBus.new_game_started.connect(reset)
 	EventBus.day_started.connect(_on_day_started)
+	EventBus.lua_reloaded.connect(_on_lua_reloaded)
+
+
+## The shop defs were re-read (F9): today's rotation rows are rebuilt from them and the messages may come again. The units
+## left on the shelves are run state and stay.
+func _on_lua_reloaded() -> void:
+	_rotation_cache.clear()
+	_logged.clear()
 
 
 ## A new run: every shelf is full again, rotation counts are forgotten.

@@ -127,6 +127,10 @@ func reload_scripts(announce: bool = false) -> void:
 	var iso_area: Variant = load("res://scripts/world2d/iso_area.gd")
 	if iso_area is Script:
 		(iso_area as Script).callv(&"clear_handler_cache", [])
+	# the consumers that copied Lua data (QuestManager's definitions, AnimalHusbandry's tables, ShopSystem's rotation cache)
+	var bus := _node("EventBus")
+	if bus != null:
+		bus.emit_signal("lua_reloaded")
 	if announce:
 		_announce_reload()
 
@@ -262,6 +266,11 @@ func get_all_script_ids() -> Array:
 
 func has_script(script_id: String) -> bool:
 	return _scripts.has(script_id)
+
+
+## A `kind = "quest"` file defines this quest id (QuestManager drops the definitions of removed files after a reload).
+func has_quest(quest_id: String) -> bool:
+	return _quest_modules.has(quest_id)
 
 
 ## Lint of an arbitrary source text (docs examples, tests): same rules as the load-time lint. Empty = clean.

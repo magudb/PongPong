@@ -111,6 +111,9 @@ signal item_discovered(item_id: StringName, rarity: StringName, category: String
 
 # --- Lua bridge and generic escape hatch ---
 signal lua_event(event_name: StringName, payload: Dictionary)
+## LuaRuntime re-read every Lua file (F9 in a debug build, reload_scripts() from tools and tests; also once at boot, before
+## the later autoloads exist): whoever copied Lua data re-reads or drops it.
+signal lua_reloaded()
 ## For signals nobody foresaw (R.13). Quest bindings of the feature content use it with these names, emitted by the
 ## owner next to the dedicated signal: furniture_placed {item, rarity}, hygge_level {level}, festival_held {},
 ## home_upgraded {tier}, garment_equipped {slot, item, rarity}, open_home_builder {tier}, open_home_chest {}.

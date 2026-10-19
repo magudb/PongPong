@@ -93,6 +93,7 @@ func run(t) -> void:
 	_semantics()
 	_kinds()
 	_passthrough()
+	_hot_reload_consumers()
 	_svc()
 	_helpers()
 	# leave the runtime and the game state as found (fixtures were loaded through load_file)
@@ -1123,6 +1124,39 @@ func _semantics() -> void:
 	t.expect(_lr._invoke_function("tests/inline_b", "b", [{}]) == false, "...also a numeric (float) flag, and 1.0 is true")
 	_lr._scripts.erase("tests/inline_b")
 	(_gm.world_flags as Dictionary).clear()
+
+
+# ---------------------------------------------------------------------------------------------------- hot reload
+
+## F9 (reload_scripts) tells the consumers that copied Lua data (LUA-03): EventBus.lua_reloaded once per reload; QuestManager
+## drops the definition of a quest whose file is gone (registered-by-code definitions stay); AnimalHusbandry re-reads its
+## config; ShopSystem forgets today's rotation rows.
+func _hot_reload_consumers() -> void:
+	var t = _t
+	var qm: Node = t.autoload("QuestManager")
+	var husbandry: Node = t.autoload("AnimalHusbandry")
+	var shop: Node = t.autoload("ShopSystem")
+	if qm == null or husbandry == null or shop == null:
+		t.skip("hot reload consumers: QuestManager / AnimalHusbandry / ShopSystem missing")
+		return
+	var reloads := [0]
+	var count := func() -> void: reloads[0] += 1
+	_bus.lua_reloaded.connect(count)
+	_lr.load_file(FIX + "semantics.lua")                        # kind quest, id "semantics": a file-based definition
+	qm.register_quest_from_lua({"id": "zz_lua03_by_code", "objectives": [], "rewards": {}, "meta": {}})
+	var registered: bool = qm.quest_defs.has(&"semantics") and qm.quest_defs.has(&"zz_lua03_by_code")
+	_gm.set_config_override("husbandry", {"species": {"zz_lua03_species": {"name_key": "X", "product_interval": "daily"}}})
+	shop._rotation_cache["seed_shop"] = {"day": -1, "rows": []}
+	_lr.reload_scripts()
+	var pruned: bool = not qm.quest_defs.has(&"semantics") and qm.quest_defs.has(&"zz_lua03_by_code") and qm.quest_defs.has(&"lost_cat")
+	var reread: bool = (husbandry.species_data as Dictionary).has("zz_lua03_species")
+	var rotation_dropped: bool = not (shop._rotation_cache as Dictionary).has("seed_shop")
+	_gm.clear_config_overrides()
+	_lr.reload_scripts()
+	var restored: bool = not (husbandry.species_data as Dictionary).has("zz_lua03_species") and (husbandry.species_data as Dictionary).has("chicken")
+	qm.quest_defs.erase(&"zz_lua03_by_code")
+	_bus.lua_reloaded.disconnect(count)
+	t.check("hot_reload_refreshes_consumers", registered and pruned and reread and rotation_dropped and restored and reloads[0] == 2, "two reloads, two lua_reloaded (%d); a removed quest file's definition is dropped, a code-registered one kept (%s); husbandry re-read (%s, back to the file %s); the rotation cache dropped (%s)" % [reloads[0], pruned, reread, restored, rotation_dropped])
 
 
 # ---------------------------------------------------------------------------------------------------- kinds
