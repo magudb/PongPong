@@ -58,6 +58,10 @@ static func _end_session() -> void:
 	_plans_day = -1
 
 
+static func _end_loaded_session(_slot: int) -> void:
+	_end_session()
+
+
 static func _hook_session() -> void:
 	if _session_hooked:
 		return
@@ -65,8 +69,8 @@ static func _hook_session() -> void:
 	if bus == null:
 		return
 	_session_hooked = true
-	bus.connect("new_game_started", func() -> void: _end_session())
-	bus.connect("load_completed", func(_slot: int) -> void: _end_session())
+	bus.connect("new_game_started", _end_session)
+	bus.connect("load_completed", _end_loaded_session)
 
 
 ## A context for an explicit moment (tests, validators, the director).

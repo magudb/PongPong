@@ -110,12 +110,15 @@ func _festivals(t) -> void:
 	var late := Routines.where_is("mapseller_natteblik", ctx)
 	t.expect(late.state in ["stay", "move", "inside", "absent"], "An off-stage citizen has a defined festival tail")
 	# The roster behind a festival post depends on each run's seed: a new game (or a load) asks the social track again.
+	# The hook is checked and run directly: emitting the real new_game_started would reset every system in mid-section.
 	Routines.now_ctx()
 	Routines.where_is("gardener_hoppe", ctx)
 	var asked: int = calls[0]
-	t.autoload("EventBus").new_game_started.emit()
+	var bus: Node = t.autoload("EventBus")
+	var hooked: bool = bus.new_game_started.is_connected(Routines._end_session) and bus.load_completed.is_connected(Routines._end_loaded_session)
+	Routines._end_session()
 	Routines.where_is("gardener_hoppe", ctx)
-	t.check("festival_posts_asked_again_in_a_new_run", calls[0] == asked + 1, "%d override calls, %d before the new run" % [calls[0], asked])
+	t.check("festival_posts_asked_again_in_a_new_run", hooked and calls[0] == asked + 1, "new game and load hooked %s; %d override calls, %d before the new run" % [hooked, calls[0], asked])
 	Routines.clear_cache()
 
 func _prove(t, name: String, routines: Dictionary, buildings: Dictionary, guard: Callable) -> void:
