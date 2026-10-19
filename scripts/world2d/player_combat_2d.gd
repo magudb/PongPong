@@ -37,19 +37,10 @@ func setup(body: PlayerBody2D) -> void:
 	_query.collision_mask = Iso.LAYER_ENEMY
 	_query.collide_with_areas = true
 	_query.collide_with_bodies = true
-	var hurtbox := Area2D.new()
-	hurtbox.name = "Hurtbox"
-	hurtbox.collision_layer = Iso.LAYER_PLAYER
-	hurtbox.collision_mask = Iso.LAYER_ENEMY_ATTACK
-	var collision := CollisionShape2D.new()
-	var shape := CapsuleShape2D.new()
-	shape.radius = 16.0 * Iso.S
-	shape.height = 48.0 * Iso.S
-	collision.shape = shape
-	collision.position.y = -34.0 * Iso.S
-	hurtbox.add_child(collision)
-	player.add_child(hurtbox)
-	hurtbox.area_entered.connect(_on_hurtbox_area_entered)
+	# No hurtbox Area2D: attacks hit only through the ground-plane tests at the
+	# feet (Enemy2D._during_attack, hazards), which match the drawn telegraph.
+	# An upper-body capsule overlapping the ground polygon hit players standing
+	# up to ~120 screen px south of the band.
 	_burst = PointLight2D.new()
 	_burst.name = "BurstLight"
 	_burst.texture = Glow.light_texture()
@@ -311,11 +302,6 @@ func take_damage(amount: int, from: Vector2 = Vector2.ZERO) -> bool:
 		_knockback = Iso.to_ground(player.global_position - from).normalized() * float(GameData.combat("knockback", 433))
 		player.visual.play_action(&"hit")
 	return true
-
-func _on_hurtbox_area_entered(area: Area2D) -> void:
-	var host := area.get_parent()
-	if host != null and host.has_method("hit_damage"):
-		take_damage(int(host.call("hit_damage")), host.global_position if host is Node2D else player.global_position)
 
 func _shake_camera(strength: float) -> void:
 	if not bool(_assist("assist_reduce_flash", false)):
