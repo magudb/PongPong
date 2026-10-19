@@ -157,12 +157,15 @@ class FakeLoot extends Node:
 	var item := "plank_pine"
 	var empty := false                 # refuses every opening (ok = false, reason cooldown)
 	var empty_openings := 0            # the next openings are ok but hold nothing (reason nothing), then the find comes
+	var full := false                  # refuses every opening as LootService does for a full backpack (ok = false, reason full)
 	var gm: Node = null
 
 	func open_container(zone: String, container: String, uid: String, _ctx: Dictionary = {}) -> Dictionary:
 		calls.append({"zone": zone, "container": container, "uid": uid, "day": gm.total_day() if gm != null else -1})
 		if empty:
 			return {"ok": false, "results": [], "reason": &"cooldown"}
+		if full:
+			return {"ok": false, "results": [], "reason": &"full"}
 		if empty_openings > 0:
 			empty_openings -= 1
 			return {"ok": true, "results": [], "reason": &"nothing"}
@@ -253,6 +256,7 @@ func run(t) -> void:
 	_atomic_transfers(t)
 	_festival(t)
 	_visits(t)
+	await _visit_waits_when_full(t)
 	_guests(t)
 	_save_section(t)
 	_project_godot(t)
@@ -1229,6 +1233,39 @@ func _visits(t) -> void:
 	no_loot.free()
 	_hm.reset()
 	_eco.reset()
+
+
+## SYS-10: a full backpack on a visit morning does not cost the week's gift: it waits at the door (named toast, saved) and arrives once there is room.
+func _visit_waits_when_full(t) -> void:
+	var bag: Array[String] = []
+	var loot := FakeLoot.new()
+	loot.gm = _gm
+	Svc.override("LootService", loot)
+	Fresh.new_game(t)
+	_rec.clear()
+	loot.full = true
+	_hm.set_tier(3)
+	_set_date(&"foraar", 3, 1)
+	_gm.end_day()
+	var waiting := _rec.toasts.filter(func(x): return str(x[1]) == _lm.t("HOME_GUEST_GIFT_WAITING"))
+	_ck(loot.calls.size() == 1 and _rec.gifts.is_empty() and _hm.last_visit.get("reason", "") == "full" and waiting.size() == 1, "Thursday with a full backpack: one refused opening, no gift yet, a toast that says the gift waits at the door (%s)" % str(_hm.last_visit), bag)
+	_ck(_hm.to_dict().get("visits_owed", []) == [{"week": 0, "index": 0, "npc": ""}], "the waiting gift is saved (%s)" % str(_hm.to_dict().get("visits_owed", [])), bag)
+	_hm.from_dict(JSON.parse_string(JSON.stringify(_hm.to_dict())))
+	_eco.add_item(&"wood", 1, true)
+	await t.frames(2)
+	_ck(loot.calls.size() == 2 and _rec.gifts.is_empty() and _rec.toasts.filter(func(x): return str(x[1]) == _lm.t("HOME_GUEST_GIFT_WAITING")).size() == 1, "still full: the retry after an inventory change is refused quietly, the gift keeps waiting", bag)
+	loot.full = false
+	_eco.add_item(&"wood", 1, true)
+	await t.frames(2)
+	var uids: Array = loot.calls.map(func(c): return c["uid"])
+	_ck(_rec.gifts == [["", "plank_pine"]] and uids[-1] == "home:visit:0:0" and _hm.last_visit.get("ok", false) and _hm.to_dict().get("visits_owed", []).is_empty(), "with room again the same visit's gift arrives once (%s)" % str(uids), bag)
+	_eco.add_item(&"wood", 1, true)
+	await t.frames(2)
+	_ck(_rec.gifts.size() == 1, "and only once", bag)
+	t.check("guest_gift_waits_when_backpack_full", bag.is_empty(), "a full backpack keeps the week's guest gift at the door until there is room: %s" % str(bag.slice(0, 3)))
+	Svc.clear_overrides()
+	loot.free()
+	_hm.reset()
 
 
 func _visit_with_real_loot(t) -> void:
