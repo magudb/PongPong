@@ -72,7 +72,8 @@ func _specs() -> Array:
 		if spec[0] == "build_menu_ui" and (world == null or world.get("area").map.id != &"farm"):
 			continue
 		rows.append([spec[1], spec[2], _transfer.bind(StringName(spec[0]))])
-	rows.append(["CheatButton", "CHEAT_TITLE", _transfer.bind(&"cheat_menu")])
+	if _screen(&"cheat_menu") != null:
+		rows.append(["CheatButton", "CHEAT_TITLE", _transfer.bind(&"cheat_menu")])
 	rows.append_array([["SaveButton", "MENU_SAVE", _nested.bind(&"save_menu")], ["LoadButton", "MENU_LOAD_GAME", _nested.bind(&"load_menu")], ["SettingsButton", "MENU_SETTINGS", _nested.bind(&"settings")]])
 	var floors: Variant = _floors()
 	if floors is Object and floors.has_method("current_floor") and int(floors.call("current_floor")) > 0:

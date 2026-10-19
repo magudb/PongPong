@@ -17,6 +17,14 @@ func run(t) -> void:
 	var title: Control = t.tree.current_scene
 	await t.frames(3)
 	t.check("initial_focus_title", title.get_viewport().gui_get_focus_owner() == title.get_node("%NewGameButton"))
+	# PERF-02: the idle title loads GameUI's screens one per frame, so entering the world only instances them.
+	var warmed: bool = await t.until(func(): return not title.is_processing(), 60.0)
+	var cold: Array = []
+	for id in GameUI.SCREEN_ORDER:
+		var path := GameUI.scene_path(id)
+		if ResourceLoader.exists(path) and not GameUI._scenes.get(path) is PackedScene:
+			cold.append(id)
+	t.check("title_warms_game_ui_screens", warmed and cold.is_empty(), "not loaded by the title: %s" % str(cold))
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(2)
 	t.check("title_esc_inert", t.tree.current_scene == title)
@@ -189,6 +197,10 @@ func _settings(t, settings: TTScreen) -> void:
 	config.load(SettingsUI.PATH)
 	config.set_value("other_owner", "kept", "unchanged")
 	config.save(SettingsUI.PATH)
+	# The rest timer is paused while the four buses are stepped: a busy runner can take longer than SAVE_DELAY between two taps,
+	# and the check is about "no write per step", not about wall-clock speed.
+	var rest: Timer = settings._save_timer
+	rest.paused = true
 	for bus in SettingsUI.BUSES:
 		var slider: TTSlider = settings.get_node("%" + bus + "Slider")
 		slider.grab_focus()
@@ -196,6 +208,35 @@ func _settings(t, settings: TTScreen) -> void:
 		t.tap_key(KEY_LEFT)
 		await t.frames(2)
 		t.expect(is_equal_approx(slider.value, before - 0.05), bus + " keyboard changes by five percent")
+		var live := db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("SFX" if bus == "Sfx" else bus)))
+		t.expect(is_equal_approx(live, slider.value), bus + " slider sets its AudioManager bus at once (%.2f)" % live)
+	# REPO-09: a slider step is heard at once but saved once the slider rests, in ONE write.
+	config.load(SettingsUI.PATH)
+	t.check("slider_save_waits_for_rest", not is_equal_approx(float(config.get_value("audio", "master", 0.8)), 0.75) and settings._unsaved.get("audio", {}).size() == SettingsUI.BUSES.size() and not rest.is_stopped(), str(settings._unsaved))
+	rest.paused = false
+	await t.seconds(SettingsUI.SAVE_DELAY + 0.2)
+	config.load(SettingsUI.PATH)
+	t.check("slider_saves_after_rest", is_equal_approx(float(config.get_value("audio", "master", 0.8)), 0.75) and is_equal_approx(float(config.get_value("audio", "voice", 0.8)), 0.75))
+	# An unreadable settings file (a parse error, a sync client's lock) is never replaced by the few values the screen holds.
+	var kept := FileAccess.get_file_as_string(SettingsUI.PATH)
+	var broken := FileAccess.open(SettingsUI.PATH, FileAccess.WRITE)
+	broken.store_string("[audio\nmaster = ??\n")
+	broken.close()
+	t.allow("is unreadable")
+	t.allow("ConfigFile parse error")
+	var music: TTSlider = settings.get_node("%MusicSlider")
+	music.grab_focus()
+	t.tap_key(KEY_RIGHT)
+	await t.seconds(SettingsUI.SAVE_DELAY + 0.2)
+	t.check("unreadable_settings_file_left_alone", FileAccess.get_file_as_string(SettingsUI.PATH) == "[audio\nmaster = ??\n")
+	t.tap_key(KEY_LEFT)
+	var restore := FileAccess.open(SettingsUI.PATH, FileAccess.WRITE)
+	restore.store_string(kept)
+	restore.close()
+	await t.seconds(SettingsUI.SAVE_DELAY + 0.2)
+	# UX-01: presets are points; a Retina Mac (scale 2) gets twice the pixels, a small screen clamps them and disables what cannot fit.
+	t.check("size_presets_scale_to_retina_points", SettingsUI.preset_pixels(Vector2i(1280, 720), 2.0, Vector2i(2940, 1830)) == Vector2i(2560, 1440) and SettingsUI.preset_pixels(Vector2i(1280, 720), 1.0, Vector2i.ZERO) == Vector2i(1280, 720))
+	t.check("size_presets_clamp_to_usable_screen", SettingsUI.preset_pixels(Vector2i(1280, 720), 1.0, Vector2i(1366, 697)) == Vector2i(1280, 697) and not SettingsUI.preset_fits(Vector2i(1920, 1080), 1.0, Vector2i(1366, 697)) and SettingsUI.preset_fits(Vector2i(1600, 900), 2.0, Vector2i(3456, 2160)) and not SettingsUI.preset_fits(Vector2i(1920, 1080), 2.0, Vector2i(2880, 1772)))
 	var fullscreen: CheckBox = settings.get_node("%FullscreenCheck")
 	fullscreen.grab_focus()
 	t.tap_key(KEY_RIGHT)
@@ -420,6 +461,13 @@ func _quit_saves(t) -> void:
 func run_windowed(t) -> void:
 	const Fixtures := preload("res://scripts/ui/dev/ui_fixtures.gd")
 	await t.clear_scene()
+	# UX-01: the title's saved window (here the largest preset) never resizes the harness's 1280x720 window; Godot hides
+	# `--resolution` from OS.get_cmdline_args(), so the harness marks the window instead (SettingsUI.KEEP_WINDOW).
+	SettingsStore.store("video", "size", SettingsUI.SIZES.size() - 1)
+	SettingsUI.apply_window(false)
+	await t.frames(3)
+	t.check("title_keeps_harness_window", SettingsUI.keeps_window(t.tree.root) and t.window_size() == Vector2i(1280, 720), str(t.window_size()))
+	SettingsStore.store("video", "size", 0)
 	for name in ["title_guide", "select_guide4", "select2", "settings", "saveload", "pause"]:
 		var host := Control.new()
 		host.process_mode = Node.PROCESS_MODE_ALWAYS

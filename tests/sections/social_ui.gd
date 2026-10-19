@@ -33,7 +33,7 @@ func run(t) -> void:
 	t.check("people_initial_focus", _focus(t) == people._initial_focus() and people.selected_id == "gardener_hoppe")
 	t.check("people_only_met_npcs", people.data == t.autoload("SocialManager").people_rows() and people.data.all(func(r): return t.autoload("SocialManager").met(r.id)))
 	t.check("people_rows_nodes_max", people.list.get_child_count() <= 60 and people.list.get_children().all(func(r): return r.get_child_count() == 0))
-	t.check("people_open_ms", open_ms <= 25.0, str(open_ms))
+	t.check("people_open_ms", t.perf_ok("people_open_ms", open_ms, 25.0), "%.1f ms, limit %.1f ms (native reference 25)" % [open_ms, t.perf_limit(25.0)])
 	t.check("glyph_in_people", not people.find_children("*", "SocialHearts", true, false).is_empty())
 	for index in people.rows.size():
 		var row: Button = people.rows[index]

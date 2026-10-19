@@ -28,7 +28,7 @@ const LOC_DIR := "res://localization"
 const LEGACY_FILE := "da.csv"
 const FINAL_FILE := "zz_final.csv"
 const OWNERS_PATH := "tools/loc/key_owners.json"
-const SETTINGS_PATH := "user://settings.cfg"
+const SETTINGS_PATH := SettingsStore.PATH
 const SETTINGS_SECTION := "game"
 const SETTINGS_KEY := "locale"
 
@@ -93,23 +93,13 @@ func _apply_locale(locale: String) -> void:
 
 
 static func _saved_locale() -> String:
-	var cfg := ConfigFile.new()
-	if cfg.load(SETTINGS_PATH) != OK:
-		return DEFAULT_LOCALE
-	var loc := normalize_locale(str(cfg.get_value(SETTINGS_SECTION, SETTINGS_KEY, DEFAULT_LOCALE)))
+	var loc := normalize_locale(str(SettingsStore.value(SETTINGS_SECTION, SETTINGS_KEY, DEFAULT_LOCALE)))
 	return DEFAULT_LOCALE if loc == "" else loc
 
 
+## SettingsStore keeps the other owners' sections and never overwrites an unreadable file.
 static func _persist_locale(locale: String) -> void:
-	var cfg := ConfigFile.new()
-	var err := cfg.load(SETTINGS_PATH)
-	if err != OK and err != ERR_FILE_NOT_FOUND:
-		push_warning("LocalizationManager: %s is unreadable (error %d); the language choice was not saved so that no other setting is destroyed" % [SETTINGS_PATH, err])
-		return
-	cfg.set_value(SETTINGS_SECTION, SETTINGS_KEY, locale)
-	var save_err := cfg.save(SETTINGS_PATH)
-	if save_err != OK:
-		push_warning("LocalizationManager: could not write %s (error %d)" % [SETTINGS_PATH, save_err])
+	SettingsStore.store(SETTINGS_SECTION, SETTINGS_KEY, locale, "language choice")
 
 
 ## "da", "da_DK", "DA-dk" -> "da"; anything that is not a supported locale -> "".

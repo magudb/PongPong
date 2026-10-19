@@ -4,12 +4,16 @@ extends Node
 signal changed
 const Version := preload("res://scripts/release/release_version.gd")
 const CACHE := "user://updates"
+## A download has no total time limit (418 MB on a slow line takes long); it fails when no byte arrived for this long.
+const STALL_SECONDS := 60.0
 var state := "idle"
 var available: Dictionary = {}
 var downloaded_path := ""
 var checked := false
 var _request: HTTPRequest
 var _downloading := false
+var _last_bytes := 0
+var _stalled := 0.0
 
 static func inst() -> ReleaseUpdates:
 	var tree := Engine.get_main_loop() as SceneTree
@@ -32,6 +36,13 @@ static func repository() -> String:
 static func platform_name() -> String:
 	return "windows" if OS.get_name() == "Windows" else "macos" if OS.get_name() == "macOS" else ""
 
+## The automatic check at the title can be switched off in the update panel (settings.cfg [updates] auto_check, default on).
+static func auto_check_enabled() -> bool:
+	return SettingsStore.value("updates", "auto_check", true) != false
+
+static func set_auto_check(on: bool) -> void:
+	SettingsStore.store("updates", "auto_check", on, "update choice")
+
 static func production() -> bool:
 	return not OS.has_feature("editor") and DisplayServer.get_name() != "headless" and ProjectSettings.get_setting("release/channel", "development") == "stable"
 
@@ -42,6 +53,36 @@ func _ready() -> void:
 	_request.max_redirects = 5
 	add_child(_request)
 	_request.request_completed.connect(_completed)
+	set_process(false)
+
+func _process(delta: float) -> void:
+	_watch(delta)
+
+## The stall watchdog of a running download (it runs in the background: closing the update panel does not stop it).
+func _watch(delta: float) -> void:
+	if state != "downloading":
+		set_process(false)
+		return
+	var bytes := downloaded_bytes()
+	if bytes != _last_bytes:
+		_last_bytes = bytes
+		_stalled = 0.0
+		return
+	_stalled += delta
+	if _stalled >= STALL_SECONDS:
+		_drop_partial()
+		_set_state("download_failed")
+
+## Quitting during a background download leaves no partial archive behind in user://updates (it never resumes, so it is only waste).
+func _exit_tree() -> void:
+	if state == "downloading":
+		_drop_partial()
+		state = "available"
+
+func _drop_partial() -> void:
+	_request.cancel_request()
+	_downloading = false
+	if FileAccess.file_exists(downloaded_path): DirAccess.remove_absolute(downloaded_path)
 
 func _set_state(value: String) -> void:
 	state = value
@@ -52,7 +93,7 @@ func check(automatic := false) -> void:
 		check.call_deferred(automatic)
 		return
 	if state in ["checking", "downloading", "installing"]: return
-	if automatic and (checked or not production()): return
+	if automatic and (checked or not production() or not auto_check_enabled()): return
 	if platform_name().is_empty():
 		_set_state("unsupported")
 		return
@@ -99,17 +140,26 @@ func download() -> void:
 		_set_state("download_failed")
 		return
 	downloaded_path = path.path_join(available.name)
-	_request.timeout = 1800
+	_request.timeout = 0
 	_request.body_size_limit = 1073741824
 	_request.download_file = downloaded_path
 	_downloading = true
+	_last_bytes = 0
+	_stalled = 0.0
 	_set_state("downloading")
+	set_process(true)
 	if _request.request(available.url, PackedStringArray(["User-Agent: Traetoppen/" + current_version()])) != OK:
 		_downloading = false
 		_set_state("download_failed")
 
 func progress() -> float:
-	return clampf(float(_request.get_downloaded_bytes()) / maxf(1, float(available.get("size", 1))), 0, 1)
+	return clampf(float(downloaded_bytes()) / maxf(1, float(download_size())), 0, 1)
+
+func downloaded_bytes() -> int:
+	return _request.get_downloaded_bytes() if _request != null else 0
+
+func download_size() -> int:
+	return int(available.get("size", 0))
 
 func install_target() -> String:
 	var executable := OS.get_executable_path()
@@ -173,7 +223,5 @@ func install() -> bool:
 
 func cancel_download() -> void:
 	if state != "downloading": return
-	_request.cancel_request()
-	_downloading = false
-	if FileAccess.file_exists(downloaded_path): DirAccess.remove_absolute(downloaded_path)
+	_drop_partial()
 	_set_state("available")

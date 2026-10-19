@@ -1,10 +1,22 @@
 class_name SettingsUI
 extends TTScreen
-## Settings share the locale config file. Every write reloads it, preserving other owners' sections.
-const PATH := "user://settings.cfg"
+## Settings share the locale config file through SettingsStore, which keeps the other owners' sections. A slider saves once it rests
+## (SAVE_DELAY), not on every step; the volume itself follows every step.
+const PATH := SettingsStore.PATH
+## Root window meta: the window was sized by whoever started the game (tests/playtest.gd --windowed) and the title must not resize it.
+const KEEP_WINDOW := &"tt_keep_window"
+## Window presets in points: on a Retina Mac a point is two pixels (DisplayServer.screen_get_max_scale), on Windows one.
 const SIZES := [Vector2i(1280, 720), Vector2i(1600, 900), Vector2i(1920, 1080)]
+## The smallest window (points) the player can drag to: below it the 1280x720 layout's text is too small to read.
+const MIN_SIZE := Vector2i(960, 540)
+## Slider names; "Sfx" is the bus "SFX" (AudioManager.VOLUME_BUSES), its settings key is "sfx" either way.
 const BUSES := ["Master", "Music", "Sfx", "Voice"]
+const SAVE_DELAY := 0.4
+## The saved window is put on screen once per run (the first title), never again by a later visit to the title.
+static var _window_restored := false
 var _applying := false
+var _unsaved: Dictionary = {}           # section -> {key: value} waiting for the save timer
+var _save_timer: Timer
 var forest_help_button: Button
 var updates_button: Button
 var controls_button: Button
@@ -17,6 +29,12 @@ func _init() -> void:
 
 func _ready() -> void:
 	super._ready()
+	_save_timer = Timer.new()
+	_save_timer.one_shot = true
+	_save_timer.wait_time = SAVE_DELAY
+	_save_timer.process_mode = Node.PROCESS_MODE_ALWAYS
+	_save_timer.timeout.connect(_flush)
+	add_child(_save_timer)
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("settings", Callable(get_script(), &"fixture_setup"))
 	get_node("Panel").item_rect_changed.connect(_snap_panel)
 	_snap_panel.call_deferred()
@@ -71,37 +89,75 @@ func _open_forest_help() -> void:
 		add_child(screen)
 	screen.open(forest_help_button)
 
-static func _config() -> ConfigFile:
-	var config := ConfigFile.new()
-	config.load(PATH)
-	return config
+static func _audio_bus(bus: String) -> String:
+	return "SFX" if bus == "Sfx" else bus
 
-static func _volume(config: ConfigFile, bus: String) -> float:
-	var value: Variant = config.get_value("audio", bus.to_lower(), 0.8)
-	return clampf(float(value), 0.0, 1.0) if value is int or value is float else 0.8
+static func _size_index(config: ConfigFile) -> int:
+	var saved: Variant = config.get_value("video", "size", 0)
+	return clampi(int(saved), 0, SIZES.size() - 1) if saved is int else 0
 
-static func _apply_volume(bus: String, value: float) -> void:
-	var index := AudioServer.get_bus_index("SFX" if bus == "Sfx" else bus)
-	if index >= 0:
-		AudioServer.set_bus_mute(index, value <= 0.0)
-		AudioServer.set_bus_volume_db(index, linear_to_db(maxf(value, 0.0001)))
-
+## The title calls this on every visit: the saved volumes always, the saved window only the first time in a run, so a resize, a
+## maximise or the native full screen the player made since is kept.
 static func apply_saved() -> void:
-	var config := _config()
-	for bus in BUSES:
-		_apply_volume(bus, _volume(config, bus))
-	if DisplayServer.get_name() == "headless":
+	var audio := Svc.node("AudioManager")
+	if audio != null:
+		audio.call("apply_saved_volumes")
+	if not _window_restored:
+		_window_restored = true
+		apply_window(false)
+
+## Puts the saved mode and size on screen: the preset scaled to window pixels, clamped to the usable area of the window's screen and
+## centred on it. `chosen` (the player picked it just now) also leaves a maximised window; otherwise a maximised or minimised window
+## is the player's own choice and stays. A window marked KEEP_WINDOW (the windowed test harness owns its 1280x720 window) keeps its
+## size at boot. Godot keeps engine options such as `--resolution` out of OS.get_cmdline_args(), so the mark is the only signal.
+static func apply_window(chosen: bool) -> void:
+	var window := (Engine.get_main_loop() as SceneTree).root
+	if DisplayServer.get_name() == "headless" or (not chosen and keeps_window(window)):
 		return
-	var fullscreen: bool = config.get_value("video", "fullscreen", false) == true
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if fullscreen else DisplayServer.WINDOW_MODE_WINDOWED)
-	if not fullscreen:
-		var size_index: Variant = config.get_value("video", "size", 0)
-		var index := clampi(int(size_index), 0, SIZES.size() - 1) if size_index is int else 0
-		DisplayServer.window_set_size(SIZES[index])
+	var config := SettingsStore.read()
+	window.min_size = preset_pixels(MIN_SIZE, DisplayServer.screen_get_max_scale(), _room(window))
+	var full := window.mode in [Window.MODE_FULLSCREEN, Window.MODE_EXCLUSIVE_FULLSCREEN]
+	if config.get_value("video", "fullscreen", false) == true:
+		if not full:
+			window.mode = Window.MODE_FULLSCREEN
+		return
+	if full or (chosen and window.mode == Window.MODE_MAXIMIZED):
+		window.mode = Window.MODE_WINDOWED
+	elif window.mode != Window.MODE_WINDOWED:
+		return
+	var preset: Vector2i = SIZES[_size_index(config)]
+	var place := func() -> void:
+		window.size = preset_pixels(preset, DisplayServer.screen_get_max_scale(), _room(window))
+		window.move_to_center()
+	place.call()
+	if full:
+		# Leaving the (animated) macOS full screen restores the old frame when the animation ends; place the window again after it.
+		window.get_tree().create_timer(0.6, true).timeout.connect(place)
+
+static func keeps_window(window: Window) -> bool:
+	return window.get_meta(KEEP_WINDOW, false) == true
+
+## A size in points as window pixels at `scale`, no larger than `room` (Vector2i.ZERO = unknown, no limit).
+static func preset_pixels(preset: Vector2i, scale: float, room: Vector2i) -> Vector2i:
+	var pixels := Vector2i((Vector2(preset) * maxf(scale, 1.0)).round())
+	return pixels if room == Vector2i.ZERO else pixels.min(room)
+
+## Does the preset fit the screen whole? A size that does not is offered disabled.
+static func preset_fits(preset: Vector2i, scale: float, room: Vector2i) -> bool:
+	var pixels := preset_pixels(preset, scale, Vector2i.ZERO)
+	return room == Vector2i.ZERO or (pixels.x <= room.x and pixels.y <= room.y)
+
+## The window pixels the screen has for the window's content: its usable area (no Dock, menu bar or task bar) minus the title bar.
+static func _room(window: Window) -> Vector2i:
+	if DisplayServer.get_name() == "headless":
+		return Vector2i.ZERO
+	var usable := DisplayServer.screen_get_usable_rect(window.current_screen).size
+	var frame := (window.get_size_with_decorations() - window.size).max(Vector2i.ZERO)
+	return (usable - frame).max(Vector2i.ONE)
 
 ## Whether focus loss and a pad disconnect open the pause menu (PauseMenu.auto_open, review UX-07): on unless the player switched it off.
 static func pause_on_focus_loss() -> bool:
-	return _config().get_value("game", "pause_on_focus_loss", true) != false
+	return SettingsStore.value("game", "pause_on_focus_loss", true) != false
 
 func open(opener: Control = null) -> void:
 	pauses_tree = get_tree().get_first_node_in_group("world_2d") != null
@@ -118,34 +174,62 @@ func _refresh_texts() -> void:
 	_applying = true
 	%LangDa.button_pressed = LocalizationManager.is_da()
 	%LangEn.button_pressed = not LocalizationManager.is_da()
-	var config := _config()
+	var config := SettingsStore.read()
+	for section in _unsaved:
+		for key in _unsaved[section]:
+			config.set_value(section, key, _unsaved[section][key])
 	for bus in BUSES:
-		(get_node("%" + bus + "Slider") as Slider).value = _volume(config, bus)
+		(get_node("%" + bus + "Slider") as Slider).value = AudioManager.saved_volume(config, bus)
 	%FullscreenCheck.button_pressed = config.get_value("video", "fullscreen", false) == true
-	%AutoPauseCheck.button_pressed = pause_on_focus_loss()
-	var saved_size: Variant = config.get_value("video", "size", 0)
-	var size_index := clampi(int(saved_size), 0, SIZES.size() - 1) if saved_size is int else 0
+	%AutoPauseCheck.button_pressed = config.get_value("game", "pause_on_focus_loss", true) != false
+	var size_index := _size_index(config)
 	for index in SIZES.size():
 		(get_node("%%Size%d" % index) as Button).button_pressed = index == size_index
 	_applying = false
 	_update_sizes()
 
+func close() -> void:
+	_flush()
+	super.close()
+
+func _exit_tree() -> void:
+	_flush()
+	super._exit_tree()
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		_flush()
+
+## A chip or a toggle saves at once (together with a slider value still waiting).
 func _store(section: String, key: String, value: Variant) -> void:
-	var config := _config()
-	config.set_value(section, key, value)
-	config.save(PATH)
+	_queue(section, key, value)
+	_flush()
+
+func _queue(section: String, key: String, value: Variant) -> void:
+	if not _unsaved.has(section):
+		_unsaved[section] = {}
+	_unsaved[section][key] = value
+
+func _flush() -> void:
+	if _save_timer != null:
+		_save_timer.stop()
+	if _unsaved.is_empty():
+		return
+	SettingsStore.store_all(_unsaved, "setting")
+	_unsaved.clear()
 
 func _volume_changed(bus: String, value: float) -> void:
 	if _applying:
 		return
-	_apply_volume(bus, value)
-	_store("audio", bus.to_lower(), value)
+	AudioManager.set_bus_volume(_audio_bus(bus), value, false)
+	_queue("audio", bus.to_lower(), value)
+	_save_timer.start()
 
 func _fullscreen_changed(value: bool) -> void:
 	if _applying:
 		return
 	_store("video", "fullscreen", value)
-	apply_saved()
+	apply_window(true)
 	_update_sizes()
 
 func _fullscreen_input(event: InputEvent) -> void:
@@ -167,14 +251,16 @@ func _size_changed(index: int) -> void:
 	if %FullscreenCheck.button_pressed:
 		return
 	_store("video", "size", index)
-	apply_saved()
+	apply_window(true)
 
 func _update_sizes() -> void:
 	var sizes: Array = []
+	var room := _room(get_window())
 	for index in SIZES.size():
 		var chip: Button = get_node("%%Size%d" % index)
-		UiNav.set_enabled(chip, not %FullscreenCheck.button_pressed)
-		chip.modulate.a = 0.5 if %FullscreenCheck.button_pressed else 1.0
+		var usable: bool = not %FullscreenCheck.button_pressed and preset_fits(SIZES[index], DisplayServer.screen_get_max_scale(), room)
+		UiNav.set_enabled(chip, usable)
+		chip.modulate.a = 1.0 if usable else 0.5
 		sizes.append(chip)
 	var rows: Array = [[%LangDa, %LangEn]]
 	for bus in BUSES:

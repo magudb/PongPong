@@ -51,9 +51,72 @@ func run(t) -> void:
 	t.check("settings_opens_update_panel", panel.is_open() and t.autoload("GameManager").modal_stack() == [&"settings", &"updates"])
 	var rules := UiAudit.rule_report(panel)
 	t.check("update_panel_rules", rules.ok, str(rules.defects))
+	# REL-10: the panel names where the check goes, and the automatic check at the title can be switched off (and on again).
+	var source: Label = panel.source_label
+	var auto_check: CheckBox = panel.auto_check
+	t.check("update_panel_names_github", source.text.contains("github.com/" + ReleaseUpdates.repository()), source.text)
+	t.check("auto_check_defaults_on", ReleaseUpdates.auto_check_enabled() and auto_check.button_pressed)
+	auto_check.grab_focus()
+	t.tap_key(KEY_ENTER)
+	await t.frames(2)
+	t.check("auto_check_switch_saves_off", not auto_check.button_pressed and not ReleaseUpdates.auto_check_enabled() and SettingsStore.value("updates", "auto_check", true) == false)
+	t.tap_key(KEY_ENTER)
+	await t.frames(2)
+	t.check("auto_check_switch_saves_on", auto_check.button_pressed and ReleaseUpdates.auto_check_enabled())
+	panel.primary.grab_focus()
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(2)
 	t.check("escape_returns_to_settings", not panel.is_open() and settings.is_open() and settings.get_viewport().gui_get_focus_owner() == settings.updates_button)
+	# REL-09: a download runs in the background. Closing the panel keeps it, the panel shows MB and per cent, "Stop" cancels it,
+	# and only a download that stalls (no byte for STALL_SECONDS) fails; there is no total time limit.
+	updates.available = {"version": "9.9.9", "size": 418 * 1048576, "sha256": "a".repeat(64)}
+	updates.downloaded_path = ProjectSettings.globalize_path("user://updater-test-partial.zip")
+	updates._downloading = true
+	updates._set_state("downloading")
+	settings.updates_button.pressed.emit()
+	await t.frames(2)
+	t.check("download_shows_megabytes", panel.is_open() and panel.status_label.text.contains("418") and panel.progress_bar.visible and panel.progress_bar.show_percentage, panel.status_label.text)
+	t.check("download_offers_stop", panel.primary.text == TranslationServer.translate("UPDATE_STOP") and not panel.primary.disabled)
+	t.tap_key(KEY_ESCAPE)
+	await t.frames(2)
+	t.check("closing_keeps_download", not panel.is_open() and updates.state == "downloading")
+	settings.updates_button.pressed.emit()
+	await t.frames(2)
+	# Reopened mid-download the panel lands on "Luk", not on "Stop": one more Enter must not throw the progress away.
+	var reopened_focus := panel.get_viewport().gui_get_focus_owner()
+	t.check("reopened_download_focuses_close", reopened_focus == panel.back, str(reopened_focus))
+	panel.primary.grab_focus()
+	t.tap_key(KEY_ENTER)
+	await t.frames(2)
+	t.check("stop_cancels_download", updates.state == "available" and not updates._downloading)
+	t.tap_key(KEY_ESCAPE)
+	await t.frames(2)
+	updates._downloading = true
+	updates._set_state("downloading")
+	updates._last_bytes = updates.downloaded_bytes()
+	updates._stalled = 0.0
+	updates._watch(ReleaseUpdates.STALL_SECONDS * 0.5)
+	var alive: bool = updates.state == "downloading"
+	updates._watch(ReleaseUpdates.STALL_SECONDS * 0.5 + 0.1)
+	t.check("stalled_download_fails", alive and updates.state == "download_failed" and not updates._downloading)
+	# A download that failed in the background keeps the title's "Ny version" row, the way back to the retry.
+	var title_row: Button = t.tree.current_scene._updates_button
+	t.check("failed_download_keeps_title_row", title_row.visible and title_row in t.tree.current_scene._rows)
+	# Quitting during a download leaves no partial archive behind (it never resumes).
+	var leaving := ReleaseUpdates.new()
+	t.tree.root.add_child(leaving)
+	var leftover := ProjectSettings.globalize_path("user://updater-test-leftover.zip")
+	var partial := FileAccess.open(leftover, FileAccess.WRITE)
+	partial.store_string("half an archive")
+	partial.close()
+	leaving.downloaded_path = leftover
+	leaving._downloading = true
+	leaving.state = "downloading"
+	t.tree.root.remove_child(leaving)
+	t.check("quit_removes_partial_download", not FileAccess.file_exists(leftover) and not leaving._downloading)
+	leaving.free()
+	updates.available.clear()
+	updates._set_state("current")
 	settings.close()
 	await UiAudit.audit_screen(t, "updates")
 

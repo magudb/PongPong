@@ -14,7 +14,7 @@ var npc_id := &"appraiser_fru_ugle"
 var busy := false
 func _init() -> void:
 	super._init()
-	screen_id = &"appraisal"
+	screen_id = &"appraisal_ui"
 	modal_name = &"appraisal"
 func _ready() -> void:
 	super._ready()
@@ -151,7 +151,7 @@ func _initial_focus() -> Control:
 	return close_button
 func _on_page(step: int) -> void:
 	result_scroll.scroll_vertical += step*180
+## GameUI keeps the screen (SCREEN_ORDER): closing hides it, the next open_for_npc starts it fresh.
 func close() -> void:
 	if busy: return
 	super.close()
-	queue_free()

@@ -33,14 +33,10 @@ func interact(player: Node) -> void:
 	var floors := DungeonFloors.inst()
 	if floors == null: return
 	if hub:
+		# GameUI owns the picker (SCREEN_ORDER: below the pause menu, found by get_screen).
 		var ui := get_tree().get_first_node_in_group("game_ui")
-		if ui == null: return
-		var picker := ui.get_node_or_null("RunePicker")
-		if picker == null:
-			picker = load("res://scenes/ui/rune_picker.tscn").instantiate()
-			picker.name = "RunePicker"
-			ui.add_child(picker)
-		picker.open()
+		var picker: Node = ui.call("get_screen", &"rune_picker") if ui != null and ui.has_method("get_screen") else null
+		if picker != null: picker.open()
 		return
 	_busy = true
 	var first := floors.activate_stone(floor_number)

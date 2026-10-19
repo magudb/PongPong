@@ -3,6 +3,7 @@ extends Control
 var _rows: Array = []
 var _last_row: Control
 var _updates_button: Button
+var _shown_frames := 0
 
 func _ready() -> void:
 	GameManager.pop_all_modals()
@@ -46,6 +47,13 @@ func _ready() -> void:
 	if DisplayServer.get_name() == "headless" and "--release-smoke" in OS.get_cmdline_user_args():
 		get_tree().root.add_child.call_deferred(load("res://scripts/release/export_smoke.gd").new())
 
+## While the title waits for the player, GameUI's screens load one per frame (PERF-02), not all at once after Fortsæt / Bekræft.
+## The first frames draw the title before anything loads.
+func _process(_delta: float) -> void:
+	_shown_frames += 1
+	if _shown_frames > 2 and GameUI.warm_step():
+		set_process(false)
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
 		_refresh_labels()
@@ -70,7 +78,8 @@ func _refresh_labels() -> void:
 	var latest_summary: Dictionary = rows.filter(func(row: Dictionary) -> bool: return int(row.slot) == latest).front().summary if latest >= 0 else {}
 	%ContinueInfo.text = tr("MENU_CONTINUE_DAY") % int(latest_summary.get("total_day", 1)) if latest >= 0 else ""
 	_rows = [%ContinueButton, %LoadButton, %NewGameButton, %SettingsButton, %QuitButton]
-	_updates_button.visible = ReleaseUpdates.inst().state in ["available", "ready"]
+	# A background download that failed keeps the row: the panel offers the retry.
+	_updates_button.visible = ReleaseUpdates.inst().state in ["available", "downloading", "ready", "download_failed"] and not ReleaseUpdates.inst().available.is_empty()
 	_updates_button.text = tr("UPDATE_AVAILABLE") % str(ReleaseUpdates.inst().available.get("version", ""))
 	if _updates_button.visible: _rows.insert(_rows.size() - 1, _updates_button)
 	UiNav.wire_ring(_rows)

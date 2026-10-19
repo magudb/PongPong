@@ -38,7 +38,8 @@ extends Node
 ## The one-time gifts are keyed `npc:hearts` inside `claimed` (TOWNS RT19); a legacy `gifts` table is merged into it on load.
 ##
 ## HOSTING. LootService adds the child node `DungeonFloors` (D2) when its script exists and registers it as the section `dungeon` (order 45); it listens to
-## game_event `open_appraisal {npc}` and, when scenes/ui/appraisal_ui.tscn exists (DL7), instantiates it ONCE under the first node of group `game_ui` and calls its open(npc);
+## game_event `open_appraisal {npc}` and, when scenes/ui/appraisal_ui.tscn exists (DL7), opens the screen GameUI loaded for it (SCREEN_ORDER `appraisal_ui`;
+## another scene path or a host without get_screen gets ONE instance under the first node of group `game_ui`) and calls its open(npc);
 ## without the scene the event is ignored (honest stub S21).
 
 const _Svc := preload("res://scripts/data/svc.gd")
@@ -1003,11 +1004,15 @@ func open_appraisal(npc_id: StringName = &"") -> bool:
 		var host := get_tree().get_first_node_in_group(GAME_UI_GROUP)
 		if host == null:
 			return false
-		var scene: Variant = load(appraisal_scene_path)
-		if not (scene is PackedScene):
-			return false
-		_appraisal_ui = (scene as PackedScene).instantiate()
-		host.add_child(_appraisal_ui)
+		# GameUI loads the real screen at its place in SCREEN_ORDER (below the pause menu); only another scene (a test fixture)
+		# or a host without that registry gets an instance of its own.
+		_appraisal_ui = host.call("get_screen", &"appraisal_ui") if appraisal_scene_path == APPRAISAL_SCENE and host.has_method("get_screen") else null
+		if _appraisal_ui == null:
+			var scene: Variant = load(appraisal_scene_path)
+			if not (scene is PackedScene):
+				return false
+			_appraisal_ui = (scene as PackedScene).instantiate()
+			host.add_child(_appraisal_ui)
 	if _appraisal_ui.has_method("open_for_npc"):
 		_appraisal_ui.call("open_for_npc",npc_id)
 	elif _appraisal_ui.has_method("open"):

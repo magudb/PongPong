@@ -74,6 +74,14 @@ class TestScreen extends TTScreen:
 		page_steps.append(step)
 
 
+## Counts _refresh_texts: a language switch rebuilds an OPEN screen only (UIC-04).
+class RefreshCountScreen extends TestScreen:
+	var refreshes := 0
+
+	func _refresh_texts() -> void:
+		refreshes += 1
+
+
 ## A screen whose _input eats ui_accept: the mutation the foundation must catch (Enter / Space / pad A would press nothing).
 class EatingScreen extends TestScreen:
 	func _input(event: InputEvent) -> void:
@@ -182,6 +190,7 @@ func run(t) -> void:
 	await _no_wrap_on_echo(t)
 	await _wasd_navigates(t)
 	await _screen_lifecycle(t)
+	await _language_refresh_only_when_open(t)
 	await _initial_focus_and_restore(t)
 	await _focus_loss_guard(t)
 	await _wants_focus_guard(t)
@@ -673,6 +682,25 @@ func _screen_lifecycle(t) -> void:
 	var nested_ok: bool = n.is_open() and (_gm.call("modal_stack") as Array) == [&"nav_a", &"nav_nested"]
 	t.check("screen_lifecycle", hidden_always and once and paused_ok and gone and req_open and other_ignored and req_close and cutscene_ok and dropped_ok and refused and nested_ok,
 		"hidden + ALWAYS after _ready (%s); open() twice pushes ONCE (%s) and pauses (%s); close() twice pops once (%s); ui_panel_toggled is answered once per request (%s / %s / %s); a non-pausing screen is CUTSCENE (%s); a dropped stack closes it (%s); siblings refuse (%s), a nested screen opens (%s)" % [hidden_always, once, paused_ok, gone, req_open, other_ignored, req_close, cutscene_ok, dropped_ok, refused, nested_ok])
+	await _finish_test(t)
+
+
+func _language_refresh_only_when_open(t) -> void:
+	var host := _fresh(t)
+	var s = await _screen(t, host, &"nav_lang", &"", false, RefreshCountScreen)
+	s.refreshes = 0
+	TranslationServer.set_locale("en")
+	await t.frames(2)
+	var closed_skips: bool = s.refreshes == 0
+	s.open()
+	await t.frames(2)
+	var open_catches_up: bool = s.refreshes == 1
+	TranslationServer.set_locale("da")
+	await t.frames(2)
+	var open_follows: bool = s.refreshes == 2
+	s.close()
+	t.check("language_switch_rebuilds_open_screens_only", closed_skips and open_catches_up and open_follows,
+		"a closed screen skips the rebuild (%s), open() catches up (%s), an open screen follows the switch (%s): %d refreshes" % [closed_skips, open_catches_up, open_follows, s.refreshes])
 	await _finish_test(t)
 
 
