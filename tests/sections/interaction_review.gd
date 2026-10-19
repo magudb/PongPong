@@ -301,6 +301,70 @@ func _tool_targets(t) -> void:
 	sign_host.queue_free()
 	rock.queue_free()
 	await t.physics(2)
+	await _tool_types(t)
+
+
+func _resource(t, kind: String, cell: Vector2i) -> ResourceNode2D:
+	var area: IsoArea = t.world().area
+	var node := ResourceNode2D.create_marker({"kind": kind}, area.cell_to_global(cell), cell, area)
+	area.objects.add_child(node)
+	return node
+
+
+func _swing(t, item: StringName) -> bool:
+	var player: Player2D = t.world().player
+	player.state = PlayerBody2D.S.FREE
+	player._tool_time = 0.0
+	player.stamina = player.max_stamina
+	player.hotbar.assign(0, item)
+	player.hotbar.select(0)
+	return player.use_selected()
+
+
+## GAP3-03: the axe filter type-checks the tool. Every resource node has tool_hit, so a nearer rock or berry bush took the swing
+## meant for a tree and whispered "Redskabet er for svagt" (or nothing). ResourceNode2D.accepts_tool keeps only the node's own tool.
+func _tool_types(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var home: Vector2i = area.global_to_cell(player.global_position)
+	var keys: Array = []
+	var listen := _whispers(keys)
+	player.global_position = area.cell_to_global(home)
+	player.facing8 = 0
+	# the tree on the target cell, a rock and a fern in the side cells, both nearer to the player
+	var tree := _resource(t, "tree_chop", home + area.facing_step(0))
+	var rock := _resource(t, "rock_stone", home + area.facing_step(1))
+	var fern := _resource(t, "fern", home + area.facing_step(7))
+	await t.physics(2)
+	var tree_hp := tree.hp
+	var rock_hp := rock.hp
+	var rock_nearer: bool = Iso.ground_dist(rock.global_position, player.global_position) < Iso.ground_dist(tree.global_position, player.global_position)
+	t.check("axe_chops_tree_past_nearer_rock", rock_nearer and _swing(t, &"axe_wooden") and tree.hp == tree_hp - 1 and rock.hp == rock_hp and "FOREST_TOOL_WEAK" not in keys,
+		"tree hp %d -> %d, rock hp %d -> %d, whispers %s" % [tree_hp, tree.hp, rock_hp, rock.hp, keys])
+	keys.clear()
+	t.check("pickaxe_mines_rock_past_tree_on_target", _swing(t, &"pickaxe_wooden") and rock.hp == rock_hp - 1 and tree.hp == tree_hp - 1, "whispers %s" % [keys])
+	# off the target cell: the nearest host that takes the tool, a nearer one that does not never blocks it
+	tree.queue_free()
+	fern.queue_free()
+	await t.physics(1)
+	tree = _resource(t, "tree_chop", home + area.facing_step(7))
+	player.global_position = area.cell_to_global(home) + Vector2(-10, 0)
+	await t.physics(2)
+	tree_hp = tree.hp
+	keys.clear()
+	var rock_still_nearer: bool = Iso.ground_dist(rock.global_position, player.global_position) < Iso.ground_dist(tree.global_position, player.global_position)
+	t.check("axe_takes_tree_in_reach_past_nearer_rock", rock_still_nearer and _swing(t, &"axe_wooden") and tree.hp == tree_hp - 1, "tree hp %d -> %d, whispers %s" % [tree_hp, tree.hp, keys])
+	# nothing takes the tool: the rock names the right one instead of calling the tool too weak
+	tree.queue_free()
+	await t.physics(2)
+	keys.clear()
+	t.check("wrong_tool_names_the_right_one", not _swing(t, &"axe_wooden") and keys == ["FOREST_TOOL_PICKAXE"] and rock.hp == rock_hp - 1, str(keys))
+	rock.queue_free()
+	EventBus.whisper_requested.disconnect(listen)
+	player.global_position = area.cell_to_global(home)
+	player.state = PlayerBody2D.S.FREE
+	player._tool_time = 0.0
+	await t.physics(2)
 
 
 ## A farm cell to aim at from the cell before it (facing S): `pick` (cell -> bool) decides; Vector2i.MAX when none fits.
@@ -359,13 +423,33 @@ func _axe_on_crops(t) -> void:
 	farm.plant(cell, &"turnip_seeds")
 	keys.clear()
 	t.check("axe_clears_living_crop_with_a_word", player.use_selected() and farm.state_of(cell) == FarmGrid.State.TILLED and keys == ["FARM_CROP_CLEARED"], str(keys))
+	# an object standing on the target cell itself takes the swing before the crop there
 	_aim_cell(t, [cell], func(_c: Vector2i) -> bool: return true)
 	farm.plant(cell, &"turnip_seeds")
-	var rock: RockProbe = _probe(t, RockProbe.new(), area.cell_to_global(cell + area.facing_step(7)))
+	var rock: RockProbe = _probe(t, RockProbe.new(), area.cell_to_global(cell))
 	await t.physics(2)
-	t.check("axe_hits_object_in_reach_before_crop", player.use_selected() and rock.hits.size() == 1 and farm.state_of(cell) == FarmGrid.State.PLANTED, "hits %s state %d" % [rock.hits, farm.state_of(cell)])
+	t.check("axe_hits_object_on_target_before_crop", player.use_selected() and rock.hits.size() == 1 and farm.state_of(cell) == FarmGrid.State.PLANTED, "hits %s state %d" % [rock.hits, farm.state_of(cell)])
 	rock.queue_free()
 	farm.clear_crop(cell, false)
+	await t.physics(2)
+	# a sprinkler beside the crops it waters never takes the swing aimed at one of them (it was picked up instead)
+	eco.add_item(&"sprinkler", 1, true)
+	var beside := Vector2i.MAX
+	for facing in [7, 1, 5, 3]:
+		if PlacementService.can_place(&"sprinkler", cell + area.facing_step(facing)) == "":
+			beside = cell + area.facing_step(facing)
+			break
+	var placed: bool = beside != Vector2i.MAX and PlacementService.place(&"sprinkler", beside)
+	_aim_cell(t, [cell], func(_c: Vector2i) -> bool: return true)
+	farm.plant(cell, &"turnip_seeds")
+	await t.physics(2)
+	var sprinklers: int = eco.count_item(&"sprinkler")
+	var cleared: bool = placed and player.use_selected()
+	t.check("axe_clears_crop_beside_sprinkler", cleared and farm.state_of(cell) == FarmGrid.State.TILLED and not FarmEquipment.at(&"farm", beside).is_empty() \
+		and eco.count_item(&"sprinkler") == sprinklers, "placed %s at %s, state %d" % [placed, beside, farm.state_of(cell)])
+	for node in area.find_children("*", "Node", true, false):
+		if node is FarmMachine2D and node.cell == beside:
+			node.tool_hit("pickaxe", 1, player)
 	EventBus.whisper_requested.disconnect(listen)
 	player.state = PlayerBody2D.S.FREE
 	player._tool_time = 0.0

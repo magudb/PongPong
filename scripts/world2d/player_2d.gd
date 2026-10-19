@@ -394,15 +394,25 @@ func use_selected() -> bool:
 							var harvest_cell := area.global_to_cell(global_position) + area.facing_step(direction)
 							ok = farm.harvest(harvest_cell) > 0 or farm.clear_crop(harvest_cell) or ok
 				"axe", "pickaxe":
-					# The object in reach that takes a tool hit (a rock, a tree, a sprinkler), past nearer hosts that do not,
-					# comes first; only then a crop on the target cell, which the tool deliberately removes.
-					var host := nearest_interactable(func(h: Node) -> bool: return h.has_method("tool_hit"))
+					# What the swing acts on: (1) an object on the target cell that takes this tool (a tree for the axe, a rock for
+					# the pickaxe, a sprinkler for either), (2) a crop on the target cell, which the tool deliberately removes,
+					# (3) another object in reach that takes this tool. A nearer host that does not take it never blocks the swing.
+					var tool := str(def.tool_type)
+					var crop: bool = _at_farm() and farm.get_plot(cell) != null and farm.get_plot(cell).crop_id != &""
+					var host := nearest_interactable(func(h: Node) -> bool: return area.global_to_cell((h as Node2D).global_position) == cell and _takes_tool(h, tool))
+					if host == null and not crop:
+						host = nearest_interactable(func(h: Node) -> bool: return _takes_tool(h, tool))
 					if host != null:
-						ok = bool(host.call("tool_hit", str(def.tool_type), int(def.get("power", 1)), self))
-					elif _at_farm() and farm.get_plot(cell) != null and farm.get_plot(cell).crop_id != &"":
+						ok = bool(host.call("tool_hit", tool, int(def.get("power", 1)), self))
+					elif crop:
 						ok = _remove_crop(cell)
 					else:
-						EventBus.whisper_requested.emit("UI_TOOL_NO_EFFECT")
+						# Nothing takes this tool: the nearest object that takes another one names it (FOREST_TOOL_PICKAXE on a rock).
+						var other := nearest_interactable(func(h: Node) -> bool: return h.has_method("tool_hit"))
+						if other != null:
+							other.call("tool_hit", tool, int(def.get("power", 1)), self)
+						else:
+							EventBus.whisper_requested.emit("UI_TOOL_NO_EFFECT")
 		"seed":
 			if _at_farm():
 				var reason: String = farm.plant(cell, item)
@@ -444,6 +454,11 @@ func _remove_crop(cell: Vector2i) -> bool:
 	if cleared:
 		EventBus.whisper_requested.emit("FARM_CROP_CLEARED")
 	return harvested or cleared
+
+## The tool contract: a host with tool_hit takes a hit from `tool` unless its optional accepts_tool(tool) says no
+## (ResourceNode2D: the axe takes trees, the pickaxe rocks, forage takes neither; FarmMachine2D: both).
+func _takes_tool(host: Node, tool: String) -> bool:
+	return host.has_method("tool_hit") and (not host.has_method("accepts_tool") or bool(host.call("accepts_tool", tool)))
 
 func _is_cow(host: Node) -> bool:
 	if not host is Animal2D:
