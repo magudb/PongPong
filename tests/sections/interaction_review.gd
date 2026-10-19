@@ -1,7 +1,6 @@
 extends RefCounted
-## Regressions from the 2026-10-19 review of player interaction, combat input and world hosts:
-## telegraph-only damage (DUN-01), dodge direction (GAP3-06), the buffered dodge across a pause (GAP3-12), E reach
-## (GAP3-02), the host choice of E and of the tools (GAP3-03), the axe on crops (GAP4-02) and the placement marker (GAP4-04).
+## Regressions from the 2026-10-19 review of player interaction, combat input and world hosts; each group of checks names
+## its finding id (DUN-01, GAP3-02/03/06/08/10/12/13, GAP4-02/04, SIM-03).
 const SECTION := "interaction_review"
 const TIMEOUT_S := 180.0
 
@@ -76,6 +75,7 @@ func run(t) -> void:
 	await _reach_touching(t)
 	await _spent_hosts(t)
 	await _tool_targets(t)
+	await _hotbar_auto_assign(t)
 	await world.travel(&"farm", &"default")
 	WorldRoot2D.unregister_map(&"_t_interaction")
 	await _axe_on_crops(t)
@@ -351,3 +351,27 @@ func _placement_reasons(t) -> void:
 	await t.physics(2)
 	t.check("decoration_marker_gold_where_it_fits", grass != Vector2i.MAX and player._marker.valid)
 	EventBus.whisper_requested.disconnect(listen)
+
+
+## GAP3-10: "use" of a placeable from the backpack never overwrites the selected tool on a full hotbar, and never duplicates a slot.
+func _hotbar_auto_assign(t) -> void:
+	var player: Player2D = t.world().player
+	var bar: Hotbar = player.hotbar
+	var before := bar.to_dict()
+	var whispers: Array = []
+	var listen := func(key: String) -> void: whispers.append(key)
+	EventBus.whisper_requested.connect(listen)
+	var kit: Array[StringName] = [&"hoe_wooden", &"watering_can_copper", &"axe_wooden", &"pickaxe_wooden", &"scythe", &"turnip_seeds", &"sword_rusty", &"health_tonic"]
+	for i in Hotbar.SIZE:
+		bar.assign(i, kit[i])
+	bar.select(2)
+	var full := bar.slots.duplicate()
+	EventBus.hotbar_assign_requested.emit(-1, &"scarecrow")
+	t.check("full_hotbar_refuses_auto_assign", bar.slots == full and bar.selected == 2 and whispers == ["HUD_HOTBAR_FULL"], "%s selected %d whispers %s" % [bar.slots, bar.selected, whispers])
+	EventBus.hotbar_assign_requested.emit(-1, &"turnip_seeds")
+	t.check("held_item_is_selected_not_duplicated", bar.slots == full and bar.selected == 5 and bar.slots.count(&"turnip_seeds") == 1)
+	bar.assign(3, &"")
+	EventBus.hotbar_assign_requested.emit(-1, &"scarecrow")
+	t.check("free_slot_takes_item_in_hand", bar.slots[3] == &"scarecrow" and bar.selected == 3 and bar.slots[2] == &"axe_wooden")
+	EventBus.whisper_requested.disconnect(listen)
+	bar.from_dict(before)

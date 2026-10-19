@@ -7,3 +7,4 @@ HUD_ITEM_USING,I brug,Using
 HUD_ITEM_WEAPON,Våben,Weapon
 HUD_ITEM_EMPTY,Tomme hænder,Empty hands
 HUD_ITEM_UNAVAILABLE,Ikke i tasken,Not in backpack
+HUD_HOTBAR_FULL,Alle hurtigpladser er i brug. Vælg selv en plads i rygsækken.,Every hotbar slot is in use. Choose a slot in the backpack.
