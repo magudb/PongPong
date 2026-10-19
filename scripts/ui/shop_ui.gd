@@ -60,6 +60,7 @@ func _ready() -> void:
 	EventBus.player_inventory_changed.connect(func(_inventory): _schedule_refresh())
 	EventBus.friend_changed.connect(func(_npc, _hearts): _schedule_refresh())
 	EventBus.outfit_changed.connect(func(_outfit): _schedule_refresh())
+	%HintBar.on_dark = true
 	%HintBar.set_hints([{"pair": [&"ui_up", &"ui_down"], "key": "HINT_MOVE"}, {"action": &"ui_accept", "key": "HINT_OK"}, {"action": &"ui_cancel", "key": "HINT_BACK"}])
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("shop", Callable(get_script(), &"fixture_setup"))
 

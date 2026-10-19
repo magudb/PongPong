@@ -32,6 +32,7 @@ func run(t) -> void:
 	t.autoload("LocalizationManager").set_locale("da")
 	await t.frames(3)
 	t.check("initial_focus", shop.get_viewport().gui_get_focus_owner() == shop._rows[0])
+	_hint_contrast_on_scrim(t, game_ui)
 	var row: Button = shop._rows[0]
 	var item := StringName(str(row.item_id))
 	row.pressed.emit()
@@ -65,6 +66,28 @@ func run(t) -> void:
 	await _inventory_checks(t, game_ui)
 	await _equipment_cards(t,game_ui,false)
 	gm.clear_config_overrides()
+
+## UX-13: the key-hint words of the screens that put their HintBar on the dark scrim (#3a3150) read at >= 4.5:1 and at 13 px or more.
+func _hint_contrast_on_scrim(t, game_ui: GameUI) -> void:
+	var Foundation := preload("res://tests/sections/ui_foundation.gd")
+	var scrim := Color("#3a3150")
+	var weak: Array[String] = []
+	var words := 0
+	for id in [&"shop_ui", &"inventory_ui", &"quest_journal"]:
+		var screen: Control = game_ui.get_screen(id)
+		var bar: HintBar = screen.get_node("%HintBar") if screen != null else null
+		if bar == null:
+			weak.append("%s: no HintBar" % id)
+			continue
+		for label in bar.get_children():
+			if not (label is Label) or (label as Label).theme_type_variation == &"KeyCap":
+				continue
+			words += 1
+			var ratio: float = Foundation._contrast((label as Label).get_theme_color(&"font_color"), scrim)
+			var px: int = (label as Label).get_theme_font_size(&"font_size")
+			if ratio < 4.5 or px < 13:
+				weak.append("%s %s %.1f:1 %d px" % [id, (label as Label).text, ratio, px])
+	t.check("hint_bar_readable_on_scrim", words > 0 and weak.is_empty(), "%d words, too faint: %s" % [words, str(weak)])
 
 func _equipment_cards(t,game_ui: GameUI,native: bool) -> void:
 	var shop: Control = game_ui.get_screen(&"shop_ui")
