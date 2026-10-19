@@ -51,6 +51,19 @@ func run(t) -> void:
 	t.check("settings_opens_update_panel", panel.is_open() and t.autoload("GameManager").modal_stack() == [&"settings", &"updates"])
 	var rules := UiAudit.rule_report(panel)
 	t.check("update_panel_rules", rules.ok, str(rules.defects))
+	# REL-10: the panel names where the check goes, and the automatic check at the title can be switched off (and on again).
+	var source: Label = panel.source_label
+	var auto_check: CheckBox = panel.auto_check
+	t.check("update_panel_names_github", source.text.contains("github.com/" + ReleaseUpdates.repository()), source.text)
+	t.check("auto_check_defaults_on", ReleaseUpdates.auto_check_enabled() and auto_check.button_pressed)
+	auto_check.grab_focus()
+	t.tap_key(KEY_ENTER)
+	await t.frames(2)
+	t.check("auto_check_switch_saves_off", not auto_check.button_pressed and not ReleaseUpdates.auto_check_enabled() and SettingsStore.value("updates", "auto_check", true) == false)
+	t.tap_key(KEY_ENTER)
+	await t.frames(2)
+	t.check("auto_check_switch_saves_on", auto_check.button_pressed and ReleaseUpdates.auto_check_enabled())
+	panel.primary.grab_focus()
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(2)
 	t.check("escape_returns_to_settings", not panel.is_open() and settings.is_open() and settings.get_viewport().gui_get_focus_owner() == settings.updates_button)

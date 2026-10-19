@@ -4,6 +4,8 @@ var service: ReleaseUpdates
 var status_label: Label
 var version_label: Label
 var progress_bar: ProgressBar
+var source_label: Label
+var auto_check: CheckBox
 var primary: Button
 var back: Button
 var _confirmed := false
@@ -18,7 +20,7 @@ func _ready() -> void:
 	super._ready()
 	service = ReleaseUpdates.inst()
 	L.scrim(self)
-	var book := L.panel(self, "PanelParchment", Rect2(300, 180, 680, 360))
+	var book := L.panel(self, "PanelParchment", Rect2(300, 130, 680, 460))
 	var body := L.box(L.margin(book, 24), true, 14)
 	L.label(body, "UPDATE_TITLE", "Display34")
 	version_label = L.label(body, "", "Body")
@@ -29,6 +31,13 @@ func _ready() -> void:
 	progress_bar.show_percentage = false
 	progress_bar.custom_minimum_size.y = 18
 	body.add_child(progress_bar)
+	# Say where the check goes, and let the player stop the automatic one (REL-10).
+	source_label = L.label(body, "", "Muted14", true)
+	auto_check = CheckBox.new()
+	auto_check.name = "UpdateAutoCheck"
+	auto_check.text = "UPDATE_AUTO_CHECK"
+	auto_check.toggled.connect(func(on: bool): ReleaseUpdates.set_auto_check(on))
+	body.add_child(auto_check)
 	var buttons := L.box(body, false, 12)
 	primary = L.button(buttons, "UPDATE_CHECK", "ButtonPrimary")
 	primary.name = "UpdateAction"
@@ -36,8 +45,8 @@ func _ready() -> void:
 	back = L.button(buttons, "UI_CLOSE", "ButtonSecondaryS")
 	back.name = "UpdateClose"
 	back.pressed.connect(_on_cancel)
-	UiNav.wire_ring([primary, back])
-	UiNav.hover_focus([primary, back])
+	UiNav.wire_ring([auto_check, primary, back])
+	UiNav.hover_focus([auto_check, primary, back])
 	service.changed.connect(_changed)
 	_refresh_texts()
 
@@ -67,6 +76,8 @@ func _process(delta: float) -> void:
 func _refresh_texts() -> void:
 	if not is_node_ready() or service == null: return
 	version_label.text = tr("UPDATE_VERSION") % ReleaseUpdates.current_version()
+	source_label.text = tr("UPDATE_SOURCE") % ReleaseUpdates.repository()
+	auto_check.set_pressed_no_signal(ReleaseUpdates.auto_check_enabled())
 	var key := "UPDATE_STATE_" + service.state.to_upper()
 	status_label.text = tr(key)
 	if service.state in ["available", "ready"]: status_label.text = tr(key) % str(service.available.get("version", ""))

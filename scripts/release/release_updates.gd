@@ -32,6 +32,13 @@ static func repository() -> String:
 static func platform_name() -> String:
 	return "windows" if OS.get_name() == "Windows" else "macos" if OS.get_name() == "macOS" else ""
 
+## The automatic check at the title can be switched off in the update panel (settings.cfg [updates] auto_check, default on).
+static func auto_check_enabled() -> bool:
+	return SettingsStore.value("updates", "auto_check", true) != false
+
+static func set_auto_check(on: bool) -> void:
+	SettingsStore.store("updates", "auto_check", on, "update choice")
+
 static func production() -> bool:
 	return not OS.has_feature("editor") and DisplayServer.get_name() != "headless" and ProjectSettings.get_setting("release/channel", "development") == "stable"
 
@@ -52,7 +59,7 @@ func check(automatic := false) -> void:
 		check.call_deferred(automatic)
 		return
 	if state in ["checking", "downloading", "installing"]: return
-	if automatic and (checked or not production()): return
+	if automatic and (checked or not production() or not auto_check_enabled()): return
 	if platform_name().is_empty():
 		_set_state("unsupported")
 		return
