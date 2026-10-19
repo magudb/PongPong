@@ -81,6 +81,13 @@ func _run(t) -> void:
 	t.tap_key(KEY_H)
 	await t.frames(3)
 	t.check("close_restores_world_input",not fm.decorate_mode and not decorate.is_open() and not GameManager.is_modal_open())
+	# UIC-07: a dropped modal stack (quit to the title, load) leaves decorate mode like close() does.
+	t.tap_key(KEY_H)
+	await t.frames(3)
+	var decorating: bool = decorate.is_open() and fm.decorate_mode
+	GameManager.pop_all_modals()
+	await t.frames(2)
+	t.check("dropped_stack_ends_decorate_mode",decorating and not decorate.is_open() and not fm.decorate_mode and decorate._preview == null)
 	EventBus.game_event.emit(&"open_home_chest",{})
 	await t.frames(3)
 	t.check("storage_event_opens_chest",chest.is_open())

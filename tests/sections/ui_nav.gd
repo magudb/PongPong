@@ -35,6 +35,7 @@ class TestScreen extends TTScreen:
 	var page_steps: Array[int] = []
 	var wants := true
 	var with_field := true
+	var force_closed_calls := 0
 
 	func _ready() -> void:
 		super()
@@ -72,6 +73,9 @@ class TestScreen extends TTScreen:
 
 	func _on_page(step: int) -> void:
 		page_steps.append(step)
+
+	func _force_closed() -> void:
+		force_closed_calls += 1
 
 
 ## A screen whose _input eats ui_accept: the mutation the foundation must catch (Enter / Space / pad A would press nothing).
@@ -697,7 +701,8 @@ func _screen_lifecycle(t) -> void:
 	# the stack dropped under the screen (quit to the title, load): closed without ceremony
 	_gm.call("pop_all_modals")
 	await t.frames(1)
-	var dropped_ok: bool = not s.is_open() and not s.visible and closed[0] == 3
+	# UIC-07: the screen's own teardown still runs (exactly once), and an ordinary close() does not call it
+	var dropped_ok: bool = not s.is_open() and not s.visible and closed[0] == 3 and s.force_closed_calls == 1
 	# siblings do not stack: opening is refused while another modal is open, unless the screen is nested under the one on top
 	var a := await _screen(t, host, &"nav_a")
 	var b := await _screen(t, host, &"nav_b")

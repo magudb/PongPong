@@ -71,6 +71,10 @@ func close() -> void:
 		%HotbarPicker.visible = false
 	super.close()
 
+func _force_closed() -> void:
+	_picking = false
+	%HotbarPicker.visible = false
+
 func _on_cancel() -> void:
 	if _picking:
 		_close_picker()

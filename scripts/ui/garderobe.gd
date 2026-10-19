@@ -194,6 +194,13 @@ func _place_preview() -> void:
 		preview.position = Vector2(preview_well.size.x/2,preview_well.size.y-16)
 
 func close() -> void:
+	_drop_preview()
+	super.close()
+
+func _force_closed() -> void:
+	_drop_preview()
+
+func _drop_preview() -> void:
 	_assigning = ""
 	if is_instance_valid(preview):
 		preview_well.remove_child(preview)
@@ -203,7 +210,6 @@ func close() -> void:
 	preview_held = null
 	preview_outfit.clear()
 	_try_on.clear()
-	super.close()
 
 func _initial_focus() -> Control:
 	for button in item_buttons:

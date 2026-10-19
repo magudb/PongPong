@@ -155,3 +155,5 @@ func close() -> void:
 	if busy: return
 	super.close()
 	queue_free()
+func _force_closed() -> void:
+	if not busy: queue_free()

@@ -88,6 +88,10 @@ func close() -> void:
 	_clear_rows()
 	_closing = false
 
+func _force_closed() -> void:
+	ShopSystem.close_shop(current_shop)
+	_clear_rows()
+
 func _shop_closed(id: StringName) -> void:
 	if id == current_shop and is_open() and not _closing:
 		super.close()

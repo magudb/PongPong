@@ -65,7 +65,23 @@ func run(t) -> void:
 	await _prices_and_tabs(t, shop)
 	await _inventory_checks(t, game_ui)
 	await _equipment_cards(t,game_ui,false)
+	await _dropped_stack_closes_shop(t, shop)
 	gm.clear_config_overrides()
+
+## UIC-07: a dropped modal stack (quit to the title, load) ends the ShopSystem session and clears the rows like close() does.
+func _dropped_stack_closes_shop(t, shop: Control) -> void:
+	var service: Node = t.autoload("ShopSystem")
+	service.open_shop(&"seed_shop")
+	await t.frames(3)
+	var ended: Array = []
+	var probe := func(id: StringName): ended.append(id)
+	t.autoload("EventBus").shop_closed.connect(probe)
+	var had_rows: bool = shop.is_open() and not shop._rows.is_empty()
+	t.autoload("GameManager").pop_all_modals()
+	await t.frames(2)
+	t.autoload("EventBus").shop_closed.disconnect(probe)
+	t.check("dropped_stack_ends_shop_session", had_rows and not shop.is_open() and ended == [&"seed_shop"] and shop._rows.is_empty() and shop._row_cache.is_empty(),
+		"had rows %s, open %s, shop_closed %s, rows %d" % [had_rows, shop.is_open(), str(ended), shop._rows.size()])
 
 ## UX-13: the key-hint words of the screens that put their HintBar on the dark scrim (#3a3150) read at >= 4.5:1 and at 13 px or more.
 func _hint_contrast_on_scrim(t, game_ui: GameUI) -> void:

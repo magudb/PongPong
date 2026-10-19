@@ -133,6 +133,14 @@ func close() -> void:
 		_release_actor()
 	if selecting: selection_finished.emit(_selection_result)
 
+## A dropped stack releases the actor and the awaiter of a selection like Esc does.
+func _force_closed() -> void:
+	var selecting := _selection_mode
+	_selection_mode = false
+	if not _handoff:
+		_release_actor()
+	if selecting: selection_finished.emit("")
+
 func _exit_tree() -> void:
 	if _selection_mode:
 		_selection_mode = false

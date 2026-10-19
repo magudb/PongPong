@@ -81,11 +81,15 @@ func open(opener: Control = null) -> void:
 		FurnitureManager.decorate_mode = true
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 func close() -> void:
+	_end_decorating()
+	super.close()
+func _force_closed() -> void:
+	_end_decorating()
+func _end_decorating() -> void:
 	placing = false
 	FurnitureManager.decorate_mode = false
 	if is_instance_valid(_preview): _preview.queue_free()
 	_preview = null
-	super.close()
 func _initial_focus() -> Control:
 	return close_button
 func _wants_focus() -> bool:

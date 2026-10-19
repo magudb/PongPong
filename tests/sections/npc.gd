@@ -290,6 +290,13 @@ func _lifetime_and_schedule(t, dialogue: Control) -> void:
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(3)
 	t.check("dialogue_reentrant_second_result", outcomes.size() == 2 and outcomes[1].index == 2 and not dialogue.is_open())
+	# UIC-07: a dropped modal stack (quit to the title, load) still resolves the awaited session, so no NPC stays in its talk.
+	show_page.call(3)
+	await t.frames(2)
+	t.autoload("GameManager").pop_all_modals()
+	await t.frames(2)
+	t.check("dropped_stack_resolves_dialogue_session", outcomes.size() == 3 and outcomes[2].index == 3 and not outcomes[2].result.completed and not dialogue.is_open() and not dialogue._session,
+		str(outcomes))
 	var npc := _spawn(t, "mapseller_natteblik", {"reach": 420})
 	npc.global_position += Vector2(350, 0)
 	await t.frames(3)

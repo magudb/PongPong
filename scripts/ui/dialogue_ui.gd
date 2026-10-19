@@ -182,6 +182,10 @@ func _pick(choice: Dictionary) -> void:
 func close() -> void:
 	_finish(false)
 
+## A dropped stack must still resolve the awaited session, or the NPC that waits on it stays in its talk forever.
+func _force_closed() -> void:
+	_finish(false)
+
 func _on_cancel() -> void:
 	if GameManager.is_modal_open(&"event"):
 		EventBus.game_event.emit(&"event_skip_requested",{})
