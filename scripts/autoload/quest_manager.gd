@@ -113,6 +113,8 @@ var _claim_again: bool = false           # a claim was asked for while one ran (
 var _reward_claim_queued: bool = false
 var _refresh_queued: bool = false
 var _dispatch_depth: int = 0
+var _giver_index: Dictionary = {}        # meta.giver -> [quest ids, sorted]: built once per set of definitions, not per offerable() call (SYS-04)
+var _giver_index_size: int = -1          # quest_defs.size() the index was built for (-1 = stale)
 var _missing: Dictionary = {}            # item id -> amount a delivery needs, gathered while one event is dispatched: ONE toast per event
 var _accept_counter: int = 0
 var _state_queries: Dictionary = {}      # query name -> Callable(objective def) -> int, registered by the owner of the data
@@ -205,6 +207,7 @@ func register_quest_from_lua(quest_data: Dictionary) -> void:
 	# Lua defines availability; we only store the definition cache
 	quest_defs[quest_id] = quest_data
 	_objective_cache.erase(str(quest_id))
+	_giver_index_size = -1
 	if str(quest_data.get("source_path", "")) != "":
 		_report_binding_findings(quest_data)
 
@@ -407,14 +410,27 @@ func _quests_of_giver(giver: String) -> Array[StringName]:
 		var meta_giver := str(_Data.dict(get_quest_def(quest_id).get("meta", {})).get("giver", ""))
 		if quest_defs.has(quest_id) and (meta_giver == "" or meta_giver == giver) and not (quest_id in out):
 			out.append(quest_id)
-	var extra: Array[String] = []
-	for quest_id in quest_defs:
-		if str(_Data.dict(_Data.dict(quest_defs[quest_id]).get("meta", {})).get("giver", "")) == giver and not (StringName(str(quest_id)) in out):
-			extra.append(str(quest_id))
-	extra.sort()
-	for q in extra:
-		out.append(StringName(q))
+	for q in _quests_naming_giver(giver):
+		if quest_defs.has(StringName(q)) and not (StringName(q) in out):
+			out.append(StringName(q))
 	return out
+
+
+## The quests whose own meta names `giver`, in id order. Every NPC asks offerable() on each broadcast, so the scan over every definition runs once per
+## set of definitions (rebuilt after a registration, or when the number of definitions changed).
+func _quests_naming_giver(giver: String) -> Array:
+	if _giver_index_size != quest_defs.size():
+		_giver_index = {}
+		for quest_id in quest_defs:
+			var named := str(_Data.dict(_Data.dict(quest_defs[quest_id]).get("meta", {})).get("giver", ""))
+			if named != "":
+				if not _giver_index.has(named):
+					_giver_index[named] = []
+				(_giver_index[named] as Array).append(str(quest_id))
+		for named in _giver_index:
+			(_giver_index[named] as Array).sort()
+		_giver_index_size = quest_defs.size()
+	return _giver_index.get(giver, [])
 
 
 ## One quest of offerable(): defined, not active, startable (not done / cooled down, Lua is_available) and its zone unlocked. P14's offer

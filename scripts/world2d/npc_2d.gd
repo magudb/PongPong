@@ -40,6 +40,8 @@ var _body: CollisionShape2D
 var _query := PhysicsShapeQueryParameters2D.new()
 var _bubble := ""
 var _bubble_label: Label
+var _bubble_shown := "-"              # the kind the label shows now ("-" = never drawn): the label is restyled only when it changes
+var _bubble_queued := false
 var _talk_player: Node
 var _screen: Node
 var _act := &"idle"
@@ -114,12 +116,14 @@ func _ready() -> void:
 	_home = global_position
 	_target = _home
 	_rng.seed = hash(npc_id)
-	EventBus.time_of_day_changed.connect(func(_h, _m): _clock())
-	EventBus.modal_changed.connect(func(_stack): _update_bubble())
-	EventBus.quest_accepted.connect(func(_id): _update_bubble())
-	EventBus.quest_completed.connect(func(_id): _update_bubble())
-	EventBus.friend_changed.connect(func(_id, _hearts): _update_bubble())
-	EventBus.flag_changed.connect(func(_flag, _value): _update_bubble())
+	# every broadcast only QUEUES the bubble: one refresh per frame however many arrive (a load emits one flag_changed per flag; SYS-04);
+	# bound methods are disconnected with the node
+	EventBus.time_of_day_changed.connect(_clock.unbind(2))
+	EventBus.modal_changed.connect(_queue_bubble.unbind(1))
+	EventBus.quest_accepted.connect(_queue_bubble.unbind(1))
+	EventBus.quest_completed.connect(_queue_bubble.unbind(1))
+	EventBus.friend_changed.connect(_queue_bubble.unbind(2))
+	EventBus.flag_changed.connect(_queue_bubble.unbind(2))
 	_clock()
 	Svc.static_call("res://scripts/ghostfam/hook/ghostfam_hook.gd", &"attach", [self])
 
@@ -146,7 +150,13 @@ func set_enabled(enabled: bool) -> void:
 func _clock() -> void:
 	if str(_params.get("when", "")) == "night":
 		set_enabled(TimeManager.is_night())
-	_update_bubble()
+	_queue_bubble()
+
+func _queue_bubble() -> void:
+	if _bubble_queued:
+		return
+	_bubble_queued = true
+	_update_bubble.call_deferred()
 
 func _physics_process(delta: float) -> void:
 	if not _enabled or is_talking or (_held and not _event_walking):
@@ -377,6 +387,7 @@ func set_bubble(kind: String) -> void:
 	_update_bubble()
 
 func _update_bubble() -> void:
+	_bubble_queued = false
 	if _bubble_label == null:
 		return
 	var cinematic := GameManager.is_modal_open(&"event")
@@ -389,8 +400,10 @@ func _update_bubble() -> void:
 		kind = "heart"
 	elif SocialManager.is_birthday(str(npc_id)):
 		kind = "birthday"
-	_bubble_label.text = {"quest": "!", "heart": "♥", "note": "♪", "drop": "·"}.get(kind, "")
-	_bubble_label.set("candle", kind == "birthday")
-	_bubble_label.add_theme_color_override("font_color", C.ROSE if kind == "heart" else C.CHALK)
-	_bubble_label.queue_redraw()
+	if kind != _bubble_shown:
+		_bubble_shown = kind
+		_bubble_label.text = {"quest": "!", "heart": "♥", "note": "♪", "drop": "·"}.get(kind, "")
+		_bubble_label.set("candle", kind == "birthday")
+		_bubble_label.add_theme_color_override("font_color", C.ROSE if kind == "heart" else C.CHALK)
+		_bubble_label.queue_redraw()
 	_bubble_label.visible = (_bubble_label.text != "" or kind == "birthday") and not is_talking and not bool(get_meta("ghostfam_hiding",false))
