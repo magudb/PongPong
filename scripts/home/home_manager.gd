@@ -561,7 +561,7 @@ func _visitor_for(week: int, index: int) -> String:
 	return str(sm.call("pick_visitor", week, index))
 
 
-## Opens the visit container and returns the first result {id, amount, ...}; {} when nothing came out. LootService.open_container(zone, container_id, uid)
+## Opens the visit container and returns the first result {id, amount, ...}; {} when nothing came out. LootService.open_container(zone, container_id, uid, ctx)
 ## answers {ok, results: [{id, amount, rarity, kind}], reason}; a plain Array of results and/or the loot_rolled signal are accepted as well. The reason of a
 ## refused open (cooldown, full backpack ...) is kept in _loot_reason.
 func _open_visit_container(loot: Node, uid: String) -> Dictionary:
@@ -569,7 +569,8 @@ func _open_visit_container(loot: Node, uid: String) -> Dictionary:
 	_loot_reason = ""
 	_loot_refused = false
 	EventBus.loot_rolled.connect(_on_loot_rolled)
-	var answer: Variant = loot.call("open_container", _HomeData.VISIT_ZONE, _HomeData.VISIT_CONTAINER, uid)
+	# quiet_full: a refusal for a full backpack is told by the guest's own toast (or, on a retry, not again), not by LootService's generic one
+	var answer: Variant = loot.call("open_container", _HomeData.VISIT_ZONE, _HomeData.VISIT_CONTAINER, uid, {"quiet_full": true})
 	EventBus.loot_rolled.disconnect(_on_loot_rolled)
 	var results: Array = []
 	if answer is Array:

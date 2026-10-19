@@ -176,7 +176,7 @@ class FakeLoot extends Node:
 class FakeLootSignal extends Node:
 	var calls := 0
 
-	func open_container(_zone: String, _container: String, _uid: String) -> void:
+	func open_container(_zone: String, _container: String, _uid: String, _ctx: Dictionary = {}) -> void:
 		calls += 1
 		var bus: Node = (Engine.get_main_loop() as SceneTree).root.get_node("EventBus")
 		bus.loot_rolled.emit(&"home:visit", [{"id": "stone_block", "amount": 2, "rarity": "normal", "kind": "material"}])
@@ -257,6 +257,7 @@ func run(t) -> void:
 	_festival(t)
 	_visits(t)
 	await _visit_waits_when_full(t)
+	await _visit_waits_with_real_loot(t)
 	_guests(t)
 	_save_section(t)
 	_project_godot(t)
@@ -1265,6 +1266,55 @@ func _visit_waits_when_full(t) -> void:
 	t.check("guest_gift_waits_when_backpack_full", bag.is_empty(), "a full backpack keeps the week's guest gift at the door until there is room: %s" % str(bag.slice(0, 3)))
 	Svc.clear_overrides()
 	loot.free()
+	_hm.reset()
+
+
+## SYS-10 with the REAL LootService: the full morning gives ONE toast (the guest's, not LootService's generic "inventory full" on top of it), and a retry that
+## is refused again stays quiet. The farm's `trae` is narrowed to its backpack materials so the find cannot go to a store of its own.
+func _visit_waits_with_real_loot(t) -> void:
+	var ls: Node = Svc.node("LootService")
+	if ls == null or not ls.has_method("set_loot_config"):
+		t.skip("home.guest_gift_waits_real_loot_one_toast: LootService (F4-loot-shops) is not installed yet")
+		return
+	var bag: Array[String] = []
+	Fresh.new_game(t)
+	_eco.reset()
+	var cfg: Dictionary = (ls.call("loot_cfg") as Dictionary).duplicate(true)
+	var trae: Dictionary = cfg["containers"]["trae"]
+	trae["kinds"] = {"material": 1}
+	trae["odds"] = {"normal": 10000, "uncommon": 0, "rare": 0}
+	trae["wander_bp"] = 0
+	ls.call("set_loot_config", cfg)
+	var finds := ["nails", "plank_pine", "straw_bundle"]
+	for id in ItemKinds.all_ids("building_material") + ["wood", "stone", "moss", "iron_ore", "copper_ore", "apple", "carrot", "turnip", "honey", "milk", "egg", "wool"]:
+		if _eco.free_slots() <= 0:
+			break
+		if not id in finds:
+			_eco.add_item(StringName(id), 1, true)
+	var filler := StringName(str(ItemKinds.all_ids("building_material").filter(func(id): return not id in finds)[0]))
+	_rec.clear()
+	_hm.set_tier(3)
+	_set_date(&"foraar", 3, 1)
+	_gm.end_day()
+	var full_title: String = _lm.t("NOTIF_INVENTORY_FULL_TITLE")
+	var count_full := func() -> int: return _rec.toasts.filter(func(x): return str(x[0]) == full_title).size()
+	var count_waiting := func() -> int: return _rec.toasts.filter(func(x): return str(x[1]) == _lm.t("HOME_GUEST_GIFT_WAITING")).size()
+	_ck(_eco.free_slots() == 0 and _hm.last_visit.get("reason", "") == "full", "a full backpack: the real LootService refuses Thursday's visit as full (%s, %d free)" % [str(_hm.last_visit), _eco.free_slots()], bag)
+	_ck(count_waiting.call() == 1 and count_full.call() == 0, "the full morning gives exactly one toast, the guest's: %d waiting, %d inventory-full" % [count_waiting.call(), count_full.call()], bag)
+	_ck(_eco.add_item(filler, 1, true), "one more %s still fits its stack" % filler, bag)
+	await t.frames(2)
+	_ck(_hm.to_dict().get("visits_owed", []).size() == 1 and count_waiting.call() == 1 and count_full.call() == 0, "an inventory change that leaves no free slot: the gift keeps waiting, no toast", bag)
+	var quiet: Dictionary = ls.call("open_container", "farm", "trae", "home:visit:0:0", {"quiet_full": true})
+	_ck(str(quiet.get("reason", "")) == "full" and count_full.call() == 0, "a retry the real service refuses as full stays quiet with quiet_full (%s)" % str(quiet.get("reason", "")), bag)
+	ls.call("open_container", "farm", "trae", "home:visit:0:0")
+	_ck(count_full.call() == 1, "without quiet_full the same refusal posts the generic inventory-full toast (the flag is what keeps it quiet)", bag)
+	_eco.remove_item(filler, _eco.count_item(filler))
+	await t.frames(2)
+	var gift_toasts := _rec.toasts.filter(func(x): return str(x[0]) == _lm.t("HOME_UNLOCK_GUEST_VISITS") and str(x[1]) != _lm.t("HOME_GUEST_GIFT_WAITING"))
+	_ck(_rec.gifts.size() == 1 and str(_rec.gifts[0][1]) in finds and gift_toasts.size() == 1 and _hm.to_dict().get("visits_owed", []).is_empty() and count_full.call() == 1, "a free slot: the waiting gift arrives once with its own toast (%s)" % str(_rec.gifts), bag)
+	t.check("guest_gift_waits_real_loot_one_toast", bag.is_empty(), "with the real LootService a full visit morning toasts once and a refused retry stays quiet: %s" % str(bag.slice(0, 3)))
+	ls.call("set_loot_config", null)
+	_eco.reset()
 	_hm.reset()
 
 

@@ -12,9 +12,9 @@ extends Node
 ##   appraisal_quote(rough_id) -> {band, fee}              appraise(rough_id, ctx := {}) -> {ok, gem, rarity, fee, reason}      appraisal_available() -> bool (rules AND screen exist)
 ##   check_friend_gifts(npc_id)   grant_set_capstone(set_id)   set_capstone_granted(set_id) -> bool
 ##   deliver(item_id, amount := 1) -> {ok, sold, reason}    found(item_id) -> bool    day_value()   daily_cap_reached()   set_seed(int)
-## ctx = {dungeon, floor, band, zone, rng, luck, lock_ok, first_kill, ready, uid, deliver, consume}: `deliver` = "add" (default) or "orbs" (return the results without adding
+## ctx = {dungeon, floor, band, zone, rng, luck, lock_ok, first_kill, ready, uid, deliver, consume, quiet_full}: `deliver` = "add" (default) or "orbs" (return the results without adding
 ## them: the default of on_enemy_defeated, the pickup orb's pickup calls deliver()); `consume` = {item: n} is taken in the SAME transaction (the lake key, the three rune
-## shards); `ctx.odds` is ignored; `rng` is used only when it is a RandomNumberGenerator (tests); luck defaults to Perks.total("luck") clamped to 0..0.20.
+## shards); `quiet_full` = true leaves the "full" refusal to the caller's own toast (the guest gift that waits at the door); `ctx.odds` is ignored; `rng` is used only when it is a RandomNumberGenerator (tests); luck defaults to Perks.total("luck") clamped to 0..0.20.
 ##
 ## TWO-PHASE (every MUTATING call): PLAN (pure draws, no state change except the rng) -> FIT (every backpack-bound roll TOGETHER on a virtual pack, the consumed items
 ## freeing their slots) -> DELIVER -> COMMIT (opened, wanderer / boss / spot state). When anything does not fit the answer is {ok = false, reason = &"full", results = []}
@@ -593,7 +593,8 @@ func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNum
 	var orbs := str(ctx.get("deliver", DELIVER_ADD)) == DELIVER_ORBS
 	if not orbs and not _fits_plan(plan, rows, consume):
 		_restore(r, rng_before, own_stream)
-		_announce_full(bool(ctx.get("dungeon", false)) or str(ctx.get("uid", "")).begins_with(DUNGEON_UID_PREFIX))
+		if not bool(ctx.get("quiet_full", false)):
+			_announce_full(bool(ctx.get("dungeon", false)) or str(ctx.get("uid", "")).begins_with(DUNGEON_UID_PREFIX))
 		return _answer(false, [], &"full")
 	var out_rows: Array = []
 	var sold: Array = []
