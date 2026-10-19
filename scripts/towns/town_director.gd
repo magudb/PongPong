@@ -427,8 +427,7 @@ func _physics_process(delta: float) -> void:
 		return
 	if not ready_for_population or not running or (GameManager.current_phase != GameManager.GamePhase.PLAYING and _ctx_override.is_empty()):
 		return
-	var rate := GameManager.minutes_per_real_second() if _ctx_override.is_empty() else RouteTable.game_min_per_s
-	game_hours += delta * rate / 60.0
+	game_hours += delta * clock_rate() / 60.0
 	_tick += delta
 	if _tick >= 0.5:
 		_tick = 0
@@ -452,6 +451,13 @@ func _physics_process(delta: float) -> void:
 		actor.move_and_slide()
 		actor.visual.update_motion(actor.velocity)
 		stats.max_lag = maxf(float(stats.max_lag), distance)
+
+## Game minutes per real second between two clock ticks: the rate TimeManager
+## feeds the clock (nothing while it is paused, faster under its time scale).
+func clock_rate() -> float:
+	if not _ctx_override.is_empty():
+		return RouteTable.game_min_per_s
+	return 0.0 if TimeManager.is_paused else GameManager.minutes_per_real_second() * TimeManager.time_scale
 
 func post_ground(name: StringName) -> Vector2:
 	return anchors.get(str(name), Vector2.INF)

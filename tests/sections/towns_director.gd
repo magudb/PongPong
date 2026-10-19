@@ -123,6 +123,17 @@ func _park(t) -> void:
 		old._physics_process(1.0 / 60)
 	var ms := float(Time.get_ticks_usec() - started) / 500000.0
 	t.check("director_frame_budget", ms <= 0.3, "%.4f ms with %d live" % [ms, old.live.size()])
+	# Between clock ticks the carrot runs at the clock's own rate: scaled with it, still while it is paused.
+	var tm: Node = t.autoload("TimeManager")
+	gm.set_config_override("time.minutes_per_real_second", 2.0)
+	tm.set_time_scale(2.0)
+	var scaled: float = old.clock_rate()
+	tm.pause_time()
+	var paused: float = old.clock_rate()
+	tm.resume_time()
+	tm.set_time_scale(1.0)
+	gm.set_config_override("time.minutes_per_real_second", 0.0)
+	t.check("director_follows_the_clock_rate", is_equal_approx(scaled, 4.0) and paused == 0.0, "scaled %s paused %s" % [scaled, paused])
 
 func _curfew(t) -> void:
 	var gm: Node = t.autoload("GameManager")
