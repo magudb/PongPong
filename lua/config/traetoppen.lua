@@ -37,9 +37,6 @@ config = {
       once_per_day = true,
     },
 
-    -- stall: Brumme sells at the Torvet stall on these weekdays (TimeManager.weekday_index, 0 = Monday: 5 = Saturday, 6 = Sunday)
-    stall = { weekdays = { 5, 6 } },
-
     -- caches: Kiki's crown caches (monkey only): `slots` hidden spots, one cache per day, gold between `gold_min` and `gold_max` plus one small item
     caches = {
       slots = 5,

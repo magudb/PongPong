@@ -649,14 +649,13 @@ func _data_files(t) -> void:
 	var caches: Dictionary = LuaData.dict(cfg.get("caches", {}))
 	var lift: Dictionary = LuaData.dict(cfg.get("skovlift", {}))
 	var stops: Array = LuaData.arr(LuaData.dict(cfg.get("fast_travel", {})).get("stops", []))
-	var weekdays: Array = LuaData.arr(LuaData.dict(cfg.get("stall", {})).get("weekdays", []))
 	var numbers_ok: bool = absf(LuaData.num(cfg.get("scale", 0.0)) - 3.0) < 0.0001 and LuaData.int_of(post.get("per_day", 0)) == 1 and LuaData.arr(post.get("givers", [])).size() == 6 \
 		and LuaData.int_of(board.get("max", 0)) == 5 and LuaData.arr(board.get("givers", [])).size() == 6 and LuaData.int_of(bath.get("minutes", 0)) == 30 and bool(bath.get("once_per_day", false)) \
 		and LuaData.int_of(LuaData.dict(swap.get("give", {})).get("carrot", 0)) == 2 and bool(swap.get("once_per_day", false)) and LuaData.int_of(LuaData.dict(swap.get("table", {})).get("moonflower_seeds", 0)) == 3 and LuaData.int_of(LuaData.dict(swap.get("table", {})).get("glow_berry_seeds", 0)) == 2 \
-		and weekdays == [5, 6] and LuaData.int_of(caches.get("slots", 0)) == 5 and LuaData.int_of(caches.get("gold_min", 0)) == 20 and LuaData.int_of(caches.get("gold_max", 0)) == 50 \
+		and LuaData.int_of(caches.get("slots", 0)) == 5 and LuaData.int_of(caches.get("gold_min", 0)) == 20 and LuaData.int_of(caches.get("gold_max", 0)) == 50 \
 		and str(lift.get("to_area", "")) == "moerkeskoven" and str(lift.get("spawn", "")) == "from_traetoppen" and stops.size() == 4
 	var documented: bool = true
-	for key in ["scale", "zoom", "post", "board", "bath", "swap", "stall", "caches", "skovlift", "fast_travel"]:
+	for key in ["scale", "zoom", "post", "board", "bath", "swap", "caches", "skovlift", "fast_travel"]:
 		if not lua_text.contains("-- %s:" % key):
 			documented = false
 	var stretch_label: bool = lua_text.contains("used only by Rejsestolpen (V6, STRETCH)")
@@ -666,7 +665,7 @@ func _data_files(t) -> void:
 		if not (_data["spawns"] as Dictionary).has(str(LuaData.dict(s).get("spawn", ""))):
 			stop_spawns_ok = false
 	t.check("config_numbers_documented", numbers_ok and documented and stretch_label and agree and stop_spawns_ok,
-		"lua/config/traetoppen.lua: scale 3.0, post {6 givers, per_day 1}, board {max 5}, bath {30 min, once a day}, swap {2 carrots, moonflower 3 : glow berry 2}, stall weekdays 5 6, caches {5 slots, gold 20..50}, skovlift {moerkeskoven, from_traetoppen}; every key has its comment line, the fast_travel rows carry 'used only by Rejsestolpen (V6, STRETCH)', scale and lift agree with the JSON, every stop names a spawn of the JSON (numbers %s, documented %s, label %s, agree %s)" % [numbers_ok, documented, stretch_label, agree])
+		"lua/config/traetoppen.lua: scale 3.0, post {6 givers, per_day 1}, board {max 5}, bath {30 min, once a day}, swap {2 carrots, moonflower 3 : glow berry 2}, caches {5 slots, gold 20..50}, skovlift {moerkeskoven, from_traetoppen}; every key has its comment line, the fast_travel rows carry 'used only by Rejsestolpen (V6, STRETCH)', scale and lift agree with the JSON, every stop names a spawn of the JSON (numbers %s, documented %s, label %s, agree %s)" % [numbers_ok, documented, stretch_label, agree])
 	# --- levels.csv
 	var lm: Node = t.autoload("LocalizationManager")
 	var keys: Array[String] = ["LEVEL_PROMPT_CLIMB", "LEVEL_PROMPT_LIFT", "LEVEL_LIFT_CLOSED"]

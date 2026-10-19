@@ -31,9 +31,20 @@ func _exit_tree() -> void:
 func _morning(_day: int, _season: StringName) -> void:
 	refresh()
 static func refresh() -> void:
-	var weekend := TimeManager.weekday_index() in LuaData.arr(GameManager.config_value("traetoppen.stall.weekdays", [5, 6]))
-	GameManager.set_flag(&"brumme_at_stall", int(weekend))
-	GameManager.set_flag(&"brumme_at_work", int(not weekend))
+	var at_stall := keeps_stall_today()
+	GameManager.set_flag(&"brumme_at_stall", int(at_stall))
+	GameManager.set_flag(&"brumme_at_work", int(not at_stall))
+
+## Brumme is at the Torvet stall on the days his routine (lua/routines/core/carpenter_brumme.lua) takes him to the
+## stall's post: the routine is the one source, the dialogue's market line and the markers follow it.
+static func keeps_stall_today(ctx: Dictionary = {}) -> bool:
+	var stall := Hours.building("torvestanden")
+	var keeper := str(stall.get("keeper", "carpenter_brumme"))
+	var now := ctx if not ctx.is_empty() else Routines.now_ctx()
+	for block in Routines.plan_blocks(keeper, Routines.daily_plan(keeper, now)):
+		if str(block.get("at", "")) == str(stall.get("post", "")):
+			return true
+	return false
 
 # Dialogue services belong to the loaded world, so Hoppe can swap seeds while
 # visiting the farm as well as at his city basket. Markers own only E-interaction.
