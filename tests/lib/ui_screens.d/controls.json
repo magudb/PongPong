@@ -1,0 +1,16 @@
+{
+  "screens": [{
+    "id": "controls",
+    "title": "Styring",
+    "kind": "modal",
+    "scene": "res://scenes/ui/controls_panel.tscn",
+    "package": "Review fixes (input)",
+    "guide": "docs/design/UI_NAVIGATION.md",
+    "focus": "initial",
+    "modal": "controls",
+    "esc_depth": 1,
+    "checks": ["initial_focus", "focus_walk", "focusable_report", "rule_report", "i18n_flip", "escape_chain", "ring_pixels", "panel_pixels", "button_pixels"],
+    "open": {"driver": "res://tests/lib/ui_controls_driver.gd"},
+    "options": {"button": "%ControlsClose"}
+  }]
+}

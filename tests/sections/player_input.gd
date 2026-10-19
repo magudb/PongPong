@@ -48,6 +48,9 @@ func _free(p: Player2D) -> void:
 	p.combat.attack_held = false
 	p._cancel_flight()
 
+func run_windowed(t) -> void:
+	await run(t)
+
 func run(t) -> void:
 	_pad_families(t)
 	await t.start_world()
@@ -73,6 +76,8 @@ func run(t) -> void:
 	p.restore_after_sleep()
 	_free(p)
 	p.set_physics_process(true)
+	await _pause_row_hotkeys(t, world)
+	await _controls_page(t)
 
 ## DUN-07: in an action area LMB / pad X are the attack (buffer, held flag, Cozy auto-swing), never the hidden hotbar item.
 func _attack_before_tool(t, world: WorldRoot2D, p: Player2D, eco: Node) -> void:
@@ -408,3 +413,71 @@ func _oil_rules_direct(t, world: WorldRoot2D, p: Player2D, eco: Node) -> void:
 		and is_equal_approx(float(GameData.player_cfg("tool_seconds", -1)), 0.34)
 	t.check("oil_rules_called_directly", off_kept and on_used and tuned, "auto-refuel off keeps the flask %s, on uses one %s; the three literals are Lua config %s" % [off_kept, on_used, tuned])
 	_free(p)
+
+## UX-17: the pause rows name their world hotkey (keyboard only: a pad has none of these buttons).
+func _pause_row_hotkeys(t, world: WorldRoot2D) -> void:
+	var pause: TTScreen = world.game_ui.get_screen(&"pause_menu")
+	await UiAudit.device_swap(t, "keyboard")
+	pause.open()
+	await t.frames(2)
+	var keys := {}
+	for name in ["InventoryButton", "MapButton", "JournalButton", "PeopleButton", "WardrobeButton", "BuildButton"]:
+		var row: Node = pause.get_node_or_null("%" + name)
+		keys[name] = str(row.get_node("Hotkey").text) if row != null and row.has_node("Hotkey") else "-"
+	var resume_plain: bool = not pause.get_node("%ResumeButton").has_node("Hotkey")
+	await UiAudit.device_swap(t, "pad")
+	var pad_hidden: bool = str(pause.get_node("%InventoryButton/Hotkey").text) == ""
+	await UiAudit.device_swap(t, "keyboard")
+	pause.close()
+	await t.frames(2)
+	var want := {"InventoryButton": "I", "MapButton": "M", "JournalButton": "J", "PeopleButton": "P", "WardrobeButton": "G", "BuildButton": "B"}
+	var ok := resume_plain and pad_hidden
+	for name in keys:
+		ok = ok and (keys[name] == want[name] or keys[name] == "-")
+	# In the world the Settings footer also carries the forest help: all four buttons still fit the panel.
+	var settings: TTScreen = world.game_ui.get_screen(&"settings_ui")
+	settings.open()
+	await t.frames(2)
+	var footer_fits := true
+	for button in [settings.forest_help_button, settings.updates_button, settings.controls_button, settings.get_node("%CloseButton")]:
+		footer_fits = footer_fits and button.visible and settings.get_node("Panel").get_global_rect().encloses((button as Control).get_global_rect())
+	settings.close()
+	await t.frames(2)
+	t.check("world_settings_footer_fits", footer_fits, str(settings.get_node("Panel").get_global_rect()))
+	t.check("pause_rows_show_hotkeys", ok and keys["InventoryButton"] == "I", "keys %s, resume has none %s, a pad shows none %s" % [keys, resume_plain, pad_hidden])
+
+## UX-17: Settings opens a read-only Styring page that lists the live keys and pad buttons.
+func _controls_page(t) -> void:
+	await t.go_menu()
+	var settings: TTScreen = t.tree.current_scene.get_node("SettingsUI")
+	settings.open()
+	await t.frames(2)
+	var footer_fits: bool = settings.get_node("Panel").get_global_rect().encloses(settings.controls_button.get_global_rect()) and settings.get_node("Panel").get_global_rect().encloses(settings.get_node("%CloseButton").get_global_rect())
+	t.check("settings_footer_fits_controls_button", footer_fits and settings.controls_button.visible, "panel %s, button %s" % [settings.get_node("Panel").get_global_rect(), settings.controls_button.get_global_rect()])
+	settings.controls_button.pressed.emit()
+	await t.frames(2)
+	var panel: TTScreen = settings.get_node("Controls")
+	var book: Control = panel.get_child(panel.get_child_count() - 1) as Control
+	var cells_fit := true
+	for cell in panel._cells:
+		for label in [cell[1], cell[2]]:
+			cells_fit = cells_fit and book.get_global_rect().encloses((label as Control).get_global_rect())
+	t.check("settings_opens_controls_page", panel.is_open() and t.autoload("GameManager").modal_stack() == [&"settings", &"controls"])
+	var texts := {}
+	for cell in panel._cells:
+		texts[str(cell[0][0])] = [str(cell[1].text), str(cell[2].text)]
+	var listed: bool = texts["NAV_CONTROLS_TOOL"][0].contains("X") and texts["NAV_CONTROLS_TOOL"][0].contains(str(TranslationServer.translate("KEY_MOUSE_LEFT"))) \
+		and texts["NAV_CONTROLS_RUN"][1] == "LT" and texts["NAV_CONTROLS_FLY"] == ["F", "Y"] and texts["INDRET_TITLE"][0] == "H" \
+		and texts["INV_TITLE"] == ["I / Tab", str(TranslationServer.translate("NAV_CONTROLS_PAUSE_ROW"))] and texts["NAV_CONTROLS_HOTBAR"][0] == "1–8"
+	var complete := true
+	for key in texts:
+		complete = complete and texts[key][0] != "" and texts[key][1] != ""
+	t.check("controls_page_lists_live_bindings", listed and complete, str(texts))
+	t.check("controls_page_fits_its_panel", cells_fit)
+	if t.has_window():
+		await t.capture("controls_page")
+	t.tap_key(KEY_ESCAPE)
+	await t.frames(2)
+	t.check("controls_escape_returns_to_settings", not panel.is_open() and settings.is_open() and settings.get_viewport().gui_get_focus_owner() == settings.controls_button)
+	settings.close()
+	await UiAudit.audit_screen(t, "controls")

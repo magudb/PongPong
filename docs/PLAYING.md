@@ -31,7 +31,7 @@ Press M, or choose Map in the pause menu, to see the current area, your blue dia
 
 The clothing screen has separate outfit and hands/loadout views. Select an owned piece, preview it, then apply it to equip it. Tools, weapons and lantern gems use their own equipment slots. Weapon cards show damage, attack speed, damage per second, effects and recommended floors; lantern-gem cards show their actual modifiers. The same details appear when browsing shop stock. Equipment and clothing persist with the save. The character's hands and HUD identify the selected tool on the farm and the equipped weapon in adventure areas; an action keeps showing the item actually being used until it finishes.
 
-Use arrows, Enter and Escape to navigate panels; Q / E (or PgUp / PgDn) switch tabs, and Delete or Backspace deletes a save slot. The on-screen hints also show controller bindings. Settings include the dungeon assist presets and reduced flashing.
+Use arrows, Enter and Escape to navigate panels; Q / E (or PgUp / PgDn) switch tabs, and Delete or Backspace deletes a save slot. The on-screen hints also show controller bindings. Settings include the dungeon assist presets and reduced flashing, and Settings → Styring lists every key and controller button. The pause menu shows each screen's key next to its row.
 
 ## Farm, home and towns
 

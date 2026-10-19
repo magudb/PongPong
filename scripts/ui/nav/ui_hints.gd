@@ -116,6 +116,30 @@ static func glyph(action: StringName, dev: StringName = &"", family: StringName 
 	return ""
 
 
+## Every binding of the action on the device, joined: "E / Enter", "X / Venstre klik", "X / RS↑" (the controls page lists them all;
+## a hint shows only glyph()). "" = none.
+static func glyph_all(action: StringName, dev: StringName = &"") -> String:
+	var d := _dev(dev)
+	if not InputMap.has_action(action):
+		return ""
+	var family := pad_family()
+	var parts: Array[String] = []
+	for ev in InputMap.action_get_events(action):
+		var label := ""
+		if d == GAMEPAD:
+			if ev is InputEventJoypadButton:
+				label = _pad_name((ev as InputEventJoypadButton).button_index, family)
+			elif ev is InputEventJoypadMotion:
+				label = _axis_name(ev as InputEventJoypadMotion, family)
+		elif ev is InputEventKey:
+			label = _key_name(ev as InputEventKey)
+		elif ev is InputEventMouseButton and MOUSE_WORDS.has((ev as InputEventMouseButton).button_index):
+			label = str(TranslationServer.translate(str(MOUSE_WORDS[(ev as InputEventMouseButton).button_index])))
+		if label != "" and label not in parts:
+			parts.append(label)
+	return " / ".join(parts)
+
+
 ## One label for two or more actions: "↑↓" (the arrows run together), "PgUp PgDn" / "LB RB" (words and pad letters are separated by a space), "D-pad" when every
 ## action of the set is a D-pad button.
 static func glyph_set(actions: Array, dev: StringName = &"") -> String:
