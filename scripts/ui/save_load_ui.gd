@@ -19,7 +19,8 @@ func _ready() -> void:
 	super._ready()
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("saveload", Callable(get_script(), &"fixture_setup"))
 	%CloseButton.pressed.connect(close)
-	%HintBar.set_hints([{"action": &"ui_accept", "key": "HINT_OK"}, {"action": &"ui_cancel", "key": "HINT_BACK"}])
+	%CloseButton.focus_entered.connect(_refresh_hints)
+	_refresh_hints()
 
 func open_mode(value: int, opener: Control = null) -> void:
 	mode = value
@@ -85,7 +86,7 @@ func _refresh_texts() -> void:
 		labels.add_child(detail)
 		UiNav.set_enabled(button, (not descriptor.is_auto) if mode == Mode.SAVE else descriptor.state in ["ok", "backup"])
 		button.pressed.connect(func(): _on_slot_pressed(slot))
-		button.focus_entered.connect(func(): _focused_slot = slot)
+		button.focus_entered.connect(func(): _focused_slot = slot; _refresh_hints())
 		_rows.append(button)
 		var remove := Button.new()
 		remove.name = "Delete%d" % slot
@@ -98,7 +99,7 @@ func _refresh_texts() -> void:
 		UiNav.set_enabled(remove, not descriptor.is_auto and descriptor.state != "empty")
 		remove.modulate.a = 0.0 if descriptor.is_auto else 1.0
 		remove.pressed.connect(func(): _on_delete_pressed(slot))
-		remove.focus_entered.connect(func(): _focused_slot = slot)
+		remove.focus_entered.connect(func(): _focused_slot = slot; _refresh_hints())
 		_deletes.append(remove)
 	_wire()
 
@@ -125,13 +126,33 @@ func _wire() -> void:
 	UiNav.link(%CloseButton, &"down", enabled_rows[0] if not enabled_rows.is_empty() else %CloseButton)
 	UiNav.hover_focus(_rows + _deletes + [%CloseButton])
 
+## The delete keys are the InputMap's ui_text_delete (Delete) and ui_text_backspace (the key a Mac labels "delete"). They act on the
+## row that HAS focus right now (its slot button or its Slet), never on a row focused earlier: on Luk they do nothing. A pad reaches
+## the same Slet button with the D-pad (the frozen P01 input contract has no pad binding to spare for it).
 func _input(event: InputEvent) -> void:
-	if is_open() and is_top() and event is InputEventKey and event.pressed and (event.keycode == KEY_DELETE or event.physical_keycode == KEY_DELETE):
-		if _focused_slot >= 0 and UiNav.is_stop(_deletes[_focused_slot]):
-			_on_delete_pressed(_focused_slot)
+	if is_open() and is_top() and _is_delete_key(event):
+		var slot := _slot_of(get_viewport().gui_get_focus_owner())
+		if slot >= 0 and UiNav.is_stop(_deletes[slot]):
+			_on_delete_pressed(slot)
 		get_viewport().set_input_as_handled()
 		return
 	super._input(event)
+
+static func _is_delete_key(event: InputEvent) -> bool:
+	return event.is_action_pressed(&"ui_text_delete") or event.is_action_pressed(&"ui_text_backspace")
+
+## The slot whose row `control` belongs to (its button or its Slet), -1 for anything else.
+func _slot_of(control: Control) -> int:
+	var at := _rows.find(control)
+	return at if at >= 0 else _deletes.find(control)
+
+func _refresh_hints() -> void:
+	var hints: Array = [{"action": &"ui_accept", "key": "HINT_OK"}]
+	var slot := _slot_of(get_viewport().gui_get_focus_owner()) if is_inside_tree() else -1
+	if slot >= 0 and slot < _deletes.size() and UiNav.is_stop(_deletes[slot]):
+		hints.append({"action": &"ui_text_delete", "key": "HINT_DELETE"})          # only while the focused row has a Slet
+	hints.append({"action": &"ui_cancel", "key": "HINT_BACK"})
+	%HintBar.set_hints(hints)
 
 func _on_slot_pressed(slot: int) -> void:
 	if _busy or slot < 0 or slot >= _rows.size() or not UiNav.is_stop(_rows[slot]):
