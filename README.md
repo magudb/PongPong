@@ -139,7 +139,7 @@ tools/dev/play.sh --throwaway   # same, with a temporary profile that is deleted
 | Rotate / pick up furniture | R / X or right mouse |
 | Zoom | Mouse wheel |
 | Area map | M |
-| Pause · cheat menu | Esc · F8 |
+| Pause · cheat menu (debug builds) | Esc · F8 |
 
 More detail is in [docs/PLAYING.md](docs/PLAYING.md).
 
