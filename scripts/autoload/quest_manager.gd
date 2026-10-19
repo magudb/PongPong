@@ -112,6 +112,8 @@ var _claiming_rewards: bool = false
 var _claim_again: bool = false           # a claim was asked for while one ran (a reward completed another quest): run another pass
 var _reward_claim_queued: bool = false
 var _refresh_queued: bool = false
+var _dispatch_depth: int = 0
+var _missing: Dictionary = {}            # item id -> amount a delivery needs, gathered while one event is dispatched: ONE toast per event
 var _accept_counter: int = 0
 var _state_queries: Dictionary = {}      # query name -> Callable(objective def) -> int, registered by the owner of the data
 var _offer_gates: Dictionary = {} # quest id -> a static eligibility query; retained across runs
@@ -186,6 +188,7 @@ func reset() -> void:
 	completed_days.clear()
 	pending_rewards.clear()
 	_claim_again = false
+	_missing.clear()
 	_reward_claim_queued = false
 	_refresh_queued = false
 	_accept_counter = 0
@@ -870,9 +873,12 @@ func _on_friend_changed(_npc_id: StringName, _hearts: int) -> void:
 func _dispatch(kind: StringName, ctx: Dictionary) -> void:
 	if active_quests.is_empty():
 		return
+	_dispatch_depth += 1
 	for quest_id in active_quests.keys():
 		if active_quests.has(quest_id):
 			_dispatch_to_quest(quest_id, kind, ctx)
+	_dispatch_depth -= 1
+	_flush_missing()
 
 
 func _dispatch_to_quest(quest_id: StringName, kind: StringName, ctx: Dictionary) -> void:
@@ -969,7 +975,7 @@ func _apply_hit(quest_id: StringName, objective_id: Variant, step: int, od: Dict
 	var obj: Dictionary = rt.objectives[objective_id]
 	var needs := _needs_of(od)
 	if not needs.is_empty() and not EconomyManager.has_items(needs):
-		_toast_missing_items()
+		_note_missing(needs)
 		return
 	var commit := func() -> void:
 		if not _Data.strings(od.get("any_of", [])).is_empty():
@@ -979,13 +985,33 @@ func _apply_hit(quest_id: StringName, objective_id: Variant, step: int, od: Dict
 		update_objective(quest_id, StringName(str(objective_id)), step)
 	if bool(od.get("consume", false)) and not needs.is_empty():
 		if not EconomyManager.consume_backpack_items(needs, commit):
-			_toast_missing_items()
+			_note_missing(needs)
 		return
 	commit.call()
 
 
-func _toast_missing_items() -> void:
-	EventBus.notification_posted.emit(tr("QUEST_NEEDS_ITEMS_TITLE"), tr("QUEST_NEEDS_ITEMS_TEXT"), "quest")
+## A delivery that lacks its goods: the shortfall is gathered and told once when the event has been dispatched to every quest (SYS-11).
+func _note_missing(needs: Dictionary) -> void:
+	for item_id in needs:
+		_missing[str(item_id)] = maxi(int(_missing.get(str(item_id), 0)), int(needs[item_id]))
+	_flush_missing()
+
+
+## One toast that names what is missing: "Gulerod 10 af 12". The generic text when every item is owned but cannot be handed over (a piece
+## that is not in the backpack).
+func _flush_missing() -> void:
+	if _dispatch_depth > 0 or _missing.is_empty():
+		return
+	var needs := _missing
+	_missing = {}
+	var rows: Array[String] = []
+	for item_id in needs:
+		var have := EconomyManager.count_item(StringName(item_id))
+		if have < int(needs[item_id]):
+			var shown := tr(str(EconomyManager.item_def(item_id).get("name_key", "ITEM_%s" % item_id.to_upper())))
+			rows.append(LocalizationManager.t("QUEST_NEEDS_ITEM_ROW_FMT", [shown, have, int(needs[item_id])]))
+	var text := LocalizationManager.t("QUEST_NEEDS_ITEMS_FMT", [", ".join(rows)]) if not rows.is_empty() else tr("QUEST_NEEDS_ITEMS_TEXT")
+	EventBus.notification_posted.emit(tr("QUEST_NEEDS_ITEMS_TITLE"), text, "quest")
 
 
 ## Every objective that is not a turn-in is done: the moment a turn-in (after_others) may count.
