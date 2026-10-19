@@ -6,6 +6,7 @@ enum Mode { SAVE, LOAD }
 var mode: int = Mode.LOAD
 var _rows: Array[Button] = []
 var _deletes: Array[Button] = []
+var _details: Array[Label] = []
 var _busy := false
 var _focused_slot := -1
 
@@ -51,6 +52,7 @@ func _refresh_texts() -> void:
 		child.queue_free()
 	_rows.clear()
 	_deletes.clear()
+	_details.clear()
 	for descriptor in SaveManager.describe_slots():
 		var slot := int(descriptor.slot)
 		var row := HBoxContainer.new()
@@ -84,6 +86,7 @@ func _refresh_texts() -> void:
 		if descriptor.state in ["newer", "corrupt", "backup"]:
 			detail.add_theme_color_override("font_color", preload("res://scripts/ui/theme/tt_colors.gd").THORNBERRY)
 		labels.add_child(detail)
+		_details.append(detail)
 		UiNav.set_enabled(button, (not descriptor.is_auto) if mode == Mode.SAVE else descriptor.state in ["ok", "backup"])
 		button.pressed.connect(func(): _on_slot_pressed(slot))
 		button.focus_entered.connect(func(): _focused_slot = slot; _refresh_hints())
@@ -212,10 +215,19 @@ func _on_slot_pressed(slot: int) -> void:
 				slot_selected.emit(slot, true)
 				_refresh_texts()
 				_initial_focus().grab_focus()
+			else:
+				_show_failure(slot)
 		else:
 			if SaveManager.load_and_enter(slot):
 				slot_selected.emit(slot, false)
 	_busy = false
+
+## A save that failed says so on its own row: the toast of SaveManager may be hidden behind this screen.
+func _show_failure(slot: int) -> void:
+	if slot < 0 or slot >= _details.size():
+		return
+	_details[slot].text = tr("NOTIF_SAVE_FAILED_MSG") % (slot + 1)
+	_details[slot].add_theme_color_override("font_color", preload("res://scripts/ui/theme/tt_colors.gd").THORNBERRY)
 
 func _on_delete_pressed(slot: int) -> void:
 	if _busy or slot < 0 or slot >= SaveManager.MANUAL_SLOTS or not UiNav.is_stop(_deletes[slot]):

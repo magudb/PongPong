@@ -82,6 +82,8 @@ const AUTO_SLOT := 6
 const PREV_AUTO_SLOT := 7
 const NO_SLOT := -1
 const AUTOSAVE_INTERVAL_SECONDS := 300.0
+## A failed autosave is tried again this many seconds later, not a whole interval later.
+const AUTOSAVE_RETRY_SECONDS := 30.0
 const WORLD_SCENE := "res://scenes/main/world.tscn"
 const MAX_SAVE_BYTES := 8 * 1024 * 1024
 const DEFAULT_SECTION_ORDER := 100
@@ -117,6 +119,8 @@ var pending_world: Dictionary = {}
 var auto_save_interval_seconds: float = AUTOSAVE_INTERVAL_SECONDS
 ## Switch for BOTH autosave triggers (the timer and the day end); tests of other packages may turn it off.
 var autosave_enabled: bool = true
+## True from a failed save until the next successful one (the HUD shows it; only the first autosave failure of a streak toasts).
+var save_failing: bool = false
 ## {slot, code, detail} of the last failed load or save, {} after a success. code: missing corrupt invalid version apply scene slot write gather event.
 var last_error: Dictionary = {}
 ## How a verified temp file replaces its target (see _commit_temp): through <file>.old on Windows, a plain atomic rename elsewhere.
@@ -194,6 +198,7 @@ func reset() -> void:
 	_autosave_queued = false
 	pending_world = {}
 	last_error = {}
+	save_failing = false
 
 
 # ------------------------------------------------------------------ slots and paths
@@ -255,8 +260,8 @@ func delete_save(slot: int = 0) -> void:
 
 ## Saves into `slot` (0..5, or AUTO_SLOT). `is_auto` forces the auto slot whatever `slot` says (the old autosave
 ## overwrote the current manual slot). Autosaves are silent and leave current_slot alone; a manual save toasts
-## NOTIF_SAVED_* and becomes current_slot. Returns false (and toasts NOTIF_SAVE_FAILED_* for a manual save) when the
-## file could not be written; the old file of the slot is then untouched.
+## NOTIF_SAVED_* and becomes current_slot. Returns false when the file could not be written (see _save_failed); the old file
+## of the slot is then untouched.
 func save_game(slot: int = 0, is_auto: bool = false) -> bool:
 	if GameManager.is_modal_open(&"event"):
 		last_error = {"slot":slot,"code":"event","detail":"scene effects have not committed"}
@@ -272,9 +277,7 @@ func save_game(slot: int = 0, is_auto: bool = false) -> bool:
 		# A section that could not describe itself would be missing from the file and reset to new-game state on the next load:
 		# nothing is written, the file of the slot (and its .bak) stays as it was.
 		last_error = {"slot": slot, "code": "gather", "detail": "to_dict() failed for %s" % ", ".join(_gather_failures)}
-		if not silent:
-			_toast(tr("NOTIF_SAVE_FAILED_TITLE"), tr("NOTIF_SAVE_FAILED_MSG"), slot + 1)
-		return false
+		return _save_failed(slot, silent)
 	var text := JSON.stringify(payload, "\t", true, true)
 	_ensure_dir()
 	if not silent:
@@ -283,10 +286,9 @@ func save_game(slot: int = 0, is_auto: bool = false) -> bool:
 		_keep_foreign_auto_file()
 	if not _write_atomic(slot_path(slot), text):
 		last_error = {"slot": slot, "code": "write", "detail": "could not write %s" % slot_path(slot)}
-		if not silent:
-			_toast(tr("NOTIF_SAVE_FAILED_TITLE"), tr("NOTIF_SAVE_FAILED_MSG"), slot + 1)
-		return false
+		return _save_failed(slot, silent)
 	last_error = {}
+	save_failing = false
 	if silent:
 		_auto_save_timer = 0.0
 		_auto_file_seen = {"hash": FileAccess.get_sha256(slot_path(slot)), "run": run_id}
@@ -296,6 +298,21 @@ func save_game(slot: int = 0, is_auto: bool = false) -> bool:
 	if not silent:
 		_toast(tr("NOTIF_SAVED_TITLE"), tr("NOTIF_SAVED_MSG"), slot + 1)
 	return true
+
+
+## A save that could not be written (last_error is set): EventBus.save_failed, save_failing, and feedback. A manual save toasts
+## NOTIF_SAVE_FAILED_*; an autosave toasts only the first failure of a streak (the HUD keeps showing it) and is tried again after
+## AUTOSAVE_RETRY_SECONDS instead of a whole interval. Always false.
+func _save_failed(slot: int, silent: bool) -> bool:
+	if silent:
+		_auto_save_timer = maxf(0.0, auto_save_interval_seconds - AUTOSAVE_RETRY_SECONDS)
+		if not save_failing:
+			EventBus.notification_posted.emit(tr("NOTIF_SAVE_FAILED_TITLE"), tr("NOTIF_SAVE_FAILED_AUTO_MSG"), "save")
+	else:
+		_toast(tr("NOTIF_SAVE_FAILED_TITLE"), tr("NOTIF_SAVE_FAILED_MSG"), slot + 1)
+	save_failing = true
+	EventBus.save_failed.emit(slot, str(last_error.get("code", "")))
+	return false
 
 
 ## Writes the auto slot (never a manual one) and restarts the autosave countdown.

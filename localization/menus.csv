@@ -8,6 +8,7 @@ NOTIF_LOAD_BACKUP_TITLE,Gemning gendannet,Save recovered
 NOTIF_LOAD_BACKUP_MSG,Gemningen i slot %d var beskadiget. Den forrige version blev indlæst.,The save in slot %d was damaged. The previous version was loaded.
 NOTIF_SAVE_FAILED_TITLE,Kunne ikke gemme,Could not save
 NOTIF_SAVE_FAILED_MSG,Spillet blev ikke gemt i slot %d. Tjek diskpladsen.,The game was not saved in slot %d. Check your disk space.
+NOTIF_SAVE_FAILED_AUTO_MSG,Den automatiske gemning mislykkedes. Spillet prøver igen om lidt; du kan også gemme selv i en plads.,The autosave failed. The game tries again shortly; you can also save to a slot yourself.
 SETTINGS_LANGUAGE,Sprog,Language
 SETTINGS_SIZE,Vindue,Window
 SAVELOAD_AUTO,Automatisk gemning,Autosave

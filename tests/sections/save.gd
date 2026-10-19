@@ -1387,12 +1387,18 @@ func _test_write_failure() -> void:
 	_notes.clear()
 	DirAccess.make_dir_recursive_absolute(sm.slot_path(sm.AUTO_SLOT) + ".tmp")
 	sm._auto_save_timer = 100.0
+	sm.save_failing = false                                           # the manual failure above began a streak: start a fresh one
+	var failures := _listen(bus.save_failed)
 	var auto_ok: bool = sm.autosave()
-	t.check("write_failure_autosave_is_silent", not auto_ok and _notes.is_empty(), "no toast for a failed autosave")
-	t.check("write_failure_autosave_restarts_countdown", is_zero_approx(sm._auto_save_timer), "a failed autosave does not retry every frame: the timer starts again (%s)" % sm._auto_save_timer)
+	var auto_again: bool = sm.autosave()
+	# SAVE-05: a failed autosave used to say nothing and wait a whole interval; now the first failure of a streak toasts (the HUD keeps
+	# showing it), the next ones do not, and it is tried again AUTOSAVE_RETRY_SECONDS later
+	t.check("write_failure_autosave_toasts_once", not auto_ok and not auto_again and _notes.size() == 1 and str(_notes[0][1]) == sm.tr("NOTIF_SAVE_FAILED_AUTO_MSG") and sm.save_failing
+		and failures.size() == 2 and failures[0][0] == sm.AUTO_SLOT and failures[0][1] == "write", "two failed autosaves: one toast (%d), save_failed %s" % [_notes.size(), failures])
+	t.check("write_failure_autosave_retries_soon", is_equal_approx(sm._auto_save_timer, sm.auto_save_interval_seconds - sm.AUTOSAVE_RETRY_SECONDS), "a failed autosave does not retry every frame, nor wait a whole interval: the next try is %s s away" % (sm.auto_save_interval_seconds - sm._auto_save_timer))
 	DirAccess.remove_absolute(sm.slot_path(3) + ".tmp")
 	DirAccess.remove_absolute(sm.slot_path(sm.AUTO_SLOT) + ".tmp")
-	t.check("write_recovers_after_failure", sm.save_game(3) and _gold_in(sm.slot_path(3)) == 777 and sm.last_error.is_empty(), "after a failed write the next good save clears last_error")
+	t.check("write_recovers_after_failure", sm.save_game(3) and _gold_in(sm.slot_path(3)) == 777 and sm.last_error.is_empty() and not sm.save_failing, "after a failed write the next good save clears last_error and save_failing")
 	# the rename itself fails (a directory with a file in it sits where the save belongs): reported, nothing left behind
 	var blocked: String = sm.slot_path(2)
 	DirAccess.make_dir_recursive_absolute(blocked)
@@ -1428,8 +1434,9 @@ func _test_write_failure() -> void:
 	t.check("short_write_feedback", _notes.size() == 1 and str(_notes[0][0]) == sm.tr("NOTIF_SAVE_FAILED_TITLE"), "the player is told (NOTIF_SAVE_FAILED)")
 	DirAccess.remove_absolute(sm.slot_path(sm.AUTO_SLOT))
 	_notes.clear()
+	writer.save_failing = false                                       # a fresh streak: the first autosave failure toasts
 	var short_auto: bool = writer.autosave()
-	t.check("short_write_autosave_leaves_no_file", not short_auto and not sm.has_save(sm.AUTO_SLOT) and _notes.is_empty() and not FileAccess.file_exists(sm.slot_path(sm.AUTO_SLOT) + ".tmp"), "a lossy autosave writes no auto slot at all (a half file would later be 'damaged') and says nothing")
+	t.check("short_write_autosave_leaves_no_file", not short_auto and not sm.has_save(sm.AUTO_SLOT) and _notes.size() == 1 and not FileAccess.file_exists(sm.slot_path(sm.AUTO_SLOT) + ".tmp"), "a lossy autosave writes no auto slot at all (a half file would later be 'damaged'); the failure is told once")
 	writer.lose_bytes = false
 	var whole_ok: bool = writer.save_game(3)
 	t.check("short_write_control_saves", whole_ok and _gold_in(sm.slot_path(3)) == 555 and _gold_in(sm.backup_path(3)) == 777, "the same probe with intact bytes saves (gold 555), the previous save is the .bak (777)")
