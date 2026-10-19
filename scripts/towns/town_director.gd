@@ -21,7 +21,7 @@ var ready_for_population := false
 var game_hours := 6.0
 var last_dropped := 0
 var max_live := 16
-var stats := {"spawned": 0, "removed": 0, "snaps": 0, "resyncs": 0, "max_lag": 0.0}
+var stats := {"spawned": 0, "removed": 0, "snaps": 0, "resyncs": 0, "max_lag": 0.0, "sheets_finalized": 0}
 var _params: Dictionary = {}
 var _shop_open: Dictionary = {}
 var _curfew_whispered := false
@@ -39,7 +39,8 @@ var _inn_floor: Array[Vector2] = []
 var _slot_query: PhysicsShapeQueryParameters2D
 var _dirty := false                  # a resync had to keep a talking / held citizen: look again shortly
 var _populated := ""                 # the last area_populated payload: listeners hear only a change
-var _staging: Dictionary = {}        # npc -> sheet paths of a mid-visit arrival loading on worker threads
+var _staging: Dictionary = {}        # npc -> sheet paths of a mid-visit arrival still loading on worker threads
+var _landed: Dictionary = {}         # npc -> the staged textures finalized so far (one a frame, see _poll_staging)
 var _sheets: Dictionary = {}         # npc -> the staged textures, held while he is live
 var init_ms := 0.0                   # the deferred initialization of the last entry (nav, posts, first population)
 ## Static geometry, kept for the session: the city's level graph and the reflowed festival posts of every area whose floor the
@@ -146,8 +147,10 @@ func _exit_tree() -> void:
 			pair[0].disconnect(pair[1])
 	clear_all()
 	for id in _staging:
-		_finish_staging(str(id))
+		for path in _staging[id]:
+			ResourceLoader.load_threaded_get(path)
 	_staging.clear()
+	_landed.clear()
 	_sheets.clear()
 	if not _static_floor():
 		nav = null
@@ -301,7 +304,8 @@ func resync(hard := true, only := "", ctx: Dictionary = {}) -> void:
 		EventBus.game_event.emit(&"area_populated", {"area": area_id, "citizens": live.size(), "visuals": looks.size(), "dropped": last_dropped})
 
 ## True when an arrival's idle and walking sheets are resident. Otherwise they are requested on worker threads and he is spawned by
-## _poll_staging once they are in (REND-02: a 3-4 MB sheet loaded with plain load() costs a frame or more).
+## _poll_staging once they are in (REND-02: a 3-4 MB sheet loaded with plain load() costs a frame or more). Only the clips the director
+## plays are staged: update_motion is called without `flying`, so a flyer idles or walks in town and never shows his hover sheet.
 func _stage(id: String) -> bool:
 	if _sheets.has(id):
 		return true
@@ -310,7 +314,7 @@ func _stage(id: String) -> bool:
 	var look := IsoChibiSprite2D.resolve_id(str(LuaRuntime.get_npc(id).get("visual", "fairy")))
 	var meta := IsoChibiSprite2D.meta_for(look)
 	var paths: Array[String] = []
-	for clip in ["idle", "hover" if bool(meta.get("flyer", false)) else "walk"]:
+	for clip in ["idle", "walk"]:
 		var spec: Dictionary = LuaData.dict(LuaData.dict(meta.get("animations", {})).get(clip, {}))
 		if not spec.is_empty():
 			paths.append(IsoChibiSprite2D.CHARACTERS_DIR + look + "/" + str(spec.get("sheet", clip + IsoChibiSprite2D.TEXTURE_EXTENSION)))
@@ -320,23 +324,32 @@ func _stage(id: String) -> bool:
 	for path in paths:
 		ResourceLoader.load_threaded_request(path)
 	_staging[id] = paths
+	_landed[id] = []
 	return false
 
+## Arrivals come in batches (a routine hour moves several citizens at once). Finalizing a loaded sheet uploads it (a frame's worth for a
+## 3-4 MB sheet, which is why IsoChibiSprite2D.warm_clips takes one a frame), so a frame finalizes at most one. Once no loaded sheet
+## is waiting, everyone whose sheets are all in spawns in ONE soft resync: one population pass and one area_populated per batch.
 func _poll_staging() -> void:
-	for id in _staging.keys():
-		if (_staging[id] as Array).any(func(path: String) -> bool: return ResourceLoader.load_threaded_get_status(path) == ResourceLoader.THREAD_LOAD_IN_PROGRESS):
-			continue
-		_finish_staging(str(id))
+	for id in _staging:
+		var pending: Array = _staging[id]
+		var index := pending.find_custom(func(path: String) -> bool: return ResourceLoader.load_threaded_get_status(path) != ResourceLoader.THREAD_LOAD_IN_PROGRESS)
+		if index >= 0:
+			(_landed[id] as Array).append(ResourceLoader.load_threaded_get(pending[index]))
+			pending.remove_at(index)
+			stats.sheets_finalized += 1
+			return
+	var ready: Array = _staging.keys().filter(func(id: String) -> bool: return (_staging[id] as Array).is_empty())
+	if ready.is_empty():
+		return
+	for id in ready:
+		_sheets[id] = _landed[id]
 		_staging.erase(id)
-		resync(false, str(id))
+		_landed.erase(id)
+	resync(false)
+	for id in ready:
 		if not live.has(id):
 			_sheets.erase(id)
-
-func _finish_staging(id: String) -> void:
-	var textures: Array = []
-	for path in _staging[id]:
-		textures.append(ResourceLoader.load_threaded_get(path))
-	_sheets[id] = textures
 
 func _position(anchor: String) -> Vector2:
 	var name := anchor.get_slice(".", 1) if anchor.contains(".") else anchor

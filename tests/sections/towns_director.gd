@@ -14,6 +14,11 @@ func _director(t) -> TownDirector:
 			return node
 	return null
 
+## The sheet path of one clip of a look ("" when the look has no such clip).
+func _sheet(look: String, clip: String) -> String:
+	var spec: Dictionary = LuaData.dict(LuaData.dict(IsoChibiSprite2D.meta_for(look).get("animations", {})).get(clip, {}))
+	return "" if spec.is_empty() else IsoChibiSprite2D.CHARACTERS_DIR + look + "/" + str(spec.get("sheet", clip + IsoChibiSprite2D.TEXTURE_EXTENSION))
+
 func _time(t, hour: int, minute := 0) -> void:
 	var gm: Node = t.autoload("GameManager")
 	gm.hour = hour
@@ -203,28 +208,52 @@ func _arrivals(t) -> void:
 	for i in 120:
 		director._physics_process(1.0 / 60)
 	t.check("no_resync_between_minute_ticks", director.stats.resyncs == before, "%d resyncs in two seconds without a tick" % (director.stats.resyncs - before))
-	# A walk-in whose sheets are not resident appears only once they are, loaded on worker threads.
-	var newcomer := ""
-	var sheet := ""
-	for id in everyone:
-		var look := IsoChibiSprite2D.resolve_id(str(t.autoload("LuaRuntime").get_npc(id).get("visual", "fairy")))
-		var path := IsoChibiSprite2D.CHARACTERS_DIR + look + "/" + str(IsoChibiSprite2D.meta_for(look).animations.idle.sheet)
-		if not id in cast and not ResourceLoader.has_cached(path):
-			newcomer = id
-			sheet = path
-			break
-	registry[newcomer] = registry[cast[0]].duplicate(true)
+	# A batch of walk-ins whose sheets are not resident appears once they are: loaded on worker threads, finalized one sheet a
+	# frame, then spawned together by ONE resync (one area_populated). A flyer stages what the director plays (idle, walk), not hover.
+	var lr: Node = t.autoload("LuaRuntime")
+	var look_of := func(id: String) -> String: return IsoChibiSprite2D.resolve_id(str(lr.get_npc(id).get("visual", "fairy")))
+	var newcomers: Array = []
+	var looks := {}
+	var flyers: Array = everyone.filter(func(id): return bool(IsoChibiSprite2D.meta_for(look_of.call(id)).get("flyer", false)))
+	for id in flyers + everyone:
+		var look: String = look_of.call(id)
+		if newcomers.size() < 3 and not id in cast and not id in newcomers and not looks.has(look) and not ResourceLoader.has_cached(_sheet(look, "idle")):
+			newcomers.append(id)
+			looks[look] = true
+	var flyer: bool = newcomers.any(func(id): return id in flyers)
+	for id in cast:
+		registry.erase(id)
 	Routines.clear_cache()
-	var resident := []
+	director.resync()
+	for id in newcomers:
+		registry[id] = {"priority": 50, "plans": {"day": {"blocks": [{"from": 6.0, "at": place, "act": "stand"}]}}, "select": [{"plan": "day"}]}
+	Routines.clear_cache()
+	var resident := {}
 	var spawned := func(id: String, _node: Node2D) -> void:
-		if id == newcomer:
-			resident.append(ResourceLoader.has_cached(sheet))
+		if id in newcomers:
+			resident[id] = ["idle", "walk"].all(func(clip): return _sheet(look_of.call(id), clip) == "" or ResourceLoader.has_cached(_sheet(look_of.call(id), clip)))
 	director.citizen_spawned.connect(spawned)
 	director.resync(false)
-	var staged: bool = director._staging.has(newcomer) and not director.live.has(newcomer)
-	await t.until(func(): return director.live.has(newcomer), 5.0)
+	var staged: bool = newcomers.all(func(id): return director._staging.has(id) and not director.live.has(id))
+	var hover := newcomers.any(func(id): return _sheet(look_of.call(id), "hover") != "" and (director._staging.get(id, []) as Array).has(_sheet(look_of.call(id), "hover")))
+	var sheets: int = newcomers.reduce(func(sum, id): return sum + (director._staging.get(id, []) as Array).size(), 0)
+	populated[0] = 0
+	t.autoload("EventBus").game_event.connect(listener)
+	var resyncs: int = director.stats.resyncs
+	var finalized := [director.stats.sheets_finalized]
+	var sample := func() -> void: finalized.append(director.stats.sheets_finalized)
+	director.get_tree().physics_frame.connect(sample)
+	await t.until(func(): return newcomers.all(func(id): return director.live.has(id)), 8.0)
+	director.get_tree().physics_frame.disconnect(sample)
+	t.autoload("EventBus").game_event.disconnect(listener)
 	director.citizen_spawned.disconnect(spawned)
-	t.check("walk_in_spawns_after_threaded_sheets", newcomer != "" and staged and resident == [true] and director._staging.is_empty(), "%s staged %s resident at spawn %s" % [newcomer, staged, resident])
+	var per_frame := 0
+	for i in range(1, finalized.size()):
+		per_frame = maxi(per_frame, finalized[i] - finalized[i - 1])
+	t.check("walk_in_spawns_after_threaded_sheets", newcomers.size() == 3 and staged and resident.size() == 3 and resident.values().all(func(v): return v) and director._staging.is_empty(), "%s staged %s resident at spawn %s" % [newcomers, staged, resident])
+	t.check("walk_in_batch_spawns_in_one_resync", director.stats.resyncs - resyncs == 1 and populated[0] == 1, "%d resyncs and %d area_populated for a batch of %d" % [director.stats.resyncs - resyncs, populated[0], newcomers.size()])
+	t.check("staging_finalizes_one_sheet_a_frame", per_frame == 1 and director.stats.sheets_finalized - finalized[0] == sheets, "%d sheets finalized over %d frames, at most %d in one" % [director.stats.sheets_finalized - finalized[0], finalized.size() - 1, per_frame])
+	t.check("flyer_stages_no_hover_sheet", not hover, "a flyer among the walk-ins %s; hover staged %s" % [flyer, hover])
 	Routines.override_registry = {}
 	Routines.clear_cache()
 	director.resync()
