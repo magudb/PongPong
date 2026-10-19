@@ -305,8 +305,9 @@ class InstallerTests(unittest.TestCase):
     def test_windows_path_traversal_keeps_previous(self):
         result, target = self.windows({"Traetoppen/../../escaped.txt": b"escape", "Traetoppen/Traetoppen.exe": b"bad"})
         self.assertNotEqual(result.returncode, 0)
+        # The helper stages next to the installation, so the member would land in games/.
+        self.assertFalse((self.games / "escaped.txt").exists())
         self.assertFalse((self.root / "escaped.txt").exists())
-        self.assertFalse((self.root.parent / "escaped.txt").exists())
         self.assertEqual((target / "Traetoppen.exe").read_bytes(), b"previous executable")
         self.assertEqual(self.outcome()["reason"], "package")
 
@@ -331,10 +332,13 @@ class InstallerTests(unittest.TestCase):
 
     def test_windows_retries_a_briefly_locked_installation(self):
         def hold(target):
-            threading.Timer(1.0, self.lock(target)).start()
+            release = threading.Timer(1.0, self.lock(target))
+            self.addCleanup(release.cancel)
+            release.start()
         result, target = self.windows(COMPLETE, parent=self.dummy_parent(), launch=True, before_exit=hold)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual((target / "Traetoppen.exe").read_bytes(), b"new executable")
+        self.assertEqual(self.outcome(), {"status": "installed", "reason": ""})
 
     def test_windows_locked_installation_relaunches_previous(self):
         result, target = self.windows(COMPLETE, parent=self.dummy_parent(), launch=True, before_exit=self.lock)
@@ -398,6 +402,16 @@ class InstallerTests(unittest.TestCase):
         self.assertEqual(self.outcome(), {"status": "rolled_back", "reason": "launch"})
         self.assertEqual([launched for launched, seen in self.launched()], ["0.2.0", "0.1.0"])
         self.assertEqual(list(self.games.glob(".Traetoppen-update.*")), [])
+
+    def test_macos_retries_a_briefly_locked_installation(self):
+        def hold(target):
+            release = threading.Timer(1.0, self.lock(target))
+            self.addCleanup(release.cancel)
+            release.start()
+        result, target = self.macos(parent=self.dummy_parent(), launch=True, before_exit=hold)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.version(target), "0.2.0")
+        self.assertEqual(self.outcome(), {"status": "installed", "reason": ""})
 
     def test_macos_locked_installation_relaunches_previous(self):
         result, target = self.macos(parent=self.dummy_parent(), launch=True, before_exit=self.lock)
