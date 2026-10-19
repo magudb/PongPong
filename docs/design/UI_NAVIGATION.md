@@ -157,7 +157,7 @@ Bindings are physical keys unless written otherwise. "Stage" says where the scre
 | `pause` | Esc | Start | on the world with no modal: open the pause menu. With a modal open: close the top modal (same as `ui_cancel`) | I | echo ignored |
 | `interact` | E, Enter | A | in the world: talk / use / sleep / harvest. In dialogue: same as `ui_accept` (advance, complete typing, pick the focused choice). In Indretning: place | U (world); I (dialogue and Indretning PLACE only: they dispatch the press themselves, F4) | echo ignored |
 | `jump` / `dodge` | Space | A / B | world only; **refused while a modal is open** | U | - |
-| `run`, `fly_toggle`, `fly_descend`, `light`, `drink` | Shift, F, Shift (in flight; not Ctrl, which switches Spaces on macOS), Q, R | - / - / - / Y / RB | world only | U / poll | - |
+| `run`, `fly_toggle`, `fly_descend`, `light`, `drink` | Shift, F, Shift (in flight; not Ctrl, which switches Spaces on macOS), Q, R | LT / Y / LT (in flight) / Y / RB (review UX-04; Y is light only in action areas, flight only outside them) | world only | U / poll | - |
 | `use_tool` / `attack` | LMB, X | X | world only; in an action area the press is `attack` (checked first, review DUN-07); a click on a UI Control never reaches it (the Control consumes the mouse, 3.7) | U | - |
 | `slot_1` .. `slot_10` | 1-9, 0 | - (D-pad left / right cycle, P06 amendment) | select the hotbar slot; in the backpack with an item selected: assign it to that slot; in a modal otherwise ignored | U | echo ignored |
 | `inventory` | I, Tab | - (pause-menu row) | open / close the backpack. Opening is refused while another modal is open. **Closing is read in `_input`**, because Tab is also `ui_focus_next` and the GUI stage eats it while a Control has focus (F1, F2) | I | echo ignored |
@@ -168,7 +168,7 @@ Bindings are physical keys unless written otherwise. "Stage" says where the scre
 | `collection` | C | pause-menu row | Samlerbog (only if F9 ships) | I | echo ignored |
 | `rotate_item` | R | RB | Indretning PLACE mode only | I | echo ignored |
 | `pickup_item` | X, RMB | X | Indretning only | I | echo ignored |
-| `zoom_in` / `zoom_out` | mouse wheel | - | camera zoom; **ignored while any modal is open**; Indretning consumes the wheel itself (rotate) | U | - |
+| `zoom_in` / `zoom_out` | mouse wheel; trackpad pan / pinch (gestures, not actions) | right stick up / down (held, polled) | camera zoom; **ignored while any modal is open**; Indretning consumes the wheel itself (rotate) | U | - |
 | `ui_focus_next` / `ui_focus_prev` | Tab / Shift+Tab | - | next / previous focus stop; in the backpack Tab belongs to `inventory` | G | echo repeats |
 | `ui_page_up` / `ui_page_down` | Q / E, PageUp / PageDown (Q / E: a MacBook has no PgUp / PgDn; `UiNav.page_pressed` leaves them to a focused text field) | **LB / RB (added)** | previous / next tab or page: shop tabs, quest tabs, Garderobe filters, Indretning filters (BROWSE), Vælg figur page 2 / 1; settings: nothing | I | echo ignored |
 | `ui_home` / `ui_end` | Home / End | - | not used | - | - |
@@ -266,7 +266,7 @@ Fields exist on Vælg figur page 2 (`%NameInput` max 20, `%FarmNameInput` max 24
 
 ### 3.8 Gamepad
 
-* D-pad and left stick navigate (`ui_*` defaults), A accepts, B cancels, Start pauses, LB / RB switch tabs and pages (`ui_page_up/down`), Back opens / closes Indretning. In the world: A interact / jump, B dodge, X use / attack / pick up, Y light, RB drink / rotate, D-pad left / right cycle the hotbar slot. Rotate is RB only in Indretning PLACE mode; in BROWSE the same RB switches the filter.
+* D-pad and left stick navigate (`ui_*` defaults), A accepts, B cancels, Start pauses, LB / RB switch tabs and pages (`ui_page_up/down`), Back opens / closes Indretning. In the world: A interact (jump / hop when there is nothing to interact with), B dodge, X use / attack / pick up, Y light (action areas) / flight (elsewhere), LT run (descend in flight), right stick zoom, RB drink / rotate, D-pad left / right cycle the hotbar slot. Rotate is RB only in Indretning PLACE mode; in BROWSE the same RB switches the filter.
 * Key hints switch to pad glyphs on the first pad event and back to keyboard glyphs on the first key or mouse-button event (stick noise below 0.5 does not flip it).
 * A gamepad can reach: title, Vælg figur (defaults), settings, pause, save / load, every modal through the pause rows or its own button, shop and dialogue through the world's A button. Text entry is the only thing that needs a keyboard (3.6).
 

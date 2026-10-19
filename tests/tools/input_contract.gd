@@ -27,10 +27,12 @@ const ACTIONS: Dictionary = {
 	"interact": {"keys": [KEY_E, KEY_ENTER], "joy": [JOY_BUTTON_A]},
 	"jump": {"keys": [KEY_SPACE], "joy": [JOY_BUTTON_A]},
 	"dodge": {"keys": [KEY_SPACE], "joy": [JOY_BUTTON_B]},
-	"run": {"keys": [KEY_SHIFT]},
-	"fly_toggle": {"keys": [KEY_F]},
+	# The pad runs and descends on LT, takes off on Y (light only acts in action areas, where nobody flies) and
+	# zooms with the right stick (review UX-04: a pad player could not run, fly or zoom)
+	"run": {"keys": [KEY_SHIFT], "axes": [[JOY_AXIS_TRIGGER_LEFT, 1.0]]},
+	"fly_toggle": {"keys": [KEY_F], "joy": [JOY_BUTTON_Y]},
 	# Shift, not Ctrl: Ctrl + arrows switches Spaces on macOS (review UX-16). Running is off while flying, so Shift is free there.
-	"fly_descend": {"keys": [KEY_SHIFT]},
+	"fly_descend": {"keys": [KEY_SHIFT], "axes": [[JOY_AXIS_TRIGGER_LEFT, 1.0]]},
 	# X is the keyboard tool / attack key (review UX-03: mouse-free play), the same letter as the pad button
 	"use_tool": {"keys": [KEY_X], "mouse": [MOUSE_BUTTON_LEFT], "joy": [JOY_BUTTON_X]},
 	"attack": {"keys": [KEY_X], "mouse": [MOUSE_BUTTON_LEFT], "joy": [JOY_BUTTON_X]},
@@ -51,8 +53,8 @@ const ACTIONS: Dictionary = {
 	"journal": {"keys": [KEY_J]},
 	"pause": {"keys": [KEY_ESCAPE], "joy": [JOY_BUTTON_START]},
 	"build_menu": {"keys": [KEY_B]},
-	"zoom_in": {"mouse": [MOUSE_BUTTON_WHEEL_UP]},
-	"zoom_out": {"mouse": [MOUSE_BUTTON_WHEEL_DOWN]},
+	"zoom_in": {"mouse": [MOUSE_BUTTON_WHEEL_UP], "axes": [[JOY_AXIS_RIGHT_Y, -1.0]]},
+	"zoom_out": {"mouse": [MOUSE_BUTTON_WHEEL_DOWN], "axes": [[JOY_AXIS_RIGHT_Y, 1.0]]},
 	# addendum 3.3 (features); no mouse wheel binding: Indretning consumes the wheel itself
 	"decorate": {"keys": [KEY_H], "joy": [JOY_BUTTON_BACK]},
 	"wardrobe": {"keys": [KEY_G]},
@@ -118,6 +120,8 @@ static func expected_shared() -> Dictionary:
 		"joy:%d" % JOY_BUTTON_X: ["attack", "pickup_item", "use_tool"],
 		"key:%d" % KEY_X: ["attack", "pickup_item", "use_tool"],
 		"key:%d" % KEY_SHIFT: ["fly_descend", "run"],
+		"axis:%d:+" % JOY_AXIS_TRIGGER_LEFT: ["fly_descend", "run"],
+		"joy:%d" % JOY_BUTTON_Y: ["fly_toggle", "light"],
 		"key:%d" % KEY_R: ["drink", "rotate_item"],
 		"joy:%d" % JOY_BUTTON_RIGHT_SHOULDER: ["drink", "rotate_item"],
 	}

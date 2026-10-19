@@ -137,7 +137,7 @@ tools/dev/play.sh --throwaway   # same, with a temporary profile that is deleted
 | Farm upgrades (on the farm) · decorate · people | B · H · P |
 | Hotbar | 1–8 |
 | Rotate / pick up furniture | R / X or right mouse |
-| Zoom | Mouse wheel |
+| Zoom | Mouse wheel or trackpad |
 | Area map | M |
 | Pause · cheat menu | Esc · F8 |
 

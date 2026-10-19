@@ -38,6 +38,8 @@ var _prompt_last_pos: Vector2 = Vector2(INF, INF)
 var _prompt_last_facing: int = -1
 var _prompt_stale: float = 0.0
 const PROMPT_REFRESH_S := 0.5
+## One mouse-wheel notch of zoom; a trackpad pan counts its delta in notches.
+const ZOOM_STEP := 0.05
 
 
 func _ready() -> void:
@@ -145,13 +147,38 @@ func _apply_camera_limits() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if GameData.gm().is_modal_open() or state == S.TALKING or area == null:
 		return
-	if event.is_action_pressed("zoom_in"):
-		_set_zoom(_target_zoom + 0.05)
-	elif event.is_action_pressed("zoom_out"):
-		_set_zoom(_target_zoom - 0.05)
+	if _zoom_input(event):
+		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("interact"):
 		if try_interact():
 			get_viewport().set_input_as_handled()
+
+
+## Wheel notches, and the macOS trackpad, which sends a two-finger scroll as InputEventPanGesture and a pinch as
+## InputEventMagnifyGesture instead of wheel buttons (review UX-04). The pad's right stick is held, not stepped:
+## _zoom_stick() polls it, so its motion events are skipped here.
+func _zoom_input(event: InputEvent) -> bool:
+	if event is InputEventPanGesture:
+		_set_zoom(_target_zoom - (event as InputEventPanGesture).delta.y * ZOOM_STEP)
+	elif event is InputEventMagnifyGesture:
+		_set_zoom(_target_zoom * (event as InputEventMagnifyGesture).factor)
+	elif event is InputEventJoypadMotion:
+		return false
+	elif event.is_action_pressed("zoom_in"):
+		_set_zoom(_target_zoom + ZOOM_STEP)
+	elif event.is_action_pressed("zoom_out"):
+		_set_zoom(_target_zoom - ZOOM_STEP)
+	else:
+		return false
+	return true
+
+
+## The right stick zooms while it is held (player.zoom_stick_per_second at full tilt). A wheel notch is released
+## within its own event flush, so it adds nothing here.
+func _zoom_stick(delta: float) -> void:
+	var push := Input.get_action_strength("zoom_in") - Input.get_action_strength("zoom_out")
+	if push != 0.0:
+		_set_zoom(_target_zoom + push * float(GameData.player_cfg("zoom_stick_per_second", 0.5)) * delta)
 
 
 ## Mouse wheel zoom: steps accumulate on the TARGET value and stay inside the area's zoom range.
@@ -167,6 +194,7 @@ func _physics_process(delta: float) -> void:
 	var in_dir := Vector2.ZERO
 	if state == S.FREE:
 		in_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	_zoom_stick(delta)
 	var speed: float = _run if Input.is_action_pressed("run") else _walk
 	_gvel = _gvel.move_toward(in_dir * speed, (_accel if in_dir != Vector2.ZERO else _decel) * delta)
 	velocity = Iso.to_screen(_gvel)

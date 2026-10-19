@@ -57,6 +57,7 @@ func run(t) -> void:
 	_keyboard_tool_key(t, world, p)
 	_aim_follows_device(t, world, p)
 	_mac_keys(t, world, p)
+	await _pad_run_fly_zoom(t, world, p)
 	world.call("_enter", &"farm", &"default")
 	p.restore_after_sleep()
 	_free(p)
@@ -231,3 +232,58 @@ func _mac_keys(t, world: WorldRoot2D, p: Player2D) -> void:
 		and UiNav.page_pressed(_key(KEY_PAGEDOWN), &"ui_page_down") and UiNav.page_pressed(_pad(JOY_BUTTON_LEFT_SHOULDER), &"ui_page_up")
 	field.queue_free()
 	t.check("mac_friendly_keys", down and up and page_free and typing, "Shift descends %s / stops %s; Q E page %s; in a text field only PgDn and LB page %s" % [down, up, page_free, typing])
+
+## UX-04: a pad runs (LT), takes off (Y), descends (LT in flight) and zooms (right stick); the trackpad pans and pinches the zoom.
+func _pad_run_fly_zoom(t, world: WorldRoot2D, p: Player2D) -> void:
+	var hints := [UiHints.glyph(&"run", &"gamepad", UiHints.XBOX), UiHints.glyph(&"fly_toggle", &"gamepad", UiHints.XBOX), UiHints.glyph(&"fly_descend", &"gamepad", UiHints.XBOX),
+		UiHints.glyph_pair(&"zoom_in", &"zoom_out", &"gamepad"), UiHints.glyph(&"run", &"gamepad", UiHints.PLAYSTATION)]
+	var hints_ok: bool = hints == ["LT", "Y", "LT", "RS↑ RS↓", "L2"]
+	Input.parse_input_event(_axis(JOY_AXIS_TRIGGER_LEFT, 1.0))
+	Input.flush_buffered_events()
+	var runs: bool = Input.is_action_pressed(&"run")
+	Input.parse_input_event(_axis(JOY_AXIS_TRIGGER_LEFT, 0.0))
+	Input.flush_buffered_events()
+	var stops: bool = not Input.is_action_pressed(&"run")
+	world.call("_enter", &"farm", &"default")
+	p.set_physics_process(false)
+	_free(p)
+	p.is_flying = true
+	p._unhandled_input(_axis(JOY_AXIS_TRIGGER_LEFT, 1.0))
+	var descends: bool = p._climb_down
+	p._unhandled_input(_axis(JOY_AXIS_TRIGGER_LEFT, 0.0))
+	descends = descends and not p._climb_down
+	_free(p)
+	p.combat.cooldowns.light = 0.0
+	p._unhandled_input(_pad(JOY_BUTTON_Y))
+	var takes_off: bool = p.is_flying == p.can_fly_here() and p.combat.cooldowns.light == 0.0
+	_free(p)
+	t.check("pad_runs_and_flies", hints_ok and runs and stops and descends and takes_off, "hints %s; LT runs %s / stops %s; LT descends in flight %s; Y takes off where the hero can fly (%s), never lights on the farm: %s" % [hints, runs, stops, descends, p.can_fly_here(), takes_off])
+	world.call("_enter", &"_fixture_ortho", &"default")
+	p.set_physics_process(false)
+	_free(p)
+	p._unhandled_input(_pad(JOY_BUTTON_Y))
+	t.check("pad_y_lights_in_action_area", p.combat.cooldowns.light > 0.0 and not p.is_flying)
+	_free(p)
+	world.call("_enter", &"farm", &"default")
+	p.set_physics_process(false)
+	var range: Vector2 = world.area.zoom_range
+	p.set_zoom((range.x + range.y) * 0.5)
+	var z0: float = p.camera.zoom.x
+	p._unhandled_input(_axis(JOY_AXIS_RIGHT_Y, -1.0))
+	var motion_skipped: bool = is_equal_approx(p.camera.zoom.x, z0)
+	Input.action_press(&"zoom_in", 1.0)
+	p._zoom_stick(0.1)
+	Input.action_release(&"zoom_in")
+	var stick_in: bool = is_equal_approx(p.camera.zoom.x, minf(range.y, z0 + 0.1 * float(GameData.player_cfg("zoom_stick_per_second", 0.5))))
+	p.set_zoom(z0)
+	var pan := InputEventPanGesture.new()
+	pan.delta = Vector2(0, -1.0)
+	p._unhandled_input(pan)
+	var pan_in: bool = is_equal_approx(p.camera.zoom.x, minf(range.y, z0 + PlayerBody2D.ZOOM_STEP))
+	p.set_zoom(z0)
+	var pinch := InputEventMagnifyGesture.new()
+	pinch.factor = 0.9
+	p._unhandled_input(pinch)
+	var pinch_out: bool = is_equal_approx(p.camera.zoom.x, maxf(range.x, z0 * 0.9))
+	p.set_zoom(world.area.zoom_default)
+	t.check("pad_stick_and_trackpad_zoom", motion_skipped and stick_in and pan_in and pinch_out, "a stick event steps nothing %s; held stick zooms in %s; pan up zooms in %s; pinch zooms out %s" % [motion_skipped, stick_in, pan_in, pinch_out])

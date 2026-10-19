@@ -182,11 +182,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			hotbar.select(index) # 9/0 remain defined inputs; this eight-slot layout ignores them.
 			get_viewport().set_input_as_handled()
 			return
-	if event.is_action_pressed("zoom_in"):
-		_set_zoom(_target_zoom + 0.05)
-	elif event.is_action_pressed("zoom_out"):
-		_set_zoom(_target_zoom - 0.05)
-	elif _is_action_area():
+	if _zoom_input(event):
+		get_viewport().set_input_as_handled()
+		return
+	if _is_action_area():
 		# attack and use_tool share every binding: in an action area the press is an attack through the
 		# buffer (and Cozy auto-swing), never the hidden hotbar item (DUN-07).
 		if event.is_action_pressed("attack"):
@@ -214,7 +213,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		use_selected()
 	elif event.is_action_pressed("jump"):
 		hop()
-	for action in ["zoom_in", "zoom_out", "interact", "fly_toggle", "attack", "dodge", "light", "drink", "jump", "use_tool"]:
+	for action in ["interact", "fly_toggle", "attack", "dodge", "light", "drink", "jump", "use_tool"]:
 		if event.is_action_pressed(action):
 			get_viewport().set_input_as_handled()
 			break
@@ -252,6 +251,7 @@ func _physics_process(delta: float) -> void:
 		_update_prompt(delta)
 		return
 	combat.tick(delta)
+	_zoom_stick(delta)
 	if combat.hit_stop > 0 or combat.stopped_this_tick:
 		return
 	_tool_time = maxf(0.0, _tool_time - delta)

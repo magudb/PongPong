@@ -21,6 +21,7 @@ config = {
     gravity = 1750,                -- visual hop gravity, px/s^2
     flight_altitude = 150,         -- Fe flight: hover height above the ground shadow, px
     flight_climb = 225,            -- Fe flight: climb / descend speed, px/s
+    zoom_stick_per_second = 0.5,   -- camera zoom per second with the pad's right stick fully tilted (a wheel notch is 0.05)
     body_rx = 25,                  -- collision ellipse of a figure, ground px (x radius)
     body_ry = 14.8,                -- collision ellipse of a figure, ground px (y radius, flattened by the 36 degree view)
     interaction_range = 45,        -- E-query circle at the facing cell, ground px (D20)
