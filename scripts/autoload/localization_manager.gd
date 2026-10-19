@@ -24,6 +24,11 @@ const DEFAULT_LOCALE := "da"
 const FALLBACK_LOCALE := "en"
 const LOCALES: PackedStringArray = ["da", "en"]
 
+## preload, not the class name: an autoload must compile with a stale global class cache (a fresh clone before --import)
+const _LuaParser := preload("res://scripts/data/lua_parser.gd")
+## the keys LuaParser.parse_source adds next to the tables of the file
+const _LUA_RESULT_KEYS := ["functions", "table_assigns", "source_path", "kind", "id"]
+
 const LOC_DIR := "res://localization"
 const LEGACY_FILE := "da.csv"
 const FINAL_FILE := "zz_final.csv"
@@ -590,196 +595,17 @@ static func summarize(report: Dictionary, strict: bool = false) -> Dictionary:
 	return {"files": report["files"], "key_count": (report["rows"] as Dictionary).size(), "errors": errors, "legacy": legacy, "warnings": warnings}
 
 
-# ================================================================ static: tolerant reader for the Lua data subset
+# ================================================================ static: the Lua data of a file (LuaParser)
 
-## Reads the DATA of a project Lua file: every top-level `name = <literal>` at column 0 (string, number, boolean or
-## a table literal; tables become Dictionary (named entries) or Array (positional); functions and code are ignored).
-## Used by the lint and by tests/loc_check.gd (item ids, quest objectives, config tables) - not a Lua interpreter.
+## Reads the DATA of a project Lua file with the parser the game loads it with (LuaParser, scripts/data/lua_parser.gd):
+## every top-level `name = <literal>` and `name = { ... }` as {name: value}; tables become Dictionary (named entries) or
+## Array (positional), `{}` an empty Dictionary, functions and code are ignored, and a table defined twice keeps the last
+## definition - exactly what LuaRuntime sees. Used by the lint and by tests/loc_check.gd (item ids, quest objectives,
+## config tables) - not a Lua interpreter.
 static func lua_parse(text: String) -> Dictionary:
-	var out: Dictionary = {}
-	var rx := RegEx.new()
-	rx.compile("(?m)^([A-Za-z_][A-Za-z0-9_]*)[ \\t]*=[ \\t]*")
-	var from := 0
-	for m in rx.search_all(text):
-		var start := m.get_end()
-		if start < from or start >= text.length():
-			continue
-		var lname := m.get_string(1)
-		var c := text.unicode_at(start)
-		var value: Variant = null
-		if c == 123 or c == 34 or c == 39:
-			var reader := _LuaReader.new(text, start)
-			value = reader.value()
-			from = reader.i
-		else:
-			var eol := text.find("\n", start)
-			var raw := text.substr(start, (text.length() if eol < 0 else eol) - start)
-			var cut := raw.find("--")
-			if cut >= 0:
-				raw = raw.substr(0, cut)
-			value = _lua_scalar(raw.strip_edges())
-			if value == null and raw.strip_edges() != "nil":
-				continue
-		if out.has(lname) and out[lname] is Dictionary and value is Dictionary:
-			(out[lname] as Dictionary).merge(value as Dictionary, true)
-		else:
-			out[lname] = value
+	var parsed: Dictionary = _LuaParser.parse_source(text)
+	var out: Dictionary = (parsed["table_assigns"] as Dictionary).duplicate()
+	for key in parsed:
+		if not (str(key) in _LUA_RESULT_KEYS):
+			out[key] = parsed[key]
 	return out
-
-
-static func _lua_scalar(raw: String) -> Variant:
-	if raw == "true":
-		return true
-	if raw == "false":
-		return false
-	if raw.is_valid_int():
-		return raw.to_int()
-	if raw.is_valid_float():
-		return raw.to_float()
-	return null
-
-
-class _LuaReader:
-	var s: String
-	var i: int = 0
-	var n: int = 0
-
-	func _init(text: String, start: int = 0) -> void:
-		s = text
-		n = text.length()
-		i = start
-
-	func skip_ws() -> void:
-		while i < n:
-			var c := s.unicode_at(i)
-			if c == 32 or c == 9 or c == 10 or c == 13:
-				i += 1
-			elif c == 45 and i + 1 < n and s.unicode_at(i + 1) == 45:
-				if s.substr(i + 2, 2) == "[[":
-					var e := s.find("]]", i + 4)
-					i = n if e < 0 else e + 2
-				else:
-					var e2 := s.find("\n", i)
-					i = n if e2 < 0 else e2 + 1
-			else:
-				return
-
-	func string() -> String:
-		var q := s.unicode_at(i)
-		i += 1
-		var start := i
-		while i < n:
-			var c := s.unicode_at(i)
-			if c == 92 and i + 1 < n:
-				i += 2
-				continue
-			if c == q:
-				break
-			i += 1
-		var raw := s.substr(start, i - start)
-		i += 1
-		return raw.replace("\\\"", "\"").replace("\\'", "'")
-
-	## One value. Tables -> Dictionary/Array, strings, numbers, true/false; nil and anything that is not data -> null.
-	func value() -> Variant:
-		skip_ws()
-		if i >= n:
-			return null
-		var c := s.unicode_at(i)
-		if c == 123:
-			return table()
-		if c == 34 or c == 39:
-			return string()
-		var start := i
-		var depth := 0
-		while i < n:
-			var ch := s.unicode_at(i)
-			if ch == 34 or ch == 39:
-				string()
-				continue
-			if ch == 40 or ch == 91 or ch == 123:
-				depth += 1
-			elif ch == 41 or ch == 93 or ch == 125:
-				if depth <= 0:
-					break
-				depth -= 1
-			elif (ch == 44 or ch == 59) and depth <= 0:
-				break
-			elif ch == 45 and i + 1 < n and s.unicode_at(i + 1) == 45:
-				break
-			i += 1
-		return _scalar(s.substr(start, i - start).strip_edges())
-
-	static func _scalar(raw: String) -> Variant:
-		if raw == "true":
-			return true
-		if raw == "false":
-			return false
-		if raw.is_valid_int():
-			return raw.to_int()
-		if raw.is_valid_float():
-			return raw.to_float()
-		return null
-
-	func _is_ident_start(c: int) -> bool:
-		return (c >= 65 and c <= 90) or (c >= 97 and c <= 122) or c == 95
-
-	func _is_ident(c: int) -> bool:
-		return _is_ident_start(c) or (c >= 48 and c <= 57)
-
-	func table() -> Variant:
-		i += 1
-		var named: Dictionary = {}
-		var positional: Array = []
-		while i < n:
-			skip_ws()
-			if i >= n:
-				break
-			var c := s.unicode_at(i)
-			if c == 125:
-				i += 1
-				break
-			if c == 44 or c == 59:
-				i += 1
-				continue
-			var before := i
-			var key: Variant = null
-			var is_named := false
-			if c == 91:
-				var save := i
-				i += 1
-				var k: Variant = value()
-				skip_ws()
-				if i < n and s.unicode_at(i) == 93:
-					i += 1
-				skip_ws()
-				if i < n and s.unicode_at(i) == 61 and (i + 1 >= n or s.unicode_at(i + 1) != 61):
-					i += 1
-					key = k
-					is_named = true
-				else:
-					i = save + 1
-			elif _is_ident_start(c):
-				var j := i
-				while j < n and _is_ident(s.unicode_at(j)):
-					j += 1
-				var k2 := j
-				while k2 < n and (s.unicode_at(k2) == 32 or s.unicode_at(k2) == 9 or s.unicode_at(k2) == 10 or s.unicode_at(k2) == 13):
-					k2 += 1
-				if k2 < n and s.unicode_at(k2) == 61 and (k2 + 1 >= n or s.unicode_at(k2 + 1) != 61):
-					key = s.substr(i, j - i)
-					i = k2 + 1
-					is_named = true
-			var v: Variant = value()
-			if is_named and key != null:
-				named[key] = v
-			else:
-				positional.append(v)
-			if i == before:
-				i += 1
-		if named.is_empty():
-			return positional
-		for pi in positional.size():
-			if positional[pi] != null and not named.has(pi + 1):
-				named[pi + 1] = positional[pi]
-		return named

@@ -363,15 +363,19 @@ config = { three = 3 }
 	var alpha: Dictionary = items.get("alpha", {})
 	t.check("lua_reader_top_level_scalars", d.get("kind") == "items" and d.get("version") == 3 and d.get("flag") == true and is_equal_approx(float(d.get("ratio", 0)), 1.5) and not d.has("foo"))
 	t.check("lua_reader_items_ids", items.keys() == ["alpha", "beta", "gamma"], str(items.keys()))
-	t.check("lua_reader_nested_values", alpha.get("n") == 5 and alpha.get("neg") == -2 and alpha.get("nested", {}).get("a") == ["x", "y"] and alpha.get("nested", {}).get("empty") == [], str(alpha))
+	t.check("lua_reader_nested_values", alpha.get("n") == 5 and alpha.get("neg") == -2 and alpha.get("nested", {}).get("a") == ["x", "y"] and alpha.get("nested", {}).get("empty") == {}, "an empty table is an empty Dictionary, as LuaRuntime reads it: %s" % str(alpha))
 	t.check("lua_reader_bracket_keys_and_strings", items["beta"].get("list") == [1, 2, 3] and items["beta"].get("s") == "single" and items["beta"].get("t") == "with, comma and } brace", str(items["beta"]))
 	t.check("lua_reader_skips_function_values_without_losing_the_next_key", items["gamma"].get("after") == "ok", str(items["gamma"]))
-	t.check("lua_reader_merges_repeated_top_level_tables", d.get("config", {}).get("one", {}).get("two") == 2 and d.get("config", {}).get("three") == 3, str(d.get("config")))
+	t.check("lua_reader_keeps_the_last_repeated_top_level_table", d.get("config", {}) == {"three": 3}, "the reader is LuaParser: a table defined twice keeps the last definition, as the game loads it (the old regex reader merged them): %s" % str(d.get("config")))
 	# a hostile/unfinished table must terminate
 	var broken := LM.lua_parse("items = { a = { b = \"x\", c = {")
 	t.check("lua_reader_terminates_on_unfinished_input", broken.has("items"))
 	var real := LM.lua_parse(FileAccess.get_file_as_string("res://lua/items/crops.lua"))
 	t.check("lua_reader_reads_the_real_items_file", real.get("items", {}) is Dictionary and (real["items"] as Dictionary).has("turnip_seeds"), "ids %s" % str((real.get("items", {}) as Dictionary).keys().slice(0, 4)))
+	# the data loc_check validates is the data the game loads (LUA-09): an indented top-level table is read too
+	var indented := LM.lua_parse("kind = \"items\"\n  items = { indented_id = { name_key = \"ITEM_INDENTED\" } }\n")
+	var real_runtime: Dictionary = t.autoload("LuaRuntime").parse_lua_source(FileAccess.get_file_as_string("res://lua/items/crops.lua"), "res://lua/items/crops.lua")
+	t.check("lua_reader_is_the_game_parser", indented.get("items", {}).has("indented_id") and real.get("items") == real_runtime.get("items"), "an indented table is read and the items of crops.lua equal what LuaRuntime parses")
 
 
 # ---------------------------------------------------------------- lint on the real tree
