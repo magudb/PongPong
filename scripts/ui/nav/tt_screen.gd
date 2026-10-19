@@ -162,7 +162,8 @@ func _on_page(_step: int) -> void:
 	pass
 
 
-## Called on open() and on NOTIFICATION_TRANSLATION_CHANGED: rebuild texts that code assembles. Never reconnect signals here.
+## Called on open() and on NOTIFICATION_TRANSLATION_CHANGED while the screen is open (a closed screen catches up on its next open()): rebuild
+## texts that code assembles. Never reconnect signals here.
 func _refresh_texts() -> void:
 	pass
 
@@ -302,7 +303,8 @@ func _is_press_echo(event: InputEvent, action: StringName) -> bool:
 
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+	# Many screens rebuild rows and data in _refresh_texts (save slots, the wardrobe grid, shop rows); a closed screen does that when it opens.
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready() and _open:
 		_refresh_texts()
 
 
