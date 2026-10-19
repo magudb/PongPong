@@ -100,6 +100,7 @@ func run(t) -> void:
 		world.set(flag, false)
 	await _all_pause_rows(t, pause, game_ui)
 	await _save_flows(t, pause, game_ui)
+	await _quit_saves(t)
 	await _title_states(t)
 	save_manager.save_dir = previous_save_dir
 
@@ -253,6 +254,51 @@ func _save_flows(t, pause: TTScreen, game_ui: GameUI) -> void:
 	await t.frames(10)
 	t.check("save_load_resume_roundtrip", t.world() != null and t.player() != null and not t.tree.paused and not gm.is_modal_open() and eco.gold == saved_gold + 77 and sm.current_slot == 0)
 	sm.save_dir = dir_before
+
+## ARCH-04: every way out (the window's close button, Cmd+Q / Alt+F4, the pause menu's Quit) goes through GameManager.quit_game,
+## whose save_before_quit autosaves a running world and asks before a quit that would lose progress. (quit_game itself ends the
+## process, so the check drives save_before_quit, and the wiring is checked on the signal and the pause menu row.)
+func _quit_saves(t) -> void:
+	var sm: Node = t.autoload("SaveManager")
+	var gm: Node = t.autoload("GameManager")
+	var eco: Node = t.autoload("EconomyManager")
+	var dir_before: String = sm.save_dir
+	sm.save_dir = "user://menus-quit-save"
+	DirAccess.make_dir_recursive_absolute(sm.save_dir)
+	await t.frames(2)
+	t.check("window_close_goes_through_quit_game", t.tree.root.close_requested.is_connected(gm.quit_game) and not t.tree.auto_accept_quit, "close_requested -> GameManager.quit_game, auto_accept_quit off")
+	eco.add_gold(31)
+	var gold: int = eco.gold
+	var saved: bool = await gm.save_before_quit()
+	t.check("quit_autosaves_running_world", saved and sm.has_save(sm.AUTO_SLOT) and int(sm.get_save_summary(sm.AUTO_SLOT).get("gold", -1)) == gold, "save_before_quit wrote the auto slot (gold %s, want %d)" % [sm.get_save_summary(sm.AUTO_SLOT).get("gold", -1), gold])
+	gm.push_modal(&"event", false)
+	sm.delete_save(sm.AUTO_SLOT)
+	var during_event: bool = await gm.save_before_quit()
+	gm.pop_modal(&"event")
+	t.check("quit_during_event_does_not_save", during_event and not sm.has_save(sm.AUTO_SLOT), "an event scene in progress is not saved, the quit goes on")
+	# a save that fails asks first (Cancel by default keeps playing; OK quits anyway)
+	DirAccess.make_dir_recursive_absolute(sm.slot_path(sm.AUTO_SLOT) + ".tmp")
+	var answers: Array = []
+	var asking := func() -> void: answers.append(await gm.save_before_quit())
+	asking.call()
+	await t.frames(3)
+	t.check("quit_failed_save_asks", answers.is_empty() and gm.top_modal() == UiConfirm.MODAL, "the failed autosave puts PAUSE_SAVE_FAILED_CONFIRM up (top modal %s)" % gm.top_modal())
+	t.tap_key(KEY_ENTER)
+	await t.frames(3)
+	t.check("quit_failed_save_cancel_keeps_playing", answers == [false] and not gm.is_modal_open(), "Cancel (the default) answers false: %s" % [answers])
+	asking.call()
+	await t.frames(3)
+	t.tap_key(KEY_LEFT)
+	t.tap_key(KEY_ENTER)
+	await t.frames(3)
+	t.check("quit_failed_save_ok_quits", answers == [false, true], "OK answers true: %s" % [answers])
+	DirAccess.remove_absolute(sm.slot_path(sm.AUTO_SLOT) + ".tmp")
+	var pause: TTScreen = t.world().game_ui.get_screen(&"pause_menu")
+	var source: String = (pause.get_script() as Script).source_code
+	t.check("pause_quit_uses_quit_game", source.contains("GameManager.quit_game(0, true, self)"), "the pause menu's Quit hands the save to quit_game")
+	sm.delete_save(sm.AUTO_SLOT)
+	sm.save_dir = dir_before
+
 
 func run_windowed(t) -> void:
 	const Fixtures := preload("res://scripts/ui/dev/ui_fixtures.gd")

@@ -157,7 +157,7 @@ func _config_keys() -> void:
 		documented.append("economy.%s" % k)
 	for k in ["dark_forest_unlock_day", "ore_respawn_days", "rare_gem_chance", "enemy_damage_base", "loot_table_size", "oil_empty_hurt_interval"]:
 		documented.append("adventure.%s" % k)
-	for k in ["minutes_per_real_second", "day_start_hour", "day_end_hour", "days_per_season", "seasons", "first_weekday", "night_start_hour", "night_end_hour", "auto_save_minutes"]:
+	for k in ["minutes_per_real_second", "day_start_hour", "day_end_hour", "days_per_season", "seasons", "first_weekday", "night_start_hour", "night_end_hour"]:
 		documented.append("time.%s" % k)
 	for season in ["foraar", "sommer", "efteraar", "vinter"]:
 		documented.append("time.weather_chances.%s" % season)

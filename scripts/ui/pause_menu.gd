@@ -107,6 +107,10 @@ func _leave(quit_game: bool) -> void:
 	if _leaving:
 		return
 	_leaving = true
+	if quit_game:                              # GameManager owns the save-on-quit policy (the window's close button takes the same way)
+		await GameManager.quit_game(0, true, self)
+		_leaving = false
+		return
 	if not SaveManager.autosave():
 		var accepted := await UiConfirm.ask(self, "NOTIF_SAVE_FAILED_TITLE", tr("PAUSE_SAVE_FAILED_CONFIRM"), "NAV_OK")
 		if not accepted:
@@ -114,10 +118,7 @@ func _leave(quit_game: bool) -> void:
 			return
 	GameManager.pop_all_modals()
 	GameManager.change_phase(GameManager.GamePhase.MENU)
-	if quit_game:
-		GameManager.quit_game()
-	else:
-		get_tree().change_scene_to_file("res://scenes/main/main_menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/main/main_menu.tscn")
 
 func _floors() -> Variant:
 	return Svc.static_call("res://scripts/dungeon/floors/dungeon_floors.gd", &"inst", [], null)

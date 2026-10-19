@@ -47,7 +47,7 @@ func _run() -> void:
 			var file := FileAccess.open(argument.substr(9), FileAccess.WRITE)
 			if file != null: file.store_string(JSON.stringify(report))
 	print("RELEASE_SMOKE ", JSON.stringify(report))
-	game.quit_game(0 if failures.is_empty() else 1)
+	game.quit_game(0 if failures.is_empty() else 1, false)
 
 func _check(label: String, passed: bool) -> void:
 	print("SMOKE ", label, ": ", passed)
