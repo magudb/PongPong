@@ -99,6 +99,11 @@ func _process(delta: float) -> void:
 		_glimmer.modulate = Color(1, 1, 1, 0.72 + 0.28 * sin(_t * TAU / PULSE_SECONDS))
 
 
+## The E-query contract (PlayerBody2D.nearest_interactable): a dug spot only whispers that it rests, so a live host in reach wins E.
+func is_spent() -> bool:
+	return spent
+
+
 func get_interaction_prompt() -> String:
 	return tr(prompt_key) if prompt_key != "" else ""
 

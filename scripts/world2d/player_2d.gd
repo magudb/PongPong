@@ -355,11 +355,12 @@ func use_selected() -> bool:
 		"tool":
 			match str(def.get("tool_type", "")):
 				"pail":
-					var animal := nearest_interactable() as Animal2D
-					if animal != null:
-						var data: Variant = Svc.node("AnimalHusbandry").get_animal(animal.animal_id)
-						if data != null and str(data.species) == "cow":
-							ok = int(Svc.node("AnimalHusbandry").collect_product(animal.animal_id)) > 0
+					# The nearest COW in reach: a hen standing closer must not hide it.
+					var cow := nearest_interactable(_is_cow) as Animal2D
+					if cow != null:
+						ok = int(Svc.node("AnimalHusbandry").collect_product(cow.animal_id)) > 0
+					else:
+						EventBus.whisper_requested.emit("UI_TOOL_NO_EFFECT")
 				"hoe":
 					if _at_farm():
 						if str(Svc.static_call("res://scripts/farm/steading/objects/farm_reserve.gd", &"blocked", [area, cell], "")) not in ["", "field", "zone"]:
@@ -376,8 +377,9 @@ func use_selected() -> bool:
 				"axe", "pickaxe":
 					ok = _at_farm() and farm.clear_crop(cell, false)
 					if not ok:
-						var host := nearest_interactable()
-						if host != null and host.has_method("tool_hit"):
+						# The object in reach that takes a tool hit (a rock, a tree, a sprinkler), past nearer hosts that do not.
+						var host := nearest_interactable(func(h: Node) -> bool: return h.has_method("tool_hit"))
+						if host != null:
 							ok = bool(host.call("tool_hit", str(def.tool_type), int(def.get("power", 1)), self))
 		"seed":
 			if _at_farm():
@@ -406,6 +408,12 @@ func use_selected() -> bool:
 		visual.play_action(&"interact", 1.4 * dig)
 	tool_used.emit(item, cell, ok)
 	return ok
+
+func _is_cow(host: Node) -> bool:
+	if not host is Animal2D:
+		return false
+	var data: Variant = Svc.node("AnimalHusbandry").get_animal((host as Animal2D).animal_id)
+	return data != null and str(data.species) == "cow"
 
 func _spend_stamina(amount: float) -> void:
 	stamina = maxf(0.0, stamina - maxf(0.0, amount))

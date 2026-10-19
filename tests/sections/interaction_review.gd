@@ -1,8 +1,61 @@
 extends RefCounted
 ## Regressions from the 2026-10-19 review of player interaction, combat input and world hosts:
-## telegraph-only damage (DUN-01), dodge direction (GAP3-06) and the buffered dodge across a pause (GAP3-12).
+## telegraph-only damage (DUN-01), dodge direction (GAP3-06), the buffered dodge across a pause (GAP3-12), E reach
+## (GAP3-02) and the host choice of E and of the tools (GAP3-03).
 const SECTION := "interaction_review"
 const TIMEOUT_S := 180.0
+
+## 14 x 14 open iso platform with nothing on it: every host of the E checks is placed by the section.
+const OPEN_MAP := """
+@id _t_interaction
+@projection iso
+@ambient farm
+@theme farm
+@zone farm
+@ground
+##############
+#............#
+#............#
+#............#
+#............#
+#............#
+#............#
+#............#
+#............#
+#............#
+#............#
+#............#
+#............#
+##############
+@objects
+..............
+..............
+..............
+..............
+..............
+..............
+.......@......
+..............
+..............
+..............
+..............
+..............
+..............
+..............
+"""
+
+## A host with the E-query contract of an opened chest or a dug spot.
+class SpentProbe extends Interactable2D:
+	var spent := true
+	func is_spent() -> bool:
+		return spent
+
+## A rock: takes tool hits.
+class RockProbe extends Interactable2D:
+	var hits: Array = []
+	func tool_hit(tool: String, power: int, _player: Node) -> bool:
+		hits.append([tool, power])
+		return true
 
 
 func run(t) -> void:
@@ -18,6 +71,13 @@ func run(t) -> void:
 	await _telegraph_only(t)
 	await _dodge_direction(t)
 	await _buffer_across_pause(t)
+	WorldRoot2D.register_map(&"_t_interaction", AreaMap.parse_text(OPEN_MAP))
+	await world.travel(&"_t_interaction", &"default")
+	await _reach_touching(t)
+	await _spent_hosts(t)
+	await _tool_targets(t)
+	await world.travel(&"farm", &"default")
+	WorldRoot2D.unregister_map(&"_t_interaction")
 	gm.clear_config_overrides()
 
 
@@ -101,3 +161,95 @@ func _buffer_across_pause(t) -> void:
 		t.check("buffered_dodge_dropped_by_%s_modal" % ("pausing" if pauses else "open"), buffered and player.state != PlayerBody2D.S.DODGE and player.combat._buffer == &"",
 			"state %d buffer %s" % [player.state, player.combat._buffer])
 	player.state = PlayerBody2D.S.FREE
+
+
+func _probe(t, host: Interactable2D, at: Vector2) -> Interactable2D:
+	host.radius = Vector2(60, 60 * Iso.squash())          # the reach ellipse of an Npc2D (reach 60)
+	t.world().area.objects.add_child(host)
+	host.global_position = at
+	return host
+
+
+## GAP3-02: a host the body touches is found from every spot inside the player's cell. The query circle sat on the facing cell
+## centre, 64-192 ground px ahead, so a touching NPC was missed from about a third of the positions facing S, W, N or E.
+func _reach_touching(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var home: Vector2i = area.global_to_cell(player.global_position)
+	var probe := _probe(t, Interactable2D.new(), player.global_position)
+	var found := 0
+	var total := 0
+	var missed: Array = []
+	for facing in [0, 2, 4, 6]:
+		var ahead: Vector2 = Iso.to_ground(area.cell_to_global(home + area.facing_step(facing)) - area.cell_to_global(home)).normalized()
+		for s in [-0.4, -0.15, 0.15, 0.4]:
+			for u in [-0.4, -0.15, 0.15, 0.4]:
+				player.global_position = area.cell_to_global(home) + s * Vector2(64, 38) + u * Vector2(-64, 38)
+				player.facing8 = facing
+				probe.global_position = player.global_position + Iso.to_screen(ahead * 40.0)   # body radii 25 + 14 ground px: touching
+				await t.physics(1)
+				total += 1
+				if player.nearest_interactable() == probe:
+					found += 1
+				elif missed.size() < 4:
+					missed.append([facing, s, u])
+	t.check("touching_host_found_from_anywhere_in_cell", found == total, "%d of %d found, first misses (facing, s, u) %s" % [found, total, missed])
+	probe.queue_free()
+	player.global_position = area.cell_to_global(home)
+	player.facing8 = 0
+	await t.physics(2)
+
+
+## GAP3-03: an emptied chest or dug spot never takes E (or blanks the prompt) from a live host in reach, but still answers when it is alone.
+func _spent_hosts(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var home: Vector2i = area.global_to_cell(player.global_position)
+	player.global_position = area.cell_to_global(home)
+	player.facing8 = 0
+	var ahead: Vector2 = area.cell_to_global(home + area.facing_step(0))
+	var spent: SpentProbe = _probe(t, SpentProbe.new(), player.global_position + Vector2(0, 30))
+	var live := _probe(t, Interactable2D.new(), ahead)
+	await t.physics(2)
+	t.check("spent_host_yields_to_live_host", player.nearest_interactable() == live)
+	live.set_enabled(false)
+	await t.physics(2)
+	t.check("spent_host_alone_still_answers", player.nearest_interactable() == spent)
+	spent.spent = false
+	t.check("refilled_host_is_live_again", player.nearest_interactable() == spent)
+	spent.queue_free()
+	live.queue_free()
+	var dig := DigSpot2D.new()
+	dig.spent = true
+	var chest := LootChest2D.new()
+	chest.is_open = true
+	var closed := LootChest2D.new()
+	var spot := UniqueSpot2D.new()
+	spot.claimed = true
+	t.check("spent_states_follow_the_contract", dig.is_spent() and chest.is_spent() and not closed.is_spent() and spot.is_spent())
+	for node in [dig, chest, closed, spot]:
+		node.free()
+	await t.physics(2)
+
+
+## GAP3-03 (merged GAP3-04): a tool looks past nearer hosts it cannot act on. The axe asked only the single nearest host for tool_hit.
+func _tool_targets(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var home: Vector2i = area.global_to_cell(player.global_position)
+	player.global_position = area.cell_to_global(home)
+	player.facing8 = 0
+	player.state = PlayerBody2D.S.FREE
+	player.stamina = player.max_stamina
+	var sign_host := _probe(t, Interactable2D.new(), player.global_position + Vector2(0, 30))
+	var rock: RockProbe = _probe(t, RockProbe.new(), area.cell_to_global(home + area.facing_step(0)))
+	await t.physics(2)
+	player.hotbar.assign(0, &"axe_wooden")
+	player.hotbar.select(0)
+	var nearest_is_sign: bool = player.nearest_interactable() == sign_host
+	t.check("axe_reaches_rock_past_nearer_host", nearest_is_sign and player.use_selected() and rock.hits.size() == 1 and rock.hits[0][0] == "axe", str(rock.hits))
+	player.state = PlayerBody2D.S.FREE
+	player._tool_time = 0.0
+	sign_host.queue_free()
+	rock.queue_free()
+	await t.physics(2)

@@ -129,6 +129,11 @@ func check_hint() -> bool:
 	return true
 
 
+## The E-query contract (PlayerBody2D.nearest_interactable): a claimed spot answers nothing, so a live host in reach wins E.
+func is_spent() -> bool:
+	return claimed
+
+
 func get_interaction_prompt() -> String:
 	return tr(prompt_key) if prompt_key != "" else ""
 

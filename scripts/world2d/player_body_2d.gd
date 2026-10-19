@@ -232,33 +232,55 @@ func target_global() -> Vector2:
 	return area.cell_to_global(target_cell())
 
 
-## E-query: a circle of r = interaction_range ground px at the facing cell on layer `interactable` (D20), nearest host wins.
-func nearest_interactable() -> Node:
+## Centre of the reach circle: one interaction radius ahead of the feet, toward the facing cell (ground space).
+func reach_global() -> Vector2:
+	var feet := area.global_to_cell(global_position)
+	var step: Vector2 = Iso.to_ground(target_global() - area.cell_to_global(feet)).normalized()
+	return global_position + Iso.to_screen(step * _interact_range)
+
+
+## E-query (D20): the hosts on layer `interactable` whose area overlaps a circle of r = interaction_range ground px at
+##   * the facing cell (what a tile tool acts on),
+##   * the reach point (reach_global): a host the body touches is found wherever the feet stand inside their cell,
+##   * the feet, for counter bands only (DT53: the small end host may be underfoot while the facing cell is behind the hatch).
+## The host nearest to the player wins. A spent host (is_spent(): an opened chest, a dug spot) wins only when nothing live
+## is in reach, so it still answers E with its resting whisper but never hides a live host. `accept` (host -> bool)
+## narrows the candidates for a tool: the pail looks for a cow, the axe for something that takes a tool hit.
+func nearest_interactable(accept: Callable = Callable()) -> Node:
 	if state != S.FREE or area == null:
 		return null
 	_ensure_interact_query()
-	_interact_query.transform = Transform2D(Vector2.RIGHT, Vector2(0.0, Iso.squash()), target_global())
-	var best: Node = null
-	var best_d: float = 1e9
-	var hits := get_world_2d().direct_space_state.intersect_shape(_interact_query, 8)
-	# A counter band decides by where the customer stands (DT53). Its small
-	# end host may be underfoot while the facing cell is already behind the
-	# hatch. Other world targets still use only the normal facing-cell query.
-	_interact_query.transform = Transform2D(Vector2.RIGHT, Vector2(0.0, Iso.squash()), global_position)
+	var hosts: Array[Node2D] = []
+	_query_hosts(target_global(), hosts, "")
+	_query_hosts(reach_global(), hosts, "world")
+	_query_hosts(global_position, hosts, "counter")
+	var best: Node2D = null
+	var best_d: float = INF
+	var best_spent := true
+	for host in hosts:
+		if accept.is_valid() and not bool(accept.call(host)):
+			continue
+		var spent: bool = host.has_method("is_spent") and bool(host.call("is_spent"))
+		var d: float = Iso.ground_dist(host.global_position, global_position)
+		if (best_spent and not spent) or (spent == best_spent and d < best_d):
+			best = host
+			best_d = d
+			best_spent = spent
+	return best
+
+
+## Appends the hosts found by one query circle at `at`; `only` keeps "counter" hosts or the other ("world") ones, "" both.
+func _query_hosts(at: Vector2, hosts: Array[Node2D], only: String) -> void:
+	_interact_query.transform = Transform2D(Vector2.RIGHT, Vector2(0.0, Iso.squash()), at)
 	for hit in get_world_2d().direct_space_state.intersect_shape(_interact_query, 8):
 		var collider: Object = hit["collider"]
-		var host: Node = collider.get_parent() if collider is Area2D else null
-		if host != null and bool(host.get_meta("counter_foot_host", false)):
-			hits.append(hit)
-	for r in hits:
-		var a: Object = r["collider"]
-		var host: Node = (a as Node).get_parent() if a is Area2D else null
-		if host != null and host != self and host.has_method("interact") and host is Node2D:
-			var d: float = Iso.ground_dist((host as Node2D).global_position, global_position)
-			if d < best_d:
-				best_d = d
-				best = host
-	return best
+		var host: Node = (collider as Node).get_parent() if collider is Area2D else null
+		if host == null or host == self or not host.has_method("interact") or not host is Node2D or hosts.has(host):
+			continue
+		var counter := bool(host.get_meta("counter_foot_host", false))
+		if (only == "counter" and not counter) or (only == "world" and counter):
+			continue
+		hosts.append(host as Node2D)
 
 
 func try_interact() -> bool:
