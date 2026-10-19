@@ -16,13 +16,19 @@ static func attach(host: Node) -> Node:
 	return node
 func _ready() -> void:
 	EventBus.game_event.connect(_event)
-	EventBus.item_gained.connect(func(id,_amount):
-		if DungeonRulesData.player() != null and DungeonFloors.floor_of(DungeonRulesData.player().area) > 0: play(rarity_cue(ItemKinds.rarity_of(id))))
-	EventBus.whisper_requested.connect(func(key):
-		if key == "DEXP_OIL_LOW": play("sfx/lantern_low"))
-	EventBus.enemy_encountered.connect(func(_id): play("sfx/enemy_notice"))
+	# Bound methods, not lambdas: a lambda that never touches self belongs to the script, so it would outlive this node
+	# and every world load would add another set of cues.
+	EventBus.item_gained.connect(_item)
+	EventBus.whisper_requested.connect(_whisper)
+	EventBus.enemy_encountered.connect(_noticed)
 	EventBus.player_spawned.connect(_player)
 	_player(get_tree().get_first_node_in_group("player"))
+func _item(id: StringName, _amount: int) -> void:
+	if DungeonRulesData.player() != null and DungeonFloors.floor_of(DungeonRulesData.player().area) > 0: play(rarity_cue(ItemKinds.rarity_of(id)))
+func _whisper(key: String) -> void:
+	if key == "DEXP_OIL_LOW": play("sfx/lantern_low")
+func _noticed(_id: StringName) -> void:
+	play("sfx/enemy_notice")
 func _player(node: Node) -> void:
 	if not node is Player2D or node.damaged.is_connected(_hurt): return
 	node.damaged.connect(_hurt)

@@ -117,6 +117,16 @@ func _run(t,native: bool) -> void:
 	audio.free()
 	# DUN-02: only the boss floors (4, 8, 12) score a boss fight; the rest play their act.
 	t.check("floor_music_by_act_and_boss",Cues.floor_music(1) == "music/dungeon_act1" and Cues.floor_music(3) == "music/dungeon_act1" and Cues.floor_music(4) == "music/boss" and Cues.floor_music(5) == "music/dungeon_act2" and Cues.floor_music(8) == "music/boss" and Cues.floor_music(11) == "music/dungeon_act4" and Cues.floor_music(12) == "music/boss_final")
+	# GAP2-01: a freed cue node (every forest HUD attaches one) leaves no EventBus connection behind.
+	var bus_signals := [EventBus.game_event,EventBus.item_gained,EventBus.whisper_requested,EventBus.enemy_encountered,EventBus.player_spawned]
+	var counts_before := bus_signals.map(func(s: Signal): return s.get_connections().size())
+	var host := Node.new()
+	t.tree.root.add_child(host)
+	Cues.attach(host)
+	var counts_attached := bus_signals.map(func(s: Signal): return s.get_connections().size())
+	host.free()
+	var counts_after := bus_signals.map(func(s: Signal): return s.get_connections().size())
+	t.check("cues_disconnect_with_their_node",counts_after == counts_before and counts_attached != counts_before,"before %s attached %s after %s" % [counts_before,counts_attached,counts_after])
 	Cues.play("sfx/zz_missing_cue")
 	Cues.play("music/zz_missing_track")
 	t.check("missing_audio_is_silent",true)
