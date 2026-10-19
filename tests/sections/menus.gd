@@ -98,6 +98,39 @@ func run(t) -> void:
 		await t.frames(2)
 		t.expect(not pause.is_open() and not t.tree.paused, "Pause refused while " + flag)
 		world.set(flag, false)
+	# focus loss / a pad disconnect pause a free world (review UX-07); the harness switches the real notification off, so drive the hook
+	var focus_paused: bool = pause.auto_open() and pause.is_open() and t.tree.paused
+	pause.close()
+	await t.frames(2)
+	var config := ConfigFile.new()
+	config.load(SettingsUI.PATH)
+	var before: Variant = config.get_value("game", "pause_on_focus_loss") if config.has_section_key("game", "pause_on_focus_loss") else null
+	config.set_value("game", "pause_on_focus_loss", false)
+	config.save(SettingsUI.PATH)
+	var opted_out: bool = not pause.auto_open() and not pause.is_open()
+	if before == null: config.erase_section_key("game", "pause_on_focus_loss")
+	else: config.set_value("game", "pause_on_focus_loss", before)
+	config.save(SettingsUI.PATH)
+	world.set("traveling", true)
+	var not_while_traveling: bool = not pause.auto_open() and not pause.is_open()
+	world.set("traveling", false)
+	var script_off: bool = pause.get_script().get("auto_pause") == false
+	# the real hooks, with the static switched on for a moment: the application focus-out notification and a pad that disconnects
+	pause.get_script().set("auto_pause", true)
+	pause.notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
+	var on_focus_out: bool = pause.is_open()
+	pause.close()
+	await t.frames(2)
+	Input.joy_connection_changed.emit(0, true)
+	var on_connect: bool = pause.is_open()
+	Input.joy_connection_changed.emit(0, false)
+	var on_disconnect: bool = pause.is_open()
+	pause.close()
+	pause.get_script().set("auto_pause", false)
+	await t.frames(2)
+	focus_paused = focus_paused and on_focus_out and not on_connect and on_disconnect
+	t.check("focus_loss_pauses_a_free_world", focus_paused and opted_out and not_while_traveling and script_off,
+		"auto_open() (and the focus-out notification, a pad disconnect but not a connect): opens and pauses %s; settings pause_on_focus_loss=false refuses %s; refused while traveling %s; harness switched the real notification off %s" % [focus_paused, opted_out, not_while_traveling, script_off])
 	await _all_pause_rows(t, pause, game_ui)
 	await _save_flows(t, pause, game_ui)
 	await _title_states(t)
