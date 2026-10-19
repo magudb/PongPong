@@ -47,6 +47,15 @@ class VersionTests(unittest.TestCase):
         for extension in ("*.lua", "*.csv", "*.json", "*.map", "*.ps1", "*.sh"):
             self.assertIn(extension, text)
         self.assertIn('application/bundle_identifier="io.github.magudb.traetoppen"', text)
+
+    def test_release_exports_leave_test_tools_out(self):
+        text = (ROOT / "export_presets.cfg").read_text()
+        filters = [line for line in text.splitlines() if line.startswith("exclude_filter=")]
+        self.assertEqual(len(filters), 2)
+        for line in filters:
+            for pattern in ("scenes/ui/cheat_menu.tscn", "scripts/ui/testing/*", "scripts/dungeon/gen/dungeon_verify.gd"):
+                self.assertIn(pattern, line)
+        self.assertNotIn("cheats", "".join(line for line in text.splitlines() if line.startswith("custom_features=")))
         self.assertNotIn("export_presets.cfg", (ROOT / ".gitignore").read_text())
 
 

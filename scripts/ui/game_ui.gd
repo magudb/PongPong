@@ -43,8 +43,13 @@ const MODE_ACTION := &"action"
 const HUD_FOR_MODE := {&"farm": &"hud", &"action": &"forest_hud"}
 ## screens whose controls must never take keyboard focus
 const NO_FOCUS_SCREENS: Array[StringName] = [&"hud", &"forest_hud", &"social_hud"]
+## Test tools (F8 and the pause row "Testmenu"): loaded only while `debug_tools` is true. Release exports also leave their files out
+## (export_presets.cfg exclude_filter), and the export smoke checks both.
+const DEBUG_SCREENS: Array[StringName] = [&"cheat_menu"]
 
 var mode: StringName = MODE_FARM
+## Load DEBUG_SCREENS? A debug build (the editor, the harness) or an export with the custom feature `cheats`; tests may switch it off.
+var debug_tools: bool = debug_tools_enabled()
 
 var _screens: Dictionary = {}            # id -> Node
 var _order: Array[StringName] = SCREEN_ORDER
@@ -75,6 +80,10 @@ func _exit_tree() -> void:
 		tree.node_added.disconnect(_on_node_added)
 
 
+static func debug_tools_enabled() -> bool:
+	return OS.is_debug_build() or OS.has_feature("cheats")
+
+
 ## Scene path of a screen id.
 static func scene_path(screen_id: StringName, dir: String = SCENE_DIR) -> String:
 	return "%s%s.tscn" % [dir, screen_id]
@@ -92,7 +101,7 @@ func load_screens(dir: String = "", order: Array = []) -> Array[StringName]:
 			_order.append(StringName(str(id)))
 	var loaded: Array[StringName] = []
 	for id in _order:
-		if _screens.has(id):
+		if _screens.has(id) or (id in DEBUG_SCREENS and not debug_tools):
 			continue
 		var path := scene_path(id, _dir)
 		if not ResourceLoader.exists(path):

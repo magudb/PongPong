@@ -15,6 +15,16 @@ func _run(t) -> void:
 	var tm: Node = t.autoload("TimeManager")
 	var wardrobe: Node = t.autoload("WardrobeManager")
 	var menu: TTScreen = w.game_ui.get_screen(&"cheat_menu")
+	# REPO-05: the test menu is a debug-build tool. Without debug tools GameUI does not load it and the pause menu has no row for it.
+	var gated := GameUI.new()
+	gated.debug_tools = false
+	var gated_ids := gated.load_screens(GameUI.SCENE_DIR, [&"cheat_menu", &"pause_menu"])
+	gated.free()
+	var pause_rows := func() -> Array: return w.game_ui.get_screen(&"pause_menu").call("_specs").map(func(row): return str(row[0]))
+	w.game_ui._screens.erase(&"cheat_menu")
+	var release_rows: Array = pause_rows.call()
+	w.game_ui._screens[&"cheat_menu"] = menu
+	t.check("test_menu_only_with_debug_tools", GameUI.debug_tools_enabled() and gated_ids == [&"pause_menu"] and not "CheatButton" in release_rows and "CheatButton" in pause_rows.call(), "loaded without debug tools: %s; pause rows without the screen: %s" % [str(gated_ids), str(release_rows)])
 	t.tap_key(KEY_F8)
 	await t.frames(3)
 	t.check("f8_opens_paused_focused_menu", menu.is_open() and menu.is_top() and t.tree.paused and menu.tabs[0].has_focus() and not w.player.world_input_allowed())
