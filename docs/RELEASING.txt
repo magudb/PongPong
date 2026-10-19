@@ -39,7 +39,12 @@ Push a canonical vX.Y.Z tag, for example:
   git push origin v0.1.0
 
 The tag's version is injected into the game and native application metadata.
-Tags with suffixes, leading zeroes or additional components are rejected.
+Tags with suffixes, leading zeroes or additional components are rejected, and
+so is a tag whose commit is not on main. The build jobs receive only the six
+macOS signing secrets by name. Publishing runs in the "release" environment:
+give it required reviewers (Settings > Environments) so a person approves each
+release after its checks pass, and protect v* tags with a tag ruleset that
+restricts who may create them. Both are repository settings, not files.
 Production release waits for all four character gates and both native export
 and smoke checks. The GitHub release is created with the Windows setup EXE,
 macOS DMG and both update ZIPs together, their JSON build records and

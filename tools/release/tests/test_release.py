@@ -42,6 +42,28 @@ class VersionTests(unittest.TestCase):
         self.assertEqual(values["production"], "false")
         self.assertEqual(values["version"], "0.0.0")
 
+    def test_production_tag_must_point_at_main(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            repository = Path(temporary)
+            def git(*command):
+                return subprocess.run(["git", "-C", str(repository), "-c", "user.name=Test", "-c", "user.email=test@example.com", *command], check=True, capture_output=True, text=True).stdout.strip()
+            git("init", "-q", "-b", "main")
+            git("commit", "-q", "--allow-empty", "-m", "reviewed")
+            reviewed = git("rev-parse", "HEAD")
+            git("switch", "-q", "-c", "unreviewed")
+            git("commit", "-q", "--allow-empty", "-m", "unreviewed")
+            unreviewed = git("rev-parse", "HEAD")
+            release.require_released_from(reviewed, "main", repository)
+            for commit in (unreviewed, "0" * 40):
+                with self.subTest(commit=commit), self.assertRaises(ValueError):
+                    release.require_released_from(commit, "main", repository)
+
+    def test_release_workflow_gates_publishing(self):
+        workflow = (ROOT / ".github/workflows/release.yml").read_text()
+        self.assertIn("--require-on origin/main", workflow)
+        self.assertIn("environment: release", workflow)
+        self.assertNotIn("secrets: inherit", workflow)
+
     def test_runtime_exports_preserve_raw_data(self):
         text = (ROOT / "export_presets.cfg").read_text()
         for extension in ("*.lua", "*.csv", "*.json", "*.map", "*.ps1", "*.sh"):

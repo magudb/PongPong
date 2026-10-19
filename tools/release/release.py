@@ -34,6 +34,13 @@ def metadata(ref, event):
     return {"version": version, "production": str(production).lower(), "tag": "v" + version if production else "", "event": event}
 
 
+def require_released_from(commit, branch, repository=ROOT):
+    """A production tag must point at reviewed history: its commit has to be on the release branch."""
+    result = subprocess.run(["git", "-C", str(repository), "merge-base", "--is-ancestor", commit, branch], capture_output=True, text=True)
+    if result.returncode:
+        raise ValueError(f"Production tags must point at a commit on {branch}")
+
+
 def sha256(path):
     with path.open("rb") as stream:
         return hashlib.file_digest(stream, "sha256").hexdigest()
@@ -196,6 +203,8 @@ def main():
     meta = commands.add_parser("metadata")
     meta.add_argument("--ref", default=os.environ.get("GITHUB_REF", ""))
     meta.add_argument("--event", default=os.environ.get("GITHUB_EVENT_NAME", "local"))
+    meta.add_argument("--commit", default=os.environ.get("GITHUB_SHA", "HEAD"))
+    meta.add_argument("--require-on", metavar="BRANCH", help="refuse a production tag whose commit is not on BRANCH")
     export = commands.add_parser("build")
     export.add_argument("--platform", choices=("windows", "macos"), required=True)
     export.add_argument("--version", type=validate_version, required=True)
@@ -208,6 +217,8 @@ def main():
     args = parser.parse_args()
     if args.command == "metadata":
         values = metadata(args.ref, args.event)
+        if values["production"] == "true" and args.require_on:
+            require_released_from(args.commit, args.require_on)
         if "GITHUB_OUTPUT" in os.environ:
             with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as target:
                 target.write("".join(f"{key}={value}\n" for key, value in values.items()))

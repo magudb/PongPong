@@ -18,9 +18,13 @@ jobs:
       version: ${{ steps.metadata.outputs.version }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - name: Require a strict vX.Y.Z production tag
+        with:
+          # Commit history only: enough to prove the tag is on main without the art blobs.
+          fetch-depth: 0
+          filter: blob:none
+      - name: Require a strict vX.Y.Z production tag on main
         id: metadata
-        run: python3 tools/release/release.py metadata
+        run: python3 tools/release/release.py metadata --require-on origin/main
 
   tests:
     needs: version
@@ -32,11 +36,20 @@ jobs:
     with:
       version: ${{ needs.version.outputs.version }}
       production: true
-    secrets: inherit
+    # Only the signing and notarization credentials, never every repository secret.
+    secrets:
+      MACOS_CERTIFICATE_P12: ${{ secrets.MACOS_CERTIFICATE_P12 }}
+      MACOS_CERTIFICATE_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
+      MACOS_SIGNING_IDENTITY: ${{ secrets.MACOS_SIGNING_IDENTITY }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
 
   publish:
     needs: [version, tests, builds]
     runs-on: ubuntu-latest
+    # Required reviewers on the "release" environment hold publishing until a person approves it.
+    environment: release
     permissions:
       contents: write
     steps:
