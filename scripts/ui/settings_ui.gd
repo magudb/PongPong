@@ -3,6 +3,8 @@ extends TTScreen
 ## Settings share the locale config file through SettingsStore, which keeps the other owners' sections. A slider saves once it rests
 ## (SAVE_DELAY), not on every step; the volume itself follows every step.
 const PATH := SettingsStore.PATH
+## Root window meta: the window was sized by whoever started the game (tests/playtest.gd --windowed) and the title must not resize it.
+const KEEP_WINDOW := &"tt_keep_window"
 ## Window presets in points: on a Retina Mac a point is two pixels (DisplayServer.screen_get_max_scale), on Windows one.
 const SIZES := [Vector2i(1280, 720), Vector2i(1600, 900), Vector2i(1920, 1080)]
 ## The smallest window (points) the player can drag to: below it the 1280x720 layout's text is too small to read.
@@ -92,12 +94,12 @@ static func apply_saved() -> void:
 
 ## Puts the saved mode and size on screen: the preset scaled to window pixels, clamped to the usable area of the window's screen and
 ## centred on it. `chosen` (the player picked it just now) also leaves a maximised window; otherwise a maximised or minimised window
-## is the player's own choice and stays. At boot a size given on the command line (`--resolution`: the windowed harness, tools/dev/play.sh)
-## wins over the saved one.
+## is the player's own choice and stays. A window marked KEEP_WINDOW (the windowed test harness owns its 1280x720 window) keeps its
+## size at boot. Godot keeps engine options such as `--resolution` out of OS.get_cmdline_args(), so the mark is the only signal.
 static func apply_window(chosen: bool) -> void:
-	if DisplayServer.get_name() == "headless" or (not chosen and "--resolution" in OS.get_cmdline_args()):
-		return
 	var window := (Engine.get_main_loop() as SceneTree).root
+	if DisplayServer.get_name() == "headless" or (not chosen and keeps_window(window)):
+		return
 	var config := SettingsStore.read()
 	window.min_size = preset_pixels(MIN_SIZE, DisplayServer.screen_get_max_scale(), _room(window))
 	var full := window.mode in [Window.MODE_FULLSCREEN, Window.MODE_EXCLUSIVE_FULLSCREEN]
@@ -117,6 +119,9 @@ static func apply_window(chosen: bool) -> void:
 	if full:
 		# Leaving the (animated) macOS full screen restores the old frame when the animation ends; place the window again after it.
 		window.get_tree().create_timer(0.6, true).timeout.connect(place)
+
+static func keeps_window(window: Window) -> bool:
+	return window.get_meta(KEEP_WINDOW, false) == true
 
 ## A size in points as window pixels at `scale`, no larger than `room` (Vector2i.ZERO = unknown, no limit).
 static func preset_pixels(preset: Vector2i, scale: float, room: Vector2i) -> Vector2i:

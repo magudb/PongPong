@@ -192,6 +192,8 @@ func _prepare_window() -> void:
 	if DisplayServer.get_name() == "headless":
 		_problems.append("--windowed needs a display: do not combine it with --headless")
 		return
+	# The harness owns the window: the title's saved / default window (SettingsUI.apply_window, KEEP_WINDOW) must not resize it.
+	root.set_meta(&"tt_keep_window", true)
 	if Vector2i(root.size) != WINDOW_SIZE:
 		DisplayServer.window_set_size(WINDOW_SIZE)
 		await process_frame

@@ -293,6 +293,13 @@ func _save_flows(t, pause: TTScreen, game_ui: GameUI) -> void:
 func run_windowed(t) -> void:
 	const Fixtures := preload("res://scripts/ui/dev/ui_fixtures.gd")
 	await t.clear_scene()
+	# UX-01: the title's saved window (here the largest preset) never resizes the harness's 1280x720 window; Godot hides
+	# `--resolution` from OS.get_cmdline_args(), so the harness marks the window instead (SettingsUI.KEEP_WINDOW).
+	SettingsStore.store("video", "size", SettingsUI.SIZES.size() - 1)
+	SettingsUI.apply_window(false)
+	await t.frames(3)
+	t.check("title_keeps_harness_window", SettingsUI.keeps_window(t.tree.root) and t.window_size() == Vector2i(1280, 720), str(t.window_size()))
+	SettingsStore.store("video", "size", 0)
 	for name in ["title_guide", "select_guide4", "select2", "settings", "saveload", "pause"]:
 		var host := Control.new()
 		host.process_mode = Node.PROCESS_MODE_ALWAYS
