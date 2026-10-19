@@ -24,6 +24,8 @@ func _ready() -> void:
 	%CloseButton.pressed.connect(close)
 	%FullscreenCheck.toggled.connect(_fullscreen_changed)
 	%FullscreenCheck.gui_input.connect(_fullscreen_input)
+	%AutoPauseCheck.toggled.connect(_auto_pause_changed)
+	%AutoPauseCheck.gui_input.connect(_auto_pause_input)
 	for bus in BUSES:
 		var slider: TTSlider = get_node("%" + bus + "Slider")
 		slider.value_changed.connect(func(value: float): _volume_changed(bus, value))
@@ -85,6 +87,10 @@ static func apply_saved() -> void:
 		var index := clampi(int(size_index), 0, SIZES.size() - 1) if size_index is int else 0
 		DisplayServer.window_set_size(SIZES[index])
 
+## Whether focus loss and a pad disconnect open the pause menu (PauseMenu.auto_open, review UX-07): on unless the player switched it off.
+static func pause_on_focus_loss() -> bool:
+	return _config().get_value("game", "pause_on_focus_loss", true) != false
+
 func open(opener: Control = null) -> void:
 	pauses_tree = get_tree().get_first_node_in_group("world_2d") != null
 	super.open(opener)
@@ -104,6 +110,7 @@ func _refresh_texts() -> void:
 	for bus in BUSES:
 		(get_node("%" + bus + "Slider") as Slider).value = _volume(config, bus)
 	%FullscreenCheck.button_pressed = config.get_value("video", "fullscreen", false) == true
+	%AutoPauseCheck.button_pressed = pause_on_focus_loss()
 	var saved_size: Variant = config.get_value("video", "size", 0)
 	var size_index := clampi(int(saved_size), 0, SIZES.size() - 1) if saved_size is int else 0
 	for index in SIZES.size():
@@ -134,6 +141,16 @@ func _fullscreen_input(event: InputEvent) -> void:
 		%FullscreenCheck.button_pressed = event.is_action_pressed("ui_right")
 		%FullscreenCheck.accept_event()
 
+func _auto_pause_changed(value: bool) -> void:
+	if _applying:
+		return
+	_store("game", "pause_on_focus_loss", value)
+
+func _auto_pause_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right"):
+		%AutoPauseCheck.button_pressed = event.is_action_pressed("ui_right")
+		%AutoPauseCheck.accept_event()
+
 func _size_changed(index: int) -> void:
 	if %FullscreenCheck.button_pressed:
 		return
@@ -152,6 +169,7 @@ func _update_sizes() -> void:
 		rows.append([get_node("%" + bus + "Slider")])
 	rows.append([%FullscreenCheck])
 	rows.append(sizes)
+	rows.append([%AutoPauseCheck])
 	var footer: Array = []
 	if forest_help_button != null and forest_help_button.visible: footer.append(forest_help_button)
 	if updates_button != null: footer.append(updates_button)

@@ -1,8 +1,8 @@
 extends TTScreen
 ## Pause transfers close their modal before opening a peer; save/load/settings nest above it.
 ## Focus loss and a pad disconnect open this menu over a free world (review UX-07): alt-tabbed or with the pad gone, the clock, the lantern oil
-## and the enemies would run on. settings.cfg [game] pause_on_focus_loss = false switches it off for a player; the test harness switches the
-## static off for its runs (a windowed run's real window loses focus to whatever the machine does), and the sections call auto_open() directly.
+## and the enemies would run on. The Settings toggle SET_AUTO_PAUSE ([game] pause_on_focus_loss) switches it off for a player; the test harness
+## switches the static off for its runs (a windowed run's real window loses focus to whatever the machine does), and the sections call auto_open() directly.
 static var auto_pause := true
 var _rows: Array[Button] = []
 var _row_specs: Array = []
@@ -30,7 +30,6 @@ func _ready() -> void:
 	Input.joy_connection_changed.connect(_on_joy_connection_changed)
 
 func _notification(what: int) -> void:
-	super._notification(what)
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT and auto_pause:
 		auto_open()
 
@@ -43,9 +42,7 @@ func _on_joy_connection_changed(_device: int, connected: bool) -> void:
 func auto_open() -> bool:
 	if is_open() or not is_inside_tree() or not UiNav.world_is_free() or not _hotkey_open_allowed():
 		return false
-	var config := ConfigFile.new()
-	config.load(SettingsUI.PATH)
-	if not bool(config.get_value("game", "pause_on_focus_loss", true)):
+	if not SettingsUI.pause_on_focus_loss():
 		return false
 	open()
 	return is_open()
