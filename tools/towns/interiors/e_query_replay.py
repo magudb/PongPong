@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Replay of the BUILT E-query on room specs (package T-towns-core, SE1 / SE2: the talk-cell geometry proof; lifted from D3/final_editor/se1/replay14.py and emit_expected.py).
 
-The player's E key asks the physics space for the interaction hosts that overlap a ground-space circle r = 45 at the FACING cell plus the counter-only underfoot query and takes the host NEAREST TO THE PLAYER. A counter band therefore
+The player's E key asks the physics space for the interaction hosts that overlap a ground-space circle r = 45 at the FACING cell, the reach query ahead of the feet (every host but
+the counter hosts) and the counter-only underfoot query, and takes the host NEAREST TO THE PLAYER among the hosts of the facing and underfoot circles (a host only the
+reach circle finds wins only when they find none). A counter band therefore
 has three kinds of host, decided by where the player STANDS: the middle cell selects the centre host (the shop panel), an end cell the `talk` host of that cell (the keeper's own
 dialogue). The replay proves, for every spec with a centre host and two `talk` hosts:
     A  standing on an end cell and facing the counter selects that cell's talk host (9 sub-positions per cell, 18 per room)

@@ -57,13 +57,22 @@ var _camera_zoom_before: float = Iso.DEFAULT_ZOOM
 var _bob_time: float = 0.0
 var _flower_time: float = 0.0
 var _flower_cell := Vector2i(-999, -999)
+## The marker's cached placement answer (PlacementService.can_place runs a physics query): per cell and item, refreshed every PROMPT_REFRESH_S.
+var _place_cell := Vector2i(-999, -999)
+var _place_item := &""
+var _place_reason := ""
+var _place_stale: float = 0.0
 const RULES := "res://scripts/dungeon_run/dungeon_run.gd"
 const GEM := "res://scripts/combat/lantern_gem.gd"
+const PLACEMENT := "res://scripts/farm/placement_service.gd"
 
 func _ready() -> void:
 	EventBus.modal_changed.connect(func(stack):
 		if not stack.is_empty():
-			_farm_use_held = false)
+			_farm_use_held = false
+			# A pausing modal freezes _physics_process, so its paused branch never runs.
+			if combat != null:
+				combat.clear_buffer())
 	super._ready()
 	refresh_stats()
 	stamina = max_stamina
@@ -262,6 +271,7 @@ func _physics_process(delta: float) -> void:
 	if paused:
 		_farm_use_held = false
 		combat.attack_held = false
+		combat.clear_buffer()
 		_climb_up = false
 		_climb_down = false
 		velocity = Vector2.ZERO
@@ -329,8 +339,9 @@ func _physics_process(delta: float) -> void:
 
 func _update_target(delta: float = 0.0) -> void:
 	_flower_time = maxf(0.0, _flower_time - delta)
+	_place_stale += delta
 	_marker.global_position = target_global()
-	_marker.valid = _at_farm() and farm.can_till(target_cell())
+	_marker.valid = _at_farm() and _target_valid(target_cell())
 	_marker.visible = _at_farm() and state == S.FREE and not is_flying
 	if bool(GameData.perk("talks_to_flowers", false)) and _at_farm():
 		var current := area.global_to_cell(global_position)
@@ -341,6 +352,18 @@ func _update_target(delta: float = 0.0) -> void:
 					_flower_time = 10.0
 					EventBus.whisper_requested.emit("WHISPER_FLOWER_%d" % (posmod(cell.x + cell.y, 6) + 1))
 					break
+
+## The gold ring: the held farm placeable can stand on the cell (the same answer place() gives), else the cell can be tilled.
+func _target_valid(cell: Vector2i) -> bool:
+	var item := hotbar.current()
+	if str(GameData.item_def(item).get("placeable", "")) != "farm":
+		return farm.can_till(cell)
+	if cell != _place_cell or item != _place_item or _place_stale >= PROMPT_REFRESH_S:
+		_place_cell = cell
+		_place_item = item
+		_place_stale = 0.0
+		_place_reason = str(Svc.static_call(PLACEMENT, &"can_place", [item, cell], "WHISPER_NOT_YET"))
+	return _place_reason == ""
 
 func _farm_repeat_allowed() -> bool:
 	var def := GameData.item_def(hotbar.current())
@@ -388,11 +411,12 @@ func use_selected() -> bool:
 		"tool":
 			match str(def.get("tool_type", "")):
 				"pail":
-					var animal := nearest_interactable() as Animal2D
-					if animal != null:
-						var data: Variant = Svc.node("AnimalHusbandry").get_animal(animal.animal_id)
-						if data != null and str(data.species) == "cow":
-							ok = int(Svc.node("AnimalHusbandry").collect_product(animal.animal_id)) > 0
+					# The nearest COW in reach: a hen standing closer must not hide it.
+					var cow := nearest_interactable(_is_cow) as Animal2D
+					if cow != null:
+						ok = int(Svc.node("AnimalHusbandry").collect_product(cow.animal_id)) > 0
+					else:
+						EventBus.whisper_requested.emit("UI_TOOL_NO_EFFECT")
 				"hoe":
 					if _at_farm():
 						if str(Svc.static_call("res://scripts/farm/steading/objects/farm_reserve.gd", &"blocked", [area, cell], "")) not in ["", "field", "zone"]:
@@ -407,11 +431,25 @@ func use_selected() -> bool:
 							var harvest_cell := area.global_to_cell(global_position) + area.facing_step(direction)
 							ok = farm.harvest(harvest_cell) > 0 or farm.clear_crop(harvest_cell) or ok
 				"axe", "pickaxe":
-					ok = _at_farm() and farm.clear_crop(cell, false)
-					if not ok:
-						var host := nearest_interactable()
-						if host != null and host.has_method("tool_hit"):
-							ok = bool(host.call("tool_hit", str(def.tool_type), int(def.get("power", 1)), self))
+					# What the swing acts on: (1) an object on the target cell that takes this tool (a tree for the axe, a rock for
+					# the pickaxe, a sprinkler for either), (2) a crop on the target cell, which the tool deliberately removes,
+					# (3) another object in reach that takes this tool. A nearer host that does not take it never blocks the swing.
+					var tool := str(def.tool_type)
+					var crop: bool = _at_farm() and farm.get_plot(cell) != null and farm.get_plot(cell).crop_id != &""
+					var host := nearest_interactable(func(h: Node) -> bool: return area.global_to_cell((h as Node2D).global_position) == cell and _takes_tool(h, tool))
+					if host == null and not crop:
+						host = nearest_interactable(func(h: Node) -> bool: return _takes_tool(h, tool))
+					if host != null:
+						ok = bool(host.call("tool_hit", tool, int(def.get("power", 1)), self))
+					elif crop:
+						ok = _remove_crop(cell)
+					else:
+						# Nothing takes this tool: the nearest object that takes another one names it (FOREST_TOOL_PICKAXE on a rock).
+						var other := nearest_interactable(func(h: Node) -> bool: return h.has_method("tool_hit"))
+						if other != null:
+							other.call("tool_hit", tool, int(def.get("power", 1)), self)
+						else:
+							EventBus.whisper_requested.emit("UI_TOOL_NO_EFFECT")
 		"seed":
 			if _at_farm():
 				var reason: String = farm.plant(cell, item)
@@ -428,9 +466,11 @@ func use_selected() -> bool:
 			return state == S.SWING
 		_:
 			if str(def.get("placeable", "")) == "farm":
-				ok = bool(Svc.static_call("res://scripts/farm/placement_service.gd", &"place", [item, cell], false))
+				var reason := str(Svc.static_call(PLACEMENT, &"can_place", [item, cell], "WHISPER_NOT_YET"))
+				ok = reason == "" and bool(Svc.static_call(PLACEMENT, &"place", [item, cell], false))
+				_place_stale = PROMPT_REFRESH_S
 				if not ok:
-					EventBus.whisper_requested.emit("WHISPER_NOT_YET")
+					EventBus.whisper_requested.emit(reason if reason != "" else "WHISPER_NOT_YET")
 	if ok:
 		_spend_stamina(cost)
 		state = S.USING
@@ -441,6 +481,29 @@ func use_selected() -> bool:
 		visual.play_action(&"interact", 1.4 * dig)
 	tool_used.emit(item, cell, ok)
 	return ok
+
+## An axe / pickaxe on a crop: a ripe one is harvested first (a full backpack keeps it in the ground), the rest is cleared to tilled soil.
+func _remove_crop(cell: Vector2i) -> bool:
+	var harvested := false
+	if farm.state_of(cell) == FarmGrid.State.READY:
+		harvested = farm.harvest(cell) > 0
+		if not harvested:
+			return false
+	var cleared: bool = farm.clear_crop(cell, false)
+	if cleared:
+		EventBus.whisper_requested.emit("FARM_CROP_CLEARED")
+	return harvested or cleared
+
+## The tool contract: a host with tool_hit takes a hit from `tool` unless its optional accepts_tool(tool) says no
+## (ResourceNode2D: the axe takes trees, the pickaxe rocks, forage takes neither; FarmMachine2D: both).
+func _takes_tool(host: Node, tool: String) -> bool:
+	return host.has_method("tool_hit") and (not host.has_method("accepts_tool") or bool(host.call("accepts_tool", tool)))
+
+func _is_cow(host: Node) -> bool:
+	if not host is Animal2D:
+		return false
+	var data: Variant = Svc.node("AnimalHusbandry").get_animal((host as Animal2D).animal_id)
+	return data != null and str(data.species) == "cow"
 
 func _spend_stamina(amount: float) -> void:
 	stamina = maxf(0.0, stamina - maxf(0.0, amount))

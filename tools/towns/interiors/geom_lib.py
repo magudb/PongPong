@@ -1,6 +1,8 @@
 """Replay of the BUILT player E-query (scripts/world2d/player_stub_2d.gd nearest_interactable; Player2D keeps the same rule, D20):
-a circle r = 45 ground px at the centre of the FACING cell, hosts whose 12-gon interaction ellipse (Interactable2D._ready, radius = half axes) overlaps it,
-the host whose global_position is NEAREST TO THE PLAYER wins. Iso: iso_center(c) = ((x - y + 1) * 64, (x + y + 1) * 38); facing steps = Iso.DIR8_TO_CELL_STEP.
+a circle r = 45 ground px at the centre of the FACING cell, one at the REACH point (45 ground px ahead of the feet toward the facing cell; every host that is
+not a counter host) and one at the feet (counter hosts only, DT53); hosts whose 12-gon interaction ellipse (Interactable2D._ready, radius = half axes) overlaps
+one of them. Among the hosts of the facing and counter circles the one whose global_position is NEAREST TO THE PLAYER wins; a host only the reach circle finds
+wins only when they find none (nearest first again). Iso: iso_center(c) = ((x - y + 1) * 64, (x + y + 1) * 38); facing steps = Iso.DIR8_TO_CELL_STEP.
 Lifted from D3/final_editor/se1/geom_lib.py (package T-towns-core); no dependency outside the standard library."""
 from __future__ import annotations
 
@@ -51,15 +53,23 @@ def select(player_xy: tuple[float, float], facing: int, cell: tuple[int, int], h
     tgt = ic(cell[0] + STEP[facing][0], cell[1] + STEP[facing][1])
     squash = HALF_H / HALF_W
     ground = lambda point: (point[0], point[1] / squash)
-    best, bd = None, 1e18
+    # PlayerBody2D.reach_global: the reach point lies one radius ahead of the feet along the facing cell step.
+    origin = ic(*cell)
+    sx, sy = ground((tgt[0] - origin[0], tgt[1] - origin[1]))
+    feet = ground(player_xy)
+    reach = (feet[0] + sx / math.hypot(sx, sy) * r, feet[1] + sy / math.hypot(sx, sy) * r)
+    best, bd = None, (2, math.inf)
     for name, (cxy, rad) in hosts.items():
         polygon = [ground(point) for point in ellipse_pts(cxy, rad)]
         facing_hit = circle_hits_poly(ground(tgt), r, polygon)
         # DT53: a customer's own counter spot remains reachable when the
         # facing cell lies beyond its small talk ellipse. K is the NPC itself.
-        foot_hit = name in {"S", "T0", "T1", "D"} and circle_hits_poly(ground(player_xy), r, polygon)
-        if facing_hit or foot_hit:
-            d = math.dist(ground(cxy), ground(player_xy))
+        counter = name in {"S", "T0", "T1", "D"}
+        foot_hit = counter and circle_hits_poly(feet, r, polygon)
+        reach_hit = not counter and circle_hits_poly(reach, r, polygon)
+        if facing_hit or foot_hit or reach_hit:
+            # a host only the reach circle finds ranks after every host of the facing and counter circles
+            d = (0 if facing_hit or foot_hit else 1, math.dist(ground(cxy), ground(player_xy)))
             if d < bd:
                 best, bd = name, d
     return best

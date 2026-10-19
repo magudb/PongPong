@@ -25,7 +25,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | dungeon_items.csv | draft | 157 | 1209 | 3.0 |
 | dungeon_run.csv | draft | 83 | 418 | 1.0 |
 | economy.csv | draft | 166 | 612 | 1.5 |
-| farm.csv | draft | 14 | 95 | 0.2 |
+| farm.csv | draft | 20 | 135 | 0.3 |
 | farm_signs.csv | draft | 3 | 30 | 0.1 |
 | farm_site.csv | draft | 112 | 655 | 1.6 |
 | features_quests.csv | draft | 44 | 327 | 0.8 |
@@ -47,7 +47,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | home_amenities.csv | draft | 20 | 164 | 0.4 |
 | home_ui.csv | draft | 62 | 269 | 0.7 |
 | home_world.csv | draft | 7 | 30 | 0.1 |
-| hud.csv | draft | 8 | 20 | 0.1 |
+| hud.csv | draft | 14 | 66 | 0.2 |
 | keepers.csv | draft | 66 | 568 | 1.4 |
 | levels.csv | draft | 3 | 12 | 0.0 |
 | life.csv | draft | 27 | 121 | 0.3 |
@@ -55,8 +55,8 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | loot_dungeon.csv | draft | 11 | 81 | 0.2 |
 | map.csv | draft | 6 | 25 | 0.1 |
 | materials.csv | draft | 75 | 378 | 0.9 |
-| menus.csv | draft | 34 | 122 | 0.3 |
-| nav.csv | draft | 32 | 42 | 0.1 |
+| menus.csv | draft | 49 | 222 | 0.6 |
+| nav.csv | draft | 56 | 86 | 0.2 |
 | partner.csv | draft | 54 | 555 | 1.4 |
 | post.csv | draft | 77 | 222 | 0.6 |
 | quests.csv | draft | 147 | 1058 | 2.6 |

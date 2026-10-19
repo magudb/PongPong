@@ -12,3 +12,4 @@ HUD_SAVE_FAILED,! Ikke gemt – prøver igen,! Not saved – trying again
 TOAST_OWED_TITLE,Tasken,Backpack
 TOAST_OWED_DELIVERED,"Du fik %d ting tilbage, som der ikke var plads til i tasken.","%d things that did not fit in your backpack were handed back."
 TOAST_OWED_WAITING,%d ting venter på plads i tasken. Du får dem en morgen med plads.,%d things are waiting for room in your backpack. You get them on a morning with room.
+HUD_HOTBAR_FULL,Alle hurtigpladser er i brug. Vælg selv en plads i rygsækken.,Every hotbar slot is in use. Choose a slot in the backpack.

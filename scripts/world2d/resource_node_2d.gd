@@ -121,9 +121,15 @@ func _release_picker() -> void:
 		_picker.end_talk()
 		_picker.visual.cancel_action()
 	_picker = null
+## The tool contract (Player2D._takes_tool): only the node's own tool acts on it, so a nearer rock never takes the axe meant for a tree.
+func accepts_tool(tool: String) -> bool:
+	return _enabled and not depleted and not picking and not bool(cfg.get("forage",false)) and tool == str(cfg.get("tool",""))
 func tool_hit(tool: String, power: int, _player: Node = null) -> bool:
 	if not _enabled or depleted or picking or bool(cfg.get("forage",false)): return false
-	if tool != str(cfg.get("tool","")) or power < int(cfg.get("power",1)):
+	if tool != str(cfg.get("tool","")):
+		EventBus.whisper_requested.emit("FOREST_TOOL_AXE" if str(cfg.get("tool","")) == "axe" else "FOREST_TOOL_PICKAXE")
+		return false
+	if power < int(cfg.get("power",1)):
 		EventBus.whisper_requested.emit("FOREST_TOOL_WEAK")
 		return false
 	hp -= 1

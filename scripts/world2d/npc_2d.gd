@@ -78,7 +78,7 @@ func _ready() -> void:
 	add_to_group("interactable")
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	collision_layer = Iso.LAYER_NPC
-	collision_mask = Iso.LAYER_WORLD | Iso.LAYER_GROUND_BLOCK
+	collision_mask = Iso.LAYER_WORLD | Iso.LAYER_PLAYER | Iso.LAYER_GROUND_BLOCK   # the rule next to Iso.MASK_WALKING
 	_body = CollisionShape2D.new()
 	var shape := ConvexPolygonShape2D.new()
 	shape.points = _ellipse(Vector2(14, 8))
