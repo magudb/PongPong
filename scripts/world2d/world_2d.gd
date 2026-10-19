@@ -573,8 +573,15 @@ func warm_clips() -> void:
 	if DisplayServer.get_name() == "headless" and not warm_in_headless:
 		warm_skipped += 1
 		return
-	for j in warm_jobs():
-		await warm_one(j[0], j[1])
+	await warm_each(warm_jobs())
+
+
+## Warms the jobs of warm_jobs() one after the other. The list is taken before the first await, so a later sprite can be freed while an
+## earlier one warms (TownDirector at a routine boundary): it is skipped, as a freed object cannot even be passed to warm_one().
+func warm_each(jobs: Array) -> void:
+	for j in jobs:
+		if is_instance_valid(j[0]):
+			await warm_one(j[0], j[1])
 
 
 ## One sprite's warm-up, safe against the sprite being freed while it runs. Awaiting the sprite's own coroutine is not: TownDirector can

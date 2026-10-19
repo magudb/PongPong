@@ -2705,11 +2705,30 @@ func _warm_one_survives_a_freed_sprite(t) -> void:
 	doomed.queue_free()
 	var resumed: bool = await t.until(func() -> bool: return bool(freed["done"]), 3.0)
 	t.check("warm_one_survives_a_freed_sprite", resumed, "the sprite was freed two frames into its warm-up: warm_one() returned (%s) instead of keeping the travel on a black screen" % resumed)
-	slow.queue_free()
+	# the job list is taken up front: the NEXT sprite can be freed while the first one warms, and must be skipped, not passed on freed
+	var first := SlowVisual.new()
+	var second := SlowVisual.new()
+	var third := SlowVisual.new()
+	for v in [first, second, third]:
+		w.area.objects.add_child(v)
+	var each := {"done": false}
+	_warm_each_probe(w, [[first, ["idle"]], [second, ["idle"]], [third, ["idle"]]], each)
+	await t.frames(2)
+	second.queue_free()
+	var each_done: bool = await t.until(func() -> bool: return bool(each["done"]), 5.0)
+	t.check("warm_each_skips_a_sprite_freed_while_another_warms", each_done and first.finished and third.finished,
+		"the second of 3 sprites was freed while the first warmed: the list finished %s, first warmed %s, third warmed %s" % [each_done, first.finished, third.finished])
+	for v in [slow, first, third]:
+		v.queue_free()
 
 
 func _warm_probe(w: WorldRoot2D, visual: Object, box: Dictionary) -> void:
 	await w.warm_one(visual, ["idle", "talk"])
+	box["done"] = true
+
+
+func _warm_each_probe(w: WorldRoot2D, jobs: Array, box: Dictionary) -> void:
+	await w.warm_each(jobs)
 	box["done"] = true
 
 
