@@ -187,9 +187,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if _is_action_area():
 		# attack and use_tool share every binding: in an action area the press is an attack through the
-		# buffer (and Cozy auto-swing), never the hidden hotbar item (DUN-07).
-		if event.is_action_pressed("attack"):
-			combat.request(&"slash")
+		# buffer (and Cozy auto-swing), unless the selected tool has something to mine or chop in front (DUN-07).
+		if event.is_action_pressed("attack") or event.is_action_pressed("use_tool"):
+			if _tool_target_in_front():
+				use_selected()
+			else:
+				combat.request(&"slash")
 		elif event.is_action_pressed("dodge"):
 			combat.request(&"dodge")
 		elif event.is_action_pressed("light"):
@@ -226,6 +229,16 @@ func _track_aim_device(event: InputEvent) -> void:
 	elif (event is InputEventJoypadButton and event.pressed) or (event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) >= UiNavWatcher.STICK_THRESHOLD) \
 			or (event is InputEventKey and event.pressed and event.is_action("attack")):
 		mouse_aim = false
+
+## The selected hotbar tool (pickaxe, axe) and a host it can hit are in front, so an action-area press mines
+## instead of swinging. A consumable or a weapon in the slot never takes the press (DUN-07).
+func _tool_target_in_front() -> bool:
+	var item := hotbar.current()
+	var def := GameData.item_def(item)
+	if str(def.get("category", "")) != "tool" or str(def.get("tool_type", "")) == "" or not GameData.eco().has_item(item):
+		return false
+	var host := nearest_interactable()
+	return host != null and host.has_method("tool_hit")
 
 func _is_action_area() -> bool:
 	return area != null and area.projection == &"ortho"

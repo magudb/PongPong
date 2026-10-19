@@ -79,7 +79,8 @@ func run(t) -> void:
 	await _pause_row_hotkeys(t, world)
 	await _controls_page(t)
 
-## DUN-07: in an action area LMB / pad X are the attack (buffer, held flag, Cozy auto-swing), never the hidden hotbar item.
+## DUN-07: in an action area LMB / pad X are the attack (buffer, held flag, Cozy auto-swing), never a hotbar consumable;
+## only a selected tool with a node it can hit in front takes the press.
 func _attack_before_tool(t, world: WorldRoot2D, p: Player2D, eco: Node) -> void:
 	world.call("_enter", &"_fixture_ortho", &"default")
 	p.set_physics_process(false)
@@ -118,6 +119,34 @@ func _attack_before_tool(t, world: WorldRoot2D, p: Player2D, eco: Node) -> void:
 	p.combat.tick(0.12)
 	t.check("early_click_is_buffered", waiting and p.state == PlayerBody2D.S.SWING, "buffered %s, then state %d" % [waiting, p.state])
 	_free(p)
+	# Hotbar tools still work there: a pickaxe with ore in front mines, and with nothing in front the same click attacks.
+	eco.add_item(&"pickaxe_wooden", 1, true)
+	p.hotbar.assign(0, &"pickaxe_wooden")
+	p.hotbar.select(0)
+	var ore_cell: Vector2i = p.target_cell()
+	var ore: Node = ResourceNode2D.create_marker({"kind": "copper_ore"}, p.target_global(), ore_cell, world.area)
+	if ore == null:
+		t.skip("no copper ore node in the fixture")
+	else:
+		world.area.objects.add_child(ore)
+		await t.physics(2)
+		var hp: int = ore.hp
+		var used := []
+		var record := func(item, _cell, ok): used.append([item, ok])
+		p.tool_used.connect(record)
+		p._unhandled_input(_mouse(MOUSE_BUTTON_LEFT))
+		p._unhandled_input(_mouse(MOUSE_BUTTON_LEFT, false))
+		var mined: bool = p.state == PlayerBody2D.S.USING and ore.hp == hp - 1 and used == [[&"pickaxe_wooden", true]] and not p.combat.attack_held
+		t.check("action_area_pickaxe_mines_ore_in_front", mined, "state %d, ore hp %d -> %d, tool_used %s" % [p.state, hp, ore.hp, used])
+		ore.queue_free()
+		_free(p)
+		await t.physics(2)
+		p._unhandled_input(_mouse(MOUSE_BUTTON_LEFT))
+		var attacked: bool = p.state == PlayerBody2D.S.SWING and p.combat.attack_held and used.size() == 1
+		p._unhandled_input(_mouse(MOUSE_BUTTON_LEFT, false))
+		p.tool_used.disconnect(record)
+		t.check("action_area_pickaxe_attacks_with_no_target", attacked, "state %d, tool_used %s" % [p.state, used])
+		_free(p)
 	# A hotbar weapon in an iso area goes through the same request path.
 	world.call("_enter", &"farm", &"default")
 	p.set_physics_process(false)
