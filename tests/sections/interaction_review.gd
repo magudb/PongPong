@@ -77,6 +77,7 @@ func run(t) -> void:
 	await _tool_targets(t)
 	await _hotbar_auto_assign(t)
 	await _warp_after_tool_use(t)
+	await _stall_keeper_reach(t)
 	await world.travel(&"farm", &"default")
 	WorldRoot2D.unregister_map(&"_t_interaction")
 	await _axe_on_crops(t)
@@ -420,4 +421,49 @@ func _warp_after_tool_use(t) -> void:
 	player.state = PlayerBody2D.S.FREE
 	EventBus.area_change_requested.disconnect(listen)
 	warp.queue_free()
+	await t.physics(2)
+
+
+class KeeperProbe extends Node2D:
+	var talks := 0
+	func interact(_player: Node) -> void:
+		talks += 1
+
+
+## SIM-03: an outdoor stall's talk host is live only while its keeper stands at the stall. The whole open city counted as "the room",
+## so the empty stall said "Tal med Brumme" and E opened his dialogue from ~1,200 px away.
+func _stall_keeper_reach(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var keeper := KeeperProbe.new()
+	area.objects.add_child(keeper)
+	ShopCounter.keeper_resolver = func(_id: String) -> Node: return keeper
+	var stall := ShopCounter.new()
+	stall.setup("talk", {"id": "timber_yard", "keeper": "carpenter_brumme"}, "torvestanden")
+	area.objects.add_child(stall)
+	stall.position = area.objects.to_local(player.global_position + Vector2(300, 0))
+	stall.keeper_anchor = stall.position + Vector2(96, -48)
+	var anchor: Vector2 = area.objects.to_global(stall.keeper_anchor)
+	keeper.global_position = anchor + Vector2(20, -10)
+	stall._refresh()
+	var at_stall: bool = stall.is_enabled()
+	keeper.global_position = anchor + Vector2(1200, 0)
+	stall._refresh()
+	var away: bool = stall.is_enabled()
+	t.check("stall_talk_host_needs_keeper_at_stall", at_stall and not away)
+	keeper.global_position = anchor
+	stall._refresh()
+	keeper.global_position = anchor + Vector2(1200, 0)      # walks off between two polls
+	stall.interact(player)
+	t.check("stall_talk_rechecks_reach_at_the_press", keeper.talks == 0 and not stall.is_enabled())
+	var room := ShopCounter.new()
+	room.setup("talk", {"id": "timber_yard", "keeper": "carpenter_brumme"}, "torvestanden")
+	area.objects.add_child(room)
+	room._refresh()
+	t.check("indoor_talk_host_keeps_room_rule", room.is_enabled() and room.keeper_anchor == Vector2.INF)
+	room.interact(player)
+	t.check("indoor_talk_host_reaches_keeper", keeper.talks == 1)
+	ShopCounter.keeper_resolver = Callable()
+	for node in [keeper, stall, room]:
+		node.queue_free()
 	await t.physics(2)

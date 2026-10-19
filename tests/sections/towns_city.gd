@@ -33,6 +33,7 @@ func run(t) -> void:
 				talks[host.shop_id] = int(talks.get(host.shop_id, 0)) + 1
 	for id in ["timber_yard", "natteblik_maps"]:
 		t.check("stall_shop_and_two_talk_hosts_" + id, shops.get(id) == 1 and talks.get(id) == 2 and not t.autoload("LuaRuntime").get_shop(id).is_empty())
+	await _stall_talk_follows_keeper(t, director)
 	for building in doors:
 		var room := str(Hours.building(building).get("interior", ""))
 		if room == "" or not t.world().has_area(StringName(room)):
@@ -168,3 +169,37 @@ func run_windowed(t) -> void:
 	t.check("native_shop_over_live_room", gm.top_modal() == &"shop" and keeper != null)
 	t.tree.get_first_node_in_group("game_ui").get_screen(&"shop_ui").close()
 	gm.clear_config_overrides()
+
+
+## SIM-03: the open city is one "room", so a stall's talk hosts also need the keeper AT the stall: on a weekday at 16:30 Brumme sits on a
+## bench across town and his stall must not offer "Tal med Brumme"; at a weekend noon he keeps the stall and it does.
+func _stall_talk_follows_keeper(t, director: TownDirector) -> void:
+	var gm: Node = t.autoload("GameManager")
+	var tm: Node = t.autoload("TimeManager")
+	var hosts: Array = t.world().area.objects.get_children().filter(func(n: Node) -> bool: return n is ShopCounter and n.kind == "talk" and n.shop_id == "timber_yard")
+	var weekday := -1
+	var weekend := -1
+	for day in range(1, 8):
+		var index: int = tm.weekday_index(day)
+		if index in [5, 6] and weekend == -1:
+			weekend = day
+		elif index in [0, 1, 2, 3] and weekday == -1:
+			weekday = day
+	var keep: Array = [gm.day, gm.hour, gm.minute]
+	var seen := {}
+	for moment in [[weekday, 16, 30, "weekday"], [weekend, 12, 0, "weekend"]]:
+		gm.day = moment[0]
+		gm.hour = moment[1]
+		gm.minute = moment[2]
+		EventBus.time_of_day_changed.emit(gm.hour, gm.minute)
+		await t.physics(30)
+		var brumme: Node2D = director.node_of("carpenter_brumme")
+		for host in hosts:
+			host._refresh()
+		seen[moment[3]] = [brumme != null, hosts.all(func(h: ShopCounter) -> bool: return h.is_enabled()), hosts.any(func(h: ShopCounter) -> bool: return h.is_enabled())]
+	t.check("stall_talk_hosts_follow_keeper_to_the_stall", hosts.size() == 2 and seen.weekday == [true, false, false] and seen.weekend == [true, true, true], str(seen))
+	gm.day = keep[0]
+	gm.hour = keep[1]
+	gm.minute = keep[2]
+	EventBus.time_of_day_changed.emit(gm.hour, gm.minute)
+	await t.physics(3)
