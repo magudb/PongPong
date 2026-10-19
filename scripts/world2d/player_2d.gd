@@ -57,8 +57,14 @@ var _camera_zoom_before: float = Iso.DEFAULT_ZOOM
 var _bob_time: float = 0.0
 var _flower_time: float = 0.0
 var _flower_cell := Vector2i(-999, -999)
+## The marker's cached placement answer (PlacementService.can_place runs a physics query): per cell and item, refreshed every PROMPT_REFRESH_S.
+var _place_cell := Vector2i(-999, -999)
+var _place_item := &""
+var _place_reason := ""
+var _place_stale: float = 0.0
 const RULES := "res://scripts/dungeon_run/dungeon_run.gd"
 const GEM := "res://scripts/combat/lantern_gem.gd"
+const PLACEMENT := "res://scripts/farm/placement_service.gd"
 
 func _ready() -> void:
 	EventBus.modal_changed.connect(func(stack):
@@ -299,8 +305,9 @@ func _physics_process(delta: float) -> void:
 
 func _update_target(delta: float = 0.0) -> void:
 	_flower_time = maxf(0.0, _flower_time - delta)
+	_place_stale += delta
 	_marker.global_position = target_global()
-	_marker.valid = _at_farm() and farm.can_till(target_cell())
+	_marker.valid = _at_farm() and _target_valid(target_cell())
 	_marker.visible = _at_farm() and state == S.FREE and not is_flying
 	if bool(GameData.perk("talks_to_flowers", false)) and _at_farm():
 		var current := area.global_to_cell(global_position)
@@ -311,6 +318,18 @@ func _update_target(delta: float = 0.0) -> void:
 					_flower_time = 10.0
 					EventBus.whisper_requested.emit("WHISPER_FLOWER_%d" % (posmod(cell.x + cell.y, 6) + 1))
 					break
+
+## The gold ring: the held farm placeable can stand on the cell (the same answer place() gives), else the cell can be tilled.
+func _target_valid(cell: Vector2i) -> bool:
+	var item := hotbar.current()
+	if str(GameData.item_def(item).get("placeable", "")) != "farm":
+		return farm.can_till(cell)
+	if cell != _place_cell or item != _place_item or _place_stale >= PROMPT_REFRESH_S:
+		_place_cell = cell
+		_place_item = item
+		_place_stale = 0.0
+		_place_reason = str(Svc.static_call(PLACEMENT, &"can_place", [item, cell], "WHISPER_NOT_YET"))
+	return _place_reason == ""
 
 func _farm_repeat_allowed() -> bool:
 	var def := GameData.item_def(hotbar.current())
@@ -398,9 +417,11 @@ func use_selected() -> bool:
 			return combat.swing(item)
 		_:
 			if str(def.get("placeable", "")) == "farm":
-				ok = bool(Svc.static_call("res://scripts/farm/placement_service.gd", &"place", [item, cell], false))
+				var reason := str(Svc.static_call(PLACEMENT, &"can_place", [item, cell], "WHISPER_NOT_YET"))
+				ok = reason == "" and bool(Svc.static_call(PLACEMENT, &"place", [item, cell], false))
+				_place_stale = PROMPT_REFRESH_S
 				if not ok:
-					EventBus.whisper_requested.emit("WHISPER_NOT_YET")
+					EventBus.whisper_requested.emit(reason if reason != "" else "WHISPER_NOT_YET")
 	if ok:
 		_spend_stamina(cost)
 		state = S.USING

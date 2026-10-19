@@ -1,7 +1,7 @@
 extends RefCounted
 ## Regressions from the 2026-10-19 review of player interaction, combat input and world hosts:
 ## telegraph-only damage (DUN-01), dodge direction (GAP3-06), the buffered dodge across a pause (GAP3-12), E reach
-## (GAP3-02), the host choice of E and of the tools (GAP3-03) and the axe on crops (GAP4-02).
+## (GAP3-02), the host choice of E and of the tools (GAP3-03), the axe on crops (GAP4-02) and the placement marker (GAP4-04).
 const SECTION := "interaction_review"
 const TIMEOUT_S := 180.0
 
@@ -79,6 +79,7 @@ func run(t) -> void:
 	await world.travel(&"farm", &"default")
 	WorldRoot2D.unregister_map(&"_t_interaction")
 	await _axe_on_crops(t)
+	await _placement_reasons(t)
 	gm.clear_config_overrides()
 
 
@@ -323,3 +324,30 @@ func _axe_on_crops(t) -> void:
 	player.state = PlayerBody2D.S.FREE
 	player._tool_time = 0.0
 	await t.physics(2)
+
+
+## GAP4-04: the farm marker shows whether the HELD placeable can stand on the cell, and a refusal names its reason. The marker showed
+## tillability (gold on the fields, where a decoration is refused) and every refusal said "Det kan vi prøve en anden dag".
+func _placement_reasons(t) -> void:
+	var world: WorldRoot2D = t.world()
+	var area: IsoArea = world.area
+	var player: Player2D = world.player
+	var farm: FarmGrid = world.farm
+	t.autoload("EconomyManager").add_item(&"scarecrow", 1, true)
+	player.hotbar.assign(0, &"scarecrow")
+	player.hotbar.select(0)
+	var field := _aim_cell(t, farm.farmable_cells(), func(c: Vector2i) -> bool: return farm.state_of(c) in [FarmGrid.State.EMPTY, FarmGrid.State.TILLED])
+	await t.physics(2)
+	var keys: Array = []
+	var listen := _whispers(keys)
+	var field_marker: bool = player._marker.valid
+	t.check("decoration_marker_dark_on_field", field != Vector2i.MAX and not field_marker and PlacementService.can_place(&"scarecrow", field) == "FARM_PLACE_FIELD")
+	t.check("decoration_refusal_names_the_field", not player.use_selected() and keys == ["FARM_PLACE_FIELD"], str(keys))
+	var grass_cells: Array = []
+	for y in area.map.height:
+		for x in area.map.width:
+			grass_cells.append(Vector2i(x, y))
+	var grass := _aim_cell(t, grass_cells, func(c: Vector2i) -> bool: return PlacementService.can_place(&"scarecrow", c) == "")
+	await t.physics(2)
+	t.check("decoration_marker_gold_where_it_fits", grass != Vector2i.MAX and player._marker.valid)
+	EventBus.whisper_requested.disconnect(listen)

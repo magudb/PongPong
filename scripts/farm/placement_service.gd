@@ -62,27 +62,39 @@ static func _draw_prop(target: IsoArea, item: String, at: Vector2i) -> Node2D:
 		interaction.position = target.objects.to_local(target.cell_to_global(at)) - picture.position
 		picture.add_child(interaction)
 	return picture
-static func place(item: StringName, at: Vector2i) -> bool:
+## Why `item` cannot stand on `at` right now, as the whisper key of the reason ("" = it can). The farm marker and place()
+## share this answer, so the gold ring and the refusal never disagree.
+##   FARM_PLACE_ONLY_FARM  not on the farm or in the greenhouse   FARM_CELL_RESERVED  the steading keeps the cell free
+##   FARM_PLACE_FIELD      a decoration on a field cell          FARM_PLACE_GROWING  a machine on a cell with a crop
+##   FARM_PLACE_BLOCKED    not walkable, or a marker, a placed piece, world geometry, a resource or an actor is there
+static func can_place(item: StringName, at: Vector2i) -> String:
 	var tree := Engine.get_main_loop() as SceneTree
 	var world := tree.get_first_node_in_group("world_2d") if tree != null else null
-	if world == null or world.area == null or world.area.map.id not in [&"farm", &"greenhouse"]: return false
 	var def := ItemKinds.def(item)
+	if world == null or world.area == null or world.area.map.id not in [&"farm", &"greenhouse"] or str(def.get("placeable","")) != "farm": return "FARM_PLACE_ONLY_FARM"
 	var machine := str(def.get("farm_machine", "")) != ""
-	var reserved := FarmReserve.blocked(world.area,at)
 	var model: FarmGrid = world.farm_for_area(world.area.map.id)
-	var field := at in model.farmable_cells()
-	if str(def.get("placeable","")) != "farm" or not world.area.is_walkable(at) or reserved not in (["", "field", "zone"] if machine else [""]): return false
-	if field and (not machine or model.state_of(at) not in [FarmGrid.State.EMPTY, FarmGrid.State.TILLED]): return false
+	if not world.area.is_walkable(at): return "FARM_PLACE_BLOCKED"
+	var reserved := FarmReserve.blocked(world.area,at)
+	if reserved == "field" or at in model.farmable_cells():
+		if not machine: return "FARM_PLACE_FIELD"
+		if model.state_of(at) not in [FarmGrid.State.EMPTY, FarmGrid.State.TILLED]: return "FARM_PLACE_GROWING"
+	if reserved not in (["", "field", "zone"] if machine else [""]): return "FARM_CELL_RESERVED"
 	for marker in world.area.markers:
-		if marker.cell == at: return false
+		if marker.cell == at: return "FARM_PLACE_BLOCKED"
 	for piece in world.placed_items:
-		if str(piece.get("area", "farm")) == str(world.area.map.id) and piece.cell == [at.x,at.y]: return false
+		if str(piece.get("area", "farm")) == str(world.area.map.id) and piece.cell == [at.x,at.y]: return "FARM_PLACE_BLOCKED"
 	# World geometry, resources and actors also reserve their occupied cells.
 	var query := PhysicsPointQueryParameters2D.new()
 	query.position = world.area.cell_to_global(at)
 	query.collision_mask = Iso.MASK_WALKING
 	query.collide_with_areas = false
-	if not world.area.get_world_2d().direct_space_state.intersect_point(query).is_empty(): return false
+	if not world.area.get_world_2d().direct_space_state.intersect_point(query).is_empty(): return "FARM_PLACE_BLOCKED"
+	return ""
+
+static func place(item: StringName, at: Vector2i) -> bool:
+	if can_place(item, at) != "": return false
+	var world: Node = (Engine.get_main_loop() as SceneTree).get_first_node_in_group("world_2d")
 	var picture := _draw_prop(world.area,str(item),at)
 	if picture == null: return false
 	if not EconomyManager.consume_backpack_items({item:1},func(): world.placed_items.append({"item":str(item),"cell":[at.x,at.y],"area":str(world.area.map.id)})):
