@@ -72,8 +72,8 @@ func _row_texts(row: Array) -> Array[String]:
 		"NAV_CONTROLS_MOVE":
 			return [UiHints.glyph_set([&"move_forward", &"move_left", &"move_back", &"move_right"], kb) + " / " + UiHints.glyph_set([&"ui_up", &"ui_left", &"ui_down", &"ui_right"], kb), tr("NAV_PAD_LSTICK")]
 		"NAV_CONTROLS_CLICK":
-			# A click works the clicked cell around the hero; the pad and the X key work the cell in front.
-			return [tr("NAV_CONTROLS_CLICK_GROUND"), tr("NAV_CONTROLS_TILE_AHEAD")]
+			# A click works the clicked cell around the hero; the pad's tool button works the cell in front.
+			return [tr("NAV_CONTROLS_CLICK_GROUND"), tr("NAV_CONTROLS_TILE_AHEAD_FMT") % UiHints.glyph(&"use_tool", pad)]
 		"NAV_CONTROLS_ZOOM":
 			return [tr("NAV_CONTROLS_WHEEL"), UiHints.glyph_pair(&"zoom_in", &"zoom_out", pad)]
 		"NAV_CONTROLS_HOTBAR":

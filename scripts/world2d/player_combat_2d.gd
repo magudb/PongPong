@@ -5,8 +5,10 @@ signal weapon_drawn(item_id: StringName)
 const S := PlayerBody2D.S
 const RULES := "res://scripts/dungeon_run/dungeon_run.gd"
 const FX := "res://scripts/combat/weapon_fx.gd"
-## The slash is drawn, and its hits are tested, this far above the feet: a cursor aim measures from the same point.
+## The slash is drawn (and its broad-phase ellipse sits) this far above the feet; the exact arc test runs feet to feet.
 const SLASH_LIFT := -6.0 * Iso.S
+## A click this far above an enemy's hurtbox still names it: players click the sprite's chest or head, not its feet.
+const BODY_PROBE := 24.0 * Iso.S
 var player: PlayerBody2D
 var cooldowns := {"slash": 0.0, "dodge": 0.0, "light": 0.0, "drink": 0.0}
 var durations := {"slash": 0.4, "dodge": 0.9, "light": 7.0, "drink": 1.0}
@@ -146,20 +148,58 @@ func _read_weapon(item: StringName = &"") -> Dictionary:
 	return info
 
 ## The ground direction of a swing: toward `at` (a clicked ground point), else toward the cursor while the mouse is the
-## device in use, else the precise walking direction. A point is measured from the slash's own origin (SLASH_LIFT), so the
-## drawn arc is centred on the clicked spot.
+## device in use, else the precise walking direction. A point on an enemy's sprite aims at that enemy's feet; any other
+## point is measured from the feet, as the exact arc test in _apply_hits measures (review: a 24 px chest origin or the
+## slash lift skews diagonal aims by up to 26 degrees).
 func aim_ground(at: Variant = null) -> Vector2:
-	if at == null and bool(player.get("mouse_aim")) and player.has_method("cursor_global"):
-		at = player.call("cursor_global")
-	if at is Vector2:
-		var point: Vector2 = at
-		var direction := Iso.to_ground(point - player.global_position - Vector2(0, SLASH_LIFT))
+	var point: Variant = _aim_point(at)
+	if point is Vector2:
+		var enemy := enemy_at(point)
+		if enemy != null:
+			point = enemy.global_position
+		var direction := Iso.to_ground((point as Vector2) - player.global_position)
 		if direction.length() > 8.0 * Iso.S:
 			return direction.normalized()
 	var precise: Variant = player.get("combat_aim")
 	if precise is Vector2 and precise.length_squared() > .01:
 		return precise.normalized()
 	return Iso.to_ground(player.facing_vec).normalized()
+
+## The point a swing aims at: the clicked one, else the live cursor while the mouse is the device in use, else null.
+func _aim_point(at: Variant) -> Variant:
+	if at == null and bool(player.get("mouse_aim")) and player.has_method("cursor_global"):
+		return player.call("cursor_global")
+	return at
+
+## The enemy whose hurtbox is under `point` (or under the point BODY_PROBE lower: the sprite's upper body), the nearest
+## to the point when several overlap; null when the point is on bare ground.
+func enemy_at(point: Vector2) -> Node2D:
+	var query := PhysicsPointQueryParameters2D.new()
+	query.collision_mask = Iso.LAYER_ENEMY
+	query.collide_with_areas = true
+	query.collide_with_bodies = false
+	var space := player.get_world_2d().direct_space_state
+	var best: Node2D = null
+	var best_distance := INF
+	for probe in [point, point + Vector2(0, BODY_PROBE)]:
+		query.position = probe
+		for hit in space.intersect_point(query, 8):
+			var target: Node = hit.collider
+			if target is Area2D:
+				target = target.get_parent()
+			if not target is Node2D or not target.has_method("take_hit") or not target.is_in_group("enemy"):
+				continue
+			var distance := (target as Node2D).global_position.distance_to(point)
+			if distance < best_distance:
+				best = target
+				best_distance = distance
+		if best != null:
+			return best
+	return best
+
+## The ground direction of the running (or last) swing: what an on_swing effect aims along.
+func swing_direction() -> Vector2:
+	return _swing_direction
 
 func swing(item: StringName = &"", aim: Variant = null) -> bool:
 	if not player.world_input_allowed() or player.state != S.FREE or float(cooldowns.slash) > 0.0 or player.is_flying:
@@ -168,13 +208,16 @@ func swing(item: StringName = &"", aim: Variant = null) -> bool:
 	if _weapon.is_empty():
 		return false
 	_swing_direction = aim_ground(aim)
+	# A click (or the cursor) on an enemy's sprite already aims at that enemy: no other enemy may steal the swing.
+	var point: Variant = _aim_point(aim)
+	var named: bool = point is Vector2 and enemy_at(point) != null
 	# Eight keyboard directions need half a 45-degree sector of assistance;
 	# otherwise a 22-degree spear leaves blind angles between directions.
-	var nudge := deg_to_rad(15.0) if aim is Vector2 or bool(player.get("mouse_aim")) else PI/8
+	var nudge := deg_to_rad(15.0) if point is Vector2 else PI/8
 	var closest := INF
 	var target_angle := _swing_direction.angle()
 	for enemy in get_tree().get_nodes_in_group("enemy"):
-		if enemy is Node2D:
+		if enemy is Node2D and not named:
 			var offset := Iso.to_ground(enemy.global_position - player.global_position)
 			if offset.length() < float(_weapon.swing_radius) and offset.length() < closest and absf(angle_difference(target_angle, offset.angle())) <= nudge:
 				closest = offset.length()

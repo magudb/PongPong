@@ -31,11 +31,30 @@ var _farm_use_cell := Vector2i.ZERO
 var _farm_use_item := &""
 ## The held use started with a click: its repeats follow the cursor (cursor_cell), not the facing cell.
 var _farm_use_mouse := false
-## The cursor in viewport coordinates, from the last mouse event that reached the world (cursor_global converts it).
+## The cursor in viewport coordinates (cursor_global converts it). _input stores every mouse event before the GUI sees it,
+## so the position stays current over the HUD and open panels too.
 var _cursor_screen := Vector2.ZERO
-## True only while a click (or a held click's repeat) works: tool_cell() is then the cursor's cell. E, the X key and the
-## pad never set it, so they keep the facing cell even while the mouse is the aiming device.
-var _cursor_use := false
+## The cell the running click works on (a press, a held click's repeat or a buffered click): tool_cell() then returns it.
+## null for E, the X key and the pad, which keep the facing cell even while the mouse is the aiming device.
+var _click_cell: Variant = null
+## The marker's device, kept apart from mouse_aim (combat aim): a real mouse move or a click over the world puts the marker
+## on the cursor's cell; a movement key, E, X, a pad input or the pointer leaving the window hands it back to the facing
+## cell, so the marker always shows what the next key press works on.
+var _marker_pointer := false
+## One farm click made while the previous tool use still runs: its cell, fired once the hero is free (review: fast
+## click-click-click along a row must work every clicked tile).
+var _click_buffer: Variant = null
+var _click_buffer_item := &""
+var _click_buffer_time := 0.0
+## The running tool use came from a click: walking keeps the hero turned toward the clicked cell until the use ends.
+var _click_facing := false
+## Throttles the "land first" whisper of a tool used in flight.
+var _flight_whisper_time := 0.0
+## cursor_cell() of a click that works nothing (seeds or a placed object under the feet, an object beyond reach).
+const NO_CELL := Vector2i(-99999, -99999)
+## A buffered click outlives the running tool use by this long.
+const CLICK_BUFFER_S := 0.15
+const FLIGHT_WHISPER_S := 2.5
 var _marker: TargetMarker2D
 var _last_stats: Dictionary = {}
 var _stats_timer: float = 0.0
@@ -75,8 +94,12 @@ const PLACEMENT := "res://scripts/farm/placement_service.gd"
 
 func _ready() -> void:
 	EventBus.modal_changed.connect(func(stack):
+		if stack.is_empty() and is_inside_tree():
+			# A pausing modal stopped _input: take up the pointer where it is now, not where it was when the modal opened.
+			_cursor_screen = get_viewport().get_mouse_position()
 		if not stack.is_empty():
 			_farm_use_held = false
+			_click_buffer = null
 			# A pausing modal freezes _physics_process, so its paused branch never runs.
 			if combat != null:
 				combat.clear_buffer())
@@ -121,6 +144,8 @@ func _ready() -> void:
 	var footsteps := PlayerFootsteps.new()
 	footsteps.name = "Footsteps"
 	add_child(footsteps)
+	# The pointer left the window: its last position is stale, so the marker goes back to the facing cell.
+	get_window().mouse_exited.connect(func(): _marker_pointer = false)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE and is_instance_valid(_marker):
@@ -177,10 +202,13 @@ func _world_in_transition() -> bool:
 	var world := get_tree().get_first_node_in_group("world_2d") if is_inside_tree() else null
 	return world != null and (bool(world.get("traveling")) or bool(world.get("sleeping")))
 
-## A move over the HUD never reaches _unhandled_input (the GUI takes it), yet it still makes the mouse the aiming device:
-## the marker then hides over the HUD instead of staying on the facing cell.
+## Every mouse event updates the cursor position, wherever it lands. A move over the in-world HUD never reaches
+## _unhandled_input (the GUI takes it), yet it still makes the mouse the device in use, so the marker hides over the HUD;
+## a move over an open panel or modal changes no device.
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if event is InputEventMouse:
+		_cursor_screen = (event as InputEventMouse).position
+	if event is InputEventMouseMotion and not GameData.gm().is_modal_open():
 		_track_aim_device(event)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -224,12 +252,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed("attack") or event.is_action_pressed("use_tool"):
 			# A click works the clicked cell: a tree or rock there that takes the tool is hit, anything else is a swing
 			# toward the clicked ground point (aimed at the press position, not wherever the cursor is when a buffer fires).
-			_cursor_use = event is InputEventMouseButton
+			var click := event is InputEventMouseButton
+			_click_cell = cursor_cell(hotbar.current()) if click else null
 			if _tool_target_in_front():
 				use_selected()
 			else:
-				combat.request(&"slash", &"", cursor_global() if _cursor_use else null)
-			_cursor_use = false
+				combat.request(&"slash", &"", cursor_global() if click else null)
+			_click_cell = null
 		elif event.is_action_pressed("dodge"):
 			combat.request(&"dodge")
 		elif event.is_action_pressed("light"):
@@ -249,12 +278,21 @@ func _unhandled_input(event: InputEvent) -> void:
 		toggle_flight()
 	elif event.is_action_pressed("use_tool"):
 		_farm_use_mouse = event is InputEventMouseButton
-		_cursor_use = _farm_use_mouse
+		_click_cell = cursor_cell(hotbar.current()) if _farm_use_mouse else null
 		_farm_use_held = _farm_repeat_allowed()
-		_farm_use_cell = tool_cell()
 		_farm_use_item = hotbar.current()
-		use_selected()
-		_cursor_use = false
+		if state == S.USING:
+			# The previous use still runs: a click waits for it (one buffered cell), and a held press repeats as soon as
+			# the hero is free (NO_CELL never equals a worked cell, so the repeat in _physics_process fires).
+			if _farm_use_mouse and _click_bufferable():
+				_click_buffer = _click_cell
+				_click_buffer_item = hotbar.current()
+				_click_buffer_time = _tool_time + CLICK_BUFFER_S
+			_farm_use_cell = NO_CELL
+		else:
+			_farm_use_cell = tool_cell()
+			use_selected()
+		_click_cell = null
 	elif event.is_action_pressed("jump"):
 		hop()
 	for action in ["interact", "fly_toggle", "attack", "dodge", "light", "drink", "jump", "use_tool"]:
@@ -264,12 +302,21 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Swings aim at the cursor only while the mouse is the device in use: a real mouse move or a click picks it,
 ## a pad input or a keyboard attack hands the aim back to the walking direction (GAP3-05).
+## The marker follows the same devices, and a movement key or E also hands it back to the facing cell (combat aim keeps
+## the mouse then: walking with the keys while aiming with the mouse is normal play), until the mouse moves again.
 func _track_aim_device(event: InputEvent) -> void:
 	if (event is InputEventMouseMotion and (event as InputEventMouseMotion).relative.length() >= UiNavWatcher.MOUSE_MOVE_MIN) or (event is InputEventMouseButton and event.pressed):
 		mouse_aim = true
+		_marker_pointer = true
 	elif (event is InputEventJoypadButton and event.pressed) or (event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) >= UiNavWatcher.STICK_THRESHOLD) \
 			or (event is InputEventKey and event.pressed and event.is_action("attack")):
 		mouse_aim = false
+		_marker_pointer = false
+	elif event is InputEventKey and event.pressed and not event.is_echo():
+		for action in [&"interact", &"use_tool", &"move_forward", &"move_back", &"move_left", &"move_right"]:
+			if event.is_action(action):
+				_marker_pointer = false
+				break
 
 ## The selected hotbar tool (pickaxe, axe) and a host in reach that takes it (_takes_tool) are there, so an action-area
 ## press mines instead of swinging. A consumable or a weapon in the slot never takes the press (DUN-07), and neither does
@@ -281,8 +328,8 @@ func _tool_target_in_front() -> bool:
 	if str(def.get("category", "")) != "tool" or tool == "" or not GameData.eco().has_item(item):
 		return false
 	var takes := func(h: Node) -> bool: return _takes_tool(h, tool)
-	if _cursor_use:
-		return _host_at(cursor_cell(item), takes) != null
+	if _click_cell != null:
+		return _click_cell != NO_CELL and _host_at(_click_cell, takes) != null
 	return nearest_interactable(takes) != null
 
 # ------------------------------------------------------------------ mouse targeting (owner request 2026-10-20)
@@ -293,34 +340,53 @@ func cursor_global() -> Vector2:
 	return get_canvas_transform().affine_inverse() * _cursor_screen
 
 ## The cell a click works on: the ground cell under the cursor when it is one of the nine cells around the feet (the feet's
-## own cell only for what can be done standing on it, _feet_cell_ok), else the neighbour cell toward the cursor.
+## own cell only for what can be done standing on it, _feet_cell_ok), else the neighbour cell toward the cursor. NO_CELL
+## when the click works nothing: seeds or a placed object under the feet, a placed object beyond reach (a click anywhere on
+## the screen must never spend a sprinkler or a chest on a cell the player did not point at).
 func cursor_cell(item: StringName) -> Vector2i:
 	var feet := area.global_to_cell(global_position)
 	var at := cursor_global()
 	var cell := area.global_to_cell(at)
 	var d := cell - feet
 	if absi(d.x) > 1 or absi(d.y) > 1:
+		if _places_object(item):
+			return NO_CELL
 		# The eight neighbours lie on the 45-degree rays in GROUND space (iso exactly, ortho within half a degree).
 		return feet + area.facing_step(Iso.dir8_of(Iso.to_ground(at - global_position)))
 	if d == Vector2i.ZERO and not _feet_cell_ok(item, cell):
-		return target_cell()
+		return NO_CELL
 	return cell
 
-## Seeds and placed objects never go under the hero's own feet: such a click works the facing cell instead. Watering,
-## tilling, fertilising, a ripe crop and a tool on an overlapping tree or rock are fine on the cell the hero stands on.
+## Seeds and placed objects never go under the hero's own feet. Watering, tilling, fertilising, a ripe crop and a tool on
+## an overlapping tree or rock are fine on the cell the hero stands on.
 func _feet_cell_ok(item: StringName, cell: Vector2i) -> bool:
-	var def := GameData.item_def(item)
-	if str(def.get("category", "")) != "seed" and str(def.get("placeable", "")) == "":
+	if str(GameData.item_def(item).get("category", "")) != "seed" and not _places_object(item):
 		return true
 	return _at_farm() and farm.state_of(cell) == FarmGrid.State.READY
 
-## The cell the selected item works on: the cursor's cell during a click, else the facing cell (keys, pad, E).
-func tool_cell() -> Vector2i:
-	return cursor_cell(hotbar.current()) if _cursor_use else target_cell()
+static func _places_object(item: StringName) -> bool:
+	return str(GameData.item_def(item).get("placeable", "")) == "farm"
 
-## The marker follows the cursor while the mouse is the device in use; a pad or keyboard attack hands it back to the facing cell.
+## The cell the selected item works on: the clicked cell during a click, else the facing cell (keys, pad, E).
+func tool_cell() -> Vector2i:
+	return _click_cell if _click_cell != null else target_cell()
+
+## The marker shows the cursor's cell while the mouse is the marker's device, and during a held click (whose repeats
+## follow the cursor even while a movement key is down); otherwise the facing cell that E, X and the pad work on.
+func _marker_on_cursor() -> bool:
+	return _marker_pointer or (_farm_use_held and _farm_use_mouse)
+
+## The marked cell: what the next click works on, or, for a click that would work nothing, the cell under the cursor.
 func marker_cell() -> Vector2i:
-	return cursor_cell(hotbar.current()) if mouse_aim else target_cell()
+	if not _marker_on_cursor():
+		return target_cell()
+	var cell := cursor_cell(hotbar.current())
+	return cell if cell != NO_CELL else area.global_to_cell(cursor_global())
+
+## A farm click made during a running use waits for it: tools, seeds, supplies and placed objects (a weapon has its own buffer).
+func _click_bufferable() -> bool:
+	var def := GameData.item_def(hotbar.current())
+	return _at_farm() and (str(def.get("category", "")) in ["tool", "seed", "farm"] or _places_object(hotbar.current()))
 
 ## A GUI control (one that does not ignore the mouse) is under the cursor: no marker, and a press there is not a world click.
 func _cursor_over_gui() -> bool:
@@ -380,6 +446,7 @@ func _physics_process(delta: float) -> void:
 	var paused: bool = GameData.gm().is_modal_open() or state in [S.TALKING, S.FAINTED] or _event_active
 	if paused:
 		_farm_use_held = false
+		_click_buffer = null
 		combat.attack_held = false
 		combat.clear_buffer()
 		_climb_up = false
@@ -393,6 +460,8 @@ func _physics_process(delta: float) -> void:
 	if combat.hit_stop > 0 or combat.stopped_this_tick:
 		return
 	_tool_time = maxf(0.0, _tool_time - delta)
+	_click_buffer_time = maxf(0.0, _click_buffer_time - delta)
+	_flight_whisper_time = maxf(0.0, _flight_whisper_time - delta)
 	_regen_delay = maxf(0.0, _regen_delay - delta)
 	if state == S.USING and _tool_time == 0.0:
 		state = S.FREE
@@ -425,7 +494,8 @@ func _physics_process(delta: float) -> void:
 	velocity = Iso.to_screen(_gvel)
 	move_and_slide()
 	_gvel = Iso.to_ground(velocity)
-	if direction != Vector2.ZERO and state != S.DODGE:
+	# A clicked use keeps the hero turned toward the clicked cell while it runs, even when walking the other way.
+	if direction != Vector2.ZERO and state != S.DODGE and not (state == S.USING and _click_facing):
 		combat_aim = direction.normalized()
 		facing8 = Iso.dir8_of(direction)
 		facing_vec = Iso.dir8_vector(facing8)
@@ -435,15 +505,28 @@ func _physics_process(delta: float) -> void:
 	else:
 		visual.update_motion(velocity, running, is_jumping or _landing, is_flying, direction)
 	_update_target(delta)
+	if _click_buffer != null and (_click_buffer_time == 0.0 or hotbar.current() != _click_buffer_item or not _at_farm()):
+		_click_buffer = null
+	if _click_buffer != null and state == S.FREE:
+		# The click made during the previous use works its own cell now, if the hero has not walked out of reach of it.
+		var buffered: Vector2i = _click_buffer
+		var d: Vector2i = buffered - area.global_to_cell(global_position)
+		_click_buffer = null
+		if buffered != NO_CELL and absi(d.x) <= 1 and absi(d.y) <= 1:
+			_click_cell = buffered
+			_farm_use_cell = buffered
+			_farm_use_item = hotbar.current()
+			use_selected()
+			_click_cell = null
 	if _farm_use_held and _farm_repeat_allowed() and Input.is_action_pressed("use_tool") and state == S.FREE:
 		# A held click repeats on the cells the cursor moves over (never while it rests on the HUD).
-		_cursor_use = _farm_use_mouse and mouse_aim
+		_click_cell = cursor_cell(hotbar.current()) if _farm_use_mouse and mouse_aim else null
 		var cell := tool_cell()
-		if (cell != _farm_use_cell or hotbar.current() != _farm_use_item) and not (_cursor_use and _cursor_over_gui()):
+		if (cell != _farm_use_cell or hotbar.current() != _farm_use_item) and not (_click_cell != null and _cursor_over_gui()):
 			_farm_use_cell = cell
 			_farm_use_item = hotbar.current()
 			use_selected()
-		_cursor_use = false
+		_click_cell = null
 	_update_prompt(delta)
 	_update_oil(delta)
 	_update_ghost(delta)
@@ -456,9 +539,10 @@ func _update_target(delta: float = 0.0) -> void:
 	_flower_time = maxf(0.0, _flower_time - delta)
 	_place_stale += delta
 	var marked := marker_cell()
+	var on_cursor := _marker_on_cursor()
 	_marker.global_position = area.cell_to_global(marked)
-	_marker.valid = _at_farm() and _target_valid(marked)
-	_marker.visible = _at_farm() and state == S.FREE and not is_flying and not (mouse_aim and _cursor_over_gui())
+	_marker.valid = _at_farm() and not (on_cursor and cursor_cell(hotbar.current()) == NO_CELL) and _target_valid(marked)
+	_marker.visible = _at_farm() and state == S.FREE and not is_flying and not (on_cursor and _cursor_over_gui())
 	if bool(GameData.perk("talks_to_flowers", false)) and _at_farm():
 		var current := area.global_to_cell(global_position)
 		if current != _flower_cell and _flower_time == 0.0:
@@ -505,12 +589,20 @@ func try_interact() -> bool:
 	return super.try_interact()
 
 func use_selected() -> bool:
+	if is_flying and world_input_allowed() and hotbar.current() != &"":
+		# Tools stay refused in flight, with a word why (a click, X and the pad alike), at most every FLIGHT_WHISPER_S.
+		if _flight_whisper_time == 0.0:
+			_flight_whisper_time = FLIGHT_WHISPER_S
+			EventBus.whisper_requested.emit("FARM_LAND_FIRST")
+		return false
 	if not world_input_allowed() or state != S.FREE or is_flying:
 		return false
 	var item := hotbar.current()
 	var def := GameData.item_def(item)
-	if _cursor_use:
-		var clicked := cursor_cell(item)
+	if _click_cell != null:
+		if _click_cell == NO_CELL:
+			return false
+		var clicked: Vector2i = _click_cell
 		_face_cell(clicked)
 		# A click on a ripe crop picks it, as E does (the axe, pickaxe and scythe keep their own crop rules).
 		if _at_farm() and farm.state_of(clicked) == FarmGrid.State.READY and str(def.get("tool_type", "")) not in ["axe", "pickaxe", "scythe"]:
@@ -533,8 +625,8 @@ func use_selected() -> bool:
 		"tool":
 			match str(def.get("tool_type", "")):
 				"pail":
-					# The nearest COW in reach: a hen standing closer must not hide it.
-					var cow := nearest_interactable(_is_cow) as Animal2D
+					# The nearest COW in reach: a hen standing closer must not hide it. A click milks the cow on the clicked cell.
+					var cow := (_host_at(cell, _is_cow) if _click_cell != null else nearest_interactable(_is_cow)) as Animal2D
 					if cow != null:
 						ok = int(Svc.node("AnimalHusbandry").collect_product(cow.animal_id)) > 0
 					else:
@@ -560,8 +652,8 @@ func use_selected() -> bool:
 					var tool := str(def.tool_type)
 					var crop: bool = _at_farm() and farm.get_plot(cell) != null and farm.get_plot(cell).crop_id != &""
 					var takes := func(h: Node) -> bool: return _takes_tool(h, tool)
-					var host: Node = _host_at(cell, takes) if _cursor_use else nearest_interactable(func(h: Node) -> bool: return area.global_to_cell((h as Node2D).global_position) == cell and _takes_tool(h, tool))
-					if host == null and not crop and not _cursor_use:
+					var host: Node = _host_at(cell, takes) if _click_cell != null else nearest_interactable(func(h: Node) -> bool: return area.global_to_cell((h as Node2D).global_position) == cell and _takes_tool(h, tool))
+					if host == null and not crop and _click_cell == null:
 						host = nearest_interactable(takes)
 					if host != null:
 						ok = bool(host.call("tool_hit", tool, int(def.get("power", 1)), self))
@@ -570,7 +662,7 @@ func use_selected() -> bool:
 					else:
 						# Nothing takes this tool: the nearest object that takes another one names it (FOREST_TOOL_PICKAXE on a rock).
 						var hittable := func(h: Node) -> bool: return h.has_method("tool_hit")
-						var other: Node = _host_at(cell, hittable) if _cursor_use else nearest_interactable(hittable)
+						var other: Node = _host_at(cell, hittable) if _click_cell != null else nearest_interactable(hittable)
 						if other != null:
 							other.call("tool_hit", tool, int(def.get("power", 1)), self)
 						else:
@@ -587,7 +679,7 @@ func use_selected() -> bool:
 			ok = GameData.eco().use_item(item)
 		"weapon":
 			# The same path as the attack action: the input buffer and Cozy auto-swing apply (DUN-07).
-			combat.request(&"slash", item, cursor_global() if _cursor_use else null)
+			combat.request(&"slash", item, cursor_global() if _click_cell != null else null)
 			return state == S.SWING
 		_:
 			if str(def.get("placeable", "")) == "farm":
@@ -600,6 +692,7 @@ func use_selected() -> bool:
 		_spend_stamina(cost)
 		state = S.USING
 		_using_item = item
+		_click_facing = _click_cell != null
 		_sync_equipment_display()
 		var dig := maxf(0.1, float(SpeciesPerks.current("dig_speed", 1.0)))
 		_tool_time = float(GameData.player_cfg("tool_seconds", 0.34)) / dig

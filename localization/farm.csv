@@ -10,6 +10,7 @@ UI_TOOL_NO_EFFECT,Her er der ikke brug for det lige nu.,That is not needed here 
 UI_NOT_IN_SEASON,Frøet må vente på sin årstid.,This seed needs to wait for its season.
 UI_TIRED,Tag et lille hvil. Energien kommer tilbage.,Take a short rest. Your energy will return.
 UI_NO_ROOM_TO_LAND,Find et frit sted at lande.,Find a clear place to land.
+FARM_LAND_FIRST,Land først. Redskaberne virker ikke i luften.,Land first. Tools do not work in the air.
 WHISPER_NOT_YET,Det kan vi prøve en anden dag.,We can try that another day.
 WHISPER_FISHING_CLOSED,Fiskene får ro lidt endnu.,The fish can rest a little longer.
 WHISPER_OIL_LOW,Lyset bliver svagere. Har du mere olie?,The light is fading. Do you have more oil?

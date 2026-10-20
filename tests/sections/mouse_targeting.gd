@@ -8,6 +8,7 @@ const TIMEOUT_S := 240.0
 const HOE := &"hoe_wooden"
 const CAN := &"watering_can_copper"
 const SEEDS := &"turnip_seeds"
+const SPRINKLER := &"sprinkler"
 
 var _last_screen := Vector2.ZERO
 
@@ -125,6 +126,15 @@ func run(t) -> void:
 	_flight_refuses(t, world, p, centre)
 	await _any_zoom_and_scale(t, world, p, centre)
 	_clear_plots(world, centre)
+	await _marker_matches_keys(t, world, p, centre)
+	_clear_plots(world, centre)
+	await _rapid_clicks(t, world, p, centre)
+	_clear_plots(world, centre)
+	await _click_keeps_facing_while_walking(t, world, p, centre)
+	_clear_plots(world, centre)
+	_objects_never_misplaced(t, world, p, centre)
+	await _pointer_leaves_and_modals(t, world, p, centre)
+	_clear_plots(world, centre)
 	world.call("_enter", &"_fixture_ortho", &"default")
 	p.set_physics_process(false)
 	for node in t.tree.get_nodes_in_group("enemy"):
@@ -133,7 +143,9 @@ func run(t) -> void:
 	_free(p)
 	_world_cells_free_of_gui(t, world, p, world.area.global_to_cell(p.global_position), "action area")
 	await _weapon_aim(t, world, p)
+	await _click_enemy_body(t, world, p)
 	await _tools_on_clicked_hosts(t, world, p)
+	await _greenhouse_bed(t, world, p)
 	# The town HUD (festival ribbon, birthday chips) must not cover the ground either.
 	if world.call("_enter", &"hyggebyen", &"default"):
 		p.set_physics_process(false)
@@ -195,8 +207,8 @@ func _reach(t, world: WorldRoot2D, p: Player2D, centre: Vector2i) -> void:
 	t.check("cursor_cell_within_reach_and_clamped", wrong.is_empty() and p.mouse_aim, ", ".join(wrong))
 	_hover(p, _in_cell(area, centre))
 	var feet_ok: bool = p.cursor_cell(HOE) == centre and p.cursor_cell(CAN) == centre
-	var seeds_ahead: bool = p.cursor_cell(SEEDS) == p.target_cell() and p.target_cell() != centre
-	t.check("feet_cell_for_tools_never_for_seeds", feet_ok and seeds_ahead, "hoe %s, can %s, seeds %s (facing %s)" % [p.cursor_cell(HOE), p.cursor_cell(CAN), p.cursor_cell(SEEDS), p.target_cell()])
+	var seeds_refused: bool = p.cursor_cell(SEEDS) == Player2D.NO_CELL and p.cursor_cell(SPRINKLER) == Player2D.NO_CELL
+	t.check("feet_cell_for_tools_never_for_seeds", feet_ok and seeds_refused, "hoe %s, can %s, seeds %s, sprinkler %s" % [p.cursor_cell(HOE), p.cursor_cell(CAN), p.cursor_cell(SEEDS), p.cursor_cell(SPRINKLER)])
 
 ## Till, water, plant and harvest the clicked cell; the hero turns toward it; a click beyond reach works the neighbour toward it.
 func _farm_clicks(t, world: WorldRoot2D, p: Player2D, centre: Vector2i) -> void:
@@ -348,8 +360,8 @@ func _keyboard_and_pad_unchanged(t, world: WorldRoot2D, p: Player2D, centre: Vec
 	var facing: Vector2i = p.target_cell()
 	_key(KEY_X)
 	_key(KEY_X, false)
-	t.check("x_key_tills_facing_cell_not_cursor", not p.mouse_aim and world.farm.state_of(facing) == FarmGrid.State.TILLED and world.farm.state_of(cursor_cell) == FarmGrid.State.EMPTY and p.facing8 == 1,
-		"facing %s state %d, cursor %s state %d" % [facing, world.farm.state_of(facing), cursor_cell, world.farm.state_of(cursor_cell)])
+	t.check("x_key_tills_facing_cell_not_cursor", not p.mouse_aim and world.farm.state_of(facing) == FarmGrid.State.TILLED and world.farm.state_of(cursor_cell) == FarmGrid.State.EMPTY and p.facing8 == 1 and p.marker_cell() == facing,
+		"facing %s state %d, cursor %s state %d, marker %s" % [facing, world.farm.state_of(facing), cursor_cell, world.farm.state_of(cursor_cell), p.marker_cell()])
 	_free(p)
 
 ## Tools are refused in flight: a click does what the X key does there (nothing), and the hero does not turn.
@@ -362,14 +374,27 @@ func _flight_refuses(t, world: WorldRoot2D, p: Player2D, centre: Vector2i) -> vo
 	_select(p, HOE)
 	p.facing8 = 0
 	p.toggle_flight()
+	var whispers: Array = []
+	var heard := func(key): whispers.append(str(key))
+	EventBus.whisper_requested.connect(heard)
+	p._flight_whisper_time = 0.0
 	var cell: Vector2i = centre + area.facing_step(7)
 	var stamina: float = p.stamina
 	_click(p, _in_cell(area, cell))
 	var click_refused: bool = world.farm.state_of(cell) == FarmGrid.State.EMPTY and p.facing8 == 0 and p.stamina == stamina
+	var click_said: bool = whispers.count("FARM_LAND_FIRST") == 1
 	_key(KEY_X)
 	_key(KEY_X, false)
 	var key_refused: bool = world.farm.state_of(p.target_cell()) == FarmGrid.State.EMPTY
+	# The X key gets the same word once the throttle has passed (a click and a key press in a row say it once).
+	var throttled: bool = whispers.count("FARM_LAND_FIRST") == 1
+	p._flight_whisper_time = 0.0
+	_key(KEY_X)
+	_key(KEY_X, false)
+	var key_said: bool = whispers.count("FARM_LAND_FIRST") == 2
+	EventBus.whisper_requested.disconnect(heard)
 	t.check("flight_refuses_click_like_key", p.is_flying and click_refused and key_refused, "flying %s, click refused %s, key refused %s" % [p.is_flying, click_refused, key_refused])
+	t.check("flight_refusal_says_land_first", click_said and throttled and key_said, "click %s, throttled %s, key %s: %s" % [click_said, throttled, key_said, whispers])
 	_free(p)
 
 ## The cursor cell matches what the camera shows at both zoom limits, while the camera is still smoothing toward the hero,
@@ -412,19 +437,19 @@ func _any_zoom_and_scale(t, world: WorldRoot2D, p: Player2D, centre: Vector2i) -
 	await t.physics(2)
 	t.check("cursor_cell_at_any_zoom_smoothing_and_stretch", wrong.is_empty() and lagging and stretched, "lagging camera %s, stretched window %s; %s" % [lagging, stretched, ", ".join(wrong)])
 
-## The swing goes toward the clicked ground point, measured from the slash's origin; a buffered click keeps its press position.
+## The swing goes toward the clicked ground point, measured from the feet as the arc test measures; a buffered click keeps its
+## press position.
 func _weapon_aim(t, world: WorldRoot2D, p: Player2D) -> void:
 	var eco: Node = GameData.eco()
 	eco.add_item(&"wpn_spear_iron", 1, true)
 	eco.equip(&"weapon", &"wpn_spear_iron")
 	_select(p, HOE)
-	var lift := Vector2(0, PlayerCombat2D.SLASH_LIFT)
 	var bad: Array[String] = []
 	for ground in [Vector2(260, -140), Vector2(-90, 210), Vector2(-300, -20)]:
 		_free(p)
 		var at: Vector2 = p.global_position + Iso.to_screen(ground)
 		_click(p, at)
-		var want: Vector2 = Iso.to_ground(at - p.global_position - lift).normalized()
+		var want: Vector2 = Iso.to_ground(at - p.global_position).normalized()
 		var swung: bool = p.state == PlayerBody2D.S.SWING and p.combat._swing_direction.dot(want) > 0.999 and p.facing8 == Iso.dir8_of(Iso.to_screen(want))
 		if not swung:
 			bad.append("%s: state %d dir %s want %s facing %d" % [ground, p.state, p.combat._swing_direction, want, p.facing8])
@@ -440,7 +465,7 @@ func _weapon_aim(t, world: WorldRoot2D, p: Player2D) -> void:
 	var waiting: bool = p.state == PlayerBody2D.S.FREE and p.combat._buffer == &"slash"
 	_hover(p, p.global_position + Iso.to_screen(Vector2(0, -260)))
 	p.combat.tick(0.12)
-	var want_buffered: Vector2 = Iso.to_ground(pressed_at - p.global_position - lift).normalized()
+	var want_buffered: Vector2 = Iso.to_ground(pressed_at - p.global_position).normalized()
 	t.check("buffered_click_aims_at_press_position", waiting and p.state == PlayerBody2D.S.SWING and p.combat._swing_direction.dot(want_buffered) > 0.999,
 		"buffered %s, state %d, dir %s want %s" % [waiting, p.state, p.combat._swing_direction, want_buffered])
 	_free(p)
@@ -484,3 +509,233 @@ func _tools_on_clicked_hosts(t, world: WorldRoot2D, p: Player2D) -> void:
 	_free(p)
 	ore.queue_free()
 	await t.physics(2)
+
+## The marker shows what the next key press works on (review): E, a movement key and X hand it back to the facing cell, and
+## what E harvests and X tills is the marked cell.
+func _marker_matches_keys(t, world: WorldRoot2D, p: Player2D, centre: Vector2i) -> void:
+	var area: IsoArea = world.area
+	var farm: Node = world.farm
+	_free(p)
+	p.global_position = area.cell_to_global(centre)
+	p.facing8 = 0
+	p.facing_vec = Iso.dir8_vector(0)
+	_select(p, HOE)
+	var facing: Vector2i = p.target_cell()
+	var hovered: Vector2i = centre + area.facing_step(5)
+	var ripe: bool = farm.in_season(&"turnip")
+	if ripe:
+		GameData.eco().add_item(SEEDS, 2, true)
+		for cell in [facing, hovered]:
+			farm.till(cell)
+			farm.plant(cell, SEEDS)
+			farm.get_plot(cell).state = FarmGrid.State.READY
+	_hover(p, _in_cell(area, hovered))
+	p._update_target()
+	var on_cursor: bool = p.marker_cell() == hovered
+	_key(KEY_E)
+	_key(KEY_E, false)
+	p._update_target()
+	var e_marker: bool = p.marker_cell() == p.target_cell() and p._marker.global_position.is_equal_approx(area.cell_to_global(p.target_cell()))
+	var e_cell: bool = not ripe or (farm.state_of(facing) != FarmGrid.State.READY and farm.state_of(hovered) == FarmGrid.State.READY)
+	t.check("e_key_hands_marker_back_and_acts_on_it", on_cursor and e_marker and e_cell, "marker on cursor %s, back after E %s, E picked the facing crop %s" % [on_cursor, e_marker, e_cell])
+	_clear_plots(world, centre)
+	_free(p)
+	p.global_position = area.cell_to_global(centre)
+	# Hover a cell, walk a few steps with a movement key, press X: the marked cell is the tilled one.
+	_hover(p, _in_cell(area, centre + area.facing_step(7)))
+	var used: Array = []
+	var record := func(_item, cell, ok):
+		if ok: used.append(cell)
+	p.tool_used.connect(record)
+	p.set_physics_process(true)
+	_key(KEY_S)
+	await t.physics(8)
+	_key(KEY_S, false)
+	await t.physics(12)
+	p._update_target()
+	var marked: Vector2i = p.marker_cell()
+	var walked_marker: bool = marked == p.target_cell() and p._marker.global_position.is_equal_approx(area.cell_to_global(marked))
+	_key(KEY_X)
+	_key(KEY_X, false)
+	await t.physics(2)
+	p.set_physics_process(false)
+	p.tool_used.disconnect(record)
+	t.check("walk_then_x_tills_the_marked_cell", walked_marker and used == [marked], "marker %s (facing %s), tilled %s" % [marked, p.target_cell(), used])
+	_free(p)
+	p.global_position = area.cell_to_global(centre)
+
+## Two clicks within one tool use both land: the second waits for the first (review: fast clicking dropped every other tile).
+func _rapid_clicks(t, world: WorldRoot2D, p: Player2D, centre: Vector2i) -> void:
+	var area: IsoArea = world.area
+	var farm: Node = world.farm
+	_free(p)
+	p.global_position = area.cell_to_global(centre)
+	_select(p, HOE)
+	var a: Vector2i = centre + area.facing_step(4)
+	var b: Vector2i = centre + area.facing_step(5)
+	var used: Array = []
+	var record := func(_item, cell, ok):
+		if ok: used.append(cell)
+	p.tool_used.connect(record)
+	p.set_physics_process(true)
+	_click(p, _in_cell(area, a))
+	var busy: bool = p.state == PlayerBody2D.S.USING
+	await t.physics(6)
+	_click(p, _in_cell(area, b))
+	await t.physics(45)
+	p.set_physics_process(false)
+	p.tool_used.disconnect(record)
+	t.check("second_click_during_use_is_worked_after_it", busy and farm.state_of(a) == FarmGrid.State.TILLED and farm.state_of(b) == FarmGrid.State.TILLED and used == [a, b],
+		"busy after the first %s, a %d, b %d, uses %s" % [busy, farm.state_of(a), farm.state_of(b), used])
+	_free(p)
+
+## Walking during a clicked use keeps the hero turned toward the clicked cell until the use ends.
+func _click_keeps_facing_while_walking(t, world: WorldRoot2D, p: Player2D, centre: Vector2i) -> void:
+	var area: IsoArea = world.area
+	_free(p)
+	p.global_position = area.cell_to_global(centre)
+	_select(p, HOE)
+	p.set_physics_process(true)
+	_key(KEY_W)
+	await t.physics(3)
+	var walking_facing: int = p.facing8
+	var behind: int = posmod(walking_facing + 4, 8)
+	_click(p, _in_cell(area, area.global_to_cell(p.global_position) + area.facing_step(behind)))
+	var used: bool = p.state == PlayerBody2D.S.USING
+	await t.physics(3)
+	var kept: bool = p.state != PlayerBody2D.S.USING or p.facing8 == behind
+	_key(KEY_W, false)
+	await t.physics(30)
+	p.set_physics_process(false)
+	t.check("clicked_use_keeps_facing_while_walking", used and kept, "use started %s, walking %d, clicked %d, facing during the use %d" % [used, walking_facing, behind, p.facing8])
+	_free(p)
+	p.global_position = area.cell_to_global(centre)
+	p.camera.reset_smoothing()
+	await t.physics(2)
+
+## A click never plants under the feet nor spends a placed object on a cell the cursor does not name; the marker shows invalid.
+func _objects_never_misplaced(t, world: WorldRoot2D, p: Player2D, centre: Vector2i) -> void:
+	var area: IsoArea = world.area
+	var eco: Node = GameData.eco()
+	_free(p)
+	p.global_position = area.cell_to_global(centre)
+	_select(p, SPRINKLER)
+	var count: int = eco.count_item(SPRINKLER)
+	var far: Vector2 = area.cell_to_global(centre + area.facing_step(3) * 3)
+	_hover(p, far)
+	p._update_target()
+	var invalid_far: bool = p.cursor_cell(SPRINKLER) == Player2D.NO_CELL and not p._marker.valid
+	_click(p, far)
+	_free(p)
+	_click(p, _in_cell(area, centre))
+	var kept: bool = eco.count_item(SPRINKLER) == count and FarmEquipment.at(&"farm", centre + area.facing_step(3)).is_empty() and FarmEquipment.at(&"farm", centre).is_empty()
+	_free(p)
+	_select(p, SEEDS)
+	var seeds: int = eco.count_item(SEEDS)
+	world.farm.till(p.target_cell())
+	_click(p, _in_cell(area, centre))
+	var unplanted: bool = eco.count_item(SEEDS) == seeds and world.farm.get_plot(p.target_cell()).crop_id == &""
+	t.check("objects_and_seeds_only_where_clicked", invalid_far and kept and unplanted, "far marker invalid %s, sprinklers kept %s, seeds kept %s" % [invalid_far, kept, unplanted])
+	_free(p)
+
+## A move over an open modal changes no device; after the modal closes the marker shows the cursor's current cell without a
+## new move; the pointer leaving the window hands the marker back to the facing cell.
+func _pointer_leaves_and_modals(t, world: WorldRoot2D, p: Player2D, centre: Vector2i) -> void:
+	var area: IsoArea = world.area
+	var gm: Node = t.autoload("GameManager")
+	_free(p)
+	p.global_position = area.cell_to_global(centre)
+	p.facing8 = 0
+	_select(p, HOE)
+	var c: Vector2i = centre + area.facing_step(3)
+	var d: Vector2i = centre + area.facing_step(7)
+	_hover(p, _in_cell(area, c))
+	gm.push_modal(&"mouse_targeting_probe", true)
+	await t.frames(2)
+	_hover(p, _in_cell(area, d))
+	gm.pop_modal(&"mouse_targeting_probe")
+	await t.frames(2)
+	p._update_target()
+	var fresh: bool = p.marker_cell() == d and p._marker.global_position.is_equal_approx(area.cell_to_global(d))
+	_stick()
+	gm.push_modal(&"mouse_targeting_probe", true)
+	await t.frames(2)
+	_hover(p, _in_cell(area, c))
+	var no_device: bool = not p.mouse_aim and not p._marker_pointer
+	gm.pop_modal(&"mouse_targeting_probe")
+	await t.frames(2)
+	p._update_target()
+	var facing_after: bool = p.marker_cell() == p.target_cell()
+	_hover(p, _in_cell(area, d))
+	t.tree.root.mouse_exited.emit()
+	p._update_target()
+	var left: bool = p.marker_cell() == p.target_cell() and p._marker.global_position.is_equal_approx(area.cell_to_global(p.target_cell()))
+	t.tree.root.notification(Node.NOTIFICATION_VP_MOUSE_ENTER)
+	t.check("marker_after_modal_and_pointer_exit", fresh and no_device and facing_after and left,
+		"fresh after the modal %s, a move over a modal sets no device %s, facing cell after it %s, back on the facing cell when the pointer leaves %s" % [fresh, no_device, facing_after, left])
+	_free(p)
+
+## A spear click on the visible body of a diagonal neighbour enemy aims at its feet and hits it (review: a lifted origin
+## skewed the aim by 26 degrees and missed).
+func _click_enemy_body(t, world: WorldRoot2D, p: Player2D) -> void:
+	var area: IsoArea = world.area
+	_free(p)
+	_select(p, HOE)
+	var at: Vector2 = p.global_position + Vector2(64, 38)
+	var enemy: Enemy2D = Enemy2D.create_marker({"kind": "mosfroe", "tier": 1, "persist": 0}, at, area.global_to_cell(at), area)
+	if enemy == null:
+		t.skip("no mosfroe enemy")
+		return
+	area.objects.add_child(enemy)
+	enemy.set_awake(true)
+	enemy.set_physics_process(false)
+	await t.physics(2)
+	_free(p)
+	var hp: int = enemy.hp
+	_click(p, enemy.global_position + Vector2(0, -35))
+	var want: Vector2 = Iso.to_ground(enemy.global_position - p.global_position).normalized()
+	var aimed: bool = p.state == PlayerBody2D.S.SWING and p.combat._swing_direction.dot(want) > 0.999
+	for i in 40:
+		p.combat.tick(1.0 / 60.0)
+	var hit: bool = not is_instance_valid(enemy) or enemy.hp < hp or enemy.state == Enemy2D.S.DEAD
+	t.check("click_on_enemy_body_aims_at_it_and_hits", aimed and hit, "aimed %s (dir %s want %s), hit %s" % [aimed, p.combat._swing_direction, want, hit])
+	if is_instance_valid(enemy):
+		enemy.queue_free()
+	await t.physics(2)
+	_free(p)
+
+## A greenhouse bed takes a click like a farm plot (beds share the farm path through Player2D.farm).
+func _greenhouse_bed(t, world: WorldRoot2D, p: Player2D) -> void:
+	if not world.call("_enter", &"greenhouse", &"default"):
+		t.skip("the greenhouse cannot be entered here")
+		return
+	p.set_physics_process(false)
+	await t.physics(2)
+	_free(p)
+	var area: IsoArea = world.area
+	var indoor: FarmGrid = world.greenhouse_farm
+	var bed := Vector2i(-1, -1)
+	var stand := Vector2i(-1, -1)
+	for cell in indoor.farmable_cells():
+		if indoor.state_of(cell) != FarmGrid.State.EMPTY or not indoor.can_till(cell):
+			continue
+		for index in 8:
+			var n: Vector2i = cell + area.facing_step(index)
+			if area.is_walkable(n) and not indoor.farmable_cells().has(n):
+				bed = cell
+				stand = n
+				break
+		if bed != Vector2i(-1, -1):
+			break
+	if bed == Vector2i(-1, -1) or p.farm != indoor:
+		t.skip("no free greenhouse bed beside a walkable cell")
+		return
+	p.global_position = area.cell_to_global(stand)
+	p.camera.reset_smoothing()
+	await t.physics(2)
+	_select(p, HOE)
+	_click(p, _in_cell(area, bed))
+	t.check("click_tills_greenhouse_bed", indoor.state_of(bed) == FarmGrid.State.TILLED, "bed %s from %s: state %d" % [bed, stand, indoor.state_of(bed)])
+	indoor.plots.erase(bed)
+	indoor.plot_changed.emit(bed)
+	_free(p)
