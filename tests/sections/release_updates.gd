@@ -1,5 +1,10 @@
 extends RefCounted
 const SECTION := "release_updates"
+## Above the section's own bounds, so a slow helper fails its handshake check with the helper's reason instead of the watchdog:
+## per helper (Windows via pwsh, macOS) ReleaseUpdates.handshake() polls up to 120 game seconds and the exit wait is 60 s. The
+## default 120 s ran out in the local gate (four shards at once) while the pwsh handshake was still polling; there the whole
+## section took 93 s where it takes 2 s alone.
+const TIMEOUT_S := 420.0
 const V := preload("res://scripts/release/release_version.gd")
 
 func _release() -> Dictionary:
@@ -22,6 +27,10 @@ func run(t) -> void:
 		release.assets[0][property] = "https://example.com/update.zip" if property == "browser_download_url" else "" if property == "digest" else 2147483648
 		t.check("reject_asset_" + property, V.select_asset(release, "1.0.0", "magudb/PongPong", "windows").is_empty())
 	var updates := ReleaseUpdates.inst()
+	# without the boot stage (--no-boot) nothing created the service yet: inst() adds it to the root deferred, and the
+	# handshake below needs its tree
+	if not updates.is_inside_tree():
+		await t.frames(1)
 	t.check("development_does_not_auto_check", not ReleaseUpdates.production())
 	updates._completed(HTTPRequest.RESULT_CANT_CONNECT, 0, PackedStringArray(), PackedByteArray())
 	t.check("offline_is_nonfatal", updates.state == "unavailable")
