@@ -67,7 +67,8 @@ The other `tools/art/` bakers still supply floors, furniture, icons and source e
 (`tools/art/setup_env.sh`, Python 3.12); worktrees link to the main one. Baked output is committed under `assets/`; the
 staging area `tools/art/_stage/` is not. Every texture's import preset comes from one table, `POLICY` in
 `tools/import/write_import_stubs.py` (S3TC for painted world art, lossless without mipmaps for atlases, lossless for UI):
-run that tool after adding art, before the first import. Its `--check` runs before every playtest and CI job. An id a later art pack repaints keeps no file of its own in the earlier pack.
+run that tool after adding art, before the first import. Its `--check` runs before every playtest and CI job and also holds
+the exported textures to a size budget. An id a later art pack repaints keeps no file of its own in the earlier pack.
 
 ## Layout notes
 

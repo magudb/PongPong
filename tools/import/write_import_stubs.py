@@ -138,6 +138,14 @@ DEFAULT_PRESET = "lossless"   # what Godot imports a texture without an .import 
 
 TEXTURE_SUFFIXES = {".png", ".webp", ".jpg", ".jpeg", ".svg", ".tga", ".bmp", ".exr", ".hdr"}
 
+# The textures' share of the exported PCK (review REPO-02), estimated from the files and the policy: a VRAM-compressed
+# texture is stored as raw DXT5 blocks (16 bytes per 4x4 block, every mip level), a lossless one about as big as its
+# source file. --check fails above the budget, so the package only grows on purpose: raise it here, in the same commit as
+# the art that needs it, and say why. Measured with the Windows preset in 4.7.2 (review REPO-02): the estimate (1894 MB)
+# is within 0.2 % of the textures' .ctex files in the exported PCK (1897 MB of a 1916 MB PCK; audio, scripts and data add
+# about 19 MB). Nearly all of it is the character and wardrobe sheets (raw DXT5, fast to load; the download is zipped).
+PCK_TEXTURE_BUDGET_MB = 1950
+
 
 def _glob_re(pattern: str):
     out = ""
@@ -167,6 +175,62 @@ def preset_of(rel: str):
         if rx.match(rel):
             return preset
     return None
+
+
+def image_size(path: Path):
+    """(width, height) of a PNG or WebP from its header (standard library only), None for anything else."""
+    with path.open("rb") as f:
+        b = f.read(64)
+    if b[:8] == b"\x89PNG\r\n\x1a\n":
+        return int.from_bytes(b[16:20], "big"), int.from_bytes(b[20:24], "big")
+    if b[:4] == b"RIFF" and b[8:12] == b"WEBP":
+        chunk = b[12:16]
+        if chunk == b"VP8X":
+            return int.from_bytes(b[24:27], "little") + 1, int.from_bytes(b[27:30], "little") + 1
+        if chunk == b"VP8L":
+            bits = int.from_bytes(b[21:25], "little")
+            return (bits & 0x3FFF) + 1, ((bits >> 14) & 0x3FFF) + 1
+        if chunk == b"VP8 ":
+            return int.from_bytes(b[26:28], "little") & 0x3FFF, int.from_bytes(b[28:30], "little") & 0x3FFF
+    return None
+
+
+def dxt5_bytes(w: int, h: int, mipmaps: bool) -> int:
+    total = 0
+    while True:
+        total += ((w + 3) // 4) * ((h + 3) // 4) * 16
+        if not mipmaps or (w == 1 and h == 1):
+            return total
+        w, h = max(1, w // 2), max(1, h // 2)
+
+
+def export_excluded(root: Path) -> list:
+    """The exclude_filter globs of the first export preset (what the PCK leaves out), as compiled regexes."""
+    cfg = root / "export_presets.cfg"
+    if not cfg.is_file():
+        return []
+    m = re.search(r'^exclude_filter="([^"]*)"', cfg.read_text(encoding="utf-8"), re.M)
+    return [_glob_re(g.strip().replace("*", "**")) for g in (m.group(1).split(",") if m else []) if g.strip()]
+
+
+def texture_payload(root: Path) -> dict:
+    """{preset: estimated bytes in the exported PCK} of every exported texture under assets/."""
+    out: dict = {}
+    excluded = export_excluded(root)
+    for tex in textures(root):
+        rel = tex.relative_to(root).as_posix()
+        if any(rx.match(rel) for rx in excluded):
+            continue
+        preset = preset_of(rel) or DEFAULT_PRESET
+        imp = import_path(tex)
+        prm = parse_import(imp).get("params", {}) if imp.is_file() else {}
+        size = image_size(tex)
+        if prm.get("compress/mode") in VRAM_MODES and size is not None:
+            n = dxt5_bytes(size[0], size[1], prm.get("mipmaps/generate", "true") == "true")
+        else:
+            n = tex.stat().st_size
+        out[preset] = out.get(preset, 0) + n
+    return out
 
 
 def textures(root: Path) -> list:
@@ -428,6 +492,11 @@ def check(root: Path, quiet: bool = False) -> int:
         for why in problems_of_import(tex, preset):
             failures.append("%s: %s (policy preset %s)" % (rel, why, preset))
     n_policy = sum(by_preset.values())
+    payload = texture_payload(root)
+    payload_mb = sum(payload.values()) / 1e6
+    if PCK_TEXTURE_BUDGET_MB and payload_mb > PCK_TEXTURE_BUDGET_MB:
+        failures.append("exported textures weigh about %.0f MB, above the %g MB budget (PCK_TEXTURE_BUDGET_MB: raise it on purpose, in the commit that needs it): %s"
+                        % (payload_mb, PCK_TEXTURE_BUDGET_MB, ", ".join("%s %.0f MB" % (k, v / 1e6) for k, v in sorted(payload.items()))))
 
     if not quiet:
         for n in notes:
@@ -441,9 +510,9 @@ def check(root: Path, quiet: bool = False) -> int:
               % (len(failures), n_dirs, n_sheets, n_tiles, n_layers, n_keep))
         return 1
     if not quiet:
-        print("write_import_stubs --check: ok (%d character folders, %d sheets with the S3TC preset, %d tile atlases, %d wardrobe layer imports lossless, %d painted wardrobe textures with S3TC, %d keep files; %d textures follow the import policy: %s)"
+        print("write_import_stubs --check: ok (%d character folders, %d sheets with the S3TC preset, %d tile atlases, %d wardrobe layer imports lossless, %d painted wardrobe textures with S3TC, %d keep files; %d textures follow the import policy: %s; exported textures about %.0f MB of the %g MB budget)"
               % (n_dirs, n_sheets, n_tiles, n_layers, n_painted, n_keep, n_policy,
-                 ", ".join("%s %d" % (k, by_preset[k]) for k in sorted(by_preset))))
+                 ", ".join("%s %d" % (k, by_preset[k]) for k in sorted(by_preset)), payload_mb, PCK_TEXTURE_BUDGET_MB))
     return 0
 
 

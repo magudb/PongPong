@@ -239,6 +239,19 @@ def main() -> int:
               and tool.policy_problems(prop, r) == [] and tool.preset_of("assets/iso_tiles/grass.png") == "atlas"
               and tool.preset_of("assets/isometric_characters/fox/portrait.webp") == "lossless"
               and tool.preset_of("assets/isometric_characters/fox/walk.webp") == "vram")
+        # the exported-texture budget (review REPO-02): DXT5 arithmetic for a VRAM texture, the file size for a lossless one
+        png = r / "assets" / "iso_props" / "city" / "big.png"
+        png.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\0\0\0\rIHDR" + (1024).to_bytes(4, "big") + (512).to_bytes(4, "big") + b"\0" * 16)
+        tool.ensure_policy(png, r)
+        payload = tool.texture_payload(r)
+        check("budget_counts_dxt5_with_mips", payload.get("vram", 0) >= tool.dxt5_bytes(1024, 512, True) > 1024 * 512 and tool.dxt5_bytes(8, 8, True) == 112 and tool.dxt5_bytes(4, 4, False) == 16, str(payload))
+        import contextlib, io
+        budget, tool.PCK_TEXTURE_BUDGET_MB = tool.PCK_TEXTURE_BUDGET_MB, 0.5
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            code = tool.check(r, True)
+        tool.PCK_TEXTURE_BUDGET_MB = budget
+        check("budget_fails_when_exceeded", code == 1 and "above the 0.5 MB budget" in buf.getvalue(), buf.getvalue().strip().splitlines()[-1])
 
         # 8. an empty project is fine, a bad root is a usage error
         r = base / "t7"
