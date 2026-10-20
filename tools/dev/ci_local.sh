@@ -14,6 +14,7 @@
 #   5. a summary (DIR/SUMMARY.txt): one line per run; exit 0 only when every step passed.
 # TT_PERF_SCALE defaults to 4 like CI (shared CPUs). It tests the working tree as it is, uncommitted changes included.
 # Logs, JSON reports and the summary go to DIR (default $TMPDIR/traetoppen-ci/<timestamp>); clones are deleted when done.
+# Ctrl-C or a TERM stops every run with its whole process tree (Godot included) before the clones are removed; exit 130.
 # Wall time on an 8-core Mac with --parallel=4: about an hour. For one section while developing, use the inner loop instead:
 #   tests/run_playtest.sh --strict --no-boot --only=<section> [--character=fairy]
 set -uo pipefail
@@ -37,7 +38,7 @@ for a in "$@"; do
 		--races=*) RACES="${a#--races=}" ;;
 		--shards=*) SHARDS="${a#--shards=}" ;;
 		--no-selftest) SELFTEST=0 ;;
-		-h|--help) sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+		-h|--help) sed -n '2,21p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
 		*) echo "ci_local: unknown option $a (see --help)" >&2; exit 2 ;;
 	esac
 done
@@ -52,12 +53,48 @@ mkdir -p "$COPIES"
 PY=python3
 [ -x tools/art/.venv/bin/python ] && PY="$ROOT/tools/art/.venv/bin/python"
 
+tree_of() {   # tree_of PID...: the live processes of these trees, one per line in pid order (a zombie is not live)
+	ps -axo pid=,ppid=,stat= | awk -v roots="$*" '
+		BEGIN { n = split(roots, r, " "); for (i = 1; i <= n; i++) want[r[i]] = 1 }
+		$3 !~ /^Z/ { parent[$1] = $2; live[$1] = 1 }
+		END {
+			do { grew = 0; for (p in live) if (!(p in want) && (parent[p] in want)) { want[p] = 1; grew = 1 } } while (grew)
+			for (p in want) if (p in live) print p
+		}' | sort -n
+}
+
+# Ctrl-C (or a TERM) stops the WHOLE tree of every running job: the job's subshell, the nested one, run_playtest.sh, tee, timeout
+# and Godot. Killing only the job leaders is not enough: the inner processes would run on (GNU timeout puts itself and Godot into
+# a process group of their own, and the jobs run in groups of their own, see below). The trees are frozen (SIGSTOP) until no new
+# process shows up, so nothing forks past the kill, then TERMinated and continued; what is still alive after 20 s gets SIGKILL.
+# Only then are the clones removed.
 stop_all() {
+	trap - INT TERM
 	echo "ci_local: interrupted, stopping the running shards" >&2
-	# shellcheck disable=SC2046
-	kill $(jobs -p) 2>/dev/null
+	local all="" new i
+	# shellcheck disable=SC2046,SC2086
+	while new="$(tree_of $(jobs -p) $all | tr '\n' ' ')"; [ "$new" != "$all" ]; do
+		all="$new"
+		# shellcheck disable=SC2086
+		kill -STOP $all 2>/dev/null
+	done
+	if [ -n "$all" ]; then
+		# shellcheck disable=SC2086
+		kill -TERM $all 2>/dev/null
+		# shellcheck disable=SC2086
+		kill -CONT $all 2>/dev/null
+		for i in $(seq 1 40); do
+			# shellcheck disable=SC2086
+			[ -n "$(tree_of $all)" ] || break
+			sleep 0.5
+		done
+		# shellcheck disable=SC2046,SC2086
+		kill -KILL $(tree_of $all) 2>/dev/null
+	fi
 	wait
+	release_checkout_lock
 	rm -rf "${COPIES:?}"
+	echo "ci_local: stopped (logs so far in $OUT)" >&2
 	exit 130
 }
 trap stop_all INT TERM
@@ -141,12 +178,16 @@ echo "ci_local: ${#JOBS[@]} run(s), $PAR at a time, TT_PERF_SCALE=$TT_PERF_SCALE
 for j in "${JOBS[@]}"; do
 	while [ "$(jobs -pr | wc -l | tr -d ' ')" -ge "$PAR" ]; do sleep 2; done
 	echo "ci_local: start $j"
+	# each run in a process group of its own (set -m only for the fork): a TERM or Ctrl-C sent to the group of this script
+	# must reach stop_all first, which takes down every run's whole tree; a run whose subshell died first would orphan its Godot
+	set -m
 	if [ "$j" = selftest ]; then
-		run_selftest &
+		run_selftest </dev/null &
 	else
 		# shellcheck disable=SC2086
-		run_shard $j &
+		run_shard $j </dev/null &
 	fi
+	set +m
 done
 wait
 rmdir "$COPIES" 2>/dev/null
