@@ -643,7 +643,7 @@ class LandmarkTrigger extends Node2D:
 			p = _player_ref
 		else:
 			var tree: SceneTree = get_tree()
-			p = tree.get_first_node_in_group("player") as Node2D if tree != null else null
+			p = PlayerRegistry.local_player(tree) as Node2D if tree != null else null
 			_player_ref = p
 		if p == null or p.global_position.distance_to(global_position) > radius or ActorLevel.level_id(p) != level_id:
 			return

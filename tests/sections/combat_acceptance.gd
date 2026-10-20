@@ -1,12 +1,18 @@
 extends RefCounted
 const SECTION := "combat_acceptance"
-# All 180 boss duels and 100 ambush trials run with fixed 60 Hz physics in CI.
+# All 180 boss duels and 100 ambush trials run with fixed 60 Hz physics in CI (`--fast`).
+# At normal wall-clock pacing that is more than an hour of play, so the smoke sample below
+# still exercises every path but not the full Monte Carlo (tools/ci/sections.py SIMULATIONS).
 const TIMEOUT_S := 1200.0
 func run(t) -> void:
 	await t.start_world()
 	var world: WorldRoot2D = t.world()
 	GameManager.set_config_override("time.minutes_per_real_second",0.0)
 	GameManager.set_config_override("towns.curfew.enabled",false)
+	var full: bool = t.fixed_fps()
+	var count: int = 60 if full else 3
+	var ambush_trials: int = 100 if full else 5
+	t.info("combat_acceptance pacing: %s (duels/boss %d, ambush %d)" % ["fixed-fps simulation" if full else "normal wall-clock smoke", count, ambush_trials])
 	var ground := PackedStringArray()
 	var objects := PackedStringArray()
 	for y in 28:
@@ -21,8 +27,7 @@ func run(t) -> void:
 	var weapon: Dictionary = LuaRuntime.get_item_def("iron_sword")
 	var original_damage: int = weapon.damage
 	var spawn := world.area.get_spawn("default")
-	var report := {"bosses":{},"profile":"normal movement, swing after 0.22 s in range, windup reaction N(0.40,0.13) clamped 0.12–0.65 s; boss profile clears windup/lunge telegraphs and attacks recovery; no assist; live adds and berry orbs; gross damage before healing"}
-	var count := 60
+	var report := {"bosses":{},"pacing":"fixed_fps" if full else "wall_clock","profile":"normal movement, swing after 0.22 s in range, windup reaction N(0.40,0.13) clamped 0.12–0.65 s; boss profile clears windup/lunge telegraphs and attacks recovery; no assist; live adds and berry orbs; gross damage before healing"}
 	# [kind, floor, tier, min mean s, max mean s]. The windows bracket the combat model's 18 / 30 / 39 s for an average player at the
 	# curve weapon (docs/design/dungeon_v2_workpackages.json, DR4). The daze lengths in lua/config/bosses.lua are tuned to them: after
 	# review fixes DUN-08 (a hit keeps the full daze) and DUN-01 (no hits outside the drawn band) the model's 1.8 / 1.7 s dazes made
@@ -50,14 +55,18 @@ func run(t) -> void:
 			await cleanup(t,world)
 		var mean := total/count
 		report.bosses[spec[0]] = {"mean_seconds":mean,"wins_within_12_gross_half_hearts":good,"count":count,"results":results}
-		t.check("bot_beats_"+spec[0]+"_in_window",mean>=spec[3] and mean<=spec[4] and good>=ceili(count*.9),"mean %.3fs, %d/%d wins losing <=12 gross half hearts" % [mean,good,count])
+		# The mean window is a Monte Carlo property of the full sample; the smoke sample only has to win cleanly.
+		if full:
+			t.check("bot_beats_"+spec[0]+"_in_window",mean>=spec[3] and mean<=spec[4] and good>=ceili(count*.9),"mean %.3fs, %d/%d wins losing <=12 gross half hearts" % [mean,good,count])
+		else:
+			t.check("bot_beats_"+spec[0]+"_smoke",good>=maxi(1,count-1),"smoke %d/%d wins losing <=12 gross half hearts (mean %.3fs)" % [good,count,mean])
 	weapon["damage"] = original_damage
 	GameManager.set_flag(&"dungeon_hearts_bonus",0)
 	# The first ambush attack must really complete; attacking/revealing it
 	# early would only test cancellation, not whether its leap can be dodged.
 	var dodged := 0
 	var trials := []
-	for value in 100:
+	for value in ambush_trials:
 		world.player.revive(spawn)
 		var at := spawn+Vector2(280,0)
 		var enemy: Enemy2D = Enemy2D.create_marker({"kind":"ugleoje","tier":1,"ambush":1,"persist":0},at,world.area.global_to_cell(at),world.area)
@@ -81,8 +90,11 @@ func run(t) -> void:
 		if ok:dodged += 1
 		trials.append({"seed":value,"reaction":reaction,"dodged":ok,"gross_lost":lost[0]})
 		await cleanup(t,world)
-	t.check("ambush_leap_dodgeable_85_percent",dodged>=85,"%d/100" % dodged)
-	report["ambush"] = {"dodged":dodged,"count":100,"results":trials}
+	if full:
+		t.check("ambush_leap_dodgeable_85_percent",dodged>=85,"%d/100" % dodged)
+	else:
+		t.check("ambush_leap_dodgeable_smoke",dodged>=maxi(1,ambush_trials-2),"%d/%d" % [dodged,ambush_trials])
+	report["ambush"] = {"dodged":dodged,"count":ambush_trials,"results":trials}
 	var out := ProjectSettings.globalize_path("res://docs/qa/mechanics/combat/bot.json")
 	DirAccess.make_dir_recursive_absolute(out.get_base_dir())
 	var file := FileAccess.open(out,FileAccess.WRITE)

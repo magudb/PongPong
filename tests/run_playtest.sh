@@ -201,6 +201,7 @@ if [ "$FAST" = 1 ]; then
 			*" --fixed-fps"*) ;;
 			*) GODOT_EXTRA_ARGS="--fixed-fps 60${GODOT_EXTRA_ARGS:+ $GODOT_EXTRA_ARGS}" ;;
 		esac
+		ARGS+=("--fast")
 	fi
 fi
 # split on whitespace without pathname expansion (an argument such as `--log-file=*.log` stays as it is)

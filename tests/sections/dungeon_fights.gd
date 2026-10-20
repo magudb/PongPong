@@ -1,10 +1,15 @@
 extends RefCounted
 const SECTION := "dungeon_fights"
-# One hundred real fights may each use the full eight-second bot limit.
+# One hundred real fights may each use the full eight-second bot limit (CI runs this with --fast).
+# At normal wall-clock pacing that is a long Monte Carlo, so the smoke sample still exercises the bot
+# without simulating the full hundred (tools/ci/sections.py SIMULATIONS).
 const TIMEOUT_S := 960.0
 func run(t) -> void:
 	await t.start_world()
 	var world: WorldRoot2D = t.world()
+	var full: bool = t.fixed_fps()
+	var fights: int = 100 if full else 4
+	t.info("dungeon_fights pacing: %s (fights %d)" % ["fixed-fps simulation" if full else "normal wall-clock smoke", fights])
 	var ground := PackedStringArray()
 	var objects := PackedStringArray()
 	for y in 24:
@@ -22,7 +27,7 @@ func run(t) -> void:
 	var good := 0
 	var spawn := world.area.get_spawn("default")
 	DungeonEnemyRoster.of(world.area).set_process(false)
-	for seed_value in 100:
+	for seed_value in fights:
 		player.global_position = spawn
 		player.revive(spawn)
 		player.combat._iframes = 0
@@ -36,7 +41,10 @@ func run(t) -> void:
 		for node in world.area.objects.get_children():
 			if node is LootDrop2D: node.queue_free()
 		await t.frames(2)
-	t.check("bot_fight_matches_model_90_percent_of_100",good >= 90,"%d/100 fights won within 6.5 s and at most 2 half hearts lost" % good)
+	if full:
+		t.check("bot_fight_matches_model_90_percent_of_100",good >= 90,"%d/100 fights won within 6.5 s and at most 2 half hearts lost" % good)
+	else:
+		t.check("bot_fight_matches_model_smoke",good >= maxi(1,fights-1),"%d/%d fights won within 6.5 s and at most 2 half hearts lost" % [good,fights])
 	t.info("fight results: "+JSON.stringify(results))
 	for row in [["bat",1],["tornebusk",3]]:
 		player.revive(spawn)

@@ -10,4 +10,4 @@ static func flag(key: String, fallback: Variant = 0) -> Variant:
 	return gm.get_flag(StringName(key),fallback) if gm != null else fallback
 static func player() -> Node:
 	var tree := Engine.get_main_loop() as SceneTree
-	return tree.get_first_node_in_group("player") if tree != null else null
+	return PlayerRegistry.local_player(tree) if tree != null else null

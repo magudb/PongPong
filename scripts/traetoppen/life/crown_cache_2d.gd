@@ -24,7 +24,7 @@ func refresh() -> void:
 	set_enabled(eligible())
 	queue_redraw()
 func _process(_delta: float) -> void:
-	var player := get_tree().get_first_node_in_group("player") as Node2D
+	var player := PlayerRegistry.local_player(get_tree()) as Node2D
 	visible = is_enabled() and player != null and Iso.to_ground(player.global_position - global_position).length() <= float(SpeciesPerks.current("chest_sense_px", 0))
 func _draw() -> void:
 	if visible:

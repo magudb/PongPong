@@ -70,7 +70,7 @@ def smoke_macos(image, archive, work, smoke_game):
     marker = installed / "previous-installation"
     marker.write_text("must disappear after update")
     digest = sha256(archive)
-    run(["bash", ROOT / "scripts/release/install_macos.sh", "0", archive, installed,
+    run(["/bin/bash", ROOT / "scripts/release/install_macos.sh", "0", archive, installed,
          digest, work / "installed-update.json", "--no-launch"])
     if marker.exists():
         raise ValueError("Update did not replace the DMG-installed application")

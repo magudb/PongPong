@@ -85,7 +85,7 @@ static func sense_px() -> float:
 
 ## The first node of group `player` (null while none exists).
 static func player_of(tree: SceneTree) -> Node2D:
-	return tree.get_first_node_in_group("player") as Node2D if tree != null else null
+	return PlayerRegistry.local_player(tree) as Node2D if tree != null else null
 
 
 ## Ground distance (px) from a node to the player; INF without a player.

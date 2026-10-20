@@ -102,7 +102,7 @@ func run(t) -> void:
 	await t.clear_scene()
 	await t.frames(3)
 	var elapsed := (Time.get_ticks_usec() - started) / 1000000.0
-	var limit := 15.0 if OS.get_environment("GODOT_EXTRA_ARGS").contains("--fixed-fps") else 120.0
+	var limit := 15.0 if t.fixed_fps() else 120.0
 	_check(t, "L14", "l14_wall_time", t.perf_ok("l14_wall_time", elapsed, limit), "%.3fs (native reference %.0fs, runner limit %.0fs)" % [elapsed, limit, t.perf_limit(limit)])
 	# Every area is entered once or more: its best build is its cost (a second visit of the farm under load measured 305 ms next to 306 ms,
 	# a quiet one 79 / 128 ms), the slowest of those bests is the budget.

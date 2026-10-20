@@ -364,6 +364,7 @@ class InstallerTests(unittest.TestCase):
         result, target = self.windows(COMPLETE, parent=self.dummy_parent(), launch=True, fails=1)
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual((target / "Traetoppen.exe").read_bytes(), b"previous executable")
+        self.assertEqual((target / "Traetoppen.pck").read_bytes(), b"previous data")
         self.assertEqual(self.outcome(), {"status": "rolled_back", "reason": "launch"})
         self.assertEqual([launched for launched, seen in self.launched()], ["new executable", "previous executable"])
         self.assertEqual(list(self.games.glob(".Traetoppen-update.*")), [])
@@ -376,14 +377,22 @@ class InstallerTests(unittest.TestCase):
         result, target = self.windows(COMPLETE, parent=self.dummy_parent(), launch=True, before_exit=hold)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual((target / "Traetoppen.exe").read_bytes(), b"new executable")
+        self.assertEqual((target / "Traetoppen.pck").read_bytes(), b"new data")
         self.assertEqual(self.outcome(), {"status": "installed", "reason": ""})
+        self.assertEqual(self.launched(), [("new executable", {"status": "installed", "reason": ""})])
+        self.assertEqual(list(self.games.glob(".Traetoppen-update.*")), [])
 
     def test_windows_locked_installation_relaunches_previous(self):
         result, target = self.windows(COMPLETE, parent=self.dummy_parent(), launch=True, before_exit=self.lock)
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual((target / "Traetoppen.exe").read_bytes(), b"previous executable")
+        self.assertEqual((target / "Traetoppen.pck").read_bytes(), b"previous data")
         self.assertEqual(self.outcome(), {"status": "failed", "reason": "locked"})
         self.assertEqual(self.launched(), [("previous executable", {"status": "failed", "reason": "locked"})])
+        # The non-Windows permission-based lock also prevents removing the staging
+        # directory; a native Windows file lock only holds the previous installation.
+        if os.name == "nt":
+            self.assertEqual(list(self.games.glob(".Traetoppen-update.*")), [])
 
     def macos(self, bad_hash=False, parent=None, launch=False, fails=0, before_exit=None):
         if sys.platform != "darwin":
@@ -407,7 +416,7 @@ class InstallerTests(unittest.TestCase):
             stub = self.root / "open"
             stub.write_text(MACOS_OPEN)
             stub.chmod(0o755)
-        command = ["bash", str(script), str(parent.pid if parent else 0), str(archive), str(target), digest, str(self.result)]
+        command = ["/bin/bash", str(script), str(parent.pid if parent else 0), str(archive), str(target), digest, str(self.result)]
         if not launch:
             command.append("--no-launch")
         return self.run_helper(command, self.root, fails, parent, before_exit and (lambda: before_exit(target))), target
@@ -427,6 +436,8 @@ class InstallerTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(self.version(target), "0.1.0")
         self.assertEqual(self.outcome(), {"status": "failed", "reason": "checksum"})
+        self.assertFalse(Path(str(self.result) + ".ready").exists())
+        self.assertEqual(list(self.games.glob(".Traetoppen-update.*")), [])
 
     def test_macos_waits_for_the_game_and_reports_before_launching(self):
         result, target = self.macos(parent=self.dummy_parent(), launch=True)

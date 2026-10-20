@@ -65,7 +65,7 @@ static func play_scene(npc: String,result: Dictionary,actor: WeakRef) -> bool:
 	runtime.actor_resolver = func(id: String) -> Node:
 		if id==npc:return actor.get_ref()
 		if old.is_valid():return old.call(id)
-		return tree.get_first_node_in_group("player") if id=="player" else NpcDirector.node_of(id)
+		return PlayerRegistry.local_player(tree) if id=="player" else NpcDirector.node_of(id)
 	var place := str(Routines.where_is(npc,Routines.now_ctx()).get("place",""))
 	var steps: Array = [{"act":"fade","to":"black","seconds":0.15},
 		{"act":"stand","who":npc,"mark":place.get_slice(".",1),"clear_view":true},

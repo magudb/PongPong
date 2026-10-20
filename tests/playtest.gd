@@ -80,6 +80,7 @@ var _seed := 424242
 var _verbose := false
 var _strict := false
 var _not_judged_exit := 0
+var _fast := false
 var _known_paths: Array[String] = ["res://tests/lib/known_issues.txt"]
 var _shuffle := -1                       # --shuffle=N seed; -1 = alphabetical order
 var _skip_budget: Dictionary = {}        # section -> skips allowed under --strict (tests/lib/skip_budget.txt)
@@ -142,6 +143,7 @@ func _make_t(t_script: GDScript) -> Object:
 	t.out_dir = _out
 	t.verbose = _verbose
 	t.strict = _strict
+	t.fast = _fast
 	t.user_dir = OS.get_user_data_dir()
 	t.rng.seed = _seed
 	return t
@@ -758,6 +760,8 @@ func _parse_args(args: PackedStringArray) -> String:
 		elif a.begins_with("--skip-budget="):
 			var sb := a.get_slice("=", 1)
 			_skip_budget_path = sb if sb.begins_with("res://") or sb.begins_with("user://") else "res://" + sb
+		elif a == "--fast":
+			_fast = true
 		elif a.begins_with("--known-issues="):
 			var kp := a.get_slice("=", 1)
 			_known_paths.append(kp if kp.begins_with("res://") or kp.begins_with("user://") else "res://" + kp)
@@ -776,6 +780,6 @@ func _absolute(path: String) -> String:
 
 func _print_usage() -> void:
 	print("usage: tests/run_playtest.sh [--character=animal|fairy|hobbit|ghost] [--only=a,b] [--list] [--windowed] [--out=DIR]")
-	print("       [--no-boot] [--play-seconds=N] [--section-timeout=N] [--max-seconds=N] [--report=FILE] [--seed=N] [--shuffle=N] [--verbose] [--strict]")
+	print("       [--no-boot] [--play-seconds=N] [--section-timeout=N] [--max-seconds=N] [--report=FILE] [--seed=N] [--shuffle=N] [--verbose] [--strict] [--fast]")
 	print("       [--skip-budget=PATH] [--not-judged-exit=N]")
 	print("       wrapper only (tests/run_playtest.sh): [--fast] [--no-import] [--timeout=SECS] [--keep-home]")

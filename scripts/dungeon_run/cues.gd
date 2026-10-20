@@ -22,7 +22,7 @@ func _ready() -> void:
 	EventBus.whisper_requested.connect(_whisper)
 	EventBus.enemy_encountered.connect(_noticed)
 	EventBus.player_spawned.connect(_player)
-	_player(get_tree().get_first_node_in_group("player"))
+	_player(PlayerRegistry.local_player(get_tree()))
 func _item(id: StringName, _amount: int) -> void:
 	if DungeonRulesData.player() != null and DungeonFloors.floor_of(DungeonRulesData.player().area) > 0: play(rarity_cue(ItemKinds.rarity_of(id)))
 func _whisper(key: String) -> void:

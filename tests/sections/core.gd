@@ -118,6 +118,11 @@ const REVIEW_SIGNALS := {
 	"lua_reloaded": "",
 }
 
+## Multiplayer track (MP1+): player registry signals that are allowed in wave 1.
+const MULTIPLAYER_SIGNALS := {
+	"player_despawned": "player_id:StringName",
+}
+
 var t
 var gm: Node
 var tm: Node
@@ -236,6 +241,7 @@ func _contract() -> Dictionary:
 	all_contract.merge(PLAN_SIGNALS)
 	all_contract.merge(FEATURE_SIGNALS)
 	all_contract.merge(REVIEW_SIGNALS)
+	all_contract.merge(MULTIPLAYER_SIGNALS)
 	return all_contract
 
 

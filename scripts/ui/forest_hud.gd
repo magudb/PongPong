@@ -161,7 +161,7 @@ func _ready() -> void:
 		# the whisper follows the toasts: above a panel, hidden under the dialogue and an event scene
 		toasts.visible = ToastStack.shown_with_modals(stack)
 		whisper.visible = toasts.visible)
-	_spawned(get_tree().get_first_node_in_group("player"))
+	_spawned(PlayerRegistry.local_player(get_tree()))
 	_inventory({})
 	_assist()
 	_area_changed(&"")

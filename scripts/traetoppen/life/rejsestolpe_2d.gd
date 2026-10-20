@@ -13,7 +13,7 @@ func _process(_delta: float) -> void:
 	if GameManager.flag_int(StringName("ft_" + stop)) != 0:
 		set_process(false)
 		return
-	var player := get_tree().get_first_node_in_group("player") as Node2D
+	var player := PlayerRegistry.local_player(get_tree()) as Node2D
 	if player != null and Iso.to_ground(player.global_position - global_position).length() < 200:
 		GameManager.set_flag(StringName("ft_" + stop), 1)
 func interact(player: Node) -> void:

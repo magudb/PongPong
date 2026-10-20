@@ -88,7 +88,7 @@ func _refresh() -> void:
 	npc.set_meta("ghostfam_hiding",hiding)
 	npc.visual.modulate.a = 0.0 if hiding else 1.0
 	if hiding:npc._bubble_label.visible = false
-	var player := get_tree().get_first_node_in_group("player") as Node2D
+	var player := PlayerRegistry.local_player(get_tree()) as Node2D
 	var distance := Iso.to_ground(player.global_position-npc.global_position).length() if player!=null else INF
 	shimmer.visible = hiding and distance<=shimmer_radius()
 	for i in _dots.size():_dots[i].modulate.a = .4+.35*(.5+.5*sin(_phase*2.7+i*2.0))

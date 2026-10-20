@@ -701,7 +701,7 @@ func use_item(item_id: StringName) -> bool:
 
 ## Applies heal / oil / energy through the player; the item is used up when at least one effect had room to work.
 func _consume(item_id: StringName, heal: int, oil: float, energy: float) -> bool:
-	var player := get_tree().get_first_node_in_group("player") if get_tree() != null else null
+	var player := PlayerRegistry.local_player(get_tree()) if get_tree() != null else null
 	if player == null or _consuming:
 		return false
 	if player.has_method("apply_consumable"):
