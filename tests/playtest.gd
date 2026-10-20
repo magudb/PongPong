@@ -429,6 +429,11 @@ func _finish() -> void:
 		print("  FAILED   ", f)
 	var on_actions := OS.get_environment("GITHUB_ACTIONS") == "true"
 	for s in _t.slow:
+		if not bool(s.get("judged", true)):
+			print("  SLOW     %s: %s, native reference %s (%.2fx, past the runner limit %s while the machine was overloaded, %s: NOT JUDGED)" % [s.check, s.measured, s.reference, s.ratio, s.limit, s.load])
+			if on_actions:
+				print("::warning title=Timing not judged (%s)::%s took %s, past its runner limit %s, while the runner was overloaded (%s)" % [_character, s.check, s.measured, s.limit, s.load])
+			continue
 		print("  SLOW     %s: %s, native reference %s (%.2fx, passed inside the runner limit %s)" % [s.check, s.measured, s.reference, s.ratio, s.limit])
 		if on_actions:
 			print("::notice title=Slow timing (%s)::%s took %s against a native reference of %s (%.2fx); the runner limit is %s" % [_character, s.check, s.measured, s.reference, s.ratio, s.limit])

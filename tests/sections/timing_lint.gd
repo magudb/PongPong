@@ -25,5 +25,13 @@ func run(t) -> void:
 			OS.delay_usec(50000)
 	var stalled: float = t.median_usec(work, 5, 10)
 	t.check("median_usec_ignores_one_stalled_batch", calls.n == 50 and stalled < 1000.0, "%d calls, median %.1f us per call (the stalled batch averages 5000 us)" % [calls.n, stalled]) # raw-time-ok: tests the helper itself, a 50x margin
-	# perf_ok: inside the reference passes quietly, over the runner limit fails
-	t.check("perf_ok_bounds", t.perf_ok("perf_ok_probe", 1.0, 2.0) and not t.perf_ok("perf_ok_probe", t.perf_limit(2.0) + 0.001, 2.0), "runner limit %.1f for a reference of 2" % t.perf_limit(2.0))
+	# perf_ok: inside the reference passes quietly, over the runner limit fails, except on an overloaded machine (not judged)
+	t.check("perf_ok_passes_inside_the_reference", t.perf_ok("perf_ok_probe", 1.0, 2.0))
+	var load: Dictionary = t.machine_overloaded()
+	var overloaded: bool = load.overloaded
+	var judged_before: int = t.slow.filter(func(row) -> bool: return not bool(row.get("judged", true))).size()
+	var over: bool = t.perf_ok("perf_ok_probe", t.perf_limit(2.0) + 0.001, 2.0)
+	var not_judged: int = t.slow.filter(func(row) -> bool: return not bool(row.get("judged", true))).size() - judged_before
+	t.check("perf_ok_fails_past_the_runner_limit", over == overloaded and not_judged == (1 if overloaded else 0), "runner limit %.1f for a reference of 2, %s: passed %s, not judged %d" % [t.perf_limit(2.0), load.text, over, not_judged])
+	if overloaded:
+		t.slow.pop_back() # the probe is not a timing of the game: keep it out of the summary

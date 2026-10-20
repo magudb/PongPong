@@ -26,7 +26,15 @@ extends "res://tests/lib/flow.gd"
 ##     build, save or reload (disk and caches only add time), a single sample only for a one-off cold cost;
 ##   * `reference` is the native budget, about 1.5-2x what a quiet machine measures; TT_PERF_SCALE (CI and the local gate: 4)
 ##     allows up to 4x it, and anything over the reference is listed as SLOW, so drift is reported and only a regression fails;
-##   * whatever the game animates by its delta is waited for in game time (until_game, seconds, physics), never a frame count.
+##   * whatever the game animates by its delta is waited for in game time (until_game, seconds, physics), never a frame count;
+##   * a timing past the runner limit on an OVERLOADED machine (1-minute load average above OVERLOAD_PER_CORE x its cores: more
+##     than the allowance is sized for) is not a verdict: it passes, listed as SLOW and NOT JUDGED with the load, the rule of
+##     tests/perf_world.gd. A quiet machine and a CI runner (one job per runner) still fail it.
+
+const PerfWorld := preload("res://tests/perf_world.gd")
+## Four local gate shards next to other jobs measured load averages of 17-21 on 8 cores, where cold builds and disk-bound saves ran
+## 6-10x their quiet time (TT_PERF_SCALE allows 4x); a GitHub runner with its single job stays far below 1.5 per core.
+const OVERLOAD_PER_CORE := 1.5
 
 ## Shared CI CPUs (TT_PERF_SCALE > 1, at most 4) get a bounded allowance for computation timings.
 ## Native reference runs keep the authored limits; game-time assertions never use this.
@@ -38,15 +46,32 @@ func perf_limit(reference: float) -> float:
 
 ## Timing assertion: `measured` must stay within perf_limit(reference). A timing over its native
 ## reference but inside the allowance passes and is recorded as slow (summary, report, CI notice),
-## so a shared runner reports drift and only fails a real regression.
+## so a shared runner reports drift and only fails a real regression. Past the limit on an overloaded
+## machine it is recorded as not judged (judged = false) and passes.
 func perf_ok(check_name: String, measured: float, reference: float) -> bool:
 	var limit := perf_limit(reference)
 	var ok := measured <= limit
-	if ok and measured > reference:
-		var entry := {"check": "%s.%s" % [section, check_name], "measured": measured, "reference": reference, "limit": limit, "ratio": snappedf(measured / reference, 0.01)}
+	if measured <= reference:
+		return true
+	var entry := {"check": "%s.%s" % [section, check_name], "measured": measured, "reference": reference, "limit": limit, "ratio": snappedf(measured / reference, 0.01), "judged": true}
+	if ok:
 		slow.append(entry)
 		print("  slow  %s: %s over its native reference %s (%.2fx, runner limit %s)" % [entry.check, measured, reference, entry.ratio, limit])
-	return ok
+		return true
+	var load := machine_overloaded()
+	if bool(load.overloaded):
+		entry["judged"] = false
+		entry["load"] = load.text
+		slow.append(entry)
+		print("  busy  %s: %s over the runner limit %s (%.2fx its native reference %s) while the machine is overloaded (%s): NOT JUDGED, rerun when quiet" % [entry.check, measured, limit, entry.ratio, reference, load.text])
+		return true
+	return false
+
+
+## {overloaded, text}: whether the 1-minute load average is above OVERLOAD_PER_CORE x the cores (tests/perf_world.gd reads `uptime`).
+func machine_overloaded() -> Dictionary:
+	var load: Dictionary = PerfWorld.machine_load()
+	return {"overloaded": float(load.load1) > float(load.cores) * OVERLOAD_PER_CORE, "text": str(load.text)}
 
 
 ## Median cost in microseconds of one call of `work`, timed in `batches` batches of `per_batch` calls: a batch that the

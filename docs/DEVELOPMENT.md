@@ -64,6 +64,9 @@ fails on a raw wall-clock comparison and on a frame-count wait that ends in `t.f
 * `reference` is the native budget, about 1.5-2x what a quiet machine measures. `TT_PERF_SCALE` (CI and the local gate set 4) lets a
   timing pass up to that multiple and lists everything over the reference as SLOW (summary, JSON report, GitHub notice): drift is
   reported, only a regression fails. A section whose own wall budget grows with it keeps its `TIMEOUT_S` above the scaled budget;
+* past the runner limit on an overloaded machine (1-minute load average above 1.5x the cores, e.g. four local gate shards next to
+  other jobs: load 17-21 on 8 cores, cold builds and saves at 6-10x) a timing is NOT JUDGED: it passes and is listed with the load
+  in the summary (a `::warning` on GitHub). A quiet machine or a CI runner, which runs one job, still fails it;
 * a game-time scene (a festival opening, a dialogue that types, a tween) is waited for with `t.until_game(cond, game_seconds, each)`,
   never a frame count: an uncapped headless run draws thousands of frames per second, so 1500 frames took 0.2 s on a Mac, less than
   one camera move of the scene. A wall-clock comparison that is not a budget carries `# raw-time-ok: <reason>` on its line.
