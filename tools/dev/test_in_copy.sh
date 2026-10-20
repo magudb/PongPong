@@ -18,6 +18,7 @@
 #                  .uid/.import files of NEW scripts/assets only into the copy: the script warns when it deletes such
 #                  files; use --keep and copy them back (the lead's pull_meta.sh) if they belong to your package.
 #   --docs         also sync docs/ (excluded by default: 30 MB of audio/art, not needed by tests; the `docs` section does)
+# The art venv (tools/art/.venv) of the canonical repo is linked into the copy, not copied.
 #   --selftest     run tools/dev/selftest_harness.sh in the copy instead of the playtest
 #   --no-run       only seed/sync and print the copy path (the caller runs Godot there; delete it with rm -rf)
 #   --wipe         throw an existing copy away and seed again
@@ -156,6 +157,12 @@ RSYNC_EXCLUDES=(--exclude=/.git --exclude=/.godot --exclude=/.playwright-mcp --e
 T1=$(date +%s)
 rsync -a --delete "${RSYNC_EXCLUDES[@]}" "$REPO/" "$COPY/" || { echo "test_in_copy: rsync failed" >&2; exit 2; }
 echo "test_in_copy: synced changes in $(( $(date +%s) - T1 )) s (total $(( $(date +%s) - T0 )) s)"
+# The art venv is not copied (hundreds of MB, absolute paths inside): link the canonical one, as worktree.sh does, so the
+# sections find the same Python (t.python()) as in the repo and in CI instead of falling back to python3 or skipping.
+if [ -d "$REPO/tools/art/.venv" ] && [ ! -e "$COPY/tools/art/.venv" ]; then
+	mkdir -p "$COPY/tools/art"
+	ln -s "$REPO/tools/art/.venv" "$COPY/tools/art/.venv"
+fi
 
 if [ "$NO_RUN" = 1 ]; then
 	echo "$COPY"

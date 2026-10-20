@@ -9,6 +9,10 @@ extends "res://tests/lib/asserts.gd"
 ##    several process frames can pass inside one physics tick, so t.frames() is NOT enough for them.
 ##  * t.tap(action) sends a press+release InputEventAction pair in the same frame (event handlers see both,
 ##    Input.is_action_just_pressed() polling does not). Use `await t.tap_held(action)` for polling code.
+##  * t.press(path) is a real click on the button's centre: it fails when the button is hidden, disabled, outside the window
+##    or covered by another control. t.press_unchecked(path) only emits `pressed` (for the few cases that need that).
+##  * State a section changes for its own checks (a locale, a config override, a fixture path) is put back with
+##    t.on_cleanup(func): the harness runs those after the section, also when a script error or a timeout ended it early.
 
 ## The SceneTree the harness runs in and its root window (set by bind()).
 var tree: SceneTree
@@ -26,12 +30,45 @@ var rng := RandomNumberGenerator.new()
 ## The Logger capture (tests/lib/error_catcher.gd), set by the harness (untyped: duck-typed, loaded at runtime).
 var catcher
 
+## Set by the harness when the section that holds this `t` timed out (tests/playtest.gd): a coroutine cannot be cancelled in
+## GDScript, so from then on every wait helper of this `t` parks the stuck section for good instead of returning, and it cannot
+## run on into the sections after it. The harness hands the next sections a fresh `t`.
+var detached: bool = false
+
 var _held: Dictionary = {}     # action -> true while held through t.hold()
+var _cleanups: Array[Callable] = []
+
+## Never emitted: what a detached `t` parks its section on.
+signal _parked
 
 
 func bind(p_tree: SceneTree) -> void:
 	tree = p_tree
 	root = p_tree.root
+
+
+## Registers `fn` (a Callable without arguments; it may await) to run when the current section ends, after its last check, also
+## when a script error or a timeout ended it early. Cleanups run last-registered first, and only once.
+##   var before: String = t.autoload("LocalizationManager").current_locale
+##   t.on_cleanup(func() -> void: t.autoload("LocalizationManager").set_locale(before, false))
+func on_cleanup(fn: Callable) -> void:
+	_cleanups.append(fn)
+
+
+## Runs and forgets the cleanups of the section (called by the harness). Returns how many ran.
+func run_cleanups() -> int:
+	var n := 0
+	while not _cleanups.is_empty():
+		var fn: Callable = _cleanups.pop_back()
+		if fn.is_valid():
+			await fn.call()
+			n += 1
+	return n
+
+
+func _park_if_detached() -> void:
+	if detached:
+		await _parked
 
 
 # ---------------------------------------------------------------- autoloads and nodes
@@ -77,17 +114,20 @@ func player() -> Node:
 func frames(n: int) -> void:
 	for i in n:
 		await tree.process_frame
+		await _park_if_detached()
 
 
 ## `n` physics ticks. Required before asserting anything driven by _physics_process.
 func physics(n: int) -> void:
 	for i in n:
 		await tree.physics_frame
+		await _park_if_detached()
 
 
 ## Game seconds (Engine.time_scale applies; the timer keeps running while the tree is paused).
 func seconds(s: float) -> void:
 	await tree.create_timer(s, true, false, false).timeout
+	await _park_if_detached()
 
 
 ## Game time in seconds since the engine started: physics ticks / ticks per second, the clock the game animates by. Measure a duration with this, not with
@@ -101,6 +141,7 @@ func game_seconds() -> float:
 ## outside the engine loop (a thread, a child process) is `until(cond, timeout)`, which counts the wall clock.
 func real_seconds(s: float) -> void:
 	await tree.create_timer(s, true, false, true).timeout
+	await _park_if_detached()
 
 
 ## Polls `cond` once per process frame until it returns true or `timeout` WALL-CLOCK seconds pass (also under --fast). Returns whether it became true.
@@ -110,6 +151,7 @@ func until(cond: Callable, timeout: float = 5.0) -> bool:
 		if float(Time.get_ticks_msec() - t0) / 1000.0 > timeout:
 			return false
 		await tree.process_frame
+		await _park_if_detached()
 	return true
 
 
