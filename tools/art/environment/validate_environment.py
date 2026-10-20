@@ -4,6 +4,8 @@
   python tools/art/environment/validate_environment.py [--root REPO] [-q]
 
 One `PASS <id>` / `FAIL <id> <reason>` line per check, exit code 1 on any FAIL.  Reads assets/iso_tiles, assets/iso_props, assets/backdrops and lua/config/props_extra.lua.
+The ids and their metadata are P22's (iso_props/props.json); the files checked are the ones the game draws: ArtCatalog's entry of each id (the last art pack
+of ArtCatalog.PROP_PACKS that defines it), so an id a later pack repaints is checked in its painted file (the superseded P22 copies are not kept, review REND-10).
   tiles_manifest        tiles.json lists the 17 diamond + 7 ortho terrains of AreaTileSet, atlas size = variants x cell, ortho entries carry proj + tile
   tiles_no_mipmaps      every tile atlas has an import stub without mipmaps (compress/mode 0, mipmaps/generate false)
   props_manifest        every prop file exists, size and pivot are inside the image, footprints are positive ints, glow files exist, no foreign (N03 / V5 / A1) ids, no dropped walls
@@ -55,6 +57,28 @@ def img(p):
     return Image.open(p).convert('RGBA')
 
 
+def catalog(root):
+    """ArtCatalog's prop entries: iso_props/props.json, then every pack of ArtCatalog.PROP_PACKS in order (a later pack wins); '_dir' is the entry's folder."""
+    src = (root / 'scripts/world2d/art_catalog.gd').read_text()
+    packs = re.findall(r'"([^"]+)"', re.search(r'const PROP_PACKS: Array\[String\] = \[(.*?)\]', src, re.S)[1])
+    out = {}
+    for folder in [root / 'assets/iso_props'] + [root / 'assets/iso_props' / p for p in packs]:
+        for pid, e in load(folder / 'props.json').items():
+            if not pid.startswith('_') and isinstance(e, dict):
+                out[pid] = dict(e, _dir=folder)
+    return out
+
+
+def drawn(root, pj):
+    """P22's ids, each with the entry ArtCatalog draws for it."""
+    entries = catalog(root)
+    return {pid: entries[pid] for pid in pj if not pid.startswith('_')}
+
+
+def art(e, file=None):
+    return e['_dir'] / (e['file'] if file is None else file)
+
+
 def hexrgb(h):
     return np.array([int(h[i:i + 2], 16) for i in (0, 2, 4)], np.float32)
 
@@ -90,12 +114,10 @@ def check_tiles(root):
     result('tiles_no_mipmaps', not stubs, f'atlases without the no-mipmap stub: {stubs}')
 
 
-def check_props(root, pj):
+def check_props(root, pj, props):
     bad = []
-    for pid, e in pj.items():
-        if pid.startswith('_'):
-            continue
-        f = root / 'assets/iso_props' / e['file']
+    for pid, e in props.items():
+        f = art(e)
         if not f.exists():
             bad.append(f'{pid}: no file'); continue
         w, h = img(f).size
@@ -107,24 +129,26 @@ def check_props(root, pj):
         if not all(isinstance(v, int) and v >= 1 for v in e['footprint']):
             bad.append(f'{pid}: footprint {e["footprint"]}')
         g = e.get('glow')
-        if g and not (root / 'assets/iso_props' / g['file']).exists():
+        if g and not art(e, g['file']).exists():
             bad.append(f'{pid}: glow file missing')
     foreign = [p for p in pj if p in FOREIGN]
     dropped = [p for p in pj if p in DROPPED]
     result('props_manifest', not bad and not foreign and not dropped, f'{bad[:4]} foreign {foreign} dropped walls {dropped}')
 
 
-def check_farm(pj):
+def check_farm(root, props):
     bad = []
     for pid, (size, pivot, fp) in FARM_CONTRACT.items():
-        e = pj.get(pid)
-        if not e or e['size'] != size or e['pivot'] != pivot or e['footprint'] != fp:
+        e = props.get(pid)
+        # a painted pack may re-canvas the sprite (props_manifest holds its size and pivot to its image); the footprint is gameplay and never moves
+        canvas_ok = e and (e['_dir'] != root / 'assets/iso_props' or (e['size'] == size and e['pivot'] == pivot))
+        if not canvas_ok or e['footprint'] != fp:
             bad.append(f'{pid}: {e and (e["size"], e["pivot"], e["footprint"])} != {(size, pivot, fp)}')
     result('farm_contract', not bad, '; '.join(bad))
 
 
 def disc_measure(root, e):
-    im = np.asarray(img(root / 'assets/iso_props' / e['file']), np.float32)
+    im = np.asarray(img(art(e)), np.float32)
     a = im[..., 3]
     ys, xs = np.where(a > 230)
     px, py = e['pivot']
@@ -166,31 +190,22 @@ def check_crowns(root, pj):
 
 
 def mean_final(root, e):
-    im = np.asarray(img(root / 'assets/iso_props' / e['file']), np.float32)
+    im = np.asarray(img(art(e)), np.float32)
     m = im[..., 3] > 240
     return im[..., :3][m].mean(0) * AMBIENT / 255.0
 
 
 def check_albedo(root, pj):
     bad = []
-    recipes = load(REPO / "tools/art/drawn/fixture_recipes.json")["assets"]
     for pid, e in pj.items():
-        pal = e.get('palette') if not pid.startswith('_') else None
+        pal = e.get('palette')
         if pal not in PALETTE or e.get('kind') == 'texture':
             continue
-        m = mean_final(root, e)
-        recipe = recipes.get('assets/iso_props/' + e['file'], {})
-        source = root / recipe.get('source', '__missing_painting__')
-        if source.is_file():
-            a = np.asarray(img(source), np.float32)
-            want = a[..., :3][a[..., 3] > 240].mean(0) * AMBIENT / 255.0
-            if np.linalg.norm(m - want) > 1 or m.min() < 8:
-                bad.append(f'{pid}: differs from approved painted pigments or loses ambient headroom')
-        else:
-            # A pristine geometry stage still uses its original bake palette.
-            want, tol = PALETTE[pal]
-            if np.abs(m - hexrgb(want)).max() > tol:
-                bad.append(f'{pid}: original bake palette differs from {want}')
+        # the drawn file is the approved painting itself (its entry names the source illustration)
+        if not e.get('illustration') or not (root / e['illustration']).is_file():
+            bad.append(f'{pid}: drawn from {art(e).relative_to(root)}, which names no approved painting'); continue
+        if mean_final(root, e).min() < 8:
+            bad.append(f'{pid}: the painting loses ambient headroom under the forest grade')
     for pid in ('eyes_glow', 'rune_glow', 'pond_sheen', 'hulen_eyes', 'firefly_dot', 'halo_amber', 'halo_violet', 'crown_spark', 'fx_hit_spark', 'fx_heal_sparkle',
                 'telegraph_ring_s', 'telegraph_ring_m', 'telegraph_ring_l', 'telegraph_line', 'boss_arena_ring', 'pond_ripple'):
         if pj.get(pid, {}).get('blend') != 'add':
@@ -214,16 +229,20 @@ def check_textures(root, pj):
         e = pj.get(pid)
         if not e or e['size'] != [256, 256] or not e.get('seamless'):
             bad.append(f'{pid}: not a 256 px seamless texture'); continue
-        edge, inner = wrap_step(img(root / 'assets/iso_props' / e['file']))
+        edge, inner = wrap_step(img(art(e)))
         if edge > inner * 1.6 + 1.0:
             bad.append(f'{pid}: wrap step {edge:.1f} vs inner {inner:.1f}')
     result('textures_seamless', not bad, '; '.join(bad))
 
 
 def check_backdrops(root):
+    """The layers ArtCatalog.backdrop serves: <theme>_sky.png before <theme>_sky.webp, the painted backdrop_<theme>_far prop before <theme>_far.webp."""
     bad = []
+    entries = catalog(root)
     for t in ('hyggebyen', 'forest'):
-        s, f = root / f'assets/backdrops/{t}_sky.webp', root / f'assets/backdrops/{t}_far.webp'
+        s = root / f'assets/backdrops/{t}_sky.png'
+        s = s if s.exists() else s.with_suffix('.webp')
+        f = art(entries[f'backdrop_{t}_far']) if f'backdrop_{t}_far' in entries else root / f'assets/backdrops/{t}_far.webp'
         if not s.exists() or not f.exists():
             bad.append(f'{t}: missing'); continue
         if Image.open(s).size != (1920, 1080) or Image.open(f).size != (2048, 1280):
@@ -261,7 +280,8 @@ def main():
     quiet = a.q
     root = Path(a.root)
     pj = load(root / 'assets/iso_props/props.json')
-    check_tiles(root); check_props(root, pj); check_farm(pj); check_crowns(root, pj); check_albedo(root, pj); check_textures(root, pj); check_backdrops(root); check_lua(root, pj)
+    props = drawn(root, pj)
+    check_tiles(root); check_props(root, pj, props); check_farm(root, props); check_crowns(root, props); check_albedo(root, props); check_textures(root, props); check_backdrops(root); check_lua(root, pj)
     print('validate_environment: %d finding(s)' % fails)
     sys.exit(1 if fails else 0)
 

@@ -117,7 +117,12 @@ tile cells and ground anchors; the neutral glow kernel remains a functional mask
 Copies that a later art pack supersedes (the P22, V5 and N03 bakes the painted
 passes replaced, and backdrops a painted layer shadows) are not kept: nothing draws
 them, so they only shipped and invited edits that never showed (review REND-10);
-`art_environment.no_superseded_art_files` fails when one comes back.
+`art_environment.no_superseded_art_files` fails when one comes back. Their recipes
+stay, marked `"superseded": true`: `fixtures.py` no longer exports them, but
+`geometry_source()` still serves their measured silhouettes and bounds to `world.py`
+and `consistency.py`, which re-read every source pack sprite.
+`fixtures.py --check` and `art_environment.superseded_geometry_kept` fail when a
+baker source has neither a file nor a recipe.
 `sources/fixture_geometry.npz` stores only measured channel sums and alpha
 for material joints/silhouettes; other recipes need only body bounds. Exporters
 read those immutable measurements, preventing repeated painted re-shading.

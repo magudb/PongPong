@@ -4,6 +4,10 @@ The recipe records the old canvas and anchor. Tile grids keep their native cells
 objects with different source canvases fit around the original ground anchor.
 Only trimmed city window layers adopt the painted window bounds and offsets.
 No illustration is drawn here: all visible pigments come from approved masters.
+
+A recipe marked "superseded" belongs to a copy that a later art pack replaced; the
+file is not exported (review REND-10), but its measured geometry stays, because the
+painted_world and consistency bakers still read those silhouettes and bounds.
 """
 from __future__ import annotations
 
@@ -53,6 +57,30 @@ def geometry_source(path: Path) -> Image.Image:
     return image
 
 
+def geometry_problems() -> list[str]:
+    """Every sprite a baker re-reads through geometry_source() must resolve.
+
+    world.py reads every city entry, consistency.py the last source pack entry
+    of each id (root, city, farm and the other packs, never its own output) and
+    the forest / hyggebyen far layers' canvases.
+    """
+    props = ROOT / "assets/iso_props"
+    paths = [ROOT / "assets/backdrops" / (theme + "_far.webp") for theme in ["forest", "hyggebyen"]]
+    for manifest in [props / "props.json", *sorted(props.glob("*/props.json"))]:
+        if manifest.parent.name == "zz_painted_consistency":
+            continue
+        for rec in json.loads(manifest.read_text()).values():
+            if isinstance(rec, dict) and "file" in rec:
+                paths.append(manifest.parent / rec["file"])
+    problems = []
+    for path in paths:
+        try:
+            geometry_source(path)
+        except (OSError, ValueError) as error:
+            problems.append(f"{path.relative_to(ROOT)}: no geometry ({error.__class__.__name__})")
+    return problems
+
+
 def anchored(image: Image.Image, rec: dict) -> Image.Image:
     w, h = rec["size"]
     px, py = rec["pivot"]
@@ -97,6 +125,8 @@ def render(path: str, rec: dict) -> Image.Image:
 def build(check: bool = False) -> None:
     report, manifests, failures = {}, {}, []
     for path, rec in recipes().items():
+        if rec.get("superseded"):
+            continue
         target = ROOT / path
         if rec["mode"] == "technical":
             if hashlib.sha256(target.read_bytes()).hexdigest() != rec["prior_sha256"]:
@@ -132,11 +162,15 @@ def build(check: bool = False) -> None:
                 failures.append(str(path.relative_to(ROOT)) + ": painted night offsets differ")
         else:
             path.write_text(data)
+    if check:
+        failures += geometry_problems()
     if failures:
         raise SystemExit("\n".join(failures))
     if not check:
         (ROOT / "docs/art/style-audit/current/fixture-exports.json").write_text(json.dumps(report, indent=2) + "\n")
-    print(f"PAINTED FIXTURES {'CHECK' if check else 'EXPORT'} PASS: {len(report)} re-exports, {len(recipes()) - len(report)} technical kernels preserved")
+    superseded = sum(1 for rec in recipes().values() if rec.get("superseded"))
+    print(f"PAINTED FIXTURES {'CHECK' if check else 'EXPORT'} PASS: {len(report)} re-exports, "
+          f"{len(recipes()) - len(report) - superseded} technical kernels preserved, {superseded} superseded geometries kept")
 
 
 if __name__ == "__main__":

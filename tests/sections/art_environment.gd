@@ -10,6 +10,7 @@ extends RefCounted
 ##   forest_art_ids_exist  forest_crowns_baked_at_36  dungeon_crowns_present_and_sized  forest_albedo_within_ambient_headroom  dungeon_prop_defs_complete
 ##   dungeon_ids_in_catalog  image_props_contract  backdrops_present  fixtures_missing_only_pending  hyggebyen_map_art_complete  ortho_decision_*  budget  readme_verdict
 ##   prop_packs_listed (review REND-10: ArtCatalog reads the packs in its explicit PROP_PACKS order, never by folder name)  no_superseded_art_files
+##   superseded_geometry_kept (a deleted copy keeps its measured geometry in fixture_recipes.json, so the painted_world / consistency bakers still run)
 ## Windowed (tests/run_playtest.sh --windowed --only=art_environment): filter_seams_mixed_terrains (grass + flowers, forest floor + glow, iso and ortho, at zoom 0.3 / 0.4 /
 ## 0.7 and a negative control), forest_ortho_readable (the outline (75,60,73) and the crowns on #1c2138 at zoom 0.4), plus the screenshots the package is judged by.
 ##
@@ -356,6 +357,24 @@ func _packs() -> void:
 		if (f.ends_with("_sky.webp") and FileAccess.file_exists(BACKDROP_DIR + theme + "_sky.png")) or (f.ends_with("_far.webp") and entries.has("backdrop_%s_far" % theme)):
 			superseded.append("backdrops/%s (ArtCatalog draws the painted layer instead)" % f)
 	_t.check("no_superseded_art_files", superseded.is_empty() and n > 100, "%d superseded pack entries keep no file of their own, no backdrop is shadowed by a painted one: %s" % [n, str(superseded.slice(0, 5))])
+	# The painted_world and consistency bakers re-read the source packs' sprites (and the forest / hyggebyen far canvases) through fixtures.geometry_source():
+	# a deleted copy keeps its measured geometry as a "superseded" fixture recipe, or those packs could no longer be re-baked.
+	var recipes: Dictionary = GameData.dict_of(GameData.dict_of(_json("res://tools/art/drawn/fixture_recipes.json")).get("assets", {}))
+	var sources: Array[String] = [BACKDROP_DIR + "forest_far.webp", BACKDROP_DIR + "hyggebyen_far.webp"]
+	for id in entries:
+		for pair in entries[id]:
+			if not str(pair[0]).ends_with("/zz_painted_consistency/"):
+				sources.append((str(pair[0]) + str(pair[1].get("file", ""))).simplify_path())
+	var no_geometry: Array[String] = []
+	var kept := 0
+	for f in sources:
+		var recipe: Dictionary = GameData.dict_of(recipes.get(f.trim_prefix("res://"), {}))
+		if bool(recipe.get("superseded", false)):
+			kept += 1
+		elif recipe.is_empty() and not FileAccess.file_exists(f):
+			no_geometry.append(f.trim_prefix("res://assets/"))
+	_t.check("superseded_geometry_kept", no_geometry.is_empty() and kept > 200,
+		"%d baker source sprites resolve to a file or a fixture recipe, %d deleted copies keep their geometry as superseded recipes; without geometry %s" % [sources.size(), kept, str(no_geometry.slice(0, 5))])
 
 
 ## The files an entry of a pack names (its sprite and its glow / ground layers), as simplified res:// paths.

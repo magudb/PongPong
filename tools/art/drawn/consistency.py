@@ -418,7 +418,8 @@ def backdrop(manifest: dict) -> None:
     save(Image.fromarray(pixels), OUT / "backdrop_farm_far.webp", 89)
     manifest["backdrop_farm_far"] = {"file": "backdrop_farm_far.webp", "size": [2048, 1024], "pivot": [0, 0], "footprint": [0, 0], "kind": "backdrop", "illustration": "tools/art/drawn/sources/nature.png"}
     for theme, index, tint in [("forest", 2, [42, 62, 67]), ("hyggebyen", 1, [168, 151, 169])]:
-        old = Image.open(ROOT / "assets/backdrops" / (theme + "_far.webp"))
+        # The old far layer only lends its canvas; its file is superseded (REND-10).
+        old = geometry_source(ROOT / "assets/backdrops" / (theme + "_far.webp"))
         w, h = old.size
         image = Image.new("RGBA", old.size)
         tree = matte(atlas("nature", 3, 3)[index])

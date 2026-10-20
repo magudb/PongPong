@@ -144,6 +144,8 @@ def roles(catalog: dict) -> tuple[dict, dict]:
         if row["id"] in technical:
             selected[local(row["path"]).resolve()] = "technical-effect-or-readability-mask"
     for name, rec in read(ROOT / "tools/art/drawn/fixture_recipes.json")["assets"].items():
+        if rec.get("superseded"):
+            continue  # only its geometry is kept; the file is gone (REND-10)
         path = (ROOT / name).resolve()
         family = "terrain" if "/iso_tiles/" in name else "backdrop" if "/backdrops/" in name else "city" if "/city/" in name else "interior" if "/interior/" in name else "props"
         selected[path] = "technical-historical-light-kernel" if rec["mode"] == "technical" else "painted-fixture-" + family
