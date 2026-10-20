@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bbuameneaom0e"
-path="res://.godot/imported/hut_l_dark.webp-3e5f39d4a21c4851c6b835deba37aed4.ctex"
+path.s3tc="res://.godot/imported/hut_l_dark.webp-3e5f39d4a21c4851c6b835deba37aed4.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/painted_world/hut_l_dark.webp"
-dest_files=["res://.godot/imported/hut_l_dark.webp-3e5f39d4a21c4851c6b835deba37aed4.ctex"]
+dest_files=["res://.godot/imported/hut_l_dark.webp-3e5f39d4a21c4851c6b835deba37aed4.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

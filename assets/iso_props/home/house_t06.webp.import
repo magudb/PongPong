@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ctpghsqw6jfgc"
-path="res://.godot/imported/house_t06.webp-d2da06219b44ee8678d81d34427fdb86.ctex"
+path.s3tc="res://.godot/imported/house_t06.webp-d2da06219b44ee8678d81d34427fdb86.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/home/house_t06.webp"
-dest_files=["res://.godot/imported/house_t06.webp-d2da06219b44ee8678d81d34427fdb86.ctex"]
+dest_files=["res://.godot/imported/house_t06.webp-d2da06219b44ee8678d81d34427fdb86.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

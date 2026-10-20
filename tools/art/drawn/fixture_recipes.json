@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Painted replacements at historical fixture paths. Geometry archive contains channel sums and alpha only, never the original coloured illustrations. Technical light kernels remain functional masks.",
+  "description": "Painted replacements at historical fixture paths. Geometry archive contains channel sums and alpha only, never the original coloured illustrations. Technical light kernels remain functional masks. Superseded entries keep only the measured geometry of a copy a later art pack replaced: the file is not exported (review REND-10), the bakers still read its silhouette and bounds.",
   "assets": {
     "assets/backdrops/farm_canopy.webp": {
       "size": [
@@ -30,7 +30,8 @@
         173,
         2048,
         1024
-      ]
+      ],
+      "superseded": true
     },
     "assets/backdrops/forest_far.webp": {
       "size": [
@@ -45,7 +46,8 @@
         439,
         2048,
         1280
-      ]
+      ],
+      "superseded": true
     },
     "assets/backdrops/forest_sky.webp": {
       "size": [
@@ -60,7 +62,8 @@
         0,
         1920,
         1080
-      ]
+      ],
+      "superseded": true
     },
     "assets/backdrops/hyggebyen_far.webp": {
       "size": [
@@ -75,7 +78,8 @@
         445,
         2048,
         1280
-      ]
+      ],
+      "superseded": true
     },
     "assets/backdrops/hyggebyen_sky.webp": {
       "size": [
@@ -90,7 +94,8 @@
         0,
         1920,
         1080
-      ]
+      ],
+      "superseded": true
     },
     "assets/backdrops/treetop_far.webp": {
       "size": [
@@ -105,7 +110,8 @@
         0,
         2048,
         1024
-      ]
+      ],
+      "superseded": true
     },
     "assets/backdrops/treetop_sky.webp": {
       "size": [
@@ -120,7 +126,8 @@
         0,
         16,
         1024
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/animal_house.png": {
       "size": [
@@ -143,7 +150,8 @@
         4,
         282,
         267
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/apple_tree.png": {
       "size": [
@@ -158,7 +166,8 @@
         3,
         356,
         393
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/barn_small.png": {
       "size": [
@@ -181,7 +190,8 @@
         3,
         410,
         421
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/bed.png": {
       "size": [
@@ -196,7 +206,8 @@
         4,
         89,
         54
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/beehive_stand.png": {
       "size": [
@@ -211,7 +222,8 @@
         3,
         126,
         144
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/bench.png": {
       "size": [
@@ -226,7 +238,8 @@
         4,
         147,
         140
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/bridge_x.png": {
       "size": [
@@ -241,7 +254,8 @@
         3,
         134,
         139
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/bridge_z.png": {
       "size": [
@@ -264,7 +278,8 @@
         3,
         134,
         128
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/bush_berry.png": {
       "size": [
@@ -287,7 +302,8 @@
         3,
         152,
         113
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/bush_eyes_a.png": {
       "size": [
@@ -302,7 +318,8 @@
         4,
         281,
         244
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/bush_eyes_b.png": {
       "size": [
@@ -317,7 +334,8 @@
         3,
         277,
         233
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/bush_farm.png": {
       "size": [
@@ -340,7 +358,8 @@
         3,
         152,
         120
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/bush_forest.png": {
       "size": [
@@ -363,7 +382,8 @@
         4,
         155,
         111
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/cave_ring.png": {
       "size": [
@@ -378,7 +398,8 @@
         2,
         541,
         388
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/cave_ring_up.png": {
       "size": [
@@ -393,7 +414,8 @@
         2,
         541,
         388
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/cave_stone_a.png": {
       "size": [
@@ -408,7 +430,8 @@
         2,
         104,
         87
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/cave_stone_b.png": {
       "size": [
@@ -423,7 +446,8 @@
         2,
         111,
         89
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/cave_stone_c.png": {
       "size": [
@@ -438,7 +462,8 @@
         2,
         111,
         90
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/cave_stone_d.png": {
       "size": [
@@ -453,7 +478,8 @@
         2,
         105,
         90
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/cave_stone_e.png": {
       "size": [
@@ -468,7 +494,8 @@
         2,
         110,
         89
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/chest_closed.png": {
       "size": [
@@ -483,7 +510,8 @@
         3,
         105,
         96
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/chest_noegle.png": {
       "size": [
@@ -498,7 +526,8 @@
         3,
         113,
         101
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/chest_open.png": {
       "size": [
@@ -513,7 +542,8 @@
         4,
         143,
         127
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/bat_hang.webp": {
       "size": [
@@ -528,7 +558,8 @@
         0,
         76,
         100
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/bat_hang_f1.webp": {
       "size": [
@@ -543,7 +574,8 @@
         0,
         71,
         99
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/bat_house_hanging.webp": {
       "size": [
@@ -558,7 +590,8 @@
         3,
         345,
         571
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/bath_tub_back.webp": {
       "size": [
@@ -573,7 +606,8 @@
         15,
         273,
         116
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/bath_tub_front.webp": {
       "size": [
@@ -588,7 +622,8 @@
         4,
         273,
         117
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/bridge_deck_tile_w28.webp": {
       "size": [
@@ -603,7 +638,8 @@
         0,
         85,
         128
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/bridge_deck_tile_w43.webp": {
       "size": [
@@ -618,7 +654,8 @@
         0,
         129,
         128
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/bridge_post.webp": {
       "size": [
@@ -633,7 +670,8 @@
         0,
         25,
         83
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/canopy_top_strip.webp": {
       "size": [
@@ -648,7 +686,8 @@
         0,
         2048,
         320
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/fire_pit.webp": {
       "size": [
@@ -663,7 +702,8 @@
         4,
         213,
         165
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/foliage_front_a.webp": {
       "size": [
@@ -678,7 +718,8 @@
         145,
         839,
         627
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/foliage_front_b.webp": {
       "size": [
@@ -693,7 +734,8 @@
         117,
         824,
         517
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_l_dark.webp": {
       "size": [
@@ -708,7 +750,8 @@
         4,
         455,
         381
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_l_dark_night.webp": {
       "size": [
@@ -725,7 +768,8 @@
         0,
         301,
         96
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_l_moss.webp": {
       "size": [
@@ -740,7 +784,8 @@
         4,
         455,
         381
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_l_moss_night.webp": {
       "size": [
@@ -757,7 +802,8 @@
         0,
         301,
         96
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_l_straw.webp": {
       "size": [
@@ -772,7 +818,8 @@
         4,
         455,
         381
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_l_straw_night.webp": {
       "size": [
@@ -789,7 +836,8 @@
         0,
         301,
         96
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_m_dark.webp": {
       "size": [
@@ -804,7 +852,8 @@
         3,
         380,
         372
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_m_dark_night.webp": {
       "size": [
@@ -821,7 +870,8 @@
         1,
         254,
         88
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_m_moss.webp": {
       "size": [
@@ -836,7 +886,8 @@
         3,
         380,
         372
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_m_moss_night.webp": {
       "size": [
@@ -853,7 +904,8 @@
         1,
         254,
         88
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_m_straw.webp": {
       "size": [
@@ -868,7 +920,8 @@
         3,
         380,
         372
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_m_straw_night.webp": {
       "size": [
@@ -885,7 +938,8 @@
         1,
         254,
         88
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_raadhus.webp": {
       "size": [
@@ -900,7 +954,8 @@
         3,
         495,
         478
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_raadhus_night.webp": {
       "size": [
@@ -917,7 +972,8 @@
         1,
         325,
         111
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_s_dark.webp": {
       "size": [
@@ -932,7 +988,8 @@
         3,
         285,
         281
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_s_dark_night.webp": {
       "size": [
@@ -949,7 +1006,8 @@
         1,
         195,
         68
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_s_moss.webp": {
       "size": [
@@ -964,7 +1022,8 @@
         3,
         285,
         281
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_s_moss_night.webp": {
       "size": [
@@ -981,7 +1040,8 @@
         1,
         195,
         68
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_s_straw.webp": {
       "size": [
@@ -996,7 +1056,8 @@
         3,
         285,
         281
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/hut_s_straw_night.webp": {
       "size": [
@@ -1013,7 +1074,8 @@
         1,
         195,
         68
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/ladder_tile.webp": {
       "size": [
@@ -1028,7 +1090,8 @@
         0,
         60,
         112
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/lamp_door.webp": {
       "size": [
@@ -1043,7 +1106,8 @@
         7,
         45,
         46
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/lantern_hang.webp": {
       "size": [
@@ -1058,7 +1122,8 @@
         0,
         47,
         90
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/lift_basket.webp": {
       "size": [
@@ -1073,7 +1138,8 @@
         0,
         142,
         87
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/lift_pulley.webp": {
       "size": [
@@ -1088,7 +1154,8 @@
         2,
         58,
         62
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/log_stack.webp": {
       "size": [
@@ -1103,7 +1170,8 @@
         3,
         237,
         146
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/market_stall_traetoppen.webp": {
       "size": [
@@ -1118,7 +1186,8 @@
         3,
         249,
         236
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/notice_board.webp": {
       "size": [
@@ -1133,7 +1202,8 @@
         3,
         165,
         213
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/owl_shelf.webp": {
       "size": [
@@ -1148,7 +1218,8 @@
         6,
         197,
         61
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/pennant_blue.webp": {
       "size": [
@@ -1163,7 +1234,8 @@
         1,
         61,
         100
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/pennant_blue_f1.webp": {
       "size": [
@@ -1178,7 +1250,8 @@
         1,
         61,
         100
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/pennant_gold.webp": {
       "size": [
@@ -1193,7 +1266,8 @@
         1,
         61,
         100
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/pennant_gold_f1.webp": {
       "size": [
@@ -1208,7 +1282,8 @@
         1,
         61,
         100
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/pennant_mint.webp": {
       "size": [
@@ -1223,7 +1298,8 @@
         1,
         61,
         100
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/pennant_mint_f1.webp": {
       "size": [
@@ -1238,7 +1314,8 @@
         1,
         61,
         100
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/pennant_pink.webp": {
       "size": [
@@ -1253,7 +1330,8 @@
         1,
         61,
         100
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/pennant_pink_f1.webp": {
       "size": [
@@ -1268,7 +1346,8 @@
         1,
         61,
         100
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/planter_box.webp": {
       "size": [
@@ -1283,7 +1362,8 @@
         3,
         165,
         146
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/planter_box_berry.webp": {
       "size": [
@@ -1298,7 +1378,8 @@
         3,
         165,
         146
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/platform_disc_171.webp": {
       "size": [
@@ -1313,7 +1394,8 @@
         2,
         1027,
         639
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/platform_disc_184.webp": {
       "size": [
@@ -1328,7 +1410,8 @@
         2,
         1100,
         681
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/platform_disc_196.webp": {
       "size": [
@@ -1343,7 +1426,8 @@
         2,
         1174,
         723
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/platform_disc_306.webp": {
       "size": [
@@ -1358,7 +1442,8 @@
         2,
         1835,
         1105
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/rope_tile.webp": {
       "size": [
@@ -1373,7 +1458,8 @@
         0,
         21,
         186
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/seed_basket.webp": {
       "size": [
@@ -1388,7 +1474,8 @@
         3,
         87,
         69
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/trunk_bark_w367.webp": {
       "size": [
@@ -1403,7 +1490,8 @@
         0,
         367,
         512
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/trunk_bark_w404.webp": {
       "size": [
@@ -1418,7 +1506,8 @@
         0,
         404,
         512
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/trunk_bark_w441.webp": {
       "size": [
@@ -1433,7 +1522,8 @@
         0,
         441,
         512
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/trunk_bark_w698.webp": {
       "size": [
@@ -1448,7 +1538,8 @@
         0,
         698,
         512
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/trunk_foot_w367.webp": {
       "size": [
@@ -1463,7 +1554,8 @@
         0,
         367,
         136
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/trunk_foot_w404.webp": {
       "size": [
@@ -1478,7 +1570,8 @@
         0,
         404,
         147
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/trunk_foot_w441.webp": {
       "size": [
@@ -1493,7 +1586,8 @@
         0,
         441,
         157
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/trunk_foot_w698.webp": {
       "size": [
@@ -1508,7 +1602,8 @@
         0,
         698,
         231
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/trunk_hole_owl.webp": {
       "size": [
@@ -1523,7 +1618,8 @@
         7,
         175,
         225
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/trunk_hole_owl_b.webp": {
       "size": [
@@ -1538,7 +1634,8 @@
         7,
         175,
         225
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/trunk_root_w367.webp": {
       "size": [
@@ -1553,7 +1650,8 @@
         0,
         495,
         280
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/trunk_root_w404.webp": {
       "size": [
@@ -1568,7 +1666,8 @@
         0,
         545,
         300
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/trunk_root_w441.webp": {
       "size": [
@@ -1583,7 +1682,8 @@
         0,
         595,
         319
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/city/trunk_root_w698.webp": {
       "size": [
@@ -1598,7 +1698,8 @@
         0,
         942,
         452
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/coop_small.png": {
       "size": [
@@ -1621,7 +1722,8 @@
         3,
         304,
         292
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_carrot_0.png": {
       "size": [
@@ -1636,7 +1738,8 @@
         5,
         55,
         26
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_carrot_1.png": {
       "size": [
@@ -1651,7 +1754,8 @@
         4,
         55,
         38
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_carrot_2.png": {
       "size": [
@@ -1666,7 +1770,8 @@
         4,
         52,
         42
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_carrot_3.png": {
       "size": [
@@ -1681,7 +1786,8 @@
         3,
         58,
         61
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_catnip_0.png": {
       "size": [
@@ -1696,7 +1802,8 @@
         5,
         55,
         26
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_catnip_1.png": {
       "size": [
@@ -1711,7 +1818,8 @@
         3,
         55,
         31
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_catnip_2.png": {
       "size": [
@@ -1726,7 +1834,8 @@
         4,
         56,
         33
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_catnip_3.png": {
       "size": [
@@ -1741,7 +1850,8 @@
         4,
         67,
         56
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_glow_berry_0.png": {
       "size": [
@@ -1756,7 +1866,8 @@
         5,
         55,
         26
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_glow_berry_1.png": {
       "size": [
@@ -1771,7 +1882,8 @@
         4,
         55,
         28
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_glow_berry_2.png": {
       "size": [
@@ -1786,7 +1898,8 @@
         4,
         57,
         32
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_glow_berry_3.png": {
       "size": [
@@ -1801,7 +1914,8 @@
         3,
         70,
         51
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_moonflower_0.png": {
       "size": [
@@ -1816,7 +1930,8 @@
         5,
         55,
         26
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_moonflower_1.png": {
       "size": [
@@ -1831,7 +1946,8 @@
         4,
         55,
         27
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_moonflower_2.png": {
       "size": [
@@ -1846,7 +1962,8 @@
         3,
         53,
         55
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_moonflower_3.png": {
       "size": [
@@ -1861,7 +1978,8 @@
         3,
         64,
         85
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_pumpkin_0.png": {
       "size": [
@@ -1876,7 +1994,8 @@
         5,
         55,
         26
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_pumpkin_1.png": {
       "size": [
@@ -1891,7 +2010,8 @@
         3,
         55,
         35
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_pumpkin_2.png": {
       "size": [
@@ -1906,7 +2026,8 @@
         3,
         73,
         55
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_pumpkin_3.png": {
       "size": [
@@ -1921,7 +2042,8 @@
         4,
         98,
         66
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_strawberry_0.png": {
       "size": [
@@ -1936,7 +2058,8 @@
         5,
         55,
         26
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_strawberry_1.png": {
       "size": [
@@ -1951,7 +2074,8 @@
         4,
         55,
         28
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_strawberry_2.png": {
       "size": [
@@ -1966,7 +2090,8 @@
         4,
         58,
         30
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_strawberry_3.png": {
       "size": [
@@ -1981,7 +2106,8 @@
         4,
         67,
         42
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_sunflower_0.png": {
       "size": [
@@ -1996,7 +2122,8 @@
         5,
         55,
         26
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_sunflower_1.png": {
       "size": [
@@ -2011,7 +2138,8 @@
         3,
         55,
         30
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_sunflower_2.png": {
       "size": [
@@ -2026,7 +2154,8 @@
         4,
         53,
         75
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_sunflower_3.png": {
       "size": [
@@ -2041,7 +2170,8 @@
         4,
         64,
         136
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_turnip_0.png": {
       "size": [
@@ -2056,7 +2186,8 @@
         5,
         55,
         26
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_turnip_1.png": {
       "size": [
@@ -2071,7 +2202,8 @@
         4,
         55,
         29
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_turnip_2.png": {
       "size": [
@@ -2086,7 +2218,8 @@
         4,
         51,
         32
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crop_turnip_3.png": {
       "size": [
@@ -2101,7 +2234,8 @@
         3,
         57,
         55
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crown_l_a.png": {
       "size": [
@@ -2116,7 +2250,8 @@
         3,
         656,
         743
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crown_l_b.png": {
       "size": [
@@ -2131,7 +2266,8 @@
         4,
         659,
         741
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crown_m_a.png": {
       "size": [
@@ -2146,7 +2282,8 @@
         4,
         498,
         574
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crown_m_b.png": {
       "size": [
@@ -2161,7 +2298,8 @@
         3,
         510,
         578
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crown_s_a.png": {
       "size": [
@@ -2176,7 +2314,8 @@
         4,
         384,
         432
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crown_s_b.png": {
       "size": [
@@ -2191,7 +2330,8 @@
         3,
         396,
         432
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crystal_amethyst.png": {
       "size": [
@@ -2206,7 +2346,8 @@
         4,
         125,
         136
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crystal_emerald.png": {
       "size": [
@@ -2221,7 +2362,8 @@
         4,
         121,
         136
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/crystal_moonstone.png": {
       "size": [
@@ -2236,7 +2378,8 @@
         4,
         114,
         136
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/empty_bush.png": {
       "size": [
@@ -2251,7 +2394,8 @@
         4,
         254,
         217
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/farm/build_stake.png": {
       "size": [
@@ -2266,7 +2410,8 @@
         3,
         62,
         103
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/farm/rope_stake_x.png": {
       "size": [
@@ -2281,7 +2426,8 @@
         4,
         78,
         93
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/farm/rope_stake_z.png": {
       "size": [
@@ -2296,7 +2442,8 @@
         4,
         78,
         93
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/farm/shipping_bin.png": {
       "size": [
@@ -2311,7 +2458,8 @@
         3,
         207,
         178
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/farm/stake_sign.png": {
       "size": [
@@ -2326,7 +2474,8 @@
         3,
         58,
         109
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/farm/tool_shed.png": {
       "size": [
@@ -2349,7 +2498,8 @@
         4,
         280,
         310
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/farm/trunk_giant_a.png": {
       "size": [
@@ -2364,7 +2514,8 @@
         3,
         1223,
         2402
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/farm/trunk_giant_b.png": {
       "size": [
@@ -2379,7 +2530,8 @@
         3,
         1270,
         2138
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/farm/trunk_under_a.png": {
       "size": [
@@ -2394,7 +2546,8 @@
         3,
         903,
         1348
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/farm/trunk_under_b.png": {
       "size": [
@@ -2409,7 +2562,8 @@
         3,
         742,
         1303
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/features/chest_fe.webp": {
       "size": [
@@ -2424,7 +2578,8 @@
         3,
         103,
         99
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/features/chest_jern.webp": {
       "size": [
@@ -2439,7 +2594,8 @@
         3,
         109,
         101
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/features/chest_konge.webp": {
       "size": [
@@ -2454,7 +2610,8 @@
         3,
         117,
         109
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/features/chest_trae.webp": {
       "size": [
@@ -2469,7 +2626,8 @@
         3,
         105,
         100
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/features/marble_vein.webp": {
       "size": [
@@ -2484,7 +2642,8 @@
         4,
         143,
         102
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/features/slate_vein.webp": {
       "size": [
@@ -2499,7 +2658,8 @@
         3,
         124,
         93
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/features/tent.webp": {
       "size": [
@@ -2514,7 +2674,8 @@
         3,
         340,
         230
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/fence_gate_x.png": {
       "size": [
@@ -2529,7 +2690,8 @@
         3,
         89,
         119
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/fence_x.png": {
       "size": [
@@ -2552,7 +2714,8 @@
         3,
         89,
         119
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/fence_z.png": {
       "size": [
@@ -2575,7 +2738,8 @@
         3,
         89,
         119
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/floor_patch_a.png": {
       "size": [
@@ -2590,7 +2754,8 @@
         0,
         256,
         256
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/floor_patch_b.png": {
       "size": [
@@ -2605,7 +2770,8 @@
         0,
         256,
         256
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/floor_patch_c.png": {
       "size": [
@@ -2620,7 +2786,8 @@
         0,
         256,
         256
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/fountain.png": {
       "size": [
@@ -2635,7 +2802,8 @@
         4,
         256,
         245
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/fx/glow_soft.webp": {
       "size": [
@@ -2665,7 +2833,8 @@
         3,
         110,
         95
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/glowmush_pink.png": {
       "size": [
@@ -2680,7 +2849,8 @@
         3,
         110,
         95
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/glowmush_teal.png": {
       "size": [
@@ -2695,7 +2865,8 @@
         3,
         110,
         95
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/home_rope.png": {
       "size": [
@@ -2710,7 +2881,8 @@
         2,
         109,
         361
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/house_animalstore.png": {
       "size": [
@@ -2733,7 +2905,8 @@
         3,
         287,
         305
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/house_animalstore_glow.png": {
       "size": [
@@ -2743,7 +2916,8 @@
       "prior_sha256": "7f6caba5c30ba3f6d22d41b4110d09c152c276926e8dc941b640d01e3e70da94",
       "mode": "technical",
       "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
-      "body_bounds": null
+      "body_bounds": null,
+      "superseded": true
     },
     "assets/iso_props/house_bakery.png": {
       "size": [
@@ -2766,7 +2940,8 @@
         3,
         281,
         370
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/house_bakery_glow.png": {
       "size": [
@@ -2776,7 +2951,8 @@
       "prior_sha256": "ed54e86eab7c2621f3dd773d328fa076d2f478c8d13b7d4b5d6ed5a271fa4e3b",
       "mode": "technical",
       "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
-      "body_bounds": null
+      "body_bounds": null,
+      "superseded": true
     },
     "assets/iso_props/house_farm.png": {
       "size": [
@@ -2799,7 +2975,8 @@
         3,
         355,
         403
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/house_king_treetop.png": {
       "size": [
@@ -2822,7 +2999,8 @@
         3,
         451,
         568
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/house_king_treetop_glow.png": {
       "size": [
@@ -2832,7 +3010,8 @@
       "prior_sha256": "0822a340230bf073cac3bbe7fc2ed267792bfe1091fff7d576603d56a6de0d26",
       "mode": "technical",
       "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
-      "body_bounds": null
+      "body_bounds": null,
+      "superseded": true
     },
     "assets/iso_props/house_mushroom_lavender.png": {
       "size": [
@@ -2855,7 +3034,8 @@
         3,
         281,
         269
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/house_mushroom_lavender_glow.png": {
       "size": [
@@ -2865,7 +3045,8 @@
       "prior_sha256": "7f6caba5c30ba3f6d22d41b4110d09c152c276926e8dc941b640d01e3e70da94",
       "mode": "technical",
       "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
-      "body_bounds": null
+      "body_bounds": null,
+      "superseded": true
     },
     "assets/iso_props/house_mushroom_mint.png": {
       "size": [
@@ -2888,7 +3069,8 @@
         3,
         281,
         269
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/house_mushroom_mint_glow.png": {
       "size": [
@@ -2898,7 +3080,8 @@
       "prior_sha256": "7f6caba5c30ba3f6d22d41b4110d09c152c276926e8dc941b640d01e3e70da94",
       "mode": "technical",
       "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
-      "body_bounds": null
+      "body_bounds": null,
+      "superseded": true
     },
     "assets/iso_props/house_mushroom_rose.png": {
       "size": [
@@ -2921,7 +3104,8 @@
         3,
         281,
         269
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/house_mushroom_rose_glow.png": {
       "size": [
@@ -2931,7 +3115,8 @@
       "prior_sha256": "7f6caba5c30ba3f6d22d41b4110d09c152c276926e8dc941b640d01e3e70da94",
       "mode": "technical",
       "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
-      "body_bounds": null
+      "body_bounds": null,
+      "superseded": true
     },
     "assets/iso_props/house_seedshop.png": {
       "size": [
@@ -2954,7 +3139,8 @@
         3,
         306,
         305
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/house_seedshop_glow.png": {
       "size": [
@@ -2964,7 +3150,8 @@
       "prior_sha256": "7f6caba5c30ba3f6d22d41b4110d09c152c276926e8dc941b640d01e3e70da94",
       "mode": "technical",
       "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
-      "body_bounds": null
+      "body_bounds": null,
+      "superseded": true
     },
     "assets/iso_props/house_smithy.png": {
       "size": [
@@ -2987,7 +3174,8 @@
         3,
         292,
         334
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/house_smithy_glow.png": {
       "size": [
@@ -2997,7 +3185,8 @@
       "prior_sha256": "b76c67f3e359e5a66614625f63276995f308c8b568580c3e4680bdd874e4b074",
       "mode": "technical",
       "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
-      "body_bounds": null
+      "body_bounds": null,
+      "superseded": true
     },
     "assets/iso_props/house_town_hall.png": {
       "size": [
@@ -3020,7 +3209,8 @@
         3,
         451,
         604
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/house_town_hall_glow.png": {
       "size": [
@@ -3030,7 +3220,8 @@
       "prior_sha256": "0822a340230bf073cac3bbe7fc2ed267792bfe1091fff7d576603d56a6de0d26",
       "mode": "technical",
       "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
-      "body_bounds": null
+      "body_bounds": null,
+      "superseded": true
     },
     "assets/iso_props/interior/corner_marble.webp": {
       "size": [
@@ -3495,7 +3686,8 @@
         4,
         33,
         52
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/lantern_post.png": {
       "size": [
@@ -3518,7 +3710,8 @@
         3,
         86,
         162
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/lantern_post_glow.png": {
       "size": [
@@ -3533,7 +3726,8 @@
         80,
         105,
         105
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/lantern_post_lavender.png": {
       "size": [
@@ -3548,7 +3742,8 @@
         3,
         86,
         162
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/lantern_post_mint.png": {
       "size": [
@@ -3563,7 +3758,8 @@
         3,
         86,
         162
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/lantern_post_rose.png": {
       "size": [
@@ -3578,7 +3774,8 @@
         3,
         86,
         162
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/mailbox_red.png": {
       "size": [
@@ -3593,7 +3790,8 @@
         3,
         76,
         125
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/market_stall.png": {
       "size": [
@@ -3608,7 +3806,8 @@
         3,
         198,
         276
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/market_stall_furniture.png": {
       "size": [
@@ -3623,7 +3822,8 @@
         3,
         198,
         276
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/market_stall_tailor.png": {
       "size": [
@@ -3638,7 +3838,8 @@
         3,
         198,
         276
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/ore_copper.png": {
       "size": [
@@ -3653,7 +3854,8 @@
         3,
         136,
         106
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/ore_gold.png": {
       "size": [
@@ -3668,7 +3870,8 @@
         3,
         136,
         108
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/ore_iron.png": {
       "size": [
@@ -3683,7 +3886,8 @@
         4,
         136,
         109
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/path_tile_o.png": {
       "size": [
@@ -3698,7 +3902,8 @@
         0,
         256,
         256
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/plank_stack.png": {
       "size": [
@@ -3721,7 +3926,8 @@
         3,
         152,
         127
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/platform_corner.png": {
       "size": [
@@ -3736,7 +3942,8 @@
         3,
         142,
         143
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/platform_se.png": {
       "size": [
@@ -3751,7 +3958,8 @@
         3,
         75,
         139
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/platform_sw.png": {
       "size": [
@@ -3766,7 +3974,8 @@
         3,
         76,
         139
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/pond_lily.png": {
       "size": [
@@ -3781,7 +3990,8 @@
         2,
         64,
         39
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/pond_water_o.png": {
       "size": [
@@ -3796,7 +4006,8 @@
         0,
         256,
         256
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/rock_dark.png": {
       "size": [
@@ -3819,7 +4030,8 @@
         3,
         108,
         81
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/rock_grey.png": {
       "size": [
@@ -3842,7 +4054,8 @@
         3,
         132,
         97
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/rock_mossy.png": {
       "size": [
@@ -3865,7 +4078,8 @@
         4,
         146,
         114
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/roof_patch.png": {
       "size": [
@@ -3880,7 +4094,8 @@
         4,
         149,
         161
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/rune_glow.png": {
       "size": [
@@ -3895,7 +4110,8 @@
         52,
         105
       ],
-      "source": "assets/iso_props/painted_world/rune_glow.webp"
+      "source": "assets/iso_props/painted_world/rune_glow.webp",
+      "superseded": true
     },
     "assets/iso_props/runestone_active.png": {
       "size": [
@@ -3910,7 +4126,8 @@
         2,
         137,
         182
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/runestone_dormant.png": {
       "size": [
@@ -3925,7 +4142,8 @@
         2,
         137,
         182
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/scarecrow.png": {
       "size": [
@@ -3948,7 +4166,8 @@
         4,
         101,
         171
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/signpost.png": {
       "size": [
@@ -3971,7 +4190,8 @@
         4,
         72,
         116
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/stone_path_a.png": {
       "size": [
@@ -3986,7 +4206,8 @@
         3,
         89,
         57
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/stone_path_b.png": {
       "size": [
@@ -4001,7 +4222,8 @@
         3,
         87,
         56
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/stone_path_c.png": {
       "size": [
@@ -4016,7 +4238,8 @@
         3,
         106,
         68
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/tornebaer.png": {
       "size": [
@@ -4031,7 +4254,8 @@
         4,
         46,
         31
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/tower_wizard.png": {
       "size": [
@@ -4054,7 +4278,8 @@
         4,
         220,
         508
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/tower_wizard_glow.png": {
       "size": [
@@ -4064,7 +4289,8 @@
       "prior_sha256": "c079961a72d600f981845f906f52caac968657ca4f9cddd9dfd031d0acbf9ecf",
       "mode": "technical",
       "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
-      "body_bounds": null
+      "body_bounds": null,
+      "superseded": true
     },
     "assets/iso_props/tree_blossom_hyggebyen.png": {
       "size": [
@@ -4087,7 +4313,8 @@
         3,
         321,
         396
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/tree_giant_crown.webp": {
       "size": [
@@ -4102,7 +4329,8 @@
         3,
         2214,
         2890
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/tree_oak_farm.png": {
       "size": [
@@ -4125,7 +4353,8 @@
         3,
         327,
         403
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/tree_oak_farm_b.png": {
       "size": [
@@ -4148,7 +4377,8 @@
         4,
         304,
         345
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/tree_pine_forest.png": {
       "size": [
@@ -4171,7 +4401,8 @@
         4,
         188,
         289
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/tree_pine_forest_b.png": {
       "size": [
@@ -4194,7 +4425,8 @@
         4,
         172,
         238
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/tree_twisted.png": {
       "size": [
@@ -4217,7 +4449,8 @@
         3,
         260,
         377
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/tree_twisted_glow.png": {
       "size": [
@@ -4227,7 +4460,8 @@
       "prior_sha256": "6b894622f9e82c30968a337d44e73ae1e20306792b3e5376f9ee34287009e629",
       "mode": "technical",
       "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
-      "body_bounds": null
+      "body_bounds": null,
+      "superseded": true
     },
     "assets/iso_props/warp_gate_stone.png": {
       "size": [
@@ -4242,7 +4476,8 @@
         3,
         161,
         248
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/well.png": {
       "size": [
@@ -4257,7 +4492,8 @@
         3,
         156,
         199
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_props/wheat_sack.png": {
       "size": [
@@ -4272,7 +4508,8 @@
         4,
         77,
         104
-      ]
+      ],
+      "superseded": true
     },
     "assets/iso_tiles/cobble_hyggebyen.webp": {
       "size": [

@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dioqkmb0m5d12"
-path="res://.godot/imported/wall_marble_win_r0_night.webp-6fc58623b0f3fdeb90bd4ed1d5dff8fb.ctex"
+path.s3tc="res://.godot/imported/wall_marble_win_r0_night.webp-6fc58623b0f3fdeb90bd4ed1d5dff8fb.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/interior/wall_marble_win_r0_night.webp"
-dest_files=["res://.godot/imported/wall_marble_win_r0_night.webp-6fc58623b0f3fdeb90bd4ed1d5dff8fb.ctex"]
+dest_files=["res://.godot/imported/wall_marble_win_r0_night.webp-6fc58623b0f3fdeb90bd4ed1d5dff8fb.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

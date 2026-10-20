@@ -8,6 +8,7 @@ from pathlib import Path
 from io import BytesIO
 import argparse
 import re
+import sys
 import hashlib
 import json
 import numpy as np
@@ -19,7 +20,9 @@ SOURCES = ROOT / 'tools/art/drawn/sources/dungeon_weapons'
 OUT = ROOT / 'assets/held_equipment/dungeon'
 ICONS = ROOT / 'assets/icons/items'
 DOC = ROOT / 'docs/art/dungeon-loadout'
-PRESET = '[remap]\nimporter="texture"\ntype="CompressedTexture2D"\n\n[params]\ncompress/mode=0\nmipmaps/generate=false\nprocess/fix_alpha_border=true\n'
+sys.path.insert(0, str(ROOT / 'tools/import'))
+# the atlas preset of the project's texture import policy (lossless, no mipmaps; for the icons a valid lossless stub too)
+from write_import_stubs import TILE_ATLAS as PRESET  # noqa: E402
 LAYOUT = {
     'wpn_dagger_thorn': (65,.82), 'wpn_dagger_flint': (65,.82),
     'wpn_dagger_moonshard': (65,.82), 'wpn_dagger_bee': (65,.80),

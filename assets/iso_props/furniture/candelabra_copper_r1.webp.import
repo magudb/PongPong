@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dk3kfqrlp2xqx"
-path="res://.godot/imported/candelabra_copper_r1.webp-674dc925b752a3f1158329b63537c1b5.ctex"
+path.s3tc="res://.godot/imported/candelabra_copper_r1.webp-674dc925b752a3f1158329b63537c1b5.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/candelabra_copper_r1.webp"
-dest_files=["res://.godot/imported/candelabra_copper_r1.webp-674dc925b752a3f1158329b63537c1b5.ctex"]
+dest_files=["res://.godot/imported/candelabra_copper_r1.webp-674dc925b752a3f1158329b63537c1b5.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

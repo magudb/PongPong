@@ -4,9 +4,11 @@ assets/backdrops/treetop_sky.webp / treetop_far.webp.  It writes ONLY the paths 
 
     assets/iso_props/city/**        assets/backdrops/treetop_*
 
-and refuses to write anywhere else (NEVER touches any pre-existing asset: Codex restyles those).  Sprites are LOSSLESS WebP (the contract: props lossless, mipmaps
-on by the project default).  The two backdrop layers (sky stretched, far magnified by the parallax) get a hand-written `.import` stub WITHOUT mipmaps, written
-BEFORE the first import (Godot honours it; it adds the uid): that is the 4.1 MB the memory budget needs (check art_city.vram_budget reads the flags).
+and refuses to write anywhere else (NEVER touches any pre-existing asset: Codex restyles those).  Sprites are LOSSLESS WebP files, imported with the project's
+texture import policy (tools/import/write_import_stubs.py: S3TC with mipmaps for world props), whose stubs are written BEFORE the first import (Godot honours
+them; it adds the uid).  The two backdrop layers (sky stretched, far magnified by the parallax) are S3TC WITHOUT mipmaps.
+The painted passes (painted_world, zz_painted_consistency) repaint most of this set and ArtCatalog draws theirs: a reinstall brings back superseded copies,
+which art_environment.no_superseded_art_files rejects, so delete the ones a later pack covers after installing (review REND-10).
 
   python tools/art/environment/city/install_city.py --stage DIR [--repo REPO] [--dry-run]
 """
@@ -18,7 +20,9 @@ from PIL import Image
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parents[1] / 'core'))
+sys.path.insert(0, str(HERE.parents[3] / 'tools/import'))
 import artpaths     # noqa: E402
+from write_import_stubs import ensure_policy   # noqa: E402  the one texture import policy
 
 NO_MIPS_STUB = """[remap]
 
@@ -27,7 +31,8 @@ type="CompressedTexture2D"
 
 [params]
 
-compress/mode=0
+compress/mode=2
+compress/high_quality=false
 mipmaps/generate=false
 process/fix_alpha_border=true
 """
@@ -67,6 +72,7 @@ def main():
         e['file'] = wname
         if not a.dry_run:
             total += save_webp(src / f, dst / wname)
+            ensure_policy(dst / wname, root=repo)
         written.append(wname)
     if not a.dry_run:
         (dst / 'props.json').write_text(json.dumps(props, indent=1))
@@ -80,12 +86,11 @@ def main():
         if not a.dry_run:
             total += save_webp(p, out)
             imp = bd / f'{b}.webp.import'
-            if not imp.exists() or 'mipmaps/generate=false' not in imp.read_text():
-                if not imp.exists():
-                    imp.write_text(NO_MIPS_STUB)
-                else:
-                    t = imp.read_text().replace('mipmaps/generate=true', 'mipmaps/generate=false')
-                    imp.write_text(t)
+            if not imp.exists():
+                imp.write_text(NO_MIPS_STUB)
+            else:
+                ensure_policy(out, root=repo)
+                imp.write_text(imp.read_text().replace('mipmaps/generate=true', 'mipmaps/generate=false'))
         written.append(f'backdrops/{b}.webp')
     # stale files of the owned folder (a sprite that is no longer in the set), with their .import
     stale = []

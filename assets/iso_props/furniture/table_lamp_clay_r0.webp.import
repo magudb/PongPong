@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bvhsde6v5tnbu"
-path="res://.godot/imported/table_lamp_clay_r0.webp-0f790ebf7f788a20a94fc84ef9176f39.ctex"
+path.s3tc="res://.godot/imported/table_lamp_clay_r0.webp-0f790ebf7f788a20a94fc84ef9176f39.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/table_lamp_clay_r0.webp"
-dest_files=["res://.godot/imported/table_lamp_clay_r0.webp-0f790ebf7f788a20a94fc84ef9176f39.ctex"]
+dest_files=["res://.godot/imported/table_lamp_clay_r0.webp-0f790ebf7f788a20a94fc84ef9176f39.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

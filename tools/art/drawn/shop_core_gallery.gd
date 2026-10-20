@@ -10,7 +10,7 @@ var _title: Label
 
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color("eee7d8"))
-	_ids = PaintedShopArt.rooms().keys()
+	_ids = View.rooms().keys()
 	var overlay := CanvasLayer.new()
 	add_child(overlay)
 	_title = Label.new()

@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0udm50xhaxy4"
-path="res://.godot/imported/painting_small_birch_r1.webp-df4b056304c8f99b2709197d210601da.ctex"
+path.s3tc="res://.godot/imported/painting_small_birch_r1.webp-df4b056304c8f99b2709197d210601da.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/painting_small_birch_r1.webp"
-dest_files=["res://.godot/imported/painting_small_birch_r1.webp-df4b056304c8f99b2709197d210601da.ctex"]
+dest_files=["res://.godot/imported/painting_small_birch_r1.webp-df4b056304c8f99b2709197d210601da.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

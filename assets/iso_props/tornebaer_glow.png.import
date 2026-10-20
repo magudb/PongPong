@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://1704r5fofpxd"
-path="res://.godot/imported/tornebaer_glow.png-1a5769357512c69b2f3bd9d91eddc639.ctex"
+path.s3tc="res://.godot/imported/tornebaer_glow.png-1a5769357512c69b2f3bd9d91eddc639.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/tornebaer_glow.png"
-dest_files=["res://.godot/imported/tornebaer_glow.png-1a5769357512c69b2f3bd9d91eddc639.ctex"]
+dest_files=["res://.godot/imported/tornebaer_glow.png-1a5769357512c69b2f3bd9d91eddc639.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

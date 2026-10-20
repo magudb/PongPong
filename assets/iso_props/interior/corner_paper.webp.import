@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://djcxpp8qkfvyl"
-path="res://.godot/imported/corner_paper.webp-d4b2f51b63550040edfb71e800b337db.ctex"
+path.s3tc="res://.godot/imported/corner_paper.webp-d4b2f51b63550040edfb71e800b337db.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/interior/corner_paper.webp"
-dest_files=["res://.godot/imported/corner_paper.webp-d4b2f51b63550040edfb71e800b337db.ctex"]
+dest_files=["res://.godot/imported/corner_paper.webp-d4b2f51b63550040edfb71e800b337db.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -16,6 +16,7 @@ Rules, all checked BEFORE the first file is written (any violation aborts with e
   * every destination is resolved and must stay inside assets/<contract dir>; anything else in the stage tree is refused
   * a character folder is mirrored: new/changed files are copied, stale clip sheets of that folder (and their .import) are removed;
     an existing .import that already carries the wanted preset keeps its Godot-assigned uid
+  * a copy a later art pack supersedes (tools/art/drawn/fixture_recipes.json, review REND-10: the painted pack draws that id) is not installed
 Prints what it did; --dry-run prints the plan only.
 """
 import argparse, filecmp, json, shutil, sys
@@ -26,6 +27,8 @@ import artpaths                       # noqa: E402
 import artcontract as ac              # noqa: E402
 sys.path.append(str(Path(__file__).resolve().parent))
 import import_stubs                   # noqa: E402
+sys.path.append(str(Path(__file__).resolve().parents[1] / 'drawn'))
+import drawn_art                      # noqa: E402
 
 CLASS_DIRS = {'characters': 'isometric_characters', 'portraits': 'portraits', 'tiles': 'iso_tiles', 'props': 'iso_props',
               'icons': 'icons/items', 'keyart': 'ui/keyart'}
@@ -138,8 +141,12 @@ def install(stage_assets: Path, repo: Path, classes, only=None, dry=False, log=p
     if not (repo / 'project.godot').exists():
         raise InstallError(f'{repo} is not a Godot project folder (no project.godot)')
     copies, removals, ids = plan(stage_assets, repo, classes, only, only_icons)
-    n_copy = n_same = n_stub_keep = 0
+    n_copy = n_same = n_stub_keep = n_superseded = 0
     for src, dst in copies:
+        texture = dst.with_suffix('') if dst.suffix == '.import' else dst
+        if drawn_art.superseded(texture.resolve(), repo):
+            n_superseded += 1
+            continue
         if dst.name.endswith('.import') and dst.exists():
             want = import_stubs.S3TC_WANT if 'isometric_characters' in dst.parts else import_stubs.TILE_WANT
             if import_stubs.has_preset(dst, want):          # keep the Godot-assigned uid
@@ -157,7 +164,7 @@ def install(stage_assets: Path, repo: Path, classes, only=None, dry=False, log=p
             f.unlink()
     changed_manifest = merge_manifest(stage_assets, repo, ids, dry)
     log(f'install{" (dry run)" if dry else ""}: {n_copy} file(s) copied, {n_same} identical, {n_stub_keep} existing .import kept, '
-        f'{len(removals)} stale removed, manifest_traetoppen.json {"updated" if changed_manifest else "unchanged"}'
+        f'{len(removals)} stale removed, {n_superseded} superseded left out, manifest_traetoppen.json {"updated" if changed_manifest else "unchanged"}'
         f' -> {repo / "assets"}')
     return {'copied': n_copy, 'identical': n_same, 'removed': len(removals), 'characters': ids, 'manifest': changed_manifest}
 

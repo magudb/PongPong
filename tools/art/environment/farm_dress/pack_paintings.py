@@ -6,7 +6,9 @@ import argparse, hashlib, json, re, sys
 from PIL import Image, ImageDraw, ImageFont
 ROOT=Path(__file__).resolve().parents[4]
 sys.path.insert(0,str(ROOT/'tools/art/features/dungeon'))
-from make_weapons import trimmed, encoded, PRESET
+from make_weapons import trimmed, encoded
+sys.path.insert(0,str(ROOT/'tools/import'))
+from write_import_stubs import policy_problems, stub_for   # the one texture import policy (S3TC for world props)
 HERE=Path(__file__).resolve().parent
 OUT=ROOT/'assets/iso_props/farm_dress'
 PIVOTS={'flower_box':[47,61],'garden_arch':[87,214],'fountain_small':[104,135],'royal_banner':[42,216], 'blossom_cluster':[61,58],'sunflower_row':[68,144],'leaf_pile':[60,47],'pumpkin_stack':[61,62],'snow_patch':[61,53],'bunting_x':[43,192],'vine_hang':[15,3],'pond_lily':[48,40]}
@@ -25,7 +27,7 @@ def build():
         canvas.alpha_composite(fitted,((width-fitted.width)//2,(height-fitted.height)//2))
         target=OUT/(spec['id']+'.webp')
         files[target]=encoded(canvas)
-        files[target.with_suffix('.webp.import')]=PRESET.encode()
+        files[target.with_suffix('.webp.import')]=stub_for(target).encode()
         sources[spec['id']]={'source':spec['source'],'sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'size':spec['size'],'type':spec['type']}
         if spec['type']!='particle':
             catalog_id=spec.get('catalog_id',spec['id'])
@@ -52,7 +54,7 @@ def main():
     for path,data in build().items():
         if a.check:
             if path.suffix=='.import' and path.exists() and path.name!='props.json.import':
-                if not all(re.search('^'+re.escape(line)+'$',path.read_text(),re.M) for line in ['compress/mode=0','mipmaps/generate=false','process/fix_alpha_border=true']):stale.append(str(path.relative_to(ROOT)))
+                if policy_problems(path.with_suffix('')):stale.append(str(path.relative_to(ROOT)))
             elif path.suffix=='.png' and path.exists():
                 with Image.open(path) as committed, Image.open(BytesIO(data)) as fresh:
                     if committed.mode!=fresh.mode or committed.size!=fresh.size or committed.tobytes()!=fresh.tobytes():stale.append(str(path.relative_to(ROOT)))

@@ -12,8 +12,8 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageFilter
 
-from pack import ROOT, HERE, extract, building_footprint, project_building
-from consistency import matte, PRESET
+from pack import ROOT, HERE, extract, building_footprint, project_building, ensure_policy
+from consistency import matte
 
 SRC = HERE / "sources/shop_core"
 OUT = ROOT / "assets/iso_props/shops/core"
@@ -39,9 +39,7 @@ def write(path: Path, value: dict) -> None:
 def save(image: Image.Image, name: str, lossless: bool = False) -> str:
     path = OUT / (name + ".webp")
     image.save(path, lossless=lossless, quality=90, method=6, exact=True)
-    stub = path.with_name(path.name + ".import")
-    if not stub.exists():
-        stub.write_text(PRESET)
+    ensure_policy(path)
     return path.name
 
 

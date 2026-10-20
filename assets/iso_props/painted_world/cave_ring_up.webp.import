@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c1kv01vvg2xuc"
-path="res://.godot/imported/cave_ring_up.webp-ed8108cd747ecf5bf96355eeb0a365ac.ctex"
+path.s3tc="res://.godot/imported/cave_ring_up.webp-ed8108cd747ecf5bf96355eeb0a365ac.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/painted_world/cave_ring_up.webp"
-dest_files=["res://.godot/imported/cave_ring_up.webp-ed8108cd747ecf5bf96355eeb0a365ac.ctex"]
+dest_files=["res://.godot/imported/cave_ring_up.webp-ed8108cd747ecf5bf96355eeb0a365ac.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://vijyqxn3m7gq"
-path="res://.godot/imported/wall_paper_win_r0.webp-e9f1f28fddd9e867a57c194b66759814.ctex"
+path.s3tc="res://.godot/imported/wall_paper_win_r0.webp-e9f1f28fddd9e867a57c194b66759814.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/interior/wall_paper_win_r0.webp"
-dest_files=["res://.godot/imported/wall_paper_win_r0.webp-e9f1f28fddd9e867a57c194b66759814.ctex"]
+dest_files=["res://.godot/imported/wall_paper_win_r0.webp-e9f1f28fddd9e867a57c194b66759814.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,13 +15,12 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageOps
 
-from pack import extract, project_building, building_footprint, TILE_W, TILE_H
+from pack import extract, project_building, building_footprint, TILE_W, TILE_H, ensure_policy
 from terrain import ROOT, HERE
 
 OUT = ROOT / "assets/iso_props/painted_interiors"
 DATA = ROOT / "assets/data/interiors/painted.json"
 SOURCE = "tools/art/drawn/sources/"
-PRESET = '[remap]\nimporter="texture"\ntype="CompressedTexture2D"\n\n[params]\ncompress/mode=2\ncompress/high_quality=false\nmipmaps/generate=true\nprocess/fix_alpha_border=true\n'
 
 # Row-major names and floor footprints. Only the authored front view is claimed;
 # these fixed room studies do not stand in for a four-rotation furniture pack.
@@ -59,9 +58,7 @@ def load(path: Path) -> dict:
 
 def export(name: str, image: Image.Image, record: dict, source: str, manifest: dict) -> None:
     image.save(OUT / (name + ".webp"), lossless=True, method=4, exact=True)
-    preset = OUT / (name + ".webp.import")
-    if not preset.exists():
-        preset.write_text(PRESET)
+    ensure_policy(OUT / (name + ".webp"))
     manifest[name] = dict(record, file=name + ".webp", size=list(image.size), illustration=SOURCE + source)
 
 

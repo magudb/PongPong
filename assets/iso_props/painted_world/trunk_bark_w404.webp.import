@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://clgo864u8glr6"
-path="res://.godot/imported/trunk_bark_w404.webp-3954c187e9f5c1848b53d2505d469b65.ctex"
+path.s3tc="res://.godot/imported/trunk_bark_w404.webp-3954c187e9f5c1848b53d2505d469b65.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/painted_world/trunk_bark_w404.webp"
-dest_files=["res://.godot/imported/trunk_bark_w404.webp-3954c187e9f5c1848b53d2505d469b65.ctex"]
+dest_files=["res://.godot/imported/trunk_bark_w404.webp-3954c187e9f5c1848b53d2505d469b65.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

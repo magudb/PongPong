@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cpndw857wx4t6"
-path="res://.godot/imported/table_long_walnut_r2.webp-f06159783551578492d0844acb8dc6a1.ctex"
+path.s3tc="res://.godot/imported/table_long_walnut_r2.webp-f06159783551578492d0844acb8dc6a1.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/table_long_walnut_r2.webp"
-dest_files=["res://.godot/imported/table_long_walnut_r2.webp-f06159783551578492d0844acb8dc6a1.ctex"]
+dest_files=["res://.godot/imported/table_long_walnut_r2.webp-f06159783551578492d0844acb8dc6a1.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

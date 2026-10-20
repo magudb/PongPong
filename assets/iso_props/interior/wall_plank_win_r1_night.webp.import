@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://boxg8b7x88ay0"
-path="res://.godot/imported/wall_plank_win_r1_night.webp-fd8eb731ca241a6d2d3827fa9d8eac98.ctex"
+path.s3tc="res://.godot/imported/wall_plank_win_r1_night.webp-fd8eb731ca241a6d2d3827fa9d8eac98.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/interior/wall_plank_win_r1_night.webp"
-dest_files=["res://.godot/imported/wall_plank_win_r1_night.webp-fd8eb731ca241a6d2d3827fa9d8eac98.ctex"]
+dest_files=["res://.godot/imported/wall_plank_win_r1_night.webp-fd8eb731ca241a6d2d3827fa9d8eac98.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

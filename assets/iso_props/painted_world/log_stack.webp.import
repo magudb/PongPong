@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://qgssicr58iyh"
-path="res://.godot/imported/log_stack.webp-f2f8976e33d1635a49ca8970a1ed99fc.ctex"
+path.s3tc="res://.godot/imported/log_stack.webp-f2f8976e33d1635a49ca8970a1ed99fc.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/painted_world/log_stack.webp"
-dest_files=["res://.godot/imported/log_stack.webp-f2f8976e33d1635a49ca8970a1ed99fc.ctex"]
+dest_files=["res://.godot/imported/log_stack.webp-f2f8976e33d1635a49ca8970a1ed99fc.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
