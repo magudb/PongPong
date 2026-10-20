@@ -279,8 +279,10 @@ class PolicyTests(unittest.TestCase):
         self.assertIn("github.sha", re.search(r"concurrency:\n  group: (.+)", workflow).group(1))
 
     def test_grandfather_lists_name_exact_paths(self):
+        self.assertGreater(len(guard.list_lines(guard.show(ROOT, "HEAD", "docs/.gitattributes"))), 1000)
         for name in guard.GRANDFATHER_LISTS:
-            for line in guard.list_lines((ROOT / name).read_text(encoding="utf-8")):
+            # from git, not the working tree: the CI checkout is sparse (tools/ci, .github)
+            for line in guard.list_lines(guard.show(ROOT, "HEAD", name)):
                 pattern, attribute = line.split()
                 self.assertEqual(attribute, "plain-blob", line)
                 self.assertIsNotNone(guard.pattern_path(pattern), line)
