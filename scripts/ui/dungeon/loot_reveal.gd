@@ -1,5 +1,9 @@
 extends CanvasLayer
 ## Presentation only: all items are already saved in their owning store.
+## A unique found while enemies are awake nearby is a compact card at the top of the screen that never takes input, so
+## the fight below stays readable. Every other card is a non-pausing modal: the fight holds still, Esc skips it instead
+## of opening the pause menu, and only interact or cancel dismiss it (an attack press is never eaten).
+const MODAL := &"loot_reveal"
 const L := preload("res://scripts/ui/social/social_layout.gd")
 const C := preload("res://scripts/ui/theme/tt_colors.gd")
 var pending: Array[Dictionary] = []
@@ -8,6 +12,7 @@ var tier := 0
 var elapsed: float = 0
 var duration: float = 0
 var reduced := false
+var compact := false
 var _root: Control
 var _dim: ColorRect
 var _card: PanelContainer
@@ -17,6 +22,7 @@ var _flush_queued := false
 var _duck_bus := -1
 var _duck_before: float = 0
 var _duck_applied: float = 0
+var _modal := false
 static func tier_for(rarity: StringName) -> int:
 	return clampi(Rarity.rank(rarity)-2,0,3)
 static func appraisal_results(answers: Array) -> void:
@@ -84,16 +90,23 @@ func _show(row: Dictionary) -> void:
 	active = row
 	tier = tier_for(row.rarity)
 	reduced = bool(DungeonRun.assist("assist_reduce_flash"))
+	compact = tier == 2 and not row.appraisal and not _nearby_enemies().is_empty()
 	elapsed = 0
 	duration = 2 if reduced else 3.2 if tier == 3 else 3.0
 	_dim.color = Color(C.NIGHT,0)
 	_card = L.panel(_root,"PillNight" if tier == 3 else "PanelCard")
-	_card.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
-	_card.position += Vector2(-280,-350)
-	_card.custom_minimum_size = Vector2(560,210)
-	var content := L.box(L.margin(_card,18),false,18)
+	if compact:
+		# Under the boss bar, clear of the player and the telegraphs around them.
+		_card.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+		_card.position += Vector2(-210,104)
+		_card.custom_minimum_size = Vector2(420,0)
+	else:
+		_card.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+		_card.position += Vector2(-280,-350)
+		_card.custom_minimum_size = Vector2(560,210)
+	var content := L.box(L.margin(_card,12 if compact else 18),false,12 if compact else 18)
 	var slot := RaritySlot.new()
-	slot.slot_size = 96
+	slot.slot_size = 56 if compact else 96
 	slot.item_id = row.id
 	slot.rarity = row.rarity
 	content.add_child(slot)
@@ -101,9 +114,10 @@ func _show(row: Dictionary) -> void:
 	words.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var eyebrow := L.label(words,tr("FUND_LEGENDARY" if tier == 3 else "FUND_UNIQUE"),"EyebrowL")
 	var name_label := L.label(words,L.item_name(str(row.id)),"Display30",true)
-	name_label.add_theme_font_size_override("font_size",30 if tier == 3 else 26)
+	name_label.add_theme_font_size_override("font_size",30 if tier == 3 else 20 if compact else 26)
 	var note_key := str(ItemKinds.def(row.id).get("hint_key","FUND_LEGENDARY_NOTE" if tier == 3 else "FUND_UNIQUE_NOTE"))
 	var note := L.label(words,tr(note_key),"Body",true)
+	note.visible = not compact
 	var weapon := WeaponInfo.of(row.id)
 	if not weapon.is_empty(): L.label(words,tr("FUND_DAMAGE_FMT") % [int(weapon.damage),tr("WEAPON_FAMILY_"+str(weapon.family).to_upper())],"Body")
 	if tier == 3:
@@ -119,6 +133,9 @@ func _show(row: Dictionary) -> void:
 			_stars(slot)
 			_duck()
 	if tier == 3: _stun_nearby()
+	if not compact and not GameManager.is_modal_open(MODAL):
+		GameManager.push_modal(MODAL,false)
+		_modal = true
 	set_process(true)
 func _stars(slot: Control) -> void:
 	var halo := TextureRect.new()
@@ -147,12 +164,18 @@ func _stars(slot: Control) -> void:
 	slot.add_child(particles)
 	particles.position = Vector2(56,56)
 	particles.emitting = true
-func _stun_nearby() -> void:
+## Awake, living, non-boss enemies within 800 px of the player on a forest floor.
+func _nearby_enemies() -> Array:
+	var found := []
 	var world := get_tree().get_first_node_in_group("world_2d") as WorldRoot2D
-	if world == null or world.area == null or DungeonFloors.floor_of(world.area) <= 0: return
+	if world == null or world.area == null or world.player == null or DungeonFloors.floor_of(world.area) <= 0: return found
 	for node in get_tree().get_nodes_in_group("enemy"):
 		if not node is Enemy2D or node.is_boss or node.is_in_group("boss") or not node.is_awake() or node.state == Enemy2D.S.DEAD: continue
 		if Iso.ground_dist(node.global_position,world.player.global_position) > 800: continue
+		found.append(node)
+	return found
+func _stun_nearby() -> void:
+	for node in _nearby_enemies():
 		node.stun(3)
 		_awe.append({"node":weakref(node),"generation":node.stun_generation})
 func _release_awe() -> void:
@@ -172,24 +195,30 @@ func _unduck() -> void:
 	if is_equal_approx(AudioServer.get_bus_volume_db(_duck_bus),_duck_applied): AudioServer.set_bus_volume_db(_duck_bus,_duck_before)
 	_duck_bus = -1
 func _process(dt: float) -> void:
+	# The card waits while something else is on top (the pause menu over a compact card, a dialogue).
+	if GameManager.top_modal() not in [&"",MODAL]: return
 	elapsed += dt
 	if elapsed >= duration: finish()
 func can_skip() -> bool:
-	return not active.is_empty() and elapsed >= (1.0 if tier == 3 else .8)
+	return not active.is_empty() and not compact and elapsed >= (1.0 if tier == 3 else .8)
 func _input(event: InputEvent) -> void:
-	if not can_skip() or not (event.is_action_pressed("attack") or event.is_action_pressed("interact") or event.is_action_pressed("ui_cancel")): return
+	if not can_skip() or not (event.is_action_pressed("interact") or event.is_action_pressed("ui_cancel")): return
 	finish()
 	get_viewport().set_input_as_handled()
 func finish() -> void:
 	if _tween != null and _tween.is_valid(): _tween.kill()
 	_release_awe()
 	_unduck()
+	if _modal:
+		_modal = false
+		GameManager.pop_modal(MODAL)
 	if is_instance_valid(_card):
 		_root.remove_child(_card)
 		_card.queue_free()
 	_card = null
 	active.clear()
 	tier = 0
+	compact = false
 	if _root != null: _root.hide()
 	set_process(false)
 	if not pending.is_empty(): _flush.call_deferred()

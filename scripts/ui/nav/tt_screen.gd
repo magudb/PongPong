@@ -162,7 +162,8 @@ func _on_page(_step: int) -> void:
 	pass
 
 
-## Called on open() and on NOTIFICATION_TRANSLATION_CHANGED: rebuild texts that code assembles. Never reconnect signals here.
+## Called on open() and on NOTIFICATION_TRANSLATION_CHANGED while the screen is open (a closed screen catches up on its next open()): rebuild
+## texts that code assembles. Never reconnect signals here.
 func _refresh_texts() -> void:
 	pass
 
@@ -171,6 +172,13 @@ func _refresh_texts() -> void:
 ## the audit asks for no initial focus.
 func _wants_focus() -> bool:
 	return true
+
+
+## The modal stack was dropped while the screen was open (pop_all_modals: quit to the title, load, new game): close() did NOT run, the screen
+## is already hidden and off the stack. A screen whose close() releases something else (the shop's ShopSystem session, Indretning's
+## decorate mode, a dialogue's awaited session, a picker's awaiter) does that here too. Default nothing.
+func _force_closed() -> void:
+	pass
 
 
 ## May the screen's HOTKEY open it now (on top of the free-world rule of UiNav.world_is_free())? Default yes.
@@ -263,10 +271,10 @@ func _input(event: InputEvent) -> void:
 		if _is_press(event, &"ui_cancel") or _is_press(event, &"pause"):
 			_on_cancel()
 			vp.set_input_as_handled()
-		elif _is_press(event, &"ui_page_up"):
+		elif UiNav.page_pressed(event, &"ui_page_up", vp):
 			_on_page(-1)
 			vp.set_input_as_handled()
-		elif _is_press(event, &"ui_page_down"):
+		elif UiNav.page_pressed(event, &"ui_page_down", vp):
 			_on_page(1)
 			vp.set_input_as_handled()
 		elif hotkey_action != &"" and _is_press(event, hotkey_action) and not UiNav.text_field_focused(vp):
@@ -302,7 +310,8 @@ func _is_press_echo(event: InputEvent, action: StringName) -> bool:
 
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+	# Many screens rebuild rows and data in _refresh_texts (save slots, the wardrobe grid, shop rows); a closed screen does that when it opens.
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready() and _open:
 		_refresh_texts()
 
 
@@ -317,7 +326,8 @@ func _on_panel_toggled(panel_name: StringName, is_open_: bool) -> void:
 		close()
 
 
-## The stack was dropped under the screen (quit to the title, load, new game): it is closed without ceremony.
+## The stack was dropped under the screen (quit to the title, load, new game): it is closed without ceremony (no pop, no focus return), but
+## the screen's own teardown still runs through _force_closed() (UIC-07).
 func _on_modal_changed(stack: Array) -> void:
 	if _open and modal_name != &"" and not (modal_name in stack):
 		_open = false
@@ -326,4 +336,8 @@ func _on_modal_changed(stack: Array) -> void:
 		_last_good = null
 		visible = false
 		set_process(false)
+		var vp := get_viewport()
+		if vp != null and vp.gui_focus_changed.is_connected(_on_gui_focus_changed):
+			vp.gui_focus_changed.disconnect(_on_gui_focus_changed)
+		_force_closed()
 		closed.emit()

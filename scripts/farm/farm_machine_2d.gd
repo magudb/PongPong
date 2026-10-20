@@ -35,6 +35,10 @@ func interact(player: Node) -> void:
 	_busy = false
 	refresh()
 
+## The tool contract (Player2D._takes_tool): the axe and the pickaxe both pick a machine up.
+func accepts_tool(tool: String) -> bool:
+	return not _busy and tool in ["axe", "pickaxe"]
+
 func tool_hit(tool: String, _power: int, _player: Node) -> bool:
 	if _busy or tool not in ["axe", "pickaxe"]: return false
 	var piece := FarmEquipment.at(area.map.id, cell)

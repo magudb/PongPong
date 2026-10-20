@@ -49,6 +49,31 @@ func run(t) -> void:
 	t.check("construction_position", hud.construction.position == Vector2(40, 140))
 	bus.home_upgrade_progress.emit(0, 5)
 	t.check("construction_hidden_when_finished", not hud.construction.visible)
+	# SAVE-05: a failed save stays on the HUD until a save succeeds; a save shows "Gemt" briefly
+	var sm: Node = t.autoload("SaveManager")
+	var keep_dir: String = sm.save_dir
+	sm.save_dir = "user://hud-save-chip"
+	DirAccess.make_dir_recursive_absolute(sm.slot_path(sm.AUTO_SLOT) + ".tmp")     # a directory where the temp file must go: the write fails
+	t.check("save_chip_hidden_at_start", not hud.save_chip.visible)
+	var failed: bool = not sm.autosave()
+	await t.frames(2)
+	var chip_text: String = hud.save_chip.get_node("SaveText").text
+	t.check("save_chip_shows_failure", failed and hud.save_chip.visible and chip_text == TranslationServer.translate("HUD_SAVE_FAILED") and hud.save_chip.get_global_rect().end.y <= 720.0, "'%s' at %s" % [chip_text, hud.save_chip.get_global_rect()])
+	await t.seconds(hud.SAVED_SHOW_SECONDS + 0.5)
+	t.check("save_chip_failure_persists", hud.save_chip.visible, "")
+	var rebuilt: Control = (load("res://scenes/ui/hud.tscn") as PackedScene).instantiate()
+	t.root.add_child(rebuilt)                      # the HUD of a world loaded while saving fails
+	await t.frames(1)
+	t.check("save_chip_failure_shown_by_a_new_hud", rebuilt.save_chip.visible and rebuilt.save_chip.get_node("SaveText").text == TranslationServer.translate("HUD_SAVE_FAILED"), "")
+	rebuilt.queue_free()
+	DirAccess.remove_absolute(sm.slot_path(sm.AUTO_SLOT) + ".tmp")
+	var saved: bool = sm.autosave()
+	await t.frames(2)
+	t.check("save_chip_shows_saved", saved and hud.save_chip.visible and hud.save_chip.get_node("SaveText").text == TranslationServer.translate("HUD_SAVED"), "")
+	await t.seconds(hud.SAVED_SHOW_SECONDS + 0.5)
+	t.check("save_chip_saved_fades", not hud.save_chip.visible, "")
+	sm.delete_save(sm.AUTO_SLOT)
+	sm.save_dir = keep_dir
 	var whisper: Node = hud.get_node("%WhisperLine")
 	bus.whisper_requested.emit("WHISPER_TOO_EARLY")
 	t.check("whisper_on_farm", whisper.is_showing() and whisper.shown_text() != "WHISPER_TOO_EARLY")

@@ -193,7 +193,9 @@ func _water(p: PlotData, hour: float) -> void:
 	if p.state == State.PLANTED:
 		p.state = State.WATERED
 
-func water(cell: Vector2i, at_hour: float = -1.0) -> bool:
+## `source` = &"player" (the can: EventBus.crop_watered, which quests and hints count) or the automation that watered it (&"sprinkler" ...:
+## EventBus.crop_auto_watered). Either is sent only for a plot with a crop: wet bare soil waters no crop (GAP4-03).
+func water(cell: Vector2i, at_hour: float = -1.0, source: StringName = &"player") -> bool:
 	var p := get_plot(cell)
 	if _busy or p == null or p.state in [State.EMPTY, State.WITHERED] or not can_till(cell):
 		return false
@@ -202,9 +204,18 @@ func water(cell: Vector2i, at_hour: float = -1.0) -> bool:
 	if p.watered and (p.eligible_water or not in_water_window(hour, p.crop_id)):
 		return false
 	_water(p, hour)
-	EventBus.crop_watered.emit(plot_id(cell))
+	_announce_water(cell, p, source)
 	plot_changed.emit(cell)
 	return true
+
+
+func _announce_water(cell: Vector2i, p: PlotData, source: StringName) -> void:
+	if p.crop_id == &"":
+		return
+	if source == &"player":
+		EventBus.crop_watered.emit(plot_id(cell))
+	else:
+		EventBus.crop_auto_watered.emit(plot_id(cell), source)
 
 func apply_supply(cell: Vector2i, item: StringName) -> bool:
 	var p := get_plot(cell)
@@ -275,6 +286,7 @@ func clear_crop(cell: Vector2i, dead_only: bool = true) -> bool:
 	plot_changed.emit(cell)
 	return true
 
+## Waters up to max_n crops that are not watered yet (the partner's daily chore): crop_auto_watered(plot, &"partner"), never the player's event.
 func water_unwatered(max_n: int) -> int:
 	if _busy:return 0
 	var changed: Array[Vector2i] = []
@@ -286,12 +298,15 @@ func water_unwatered(max_n: int) -> int:
 	# The entire batch is visible before the first crop observer can save.
 	for cell in changed:
 		EconomyManager.after_transaction(func() -> void:
-			EventBus.crop_watered.emit(plot_id(cell))
+			EventBus.crop_auto_watered.emit(plot_id(cell), &"partner")
 			plot_changed.emit(cell))
 	return changed.size()
 
 func _rain() -> bool:
-	return not indoor and (GameData.tm().is_raining() or GameData.tm().weather == &"torden")
+	if indoor:
+		return false
+	var tm := GameData.tm()
+	return tm.is_raining() or tm.weather == &"torden"
 
 func _on_time_changed(hour: int, _minute: int) -> void:
 	# New-day automation runs at logical 06:00, never at the transient 02:00 roll.
@@ -303,15 +318,27 @@ func _on_weather_changed(_weather: StringName) -> void:
 	if GameData.gm().total_day() == _last_day:
 		_auto_water(maxf(6.0, float(GameData.gm().hour)))
 
+## Rain (and thunder) waters every tilled plot, a watering supply its own plot (auto_water_days). Runs every game minute: the weather is asked ONCE
+## per call and a dry day without a supplied plot leaves at once (GAP4-07).
 func _auto_water(hour: float) -> void:
+	var rain := _rain()
+	if not rain and not _has_auto_water():
+		return
 	for cell in plots:
 		var p: PlotData = plots[cell]
-		if p.state in [State.EMPTY, State.WITHERED]:
+		if p.state == State.EMPTY or p.state == State.WITHERED:
 			continue
-		if (_rain() or p.auto_water_days > 0) and (not p.watered or not p.eligible_water and in_water_window(hour, p.crop_id)):
+		if (rain or p.auto_water_days > 0) and (not p.watered or not p.eligible_water and in_water_window(hour, p.crop_id)):
 			_water(p, hour)
-			EventBus.crop_watered.emit(plot_id(cell))
+			_announce_water(cell, p, &"rain" if rain else &"supply")
 			plot_changed.emit(cell)
+
+
+func _has_auto_water() -> bool:
+	for p in plots.values():
+		if p.auto_water_days > 0:
+			return true
+	return false
 
 func _on_day_started(_day: int, _season: StringName) -> void:
 	var today: int = GameData.gm().total_day()
@@ -344,9 +371,10 @@ func to_dict() -> Dictionary:
 		out["%d,%d" % [cell.x, cell.y]] = (plots[cell] as PlotData).to_dict()
 	return {"plots": out}
 
-## Reject malformed saves before touching the live model; older valid plots default new fields.
+## Reject malformed saves before touching the live model; older valid plots default new fields. STRUCTURE only: a crop that the
+## current Lua catalogue no longer has (renamed, removed, no longer regrowing) is content drift, not damage, and from_dict repairs it
+## (see _repair_drift); rejecting it here would make the whole save unreadable.
 static func validate_dict(value: Variant) -> bool:
-	var definitions := crop_definitions()
 	if not value is Dictionary or not value.get("plots", {}) is Dictionary:
 		return false
 	for key in value.get("plots", {}):
@@ -369,13 +397,26 @@ static func validate_dict(value: Variant) -> bool:
 		if int(row.get("state", 0)) > State.WITHERED or not row.get("crop_id", "") is String:
 			return false
 		var crop := str(row.get("crop_id", ""))
-		if crop != "" and not definitions.has(crop):
-			return false
 		if int(row.get("state", 0)) >= State.PLANTED and crop == "":
 			return false
-		if bool(row.get("regrowing", false)) and (crop == "" or int(definitions[crop].get("regrow_days", 0)) <= 0):
+		if bool(row.get("regrowing", false)) and crop == "":
 			return false
 	return true
+
+
+## A loaded plot against today's crop catalogue: a crop that no longer exists leaves a tilled plot behind, a crop that no longer
+## regrows stops regrowing (it grows on as a fresh planting).
+static func _repair_drift(p: PlotData, definitions: Dictionary) -> void:
+	if definitions.is_empty():                # no catalogue loaded at all (a tool, a broken Lua): nothing to compare against
+		return
+	if p.crop_id != &"" and not definitions.has(String(p.crop_id)):
+		p.crop_id = &""
+		p.state = State.TILLED
+		p.growth_days = 0.0
+		p.yield_amount = 0
+		p.regrowing = false
+	elif p.regrowing and int((definitions[String(p.crop_id)] as Dictionary).get("regrow_days", 0)) <= 0:
+		p.regrowing = false
 
 func validate_save(value: Variant) -> bool:
 	return validate_dict(value)
@@ -384,6 +425,7 @@ func from_dict(value: Dictionary) -> bool:
 	if not validate_save(value):
 		return false
 	configure_map(map)
+	var definitions := crop_definitions()
 	var dirty := plots.duplicate()
 	var loaded := {}
 	for key in value.get("plots", {}):
@@ -404,6 +446,7 @@ func from_dict(value: Dictionary) -> bool:
 		p.auto_water_days = int(row.get("auto_water_days", 0))
 		p.yield_amount = int(row.get("yield_amount", 0))
 		p.regrowing = bool(row.get("regrowing", false))
+		_repair_drift(p, definitions)
 		loaded[cell] = p
 		dirty[cell] = p
 	plots = loaded

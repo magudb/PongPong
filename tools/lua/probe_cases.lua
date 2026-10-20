@@ -16,24 +16,26 @@ return {
   -- p01: an empty / comment-only function must not swallow the next one (the old regex bug of intro_lottery.lua)
   c("p01_empty_fn", "a", { {} }, {}, "empty function returns nothing", "exact"),
   c("p01_empty_fn", "b", { {} }, {}, "the function after the empty one is its own", "exact"),
-  -- p02 / p03: else and elseif are outside the subset (lint) but evaluated correctly
-  c("p02_else", "get_dialogue", { { x = true } }, {}, "x true -> then", "best_effort", { "else" }),
-  c("p02_else", "get_dialogue", { { x = false } }, {}, "x false -> else", "best_effort", { "else" }),
-  c("p03_elseif", "get_dialogue", { { x = true } }, {}, "x -> x", "best_effort", { "elseif" }),
-  c("p03_elseif", "get_dialogue", { { y = true } }, {}, "y -> y", "best_effort", { "elseif" }),
-  c("p03_elseif", "get_dialogue", { {} }, {}, "none -> none", "best_effort", { "elseif" }),
+  -- p02 / p03: else and elseif are part of the subset (they were linted out before table constructors were evaluated)
+  c("p02_else", "get_dialogue", { { x = true } }, {}, "x true -> then", "exact"),
+  c("p02_else", "get_dialogue", { { x = false } }, {}, "x false -> else", "exact"),
+  c("p03_elseif", "get_dialogue", { { x = true } }, {}, "x -> x", "exact"),
+  c("p03_elseif", "get_dialogue", { { y = true } }, {}, "y -> y", "exact"),
+  c("p03_elseif", "get_dialogue", { {} }, {}, "none -> none", "exact"),
   -- p04 / p05: nested if and one-line if
   c("p04_nested_if", "get_dialogue", { { a = true, b = true } }, {}, "a and b", "exact"),
   c("p04_nested_if", "get_dialogue", { { a = true } }, {}, "a only", "exact"),
   c("p04_nested_if", "get_dialogue", { {} }, {}, "neither", "exact"),
   c("p05_oneline_if", "get_dialogue", { { x = true } }, {}, "x", "exact"),
   c("p05_oneline_if", "get_dialogue", { {} }, {}, "no x", "exact"),
-  -- p06 / p07 / p10 / p13 / p16: bare identifiers, arithmetic, helpers and the standard library are not evaluated in tables
-  c("p06_ternary", "get_dialogue", { { x = true } }, {}, "x and yes or no", "flagged", { "table_value" }),
-  c("p07_arith", "get_dialogue", { { base = 4 } }, {}, "arithmetic", "flagged", { "arithmetic", "table_value" }),
-  c("p10_get_flag", "get_dialogue", { {} }, { seen = true }, "api.get_flag into a local", "flagged", { "table_value" }),
-  c("p13_helper", "get_dialogue", { {} }, {}, "local function helper", "flagged", { "local_function", "table_value" }),
-  c("p16_stdlib", "get_dialogue", { {} }, {}, "#, string.format, string.upper", "flagged", { "length", "stdlib", "table_value" }),
+  -- p06 / p10: a table built inside a function evaluates its values (`{ r = v }` reads the local)
+  c("p06_ternary", "get_dialogue", { { x = true } }, {}, "x and yes or no", "exact"),
+  c("p06_ternary", "get_dialogue", { {} }, {}, "no x: no", "exact"),
+  c("p10_get_flag", "get_dialogue", { {} }, { seen = true }, "api.get_flag into a local", "exact"),
+  -- p07 / p13 / p16: arithmetic, helpers and the standard library stay outside the subset
+  c("p07_arith", "get_dialogue", { { base = 4 } }, {}, "arithmetic", "flagged", { "arithmetic" }),
+  c("p13_helper", "get_dialogue", { {} }, {}, "local function helper", "flagged", { "local_function", "unknown_function" }),
+  c("p16_stdlib", "get_dialogue", { {} }, {}, "#, string.format, string.upper", "flagged", { "length", "stdlib" }),
   -- p08: ')' inside a string argument; the call after it must still run
   c("p08_paren_in_string", "on_accept", { {} }, {}, "paren in notification text", "exact"),
   -- p09: api.emit carries its payload
@@ -48,8 +50,8 @@ return {
   -- p15: escaped quotes (lint) but read correctly, and the field after the string survives
   c("p15_escape", "get_dialogue", { {} }, {}, "escaped quotes in a text", "best_effort", { "escape" }),
   -- p17: if/else around api calls
-  c("p17_ifelse_api", "handle_event", { "x", {} }, { bonus = true }, "bonus branch", "best_effort", { "else" }),
-  c("p17_ifelse_api", "handle_event", { "x", {} }, {}, "else branch", "best_effort", { "else" }),
+  c("p17_ifelse_api", "handle_event", { "x", {} }, { bonus = true }, "bonus branch", "exact"),
+  c("p17_ifelse_api", "handle_event", { "x", {} }, {}, "else branch", "exact"),
   -- p18: `and` binds tighter than `or`
   c("p18_compare_and_or", "get_dialogue", { { a = true, b = true } }, {}, "a and b", "exact"),
   c("p18_compare_and_or", "get_dialogue", { { c = true } }, {}, "only c", "exact"),
@@ -102,4 +104,17 @@ return {
   -- p23: statements before and after an if
   c("p23_stmt_around_if", "on_accept", { { x = true } }, {}, "x true", "exact"),
   c("p23_stmt_around_if", "on_accept", { { x = false } }, {}, "x false", "exact"),
+  -- p24 / p25: block scopes and integral float keys (LUA-07)
+  c("p24_block_scope", "get_dialogue", { { up = true } }, {}, "an inner local shadows only inside its block", "exact"),
+  c("p24_block_scope", "get_dialogue", { {} }, {}, "branch not taken", "exact"),
+  c("p24_block_scope", "assign_outer", { { up = true } }, {}, "an assignment in a block sets the outer local", "exact"),
+  c("p24_block_scope", "shadow_param", { { up = true } }, {}, "a local may shadow a parameter inside a block", "exact"),
+  c("p25_float_index", "get_dialogue", { { stage = 2.0 } }, {}, "array index by an integral float", "exact"),
+  c("p25_float_index", "get_dialogue", { { stage = 4 } }, {}, "array index by an integer", "exact"),
+  c("p25_float_index", "get_dialogue", { { stage = 2.5 } }, {}, "a fractional index misses", "exact"),
+  c("p25_float_index", "by_key", { { stage = 3.0 } }, {}, "[n] = key by an integral float", "exact"),
+  -- p26: table values are evaluated inside a function, with if / elseif / else choosing them (LUA-08)
+  c("p26_table_values", "get_dialogue", { { morning = true, mood = "happy" } }, {}, "morning greeting, a mood", "exact"),
+  c("p26_table_values", "get_dialogue", { { evening = true, shop = "bakery" } }, {}, "evening greeting, another shop", "exact"),
+  c("p26_table_values", "get_dialogue", { {} }, { p26_seen = true }, "the else branch, a [key] read from a flag", "exact"),
 }

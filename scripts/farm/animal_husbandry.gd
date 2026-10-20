@@ -187,25 +187,25 @@ const BUILDINGS := {
 		"name_key": "BUILDING_COOP",
 		"capacity": 4,
 		"build_cost": {"wood": 20, "stone": 10, "gold": 500},
-		"build_days": 2,
 	},
 	"barn": {
 		"name_key": "BUILDING_BARN",
 		"capacity": 6,
 		"build_cost": {"wood": 40, "stone": 25, "gold": 1200},
-		"build_days": 4,
 	},
 	"house": {
 		"name_key": "BUILDING_HOUSE",
 		"capacity": 3,
 		"build_cost": {"wood": 15, "stone": 8, "gold": 350},
-		"build_days": 1,
 	},
 }
 
 var animals: Dictionary = {}  # animal_id -> AnimalData
 var buildings: Dictionary = {}  # building_id -> BuildingData
 var _animal_counter: int = 0
+## Records of a save whose species or building type this build does not know (content drift): {"animals": {id: record},
+## "buildings": {id: record}}, saved as they were and adopted again once the type is known (an animal with its building).
+var orphans: Dictionary = {"animals": {}, "buildings": {}}
 ## Live tables (lua/config/husbandry.lua; the consts above are the fallback only).
 var species_data: Dictionary = SPECIES_DATA
 var buildings_data: Dictionary = BUILDINGS
@@ -296,17 +296,41 @@ class BuildingData:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_load_husbandry_config()
+	EventBus.lua_reloaded.connect(_load_husbandry_config)
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.new_game_started.connect(reset)
-	EventBus.item_purchased.connect(func(id, _amount, _total):
-		if _item_to_species(id) != &"" and _has_space_for(_item_to_species(id)):
-			adopt_animal(id))
+	EventBus.item_purchased.connect(_on_item_purchased)
+
+
+## Bought baby animals move in one by one while a building has a free place; the rest wait in the backpack (adopted later with "Brug") and
+## adopt_animal's no-space toast says so (GAP4-05).
+func _on_item_purchased(item_id: StringName, amount: int, _total: int) -> void:
+	if _item_to_species(item_id) == &"":
+		return
+	for i in amount:
+		if not adopt_animal(item_id):
+			return
+
+
+## How many babies of this item the buildings can still take (-1 = the item is not a baby animal): the shop caps its amount with it.
+func room_for_item(item_id: StringName) -> int:
+	var species := _item_to_species(item_id)
+	if species == &"" or not species_data.has(str(species)):
+		return -1
+	var needed := StringName(str(species_data[str(species)]["building"]))
+	var room := 0
+	for b in buildings.values():
+		if b.building_type == needed and b.is_built:
+			room += maxi(building_capacity(b) - b.animals_inside.size(), 0)
+	return room
 
 
 ## Replaces the fallback tables with lua/config/husbandry.lua (`husbandry.species` / `husbandry.buildings`).
 ## product_interval strings become ProductType enums so the rest of the file is unchanged. A missing or
-## partial config keeps the fallback rows for the species it does not name.
+## partial config keeps the fallback rows for the species it does not name. Runs again after a Lua reload (F9).
 func _load_husbandry_config() -> void:
+	species_data = SPECIES_DATA
+	buildings_data = BUILDINGS
 	var cfg: Variant = GameData.cfg("husbandry", {})
 	if not (cfg is Dictionary):
 		return
@@ -332,6 +356,7 @@ func _load_husbandry_config() -> void:
 func reset() -> void:
 	animals.clear()
 	buildings.clear()
+	orphans = {"animals": {}, "buildings": {}}
 	_animal_counter = 0
 	state_changed.emit()
 
@@ -560,6 +585,8 @@ func collection_reason(animal_id: StringName) -> String:
 
 # --- Buildings ---
 
+## An animal building is finished at once: the materials and gold are paid and the animals move in today (GAP4-08: there is no construction
+## time and no `build_days` setting; the upgrades of an existing building are what take days, see upgrade_building).
 func build_building(building_type: StringName, free := false) -> bool:
 	var spec: Dictionary = buildings_data.get(str(building_type), {})
 	if spec.is_empty() or has_building(building_type):
@@ -762,14 +789,6 @@ func _random_animal_name() -> String:
 	return names[randi() % names.size()]
 
 
-func _notify_cannot_afford() -> void:
-	EventBus.notification_posted.emit(
-		tr("NOTIF_NO_GOLD_TITLE"),
-		tr("NOTIF_NO_GOLD_MSG"),
-		"gold"
-	)
-
-
 func get_all_animals() -> Array:
 	return animals.values()
 
@@ -804,15 +823,19 @@ func to_dict() -> Dictionary:
 	var building_dict := {}
 	for bid in buildings:
 		building_dict[bid] = (buildings[bid] as BuildingData).to_dict()
-	return {
+	var out := {
 		"v": SAVE_VERSION,
 		"animals": animal_dict,
 		"buildings": building_dict,
 		"counter": _animal_counter,
 	}
+	if not (orphans.animals as Dictionary).is_empty() or not (orphans.buildings as Dictionary).is_empty():
+		out["orphans"] = orphans.duplicate(true)
+	return out
 
 
-## Pure validation also used by SaveManager before selecting a slot or replacing a backup.
+## Pure validation also used by SaveManager before selecting a slot or replacing a backup. STRUCTURE only: a species or building
+## type the catalogue no longer has, or a tier above today's maximum, is content drift that from_dict repairs (orphans, clamp).
 func validate_dict(data: Dictionary) -> bool:
 	if not _valid_count(data.get("v", 1)) or int(data.get("v", 1)) < 1 or int(data.get("v", 1)) > SAVE_VERSION:
 		return false
@@ -823,7 +846,7 @@ func validate_dict(data: Dictionary) -> bool:
 		if not _valid_id(id) or not (record is Dictionary):
 			return false
 		var d: Dictionary = record
-		if not _valid_id(d.get("species")) or not species_data.has(str(d["species"])):
+		if not _valid_id(d.get("species")):
 			return false
 		if not _valid_id(d.get("id", id)) or str(d.get("id", id)) != str(id):
 			return false
@@ -841,16 +864,13 @@ func validate_dict(data: Dictionary) -> bool:
 		if not _valid_id(id) or not (record is Dictionary):
 			return false
 		var d: Dictionary = record
-		if not _valid_id(d.get("building_type")) or not buildings_data.has(str(d["building_type"])):
+		if not _valid_id(d.get("building_type")):
 			return false
 		if not _valid_id(d.get("id", id)) or str(d.get("id", id)) != str(id):
 			return false
 		if not _valid_count(d.get("built_day", 0)) or not (d.get("is_built", false) is bool) or not (d.get("animals_inside", []) is Array):
 			return false
-		var max_tier := 1 + LuaData.arr(buildings_data[str(d.building_type)].get("upgrades", [])).size()
-		if not _valid_count(d.get("tier", 1)) or int(d.get("tier", 1)) < 1 or int(d.get("tier", 1)) > max_tier or not _valid_count(d.get("upgrade_ready_day", 0)):
-			return false
-		if int(d.get("upgrade_ready_day", 0)) > 0 and int(d.get("tier", 1)) >= max_tier:
+		if not _valid_count(d.get("tier", 1)) or int(d.get("tier", 1)) < 1 or not _valid_count(d.get("upgrade_ready_day", 0)):
 			return false
 		var cell: Variant = d.get("cell",[-1,-1])
 		if not cell is Array or cell.size() != 2 or not _valid_number(cell[0]) or not _valid_number(cell[1]) or float(cell[0]) != floor(float(cell[0])) or float(cell[1]) != floor(float(cell[1])):
@@ -858,6 +878,9 @@ func validate_dict(data: Dictionary) -> bool:
 		for animal_id in d.get("animals_inside", []):
 			if not _valid_id(animal_id):
 				return false
+	var kept: Variant = data.get("orphans", {})
+	if not kept is Dictionary or not (kept as Dictionary).get("animals", {}) is Dictionary or not (kept as Dictionary).get("buildings", {}) is Dictionary:
+		return false
 	return true
 
 
@@ -880,13 +903,34 @@ func _legacy_day(value: int) -> int:
 	return maxi(GameManager.total_day() - posmod(GameManager.day - value, GameManager.days_per_season()), 0)
 
 
+## The records of a save sorted against today's catalogue: {animals, buildings, orphans}. Records of the save's orphans bucket come
+## back when their type is known again; an unknown building takes the animals that live in it into the bucket with it.
+func _split_orphans(data: Dictionary) -> Dictionary:
+	var kept: Dictionary = data.get("orphans", {})
+	var all_animals: Dictionary = (kept.get("animals", {}) as Dictionary).duplicate(true)
+	all_animals.merge(data.get("animals", {}), true)
+	var all_buildings: Dictionary = (kept.get("buildings", {}) as Dictionary).duplicate(true)
+	all_buildings.merge(data.get("buildings", {}), true)
+	var out := {"animals": {}, "buildings": {}, "orphans": {"animals": {}, "buildings": {}}}
+	for bid in all_buildings:
+		var known := buildings_data.has(str(all_buildings[bid].get("building_type", "")))
+		(out.buildings if known else out.orphans.buildings)[bid] = all_buildings[bid]
+	for aid in all_animals:
+		var record: Dictionary = all_animals[aid]
+		var home := str(record.get("building_id", ""))
+		var known := species_data.has(str(record.get("species", ""))) and not (out.orphans.buildings as Dictionary).has(home)
+		(out.animals if known else out.orphans.animals)[aid] = record
+	return out
+
+
 func from_dict(data: Dictionary) -> bool:
 	if not validate_dict(data):
 		return false
 	var restored_animals := {}
 	var restored_buildings := {}
 	var legacy := int(data.get("v", 1)) < SAVE_VERSION
-	var animal_dict: Dictionary = data.get("animals", {})
+	var drift := _split_orphans(data)
+	var animal_dict: Dictionary = drift.animals
 	for aid in animal_dict:
 		var animal := AnimalData.from_dict(animal_dict[aid])
 		animal.id = StringName(str(aid))
@@ -894,15 +938,21 @@ func from_dict(data: Dictionary) -> bool:
 			animal.last_fed_day = _legacy_day(animal.last_fed_day)
 			animal.last_product_day = _legacy_day(animal.last_product_day)
 		restored_animals[animal.id] = animal
-	var building_dict: Dictionary = data.get("buildings", {})
+	var building_dict: Dictionary = drift.buildings
 	for bid in building_dict:
 		var building := BuildingData.from_dict(building_dict[bid])
 		building.id = StringName(str(bid))
 		if legacy:
 			building.built_day = _legacy_day(building.built_day)
+		var max_tier := 1 + LuaData.arr(buildings_data[str(building.building_type)].get("upgrades", [])).size()
+		if building.tier > max_tier:          # the building lost upgrade steps: keep the highest one there is
+			building.tier = max_tier
+		if building.tier >= max_tier:
+			building.upgrade_ready_day = 0
 		restored_buildings[building.id] = building
 	animals = restored_animals
 	buildings = restored_buildings
+	orphans = drift.orphans
 	_animal_counter = int(data.get("counter", 0))
 	for id in animals.keys() + buildings.keys():
 		_animal_counter = maxi(_animal_counter,int(str(id).get_slice("_",1)))

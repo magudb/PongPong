@@ -1,8 +1,16 @@
 extends TTScreen
 ## Pause transfers close their modal before opening a peer; save/load/settings nest above it.
+## Focus loss and a pad disconnect open this menu over a free world (review UX-07): alt-tabbed or with the pad gone, the clock, the lantern oil
+## and the enemies would run on. The Settings toggle SET_AUTO_PAUSE ([game] pause_on_focus_loss) switches it off for a player; the test harness
+## switches the static off for its runs (a windowed run's real window loses focus to whatever the machine does), and the sections call auto_open() directly.
+static var auto_pause := true
 var _rows: Array[Button] = []
 var _row_specs: Array = []
 var _leaving := false
+## The world hotkey of a transfer row, shown right-aligned on it (UI_NAVIGATION.md S07, review UX-17). The glyph is read from the
+## live InputMap; a pad has none of these buttons, so its rows show none.
+const ROW_HOTKEYS := {"InventoryButton": &"inventory", "MapButton": &"map", "JournalButton": &"journal", "PeopleButton": &"people",
+	"BuildButton": &"build_menu", "WardrobeButton": &"wardrobe", "CollectionButton": &"collection"}
 
 func _init() -> void:
 	super._init()
@@ -23,6 +31,26 @@ func _ready() -> void:
 	resized.connect(_fit_panel)
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("pause", Callable(get_script(), &"fixture_setup"))
 	%HintBar.set_hints([{"pair": [&"ui_up", &"ui_down"], "key": "HINT_MOVE"}, {"action": &"ui_accept", "key": "HINT_OK"}, {"action": &"ui_cancel", "key": "HINT_RESUME"}])
+	UiNav.watcher().device_changed.connect(func(_device): _refresh_texts())
+	Input.joy_connection_changed.connect(_on_joy_connection_changed)
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT and auto_pause:
+		auto_open()
+
+func _on_joy_connection_changed(_device: int, connected: bool) -> void:
+	if not connected and auto_pause:
+		auto_open()
+
+## Opens the menu for a focus loss or a pad disconnect, only where Esc could open it (a free world, no travel, night or other screen).
+## Returns whether it opened.
+func auto_open() -> bool:
+	if is_open() or not is_inside_tree() or not UiNav.world_is_free() or not _hotkey_open_allowed():
+		return false
+	if not SettingsUI.pause_on_focus_loss():
+		return false
+	open()
+	return is_open()
 
 func _initial_focus() -> Control:
 	return get_node("%ResumeButton")
@@ -44,7 +72,8 @@ func _specs() -> Array:
 		if spec[0] == "build_menu_ui" and (world == null or world.get("area").map.id != &"farm"):
 			continue
 		rows.append([spec[1], spec[2], _transfer.bind(StringName(spec[0]))])
-	rows.append(["CheatButton", "CHEAT_TITLE", _transfer.bind(&"cheat_menu")])
+	if _screen(&"cheat_menu") != null:
+		rows.append(["CheatButton", "CHEAT_TITLE", _transfer.bind(&"cheat_menu")])
 	rows.append_array([["SaveButton", "MENU_SAVE", _nested.bind(&"save_menu")], ["LoadButton", "MENU_LOAD_GAME", _nested.bind(&"load_menu")], ["SettingsButton", "MENU_SETTINGS", _nested.bind(&"settings")]])
 	var floors: Variant = _floors()
 	if floors is Object and floors.has_method("current_floor") and int(floors.call("current_floor")) > 0:
@@ -73,9 +102,21 @@ func _refresh_texts() -> void:
 			button.owner = self
 			button.unique_name_in_owner = true
 			button.pressed.connect(spec[2])
+			if ROW_HOTKEYS.has(spec[0]):
+				var hotkey := Label.new()
+				hotkey.name = "Hotkey"
+				hotkey.theme_type_variation = &"Bold15Mono"
+				hotkey.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				hotkey.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+				hotkey.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+				button.add_child(hotkey)
+				hotkey.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+				hotkey.offset_right = -button.get_theme_stylebox("normal").content_margin_right
 			_rows.append(button)
 	for row in _rows:
 		row.text = tr(str(row.get_meta(&"copy_key")))
+		if ROW_HOTKEYS.has(str(row.name)):
+			row.get_node("Hotkey").text = UiHints.glyph(ROW_HOTKEYS[str(row.name)])
 	UiNav.wire_ring(_rows)
 	UiNav.hover_focus(_rows)
 	_fit_panel.call_deferred()
@@ -107,6 +148,10 @@ func _leave(quit_game: bool) -> void:
 	if _leaving:
 		return
 	_leaving = true
+	if quit_game:                              # GameManager owns the save-on-quit policy (the window's close button takes the same way)
+		await GameManager.quit_game(0, true, self)
+		_leaving = false
+		return
 	if not SaveManager.autosave():
 		var accepted := await UiConfirm.ask(self, "NOTIF_SAVE_FAILED_TITLE", tr("PAUSE_SAVE_FAILED_CONFIRM"), "NAV_OK")
 		if not accepted:
@@ -114,10 +159,7 @@ func _leave(quit_game: bool) -> void:
 			return
 	GameManager.pop_all_modals()
 	GameManager.change_phase(GameManager.GamePhase.MENU)
-	if quit_game:
-		GameManager.quit_game()
-	else:
-		get_tree().change_scene_to_file("res://scenes/main/main_menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/main/main_menu.tscn")
 
 func _floors() -> Variant:
 	return Svc.static_call("res://scripts/dungeon/floors/dungeon_floors.gd", &"inst", [], null)

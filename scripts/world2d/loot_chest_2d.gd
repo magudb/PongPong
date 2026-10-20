@@ -238,6 +238,11 @@ func update_reveal(distance: float) -> void:
 
 # ------------------------------------------------------------------ interaction
 
+## The E-query contract (PlayerBody2D.nearest_interactable): an opened or still hidden chest has nothing to give, so a live host in reach wins E.
+func is_spent() -> bool:
+	return is_open or not revealed
+
+
 func get_interaction_prompt() -> String:
 	return tr(prompt_key) if prompt_key != "" and revealed and not is_open else ""
 

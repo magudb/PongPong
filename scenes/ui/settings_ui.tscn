@@ -199,6 +199,11 @@ toggle_mode = true
 button_group = SubResource("ButtonGroup_6kh3n")
 text = "1920 × 1080"
 
+[node name="AutoPauseCheck" type="CheckBox" parent="Panel/Body" unique_id=1873402516]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SET_AUTO_PAUSE"
+
 [node name="CloseButton" type="Button" parent="Panel/Body" unique_id=368075888]
 unique_name_in_owner = true
 layout_mode = 2

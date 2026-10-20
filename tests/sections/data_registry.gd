@@ -313,6 +313,7 @@ func _api_unknown_names() -> void:
 	var t = _t
 	_detach_real_social()
 	_lr.reload_scripts()
+	t.allow("unknown Lua function `get_friendship`")         # a runtime message of the interpreter is an engine warning (QUAL-08)
 	var mark: int = t.log_mark()
 	var first: Variant = _lr._call_api("get_friendship", ["x"])
 	var second: Variant = _lr._call_api("get_friendship", ["x"])
@@ -324,7 +325,8 @@ func _api_unknown_names() -> void:
 	for name in ["add_gold", "add_item", "remove_item", "set_flag", "get_flag", "has_flag", "has_item", "get_gold", "notification", "unlock_zone", "emit", "log", "offer_quest", "complete_quest"]:
 		lists_all = lists_all and message.contains(name)
 	t.check("api_unknown_names_log_once", first == null and second == null and logged.size() == 1 and lists_all, "an unknown function still answers nil and is logged once; the message lists the 14 old and the 4 new names: %s" % message)
-	t.expect_clean_since(mark, "an unknown api function logs no engine error or warning")
+	t.expect_clean_since(mark, "an unknown api function logs no engine error and no other warning")
+	t.expect(t.allowed_count("unknown Lua function `get_friendship`") == 1, "...and exactly one engine warning for two calls (%d)" % t.allowed_count("unknown Lua function `get_friendship`"))
 
 
 # ------------------------------------------------------------------------------------------------ the real SocialManager (S-core)

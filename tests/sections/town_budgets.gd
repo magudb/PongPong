@@ -97,7 +97,10 @@ func run(t) -> void:
 			await t.physics(3)
 		samples.sort()
 		var warm := samples[1]
-		measurements[str(id)]={"asset_preparation_ms":preparation_ms,"cold_entry_ms":first,"warm_entry_ms":warm,"nodes":count(world.area),"scenery_nodes":scenery_nodes(world.area),"scenery_lights":lights(world.area)}
+		# The director initializes two physics frames after _enter (nav, festival posts, first population): part of every entry.
+		var town := TownProbe.director(t)
+		var init := float(town.init_ms) if town != null else 0.0
+		measurements[str(id)]={"asset_preparation_ms":preparation_ms,"cold_entry_ms":first,"warm_entry_ms":warm,"director_init_ms":init,"nodes":count(world.area),"scenery_nodes":scenery_nodes(world.area),"scenery_lights":lights(world.area)}
 		match id:
 			&"int_froebutikken":
 				t.check("interior_cold_build", t.perf_ok("interior_cold_build", first, 60), str(measurements[str(id)]))
@@ -122,6 +125,7 @@ func run(t) -> void:
 				for child in world.area.get_children():
 					t.info("CITY BRANCH " + str(child.name) + " " + str(count(child)))
 				t.check("city_warm_build", t.perf_ok("city_warm_build", warm, 40), str(measurements[str(id)]))
+				t.check("city_reentry_director_init", t.perf_ok("city_reentry_director_init", init, 10), str(measurements[str(id)]))
 				t.check("city_nodes_and_lights", scenery_nodes(world.area)<=700 and lights(world.area)<=12, str(measurements[str(id)]))
 				var begin := Time.get_ticks_usec()
 				var nav := LevelNav.make()
@@ -140,12 +144,14 @@ func run(t) -> void:
 			&"hyggebyen":
 				t.check("grid_warm_build", t.perf_ok("grid_warm_build", warm, 60), str(measurements[str(id)]))
 				t.check("grid_parked_return", t.perf_ok("grid_parked_return", warm, 5), str(measurements[str(id)])+"; runner limit "+str(t.perf_limit(5))+" ms (native reference 5)")
+				t.check("grid_parked_director_init", t.perf_ok("grid_parked_director_init", init, 8), str(measurements[str(id)]))
 				t.check("grid_npc_cap", TownProbe.director(t).live.size()<=24)
 			&"farm":
 				t.check("farm_warm_build", t.perf_ok("farm_warm_build", warm, 60), str(measurements[str(id)]))
 				t.check("farm_dimensions", world.area.map.width==61 and world.area.map.height==51)
 	await _navigation(t)
 	await _director(t)
+	await _minute_ticks(t)
 	await _room_crowd(t)
 	var loc: Node = t.autoload("LocalizationManager")
 	var reload_start := Time.get_ticks_usec()
@@ -236,6 +242,26 @@ func _director(t) -> void:
 	Routines.clear_cache()
 	t.autoload("LuaRuntime").reload_scripts()
 	DirAccess.remove_absolute(extra)
+
+## The clock frozen above hides the director's spike: with a running clock every game minute builds one snapshot of now for the
+## population and every door's hours. Measure that tick with the real Hyggebyen roster.
+func _minute_ticks(t) -> void:
+	await t.world().travel(&"hyggebyen", &"default")
+	var gm: Node = t.autoload("GameManager")
+	gm.hour = 10
+	gm.minute = 0
+	EventBus.time_of_day_changed.emit(10, 0)
+	await t.physics(2)
+	var director := TownProbe.director(t)
+	var costs: Array[float] = []
+	for minute in range(1, 41):
+		gm.minute = minute
+		var began := Time.get_ticks_usec()
+		director._clock(10, minute)
+		costs.append((Time.get_ticks_usec() - began) / 1000.0)
+	costs.sort()
+	t.check("minute_tick_p95", t.perf_ok("minute_tick_p95", costs[37], 1.0), "p95 %.3f ms, max %.3f ms over 40 ticks with %d live" % [costs[37], costs[-1], director.live.size()])
+	measurements.minute_tick = {"p95_ms": costs[37], "max_ms": costs[-1], "live": director.live.size()}
 
 func run_windowed(t) -> void:
 	const Perf := preload("res://tests/perf_world.gd")

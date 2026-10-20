@@ -21,18 +21,32 @@ var ready_for_population := false
 var game_hours := 6.0
 var last_dropped := 0
 var max_live := 16
-var stats := {"spawned": 0, "removed": 0, "snaps": 0, "resyncs": 0, "max_lag": 0.0}
+var stats := {"spawned": 0, "removed": 0, "snaps": 0, "resyncs": 0, "max_lag": 0.0, "sheets_finalized": 0}
 var _params: Dictionary = {}
 var _shop_open: Dictionary = {}
 var _curfew_whispered := false
 var _curfew_sent := false
+var _curfew_pending := false         # it is time to go home, but a modal / travel holds the request: asked again shortly
 var _tick := 0.0
 var _ctx_override: Dictionary = {}
 var _generation := 0
 var _prepare_ticks := 0
 var _window_perches: Dictionary = {}
-var _post_offsets: Dictionary = {}
+var _post_offsets: Dictionary = {}   # npc -> his seat at a shared post (ground px from the anchor), kept while he stays there
+var _seat_place: Dictionary = {}     # npc -> the place his seat belongs to
+var _seat_options: Dictionary = {}   # place -> candidate seats on safe floor (physics checked once per area entry)
+var _inn_floor: Array[Vector2] = []
 var _slot_query: PhysicsShapeQueryParameters2D
+var _dirty := false                  # a resync had to keep a talking / held citizen: look again shortly
+var _populated := ""                 # the last area_populated payload: listeners hear only a change
+var _staging: Dictionary = {}        # npc -> sheet paths of a mid-visit arrival still loading on worker threads
+var _landed: Dictionary = {}         # npc -> the staged textures finalized so far (one a frame, see _poll_staging)
+var _sheets: Dictionary = {}         # npc -> the staged textures, held while he is live
+var init_ms := 0.0                   # the deferred initialization of the last entry (nav, posts, first population)
+## Static geometry, kept for the session: the city's level graph and the reflowed festival posts of every area whose floor the
+## player cannot change (no farm cells). Entering a town again, also through a Rejsestolpe, no longer rebuilds them.
+static var _city_nav: LevelNav
+static var _spaced_posts: Dictionary = {}   # area id -> {post name -> ground px}
 
 static func create(target_area: IsoArea, params: Dictionary = {}, collected: Dictionary = {}) -> TownDirector:
 	var director := TownDirector.new()
@@ -83,8 +97,13 @@ func _initialize(generation: int) -> void:
 	_prepare_ticks = 2
 
 func _finish_initialize() -> void:
+	var began := Time.get_ticks_usec()
 	if area_id == "traetoppen":
-		level_nav = LevelNav.make()
+		if _city_nav == null:
+			_city_nav = LevelNav.make()
+		level_nav = _city_nav
+		# The shared nav outlives the entry; its snap record describes this one.
+		level_nav.snap_stats.clear()
 		_window_perches.clear()
 		for marker in CityData.markers_of(CityBuilder.of(area).data, "npc"):
 			if bool(marker.get("window", false)):
@@ -93,19 +112,31 @@ func _finish_initialize() -> void:
 		var spec := LuaData.dict(area.get_meta("room_spec", {}))
 		nav = NavGrid.bake_room(area, int(spec.get("cols", 1)), int(spec.get("rows", 1)), Iso.LAYER_WORLD | Iso.LAYER_GROUND_BLOCK)
 	else:
-		nav = NavGrid.bake_area(area)
+		# A parked town keeps its grid; the farm's floor changes with what the player builds, so it is baked on every entry.
+		if nav == null or not _static_floor():
+			nav = NavGrid.bake_area(area)
 		var resolved := TownMarks.resolve_cells(nav, col)
 		# Keep exact baked positions when present. The baker and runtime share the
 		# same map/physics geometry; resolved cells also expand festival satellites.
 		for name in resolved.cells:
 			if not anchors.has(str(name)):
 				anchors[str(name)] = Iso.to_ground(area.to_local(area.cell_to_global(resolved.cells[name])))
-	_space_festival_posts()
+	if _static_floor() and _spaced_posts.has(area_id):
+		anchors.merge(_spaced_posts[area_id], true)
+	else:
+		_space_festival_posts()
 	ready_for_population = true
-	game_hours = float(_context().hour)
-	resync()
-	_emit_shop_changes(true)
+	_populated = ""
+	var ctx := _context()
+	game_hours = float(ctx.hour)
+	resync(true, "", ctx)
+	_emit_shop_changes(true, ctx)
 	Svc.static_call("res://scripts/festival/festival_decor.gd", &"attach", [self], false)
+	init_ms = (Time.get_ticks_usec() - began) / 1000.0
+
+## The floor of this area is fixed for the session: nothing the player does moves a wall or a deck (a room is baked from its spec).
+func _static_floor() -> bool:
+	return str(col.get("kind", "")) != "room" and area.farmable.is_empty()
 
 func _exit_tree() -> void:
 	running = false
@@ -117,9 +148,23 @@ func _exit_tree() -> void:
 		if pair[0].is_connected(pair[1]):
 			pair[0].disconnect(pair[1])
 	clear_all()
-	nav = null
+	for id in _staging:
+		for path in _staging[id]:
+			ResourceLoader.load_threaded_get(path)
+	_staging.clear()
+	_landed.clear()
+	_sheets.clear()
+	if not _static_floor():
+		nav = null
 	level_nav = null
 	_paths.clear()
+	_seat_place.clear()
+	_post_offsets.clear()
+	_seat_options.clear()
+	_inn_floor.clear()
+	_populated = ""
+	_dirty = false
+	_curfew_pending = false
 
 func clear_all() -> void:
 	for id in live.keys():
@@ -131,6 +176,9 @@ func _remove(id: String) -> void:
 	targets.erase(id)
 	if is_instance_valid(actor):
 		actor.queue_free()
+	_sheets.erase(id)
+	_seat_place.erase(id)
+	_post_offsets.erase(id)
 	stats.removed += 1
 	citizen_removed.emit(id)
 
@@ -140,13 +188,15 @@ func _context() -> Dictionary:
 func _clock(hour: int, minute: int) -> void:
 	if not ready_for_population:
 		return
-	var now := float(_context().hour)
+	# One snapshot of "now" serves the whole tick: the population and every door's hours.
+	var ctx := _context()
+	var now := float(ctx.hour)
 	var skipped := absf(now - game_hours) > 2.0 / 60.0
 	game_hours = now
 	if minute == 0:
 		EventBus.game_event.emit(&"routine_changed", {"hour": hour})
-	resync(skipped)
-	_emit_shop_changes(false)
+	resync(skipped, "", ctx)
+	_emit_shop_changes(false, ctx)
 
 func _morning(_day: int, _season: StringName) -> void:
 	_curfew_whispered = false
@@ -156,30 +206,36 @@ func _morning(_day: int, _season: StringName) -> void:
 
 func _area_changed(id: StringName) -> void:
 	if str(id) == area_id:
-		game_hours = float(_context().hour)
-		resync()
-		_emit_shop_changes(true)
+		var ctx := _context()
+		game_hours = float(ctx.hour)
+		_populated = ""
+		resync(true, "", ctx)
+		_emit_shop_changes(true, ctx)
 
-func _emit_shop_changes(quiet: bool) -> void:
+func _emit_shop_changes(quiet: bool, ctx: Dictionary = {}) -> void:
+	if ctx.is_empty():
+		ctx = _context()
 	for door in col.get("doors", []):
 		var id := str(door.get("building", ""))
 		var building := Hours.building(id)
 		if not building.has("hours"):
 			continue
-		var state := Hours.state(id, _context())
+		var state := Hours.state(id, ctx)
 		if not quiet and _shop_open.has(id) and bool(_shop_open[id]) != bool(state.open):
-			EventBus.game_event.emit(&"shop_open_changed", {"shop": str(building.get("shop", id)), "open": bool(state.open), "reason": str(state.reason), "opens_at": state.get("opens_at", -1), "closes_at": Hours.hours_on(building, int(_context().weekday))[1]})
+			EventBus.game_event.emit(&"shop_open_changed", {"shop": str(building.get("shop", id)), "open": bool(state.open), "reason": str(state.reason), "opens_at": state.get("opens_at", -1), "closes_at": Hours.hours_on(building, int(ctx.weekday))[1]})
 		_shop_open[id] = bool(state.open)
 
 func curfew_check(ctx: Dictionary) -> void:
 	if not curfew_enabled or not bool(GameManager.config_value("towns.curfew.enabled", true)):
 		return
 	var hour := float(ctx.hour)
+	_curfew_pending = false
 	if hour >= float(GameManager.config_value("towns.curfew.go_home", 25.75)):
-		if _curfew_sent or GameManager.is_modal_open() or GameManager.current_phase != GameManager.GamePhase.PLAYING:
+		if _curfew_sent:
 			return
 		var world := get_tree().get_first_node_in_group("world_2d")
-		if world != null and (world.traveling or world.sleeping):
+		_curfew_pending = GameManager.is_modal_open() or GameManager.current_phase != GameManager.GamePhase.PLAYING or (world != null and (world.traveling or world.sleeping))
+		if _curfew_pending:
 			return
 		_curfew_sent = true
 		EventBus.whisper_requested.emit("HOURS_CURFEW_HOME")
@@ -188,18 +244,23 @@ func curfew_check(ctx: Dictionary) -> void:
 		_curfew_whispered = true
 		EventBus.whisper_requested.emit("HOURS_CURFEW_SOON")
 
-func resync(hard := true, only := "") -> void:
+## hard = a discontinuity (entry, morning, a jump of the clock): citizens snap to their places and arrivals appear at once. A soft
+## resync (the minute tick) lets an arrival appear only once his sheets are resident (_stage), so a walk-in never loads on the main thread.
+func resync(hard := true, only := "", ctx: Dictionary = {}) -> void:
 	if not ready_for_population or not is_inside_tree():
 		return
 	stats.resyncs += 1
-	var ctx := _context()
+	if only == "":
+		_dirty = false
+	if ctx.is_empty():
+		ctx = _context()
 	if hard:
 		game_hours = float(ctx.hour)
 	curfew_check(ctx)
 	var festival := false
 	var social := Svc.node("SocialManager")
 	if social != null and social.has_method("festival_active"):
-		festival = str(social.call("festival_active")) != "" and str(LuaData.dict(_context().get("fest", {})).get("area", "")) == area_id
+		festival = str(social.call("festival_active")) != "" and str(LuaData.dict(ctx.get("fest", {})).get("area", "")) == area_id
 	max_live = maxi(1, int(GameManager.config_value("towns.max_live_visuals_festival" if festival else "towns.max_live_visuals", 20 if festival else 16)))
 	var room := area.has_meta("room_spec")
 	var keeper := ""
@@ -218,10 +279,14 @@ func resync(hard := true, only := "") -> void:
 			# Dialogue owns the actor until its result has completed.
 			if not live[id].is_talking and not live[id]._held:
 				_remove(str(id))
+			else:
+				_dirty = true
 	for id in wanted:
 		if only != "" and only != str(id):
 			continue
 		if not live.has(id):
+			if not hard and not _stage(str(id)):
+				continue
 			var actor := Npc2D.create({"id": id, "wander": "0"})
 			actor.area = area
 			actor.set_driven(true)
@@ -232,100 +297,158 @@ func resync(hard := true, only := "") -> void:
 			stats.spawned += 1
 			citizen_spawned.emit(str(id), actor)
 		_update_target(str(id), wanted[id], hard)
-	EventBus.game_event.emit(&"area_populated", {"area": area_id, "citizens": live.size(), "visuals": looks.size(), "dropped": last_dropped})
+	# Only ShopCounter needs this, but every game_event listener (quests, `when=` markers) wakes for it: say it when it changed.
+	var ids: Array = live.keys()
+	ids.sort()
+	var populated := "%s|%d|%d" % [",".join(ids), looks.size(), last_dropped]
+	if populated != _populated:
+		_populated = populated
+		EventBus.game_event.emit(&"area_populated", {"area": area_id, "citizens": live.size(), "visuals": looks.size(), "dropped": last_dropped})
+
+## True when an arrival's idle and walking sheets are resident. Otherwise they are requested on worker threads and he is spawned by
+## _poll_staging once they are in (REND-02: a 3-4 MB sheet loaded with plain load() costs a frame or more). Only the clips the director
+## plays are staged: update_motion is called without `flying`, so a flyer idles or walks in town and never shows his hover sheet.
+func _stage(id: String) -> bool:
+	if _sheets.has(id):
+		return true
+	if _staging.has(id):
+		return false
+	var look := IsoChibiSprite2D.resolve_id(str(LuaRuntime.get_npc(id).get("visual", "fairy")))
+	var meta := IsoChibiSprite2D.meta_for(look)
+	var paths: Array[String] = []
+	for clip in ["idle", "walk"]:
+		var spec: Dictionary = LuaData.dict(LuaData.dict(meta.get("animations", {})).get(clip, {}))
+		if not spec.is_empty():
+			paths.append(IsoChibiSprite2D.CHARACTERS_DIR + look + "/" + str(spec.get("sheet", clip + IsoChibiSprite2D.TEXTURE_EXTENSION)))
+	if paths.all(func(path: String) -> bool: return ResourceLoader.has_cached(path)):
+		_sheets[id] = paths.map(func(path: String) -> Resource: return ResourceLoader.load(path))
+		return true
+	for path in paths:
+		ResourceLoader.load_threaded_request(path)
+	_staging[id] = paths
+	_landed[id] = []
+	return false
+
+## Arrivals come in batches (a routine hour moves several citizens at once). Finalizing a loaded sheet uploads it (a frame's worth for a
+## 3-4 MB sheet, which is why IsoChibiSprite2D.warm_clips takes one a frame), so a frame finalizes at most one. Once no loaded sheet
+## is waiting, everyone whose sheets are all in spawns in ONE soft resync: one population pass and one area_populated per batch.
+func _poll_staging() -> void:
+	for id in _staging:
+		var pending: Array = _staging[id]
+		var index := pending.find_custom(func(path: String) -> bool: return ResourceLoader.load_threaded_get_status(path) != ResourceLoader.THREAD_LOAD_IN_PROGRESS)
+		if index >= 0:
+			(_landed[id] as Array).append(ResourceLoader.load_threaded_get(pending[index]))
+			pending.remove_at(index)
+			stats.sheets_finalized += 1
+			return
+	var ready: Array = _staging.keys().filter(func(id: String) -> bool: return (_staging[id] as Array).is_empty())
+	if ready.is_empty():
+		return
+	for id in ready:
+		_sheets[id] = _landed[id]
+		_staging.erase(id)
+		_landed.erase(id)
+	resync(false)
+	for id in ready:
+		if not live.has(id):
+			_sheets.erase(id)
 
 func _position(anchor: String) -> Vector2:
 	var name := anchor.get_slice(".", 1) if anchor.contains(".") else anchor
 	return anchors.get(name, Iso.to_ground(area.to_local(area.get_spawn("default"))))
 
+## Seats at shared posts are STABLE: a citizen keeps his seat while he stays at the place, and only an arrival picks one (the first
+## free seat of the place's spread order), so a third guest sitting down never makes the first two shuffle.
 func _assign_post_slots(wanted: Dictionary) -> void:
-	_post_offsets.clear()
-	var groups := {}
+	for id in _seat_place.keys():
+		var row: Dictionary = wanted.get(id, {})
+		if row.is_empty() or str(row.state) == "move" or str(row.place) != str(_seat_place[id]):
+			_seat_place.erase(id)
+			_post_offsets.erase(id)
 	for id in wanted:
 		var row: Dictionary = wanted[id]
-		var cap := RouteTable.capacity(str(row.place))
-		if str(row.state) == "move" or cap <= 1 or cap >= 99:
+		var place := str(row.place)
+		if _seat_place.has(id) or str(row.state) == "move":
 			continue
-		if not groups.has(str(row.place)):
-			groups[str(row.place)] = []
-		groups[str(row.place)].append(str(id))
-	for place in groups:
-		var ids: Array = groups[place]
-		if ids.size() < 2:
+		if area_id == "int_torvekroen" and str(row.state) == "stay" and str(row.npc) != "innkeeper_kvak" and not place.ends_with(".bed"):
+			_seat_inn_guest(str(id), place)
 			continue
-		ids.sort()
+		var cap := RouteTable.capacity(place)
+		if cap <= 1 or cap >= 99:
+			continue
 		var used: Array[Vector2] = []
-		for index in ids.size():
-			var offset := _post_slot(_position(place), index, ids.size(), used)
-			_post_offsets[ids[index]] = offset
-			used.append(offset)
+		for other in _seat_place:
+			if str(_seat_place[other]) == place:
+				used.append(_post_offsets[other])
+		for offset in _seats_of(place):
+			if used.all(func(previous: Vector2): return previous.distance_to(offset) >= 40):
+				_post_offsets[str(id)] = offset
+				_seat_place[str(id)] = place
+				break
 
-	if area_id == "int_torvekroen": _inn_guest_slots(wanted)
-
-func _inn_guest_slots(wanted: Dictionary) -> void:
+func _seat_inn_guest(id: String, place: String) -> void:
 	# The inn is a meeting room; spread its guests across reachable customer
 	# floor instead of stacking three large painted bodies on a chair anchor.
 	if nav == null: return
+	if _inn_floor.is_empty():
+		var entry := Iso.to_ground(area.to_local(area.get_spawn("default")))
+		for y in range(3,nav.size.y-1):
+			for x in range(1,nav.size.x-1):
+				var cell := Vector2i(x,y)
+				if not nav.blocked.has(cell):
+					var point := Iso.to_ground(area.to_local(nav.cell_pos(cell)))
+					if point.distance_to(entry) >= 120.0: _inn_floor.append(point)
 	var used: Array[Vector2] = []
-	var cells: Array[Vector2] = []
-	var entry := Iso.to_ground(area.to_local(area.get_spawn("default")))
-	for y in range(3,nav.size.y-1):
-		for x in range(1,nav.size.x-1):
-			var cell := Vector2i(x,y)
-			if not nav.blocked.has(cell):
-				var point := Iso.to_ground(area.to_local(nav.cell_pos(cell)))
-				if point.distance_to(entry) >= 120.0: cells.append(point)
-	for id in wanted:
-		var row: Dictionary = wanted[id]
-		if str(row.state) != "stay" or str(row.npc) == "innkeeper_kvak": continue
-		var base := _position(str(row.place))
-		if str(row.place).ends_with(".bed"): continue
-		var options := cells.duplicate()
-		options.sort_custom(func(a: Vector2,b: Vector2):return a.distance_squared_to(base) < b.distance_squared_to(base))
-		var found := false
-		for spacing in [200.0,170.0,140.0]:
-			for point in options:
-				if used.all(func(p: Vector2):return p.distance_to(point) >= spacing):
-					_post_offsets[str(id)] = point-base
-					used.append(point)
-					found = true
-					break
-			if found: break
+	for other in _seat_place:
+		used.append(_position(str(_seat_place[other])) + (_post_offsets[other] as Vector2))
+	var base := _position(place)
+	var options := _inn_floor.duplicate()
+	options.sort_custom(func(a: Vector2,b: Vector2):return a.distance_squared_to(base) < b.distance_squared_to(base))
+	_seat_place[id] = place
+	_post_offsets[id] = Vector2.ZERO
+	for spacing in [200.0,170.0,140.0]:
+		for point in options:
+			if used.all(func(p: Vector2):return p.distance_to(point) >= spacing):
+				_post_offsets[id] = point-base
+				return
 
-func _post_slot(base: Vector2, index: int, count: int, used: Array[Vector2]) -> Vector2:
+## The seats of one shared post in spread order (the anchor, then around it: opposite sides first), each checked against the room /
+## deck geometry once per area entry.
+func _seats_of(place: String) -> Array[Vector2]:
+	if _seat_options.has(place):
+		return _seat_options[place]
+	var seats: Array[Vector2] = [Vector2.ZERO]
+	var base := _position(place)
+	for radius in [60.0, 42.0, 22.0]:
+		for turn in [0, 4, 2, 6, 1, 5, 3, 7]:
+			var offset: Vector2 = Vector2(cos(turn * PI / 4), sin(turn * PI / 4)) * float(radius)
+			if _seat_fits(base, offset):
+				seats.append(offset)
+	_seat_options[place] = seats
+	return seats
+
+func _seat_fits(base: Vector2, offset: Vector2) -> bool:
 	if _slot_query == null:
 		_slot_query = PhysicsShapeQueryParameters2D.new()
 		var body := ConvexPolygonShape2D.new()
 		body.points = Npc2D._ellipse(Vector2(25, 14.8))
 		_slot_query.shape = body
-		_slot_query.collision_mask = Iso.LAYER_WORLD | Iso.LAYER_GROUND_BLOCK
-	var space := area.get_world_2d().direct_space_state
-	for radius in [60.0, 42.0, 22.0]:
-		for turn in 8:
-			var angle := TAU * float(index) / count + float(turn) * PI / 4
-			var offset: Vector2 = Vector2(cos(angle), sin(angle)) * float(radius)
-			if used.any(func(previous): return previous.distance_to(offset) < 40):
-				continue
-			var point := area.to_global(Iso.to_screen(base + offset))
-			if area.walkable_test.is_valid() and not bool(area.walkable_test.call(point)):
-				continue
-			var fits := true
-			if area.walkable_test.is_valid():
-				for edge in (_slot_query.shape as ConvexPolygonShape2D).points:
-					fits = fits and bool(area.walkable_test.call(point + edge))
-			if not fits:
-				continue
-			_slot_query.collision_mask = Iso.LAYER_WORLD | Iso.LAYER_GROUND_BLOCK
-			var city := CityBuilder.of(area)
-			if city != null:
-				var level := city.registry.level_at(point)
-				if level == null:
-					continue
-				_slot_query.collision_mask |= level.mask_bit()
-			_slot_query.transform = Transform2D(0, point)
-			if space.intersect_shape(_slot_query, 1).is_empty():
-				return offset
-	return Vector2.ZERO
+	var point := area.to_global(Iso.to_screen(base + offset))
+	if area.walkable_test.is_valid():
+		if not bool(area.walkable_test.call(point)):
+			return false
+		for edge in (_slot_query.shape as ConvexPolygonShape2D).points:
+			if not bool(area.walkable_test.call(point + edge)):
+				return false
+	_slot_query.collision_mask = Iso.LAYER_WORLD | Iso.LAYER_GROUND_BLOCK
+	var city := CityBuilder.of(area)
+	if city != null:
+		var level := city.registry.level_at(point)
+		if level == null:
+			return false
+		_slot_query.collision_mask |= level.mask_bit()
+	_slot_query.transform = Transform2D(0, point)
+	return area.get_world_2d().direct_space_state.intersect_shape(_slot_query, 1).is_empty()
 
 func _path(from: String, to: String) -> Dictionary:
 	var key := from + "|" + to
@@ -427,12 +550,17 @@ func _physics_process(delta: float) -> void:
 		return
 	if not ready_for_population or not running or (GameManager.current_phase != GameManager.GamePhase.PLAYING and _ctx_override.is_empty()):
 		return
-	var rate := GameManager.minutes_per_real_second() if _ctx_override.is_empty() else RouteTable.game_min_per_s
-	game_hours += delta * rate / 60.0
+	game_hours += delta * clock_rate() / 60.0
+	if not _staging.is_empty():
+		_poll_staging()
+	# The minute tick resyncs; between ticks only a citizen kept for a talk, or a held curfew, is looked at again.
 	_tick += delta
 	if _tick >= 0.5:
 		_tick = 0
-		resync(false)
+		if _dirty:
+			resync(false)
+		elif _curfew_pending:
+			curfew_check(_context())
 	for id in live:
 		var actor: Npc2D = live[id]
 		if not is_instance_valid(actor) or actor.is_talking or actor._held or not targets.has(id):
@@ -453,6 +581,13 @@ func _physics_process(delta: float) -> void:
 		actor.visual.update_motion(actor.velocity)
 		stats.max_lag = maxf(float(stats.max_lag), distance)
 
+## Game minutes per real second between two clock ticks: the rate TimeManager
+## feeds the clock (nothing while it is paused, faster under its time scale).
+func clock_rate() -> float:
+	if not _ctx_override.is_empty():
+		return RouteTable.game_min_per_s
+	return 0.0 if TimeManager.is_paused else GameManager.minutes_per_real_second() * TimeManager.time_scale
+
 func post_ground(name: StringName) -> Vector2:
 	return anchors.get(str(name), Vector2.INF)
 func door_ground(building: StringName) -> Vector2:
@@ -465,6 +600,7 @@ func controls(id: String) -> bool:
 ## Painted chibi heads need more room than the prototype's one-cell crowd.
 ## Reflow named festival posts onto safe floor, preserving the public names.
 func _space_festival_posts() -> void:
+	var spaced := {}
 	var sets: Array = col.get("fest", []).duplicate()
 	sets.append_array(col.get("fest_sets", []))
 	for spot in sets:
@@ -505,9 +641,12 @@ func _space_festival_posts() -> void:
 				for candidate in candidates:
 					if taken.all(func(point: Vector2): return candidate.distance_squared_to(point) >= spacing * spacing):
 						anchors[name] = candidate
+						spaced[name] = candidate
 						taken.append(candidate)
 						placed = true
 						break
 				if placed: break
 			if not placed:
 				push_error("TownDirector: no safe festival post for "+area_id+"."+name)
+	if _static_floor():
+		_spaced_posts[area_id] = spaced

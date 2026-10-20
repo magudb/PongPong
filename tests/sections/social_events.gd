@@ -39,6 +39,8 @@ func _run(t,native: bool) -> void:
 			{"act":"wait","time":0.01},{"act":"sfx","id":"unavailable_test_cue"},{"act":"end"}],"rewards":{"points":40,"flag":"event_end_flag"}},
 		"event_missing_actor":{"meta":{"npc":NPC,"hearts":1},"steps":[{"act":"walk","who":"missing_actor","mark":"missing"},{"act":"clip","who":"missing_actor","clip":"idle"},{"act":"emote","who":"missing_actor","kind":"heart"},{"act":"say","who":NPC,"text_key":"SOC_GARDENER_HOPPE_FIRST_1_V"}],"rewards":{"points":10}},
 		"event_yearly":{"meta":{"trigger":"festival","once_per_year":true},"steps":[{"act":"say","who":NPC,"text_key":"SOC_GARDENER_HOPPE_FIRST_1_V"}],"rewards":{"items":{"wood":1}}},
+		"event_owner_flags":{"meta":{"npc":NPC,"hearts":1},"steps":[{"act":"say","who":NPC,"text_key":"SOC_GARDENER_HOPPE_FIRST_1_V"},
+			{"act":"flag","key":"friend_"+NPC,"value":9},{"act":"flag","key":"home_tier","value":7},{"act":"flag","key":"event_plain_flag"}]},
 		"event_cancel":{"meta":{"npc":NPC,"hearts":1},"steps":[{"act":"say","who":NPC,"text_key":"SOC_GARDENER_HOPPE_FIRST_1_V"},{"act":"flag","key":"event_cancelled_flag"}]},
 	}
 	SocialFixture.install({}, {"events":definitions,"festivals":{}})
@@ -105,6 +107,15 @@ func _run(t,native: bool) -> void:
 	await _finish_dialogue(t)
 	t.check("missing_actor_api_is_skipped_not_fatal",runner.skipped_directives-skipped_before == 3 and SocialManager.event_seen("event_missing_actor"))
 	t.check("ordinary_scene_points_paid",SocialManager.points(NPC) == 200)
+	# ARCH-07: an event's flag effect may not write a flag that mirrors its owner (hearts, home tier); its other flags still commit
+	t.allow("event event_owner_flags flag(\"friend_%s\") refused" % NPC)
+	t.allow("event event_owner_flags flag(\"home_tier\") refused")
+	var hearts_flag: Variant = GameManager.get_flag(StringName("friend_"+NPC),null)
+	var tier_flag: Variant = GameManager.get_flag(&"home_tier",null)
+	t.check("owner_flag_scene_starts",director.request("event_owner_flags"))
+	await _finish_dialogue(t)
+	t.check("event_cannot_write_owner_flags",SocialManager.event_seen("event_owner_flags") and GameManager.get_flag(StringName("friend_"+NPC),null) == hearts_flag and GameManager.get_flag(&"home_tier",null) == tier_flag and GameManager.get_flag(&"event_plain_flag",false),
+		"friend_ %s -> %s, home_tier %s -> %s" % [str(hearts_flag),str(GameManager.get_flag(StringName("friend_"+NPC),null)),str(tier_flag),str(GameManager.get_flag(&"home_tier",null))])
 	# A full backpack keeps the reward in the existing social save, then claims it once.
 	EconomyManager.inventory.clear()
 	for i in 24: EconomyManager.inventory.append({"id":&"stone","amount":99,"meta":{}})
@@ -139,6 +150,8 @@ func _run(t,native: bool) -> void:
 	t.check("cancelled_scene_can_retry",director.request("event_cancel"))
 	await _finish_dialogue(t)
 	t.check("time_stops_before_the_live_day_roll",GameManager.hour == GameManager.day_end_hour()-1 and GameManager.minute == 59)
+	await _confirm_pauses_scene(t)
+	await _freed_actor_releases_scene(t)
 	GameManager.push_modal(&"test_pause",true)
 	for i in 6:
 		var id := "queued_%d" % i
@@ -152,6 +165,56 @@ func _run(t,native: bool) -> void:
 	SocialFixture.uninstall()
 	director.reset()
 	t.new_game()
+
+## Esc during a staged step opens the skip confirm; the scene waits under it, and "Fortsæt" shows every page instead of answering them unseen.
+func _confirm_pauses_scene(t) -> void:
+	var id := "event_confirm_pause"
+	var definition := {"meta":{"trigger":"automatic"},"steps":[{"act":"wait","time":0.3},{"act":"say","who":NPC,"text_key":"SOC_GARDENER_HOPPE_FIRST_1_V"},
+		{"act":"choice","options":[{"id":"first","text_key":"SOC_EV_CONTINUE","flag":"event_pause_first"},{"id":"second","text_key":"SOC_EV_SKIP","flag":"event_pause_second"}]}]}
+	t.check("confirm_scene_starts",director.request(id,true,definition))
+	await t.until(func():return runner.active == id,3.0)
+	var overlay: Node = t.world().game_ui.get_screen(&"event_overlay")
+	overlay.request_skip()
+	await t.frames(2)
+	var confirms := _confirms(t.tree.root)
+	await t.seconds(0.8)
+	t.check("scene_waits_under_the_skip_confirm",confirms.size() == 1 and runner.active == id and not ui.is_open() and not SocialManager.event_seen(id) and GameManager.top_modal() == &"confirm",
+		"active '%s' dialogue open %s seen %s top %s" % [runner.active,ui.is_open(),SocialManager.event_seen(id),GameManager.top_modal()])
+	if not confirms.is_empty(): confirms[0]._finish(false)
+	await t.until(func():return ui.is_open(),3.0)
+	var shown: bool = ui.is_open()
+	for i in 400:
+		await t.frames(1)
+		if ui.is_open() and GameManager.top_modal() == &"dialogue":
+			if ui._wants_focus(): ui._pick(ui._choices[1])
+			else: ui._advance()
+		if runner.active == "": break
+	t.check("continue_after_confirm_shows_the_pages",shown and SocialManager.event_seen(id) and GameManager.get_flag(&"event_pause_second",false) and not GameManager.get_flag(&"event_pause_first",false))
+	if runner.active != "": runner.cancel()
+
+## A walk awaited on an actor that is freed mid-step must not leave the scene (and every later scene) waiting forever.
+func _freed_actor_releases_scene(t) -> void:
+	var script := GDScript.new()
+	script.source_code = "extends Node2D\nfunc event_walk_to(_point: Vector2, _speed: float) -> bool:\n\twhile true:\n\t\tawait get_tree().process_frame\n\treturn true\n"
+	script.reload()
+	var fake: Node2D = script.new()
+	t.tree.root.add_child(fake)
+	var walker: WeakRef = weakref(fake)
+	runner.actor_resolver = func(who: String) -> Node:
+		if who == "fake_walker": return walker.get_ref()
+		return t.player() if who == "player" else NpcDirector.node_of(who)
+	var id := "event_freed_walker"
+	t.check("freed_walker_scene_starts",director.request(id,true,{"meta":{"trigger":"automatic"},"steps":[{"act":"walk","who":"fake_walker"},{"act":"flag","key":"event_walker_done"}]}))
+	await t.until(func():return runner.active == id,3.0)
+	await t.frames(3)
+	fake.queue_free()
+	await t.until(func():return runner.active == "",3.0)
+	t.check("freed_actor_releases_the_scene",runner.active == "" and SocialManager.event_seen(id) and GameManager.get_flag(&"event_walker_done",false) and not GameManager.is_modal_open(&"event"))
+	if runner.active != "": runner.cancel()
+	runner.actor_resolver = Callable()
+	director._starting = true
+	director.reset()
+	t.check("director_reset_clears_the_start_latch",not director._starting)
 
 func _finish_dialogue(t) -> void:
 	for i in 400:

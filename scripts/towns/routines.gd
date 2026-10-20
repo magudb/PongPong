@@ -27,6 +27,9 @@ static var _tl: Dictionary = {}
 static var compile_problems: Array[String] = []
 static var override_registry: Dictionary = {}    # tests: replaces the Lua registry
 static var _fb: Dictionary = {}                  # "npc|day|festival" -> festival block (the social track is asked once per citizen and day)
+static var _plans: Dictionary = {}               # "npc|day|calendar" -> the plan a live citizen keeps for the day (see daily_plan)
+static var _plans_day: int = -1
+static var _session_hooked: bool = false
 
 
 static func registry() -> Dictionary:
@@ -44,8 +47,30 @@ static func npc_ids() -> Array:
 
 static func clear_cache() -> void:
 	_tl.clear()
-	_fb.clear()
+	_end_session()
 	compile_problems.clear()
+
+
+## The per-day memos belong to one run: a new game or a load (another seed, other hearts) starts them again.
+static func _end_session() -> void:
+	_fb.clear()
+	_plans.clear()
+	_plans_day = -1
+
+
+static func _end_loaded_session(_slot: int) -> void:
+	_end_session()
+
+
+static func _hook_session() -> void:
+	if _session_hooked:
+		return
+	var bus: Node = Svc.node("EventBus")
+	if bus == null:
+		return
+	_session_hooked = true
+	bus.connect("new_game_started", _end_session)
+	bus.connect("load_completed", _end_loaded_session)
 
 
 ## A context for an explicit moment (tests, validators, the director).
@@ -62,6 +87,7 @@ static func now_ctx() -> Dictionary:
 	var c: Dictionary = make_ctx(0, 6.0)
 	if gm == null:
 		return c
+	_hook_session()
 	c["_day_end"] = float(gm.call("day_end_hour"))
 	c["hour"] = float(gm.get("hour")) + float(gm.get("minute")) / 60.0
 	c["total_day"] = int(gm.call("total_day"))
@@ -262,6 +288,25 @@ static func plan_name(npc: String, ctx: Dictionary, definition: Dictionary = {})
 	return ""
 
 
+## The plan of one citizen in ctx. A LIVE context (now_ctx) keeps the plan its day first resolved to: hearts, flags and quests change during the day
+## (a gift at noon), and a plan that switched there would make the citizen vanish from his place or pop up on another one; the new selector applies
+## from the next day. The calendar (weekday, season, weather, festival, hero) is part of the key. Explicit contexts (make_ctx) stay pure.
+static func daily_plan(npc: String, ctx: Dictionary, definition: Dictionary = {}) -> String:
+	var def: Dictionary = definition if not definition.is_empty() else registry().get(npc, {})
+	if not ctx.has("_gm"):
+		return plan_name(npc, ctx, def)
+	var day: int = int(ctx.get("total_day", 1))
+	if day != _plans_day:
+		_plans.clear()
+		_plans_day = day
+	var key: String = "%s|%s|%s|%s|%s|%s" % [npc, ctx.get("weekday", 0), ctx.get("season", ""), ctx.get("weather", ""), ctx.get("festival", ""), ctx.get("hero", "")]
+	if _plans.has(key) and (str(_plans[key]) == "" or (def.get("plans", {}) as Dictionary).has(str(_plans[key]))):
+		return str(_plans[key])
+	var plan: String = plan_name(npc, ctx, def)
+	_plans[key] = plan
+	return plan
+
+
 static func is_rainy(ctx: Dictionary) -> bool:
 	return str(ctx.get("weather", "klart")) in ["regn", "torden"]
 
@@ -459,7 +504,7 @@ static func where_is(npc: String, ctx: Dictionary) -> Dictionary:
 			return out
 	if def.has("hero_twin") and str(def["hero_twin"]) == str(ctx.get("hero", "")):
 		return out
-	var plan: String = plan_name(npc, ctx, def)
+	var plan: String = daily_plan(npc, ctx, def)
 	out["plan"] = plan
 	var fb: Dictionary = {}
 	if ctx.has("fest"):

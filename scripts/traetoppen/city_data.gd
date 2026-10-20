@@ -242,19 +242,11 @@ static func markers_of(data: Dictionary, type: String) -> Array[Dictionary]:
 # ------------------------------------------------------------------ config (lua/config/traetoppen.lua)
 
 ## The keys V4 reads (design 4.5). `config()` answers them through GameData.cfg, so a test can override one with GameManager.set_config_override.
-const CONFIG_KEYS: Array[String] = ["scale", "zoom", "post", "board", "bath", "swap", "stall", "caches", "skovlift", "fast_travel"]
+const CONFIG_KEYS: Array[String] = ["scale", "zoom", "post", "board", "bath", "swap", "caches", "skovlift", "fast_travel"]
 
 
 static func config() -> Dictionary:
 	var out: Dictionary = {}
 	for key in CONFIG_KEYS:
 		out[key] = GameData.cfg("traetoppen.%s" % key, null)
-	return out
-
-
-## The weekdays (0 = Monday) on which Brumme sells at the Torvet stall.
-static func stall_weekdays() -> Array[int]:
-	var out: Array[int] = []
-	for d in LuaData.arr(LuaData.dict(GameData.cfg("traetoppen.stall", {})).get("weekdays", [])):
-		out.append(LuaData.int_of(d))
 	return out

@@ -13,10 +13,9 @@ extends RefCounted
 ##   objects     (the ONE y-sorted node, z_index = rank of the level, then y) the upper trunk segments with their feet, the huts with pennants and additive night
 ##               layers, the stall, the fire pit with its flame, the log stack, the notice board, the seed basket, the kitchen gardens, the tub halves, the ladder
 ##   markers     npc / node markers through IsoArea.resolve_handler (the real handler when it exists), the rest are V6's and skipped silently and counted;
-##               while P14's npc handler is missing TraetoppenPreviewCitizens places the labelled stand-ins; the two ambient owls sit in their holes
+##               the two ambient owls sit in their holes
 ##   triggers    the two warps at the ends of the bridge stubs, the three signs, the ten landmark circles (game_event landmark_entered once per visit),
 ##               the Skovlift gate (unlock day, closed forest)
-##   preview     while no P14 / HUD exist: the labelled stand-in citizens and the small prompt / whisper / toast overlay (TraetoppenPreviewCitizens)
 ## After the build it calls Svc.static_call(town_script_path, "attach", [area, "traetoppen"]) (the towns track's CityTown, no hard dependency).
 ## Nothing of the framework (iso_area, world_2d, game_data, art_catalog) is edited; the build touches only the documented builder hook.
 
@@ -67,8 +66,6 @@ var signs: Array[Interactable2D] = []
 var landmarks: Array[LandmarkTrigger] = []
 var lift_gate: LiftGate
 var night: NightFx
-var citizens_placed: int = 0
-var preview_hints: Node                     # the M1a prompt / whisper / toast overlay (null once P14 has landed)
 var ambient_owls: Array[Node2D] = []
 var marker_nodes: Dictionary = {}           # marker id -> Node (handled by a real handler)
 var huts: Dictionary = {}                   # building id -> the hut container node
@@ -546,11 +543,10 @@ func _gate_lift() -> void:
 
 # ------------------------------------------------------------------ markers
 
-## Every marker of the city: through its handler when one exists (IsoArea.resolve_handler), else skipped silently and counted (area.skipped_markers);
-## the npc markers of a city without P14 get the labelled preview citizens. Each marker is recorded in area.markers like the grid maps do.
+## Every marker of the city: through its handler when one exists (IsoArea.resolve_handler), else skipped silently and counted (area.skipped_markers).
+## Each marker is recorded in area.markers like the grid maps do.
 func _place_markers() -> void:
 	var all: Array[Dictionary] = CityData.markers(data)
-	var npcs: Array[Dictionary] = []
 	for m in all:
 		var type: String = str(m["type"])
 		var rec: Dictionary = {"type": type, "params": m["params"], "cell": Vector2i.ZERO, "pos": m["at"], "char": "", "node": null, "nodes": []}
@@ -564,8 +560,6 @@ func _place_markers() -> void:
 			"ambient_owl":
 				rec["builtin_data"] = true
 			_:
-				if type == "npc":
-					npcs.append(m)
 				var h: Dictionary = IsoArea.resolve_handler(type)
 				var node: Node = null
 				if str(h["kind"]) == "script":
@@ -576,8 +570,6 @@ func _place_markers() -> void:
 				else:
 					area.skipped_markers[type] = int(area.skipped_markers.get(type, 0)) + 1
 		area.markers.append(rec)
-	citizens_placed = TraetoppenPreviewCitizens.attach(area, npcs, data, registry)
-	preview_hints = TraetoppenPreviewCitizens.attach_hints(area)
 
 
 ## The three entry points IsoArea._make_from_script knows (create_marker / create(params, pos) / create(params) / setup_marker).
@@ -723,6 +715,8 @@ class NightFx extends Node:
 ## zooms out: at the game zoom (0.4) its fringe takes FRACTION_FULL of the screen height, at the area's minimum zoom (0.2, the whole composition of
 ## the sketch) only FRACTION_MIN, so the top platforms A and B (disc tops at 252 and 402 world px, huts above) stay in view under it; in between it
 ## follows the zoom linearly. The strip is opaque art (V5), so what is not shown is slid out of the top of the screen, not faded.
+## A CanvasModulate tints only its own canvas, so the frame copies the world's DayNight colour itself (as the farm canopy does), or it stays
+## daylight green over a night-blue city (review REND-01).
 class CanopyFrame extends CanvasLayer:
 	const FRACTION_FULL := 0.16
 	const FRACTION_MIN := 0.04
@@ -733,6 +727,7 @@ class CanopyFrame extends CanvasLayer:
 	var fraction: float = FRACTION_FULL
 	var _zoom: float = -1.0
 	var _view: Vector2 = Vector2.ZERO
+	var _world: Node
 
 	## The share of the screen height the fringe takes at a camera zoom (clamped to the two ends).
 	static func fraction_for(zoom: float) -> float:
@@ -745,11 +740,18 @@ class CanopyFrame extends CanvasLayer:
 		sprite.centered = false
 		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 		add_child(sprite)
+		_world = get_tree().get_first_node_in_group("world_2d")
 		_fit()
+		_tint()
 
 	func _process(_delta: float) -> void:
 		if _zoom != _camera_zoom() or _view != get_viewport().get_visible_rect().size:
 			_fit()
+		_tint()
+
+	func _tint() -> void:
+		if is_instance_valid(_world) and _world.day_night != null and sprite.modulate != _world.day_night.color:
+			sprite.modulate = _world.day_night.color
 
 	func _camera_zoom() -> float:
 		var cam: Camera2D = get_viewport().get_camera_2d()

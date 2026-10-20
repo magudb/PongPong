@@ -29,12 +29,15 @@ const SCENE_DIR := "res://scenes/ui/"
 ##  * The towns / social screens (RT7): `social_hud` (festival ribbon, birthday chips) sits right behind the HUDs; `event_overlay`
 ##    (the letterbox of an event scene) is between the HUDs and `dialogue_ui`, so the bars are drawn BEHIND the dialogue;
 ##    `people`, `gift_ui` and `post` are modals of the quest book's rank: above it, above the shops, below the pause menu.
+##  * The dungeon screens `appraisal_ui` (Fru Ugle, opened by LootService) and `rune_picker` (the hub's runestone) are modals of the
+##    same rank: their openers look them up with get_screen, so they draw and take keys below the pause menu like every other modal.
 ## Invariants (pinned by ui_foundation.game_ui_loads_new_ids_in_order and the foundation smoke): order[0] == hud,
 ## order[1] == forest_hud, order[-3] == pause_menu, order[-1] == settings_ui.
 const SCREEN_ORDER: Array[StringName] = [
 	&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal",
 	&"people", &"gift_ui", &"post", &"map_ui", &"shop_ui", &"animal_care_ui", &"build_menu_ui",
 	&"husbyggeri", &"indretning", &"home_chest", &"home_amenities", &"garderobe", &"samlerbog",
+	&"appraisal_ui", &"rune_picker",
 	&"cheat_menu", &"pause_menu", &"save_load_ui", &"settings_ui",
 ]
 const MODE_FARM := &"farm"
@@ -43,8 +46,17 @@ const MODE_ACTION := &"action"
 const HUD_FOR_MODE := {&"farm": &"hud", &"action": &"forest_hud"}
 ## screens whose controls must never take keyboard focus
 const NO_FOCUS_SCREENS: Array[StringName] = [&"hud", &"forest_hud", &"social_hud"]
+## Test tools (F8 and the pause row "Testmenu"): loaded only while `debug_tools` is true. Release exports also leave their files out
+## (export_presets.cfg exclude_filter), and the export smoke checks both.
+const DEBUG_SCREENS: Array[StringName] = [&"cheat_menu"]
 
 var mode: StringName = MODE_FARM
+## Load DEBUG_SCREENS? A debug build (the editor, the harness) or an export with the custom feature `cheats`; tests may switch it off.
+var debug_tools: bool = debug_tools_enabled()
+
+## The PackedScenes of SCENE_DIR loaded this run, kept for the next world (a load, title -> Fortsæt): instancing them is cheap, loading
+## them (scripts, theme, textures: ~1.4 s for all screens, measured headless) is not. warm_step() fills it while the title is idle.
+static var _scenes: Dictionary = {}      # path -> PackedScene
 
 var _screens: Dictionary = {}            # id -> Node
 var _order: Array[StringName] = SCREEN_ORDER
@@ -75,6 +87,35 @@ func _exit_tree() -> void:
 		tree.node_added.disconnect(_on_node_added)
 
 
+static func debug_tools_enabled() -> bool:
+	return OS.is_debug_build() or OS.has_feature("cheats")
+
+
+## PERF-02: loads the next screen scene that is not cached yet; true when every screen is. The title calls it once per frame while
+## it sits idle, so Fortsæt / Bekræft no longer freeze the window while GameUI loads all screens in one go. One scene per frame, on
+## the main thread: worker-thread loading (ResourceLoader.load_threaded_request) leaks GDScript parser objects at exit in 4.7.2
+## (two in-function preloads of ui_fixtures.gd and social_layout.gd in one script are enough), which fails the harness.
+static func warm_step() -> bool:
+	for id in SCREEN_ORDER:
+		var path := scene_path(id)
+		if _scenes.has(path) or (id in DEBUG_SCREENS and not debug_tools_enabled()) or not ResourceLoader.exists(path):
+			continue
+		if _packed(path) == null:
+			_scenes[path] = null        # a broken scene is reported once (load_screens reports it again in the world)
+		return false
+	return true
+
+
+## The scene at `path`: the cached one, or a plain load (cached for SCENE_DIR).
+static func _packed(path: String) -> PackedScene:
+	if _scenes.has(path):
+		return _scenes[path]
+	var ps := load(path) as PackedScene
+	if ps != null and path.begins_with(SCENE_DIR):
+		_scenes[path] = ps
+	return ps
+
+
 ## Scene path of a screen id.
 static func scene_path(screen_id: StringName, dir: String = SCENE_DIR) -> String:
 	return "%s%s.tscn" % [dir, screen_id]
@@ -92,12 +133,12 @@ func load_screens(dir: String = "", order: Array = []) -> Array[StringName]:
 			_order.append(StringName(str(id)))
 	var loaded: Array[StringName] = []
 	for id in _order:
-		if _screens.has(id):
+		if _screens.has(id) or (id in DEBUG_SCREENS and not debug_tools):
 			continue
 		var path := scene_path(id, _dir)
 		if not ResourceLoader.exists(path):
 			continue
-		var ps := load(path) as PackedScene
+		var ps := _packed(path)
 		if ps == null:
 			push_error("GameUI: %s exists but is not a scene" % path)
 			continue

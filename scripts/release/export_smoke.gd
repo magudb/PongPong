@@ -33,6 +33,10 @@ func _run() -> void:
 		await tree.process_frame
 	_check("World boots", world.area != null and world.player != null)
 	_check("Map ships", world.game_ui.get_screen(&"map_ui") != null)
+	# Release exports ship no test menu (F8, the pause row) and no test-only verifier; a debug export may keep them.
+	var pause: Node = world.game_ui.get_screen(&"pause_menu")
+	var rows: Array = pause.call("_specs").map(func(row): return str(row[0])) if pause != null else []
+	_check("No test tools", OS.is_debug_build() or OS.has_feature("cheats") or (world.game_ui.get_screen(&"cheat_menu") == null and not "CheatButton" in rows and not ResourceLoader.exists("res://scenes/ui/cheat_menu.tscn") and not ResourceLoader.exists("res://scripts/ui/testing/cheat_actions.gd") and not ResourceLoader.exists("res://scripts/dungeon/gen/dungeon_verify.gd")))
 	await world.travel(&"traetoppen", &"default")
 	_check("City runtime data", world.area.map.id == &"traetoppen" and LevelStage.of(world.area) != null)
 	await world.travel(&"home", &"default")
@@ -47,7 +51,7 @@ func _run() -> void:
 			var file := FileAccess.open(argument.substr(9), FileAccess.WRITE)
 			if file != null: file.store_string(JSON.stringify(report))
 	print("RELEASE_SMOKE ", JSON.stringify(report))
-	game.quit_game(0 if failures.is_empty() else 1)
+	game.quit_game(0 if failures.is_empty() else 1, false)
 
 func _check(label: String, passed: bool) -> void:
 	print("SMOKE ", label, ": ", passed)

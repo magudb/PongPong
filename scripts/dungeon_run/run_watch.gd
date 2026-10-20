@@ -53,6 +53,17 @@ func _event(event: StringName, payload: Dictionary) -> void:
 				_summary_wait = 0.3
 		&"dungeon_surprise": _surprise(payload)
 		&"dungeon_runestone_activated": DungeonTutorial.say("rune")
+## The statistics of a run in progress from a save (DungeonFloors' run record): the count goes on after a Continue.
+func restore(record: Dictionary) -> void:
+	active = true
+	floors.clear()
+	for number in record.get("floors", []):
+		floors[int(number)] = true
+	deepest = int(record.get("deepest", 0))
+	finds = int(record.get("finds", 0))
+	rare = int(record.get("rare", 0))
+	kills = int(record.get("kills", 0))
+	best = str(record.get("best", ""))
 func _item(id: StringName, amount: int) -> void:
 	if not active: return
 	if id == &"tornebaer": _berry_seen = true

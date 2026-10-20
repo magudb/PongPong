@@ -128,7 +128,8 @@ func _localization(t) -> void:
 		var en := str(_lm.text_in(k, "en"))
 		if da == "" or en == "" or da == k or en == k or da != _lm.unescape_text(str(r["da"])) or en != _lm.unescape_text(str(r["en"])):
 			raw.append(k)
-	t.check("loc_keys_da_en", rows.size() == 914 and raw.is_empty(), "%d rows of 8 files, %d unresolved or different from the CSV: %s" % [rows.size(), raw.size(), str(raw.slice(0, 5))])
+	# 916 = 914 + the two HOME_GUEST_GIFT_WAITING rows of home.csv (SYS-10: a refused guest gift waits at the door).
+	t.check("loc_keys_da_en", rows.size() == 916 and raw.is_empty(), "%d rows of 8 files, %d unresolved or different from the CSV: %s" % [rows.size(), raw.size(), str(raw.slice(0, 5))])
 	# every item has its three keys in both languages through the runtime lookup (what a Label with the key shows)
 	var missing: Array[String] = []
 	for id in _feature_ids():

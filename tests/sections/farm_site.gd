@@ -253,6 +253,9 @@ func _scenery(t) -> void:
 	world.day_night.snap()
 	await t.frames(3)
 	t.check("canopy_follows_night_colour", fx.canopy.modulate == world.day_night.color and fx.canopy.modulate != Color.WHITE)
+	var leaf_tint: Color = Color.WHITE if fx.leaves.material != null else world.day_night.color
+	t.check("falling_leaves_follow_night_colour", fx.leaves.modulate == leaf_tint and (fx.leaves.material != null or fx.leaves.modulate != Color.WHITE),
+		"the LeafFx layer (CanvasLayer 4) copies the night colour %s (fireflies, additive light, stay white): %s" % [world.day_night.color, fx.leaves.modulate])
 	world.day_night.override_hour = -1
 	var started := Time.get_ticks_usec()
 	for i in 10000:

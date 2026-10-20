@@ -6,30 +6,32 @@ Released Windows and macOS builds can be downloaded from GitHub Releases. Extrac
 
 ## Controls and equipment
 
-| Action | Keyboard / mouse |
-|---|---|
-| Move | WASD or arrow keys |
-| Run | Shift |
-| Toggle fairy flight where allowed | F |
-| Descend during flight | Ctrl |
-| Interact / talk | E or Enter |
-| Use selected tool; attack in adventure areas | Left mouse button |
-| Jump; dodge in adventure areas | Space |
-| Fairy light | Q |
-| Drink a healing supply | R |
-| Inventory | I or Tab |
-| Area map, exits and nearby people | M, or Pause → Map |
-| Clothing and loadout | G |
-| Farm buildings, field expansion and house upgrades | B, while on the farm |
-| Journal | J |
-| Hotbar slots | 1–8 |
-| Pause / close current panel | Escape |
+| Action | Keyboard / mouse | Controller |
+|---|---|---|
+| Move | WASD or arrow keys | Left stick |
+| Run | Shift | LT (hold) |
+| Toggle fairy flight where allowed | F | Y |
+| Climb / descend during flight | Space / Shift | A / LT |
+| Interact / talk | E or Enter | A (hops when there is nothing to use) |
+| Use selected tool; attack in adventure areas | Left mouse button or X | X |
+| Jump; dodge in adventure areas | Space | A; B |
+| Fairy light | Q | Y |
+| Drink a healing supply | R | RB |
+| Zoom | Mouse wheel, trackpad scroll or pinch | Right stick |
+| Inventory | I or Tab | Pause → Rygsæk |
+| Area map, exits and nearby people | M, or Pause → Map | Pause → Map |
+| Clothing and loadout | G | Pause → Garderobe |
+| Farm buildings, field expansion and house upgrades | B, while on the farm | Pause → Byg |
+| Decorate the home | H | Back |
+| Journal | J | Pause → Opgavebog |
+| Hotbar slots | 1–8 | D-pad left / right |
+| Pause / close current panel | Escape | Start / B |
 
 Press M, or choose Map in the pause menu, to see the current area, your blue diamond, named entrances and nearby people. Select a name with the mouse, arrow keys or controller to highlight its numbered marker. The map follows the farm's current deck, the towns' paths and bridges, and each interior's floor. In the dungeon it shows the ground you have explored. M, Escape or controller B closes it and resumes play.
 
 The clothing screen has separate outfit and hands/loadout views. Select an owned piece, preview it, then apply it to equip it. Tools, weapons and lantern gems use their own equipment slots. Weapon cards show damage, attack speed, damage per second, effects and recommended floors; lantern-gem cards show their actual modifiers. The same details appear when browsing shop stock. Equipment and clothing persist with the save. The character's hands and HUD identify the selected tool on the farm and the equipped weapon in adventure areas; an action keeps showing the item actually being used until it finishes.
 
-Use arrows, Enter and Escape to navigate panels. The on-screen hints also show controller bindings. Settings include the dungeon assist presets and reduced flashing.
+Use arrows, Enter and Escape to navigate panels; Q / E (or PgUp / PgDn) switch tabs, and Delete or Backspace deletes a save slot. The on-screen hints also show controller bindings. Settings include the dungeon assist presets and reduced flashing, and Settings → Styring lists every key and controller button. The pause menu shows each screen's key next to its row.
 
 ## Farm, home and towns
 
@@ -75,4 +77,4 @@ Save and load through the pause menu or title screen. The game also autosaves pe
 
 This milestone covers the planned single-player systems. Children, multiplayer, yearly birthday cards and a fifth friendship event are later work. The greenhouse, sprinklers and crop-processing machines are included following the 17 October 2026 scope decision. Additional Danish voices are synthetic placeholders with retained provenance; native-speaker copy and aesthetic listening review remain open editorial work.
 
-Press **F8**, or open **Pause → Cheat menu**, to test the game. The menu can refill health, energy and lantern oil; give gold and searchable items; unlock the wardrobe; travel between areas or to clear Treetop City platforms; advance time or the day; freeze the clock; and change the weather. Use Left/Right between tabs, Down into actions, and Esc or F8 to return. In the item list, Up/Down selects an item and Right moves to quantity. Item grants, money, unlocked clothing and calendar changes are part of the normal save. Clock freeze lasts for the current session and resets when a save is loaded or a new game starts.
+Press **F8**, or open **Pause → Cheat menu**, to test the game (debug builds only: the editor, `tools/dev/play.sh` and the test harness; release downloads leave the menu out). The menu can refill health, energy and lantern oil; give gold and searchable items; unlock the wardrobe; travel between areas or to clear Treetop City platforms; advance time or the day; freeze the clock; and change the weather. Use Left/Right between tabs, Down into actions, and Esc or F8 to return. In the item list, Up/Down selects an item and Right moves to quantity. Item grants, money, unlocked clothing and calendar changes are part of the normal save. Clock freeze lasts for the current session and resets when a save is loaded or a new game starts.

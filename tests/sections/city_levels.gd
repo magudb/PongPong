@@ -43,9 +43,9 @@ const GENERATOR_PATH := "res://scripts/world2d/levels/source/build_traetoppen_js
 ## sha256 of the BUILT framework files this package must not edit (git-free proof, taken when V3 landed): a legitimate later edit of one of
 ## them by its owner (P04 / P05) makes this check fail on purpose - update the hash in the same commit.
 const PINNED := {
-	"res://scripts/world2d/iso_area.gd": "9a77e13b0b41b902839c7d25dbe75bc88cc4ca0147a1b672b25c4a8303201d46",
-	"res://scripts/world2d/world_2d.gd": "5e1658e0cbfe1bc68bf239ff0ecaf000e08185a87648631f8cbd302b393826a7",
-	"res://scripts/world2d/game_data.gd": "03a66479819a83799b98fbd2db1e5cad4cbdb9b5e52d0113ba73f525160e5a0c",
+	"res://scripts/world2d/iso_area.gd": "4a4c138f9798ba542af57b88fdc5d96aa5cad7e4d5ddb05f7c41bedbba104e29",
+	"res://scripts/world2d/world_2d.gd": "8f04b1c5dec15ba8dab29abafbcea2d1b335e6a6fbd275d160885eae80394b44",
+	"res://scripts/world2d/game_data.gd": "1482455c8c0cb634a4bfe8dc35215e6b45631cbc6c5ea6861e1fd33944ba519e",
 	"res://scripts/world2d/art_catalog.gd": "d63c4e78103a600ac646269f9f50113a1d1b5b81858b8a5aff02b44d69dc9261",
 	"res://scripts/isometric/iso_chibi_sprite_2d.gd": "223f6ef7eec8446ea3b0410a1ebb7b2aa58a141a5b271325f8cea51e4d73e977",
 	"res://scripts/isometric/character_catalog.gd": "2a56f24f8abf4312709284391e5f605e0894b386a68e6f08d8093b86dc11e556",
@@ -649,14 +649,13 @@ func _data_files(t) -> void:
 	var caches: Dictionary = LuaData.dict(cfg.get("caches", {}))
 	var lift: Dictionary = LuaData.dict(cfg.get("skovlift", {}))
 	var stops: Array = LuaData.arr(LuaData.dict(cfg.get("fast_travel", {})).get("stops", []))
-	var weekdays: Array = LuaData.arr(LuaData.dict(cfg.get("stall", {})).get("weekdays", []))
 	var numbers_ok: bool = absf(LuaData.num(cfg.get("scale", 0.0)) - 3.0) < 0.0001 and LuaData.int_of(post.get("per_day", 0)) == 1 and LuaData.arr(post.get("givers", [])).size() == 6 \
 		and LuaData.int_of(board.get("max", 0)) == 5 and LuaData.arr(board.get("givers", [])).size() == 6 and LuaData.int_of(bath.get("minutes", 0)) == 30 and bool(bath.get("once_per_day", false)) \
 		and LuaData.int_of(LuaData.dict(swap.get("give", {})).get("carrot", 0)) == 2 and bool(swap.get("once_per_day", false)) and LuaData.int_of(LuaData.dict(swap.get("table", {})).get("moonflower_seeds", 0)) == 3 and LuaData.int_of(LuaData.dict(swap.get("table", {})).get("glow_berry_seeds", 0)) == 2 \
-		and weekdays == [5, 6] and LuaData.int_of(caches.get("slots", 0)) == 5 and LuaData.int_of(caches.get("gold_min", 0)) == 20 and LuaData.int_of(caches.get("gold_max", 0)) == 50 \
+		and LuaData.int_of(caches.get("slots", 0)) == 5 and LuaData.int_of(caches.get("gold_min", 0)) == 20 and LuaData.int_of(caches.get("gold_max", 0)) == 50 \
 		and str(lift.get("to_area", "")) == "moerkeskoven" and str(lift.get("spawn", "")) == "from_traetoppen" and stops.size() == 4
 	var documented: bool = true
-	for key in ["scale", "zoom", "post", "board", "bath", "swap", "stall", "caches", "skovlift", "fast_travel"]:
+	for key in ["scale", "zoom", "post", "board", "bath", "swap", "caches", "skovlift", "fast_travel"]:
 		if not lua_text.contains("-- %s:" % key):
 			documented = false
 	var stretch_label: bool = lua_text.contains("used only by Rejsestolpen (V6, STRETCH)")
@@ -666,7 +665,7 @@ func _data_files(t) -> void:
 		if not (_data["spawns"] as Dictionary).has(str(LuaData.dict(s).get("spawn", ""))):
 			stop_spawns_ok = false
 	t.check("config_numbers_documented", numbers_ok and documented and stretch_label and agree and stop_spawns_ok,
-		"lua/config/traetoppen.lua: scale 3.0, post {6 givers, per_day 1}, board {max 5}, bath {30 min, once a day}, swap {2 carrots, moonflower 3 : glow berry 2}, stall weekdays 5 6, caches {5 slots, gold 20..50}, skovlift {moerkeskoven, from_traetoppen}; every key has its comment line, the fast_travel rows carry 'used only by Rejsestolpen (V6, STRETCH)', scale and lift agree with the JSON, every stop names a spawn of the JSON (numbers %s, documented %s, label %s, agree %s)" % [numbers_ok, documented, stretch_label, agree])
+		"lua/config/traetoppen.lua: scale 3.0, post {6 givers, per_day 1}, board {max 5}, bath {30 min, once a day}, swap {2 carrots, moonflower 3 : glow berry 2}, caches {5 slots, gold 20..50}, skovlift {moerkeskoven, from_traetoppen}; every key has its comment line, the fast_travel rows carry 'used only by Rejsestolpen (V6, STRETCH)', scale and lift agree with the JSON, every stop names a spawn of the JSON (numbers %s, documented %s, label %s, agree %s)" % [numbers_ok, documented, stretch_label, agree])
 	# --- levels.csv
 	var lm: Node = t.autoload("LocalizationManager")
 	var keys: Array[String] = ["LEVEL_PROMPT_CLIMB", "LEVEL_PROMPT_LIFT", "LEVEL_LIFT_CLOSED"]

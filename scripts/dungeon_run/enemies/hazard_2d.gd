@@ -8,6 +8,7 @@ var direction := Vector2.RIGHT
 var speed: float = 260
 var damage: int = 1
 var age: float = 0
+var _ray: PhysicsRayQueryParameters2D
 func _physics_process(dt: float) -> void:
 	if GameManager.is_modal_open():return
 	age += dt
@@ -16,7 +17,11 @@ func _physics_process(dt: float) -> void:
 		return
 	var player := PlayerRegistry.local_player(get_tree()) as Node2D
 	if mode == "bolt":
-		global_position += Iso.to_screen(direction*speed*dt)
+		var step := Iso.to_screen(direction*speed*dt)
+		if _blocked(global_position,global_position+step):
+			queue_free()
+			return
+		global_position += step
 		if player != null and Iso.ground_dist(global_position,player.global_position) <= radius and player.has_method("take_damage"):
 			player.take_damage(1 if DungeonRun.assist("assist_dmg") else damage,global_position)
 			queue_free()
@@ -25,6 +30,14 @@ func _physics_process(dt: float) -> void:
 	elif player != null and Iso.ground_dist(global_position,player.global_position) <= radius and player.has_method("apply_slow"):
 		player.apply_slow(.6,.12)
 	queue_redraw()
+## A bolt breaks on trees, walls and solid props (LAYER_WORLD) like a flier's body would; it flies on over water.
+func _blocked(from: Vector2, to: Vector2) -> bool:
+	if _ray == null:
+		_ray = PhysicsRayQueryParameters2D.new()
+		_ray.collision_mask = Iso.LAYER_WORLD
+	_ray.from = from
+	_ray.to = to
+	return not get_world_2d().direct_space_state.intersect_ray(_ray).is_empty()
 func _draw() -> void:
 	draw_set_transform(Vector2.ZERO,0,Vector2(1,Iso.squash()))
 	if mode == "bolt":

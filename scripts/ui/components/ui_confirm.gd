@@ -6,6 +6,7 @@ extends Control
 ##
 ##   if await UiConfirm.ask(self, "UI_CONFIRM_TITLE", "UI_CONFIRM_OVERWRITE", "NAV_OK", "NAV_CANCEL", &"cancel", [slot]):      # -> bool
 ##   var name := await UiConfirm.ask_text(self, "UI_RENAME", old_name, 24)                                           # -> "" = cancelled
+##   var n := await UiConfirm.ask_amount(self, "STORE_DISCARD", "STORE_DISCARD_AMOUNT_FMT", "STORE_DISCARD", 1, count, count, [name])  # -> 0 = cancelled
 ##
 ## Pattern C: Left / Right / Up / Down / Tab / Shift+Tab swap the two buttons, focus never leaves the dialog; `default` (&"cancel" or &"ok") picks the button
 ## that has focus first - the HARMLESS answer for every destructive question (overwrite, delete, load, build). Esc, Start and pad B cancel (read in `_input`,
@@ -15,6 +16,9 @@ extends Control
 ##
 ## `text` of ask() is a DISPLAY string; when it is a translation key (UPPER_CASE with an underscore) it is translated and formatted with `text_args`, and it
 ## re-labels on a language switch. Titles and button words are keys. ask_text() returns the text typed, strip_edges()ed; an empty text counts as "cancelled".
+## ask_amount() adds a `quantity_stepper` above the buttons and returns the chosen amount (0 = cancelled). The stepper has focus first (choosing a number is
+## harmless); Accept on it moves focus to the OK button, so a destructive amount always takes a second, deliberate press. Up / Down / Tab ring stepper ->
+## buttons -> stepper.
 
 signal answered(result: Variant)
 
@@ -22,6 +26,7 @@ const SCENE_PATH := "res://scenes/ui/components/ui_confirm.tscn"
 const MODAL := &"confirm"
 const DEFAULT_OK := &"ok"
 const DEFAULT_CANCEL := &"cancel"
+const STEPPER_SCENE := "res://scenes/ui/components/quantity_stepper.tscn"
 
 var _text_mode := false
 var _title_key := ""
@@ -35,6 +40,8 @@ var _max_len := 24
 var _open := false
 var _prev_focus: Variant = null
 var _wired := false
+var _amount_mode := false
+var _stepper: Control = null
 
 @onready var _panel: PanelContainer = %Panel
 @onready var _title_label: Label = %TitleLabel
@@ -64,6 +71,17 @@ static func ask_text(asker: Control, title_key: String, initial: String, max_len
 	dlg.begin()
 	var result: Variant = await dlg.answered
 	return str(result)
+
+
+## Asks for an amount in [lo, hi] (starting at `initial`) with a stepper. Returns the amount, 0 when cancelled.
+static func ask_amount(asker: Control, title_key: String, text: String, ok_key: String, lo: int, hi: int, initial: int, text_args: Array = []) -> int:
+	var dlg := _make(asker)
+	if dlg == null:
+		return 0
+	dlg.setup_amount(title_key, text, ok_key, lo, hi, initial, text_args)
+	dlg.begin()
+	var result: Variant = await dlg.answered
+	return int(result)
 
 
 static func _make(asker: Control) -> UiConfirm:
@@ -102,7 +120,7 @@ func _exit_tree() -> void:
 	if gm != null:
 		gm.call("pop_modal", MODAL)
 	# Removing the asker cancels the request and releases any surviving awaiter.
-	answered.emit("" if _text_mode else false)
+	answered.emit("" if _text_mode else (0 if _amount_mode else false))
 
 
 # ----------------------------------------------------------------------------------------------------------------- setup
@@ -117,6 +135,23 @@ func setup(title_key: String, text: String, ok_key: String, cancel_key := "NAV_C
 	_default = default if default == DEFAULT_OK else DEFAULT_CANCEL
 	if is_node_ready():
 		_apply_texts()
+
+
+## ask() with a quantity stepper (see ask_amount); the default answer is the stepper itself.
+func setup_amount(title_key: String, text: String, ok_key: String, lo: int, hi: int, initial: int, text_args: Array = []) -> void:
+	setup(title_key, text, ok_key, "NAV_CANCEL", DEFAULT_CANCEL, text_args)
+	_amount_mode = true
+	if _stepper == null:
+		_stepper = (load(STEPPER_SCENE) as PackedScene).instantiate() as Control
+		_stepper.name = "AmountStepper"
+		_stepper.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		var column := get_node("Center/Panel/Column")
+		column.add_child(_stepper)
+		column.move_child(_stepper, (column.get_node("TextLabel") as Control).get_index() + 1)
+		_stepper.connect(&"committed", func(_value: int) -> void: _ok_button.grab_focus())
+	_stepper.call("set_range", lo, hi)
+	_stepper.set("value", clampi(initial, lo, maxi(lo, hi)))
+	_wire_vertical()
 
 
 func setup_text(title_key: String, initial: String, max_len := 24, ok_key := "NAV_OK") -> void:
@@ -171,6 +206,21 @@ func _wire_vertical() -> void:
 		_ok_button.focus_previous = _ok_button.get_path_to(_cancel_button)
 		_ok_button.focus_next = _ok_button.get_path_to(_field)
 		UiNav.yield_updown_from_fields(self)
+	elif _amount_mode and _stepper != null and _stepper.is_inside_tree():
+		# stepper -> Fortryd / OK -> stepper; Left / Right on the stepper change the amount (it passes them on at the range ends: no way out)
+		UiNav.link(_stepper, UiNav.UP, _cancel_button)
+		UiNav.link(_stepper, UiNav.DOWN, _cancel_button)
+		UiNav.link(_stepper, UiNav.LEFT, _stepper)
+		UiNav.link(_stepper, UiNav.RIGHT, _stepper)
+		for b in [_cancel_button, _ok_button]:
+			UiNav.link(b, UiNav.UP, _stepper)
+			UiNav.link(b, UiNav.DOWN, _stepper)
+		_stepper.focus_next = _stepper.get_path_to(_cancel_button)
+		_stepper.focus_previous = _stepper.get_path_to(_ok_button)
+		_cancel_button.focus_previous = _cancel_button.get_path_to(_stepper)
+		_cancel_button.focus_next = _cancel_button.get_path_to(_ok_button)
+		_ok_button.focus_previous = _ok_button.get_path_to(_cancel_button)
+		_ok_button.focus_next = _ok_button.get_path_to(_stepper)
 	else:
 		for b in [_cancel_button, _ok_button]:
 			var other: Button = _ok_button if b == _cancel_button else _cancel_button
@@ -205,7 +255,7 @@ func begin() -> void:
 func _focus_default() -> void:
 	if not _open or not is_inside_tree():
 		return
-	var target: Control = _field if _text_mode else (_ok_button if _default == DEFAULT_OK else _cancel_button)
+	var target: Control = _field if _text_mode else (_stepper if _amount_mode else (_ok_button if _default == DEFAULT_OK else _cancel_button))
 	if target.is_visible_in_tree():
 		target.grab_focus()
 		if _text_mode:
@@ -269,6 +319,8 @@ func _finish(accepted: bool) -> void:
 	var result: Variant = accepted
 	if _text_mode:
 		result = _field.text.strip_edges() if accepted else ""
+	elif _amount_mode:
+		result = int(_stepper.get("value")) if accepted else 0
 	var gm := Svc.node("GameManager")
 	if gm != null:
 		gm.call("pop_modal", MODAL)

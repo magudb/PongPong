@@ -1,12 +1,17 @@
 extends VBoxContainer
 ## One ability button of the forest HUD (guide section 10): frame with gold double ring, dark cooldown veil rising
 ## from the bottom, cooldown seconds in Caprasimo, and the key cap below ("Venstre klik", "Mellemrum", "Q", "R").
-## The icon draws item art from assets/icons/items/<id>.webp (TTItemIcon: items, home, wardrobe) when it exists; until then the
-## frame shows the ability's Danish word in tiny mono like the guide mock ("slag", "undvig", "fe-lys", "drik"): the text of the key
-## ABILITY_<ID> (ABILITY_SLASH, ...; forest.csv, owner P19). The icon id itself ('slash') is English and technical, so it is NEVER
-## shown: while ABILITY_<ID> has no translation the slot shows the icon only (the picture when there is one, else an empty frame).
+## The icon draws item art (TTItemIcon: items, home, wardrobe) so the four slots read at a glance on a dark floor: ART names the
+## picture of each ability (sword, boots, fairy dust, red tonic) until abilities get art of their own; any other id looks up
+## <id>.webp itself. Without a picture the frame shows the ability's Danish word in tiny mono like the guide mock ("slag", "undvig",
+## "fe-lys", "drik"): the text of the key ABILITY_<ID> (ABILITY_SLASH, ...; forest.csv, owner P19). The icon id itself ('slash')
+## is English and technical, so it is NEVER shown: while ABILITY_<ID> has no translation the slot shows the icon only (the picture
+## when there is one, else an empty frame).
 ## setup() and set_cooldown() may be called before the slot is in the tree (the forest HUD builds its four slots instantiate ->
 ## setup -> add_child): the data is kept and applied in `_ready`. The word and the key cap follow a language switch.
+
+## ability id -> the item art drawn for it (UX-19: the words alone were unreadable mid-fight).
+const ART := {&"slash": &"iron_sword", &"dodge": &"shoes_boots_wind", &"light": &"fairy_dust", &"drink": &"health_tonic"}
 
 @onready var frame: Control = %Frame
 @onready var icon = %Icon
@@ -60,6 +65,11 @@ static func label_for(ability_id: StringName) -> String:
 	return "" if word == key or word == "" else str(word)
 
 
+## The picture id of an ability: its ART entry, else the ability id itself.
+static func art_for(ability_id: StringName) -> StringName:
+	return ART.get(ability_id, ability_id)
+
+
 ## The text drawn inside the frame while there is no picture ("" = nothing).
 func shown_label() -> String:
 	return icon.fallback_label() if is_node_ready() else label_for(icon_id)
@@ -74,7 +84,7 @@ func _apply_setup() -> void:
 	frame.custom_minimum_size = Vector2(_side, _side)
 	icon.id_fallback = false                        # the id is English: no word -> the picture only
 	icon.mode = TTItemIcon.Mode.LABEL               # LABEL until art exists
-	icon.item_id = icon_id
+	icon.item_id = art_for(icon_id)
 	_apply_texts()
 
 

@@ -17,5 +17,17 @@ UPDATE_STATE_INSTALLING,Opdaterer spillet. Det starter igen om lidt.,Updating th
 UPDATE_STATE_UNAVAILABLE,Kunne ikke søge efter opdateringer. Prøv igen senere.,Could not check for updates. Try again later.
 UPDATE_STATE_UNSUPPORTED,Automatiske opdateringer findes til Windows og macOS.,Automatic updates are available for Windows and macOS.
 UPDATE_STATE_DOWNLOAD_FAILED,Opdateringen kunne ikke hentes eller kontrolleres. Din nuværende udgave er bevaret.,The update could not be downloaded or verified. Your current version is unchanged.
-UPDATE_STATE_INSTALL_FAILED,Kunne ikke starte installationen. Pak spillet ud i en mappe du kan skrive i og prøv igen.,Could not start installation. Extract the game into a writable folder and try again.
+UPDATE_STATE_INSTALL_FAILED,Opdateringen kunne ikke installeres. Din nuværende udgave er bevaret.,The update could not be installed. Your current version is unchanged.
+UPDATE_FAIL_FOLDER,"Spillet ligger i en mappe, der ikke kan opdateres. Pak det ud i en mappe du kan skrive i og prøv igen.",The game is in a folder that cannot be updated. Extract it into a writable folder and try again.
+UPDATE_FAIL_CHECKSUM,Den hentede fil passede ikke til udgivelsen. Prøv at hente opdateringen igen.,The downloaded file did not match the release. Try downloading the update again.
+UPDATE_FAIL_PACKAGE,Opdateringspakken var ufuldstændig eller ikke godkendt. Din nuværende udgave er bevaret.,The update package was incomplete or not approved. Your current version is unchanged.
+UPDATE_FAIL_GAME_RUNNING,"Spillet lukkede ikke i tide, så opdateringen blev ikke installeret.","The game did not close in time, so the update was not installed."
+UPDATE_FAIL_LOCKED,Spillets filer var i brug af et andet program. Vent lidt og prøv igen.,The game files were in use by another program. Wait a moment and try again.
+UPDATE_FAIL_LAUNCH,"Den nye udgave kunne ikke starte, så den forrige udgave er sat tilbage.","The new version could not start, so the previous version was restored."
+UPDATE_REPORT_INSTALLED,Opdateret til version %s,Updated to version %s
+UPDATE_REPORT_FAILED,Den seneste opdatering blev ikke installeret,The last update was not installed
 UPDATE_STATE_SAVE_FAILED,Spillet kunne ikke gemmes. Opdateringen er sat på pause.,The game could not be saved. The update has been stopped.
+UPDATE_AUTO_CHECK,"Søg efter en nyere udgave, når spillet starter",Check for a newer version when the game starts
+UPDATE_SOURCE,Spillet spørger GitHub (github.com/%s) om nye udgaver og sender kun sit versionsnummer.,The game asks GitHub (github.com/%s) about new versions and only sends its version number.
+UPDATE_STOP,Stop hentningen,Stop the download
+UPDATE_DOWNLOAD_PROGRESS,Henter opdateringen… %d af %d MB. Du kan lukke dette panel og spille videre imens.,Downloading the update… %d of %d MB. You can close this panel and keep playing meanwhile.

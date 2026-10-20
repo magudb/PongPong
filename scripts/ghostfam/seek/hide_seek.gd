@@ -9,6 +9,8 @@ static var _feedback := {}
 static var _feedback_day := -1
 var _tick := 0.0
 var _phase := 0.0
+var _slot: Dictionary = {}
+var _slot_minute := -1              # the game minute _slot was resolved for: the routine moves Blund per minute, not per 0.1 s
 static var _kin_hint := false
 var _claiming := false
 static func cfg() -> Dictionary:
@@ -69,7 +71,11 @@ func _process(delta: float) -> void:
 	_tick = 0
 	_refresh()
 func _live_slot() -> Dictionary:
-	var slot := slot_now()
+	var minute := (GameManager.total_day()*24+GameManager.hour)*60+GameManager.minute
+	if minute!=_slot_minute:
+		_slot_minute = minute
+		_slot = slot_now()
+	var slot := _slot
 	if slot.is_empty() or not is_instance_valid(npc.area) or str(npc.area.map.id)!=str(slot.area):return {}
 	var ground := NpcDirector.post_ground(str(slot.area),StringName(str(slot.post)))
 	if ground==Vector2.INF:return {}

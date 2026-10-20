@@ -3,6 +3,7 @@ extends Control
 var _rows: Array = []
 var _last_row: Control
 var _updates_button: Button
+var _shown_frames := 0
 
 func _ready() -> void:
 	GameManager.pop_all_modals()
@@ -46,6 +47,13 @@ func _ready() -> void:
 	if DisplayServer.get_name() == "headless" and "--release-smoke" in OS.get_cmdline_user_args():
 		get_tree().root.add_child.call_deferred(load("res://scripts/release/export_smoke.gd").new())
 
+## While the title waits for the player, GameUI's screens load one per frame (PERF-02), not all at once after Fortsæt / Bekræft.
+## The first frames draw the title before anything loads.
+func _process(_delta: float) -> void:
+	_shown_frames += 1
+	if _shown_frames > 2 and GameUI.warm_step():
+		set_process(false)
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
 		_refresh_labels()
@@ -54,18 +62,29 @@ func _refresh_labels() -> void:
 	if not is_node_ready():
 		return
 	%LanguageButton.text = tr("MENU_VERSION_TAG")
-	UiNav.set_enabled(%ContinueButton, SaveManager.has_any_save())
+	var rows: Array[Dictionary] = SaveManager.describe_slots()      # once per refresh: every value below comes from these rows
+	var latest: int = SaveManager.latest_slot_of(rows)
+	UiNav.set_enabled(%ContinueButton, latest != SaveManager.NO_SLOT)
 	var loadable := 0
-	for descriptor in SaveManager.describe_slots():
+	var unreadable := false
+	for descriptor in rows:
 		if descriptor.state in ["ok", "backup"]:
 			loadable += 1
-	%LoadButton.visible = loadable >= 2
-	UiNav.set_enabled(%LoadButton, loadable >= 2)
-	var latest: int = SaveManager.get_latest_slot()
-	%ContinueInfo.text = tr("MENU_CONTINUE_DAY") % int(SaveManager.get_save_summary(latest).get("total_day", 1)) if latest >= 0 else ""
+		elif descriptor.state in ["newer", "corrupt"]:
+			unreadable = true
+	# A save that cannot be read is shown too (the load screen names its state): it must never look as if there were none.
+	%LoadButton.visible = loadable >= 2 or unreadable
+	UiNav.set_enabled(%LoadButton, %LoadButton.visible)
+	var latest_summary: Dictionary = rows.filter(func(row: Dictionary) -> bool: return int(row.slot) == latest).front().summary if latest >= 0 else {}
+	%ContinueInfo.text = tr("MENU_CONTINUE_DAY") % int(latest_summary.get("total_day", 1)) if latest >= 0 else ""
 	_rows = [%ContinueButton, %LoadButton, %NewGameButton, %SettingsButton, %QuitButton]
-	_updates_button.visible = ReleaseUpdates.inst().state in ["available", "ready"]
-	_updates_button.text = tr("UPDATE_AVAILABLE") % str(ReleaseUpdates.inst().available.get("version", ""))
+	# A background download (and one that failed: the panel offers the retry) keeps the row; so does the outcome of the last install.
+	var updates := ReleaseUpdates.inst()
+	var offered := updates.state in ["available", "downloading", "ready", "download_failed"] and not updates.available.is_empty()
+	_updates_button.visible = offered or not updates.report.is_empty()
+	_updates_button.text = tr("UPDATE_AVAILABLE") % str(updates.available.get("version", ""))
+	if not offered and not updates.report.is_empty():
+		_updates_button.text = tr("UPDATE_REPORT_INSTALLED") % ReleaseUpdates.current_version() if updates.report.status == "installed" else tr("UPDATE_REPORT_FAILED")
 	if _updates_button.visible: _rows.insert(_rows.size() - 1, _updates_button)
 	UiNav.wire_ring(_rows)
 	UiNav.wire_row([%LanguageButton])
@@ -98,8 +117,18 @@ func _input(event: InputEvent) -> void:
 func _remember(row: Control) -> void:
 	UiNav.remember(&"title", row.name)
 
+## A save already exists: ask first (Cancel is the default) and name the run, so nobody starts over by accident. The run is kept
+## either way (its manual slot, or its autosave as SaveManager.PREV_AUTO_SLOT), which the question says.
 func _on_new_game() -> void:
 	_remember(%NewGameButton)
+	var latest: int = SaveManager.get_latest_slot()
+	if latest != SaveManager.NO_SLOT:
+		var summary: Dictionary = SaveManager.get_save_summary(latest)
+		var run_name := str(summary.get("farm_name", ""))
+		if run_name == "":
+			run_name = str(summary.get("player_name", ""))
+		if not await UiConfirm.ask(self, "TITLE_NEW_GAME_TITLE", "TITLE_NEW_GAME_CONFIRM", "MENU_NEW_GAME", "NAV_CANCEL", &"cancel", [run_name, int(summary.get("total_day", 1))]):
+			return
 	get_tree().change_scene_to_file("res://scenes/ui/character_select.tscn")
 
 func _on_continue() -> void:

@@ -508,6 +508,7 @@ func _save() -> void:
 	t.expect(typeof(eco.inventory[0]["amount"]) == TYPE_INT and typeof(eco.gold) == TYPE_INT, "amounts and gold are ints after the JSON round trip")
 	t.expect((d["inventory"] as Array).all(func(s: Dictionary) -> bool: return typeof(s["id"]) == TYPE_STRING and s.has("amount") and s.has("meta")), "to_dict writes plain Strings and keeps the slot meta")
 	# garbage in: invalid slots are dropped, big stacks are split, tools stay one per slot
+	t.allow("EconomyManager: from_dict dropped")              # a lossy load is an engine error (QUAL-08); the junk below provokes it
 	var junk := {"gold": 12.0, "inventory": [{"id": "wood", "amount": 3.0}, {"id": "", "amount": 2}, {"id": "stone", "amount": -5}, "oops", 17, {"id": "carrot", "amount": 250}, {"id": "hoe_wooden", "amount": 3}, {"id": "moss"}], "equipment": {"tool_hoe": "axe_wooden", "weapon": "ghost_sword"}}
 	t.expect(eco.from_dict(junk), "from_dict never throws on bad data")
 	var inv := _inv()
@@ -526,6 +527,7 @@ func _save() -> void:
 	eco.from_dict({"gold": 999999999, "inventory": {"wood": 7.0, "stone": 0}})
 	t.expect(eco.gold == eco.MAX_GOLD and _inv() == {"wood": 7}, "gold is clamped on load and {id: amount} dictionaries are accepted")
 	t.expect(eco.from_dict({}) and eco.used_slots() == 0, "an empty dictionary loads as an empty backpack")
+	t.expect(t.allowed_count("EconomyManager: from_dict dropped") >= 2, "the dropped slots are reported as engine errors, not only on stdout (%d)" % t.allowed_count("EconomyManager: from_dict dropped"))
 	# the section SaveManager reads
 	t.new_game()
 	var d2: Dictionary = eco.to_dict()
@@ -846,6 +848,7 @@ shops = {
     },
     rotation = {
       { id = "daily", period = 1, pick = 2, qty = 2, rarity = "normal", price_mult = 1.0, pool = { "cookie", "wood" } },
+      { id = "weekly", period = 7, pick = 1, qty = 2, rarity = "normal", price_mult = 1.0, pool = { "cookie", "wood" } },
     },
   },
   fixture_nobuy = {
@@ -983,7 +986,9 @@ func _shops_from_lua() -> void:
 	var w := _watch(["shop_opened", "shop_closed"])
 	t.expect(shop.open_shop("general_store") and _args(w, "shop_opened") == [[&"seed_shop"]], "open_shop emits shop_opened (the legacy id general_store opens seed_shop)")
 	shop.close_shop(&"seed_shop")
+	t.allow("ShopSystem: open_shop(no_such_shop): no such shop")     # an unknown shop is a contract error: one engine warning (QUAL-08)
 	t.expect(_args(w, "shop_closed") == [[&"seed_shop"]] and not shop.open_shop("no_such_shop") and _count(w, "shop_opened") == 1, "close_shop emits shop_closed; an unknown shop opens nothing")
+	t.expect(t.allowed_count("ShopSystem: open_shop(no_such_shop): no such shop") == 1, "...and says so in one engine warning")
 	_unwatch(w)
 	var info: Dictionary = shop.get_shop_info("seed_shop")
 	t.expect(info["npc_id"] == "merchant_pip" and info["keeper"] == "merchant_pip" and info["closed"] == false and info["id"] == "seed_shop", "get_shop_info: id, keeper (npc_id), open state")
@@ -1023,6 +1028,21 @@ func _prices_and_selling() -> void:
 	_unwatch(sw)
 	t.expect(not shop.sell_item("seed_shop", &"turnip", 1) and shop.last_refusal == &"not_owned", "selling what you do not have is refused (not_owned)")
 	t.expect(not shop.sell_item("seed_shop", &"fern", 4) and eco.count_item(&"fern") == 3 and shop.last_refusal == &"not_owned", "selling more than you have is refused and takes nothing")
+	# the gold cap (SYS-08): a sale whose pay the wallet cannot hold is refused whole, nothing is taken; what fits still sells
+	var gold_keep: int = eco.gold
+	eco.add_item(&"turnip", 5, true)
+	eco.add_gold(eco.MAX_GOLD)
+	eco.add_gold(-100)
+	var toasts_cap := _watch(["notification_posted"])
+	var capped: bool = shop.sell_item("seed_shop", &"turnip", 3)
+	var cap_refusal: StringName = shop.last_refusal
+	var cap_toasted: bool = not _args(toasts_cap, "notification_posted").is_empty()
+	_unwatch(toasts_cap)
+	var fits: bool = shop.sell_item("seed_shop", &"turnip", 2)
+	t.check("sell_refused_at_gold_cap", not capped and cap_refusal == &"wallet_full" and cap_toasted and fits and eco.gold == eco.MAX_GOLD - 10 and eco.count_item(&"turnip") == 3 and not eco.sell_item(&"turnip", 1, 45) and eco.count_item(&"turnip") == 3,
+		"at 999 899 gold 3 turnips (135) do not fit: refused as wallet_full with a toast and kept; 2 (90) sell; EconomyManager.sell_item refuses the same way (gold %d, turnips %d)" % [eco.gold, eco.count_item(&"turnip")])
+	eco.remove_item(&"turnip", 3)
+	eco.add_gold(gold_keep - eco.gold)
 	var special_ok := true
 	eco.add_item(&"friendship_token", 1, true)
 	eco.add_item(&"flower_necklace", 1, true)
@@ -1257,12 +1277,27 @@ func _rotation_and_curve() -> void:
 	# a curve that answers nothing falls back
 	_force_curve_off()
 	t.expect(shop.get_buy_price("fixture_rotating", &"lantern_oil") == 50, "a curve source that answers null falls back to base x multiplier x discount")
-	# counts of rotation rows survive the day while the item stays on offer and vanish when it leaves
+	# a bought count belongs to one run of its slot (SYS-02): the daily slot draws the cookie again tomorrow, and it is full again
 	gm.end_day()
-	t.expect(int(_row("fixture_rotating", &"cookie")["stock"]) == 0, "an item that is still on offer keeps its bought count over the day change")
+	t.check("rotation_redraw_is_full", int(_row("fixture_rotating", &"cookie")["stock"]) == 2, "the daily slot drew the sold-out cookie again the next day: a new offer with its full 2 units, not sold out")
+	# a weekly slot keeps the count all week long, through a save, and forgets it when the slot draws again
+	shop.set_rotation_source(func(_s: String) -> Array: return [{"item": "cookie", "stock": 2, "slot": "weekly"}])
+	var week_day: int = gm.total_day()
+	t.expect(week_day < 7 and shop.buy_item("fixture_rotating", &"cookie", 2) and int(_row("fixture_rotating", &"cookie")["stock"]) == 0, "the weekly cookie (day %d) is bought out" % week_day)
+	gm.end_day()
+	t.expect(int(_row("fixture_rotating", &"cookie")["stock"]) == 0, "an offer that runs all week keeps its bought count over the day change")
+	shop.from_dict(JSON.parse_string(JSON.stringify(shop.to_dict())))
+	t.expect(int(_row("fixture_rotating", &"cookie")["stock"]) == 0, "the bought count of the weekly offer survives the save round trip")
+	shop.from_dict({"rotation_bought": {"fixture_rotating": {"cookie": 1}}})
+	t.expect(int(_row("fixture_rotating", &"cookie")["stock"]) == 1, "an older save's plain count is the count of today's offer")
+	shop.buy_item("fixture_rotating", &"cookie", 1)
+	while gm.total_day() < 8:
+		gm.end_day()
+	t.check("rotation_new_epoch_is_full", int(_row("fixture_rotating", &"cookie")["stock"]) == 2, "day %d: the weekly slot drew again (epoch 1) and the same cookie is a fresh offer of 2" % gm.total_day())
+	shop.buy_item("fixture_rotating", &"cookie", 1)
 	shop.set_rotation_source(func(_s: String) -> Array: return [{"item": "wood", "stock": 3, "price": 8}])
 	gm.end_day()
-	shop.set_rotation_source(func(_s: String) -> Array: return [{"item": "cookie", "stock": 2}])
+	shop.set_rotation_source(func(_s: String) -> Array: return [{"item": "cookie", "stock": 2, "slot": "weekly"}])
 	t.expect(int(_row("fixture_rotating", &"cookie")["stock"]) == 2, "an item that left the offer comes back with its full count")
 	# the production path: no scripts of F4, or scripts with another signature, never break a price or a listing
 	shop.set_rotation_source(Callable())

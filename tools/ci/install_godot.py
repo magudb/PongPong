@@ -77,6 +77,29 @@ def template_dir():
     return data / "Godot" / "export_templates" / (CONFIG["version"] + ".stable") if platform.system() in ("Darwin", "Windows") else data / "godot/export_templates" / (CONFIG["version"] + ".stable")
 
 
+def editor_executable(host):
+    """The member that holds the editor, named exactly by the pinned archive (never the console wrapper)."""
+    if host == "macos":
+        return "Godot.app/Contents/MacOS/Godot"
+    return CONFIG["archives"][host]["name"].removesuffix(".zip")
+
+
+def extract_editor(archive, root, host):
+    # A fresh folder per version: an old editor left by a previous pin can never be picked.
+    destination = root / CONFIG["version"]
+    if destination.exists():
+        shutil.rmtree(destination)
+    destination.mkdir(parents=True)
+    member = editor_executable(host)
+    with zipfile.ZipFile(archive) as source:
+        if member not in source.namelist():
+            raise ValueError(f"Pinned archive has no {member}")
+        source.extractall(destination)
+    binary = destination / member
+    binary.chmod(binary.stat().st_mode | 0o111)
+    return binary
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cache", type=Path, default=ROOT / ".godot-bin/downloads")
@@ -86,15 +109,7 @@ def main():
     host = {"Linux": "linux", "Darwin": "macos", "Windows": "windows"}[platform.system()]
     if not args.templates_only:
         archive = download(host, args.cache)
-        destination = ROOT / ".godot-bin/editor"
-        destination.mkdir(parents=True, exist_ok=True)
-        with zipfile.ZipFile(archive) as source:
-            source.extractall(destination)
-        if host == "macos":
-            binary = destination / "Godot.app/Contents/MacOS/Godot"
-        else:
-            binary = next(p for p in destination.iterdir() if p.is_file() and "console" not in p.name.lower())
-        binary.chmod(binary.stat().st_mode | 0o111)
+        binary = extract_editor(archive, ROOT / ".godot-bin/editor", host)
         if "GITHUB_ENV" in os.environ:
             with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as env:
                 env.write(f"GODOT={binary.resolve()}\n")

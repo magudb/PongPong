@@ -50,6 +50,8 @@ HOME_UNLOCK_LOOM,Væv,Loom
 HOME_UNLOCK_LOOM_DESC,"Væv stof, tæpper og gardiner.","Weave cloth, rugs and curtains."
 HOME_UNLOCK_GUEST_VISITS,Gæstebesøg,Guest visits
 HOME_UNLOCK_GUEST_VISITS_DESC,Hver uge efterlader en fe-ven en lille gave ved døren.,Every week a fairy friend leaves a small gift at the door.
+HOME_GUEST_GIFT_WAITING_FMT,"%s kom forbi med en gave, men rygsækken er fuld. Gaven venter ved døren, til du får plads.","%s came by with a gift, but your backpack is full. The gift waits at the door until you make room."
+HOME_GUEST_GIFT_WAITING,"En fe-ven kom forbi med en gave, men rygsækken er fuld. Gaven venter ved døren, til du får plads.","A fairy friend came by with a gift, but your backpack is full. The gift waits at the door until you make room."
 HOME_UNLOCK_FORGE_BENCH,Smedebænk,Forge bench
 HOME_UNLOCK_FORGE_BENCH_DESC,"Smed messing, kobber og bladguld.","Forge brass, copper and gold leaf."
 HOME_UNLOCK_FORECAST,Vejrudsigt fra tårnet,Tower weather forecast

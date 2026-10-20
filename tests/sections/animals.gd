@@ -136,10 +136,14 @@ func _run(t) -> void:
 	t.check("placeable_commits_one_owned_copy",placed and world.placed_items.size() == 1 and eco.count_item(&"fence") == 1)
 	t.check("occupied_cell_refuses_duplicate",not PlacementService.place(&"fence",location) and eco.count_item(&"fence") == 1)
 	var saved_world: Dictionary = world.to_dict()
+	var drawn: Array = world.area.find_markers("building_slot")[0].node._placed_visuals.duplicate()
 	await world.travel(&"hyggebyen",&"default")
 	await world.travel(&"farm",&"default")
 	await t.frames(3)
 	t.check("placeables_replay_without_duplication",world.to_dict().placed == saved_world.placed and world.area.find_markers("building_slot")[0].node._placed_visuals.size() == 1)
+	# the parked farm comes back with the same prop nodes: re-entry reconciles instead of tearing down and rebuilding (review GAP4-06)
+	var redrawn: Array = world.area.find_markers("building_slot")[0].node._placed_visuals
+	t.check("placeables_survive_reentry_unrebuilt",drawn.size() == 1 and redrawn.size() == 1 and redrawn[0] == drawn[0] and is_instance_valid(drawn[0]) and not drawn[0].is_queued_for_deletion())
 	var stored_visuals: Array = world.area.find_markers("building_slot")[0].node._placed_visuals
 	var decoration: Node = stored_visuals[0].get_children().filter(func(n): return n is Interactable2D)[0]
 	decoration.interact(world.player)
@@ -153,6 +157,21 @@ func _run(t) -> void:
 		await t.frames(2)
 		t.check("species_%s_uses_approved_actor" % species,yard.actors.has(&"animal_preview") and yard.actors[&"animal_preview"].visual.resolved_id == Animal2D.VISUALS[species][1])
 	ah.from_dict(original)
+	await t.frames(2)
+	# GAP4-05: several babies bought at once move in one per free place; the rest wait in the backpack and the no-space toast says so
+	var coop: Variant = ah.building_of(&"coop")
+	var free_places: int = ah.building_capacity(coop) - coop.animals_inside.size()
+	var titles: Array = []
+	var catch := func(title: String, _message: String, _icon: String) -> void: titles.append(title)
+	EventBus.notification_posted.connect(catch)
+	eco.add_gold(5000)
+	var herd: int = ah.animals.size()
+	var bought: bool = eco.buy_item(&"baby_chick", free_places + 1, 10)
+	EventBus.notification_posted.disconnect(catch)
+	t.check("several_babies_adopt_one_per_free_place", free_places > 0 and ah.room_for_item(&"baby_chick") == 0 and bought and ah.animals.size() == herd + free_places and eco.count_item(&"baby_chick") == 1 and titles.has(tr("NOTIF_NO_SPACE_TITLE")),
+		"%d free places, %d chicks bought: %d moved in, %d waits in the backpack, toasts %s" % [free_places, free_places + 1, ah.animals.size() - herd, eco.count_item(&"baby_chick"), str(titles)])
+	ah.from_dict(original)
+	eco.remove_item(&"baby_chick", 1)
 	await t.frames(2)
 	if native:
 		world.game_ui.get_screen(&"hud").toasts.clear()

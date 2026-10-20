@@ -33,6 +33,10 @@ var kind: String = "shop"
 var shop_id: String = ""
 var keeper_id: String = ""
 var building_id: String = ""
+## Outdoor stalls (CityTown): the open city is one room, so a talk host there also needs its keeper within keeper_reach
+## ground px of keeper_anchor (the stall's routine post, in the parent's space). INF = indoors, anywhere in the room counts.
+var keeper_anchor: Vector2 = Vector2.INF
+var keeper_reach: float = 150.0
 
 var _timer: Timer
 
@@ -74,9 +78,17 @@ func _on_game_event(event_name: StringName, _payload: Dictionary) -> void:
 		_refresh()
 
 
-## A talk host is enabled exactly while the keeper's node stands in the room.
+## A talk host is enabled exactly while the keeper's node stands in the room (at its stall, outdoors).
 func _refresh() -> void:
-	set_enabled(keeper_node() != null)
+	set_enabled(_keeper_at_post(keeper_node()))
+
+
+func _keeper_at_post(keeper: Node) -> bool:
+	if keeper == null:
+		return false
+	if keeper_anchor == Vector2.INF or not keeper is Node2D or get_parent() == null:
+		return true
+	return Iso.ground_dist((keeper as Node2D).global_position, (get_parent() as Node2D).to_global(keeper_anchor)) <= keeper_reach
 
 
 ## The live keeper node of the room (NpcDirector.node_of late bound, or the test resolver), or null.
@@ -104,9 +116,12 @@ func interact(player: Node) -> void:
 	interacted.emit(player)
 	match kind:
 		"talk":
+			# Re-checked at the press: the 0.5 s poll may still show a keeper who just walked off.
 			var k: Node = keeper_node()
-			if k != null and k.has_method("interact"):
+			if _keeper_at_post(k) and k.has_method("interact"):
 				k.call("interact", player)
+			else:
+				_refresh()
 		"shop":
 			var sys: Node = _Svc.node("ShopSystem")
 			if sys != null:

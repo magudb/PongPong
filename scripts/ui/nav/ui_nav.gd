@@ -24,6 +24,9 @@ const KEYBOARD := &"keyboard"
 const GAMEPAD := &"gamepad"
 const SIDES := {&"up": SIDE_TOP, &"down": SIDE_BOTTOM, &"left": SIDE_LEFT, &"right": SIDE_RIGHT}
 const WASD_MAP := {&"move_forward": &"ui_up", &"move_back": &"ui_down", &"move_left": &"ui_left", &"move_right": &"ui_right"}
+## Meta on the ButtonGroup of a tab row whose tabs select on focus (pattern T): wire_groups enters such a row on its pressed tab (the
+## CURRENT tab, UI_NAVIGATION.md 3.4), so leaving a list upwards or wrapping out of the footer never switches back to the first tab.
+const TAB_ROW_META := &"tt_tab_row"
 
 ## scene-level opener memory (title -> select -> title): key -> node name
 static var _remembered: Dictionary = {}
@@ -80,6 +83,14 @@ static func text_field_focused(vp: Viewport = null) -> bool:
 	if owner_ is TextEdit:
 		return (owner_ as TextEdit).editable
 	return false
+
+
+## A press of ui_page_up / ui_page_down that pages a screen. The pair also has letter keys (Q / E, for keyboards without PgUp / PgDn,
+## review UX-16): while a text field has focus those letters are typing, so only PgUp / PgDn and the pad page then.
+static func page_pressed(event: InputEvent, action: StringName, vp: Viewport = null, allow_echo := false) -> bool:
+	if not InputMap.has_action(action) or not event.is_action_pressed(action, allow_echo):
+		return false
+	return not (event is InputEventKey and text_field_focused(vp) and (event as InputEventKey).keycode not in [KEY_PAGEUP, KEY_PAGEDOWN])
 
 
 ## Leaves NO focus owner, so Space / Enter / the arrows act on the world again (a modal opened from the world gives focus back like this).
@@ -236,7 +247,7 @@ static func wire_grid(cells: Array, cols: int, wrap_h := true) -> void:
 
 ## Links the groups of a screen (each group an Array of Controls already wired with wire_ring / wire_row / wire_grid) into one ring:
 ## Down / Up past the edge of a group LEAVES to the next / previous group and lands on that group's focus memory (the member that had focus
-## last, else its first stop); from the last group it wraps to the first when `ring` (a fresh press wraps, an echo press does not).
+## last, else the current tab of a TAB_ROW_META row, else its first stop); from the last group it wraps to the first when `ring` (a fresh press wraps, an echo press does not).
 ## Tab / Shift+Tab walk the groups in order. Left / Right crossings between groups are declared with link(). Calling it again with the
 ## same (or rebuilt) groups replaces the old wiring.
 static func wire_groups(groups: Array, ring := true, remember_focus := true) -> void:
@@ -437,11 +448,17 @@ class _GroupNav extends RefCounted:
 			memory[gi] = ctrl
 		relink()
 
-	## the control a move INTO group `gi` lands on: its memory when that is still a stop, else its first stop
+	## the control a move INTO group `gi` lands on: its memory when that is still a stop, else its current tab (the pressed member of a
+	## ButtonGroup marked TAB_ROW_META: a tab row that selects on focus must never be entered on its first tab), else its first stop
 	func entry(gi: int) -> Control:
 		var m: Variant = memory.get(gi) if remember_focus else null
 		if UiNav.is_stop(m) and (m as Control).is_inside_tree():
 			return m as Control
+		for c in (groups[gi] as Array):
+			var b := c as BaseButton
+			if b != null and b.button_pressed and b.button_group != null and b.button_group.has_meta(UiNav.TAB_ROW_META) \
+					and UiNav.is_stop(b) and b.is_inside_tree():
+				return b
 		for c in (groups[gi] as Array):
 			if UiNav.is_stop(c) and (c as Control).is_inside_tree():
 				return c as Control

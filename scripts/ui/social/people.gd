@@ -35,6 +35,7 @@ func _ready() -> void:
 	title = L.label(body, "", "Display34")
 	var strip := L.box(body, false, 6)
 	var group := ButtonGroup.new()
+	group.set_meta(UiNav.TAB_ROW_META, true)
 	for i in 3:
 		var button := L.button(strip, "")
 		button.toggle_mode = true

@@ -836,46 +836,37 @@ func _festivals() -> void:
 	var ended = m.festival_active() == &"" and _spy.count("town_festival_ended") == 1 and _spy.named("town_festival_ended")[0][1] == {"id": "hoestfesten"} and not gm.world_flags.has(&"festival_now")
 	t.check("festival_active_and_events", pre and quiet and edge_before and started and once and late and ended,
 		"Høstfesten 12:00-20:00: today at 10:00 but not active; 11:59 no; 12:00 active + town_festival_started {id} once + flag festival_now; 19:59 still; 20:00 town_festival_ended and the flag is gone (%s)" % str([pre, quiet, edge_before, started, once, late, ended]))
-	# the bed seam: time.sleep_from_hour = the window end while the festival runs, taken away afterwards
+	# the bed rule (ARCH-08): WorldRoot2D.sleep_from_hour() asks SocialManager.bed_hold_hour(); nothing is written into GameManager's config overrides
 	gm.hour = 13
 	m.flush()
-	var held = m.bed_hold_hour() == 20 and int(gm.config_value("time.sleep_from_hour", 18)) == 20
-	var h_before := not (18 >= int(gm.config_value("time.sleep_from_hour", 18)))      # WorldRoot2D.can_sleep_now at 18:00: closed while the festival runs
+	var no_override := func() -> bool: return not (gm.get("_config_overrides") as Dictionary).has("time.sleep_from_hour")
+	var held = m.bed_hold_hour() == 20 and WorldRoot2D.sleep_from_hour() == 20 and no_override.call()
+	var h_before := not (18 >= WorldRoot2D.sleep_from_hour())      # WorldRoot2D.can_sleep_now at 18:00: closed while the festival runs
 	gm.hour = 20
 	m.flush()
-	var released = m.bed_hold_hour() == 0 and int(gm.config_value("time.sleep_from_hour", 18)) == 18 and not (gm.get("_config_overrides") as Dictionary).has("time.sleep_from_hour")
-	# a test's own override of the key is restored, not erased
+	var released = m.bed_hold_hour() == 0 and WorldRoot2D.sleep_from_hour() == 18 and no_override.call()
+	# a config of the key is kept: the hold only ever makes the bed open LATER
 	gm.set_config_override("time.sleep_from_hour", 17)
 	gm.hour = 13
 	m.flush()
-	var over_mine := int(gm.config_value("time.sleep_from_hour", 18)) == 20
+	var over_mine := WorldRoot2D.sleep_from_hour() == 20
 	gm.hour = 21
 	m.flush()
-	var restored := int(gm.config_value("time.sleep_from_hour", 18)) == 17
+	var restored := WorldRoot2D.sleep_from_hour() == 17 and int(gm.config_value("time.sleep_from_hour", 18)) == 17
 	gm.clear_config_overrides()
-	t.check("festival_bed_hold_seam", held and h_before and released and over_mine and restored, "while the festival runs sleep_from_hour = 20 (the bed is closed at 18:00: %s), at 20:00 the override is removed (%s); a pre-existing override of 17 is restored afterwards (%s)" % [h_before, released, restored])
-	# the hold survives what wipes it: clear_config_overrides, a load, an area change, a festival event
+	t.check("festival_bed_hold_seam", held and h_before and released and over_mine and restored, "while the festival runs the bed opens at 20 (closed at 18:00: %s), at 20:00 the hold ends (%s); a configured 17 stays 17 outside the festival (%s), and no config override is written" % [h_before, released, restored])
+	# the hold is the clock's answer, not stored state: clear_config_overrides, a reset and a load cannot lose it
 	gm.hour = 13
 	gm.minute = 0
 	m.flush()
 	gm.clear_config_overrides()
-	var wiped := int(gm.config_value("time.sleep_from_hour", 18)) == 18
-	m.flush()
-	var re_flush := int(gm.config_value("time.sleep_from_hour", 18)) == 20
-	gm.clear_config_overrides()
-	t.autoload("EventBus").area_changed.emit(&"traetoppen")
-	var re_area := int(gm.config_value("time.sleep_from_hour", 18)) == 20
-	gm.clear_config_overrides()
-	t.autoload("EventBus").game_event.emit(&"town_festival_started", {"id": "hoestfesten"})
-	var re_event := int(gm.config_value("time.sleep_from_hour", 18)) == 20
+	var wiped := WorldRoot2D.sleep_from_hour() == 20
 	var saved: Dictionary = m.to_dict()
 	m.reset()
-	var after_reset = int(gm.config_value("time.sleep_from_hour", 18)) == 20 or not m.festival_active() == &"" and false
 	m.from_dict(saved)
-	var re_load = int(gm.config_value("time.sleep_from_hour", 18)) == 20 and m.festival_active() == &"hoestfesten" and gm.get_flag(&"festival_now", "") == "hoestfesten"
-	gm.clear_config_overrides()
+	var re_load = WorldRoot2D.sleep_from_hour() == 20 and m.festival_active() == &"hoestfesten" and gm.get_flag(&"festival_now", "") == "hoestfesten"
 	m.reset()
-	t.check("festival_bed_hold_survives_load_and_clear", wiped and re_flush and re_area and re_event and re_load, "the override is a never-saved seam: after clear_config_overrides the next flush (%s), an area_changed (%s), a town_festival_started event (%s) and a load (%s) put it back" % [re_flush, re_area, re_event, re_load])
+	t.check("festival_bed_hold_survives_load_and_clear", wiped and re_load and no_override.call(), "the hold needs no override: it holds after clear_config_overrides (%s) and after a load (%s)" % [wiped, re_load])
 	# shops: closed from one hour BEFORE the window until its end except stays_open; Sofus' badedag closes none
 	var m2 := _fresh(hf, 10, 0)
 	var f := m2
@@ -1066,7 +1057,7 @@ func _when() -> void:
 	m.director_path = SocialManager.DIRECTOR
 	t.check("when_away_kind_asks_npc_director", asks and logged and no_director, "away:<npc> asks NpcDirector.is_away, at:<npc> asks is_present (a node injected with Svc.override first, then the static facade by path); with NO director at: is true and away: is false (the D2 hub marker of Fru Ugle needs exactly that)")
 	# the static facade BY PATH (what the real npc_director.gd is): a probe script under user:// with static is_absent / is_away / is_present, then one whose method is an INSTANCE method
-	# (a facade that is not static is refused like Svc.static_call refuses it: the safe default); the loaded script is remembered per path and method
+	# (a facade that is not static is refused like Svc.static_call refuses it: the safe default); Svc remembers the resolved res:// script per path and method
 	var probe := _user_path("probe_director.gd")
 	_write(probe, "static func is_absent(npc):\n\treturn npc == \"rasmus\"\n\nstatic func is_away(npc):\n\treturn npc == \"appraiser_fru_ugle\"\n\nstatic func is_present(npc):\n\treturn npc == \"baker_maja\"\n")
 	var probe_inst := _user_path("probe_director_instance.gd")
@@ -1078,8 +1069,10 @@ func _when() -> void:
 	m.director_path = "res://scripts/towns/no_such_director.gd"
 	var absent_again = not m.eval_when("away:baker_maja") and m.eval_when("at:baker_maja")
 	m.director_path = probe
-	var cached_again = m.eval_when("away:appraiser_fru_ugle") and m._dir_script != null and bool(m._dir_static.get(&"is_away", false))
+	var cached_again = m.eval_when("away:appraiser_fru_ugle")
 	m.director_path = SocialManager.DIRECTOR
+	m.eval_when("away:appraiser_fru_ugle")
+	cached_again = cached_again and Svc._resolved.get(SocialManager.DIRECTOR + "::is_away", null) is Script
 	t.check("when_director_facade_by_path", by_path and instance_refused and absent_again and cached_again, "a static facade script by path answers is_absent / is_away / is_present (%s), an instance method is refused with the safe default (%s), a missing script and a changed path re-resolve (%s %s)" % [by_path, instance_refused, absent_again, cached_again])
 	# the consumer: IsoArea.evaluate_when / when_errors (P04's RT6) delegate to this manager (the real one, not a fake)
 	m.debug_set_hearts("mayor_lyra", 2)

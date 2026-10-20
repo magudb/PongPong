@@ -38,7 +38,7 @@ func _run() -> void:
 		elif a == "--quiet":
 			quiet = true
 		elif a == "--list-rules":
-			print("rules: else elseif loop long_bracket local_function module_function escape length stdlib method_call vararg arithmetic bitwise mixed_table reserved_key table_value nil_value kind_missing kind_unknown unbalanced unterminated_string stray_character | data level: duplicate_key rarity tables_header registry_header")
+			print("rules: loop long_bracket local_function module_function escape length stdlib method_call vararg arithmetic bitwise mixed_table reserved_key table_value nil_value kind_missing kind_unknown unbalanced unterminated_string stray_character unknown_function | grammar: syntax local_list field_assignment function_value unsupported top_level | data level: duplicate_key rarity tables_header registry_header")
 			quit(0)
 			return
 	var default_root := roots.is_empty() and files.is_empty()

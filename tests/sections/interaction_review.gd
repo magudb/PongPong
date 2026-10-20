@@ -1,0 +1,681 @@
+extends RefCounted
+## Regressions from the 2026-10-19 review of player interaction, combat input and world hosts; each group of checks names
+## its finding id (DUN-01, GAP3-02/03/06/08/10/12/13, GAP4-02/04, SIM-03, REPO-04).
+const SECTION := "interaction_review"
+const TIMEOUT_S := 180.0
+
+## 14 x 14 open iso platform with nothing on it: every host of the E checks is placed by the section.
+const OPEN_MAP := """
+@id _t_interaction
+@projection iso
+@ambient farm
+@theme farm
+@zone farm
+@ground
+##############
+#............#
+#............#
+#............#
+#............#
+#............#
+#............#
+#............#
+#............#
+#............#
+#............#
+#............#
+#............#
+##############
+@objects
+..............
+..............
+..............
+..............
+..............
+..............
+.......@......
+..............
+..............
+..............
+..............
+..............
+..............
+..............
+"""
+
+## A host with the E-query contract of an opened chest or a dug spot.
+class SpentProbe extends Interactable2D:
+	var spent := true
+	func is_spent() -> bool:
+		return spent
+
+## A rock: takes tool hits.
+class RockProbe extends Interactable2D:
+	var hits: Array = []
+	func tool_hit(tool: String, power: int, _player: Node) -> bool:
+		hits.append([tool, power])
+		return true
+
+
+func run(t) -> void:
+	await t.start_world()
+	var gm: Node = t.autoload("GameManager")
+	gm.set_config_override("time.minutes_per_real_second", 0)
+	var world: WorldRoot2D = t.world()
+	await world.travel(&"_fixture_ortho", &"from_iso")
+	for node in t.tree.get_nodes_in_group("enemy"):
+		node.queue_free()
+	await t.frames(2)
+	DungeonRun.apply_preset("none")
+	await _telegraph_only(t)
+	await _dodge_direction(t)
+	await _buffer_across_pause(t)
+	WorldRoot2D.register_map(&"_t_interaction", AreaMap.parse_text(OPEN_MAP))
+	await world.travel(&"_t_interaction", &"default")
+	await _reach_touching(t)
+	await _facing_cell_decides(t)
+	await _spent_hosts(t)
+	await _tool_targets(t)
+	await _hotbar_auto_assign(t)
+	await _warp_after_tool_use(t)
+	await _stall_keeper_reach(t)
+	await _actors_block_player(t)
+	await world.travel(&"farm", &"default")
+	WorldRoot2D.unregister_map(&"_t_interaction")
+	await _axe_on_crops(t)
+	await _placement_reasons(t)
+	await _camera_on_physics_tick(t)
+	gm.clear_config_overrides()
+
+
+## DUN-01: a lunge hits only inside its drawn band. Walking into the region from the south during the lunge used to hit through an
+## upper-body hurtbox capsule while the feet were still ~100 ground px outside the band.
+func _telegraph_only(t) -> void:
+	var world: WorldRoot2D = t.world()
+	var area := world.area
+	var player: Player2D = world.player
+	var origin := player.global_position + Vector2(300, 0)
+	var enemy: Enemy2D = Enemy2D.create_marker({"kind": "ugleoje"}, origin, area.global_to_cell(origin), area)
+	area.objects.add_child(enemy)
+	enemy.set_awake(true)
+	enemy.set_physics_process(false)
+	enemy.begin_windup({"shape": "line", "width": 80, "length": 300, "direction": Vector2.LEFT}, .5, "dash")
+	enemy.remaining = 0
+	enemy._windup(Vector2.LEFT)
+	player.combat._iframes = 0
+	player.state = PlayerBody2D.S.FREE
+	var hearts: int = player.half_hearts
+	var lost := [0]
+	var damage := func(amount: int) -> void: lost[0] += amount
+	player.damaged.connect(damage)
+	# feet walk north from 200 to 60 screen px south of the band's centre line (band half width 40 ground = 23.75 screen px)
+	for y in [200.0, 160.0, 120.0, 90.0, 60.0]:
+		player.global_position = origin + Vector2(-150, y)
+		await t.physics(2)
+		enemy._during_attack(1.0 / 60.0)
+	t.check("lunge_spares_feet_outside_band", enemy.state == Enemy2D.S.LUNGE and lost[0] == 0 and player.half_hearts == hearts,
+		"state %d, lost %d half hearts with the feet 60 screen px south of the band" % [enemy.state, lost[0]])
+	player.global_position = origin + Vector2(-150, 0)
+	await t.physics(1)
+	enemy._during_attack(1.0 / 60.0)
+	t.check("lunge_hits_feet_inside_band", lost[0] == enemy.hit_damage() and player.half_hearts == hearts - enemy.hit_damage(), "lost %d" % lost[0])
+	player.damaged.disconnect(damage)
+	enemy.queue_free()
+	for ring in area.ground_fx.get_node("TelegraphPool").get_children():
+		ring.finish()
+	player.revive(origin + Vector2(-300, 0))
+	player.combat._iframes = 0
+	await t.physics(2)
+
+
+## GAP3-06: a dodge runs parallel to the walk. The stick is already a ground vector; converting it again made a diagonal dodge 14 degrees steeper.
+func _dodge_direction(t) -> void:
+	var player: Player2D = t.world().player
+	player.combat.cooldowns.dodge = 0
+	t.hold(&"move_right")
+	t.hold(&"move_back")
+	await t.physics(6)
+	var walk := Input.get_vector("move_left", "move_right", "move_forward", "move_back").normalized()
+	var began: bool = player.combat.dodge()
+	var dodge: Vector2 = player.combat._dodge_direction
+	t.release(&"move_right")
+	t.release(&"move_back")
+	t.check("diagonal_dodge_parallel_to_walk", began and absf(rad_to_deg(dodge.angle_to(walk))) < 0.5,
+		"walk %s, dodge %s (%.1f degrees apart)" % [walk, dodge, rad_to_deg(dodge.angle_to(walk))])
+	await t.physics(int(ceil(float(GameData.combat("dodge_time", 0.3)) * 60.0)) + 6)    # the dodge runs on physics ticks
+	# without input the dodge follows the last precise walking direction
+	player.combat.cooldowns.dodge = 0
+	player.combat_aim = Vector2(1, 1).normalized()
+	t.check("idle_dodge_follows_last_walk", player.combat.dodge() and player.combat._dodge_direction.is_equal_approx(Vector2(1, 1).normalized()), str(player.combat._dodge_direction))
+	await t.physics(int(ceil(float(GameData.combat("dodge_time", 0.3)) * 60.0)) + 6)    # the dodge runs on physics ticks
+	player.combat.cooldowns.dodge = 0
+
+
+## GAP3-12: a dodge buffered just before a pause or modal is dropped instead of firing on resume.
+func _buffer_across_pause(t) -> void:
+	var gm: Node = t.autoload("GameManager")
+	var player: Player2D = t.world().player
+	for pauses in [true, false]:
+		player.state = PlayerBody2D.S.FREE
+		player.combat.cooldowns.dodge = 0.05
+		player.combat.request(&"dodge")
+		var buffered: bool = player.combat._buffer == &"dodge" and player.state == PlayerBody2D.S.FREE
+		gm.push_modal(&"interaction_review", pauses)
+		await t.physics(3)
+		gm.pop_modal(&"interaction_review")
+		player.combat.cooldowns.dodge = 0
+		await t.physics(3)
+		t.check("buffered_dodge_dropped_by_%s_modal" % ("pausing" if pauses else "open"), buffered and player.state != PlayerBody2D.S.DODGE and player.combat._buffer == &"",
+			"state %d buffer %s" % [player.state, player.combat._buffer])
+	player.state = PlayerBody2D.S.FREE
+
+
+func _probe(t, host: Interactable2D, at: Vector2) -> Interactable2D:
+	host.radius = Vector2(60, 60 * Iso.squash())          # the reach ellipse of an Npc2D (reach 60)
+	t.world().area.objects.add_child(host)
+	host.global_position = at
+	return host
+
+
+## GAP3-02: a host the body touches is found from every spot inside the player's cell. The query circle sat on the facing cell
+## centre, 64-192 ground px ahead, so a touching NPC was missed from about a third of the positions facing S, W, N or E.
+func _reach_touching(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var home: Vector2i = area.global_to_cell(player.global_position)
+	var probe := _probe(t, Interactable2D.new(), player.global_position)
+	var found := 0
+	var total := 0
+	var missed: Array = []
+	for facing in [0, 2, 4, 6]:
+		var ahead: Vector2 = Iso.to_ground(area.cell_to_global(home + area.facing_step(facing)) - area.cell_to_global(home)).normalized()
+		for s in [-0.4, -0.15, 0.15, 0.4]:
+			for u in [-0.4, -0.15, 0.15, 0.4]:
+				player.global_position = area.cell_to_global(home) + s * Vector2(64, 38) + u * Vector2(-64, 38)
+				player.facing8 = facing
+				probe.global_position = player.global_position + Iso.to_screen(ahead * 40.0)   # body radii 25 + 14 ground px: touching
+				await t.physics(1)
+				total += 1
+				if player.nearest_interactable() == probe:
+					found += 1
+				elif missed.size() < 4:
+					missed.append([facing, s, u])
+	t.check("touching_host_found_from_anywhere_in_cell", found == total, "%d of %d found, first misses (facing, s, u) %s" % [found, total, missed])
+	probe.queue_free()
+	player.global_position = area.cell_to_global(home)
+	player.facing8 = 0
+	await t.physics(2)
+
+
+## GAP3-02: the facing cell stays authoritative. A host only the reach circle finds (a citizen beside the player, one touching the
+## back) never takes E from the sign on the facing cell; ranking every host by distance to the player let it win 108 of 108 samples.
+func _facing_cell_decides(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var home: Vector2i = area.global_to_cell(player.global_position)
+	var npc := _probe(t, Interactable2D.new(), player.global_position)
+	var sign_host := Interactable2D.new()                  # the default 60 x 30 ellipse of a sign, a chest or a shipping bin
+	area.objects.add_child(sign_host)
+	var won := 0
+	var total := 0
+	var lost: Array = []
+	for facing in [0, 2, 4, 6]:
+		sign_host.global_position = area.cell_to_global(home + area.facing_step(facing))
+		var ahead: Vector2 = Iso.to_ground(sign_host.global_position - area.cell_to_global(home)).normalized()
+		var places := {"left": Vector2(ahead.y, -ahead.x) * 70.0, "right": Vector2(-ahead.y, ahead.x) * 70.0, "back": -ahead * 50.0}
+		for s in [-0.25, 0.0, 0.25]:
+			for u in [-0.25, 0.0, 0.25]:
+				player.global_position = area.cell_to_global(home) + s * Vector2(64, 38) + u * Vector2(-64, 38)
+				player.facing8 = facing
+				for place in places:
+					npc.global_position = player.global_position + Iso.to_screen(places[place])
+					await t.physics(1)
+					total += 1
+					if player.nearest_interactable() == sign_host:
+						won += 1
+					elif lost.size() < 4:
+						lost.append([facing, s, u, place])
+	t.check("facing_host_beats_side_and_back_hosts", won == total, "%d of %d chose the facing host, first losses (facing, s, u, place) %s" % [won, total, lost])
+	# the reach circle still finds the touching host once nothing stands on the facing cell
+	sign_host.set_enabled(false)
+	npc.global_position = player.global_position + Iso.to_screen(Iso.to_ground(area.cell_to_global(home + area.facing_step(6)) - area.cell_to_global(home)).normalized() * 40.0)
+	await t.physics(2)
+	t.check("reach_host_answers_when_facing_cell_is_empty", player.nearest_interactable() == npc)
+	npc.queue_free()
+	sign_host.queue_free()
+	player.global_position = area.cell_to_global(home)
+	player.facing8 = 0
+	await t.physics(2)
+
+
+## GAP3-03: an emptied chest or dug spot never takes E (or blanks the prompt) from a live host in reach, but still answers when it is alone.
+func _spent_hosts(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var home: Vector2i = area.global_to_cell(player.global_position)
+	player.global_position = area.cell_to_global(home)
+	player.facing8 = 0
+	var ahead: Vector2 = area.cell_to_global(home + area.facing_step(0))
+	var spent: SpentProbe = _probe(t, SpentProbe.new(), player.global_position + Vector2(0, 30))
+	var live := _probe(t, Interactable2D.new(), ahead)
+	await t.physics(2)
+	t.check("spent_host_yields_to_live_host", player.nearest_interactable() == live)
+	live.set_enabled(false)
+	await t.physics(2)
+	t.check("spent_host_alone_still_answers", player.nearest_interactable() == spent)
+	spent.spent = false
+	t.check("refilled_host_is_live_again", player.nearest_interactable() == spent)
+	spent.queue_free()
+	live.queue_free()
+	var dig := DigSpot2D.new()
+	dig.spent = true
+	var chest := LootChest2D.new()
+	chest.is_open = true
+	var closed := LootChest2D.new()
+	var spot := UniqueSpot2D.new()
+	spot.claimed = true
+	t.check("spent_states_follow_the_contract", dig.is_spent() and chest.is_spent() and not closed.is_spent() and spot.is_spent())
+	for node in [dig, chest, closed, spot]:
+		node.free()
+	await t.physics(2)
+
+
+## GAP3-03 (merged GAP3-04): a tool looks past nearer hosts it cannot act on. The axe asked only the single nearest host for tool_hit.
+func _tool_targets(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var home: Vector2i = area.global_to_cell(player.global_position)
+	player.global_position = area.cell_to_global(home)
+	player.facing8 = 0
+	player.state = PlayerBody2D.S.FREE
+	player.stamina = player.max_stamina
+	var sign_host := _probe(t, Interactable2D.new(), player.global_position + Vector2(0, 30))
+	var rock: RockProbe = _probe(t, RockProbe.new(), area.cell_to_global(home + area.facing_step(0)))
+	await t.physics(2)
+	player.hotbar.assign(0, &"axe_wooden")
+	player.hotbar.select(0)
+	var nearest_is_sign: bool = player.nearest_interactable() == sign_host
+	t.check("axe_reaches_rock_past_nearer_host", nearest_is_sign and player.use_selected() and rock.hits.size() == 1 and rock.hits[0][0] == "axe", str(rock.hits))
+	player.state = PlayerBody2D.S.FREE
+	player._tool_time = 0.0
+	sign_host.queue_free()
+	rock.queue_free()
+	await t.physics(2)
+	await _tool_types(t)
+
+
+func _resource(t, kind: String, cell: Vector2i) -> ResourceNode2D:
+	var area: IsoArea = t.world().area
+	var node := ResourceNode2D.create_marker({"kind": kind}, area.cell_to_global(cell), cell, area)
+	area.objects.add_child(node)
+	return node
+
+
+func _swing(t, item: StringName) -> bool:
+	var player: Player2D = t.world().player
+	player.state = PlayerBody2D.S.FREE
+	player._tool_time = 0.0
+	player.stamina = player.max_stamina
+	player.hotbar.assign(0, item)
+	player.hotbar.select(0)
+	return player.use_selected()
+
+
+## GAP3-03: the axe filter type-checks the tool. Every resource node has tool_hit, so a nearer rock or berry bush took the swing
+## meant for a tree and whispered "Redskabet er for svagt" (or nothing). ResourceNode2D.accepts_tool keeps only the node's own tool.
+func _tool_types(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var home: Vector2i = area.global_to_cell(player.global_position)
+	var keys: Array = []
+	var listen := _whispers(keys)
+	player.global_position = area.cell_to_global(home)
+	player.facing8 = 0
+	# the tree on the target cell, a rock and a fern in the side cells, both nearer to the player
+	var tree := _resource(t, "tree_chop", home + area.facing_step(0))
+	var rock := _resource(t, "rock_stone", home + area.facing_step(1))
+	var fern := _resource(t, "fern", home + area.facing_step(7))
+	await t.physics(2)
+	var tree_hp := tree.hp
+	var rock_hp := rock.hp
+	var rock_nearer: bool = Iso.ground_dist(rock.global_position, player.global_position) < Iso.ground_dist(tree.global_position, player.global_position)
+	t.check("axe_chops_tree_past_nearer_rock", rock_nearer and _swing(t, &"axe_wooden") and tree.hp == tree_hp - 1 and rock.hp == rock_hp and "FOREST_TOOL_WEAK" not in keys,
+		"tree hp %d -> %d, rock hp %d -> %d, whispers %s" % [tree_hp, tree.hp, rock_hp, rock.hp, keys])
+	keys.clear()
+	t.check("pickaxe_mines_rock_past_tree_on_target", _swing(t, &"pickaxe_wooden") and rock.hp == rock_hp - 1 and tree.hp == tree_hp - 1, "whispers %s" % [keys])
+	# off the target cell: the nearest host that takes the tool, a nearer one that does not never blocks it
+	tree.queue_free()
+	fern.queue_free()
+	await t.physics(1)
+	tree = _resource(t, "tree_chop", home + area.facing_step(7))
+	player.global_position = area.cell_to_global(home) + Vector2(-10, 0)
+	await t.physics(2)
+	tree_hp = tree.hp
+	keys.clear()
+	var rock_still_nearer: bool = Iso.ground_dist(rock.global_position, player.global_position) < Iso.ground_dist(tree.global_position, player.global_position)
+	t.check("axe_takes_tree_in_reach_past_nearer_rock", rock_still_nearer and _swing(t, &"axe_wooden") and tree.hp == tree_hp - 1, "tree hp %d -> %d, whispers %s" % [tree_hp, tree.hp, keys])
+	# nothing takes the tool: the rock names the right one instead of calling the tool too weak
+	tree.queue_free()
+	await t.physics(2)
+	keys.clear()
+	t.check("wrong_tool_names_the_right_one", not _swing(t, &"axe_wooden") and keys == ["FOREST_TOOL_PICKAXE"] and rock.hp == rock_hp - 1, str(keys))
+	rock.queue_free()
+	EventBus.whisper_requested.disconnect(listen)
+	player.global_position = area.cell_to_global(home)
+	player.state = PlayerBody2D.S.FREE
+	player._tool_time = 0.0
+	await t.physics(2)
+
+
+## A farm cell to aim at from the cell before it (facing S): `pick` (cell -> bool) decides; Vector2i.MAX when none fits.
+func _aim_cell(t, cells: Array, pick: Callable) -> Vector2i:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	for cell in cells:
+		var stand: Vector2i = cell - area.facing_step(0)
+		if not area.is_walkable(stand) or not pick.call(cell):
+			continue
+		player.global_position = area.cell_to_global(stand)
+		player.facing8 = 0
+		player.state = PlayerBody2D.S.FREE
+		player._tool_time = 0.0
+		player.stamina = player.max_stamina
+		return cell
+	return Vector2i.MAX
+
+
+func _whispers(keys: Array) -> Callable:
+	var listen := func(key: String) -> void: keys.append(key)
+	EventBus.whisper_requested.connect(listen)
+	return listen
+
+
+## GAP4-02: the axe / pickaxe acts on the object it reaches first, harvests a ripe crop before clearing it, and says so when it
+## clears a living one. It cleared any crop on the target cell first, losing a READY crop's yield, even when aimed past it.
+func _axe_on_crops(t) -> void:
+	var world: WorldRoot2D = t.world()
+	var area: IsoArea = world.area
+	var player: Player2D = world.player
+	var farm: FarmGrid = world.farm
+	var eco: Node = t.autoload("EconomyManager")
+	eco.add_item(&"turnip_seeds", 3, true)
+	player.hotbar.assign(0, &"axe_wooden")
+	player.hotbar.select(0)
+	var tool_free := func(cell: Vector2i) -> bool:
+		player.global_position = area.cell_to_global(cell - area.facing_step(0))
+		player.facing8 = 0
+		return farm.state_of(cell) in [FarmGrid.State.EMPTY, FarmGrid.State.TILLED] and farm.can_till(cell) \
+			and player.nearest_interactable(func(h: Node) -> bool: return h.has_method("tool_hit")) == null
+	var cell := _aim_cell(t, farm.farmable_cells(), tool_free)
+	if cell == Vector2i.MAX:
+		t.fail("no free field cell to aim the axe at")
+		return
+	var keys: Array = []
+	var listen := _whispers(keys)
+	if farm.state_of(cell) == FarmGrid.State.EMPTY:
+		farm.till(cell)
+	farm.plant(cell, &"turnip_seeds")
+	farm.get_plot(cell).state = FarmGrid.State.READY
+	var turnips: int = eco.count_item(&"turnip")
+	var ripe_ok: bool = player.use_selected()
+	t.check("axe_harvests_ripe_crop_first", ripe_ok and eco.count_item(&"turnip") > turnips and farm.state_of(cell) == FarmGrid.State.TILLED, "ok %s turnips %d -> %d" % [ripe_ok, turnips, eco.count_item(&"turnip")])
+	_aim_cell(t, [cell], func(_c: Vector2i) -> bool: return true)
+	farm.plant(cell, &"turnip_seeds")
+	keys.clear()
+	t.check("axe_clears_living_crop_with_a_word", player.use_selected() and farm.state_of(cell) == FarmGrid.State.TILLED and keys == ["FARM_CROP_CLEARED"], str(keys))
+	# an object standing on the target cell itself takes the swing before the crop there
+	_aim_cell(t, [cell], func(_c: Vector2i) -> bool: return true)
+	farm.plant(cell, &"turnip_seeds")
+	var rock: RockProbe = _probe(t, RockProbe.new(), area.cell_to_global(cell))
+	await t.physics(2)
+	t.check("axe_hits_object_on_target_before_crop", player.use_selected() and rock.hits.size() == 1 and farm.state_of(cell) == FarmGrid.State.PLANTED, "hits %s state %d" % [rock.hits, farm.state_of(cell)])
+	rock.queue_free()
+	farm.clear_crop(cell, false)
+	await t.physics(2)
+	# a sprinkler beside the crops it waters never takes the swing aimed at one of them (it was picked up instead)
+	eco.add_item(&"sprinkler", 1, true)
+	var beside := Vector2i.MAX
+	for facing in [7, 1, 5, 3]:
+		if PlacementService.can_place(&"sprinkler", cell + area.facing_step(facing)) == "":
+			beside = cell + area.facing_step(facing)
+			break
+	var placed: bool = beside != Vector2i.MAX and PlacementService.place(&"sprinkler", beside)
+	_aim_cell(t, [cell], func(_c: Vector2i) -> bool: return true)
+	farm.plant(cell, &"turnip_seeds")
+	await t.physics(2)
+	var sprinklers: int = eco.count_item(&"sprinkler")
+	var cleared: bool = placed and player.use_selected()
+	t.check("axe_clears_crop_beside_sprinkler", cleared and farm.state_of(cell) == FarmGrid.State.TILLED and not FarmEquipment.at(&"farm", beside).is_empty() \
+		and eco.count_item(&"sprinkler") == sprinklers, "placed %s at %s, state %d" % [placed, beside, farm.state_of(cell)])
+	for node in area.find_children("*", "Node", true, false):
+		if node is FarmMachine2D and node.cell == beside:
+			node.tool_hit("pickaxe", 1, player)
+	EventBus.whisper_requested.disconnect(listen)
+	player.state = PlayerBody2D.S.FREE
+	player._tool_time = 0.0
+	await t.physics(2)
+
+
+## GAP4-04: the farm marker shows whether the HELD placeable can stand on the cell, and a refusal names its reason. The marker showed
+## tillability (gold on the fields, where a decoration is refused) and every refusal said "Det kan vi prøve en anden dag".
+func _placement_reasons(t) -> void:
+	var world: WorldRoot2D = t.world()
+	var area: IsoArea = world.area
+	var player: Player2D = world.player
+	var farm: FarmGrid = world.farm
+	t.autoload("EconomyManager").add_item(&"scarecrow", 1, true)
+	player.hotbar.assign(0, &"scarecrow")
+	player.hotbar.select(0)
+	var field := _aim_cell(t, farm.farmable_cells(), func(c: Vector2i) -> bool: return farm.state_of(c) in [FarmGrid.State.EMPTY, FarmGrid.State.TILLED])
+	await t.physics(2)
+	var keys: Array = []
+	var listen := _whispers(keys)
+	var field_marker: bool = player._marker.valid
+	t.check("decoration_marker_dark_on_field", field != Vector2i.MAX and not field_marker and PlacementService.can_place(&"scarecrow", field) == "FARM_PLACE_FIELD")
+	t.check("decoration_refusal_names_the_field", not player.use_selected() and keys == ["FARM_PLACE_FIELD"], str(keys))
+	var grass_cells: Array = []
+	for y in area.map.height:
+		for x in area.map.width:
+			grass_cells.append(Vector2i(x, y))
+	var grass := _aim_cell(t, grass_cells, func(c: Vector2i) -> bool: return PlacementService.can_place(&"scarecrow", c) == "")
+	await t.physics(2)
+	t.check("decoration_marker_gold_where_it_fits", grass != Vector2i.MAX and player._marker.valid)
+	# a machine on a dead crop: it cannot be harvested, so the reason points to clearing it, not to "Høst det først"
+	var dead := Vector2i.MAX
+	for c in farm.farmable_cells():
+		if farm.state_of(c) in [FarmGrid.State.EMPTY, FarmGrid.State.TILLED] and PlacementService.can_place(&"sprinkler", c) == "":
+			dead = c
+			break
+	var reasons: Array = []
+	if dead != Vector2i.MAX:
+		t.autoload("EconomyManager").add_item(&"turnip_seeds", 1, true)
+		if farm.state_of(dead) == FarmGrid.State.EMPTY:
+			farm.till(dead)
+		farm.plant(dead, &"turnip_seeds")
+		reasons.append(PlacementService.can_place(&"sprinkler", dead))
+		farm.get_plot(dead).state = FarmGrid.State.WITHERED
+		reasons.append(PlacementService.can_place(&"sprinkler", dead))
+		farm.clear_crop(dead, false)
+	t.check("machine_on_withered_crop_says_clear_it", reasons == ["FARM_PLACE_GROWING", "FARM_PLACE_WITHERED"], str(reasons))
+	EventBus.whisper_requested.disconnect(listen)
+
+
+## GAP3-10: "use" of a placeable from the backpack never overwrites the selected tool on a full hotbar, and never duplicates a slot.
+func _hotbar_auto_assign(t) -> void:
+	var player: Player2D = t.world().player
+	var bar: Hotbar = player.hotbar
+	var before := bar.to_dict()
+	var whispers: Array = []
+	var listen := func(key: String) -> void: whispers.append(key)
+	EventBus.whisper_requested.connect(listen)
+	var kit: Array[StringName] = [&"hoe_wooden", &"watering_can_copper", &"axe_wooden", &"pickaxe_wooden", &"scythe", &"turnip_seeds", &"sword_rusty", &"health_tonic"]
+	for i in Hotbar.SIZE:
+		bar.assign(i, kit[i])
+	bar.select(2)
+	var full := bar.slots.duplicate()
+	EventBus.hotbar_assign_requested.emit(-1, &"scarecrow")
+	t.check("full_hotbar_refuses_auto_assign", bar.slots == full and bar.selected == 2 and whispers == ["HUD_HOTBAR_FULL"], "%s selected %d whispers %s" % [bar.slots, bar.selected, whispers])
+	EventBus.hotbar_assign_requested.emit(-1, &"turnip_seeds")
+	t.check("held_item_is_selected_not_duplicated", bar.slots == full and bar.selected == 5 and bar.slots.count(&"turnip_seeds") == 1)
+	bar.assign(3, &"")
+	EventBus.hotbar_assign_requested.emit(-1, &"scarecrow")
+	t.check("free_slot_takes_item_in_hand", bar.slots[3] == &"scarecrow" and bar.selected == 3 and bar.slots[2] == &"axe_wooden")
+	EventBus.whisper_requested.disconnect(listen)
+	bar.from_dict(before)
+
+
+## GAP3-08: a warp stepped on during a tool use fires once the use ends (still on it); combat actions keep the "step out and walk
+## back in" rule, and doors share the gate (they had none: a dodge into a door travelled).
+func _warp_after_tool_use(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var home: Vector2i = area.global_to_cell(player.global_position)
+	var warp := Warp2D.new()
+	warp.setup({"to": "interaction_warp_contract", "r": "0"}, area, home + Vector2i(3, 0))
+	area.triggers.add_child(warp)
+	warp.global_position = area.cell_to_global(home + Vector2i(3, 0))
+	var requests: Array = []
+	var listen := func(id: StringName, _spawn: StringName) -> void:
+		if id == &"interaction_warp_contract": requests.append(id)
+	EventBus.area_change_requested.connect(listen)
+	await t.physics(3)
+	player.state = PlayerBody2D.S.USING
+	player._tool_time = 0.2
+	player.global_position = warp.global_position
+	await t.physics(4)
+	var held: bool = requests.is_empty() and player.state == PlayerBody2D.S.USING
+	await t.seconds(0.3)
+	await t.physics(2)
+	t.check("warp_fires_when_tool_use_ends_on_it", held and requests.size() == 1 and player.state == PlayerBody2D.S.FREE, "held %s, requests %s, state %d" % [held, requests, player.state])
+	player.global_position = area.cell_to_global(home)
+	await t.physics(4)
+	requests.clear()
+	player.state = PlayerBody2D.S.DODGE
+	warp._on_body_entered(player)
+	player.state = PlayerBody2D.S.FREE
+	await t.physics(3)
+	t.check("dodge_onto_warp_still_needs_a_fresh_step", requests.is_empty())
+	var door := Door2D.new()
+	door.always_open = true
+	door.to_area = &"interaction_warp_contract"
+	for state in [PlayerBody2D.S.DODGE, PlayerBody2D.S.FREE]:
+		player.state = state
+		door._on_body_entered(player)
+	t.check("door_shares_the_warp_gate", requests.size() == 1, str(requests))
+	door.free()
+	player.state = PlayerBody2D.S.FREE
+	EventBus.area_change_requested.disconnect(listen)
+	warp.queue_free()
+	await t.physics(2)
+
+
+class KeeperProbe extends Node2D:
+	var talks := 0
+	func interact(_player: Node) -> void:
+		talks += 1
+
+
+## SIM-03: an outdoor stall's talk host is live only while its keeper stands at the stall. The whole open city counted as "the room",
+## so the empty stall said "Tal med Brumme" and E opened his dialogue from ~1,200 px away.
+func _stall_keeper_reach(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var keeper := KeeperProbe.new()
+	area.objects.add_child(keeper)
+	ShopCounter.keeper_resolver = func(_id: String) -> Node: return keeper
+	var stall := ShopCounter.new()
+	stall.setup("talk", {"id": "timber_yard", "keeper": "carpenter_brumme"}, "torvestanden")
+	area.objects.add_child(stall)
+	stall.position = area.objects.to_local(player.global_position + Vector2(300, 0))
+	stall.keeper_anchor = stall.position + Vector2(96, -48)
+	var anchor: Vector2 = area.objects.to_global(stall.keeper_anchor)
+	keeper.global_position = anchor + Vector2(20, -10)
+	stall._refresh()
+	var at_stall: bool = stall.is_enabled()
+	keeper.global_position = anchor + Vector2(1200, 0)
+	stall._refresh()
+	var away: bool = stall.is_enabled()
+	t.check("stall_talk_host_needs_keeper_at_stall", at_stall and not away)
+	keeper.global_position = anchor
+	stall._refresh()
+	keeper.global_position = anchor + Vector2(1200, 0)      # walks off between two polls
+	stall.interact(player)
+	t.check("stall_talk_rechecks_reach_at_the_press", keeper.talks == 0 and not stall.is_enabled())
+	var room := ShopCounter.new()
+	room.setup("talk", {"id": "timber_yard", "keeper": "carpenter_brumme"}, "torvestanden")
+	area.objects.add_child(room)
+	room._refresh()
+	t.check("indoor_talk_host_keeps_room_rule", room.is_enabled() and room.keeper_anchor == Vector2.INF)
+	room.interact(player)
+	t.check("indoor_talk_host_reaches_keeper", keeper.talks == 1)
+	ShopCounter.keeper_resolver = Callable()
+	for node in [keeper, stall, room]:
+		node.queue_free()
+	await t.physics(2)
+
+
+## GAP3-13: the player and the walking actors block each other both ways (Iso.MASK_WALKING). A wandering NPC or a farm animal had
+## no LAYER_PLAYER in its mask, so it walked into the player, who was then pushed out of the overlap.
+func _actors_block_player(t) -> void:
+	var area: IsoArea = t.world().area
+	var player: Player2D = t.world().player
+	var home: Vector2i = area.global_to_cell(player.global_position)
+	player.global_position = area.cell_to_global(home)
+	var npc := Npc2D.create({"id": "carpenter_brumme"})
+	npc.area = area
+	area.objects.add_child(npc)
+	npc.global_position = player.global_position + Vector2(-150, 0)
+	npc._home = npc.global_position
+	npc._target = player.global_position + Vector2(150, 0)
+	npc._wait = 0.0
+	var start: Vector2 = player.global_position
+	var passed := false
+	for i in 120:
+		await t.physics(1)
+		passed = passed or npc.global_position.x > player.global_position.x
+	t.check("wandering_npc_stops_at_player", not passed and player.global_position.distance_to(start) < 2.0,
+		"npc at %s, player moved %.1f px" % [npc.global_position - start, player.global_position.distance_to(start)])
+	var animal := Animal2D.new()
+	area.objects.add_child(animal)
+	animal.set_physics_process(false)                        # no yard: only its collision setup is under test
+	t.check("actor_masks_include_player", (npc.collision_mask & Iso.LAYER_PLAYER) != 0 and (npc.collision_mask & Iso.LAYER_NPC) == 0 \
+		and (animal.collision_mask & Iso.LAYER_PLAYER) != 0 and (animal.collision_mask & Iso.LAYER_NPC) == 0 and (Iso.MASK_WALKING & Iso.LAYER_NPC) != 0)
+	animal.queue_free()
+	npc.queue_free()
+	await t.physics(2)
+
+
+## REPO-04: the camera follows the body on the physics tick. Bodies move only on ticks; a camera smoothed every rendered frame moved
+## between them, so on 120/144 Hz displays the hero juddered against the scrolling background.
+func _camera_on_physics_tick(t) -> void:
+	var player: Player2D = t.world().player
+	var camera: Camera2D = player.camera
+	var home: Vector2 = player.global_position
+	t.hold(&"move_left")
+	await t.physics(6)
+	await t.frames(1)                                          # sample after the tick's own camera update
+	var last: Vector2 = camera.get_screen_center_position()
+	var tick: int = Engine.get_physics_frames()
+	var moved := 0
+	var between := 0
+	var frames := 0
+	var ticks := 0
+	var start_tick: int = tick
+	var start: Vector2 = player.global_position
+	while Engine.get_physics_frames() - start_tick < 40 and frames < 20000:
+		await t.frames(1)
+		var centre: Vector2 = camera.get_screen_center_position()
+		var now: int = Engine.get_physics_frames()
+		frames += 1
+		ticks += 1 if now != tick else 0
+		if not centre.is_equal_approx(last):
+			moved += 1
+			between += 1 if now == tick else 0
+		last = centre
+		tick = now
+	t.release(&"move_left")
+	t.check("camera_moves_only_on_physics_ticks", camera.process_callback == Camera2D.CAMERA2D_PROCESS_PHYSICS and moved > 0 and between == 0,
+		"%d frames, %d with a physics tick, camera moved in %d, %d of them between ticks; the player walked %.0f px" % [frames, ticks, moved, between, player.global_position.distance_to(start)])
+	await t.physics(10)
+	player.global_position = home
+	await t.physics(2)

@@ -6,6 +6,7 @@ var runner: SocialEventRunner
 var queue: Array[Dictionary] = []
 var _waiting := false
 var _starting := false
+var _play_generation := 0
 var _tick := 0.0
 var _stage: Node
 
@@ -35,6 +36,9 @@ func _ready() -> void:
 
 func reset() -> void:
 	queue.clear()
+	# A scene still suspended in play() must not hold the start latch past a reset.
+	_play_generation += 1
+	_starting = false
 	runner.cancel()
 	if is_instance_valid(_stage): _stage.queue_free()
 	_stage = null
@@ -91,7 +95,9 @@ func _flush() -> void:
 		_schedule()
 		return
 	_starting = true
+	var generation := _play_generation
 	await runner.play(str(row.id),row.definition)
+	if generation != _play_generation: return
 	_starting = false
 	_schedule()
 

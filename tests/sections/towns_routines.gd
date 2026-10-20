@@ -51,6 +51,17 @@ func run(t) -> void:
 	t.expect(Routines.where_is("gardener_hoppe", ctx).place == "farm.hoppe_fence", "Hoppe visits the farm on Wednesday from two hearts")
 	ctx.hearts.gardener_hoppe = 0
 	t.expect(Routines.where_is("gardener_hoppe", ctx).place != "farm.hoppe_fence", "The farm visit respects its friendship gate")
+	# A live day keeps the plan it started with: two hearts at 15:30 on Wednesday do not send Hoppe from his beds to the farm fence.
+	var live := Routines.now_ctx()
+	live.merge({"weekday": 2, "hour": 15.5, "weather": "klart", "festival": "", "total_day": 3, "hearts": {"gardener_hoppe": 0}}, true)
+	live.erase("fest")
+	var before := Routines.where_is("gardener_hoppe", live)
+	live.hearts.gardener_hoppe = 2
+	var after := Routines.where_is("gardener_hoppe", live)
+	live.total_day = 10
+	var next_week := Routines.where_is("gardener_hoppe", live)
+	t.check("live_plan_fixed_for_the_day", before.plan == after.plan and before.place == after.place and after.place != "farm.hoppe_fence" and next_week.place == "farm.hoppe_fence",
+		"%s -> %s after the gift, %s the next Wednesday" % [before.place, after.place, next_week.place])
 	for weekday in range(6):
 		var morning := Routines.make_ctx(weekday, 7.25, "klart", {"total_day": weekday + 8})
 		t.expect(Routines.where_is("postman_pip", morning).place == "farm.pip_mailbox", "Pip's measured morning courier round on weekday %d" % weekday)
@@ -98,6 +109,16 @@ func _festivals(t) -> void:
 	t.check("festival_home_afterwards", home.place == ("int_hoppe_hut.bed" if RouteTable.has_anchor("int_hoppe_hut.bed") else "traetoppen.door_hoppe_hut"))
 	var late := Routines.where_is("mapseller_natteblik", ctx)
 	t.expect(late.state in ["stay", "move", "inside", "absent"], "An off-stage citizen has a defined festival tail")
+	# The roster behind a festival post depends on each run's seed: a new game (or a load) asks the social track again.
+	# The hook is checked and run directly: emitting the real new_game_started would reset every system in mid-section.
+	Routines.now_ctx()
+	Routines.where_is("gardener_hoppe", ctx)
+	var asked: int = calls[0]
+	var bus: Node = t.autoload("EventBus")
+	var hooked: bool = bus.new_game_started.is_connected(Routines._end_session) and bus.load_completed.is_connected(Routines._end_loaded_session)
+	Routines._end_session()
+	Routines.where_is("gardener_hoppe", ctx)
+	t.check("festival_posts_asked_again_in_a_new_run", hooked and calls[0] == asked + 1, "new game and load hooked %s; %d override calls, %d before the new run" % [hooked, calls[0], asked])
 	Routines.clear_cache()
 
 func _prove(t, name: String, routines: Dictionary, buildings: Dictionary, guard: Callable) -> void:

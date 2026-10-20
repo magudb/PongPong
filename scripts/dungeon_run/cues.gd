@@ -16,13 +16,19 @@ static func attach(host: Node) -> Node:
 	return node
 func _ready() -> void:
 	EventBus.game_event.connect(_event)
-	EventBus.item_gained.connect(func(id,_amount):
-		if DungeonRulesData.player() != null and DungeonFloors.floor_of(DungeonRulesData.player().area) > 0: play(rarity_cue(ItemKinds.rarity_of(id))))
-	EventBus.whisper_requested.connect(func(key):
-		if key == "DEXP_OIL_LOW": play("sfx/lantern_low"))
-	EventBus.enemy_encountered.connect(func(_id): play("sfx/enemy_notice"))
+	# Bound methods, not lambdas: a lambda that never touches self belongs to the script, so it would outlive this node
+	# and every world load would add another set of cues.
+	EventBus.item_gained.connect(_item)
+	EventBus.whisper_requested.connect(_whisper)
+	EventBus.enemy_encountered.connect(_noticed)
 	EventBus.player_spawned.connect(_player)
 	_player(PlayerRegistry.local_player(get_tree()))
+func _item(id: StringName, _amount: int) -> void:
+	if DungeonRulesData.player() != null and DungeonFloors.floor_of(DungeonRulesData.player().area) > 0: play(rarity_cue(ItemKinds.rarity_of(id)))
+func _whisper(key: String) -> void:
+	if key == "DEXP_OIL_LOW": play("sfx/lantern_low")
+func _noticed(_id: StringName) -> void:
+	play("sfx/enemy_notice")
 func _player(node: Node) -> void:
 	if not node is Player2D or node.damaged.is_connected(_hurt): return
 	node.damaged.connect(_hurt)
@@ -36,7 +42,11 @@ func _event(id: StringName, data: Dictionary) -> void:
 			play("music/rune_rest")
 		&"dungeon_floor_entered":
 			play("sfx/hulen_descend")
-			var number := int(data.get("floor",1))
-			var floors := DungeonFloors.inst()
-			var spec := DungeonSpec.spec_for(floors.cfg,number) if floors != null else {}
-			play("music/boss_final" if str(spec.get("boss","")) != "" and number == int(DungeonRun.cfg("max_floor",12)) else "music/boss" if str(spec.get("boss","")) != "" else "music/dungeon_act%d" % ceili(number/3.0))
+			play(floor_music(int(data.get("floor",1))))
+## Boss floors score the fight (the last one its own track); every other floor plays its act (floors 1-3 = act 1).
+static func floor_music(number: int) -> String:
+	var floors := DungeonFloors.inst()
+	var spec := DungeonSpec.spec_for(floors.cfg,number) if floors != null else {}
+	if bool(spec.get("boss",false)):
+		return "music/boss_final" if number == int(DungeonRun.cfg("max_floor",12)) else "music/boss"
+	return "music/dungeon_act%d" % ceili(number/3.0)

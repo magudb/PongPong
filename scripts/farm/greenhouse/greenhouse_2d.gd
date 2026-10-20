@@ -18,6 +18,10 @@ func _ready() -> void:
 	EventBus.game_event.connect(func(event, _data):
 		if event == &"greenhouse_changed": refresh())
 	EventBus.load_completed.connect(func(_slot): refresh.call_deferred())
+	# A Continue enters the farm before the world applies the saved area flags (greenhouse_built): redraw when they arrive.
+	var world := FarmEquipment.current_world()
+	if world != null and not world.state_applied.is_connected(refresh):
+		world.state_applied.connect(refresh)
 	refresh()
 
 func _enter_tree() -> void:

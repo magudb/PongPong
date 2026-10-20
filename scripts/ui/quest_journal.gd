@@ -13,6 +13,8 @@ var _calendar: Control
 var _mother_journal: MotherJournal
 var _mother_tab: Button
 var _group := ButtonGroup.new()
+## the quest rows are their own radio group: one shared group would un-press the current tab whenever a quest is selected
+var _row_group := ButtonGroup.new()
 var _refresh_pending := false
 
 func _init() -> void:
@@ -24,6 +26,7 @@ func _init() -> void:
 func _ready() -> void:
 	super._ready()
 	_tabs = [%ActiveTab, %CompletedTab]
+	_group.set_meta(UiNav.TAB_ROW_META, true)
 	if ResourceLoader.exists(CALENDAR):
 		_calendar = load(CALENDAR).instantiate()
 		%CalendarHost.add_child(_calendar)
@@ -45,6 +48,7 @@ func _ready() -> void:
 	EventBus.quest_completed.connect(func(_id): _schedule_refresh())
 	EventBus.quest_failed.connect(func(_id): _schedule_refresh())
 	EventBus.quest_objective_updated.connect(func(_q, _o, _p, _t): _schedule_refresh())
+	%HintBar.on_dark = true
 	%HintBar.set_hints([{"pair": [&"ui_up", &"ui_down"], "key": "HINT_MOVE"}, {"action": &"ui_cancel", "key": "HINT_BACK"}])
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("journal", Callable(get_script(), &"fixture_setup"))
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("journal_guide", Callable(get_script(), &"fixture_guide"))
@@ -137,7 +141,7 @@ func _make_row(id: StringName) -> Button:
 	row.name = "Quest_" + str(id)
 	row.theme_type_variation = &"RowButton"
 	row.toggle_mode = true
-	row.button_group = _group
+	row.button_group = _row_group
 	row.custom_minimum_size = Vector2(0, 68)
 	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.pressed.connect(_select.bind(id))

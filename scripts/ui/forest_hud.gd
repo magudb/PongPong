@@ -52,8 +52,7 @@ func _ready() -> void:
 	oil_count = L.label(row,"","Display15Owl")
 	boss_box = VBoxContainer.new()
 	add_child(boss_box)
-	boss_box.position = Vector2(428,40)
-	boss_box.size = Vector2(424,54)
+	L.place(boss_box,Rect2(428,40,424,54))
 	boss_box.add_theme_constant_override("separation",6)
 	boss_name = L.label(boss_box,"","DisplayCream24")
 	boss_name.add_theme_font_size_override("font_size",22)
@@ -97,8 +96,7 @@ func _ready() -> void:
 	loot_feed.offset_top = 262
 	floor_banner = Banner.new()
 	add_child(floor_banner)
-	floor_banner.position = Vector2(400,120)
-	floor_banner.size = Vector2(480,80)
+	L.place(floor_banner,Rect2(400,120,480,80))
 	var ability_row := HBoxContainer.new()
 	add_child(ability_row)
 	ability_row.set_anchors_and_offsets_preset(PRESET_CENTER_BOTTOM)
@@ -112,9 +110,17 @@ func _ready() -> void:
 		abilities[spec[0]] = slot
 	drink_count = L.label(abilities.drink.get_node("Frame/Inner"),"","Display15Owl")
 	drink_count.set_anchors_and_offsets_preset(PRESET_BOTTOM_RIGHT)
-	drink_count.offset_left = -26
+	drink_count.offset_left = -30
 	drink_count.offset_top = -20
 	drink_count.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	# A night badge keeps the count readable on top of the tonic picture.
+	var badge := StyleBoxFlat.new()
+	badge.bg_color = C.NIGHT_PANEL
+	badge.set_corner_radius_all(6)
+	badge.content_margin_left = 4
+	badge.content_margin_right = 4
+	drink_count.add_theme_stylebox_override("normal",badge)
+	drink_count.grow_horizontal = GROW_DIRECTION_BEGIN
 	current_item_badge = CurrentItemBadge.new()
 	current_item_badge.name = "CurrentItemBadge"
 	add_child(current_item_badge)
@@ -130,7 +136,9 @@ func _ready() -> void:
 	backpack_chip.position = Vector2(40,160)
 	assist_badge = L.label(self,"","OwlEye15")
 	assist_badge.position = Vector2(40,192)
-	add_child(preload("res://scenes/ui/components/whisper_line.tscn").instantiate())
+	var whisper := preload("res://scenes/ui/components/whisper_line.tscn").instantiate()
+	whisper.z_index = ToastStack.ABOVE_MODALS_Z
+	add_child(whisper)
 	var prompt := preload("res://scenes/ui/components/prompt_pill.tscn").instantiate()
 	add_child(prompt)
 	# Leave a full row between the equipped item and the interaction prompt.
@@ -138,6 +146,7 @@ func _ready() -> void:
 	prompt.get_node("Pill").offset_bottom = -196
 	toasts = preload("res://scenes/ui/components/toast_stack.tscn").instantiate()
 	toasts.item_toasts = false
+	toasts.z_index = ToastStack.ABOVE_MODALS_Z
 	add_child(toasts)
 	add_child(preload("res://scenes/ui/dungeon/loot_reveal.tscn").instantiate())
 	preload("res://scripts/dungeon_run/cues.gd").attach(self)
@@ -148,7 +157,10 @@ func _ready() -> void:
 	EventBus.area_changed.connect(_area_changed)
 	EventBus.player_inventory_changed.connect(_inventory)
 	EventBus.game_event.connect(_event)
-	EventBus.modal_changed.connect(func(_stack): toasts.visible = not GameManager.is_modal_open())
+	EventBus.modal_changed.connect(func(stack):
+		# the whisper follows the toasts: above a panel, hidden under the dialogue and an event scene
+		toasts.visible = ToastStack.shown_with_modals(stack)
+		whisper.visible = toasts.visible)
 	_spawned(PlayerRegistry.local_player(get_tree()))
 	_inventory({})
 	_assist()
