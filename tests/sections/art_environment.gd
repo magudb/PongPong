@@ -9,6 +9,7 @@ extends RefCounted
 ##   farm_contract_props_sizes_and_footprints  farm_rows_complete  farm_ids_resolved_by_installed_pack  no_foreign_or_dropped_ids
 ##   forest_art_ids_exist  forest_crowns_baked_at_36  dungeon_crowns_present_and_sized  forest_albedo_within_ambient_headroom  dungeon_prop_defs_complete
 ##   dungeon_ids_in_catalog  image_props_contract  backdrops_present  fixtures_missing_only_pending  hyggebyen_map_art_complete  ortho_decision_*  budget  readme_verdict
+##   prop_packs_listed (review REND-10: ArtCatalog reads the packs in its explicit PROP_PACKS order, never by folder name)
 ## Windowed (tests/run_playtest.sh --windowed --only=art_environment): filter_seams_mixed_terrains (grass + flowers, forest floor + glow, iso and ortho, at zoom 0.3 / 0.4 /
 ## 0.7 and a negative control), forest_ortho_readable (the outline (75,60,73) and the crowns on #1c2138 at zoom 0.4), plus the screenshots the package is judged by.
 ##
@@ -78,6 +79,7 @@ func run(t) -> void:
 		return
 	_tiles_checks(tiles)
 	_props_checks(props)
+	_packs()
 	_farm_checks(props)
 	_forest_checks(props)
 	_image_props(props)
@@ -302,6 +304,19 @@ func _col_diff(a: Color, b: Color) -> float:
 
 
 # ---------------------------------------------------------------- props
+
+## Every art pack folder (a props.json under iso_props/) is named in ArtCatalog.PROP_PACKS, which fixes the override order; a
+## folder the list misses would silently not be read, a listed folder without a props.json is a typo.
+func _packs() -> void:
+	var folders: Array[String] = []
+	for sub in DirAccess.get_directories_at(PROPS_DIR):
+		if FileAccess.file_exists(PROPS_DIR + sub + "/props.json"):
+			folders.append(sub)
+	var unlisted: Array = folders.filter(func(f: String) -> bool: return not ArtCatalog.PROP_PACKS.has(f))
+	var empty: Array = ArtCatalog.PROP_PACKS.filter(func(f: String) -> bool: return not folders.has(f))
+	_t.check("prop_packs_listed", unlisted.is_empty() and empty.is_empty() and folders.size() >= 10,
+		"%d pack folders, all in ArtCatalog.PROP_PACKS (the override order); unlisted %s, listed without a props.json %s" % [folders.size(), str(unlisted), str(empty)])
+
 
 func _props_checks(props: Dictionary) -> void:
 	var t = _t

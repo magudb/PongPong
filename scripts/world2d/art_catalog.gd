@@ -8,8 +8,8 @@ extends RefCounted
 ## Manifests (read once, lazily):
 ##   terrains   res://assets/iso_tiles/tiles.json (+ every tiles_*.json next to it, e.g. the A1 floors tiles_floors.json)
 ##              {id: {file, variants [x, y], cell [w, h], proj?}}  file is relative to the json
-##   props      res://assets/iso_props/props.json UNION res://assets/iso_props/*/props.json (feature props live in features/; home/,
-##              furniture/ and interior/ have their own jsons - home.json ... - which are NOT read here)
+##   props      res://assets/iso_props/props.json, then the props.json of every pack in PROP_PACKS, in that order (feature props
+##              live in features/; home/, furniture/ and interior/ have their own jsons - home.json ... - which are NOT read here)
 ##              {id: {file, size [w, h], pivot [x, y], footprint [fx, fz], glow?: {file, center, color, size, blend}, blend?, proj?}}
 ##              ground?: {file, pivot [x,y]} is a ground-plane contact layer, anchored at the same footprint centre.
 ##   backdrops  res://assets/backdrops/<theme>_sky.webp and <theme>_far.webp
@@ -25,6 +25,11 @@ const BACKDROP_DIR := "res://assets/backdrops/"
 const ICON_DIRS: Array[String] = ["res://assets/icons/items/", "res://assets/icons/home/", "res://assets/icons/wardrobe/"]
 const PORTRAIT_DIR := "res://assets/portraits/"
 const CHARACTERS_DIR := "res://assets/isometric_characters/"
+## The prop art packs under PROPS_DIR, in override order: a later pack replaces an earlier pack's entry of the same id (the
+## painted passes replace the generator art). The order is explicit, not the folder names' sort order; a folder with a
+## props.json that is missing here is not read, and art_environment.prop_packs_listed fails on it.
+const PROP_PACKS: Array[String] = ["city", "drawn", "drawn_extra", "drawn_terrain", "farm", "farm_completion", "farm_dress",
+	"features", "forest_mother", "painted_interiors", "painted_world", "zz_painted_consistency"]
 
 ## Placeholder tile cell of an ortho terrain (the diamond cell is Iso.TILE_CELL_W x Iso.TILE_CELL_H).
 const ORTHO_CELL := Vector2i(Iso.ORTHO_W + 16, Iso.ORTHO_H + 8)
@@ -122,17 +127,10 @@ static func _scan() -> void:
 				var e: Dictionary = (d[id] as Dictionary).duplicate()
 				e["_dir"] = TILES_DIR
 				_terrain_manifest[str(id)] = e
-	# props: iso_props/props.json, then iso_props/<dir>/props.json (later directories override on a clash)
+	# props: iso_props/props.json, then the packs of PROP_PACKS (a later pack overrides an earlier one on a clash)
 	var jsons_p: Array[String] = [PROPS_DIR + "props.json"]
-	var pdir := DirAccess.open(PROPS_DIR)
-	if pdir != null:
-		var subs: Array[String] = []
-		for sub in pdir.get_directories():
-			if FileAccess.file_exists(PROPS_DIR + sub + "/props.json"):
-				subs.append(sub)
-		subs.sort()
-		for sub in subs:
-			jsons_p.append(PROPS_DIR + sub + "/props.json")
+	for pack in PROP_PACKS:
+		jsons_p.append(PROPS_DIR + pack + "/props.json")
 	for path in jsons_p:
 		var d2: Dictionary = _read_json(path)
 		var dir: String = path.get_base_dir() + "/"
