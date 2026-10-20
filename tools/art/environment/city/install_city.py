@@ -72,7 +72,7 @@ def main():
         e['file'] = wname
         if not a.dry_run:
             total += save_webp(src / f, dst / wname)
-            ensure_policy(dst / wname)
+            ensure_policy(dst / wname, root=repo)
         written.append(wname)
     if not a.dry_run:
         (dst / 'props.json').write_text(json.dumps(props, indent=1))
@@ -89,7 +89,7 @@ def main():
             if not imp.exists():
                 imp.write_text(NO_MIPS_STUB)
             else:
-                ensure_policy(out)
+                ensure_policy(out, root=repo)
                 imp.write_text(imp.read_text().replace('mipmaps/generate=true', 'mipmaps/generate=false'))
         written.append(f'backdrops/{b}.webp')
     # stale files of the owned folder (a sprite that is no longer in the set), with their .import
