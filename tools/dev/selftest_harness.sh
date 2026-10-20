@@ -24,6 +24,8 @@
 #   require_tool           a missing tool is a skip, under --strict a failure
 #   --shuffle=N            changes the section order and prints it; a bad seed is a usage error
 #   checkout lock          a second run in a busy checkout exits 2 at once
+#   the run's log          the verdict reads the run's own log (a failed copy cannot bring back an older one), and an
+#                          interrupted run still leaves its log in .godot/playtest_last.log
 #   bad usage              unknown --only name / unknown option -> exit 2
 #   --fast (RT8)           the wrapper turns --fast into `--fixed-fps 60` ahead of the script and never hands --fast to the harness
 #                          (a stand-in engine prints its argv), a windowed run ignores it, an own --fixed-fps / other engine argument
@@ -59,7 +61,7 @@ RUN="tests/run_playtest.sh"
 ST="tests/lib/selftest"
 TMP_BASE="${TMPDIR:-/tmp}"
 WORK="$(mktemp -d "${TMP_BASE%/}/traetoppen-selftest.XXXXXX")"
-cleanup() { rm -rf "${WORK:?}" "${ROOT:?}/.selftest"; }
+cleanup() { chmod u+w "$ROOT/.godot" 2>/dev/null; rm -rf "${WORK:?}" "${ROOT:?}/.selftest"; }
 trap cleanup EXIT
 trap 'exit 130' INT TERM
 
@@ -212,6 +214,26 @@ if take_checkout_lock "$ROOT" selftest_harness; then
 	release_checkout_lock
 else
 	note_fail "busy_checkout_is_refused: could not take the checkout lock for the case"
+fi
+
+# ---- the run's own log: the verdict reads it, and .godot/playtest_last.log gets a copy also when the run was interrupted
+LAST=".godot/playtest_last.log"
+echo "PLAYTEST PASS (an older run)" >"$LAST"
+chmod a-w .godot   # the copy to playtest_last.log fails, and so does removing the older run's copy
+FAKE_GODOT_NO_RESULT=1 GODOT="$ST/fast/fake_godot.sh" run_case verdict_reads_the_runs_own_log 2 30 'printed no result line' '' --no-boot
+chmod u+w .godot
+if grep -q "could not copy the run's log" "$WORK/verdict_reads_the_runs_own_log.log"; then note_ok "a failed copy of the run's log is reported"; else note_fail "a failed copy of the run's log was not reported"; fi
+rm -f "$LAST"
+FAKE_GODOT_MARK="interrupted-$$" FAKE_GODOT_SLEEP=4 PLAYTEST_NO_IMPORT=1 GODOT="$ST/fast/fake_godot.sh" "$RUN" --no-boot >"$WORK/interrupted_run.log" 2>&1 &
+RUN_PID=$!
+sleep 1
+kill -TERM "$RUN_PID"
+wait "$RUN_PID"
+RUN_RC=$?
+if [ "$RUN_RC" = 130 ] && grep -q "^FAKE_MARK interrupted-$$\$" "$LAST" 2>/dev/null; then
+	note_ok "an interrupted run (exit 130) leaves its own log in $LAST"
+else
+	note_fail "interrupted run: exit $RUN_RC, $LAST has $(grep '^FAKE_MARK' "$LAST" 2>/dev/null || echo 'no FAKE_MARK line')"
 fi
 
 # ---- --fast (RT8): the wrapper adds `--fixed-fps 60`; a stand-in engine (tests/lib/selftest/fast/fake_godot.sh) prints its argv

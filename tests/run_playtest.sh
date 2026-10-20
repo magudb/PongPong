@@ -38,7 +38,8 @@
 #     before the editor scan has written the .gd.uid files (measured in 4.7.2), plain `--import` exits by itself;
 #   * runs tools/import/write_import_stubs.py --check when files under assets/ changed (no re-import pass);
 #   * runs Godot with a throwaway HOME so saves and settings never touch the real user:// directory; the run's output is
-#     logged there and copied to .godot/playtest_last.log when the run ends;
+#     logged there (the verdict reads that log) and copied to .godot/playtest_last.log when the run ends, also when it was
+#     interrupted; the previous run's copy is removed when Godot starts;
 #   * fails on engine ERROR/WARNING lines printed before the harness started (autoload and project load errors the
 #     in-process Logger cannot see);
 #   * exits 0 only when the harness printed its PASS line: 1 failed checks/engine messages, 2 usage or infrastructure
@@ -87,7 +88,13 @@ TMP_BASE="${TMPDIR:-/tmp}"
 TMP_BASE="${TMP_BASE%/}"
 take_checkout_lock "$ROOT" run_playtest || exit 2
 PLAY_HOME="$(mktemp -d "$TMP_BASE/traetoppen-playtest.XXXXXX")" || { release_checkout_lock; exit 2; }
+LOG="$ROOT/.godot/playtest_last.log"      # a copy of RUN_LOG, written when the run ends (also an interrupted one)
+RUN_LOG="$PLAY_HOME/playtest.log"         # the run's own log: the verdict below reads this one
 cleanup() {
+	if [ -f "$RUN_LOG" ] && ! { cp "$RUN_LOG" "$LOG.tmp" 2>/dev/null && mv -f "$LOG.tmp" "$LOG"; }; then
+		rm -f "$LOG.tmp"
+		echo "run_playtest: could not copy the run's log to $LOG" >&2
+	fi
 	release_checkout_lock
 	if [ "$KEEP_HOME" = 1 ]; then
 		echo "run_playtest: throwaway HOME kept at $PLAY_HOME"
@@ -171,8 +178,7 @@ fi
 # ---------------------------------------------------------------- 3. the run
 
 mkdir -p .godot
-LOG="$ROOT/.godot/playtest_last.log"      # a copy of RUN_LOG, written when the run ends
-RUN_LOG="$PLAY_HOME/playtest.log"
+rm -f "$LOG"                              # never let an older run's log stand in for this one
 HARNESS_MAX=$((TIMEOUT_S > 40 ? TIMEOUT_S - 15 : TIMEOUT_S))
 GODOT_ARGS=(--path .)
 if [ "$WINDOWED" = 1 ] && [ "$LIST" = 0 ]; then
@@ -207,7 +213,6 @@ T_START=$(date +%s)
 HOME="$PLAY_HOME" PLAYTEST_ISOLATED=1 run_timeout "$TIMEOUT_S" "$GODOT" "${GODOT_ARGS[@]}" 2>&1 | tee "$RUN_LOG"
 RC="${PIPESTATUS[0]}"
 ELAPSED=$(( $(date +%s) - T_START ))
-cp "$RUN_LOG" "$LOG.tmp" 2>/dev/null && mv -f "$LOG.tmp" "$LOG"
 
 # ---------------------------------------------------------------- 4. verdict
 
@@ -224,7 +229,7 @@ fi
 
 # engine errors/warnings printed before the harness started (autoload / project load): the in-process Logger is not
 # registered yet, so they are only visible in the raw output
-BOOT_ERRORS="$(awk '/^PLAYTEST (start|list|help|usage)/{exit} {print}' "$LOG" | grep -E '^(SCRIPT ERROR|ERROR|WARNING|USER ERROR|USER WARNING|SHADER ERROR):' || true)"
+BOOT_ERRORS="$(awk '/^PLAYTEST (start|list|help|usage)/{exit} {print}' "$RUN_LOG" | grep -E '^(SCRIPT ERROR|ERROR|WARNING|USER ERROR|USER WARNING|SHADER ERROR):' || true)"
 if [ -n "$BOOT_ERRORS" ]; then
 	echo "run_playtest: FAIL - engine messages before the harness started (project load / autoloads):" >&2
 	echo "$BOOT_ERRORS" >&2
@@ -233,14 +238,14 @@ fi
 
 # The logger is gone when the tree/resources shut down. Engine messages after
 # the verdict still fail, including leaked ObjectDB/RID diagnostics at exit.
-SHUTDOWN_ERRORS="$(awk '/^PLAYTEST (PASS|FAIL|list end|help|usage)/ {after=1; tail=""; next} after {tail=tail $0 ORS} END {printf "%s",tail}' "$LOG" | grep -E '^(SCRIPT ERROR|ERROR|WARNING|USER ERROR|USER WARNING|SHADER ERROR):' || true)"
+SHUTDOWN_ERRORS="$(awk '/^PLAYTEST (PASS|FAIL|list end|help|usage)/ {after=1; tail=""; next} after {tail=tail $0 ORS} END {printf "%s",tail}' "$RUN_LOG" | grep -E '^(SCRIPT ERROR|ERROR|WARNING|USER ERROR|USER WARNING|SHADER ERROR):' || true)"
 if [ -n "$SHUTDOWN_ERRORS" ]; then
 	echo "run_playtest: FAIL - engine messages after the harness result (shutdown):" >&2
 	echo "$SHUTDOWN_ERRORS" >&2
 	[ "$RC" = 0 ] && RC=1
 fi
 
-if ! grep -qE '^PLAYTEST (PASS|FAIL|list end|help)' "$LOG" && ! grep -qE '^PLAYTEST usage error' "$LOG"; then
+if ! grep -qE '^PLAYTEST (PASS|FAIL|list end|help)' "$RUN_LOG" && ! grep -qE '^PLAYTEST usage error' "$RUN_LOG"; then
 	echo "run_playtest: the harness printed no result line (it did not compile or crashed; log: $LOG)" >&2
 	[ "$RC" = 0 ] && RC=2
 fi
