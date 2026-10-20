@@ -138,15 +138,10 @@ func _done() -> void:
 	sm.director_path = SocialManager.DIRECTOR
 
 
-func _py() -> String:
-	var venv := ProjectSettings.globalize_path("res://tools/art/.venv/bin/python")
-	return venv if FileAccess.file_exists(venv) else "python3"
-
-
 func _run_py(res_script: String, args: PackedStringArray) -> Dictionary:
 	var full := PackedStringArray(["-B", "-I", ProjectSettings.globalize_path(res_script)])       # -B: no __pycache__ next to the tools (the tree stays clean)
 	full.append_array(args)
-	return t.run_tool(_py(), full)
+	return t.run_tool(t.python(), full)
 
 
 func _user_path(name: String) -> String:

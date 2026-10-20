@@ -71,7 +71,7 @@ func run(t) -> void:
 	var count := AudioManager.get_children().filter(func(node):return node is AudioStreamPlayer).size()
 	t.check("thirteen_plain_players",count==13 and AudioManager.get_children().all(func(node):return not node is AudioStreamPlayer3D))
 	for tool in ["sfx_synth.py","ambience_synth.py","music_synth.py"]:
-		var result: Dictionary = t.run_tool("python3",["-B",ProjectSettings.globalize_path("res://tools/voice/"+tool),"--check"])
+		var result: Dictionary = t.run_tool(t.python(), ["-B",ProjectSettings.globalize_path("res://tools/voice/"+tool),"--check"])
 		t.check("recipe_exports_"+tool,int(result.code)==0,str(result.output))
 	await t.go_menu()
 	await t.seconds(0.4)

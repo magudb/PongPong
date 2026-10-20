@@ -914,7 +914,7 @@ func _shops_after(shops: Dictionary, op: String) -> Dictionary:
 
 func _autoload_tool(t) -> void:
 	var script := ProjectSettings.globalize_path("res://tools/features/test_add_autoload.py")
-	var res: Dictionary = t.run_tool("/usr/bin/env", PackedStringArray(["python3", "-I", script, "--project", ProjectSettings.globalize_path("res://project.godot")]))
+	var res: Dictionary = t.run_tool(t.python(), PackedStringArray(["-I", script, "--project", ProjectSettings.globalize_path("res://project.godot")]))
 	var ids: Dictionary = t.parse_tool_ids(res)
 	var need := ["add_all", "second_run_is_noop", "base_block_untouched", "added_after_animal_husbandry", "skips_missing_scripts", "parallel_runs_do_not_corrupt", "refuses_other_path", "refuses_foreign_entry", "dry_run_writes_nothing",
 			"dedupes_repeated_names", "refuses_duplicate_entry", "refuses_missing_project", "refuses_missing_project_creates_no_lock", "refuses_missing_root", "refuses_unreadable_project"]
@@ -936,9 +936,9 @@ func _autoload_tool(t) -> void:
 		g.store_string("extends Node\n")
 		g.close()
 	var tool_path := ProjectSettings.globalize_path("res://tools/features/add_autoload.py")
-	var r1: Dictionary = t.run_tool("/usr/bin/env", PackedStringArray(["python3", "-I", tool_path, "--project", copy]))
+	var r1: Dictionary = t.run_tool(t.python(), PackedStringArray(["-I", tool_path, "--project", copy]))
 	var text1 := FileAccess.get_file_as_string(copy)
-	var r2: Dictionary = t.run_tool("/usr/bin/env", PackedStringArray(["python3", "-I", tool_path, "--project", copy]))
+	var r2: Dictionary = t.run_tool(t.python(), PackedStringArray(["-I", tool_path, "--project", copy]))
 	var checked: Dictionary = t.run_godot_script("res://tests/tools/check_project.gd", PackedStringArray(["--text=" + copy]))
 	var cids: Dictionary = t.parse_tool_ids(checked)
 	t.check("add_autoload_result_accepted_by_check_project", int(r1.get("code", -1)) == 0 and int(r2.get("code", -1)) == 0 and FileAccess.get_file_as_string(copy) == text1 and text1.count("res://scripts/") >= 5 \
@@ -949,7 +949,7 @@ func _autoload_tool(t) -> void:
 ## tools/features/test_rename_town.py (python, on temp copies): review F1 r2 - an empty / blank --old with --apply used to rewrite every text file; .map and .svg were never rewritten
 func _rename_tool(t) -> void:
 	var script := ProjectSettings.globalize_path("res://tools/features/test_rename_town.py")
-	var res: Dictionary = t.run_tool("/usr/bin/env", PackedStringArray(["python3", "-I", script]))
+	var res: Dictionary = t.run_tool(t.python(), PackedStringArray(["-I", script]))
 	var ids: Dictionary = t.parse_tool_ids(res)
 	var need := ["refuses_empty_old_with_apply", "refuses_blank_old", "refuses_empty_new", "dry_run_changes_nothing", "apply_renames_all_case_variants", "covers_map_svg_tscn_tres_gdshader", "leaves_binary_and_skip_dirs", "second_apply_is_noop"]
 	var missing: Array[String] = []
@@ -965,7 +965,7 @@ func _rename_tool(t) -> void:
 ## (the filter tested the absolute path): the self-test builds exactly such a tree and expects the name to be found there.
 func _rules_selftest(t) -> void:
 	var script := ProjectSettings.globalize_path("res://tools/features/validate/rules_selftest.py")
-	var res: Dictionary = t.run_tool("/usr/bin/env", PackedStringArray(["python3", "-I", script]))
+	var res: Dictionary = t.run_tool(t.python(), PackedStringArray(["-I", script]))
 	var ids: Dictionary = t.parse_tool_ids(res)
 	var passed: Array = ids["pass"]
 	var failed: Array = ids["fail"]

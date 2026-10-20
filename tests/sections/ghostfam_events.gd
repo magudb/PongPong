@@ -67,7 +67,7 @@ func run(t) -> void:
 			t.check(key,TranslationServer.translate(key)!=key)
 			greetings += 1
 	t.check("thirty_six_festival_greetings",greetings==36)
-	t.check("authored_source_reproducible",int(t.run_tool("python3",[ProjectSettings.globalize_path("res://tools/social/content/build_natlys.py"),"--check"]).code)==0)
+	t.check("authored_source_reproducible",int(t.run_tool(t.python(), [ProjectSettings.globalize_path("res://tools/social/content/build_natlys.py"),"--check"]).code)==0)
 	await t.go_menu()
 func _stage(t,meta: Dictionary) -> bool:
 	await world.travel(&"farm",&"default")
