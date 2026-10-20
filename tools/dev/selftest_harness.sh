@@ -261,7 +261,8 @@ fake_expect() { # fake_expect LABEL ARGV_PATTERN WANT(yes|no) CASE   (the argv m
 }
 fake_run harness.fast_flag_forwards_fixed_fps 0 30 'PLAYTEST PASS' '' --fast --no-boot
 fake_expect "--fast becomes '--fixed-fps 60' ahead of the harness script" '--headless --fixed-fps 60 -s res://tests/playtest.gd -- ' yes harness.fast_flag_forwards_fixed_fps
-fake_expect "--fast itself never reaches the harness (it would be an unknown option there)" '(^| )--fast( |$)' no harness.fast_flag_forwards_fixed_fps
+fake_expect "--fast reaches the harness as a user arg after -- (t.fixed_fps() reads it)" ' -- .*--fast( |$)' yes harness.fast_flag_forwards_fixed_fps
+fake_expect "--fast is not passed to the engine itself" '--fast .*-s res://tests/playtest.gd' no harness.fast_flag_forwards_fixed_fps
 fake_run no_fast_flag_keeps_real_time 0 30 'PLAYTEST PASS' '' --no-boot
 fake_expect "without --fast no --fixed-fps is passed" '--fixed-fps' no no_fast_flag_keeps_real_time
 GODOT_EXTRA_ARGS="--verbose" fake_run fast_flag_with_extra_engine_args 0 30 'PLAYTEST PASS' '' --fast --no-boot
