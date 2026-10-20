@@ -112,6 +112,7 @@ func player() -> Node:
 
 ## `n` process frames.
 func frames(n: int) -> void:
+	await _park_if_detached()
 	for i in n:
 		await tree.process_frame
 		await _park_if_detached()
@@ -119,6 +120,7 @@ func frames(n: int) -> void:
 
 ## `n` physics ticks. Required before asserting anything driven by _physics_process.
 func physics(n: int) -> void:
+	await _park_if_detached()
 	for i in n:
 		await tree.physics_frame
 		await _park_if_detached()
@@ -126,6 +128,7 @@ func physics(n: int) -> void:
 
 ## Game seconds (Engine.time_scale applies; the timer keeps running while the tree is paused).
 func seconds(s: float) -> void:
+	await _park_if_detached()
 	await tree.create_timer(s, true, false, false).timeout
 	await _park_if_detached()
 
@@ -140,12 +143,14 @@ func game_seconds() -> float:
 ## every frame counts 1/60 s whatever it costs, so the wait runs ahead of the wall clock like everything else the engine animates. A wait for something
 ## outside the engine loop (a thread, a child process) is `until(cond, timeout)`, which counts the wall clock.
 func real_seconds(s: float) -> void:
+	await _park_if_detached()
 	await tree.create_timer(s, true, false, true).timeout
 	await _park_if_detached()
 
 
 ## Polls `cond` once per process frame until it returns true or `timeout` WALL-CLOCK seconds pass (also under --fast). Returns whether it became true.
 func until(cond: Callable, timeout: float = 5.0) -> bool:
+	await _park_if_detached()
 	var t0 := Time.get_ticks_msec()
 	while not cond.call():
 		if float(Time.get_ticks_msec() - t0) / 1000.0 > timeout:

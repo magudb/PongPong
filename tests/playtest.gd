@@ -335,8 +335,9 @@ func _timeout_abort(what: String, limit: float) -> void:
 
 
 ## A section timed out: it fails the run, and the run goes on with the next section. The stuck coroutine keeps the old `t`,
-## which is detached (its frames / physics / seconds / until park the coroutine for good when it wakes up), the scene it left is
-## freed, and the next sections get a fresh `t` that carries the run's counts on.
+## which is detached (its frames / physics / seconds / until park the coroutine for good when it reaches one), the world it
+## left is replaced by a fresh one (what the boot stage gives the sections; a windowed run gets an empty scene), and the next
+## sections get a fresh `t` that carries the run's counts on.
 func _isolate_timeout(what: String, limit: float) -> void:
 	var msg := "section %s timed out after %d s (a coroutine is still waiting; look for an await on something that never happens)" % [what, int(limit)]
 	_problems.append(msg)
@@ -352,8 +353,11 @@ func _isolate_timeout(what: String, limit: float) -> void:
 	fresh.slow = old.slow
 	fresh.stats = old.stats
 	_t = fresh
-	await _t.clear_scene()
-	print("  note  the next sections still run: the stuck section is parked, its scene was freed")
+	if _windowed:
+		await _t.clear_scene()
+	elif not await _guarded(60.0, func() -> void: await _t.start_world(_character)):
+		_problems.append("no fresh world after the timeout of section %s" % what)
+	print("  note  the next sections still run: the stuck section is parked, the world was replaced")
 
 
 ## What a section may change for its own checks and must leave as it found it (see the header). Taken before every section.
