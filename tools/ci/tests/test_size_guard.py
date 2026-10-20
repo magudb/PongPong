@@ -194,11 +194,13 @@ class PolicyTests(unittest.TestCase):
         self.assertEqual(guard.limit_for("assets/iso_props/tree_giant_crown.webp", limits, rules)[1], "assets/**")
         self.assertEqual(guard.limit_for("docs/qa/mechanics/run.log", limits, rules)[1], "default")
 
-    def test_ci_runs_the_guard(self):
+    def test_ci_runs_the_guard_on_every_push(self):
         workflow = (ROOT / ".github/workflows/repo.yml").read_text()
         self.assertIn("tools/ci/size_guard.py --range", workflow)
         self.assertIn("tools/ci/size_guard.py --audit", workflow)
-
+        # the guard checks a delta: a cancelled push run would leave its commits unchecked
+        self.assertIn("cancel-in-progress: ${{ github.event_name == 'pull_request' }}", workflow)
+        self.assertIn("github.sha", re.search(r"concurrency:\n  group: (.+)", workflow).group(1))
 
 if __name__ == "__main__":
     unittest.main()

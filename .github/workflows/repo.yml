@@ -14,9 +14,11 @@ on:
 permissions:
   contents: read
 
+# The guard checks a delta (before..sha), so every push to main gets its own run: a cancelled or superseded push run
+# would leave its commits unchecked. A pull request run checks base..head, so a newer one may replace it.
 concurrency:
-  group: repo-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: repo-${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   size-guard:
