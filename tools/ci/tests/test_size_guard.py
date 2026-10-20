@@ -10,6 +10,7 @@ import importlib.util
 import io
 import os
 from pathlib import Path
+import re
 import subprocess
 import tempfile
 import unittest
@@ -162,7 +163,30 @@ class GuardTests(unittest.TestCase):
 
 
 class PolicyTests(unittest.TestCase):
-    """The committed limits."""
+    """The committed policy itself: LFS only where Godot never imports, shipped assets and UI baselines plain."""
+
+    def attribute(self, path):
+        out = subprocess.run(["git", "-C", str(ROOT), "check-attr", "filter", "--", path],
+                             capture_output=True, text=True, check=True).stdout
+        return out.rsplit(": ", 1)[-1].strip()
+
+    def test_lfs_patterns_cover_only_gdignored_trees(self):
+        trees = set()
+        for line in (ROOT / ".gitattributes").read_text(encoding="utf-8").splitlines():
+            if "filter=lfs" in line and not line.startswith("#"):
+                trees.add(re.match(r"(.+?)/\*\*/", line).group(1))
+        self.assertEqual(trees, {"docs", "tools/art"})
+        for tree in trees:
+            subprocess.run(["git", "-C", str(ROOT), "ls-files", "--error-unmatch", tree + "/.gdignore"],
+                           check=True, capture_output=True)
+
+    def test_where_new_files_go(self):
+        self.assertEqual(self.attribute("docs/qa/some-new-run/shot.png"), "lfs")
+        self.assertEqual(self.attribute("tools/art/drawn/sources/new_sheet.png"), "lfs")
+        self.assertEqual(self.attribute("docs/audio/new_take.wav"), "lfs")
+        self.assertNotEqual(self.attribute("assets/iso_props/new_prop.webp"), "lfs")
+        self.assertNotEqual(self.attribute("docs/qa/ui_baseline/new_screen.png"), "lfs")
+        self.assertNotEqual(self.attribute("docs/qa/some-new-run/report.json"), "lfs")
 
     def test_allowlist_parses_with_a_one_mib_default(self):
         limits, rules = guard.load_allowlist(guard.ALLOWLIST)
