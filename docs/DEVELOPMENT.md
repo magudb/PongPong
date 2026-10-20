@@ -54,6 +54,27 @@ same walk costs about 0.05 s, because the frames run back to back and every fram
   with it (most of its time is child processes and imports), and a section that times an animation with the wall clock fails under it
   (measured when the flag was added: `city_levels.monkey_climbs_faster` and `city_levels.lift_requests_area_change` read 0.01 s for 1.1 s).
 
+**Timing budgets** (the policy in the header of `tests/lib/t.gd`; the `timing_lint` section runs `tests/tools/timing_lint.py`, which
+fails on a raw wall-clock comparison and on a frame-count wait that ends in `t.fail()` or leaves early and is then checked):
+
+* a wall-clock budget is a check of its own, `t.check(name, t.perf_ok(name, measured, reference), detail)`; the functional conditions
+  around it are separate checks, so a failure names what broke;
+* `measured` must survive a preemption: `t.median_usec(work, batches, per_batch)` for a per-call or per-frame cost, the best (minimum)
+  of a repeated build, visit or reload, a single sample only for a one-off cold cost, a percentile only where the spec sets one
+  (`town_loop.l13_save_cost`: the p95 of 20 saves, `save_game p95 <= 25 ms`);
+* `reference` is the native budget, about 1.5-2x what a quiet machine measures. `TT_PERF_SCALE` (CI and the local gate set 4) lets a
+  timing pass up to that multiple and lists everything over the reference as SLOW (summary, JSON report, GitHub notice): drift is
+  reported, only a regression fails. A section whose own wall budget grows with it keeps its `TIMEOUT_S` above the scaled budget;
+* past the runner limit on an overloaded local machine (1-minute load average above 1.5x the cores, e.g. four local gate shards next
+  to other jobs: load 17-21 on 8 cores, cold builds and saves at 6-10x) a timing is NOT JUDGED: it passes, is listed with the load
+  in the summary and counted in the result line (`PLAYTEST PASS (..., 2 timing(s) NOT JUDGED)`, JSON `not_judged`), and
+  `--not-judged-exit=3` makes such a run exit 3 (inconclusive, as in `tests/perf_world.gd`) for a gate that shows it as amber.
+  It only applies when `TT_PERF_SCALE` allows more than 1x, outside CI (`GITHUB_ACTIONS` / `CI` unset), and up to 2x the runner
+  limit (8x the reference at scale 4): a native or windowed reference run, a CI runner, a quiet machine and a larger regression fail;
+* a game-time scene (a festival opening, a dialogue that types, a tween) is waited for with `t.until_game(cond, game_seconds, each)`
+  (a dialogue paged to its choices: `t.page_to_choices(dialogue)`), never a frame count: an uncapped headless run draws thousands of frames per second, so 1500 frames took 0.2 s on a Mac, less than
+  one camera move of the scene. A wall-clock comparison that is not a budget carries `# raw-time-ok: <reason>` on its line.
+
 `tools/dev/selftest_harness.sh` is the harness's own test (negative tests: an injected error, an uncompilable section, a hang, `--fast`).
 
 UI screens: every screen has a row in the UI audit's registry (`tests/lib/ui_screens.json`, plus one file per package in

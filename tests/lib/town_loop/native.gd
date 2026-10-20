@@ -70,7 +70,7 @@ func _crowd(t, suite, keep_world := false) -> void:
 	var cap := Perf.uncap()
 	await t.frames(12)
 	var frames: Dictionary = await Perf.measure_frames(t.tree,0.5,t.tree.root.get_viewport_rid())
-	t.check("l15_city_frame",float(frames.ms)<=6,str(frames))
+	t.check("l15_city_frame",t.perf_ok("l15_city_frame",float(frames.ms),6),str(frames))
 	var with_equipment := Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
 	var held: HeldEquipment2D = t.player().held_equipment
 	var clothes: WardrobeLayers = t.player().outfit_layers

@@ -213,13 +213,11 @@ func _visual(t,world: WorldRoot2D,look: ForestDress) -> void:
 	var best: Dictionary = windows[0]
 	for window in windows:
 		if window.ms < best.ms: best = window
-	t.check("frame_budget",best.ms <= 6,str(windows))
+	t.check("frame_budget",t.perf_ok("frame_budget",best.ms,6),str(windows))
 	var calls := Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
 	t.check("draw_call_budget",calls <= 450,str(calls))
-	var started := Time.get_ticks_usec()
-	for index in 1000: look._process(1.0/60)
-	var average := (Time.get_ticks_usec()-started)/1000000.0
-	t.check("dressing_update_under_point_three_ms",average < .3,"%.4f ms/frame; masks built once in %.3f ms" % [average,look.soft_ground.build_usec/1000.0])
+	var average: float = t.median_usec(func() -> void: look._process(1.0/60),20,50)/1000.0
+	t.check("dressing_update_under_point_three_ms",t.perf_ok("dressing_update_under_point_three_ms",average,.3),"%.4f ms/frame (median of 20 batches of 50; native reference 0.3); masks built once in %.3f ms" % [average,look.soft_ground.build_usec/1000.0])
 	DisplayServer.window_set_vsync_mode(timing.vsync)
 	Engine.max_fps = timing.fps
 	# Isolate lighting from the vignette and HUD for a direct same-pixel check.

@@ -3,6 +3,7 @@ extends RefCounted
 ## complete return journey. No fake rewards or test-only quest definitions.
 const SECTION := "secret_garden"
 const TIMEOUT_S := 180.0
+const CHOOSE_GAME_S := 10.0
 const Story := preload("res://scripts/world2d/story/secret_garden_story.gd")
 var world: Node
 var gm: Node
@@ -194,25 +195,30 @@ func _talk(t, npc: String) -> void:
 	await _choose(t, "close")
 	await t.frames(4)
 
+## Pages the dialogue on until `action` is offered and pressed: bounded by game time, the pages type by the game's delta (TEST-03).
 func _choose(t, action: String) -> void:
-	for i in 120:
-		await t.frames(1)
-		if not ui.is_open():
-			continue
-		if not ui._buttons.is_empty():
-			for button in ui._buttons:
-				if str(button.get_meta("choice").get("action", "")) == action:
-					t.press(str(button.get_path()))
-					return
-			for button in ui._buttons:
-				if str(button.get_meta("choice").get("action", "")) == "social_more":
-					t.press(str(button.get_path()))
-					break
-		else:
-			ui._advance()
+	await t.frames(1)
+	if await t.until_game(func() -> bool: return _press_choice(t, action), CHOOSE_GAME_S):
+		return
 	t.fail("choice_reachable_" + action)
 	if ui.is_open():
 		ui.close()
+
+func _press_choice(t, action: String) -> bool:
+	if not ui.is_open():
+		return false
+	if ui._buttons.is_empty():
+		ui._advance()
+		return false
+	for button in ui._buttons:
+		if str(button.get_meta("choice").get("action", "")) == action:
+			t.press(str(button.get_path()))
+			return true
+	for button in ui._buttons:
+		if str(button.get_meta("choice").get("action", "")) == "social_more":
+			t.press(str(button.get_path()))
+			break
+	return false
 
 func _walk_gate(t, destination: String, direction: Vector2) -> void:
 	await t.until(func() -> bool: return not world.traveling, 5.0)

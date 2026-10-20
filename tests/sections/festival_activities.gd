@@ -1,6 +1,7 @@
 extends RefCounted
 const SECTION := "festival_activities"
 const TIMEOUT_S := 180.0
+const FINISH_GAME_S := 10.0
 const Rules := preload("res://scripts/social/events/festival_activities.gd")
 const Stage := preload("res://scripts/social/events/festival_stage.gd")
 var world: WorldRoot2D
@@ -143,11 +144,13 @@ func _pick(t,stage: FestivalStage,activity: Dictionary,item: String,native: bool
 	picker._give()
 	await t.frames(3)
 
+## Bounded by game time, never by a frame count: an uncapped headless run draws 800 frames in a tenth of a second (TEST-03).
 func _finish(t) -> void:
-	for i in 800:
-		await t.frames(1)
-		if ui.is_open() and GameManager.top_modal() == &"dialogue":
-			if ui._wants_focus(): ui._pick(ui._choices[0])
-			else: ui._advance()
-		if director.runner.active == "" and director.queue.is_empty(): return
-	t.fail("festival scene did not release")
+	await t.frames(1)
+	if not await t.until_game(func():return director.runner.active == "" and director.queue.is_empty(),FINISH_GAME_S,_page):
+		t.fail("festival scene did not release within %s game seconds (active '%s', queue %s, top modal '%s')" % [FINISH_GAME_S,director.runner.active,director.queue.map(func(row):return row.id),GameManager.top_modal()])
+
+func _page() -> void:
+	if ui.is_open() and GameManager.top_modal() == &"dialogue":
+		if ui._wants_focus(): ui._pick(ui._choices[0])
+		else: ui._advance()

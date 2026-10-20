@@ -23,6 +23,8 @@ extends SceneTree
 ##   --strict                          ignore tests/lib/known_issues.txt: every engine message fails the run
 ##   --known-issues=PATH               one more known-issues file besides res://tests/lib/known_issues.txt (repeatable)
 ##   --verbose                         print every ok line (default: at most 400 per section)
+##   --not-judged-exit=N               exit code of a passing run with timings NOT JUDGED on an overloaded machine (default 0; e.g. 3,
+##                                     the INCONCLUSIVE code of tests/perf_world.gd, so a gate script can show it as amber)
 ## The wrapper (tests/run_playtest.sh) has options of its own that this script never sees: --fast (headless: `--fixed-fps 60`, frames run ahead of the
 ## wall clock), --no-import, --timeout=SECS, --keep-home. The watchdogs of this script (--section-timeout, TIMEOUT_S, --max-seconds) count WALL-CLOCK seconds.
 ##
@@ -63,6 +65,7 @@ var _report := ""
 var _seed := 424242
 var _verbose := false
 var _strict := false
+var _not_judged_exit := 0
 var _known_paths: Array[String] = ["res://tests/lib/known_issues.txt"]
 
 var _t0 := 0
@@ -429,6 +432,10 @@ func _finish() -> void:
 		print("  FAILED   ", f)
 	var on_actions := OS.get_environment("GITHUB_ACTIONS") == "true"
 	for s in _t.slow:
+		if not bool(s.get("judged", true)):
+			# never on a CI job (t.not_judged() judges every timing there), so there is no GitHub annotation for it
+			print("  SLOW     %s: %s, native reference %s (%.2fx, past the runner limit %s while the machine was overloaded, %s: NOT JUDGED)" % [s.check, s.measured, s.reference, s.ratio, s.limit, s.load])
+			continue
 		print("  SLOW     %s: %s, native reference %s (%.2fx, passed inside the runner limit %s)" % [s.check, s.measured, s.reference, s.ratio, s.limit])
 		if on_actions:
 			print("::notice title=Slow timing (%s)::%s took %s against a native reference of %s (%.2fx); the runner limit is %s" % [_character, s.check, s.measured, s.reference, s.ratio, s.limit])
@@ -449,11 +456,12 @@ func _finish() -> void:
 		shown += 1
 	if _report != "":
 		_write_report(bad == 0, elapsed)
+	var not_judged: int = _t.not_judged_count()
 	if bad == 0:
-		print("PLAYTEST PASS (%d checks in %d sections, %d allowed engine messages, %d known-issue messages)" % [_t.checks, _ran.size(), _catcher.allowed_entries.size(), _catcher.known_entries.size()])
+		print("PLAYTEST PASS (%d checks in %d sections, %d allowed engine messages, %d known-issue messages%s)" % [_t.checks, _ran.size(), _catcher.allowed_entries.size(), _catcher.known_entries.size(), (", %d timing(s) NOT JUDGED" % not_judged) if not_judged > 0 else ""])
 	else:
 		print("PLAYTEST FAIL: %d check failures, %d engine errors, %d engine warnings, %d problems" % [_t.failed, errors, warnings, _problems.size()])
-	quit(0 if bad == 0 else 1)
+	quit(1 if bad != 0 else (_not_judged_exit if not_judged > 0 else 0))
 
 
 func _write_report(passed: bool, elapsed: float) -> void:
@@ -471,6 +479,7 @@ func _write_report(passed: bool, elapsed: float) -> void:
 		"sections": _t.stats,
 		"failures": _t.failures,
 		"slow": _t.slow,
+		"not_judged": _t.not_judged_count(),
 		"problems": _problems,
 		"engine": engine,
 		"allowed": _catcher.allowed_entries,
@@ -526,6 +535,8 @@ func _parse_args(args: PackedStringArray) -> String:
 			_verbose = true
 		elif a == "--strict":
 			_strict = true
+		elif a.begins_with("--not-judged-exit="):
+			_not_judged_exit = int(a.get_slice("=", 1))
 		elif a.begins_with("--known-issues="):
 			var kp := a.get_slice("=", 1)
 			_known_paths.append(kp if kp.begins_with("res://") or kp.begins_with("user://") else "res://" + kp)
@@ -545,4 +556,5 @@ func _absolute(path: String) -> String:
 func _print_usage() -> void:
 	print("usage: tests/run_playtest.sh [--character=animal|fairy|hobbit|ghost] [--only=a,b] [--list] [--windowed] [--out=DIR]")
 	print("       [--no-boot] [--play-seconds=N] [--section-timeout=N] [--max-seconds=N] [--report=FILE] [--seed=N] [--verbose] [--strict]")
+	print("       [--not-judged-exit=N]")
 	print("       wrapper only (tests/run_playtest.sh): [--fast] [--no-import] [--timeout=SECS] [--keep-home]")

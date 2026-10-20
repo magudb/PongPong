@@ -8,6 +8,7 @@
 # Harness options (passed through unchanged, see the header of tests/playtest.gd): --character= --only= --list
 #   --windowed --out= --no-boot --boot --play-seconds=N --section-timeout=N --max-seconds=N --report=FILE --seed=N
 #   --verbose --strict (ignore tests/lib/known_issues.txt) --known-issues=FILE --sections-dir=PATH
+#   --not-judged-exit=N (exit code of a pass with timings NOT JUDGED on an overloaded machine, default 0)
 # Wrapper options:
 #   --fast             headless runs only: pass `--fixed-fps 60` to Godot (GODOT_EXTRA_ARGS), so physics and process frames run
 #                      back to back instead of waiting for the wall clock: a 5.3 game-second real-input walk costs 0.05 s instead
@@ -32,7 +33,7 @@
 #   * fails on engine ERROR/WARNING lines printed before the harness started (autoload and project load errors the
 #     in-process Logger cannot see);
 #   * exits 0 only when the harness printed its PASS line: 1 failed checks/engine messages, 2 usage or infrastructure
-#     (import/stub check/no result line), 124 timeout.
+#     (import/stub check/no result line), 124 timeout, and the --not-judged-exit code for a pass with timings NOT JUDGED.
 #
 # Exit code != 0 on any failed check, engine error or warning (plan 8.1 negative test).
 

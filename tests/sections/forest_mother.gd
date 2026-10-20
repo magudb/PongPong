@@ -1,6 +1,7 @@
 extends RefCounted
 const SECTION := "forest_mother"
 const TIMEOUT_S := 240.0
+const CHOOSE_GAME_S := 10.0
 var world: WorldRoot2D
 var ui: Node
 var native := false
@@ -235,19 +236,24 @@ func _talk(t,id: String) -> void:
 	await t.frames(3)
 	await _choose(t,"close")
 	await t.frames(3)
+## Pages the dialogue on until `action` is offered and pressed: bounded by game time, the pages type by the game's delta (TEST-03).
 func _choose(t,action: String) -> void:
-	for index in 150:
-		await t.frames(1)
-		if not ui.is_open(): continue
-		if ui._buttons.is_empty(): ui._advance()
-		else:
-			for button in ui._buttons:
-				if str(button.get_meta("choice").get("action","")) == action:
-					t.press(str(button.get_path()))
-					return
-			for button in ui._buttons:
-				if str(button.get_meta("choice").get("action","")) == "social_more":
-					t.press(str(button.get_path()))
-					break
+	await t.frames(1)
+	if await t.until_game(func():return _press_choice(t,action),CHOOSE_GAME_S): return
 	t.fail("story_choice_reachable_"+action+" "+str({"open":ui.is_open(),"lines":ui._lines,"choices":ui._choices,"modal":t.autoload("GameManager").top_modal()}))
 	if ui.is_open(): ui.close()
+
+func _press_choice(t,action: String) -> bool:
+	if not ui.is_open(): return false
+	if ui._buttons.is_empty():
+		ui._advance()
+		return false
+	for button in ui._buttons:
+		if str(button.get_meta("choice").get("action","")) == action:
+			t.press(str(button.get_path()))
+			return true
+	for button in ui._buttons:
+		if str(button.get_meta("choice").get("action","")) == "social_more":
+			t.press(str(button.get_path()))
+			break
+	return false
