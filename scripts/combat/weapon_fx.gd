@@ -40,7 +40,8 @@ static func on_swing(player: Node2D, supplied: Variant = null) -> void:
 			var damage := maxi(1,roundi(float(info.get("damage",0))*float(effect.get("mult",.6))))
 			var aim := Vector2.RIGHT
 			var combat: Variant = player.get("combat")
-			if combat is Object and combat.has_method("aim_ground"): aim = combat.aim_ground()
+			# The swing's own direction (a clicked point at press time, the nudge onto an enemy), not a fresh cursor read.
+			if combat is Object and combat.has_method("swing_direction"): aim = combat.swing_direction()
 			for enemy in _near(player,radius):
 				var offset := Iso.to_ground(enemy.global_position-player.global_position)
 				if id == "moon_wave" and (offset.dot(aim) < 0 or absf(offset.cross(aim)) > 45): continue
