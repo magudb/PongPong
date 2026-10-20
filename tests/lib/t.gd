@@ -22,8 +22,8 @@ extends "res://tests/lib/flow.gd"
 ## Timing policy (TEST-02, PERF-03; docs/DEVELOPMENT.md "Timing budgets"), enforced by tests/tools/timing_lint.py (section timing_lint):
 ##   * a wall-clock budget is a check of its own, t.check(name, t.perf_ok(name, measured, reference), detail), never AND-ed with
 ##     functional conditions (those are checks of their own, so a failure names what broke);
-##   * `measured` survives a preemption: median_usec() of batches for a per-call or per-frame cost, the best (minimum) of repeated
-##     builds, a single sample only for a one-off cold cost;
+##   * `measured` survives a preemption: median_usec() of batches for a per-call or per-frame cost, the best (minimum) of a repeated
+##     build, save or reload (disk and caches only add time), a single sample only for a one-off cold cost;
 ##   * `reference` is the native budget, about 1.5-2x what a quiet machine measures; TT_PERF_SCALE (CI and the local gate: 4)
 ##     allows up to 4x it, and anything over the reference is listed as SLOW, so drift is reported and only a regression fails;
 ##   * whatever the game animates by its delta is waited for in game time (until_game, seconds, physics), never a frame count.

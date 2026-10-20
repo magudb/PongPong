@@ -60,7 +60,7 @@ fails on a raw wall-clock comparison and on a frame-count wait that ends in `t.f
 * a wall-clock budget is a check of its own, `t.check(name, t.perf_ok(name, measured, reference), detail)`; the functional conditions
   around it are separate checks, so a failure names what broke;
 * `measured` must survive a preemption: `t.median_usec(work, batches, per_batch)` for a per-call or per-frame cost, the best (minimum)
-  of repeated builds or visits, a single sample only for a one-off cold cost;
+  of a repeated build, visit, save or reload, a single sample only for a one-off cold cost;
 * `reference` is the native budget, about 1.5-2x what a quiet machine measures. `TT_PERF_SCALE` (CI and the local gate set 4) lets a
   timing pass up to that multiple and lists everything over the reference as SLOW (summary, JSON report, GitHub notice): drift is
   reported, only a regression fails. A section whose own wall budget grows with it keeps its `TIMEOUT_S` above the scaled budget;
