@@ -16,13 +16,12 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageOps
 from fixtures import geometry_source
 
-from pack import ROOT, HERE, extract, window_light, project_building, building_footprint
+from pack import ROOT, HERE, extract, window_light, project_building, building_footprint, ensure_policy
 from world import material, swatch
 
 SRC = HERE / "sources/style_audit"
 OUT = ROOT / "assets/iso_props/zz_painted_consistency"
 DOC = ROOT / "docs/art/style-audit"
-PRESET = '[remap]\nimporter="texture"\ntype="CompressedTexture2D"\n\n[params]\ncompress/mode=2\ncompress/high_quality=false\nmipmaps/generate=true\nprocess/fix_alpha_border=true\n'
 FAMILIES = {
     "a_fixed": ["bed", "table", "chair", "sofa"],
     "b": ["wardrobe", "bookshelf", "chest", "fireplace"],
@@ -73,9 +72,7 @@ def matte(image: Image.Image) -> Image.Image:
 def save(image: Image.Image, path: Path, quality: int = 87) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     image.save(path, quality=quality, method=6, exact=True)
-    stub = path.with_name(path.name + ".import")
-    if not stub.exists():
-        stub.write_text(PRESET)
+    ensure_policy(path)
 
 
 def pigment(image: Image.Image, style: dict, template: str) -> Image.Image:
@@ -444,8 +441,7 @@ def backdrop(manifest: dict) -> None:
     sky = sky.resize((384, 216), Image.Resampling.LANCZOS)
     path = ROOT / "assets/backdrops/treetop_sky.png"
     sky.save(path, optimize=True)
-    stub = path.with_name(path.name + ".import")
-    if not stub.exists(): stub.write_text(PRESET)
+    ensure_policy(path)
 
 
 def main() -> None:

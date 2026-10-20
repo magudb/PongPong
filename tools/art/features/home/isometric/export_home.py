@@ -8,7 +8,10 @@
   iso_props/home/{house_tNN,house_tNN_night,scaffold_toNN}.webp + home.json         tiers[] without gold/materials/Danish text (those are lua/data/home_tiers.lua + home.csv)
   iso_props/furniture/<id>_r<k>[_float].webp + furniture.json                        TRUE views of every distinct rotation (symmetry MEASURED); _float only on the legendary pieces; specs/mirror_ok.json is measured on these files
   iso_props/interior/*.webp + interior.json     iso_props/fx/glow_soft.webp          iso_props/features/*.webp + props.json (the nine new props)
-  iso_tiles/floor_{stone,plank,parquet,marble}.png + .import stubs WITHOUT mipmaps + tiles_floors.json
+  iso_tiles/floor_{stone,plank,parquet,marble}.png + tiles_floors.json
+  <texture>.import                                                                   the stub of the project's texture import policy (tools/import/write_import_stubs.py, review REND-03:
+                                                                                     S3TC + mipmaps for houses, furniture, interior pieces and props, the floors lossless WITHOUT mipmaps;
+                                                                                     the lossless icons need none), so a new texture imports with its preset on the FIRST import
   data/home/rooms/room_tNN.json                                                      rows, cells, floor, wall_style, door, spawn, windows, max_furniture, zoom_fit
   icons/home/<furniture id>.webp  <material id>.webp (lossless 128x128)  <legendary id>_night.webp (pale die-cut rim, night_rim.py)
   lua/config/props_features.lua                                                      gameplay entries of the nine props (generated from features_props.GAMEPLAY + the baked footprints)
@@ -24,22 +27,11 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 import homepaths
+sys.path.insert(0, str(homepaths.REPO / 'tools/import'))
+from write_import_stubs import stub_for   # noqa: E402  the one texture import policy
 
 Q_HOUSE, Q_SCAFFOLD, Q_FURN, Q_INTERIOR, Q_PROP = 92, 90, 94, 94, 94
 NIGHT_RIM = '_night'
-
-TILE_ATLAS_IMPORT = """[remap]
-
-importer="texture"
-type="CompressedTexture2D"
-
-[params]
-
-compress/mode=0
-mipmaps/generate=false
-process/fix_alpha_border=true
-"""
-
 
 def conv(job):
     src, dst, q, lossless = job
@@ -61,15 +53,15 @@ def write_json(path: Path, doc) -> None:
     path.write_text(json.dumps(doc, indent=1, ensure_ascii=False) + '\n', encoding='utf-8')
 
 
-def write_floor_stubs(tiles_dir: Path) -> list:
-    """`.import` stubs for assets/iso_tiles/floor_*.png: lossless, mipmaps OFF (periodic atlas cells would bleed into each other at mip >= 1, review R.1).
-    Written BEFORE the first godot --import; an existing .import that already says mipmaps/generate=false is left alone (it holds Godot's uid)."""
+def write_stubs(dst: Path) -> list:
+    """The `.import` stub of every texture of the stage tree `dst` (laid out like res://assets), from the project's import policy: written BEFORE the
+    first godot --import. install_home.py copies a stub only for a texture the repo does not have yet and holds an existing .import to the same policy."""
     wrote = []
-    for f in sorted(Path(tiles_dir).glob('floor_*.png')):
-        imp = f.with_name(f.name + '.import')
-        if imp.exists() and 'mipmaps/generate=false' in imp.read_text() and 'compress/mode=0' in imp.read_text():
-            continue
-        imp.write_text(TILE_ATLAS_IMPORT); wrote.append(imp.name)
+    for f in sorted(Path(dst).rglob('*')):
+        if f.suffix in ('.png', '.webp'):
+            stub = stub_for(homepaths.REPO / 'assets' / f.relative_to(dst))
+            if stub:
+                f.with_name(f.name + '.import').write_text(stub); wrote.append(f.name)
     return wrote
 
 
@@ -164,7 +156,6 @@ def main():
     for k, v in tj.items():
         if isinstance(v, dict): v.pop('seconds', None)
     write_json(D / 'iso_tiles/tiles_floors.json', tj)
-    write_floor_stubs(D / 'iso_tiles')
 
     # ---- new props --------------------------------------------------------------------------------------------------------------
     pj = json.loads((W / 'features_props/props.json').read_text())
@@ -213,6 +204,7 @@ def main():
             e['baked'] = [0, 2]; e['rot_map'] = [[0, False], [0, True], [2, False], [2, True]]
         groups['furniture'] -= saved; print('mirror fallback: %d ids, %.2f MB of sprites not written' % (len(ok), saved / 1e6))
     write_json(D / 'iso_props/furniture/furniture.json', fur_json)
+    write_stubs(D)
 
     # ---- lua/config/props_features.lua ---------------------------------------------------------------------------------------------
     (D / 'lua/config/props_features.lua').write_text(props_lua(pj, fp), encoding='utf-8')

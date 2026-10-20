@@ -7,10 +7,11 @@ always reads those masters so repeated runs never compound quantization.
 """
 from pathlib import Path
 import json
-import re
 
 import numpy as np
 from PIL import Image, ImageOps
+
+from pack import ensure_policy
 
 ROOT = Path(__file__).resolve().parents[3]
 MASTERS = Path(__file__).resolve().parent / "sources/environment_masters"
@@ -51,20 +52,10 @@ def build() -> dict:
             (ROOT / relative).unlink(missing_ok=True)
             (ROOT / (relative + ".import")).unlink(missing_ok=True)
         if "/backdrops/" in relative:
-            # Backgrounds use the same S3TC/mipmap preset as the farm's far
-            # layer. Lossless upload of a 1920x1080 sky alone costs 8.3 MB,
+            # Backgrounds use the S3TC/mipmap backdrop preset of the import
+            # policy. Lossless upload of a 1920x1080 sky alone costs 8.3 MB,
             # exceeding the unchanged 20 MB farm texture-memory budget.
-            stub = target.with_name(target.name + ".import")
-            body = stub.read_text() if stub.exists() else '[remap]\n\nimporter="texture"\ntype="CompressedTexture2D"\n\n[params]\n'
-            for key, value in {"compress/mode": "2", "compress/high_quality": "false",
-                               "mipmaps/generate": "true", "process/fix_alpha_border": "true"}.items():
-                pattern = r"(?m)^" + re.escape(key) + r"=.*$"
-                if re.search(pattern, body):
-                    body = re.sub(pattern, key + "=" + value, body)
-                else:
-                    body += key + "=" + value + "\n"
-            if not stub.exists() or stub.read_text() != body:
-                stub.write_text(body)
+            ensure_policy(target)
         packed = np.asarray(Image.open(target).convert("RGBA"))
         assert packed.shape == pixels.shape
         assert np.array_equal(packed[:, :, 3], pixels[:, :, 3]), relative

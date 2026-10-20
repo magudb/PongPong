@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """write_farm_imports.py - the Godot `.import` stubs of the farm kit (package N03-farm-art, TOWNS addendum TE9 / DT29) and the audit that keeps them honest.
 
-Why this package writes its own stubs: tools/import/write_import_stubs.py (P05) covers only the character sheets, the tile atlases and the wardrobe layers, so assets/iso_props/**
-and assets/backdrops/** would stay lossless (kit 65.5 MB; the city peak 357.6 MB).  A hand-written minimal stub is honoured on the very first import in Godot 4.7.2 (a 1227 x 2405
+Why this package writes stubs: the kit must import VRAM-compressed on the FIRST import (lossless the kit is 65.5 MB; the city peak 357.6 MB).  The texts and
+presets are those of the project's texture import policy (tools/import/write_import_stubs.py, review REND-03), which --check of that tool enforces for every texture;
+this audit holds the kit to them too.  A hand-written minimal stub is honoured on the very first import in Godot 4.7.2 (a 1227 x 2405
 image with compress/mode=2 imports to a ~3.95 MB .s3tc.ctex).  The stub is the same minimal one as the character sheets:
 
   the ten props (assets/iso_props/farm/<id>.png)      [remap] importer="texture" type="CompressedTexture2D"
@@ -27,34 +28,12 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[3]
 sys.path.insert(0, str(HERE.parents[1] / 'drawn'))
 import drawn_art   # noqa: E402
+sys.path.insert(0, str(REPO / 'tools/import'))
+from write_import_stubs import CHARACTER_SHEET, TILE_ATLAS   # noqa: E402
 
 KIT_IDS = ['trunk_giant_a', 'trunk_giant_b', 'trunk_under_a', 'trunk_under_b', 'tool_shed', 'shipping_bin', 'stake_sign', 'rope_stake_x', 'rope_stake_z', 'build_stake']
 
-VRAM_STUB = """[remap]
-
-importer="texture"
-type="CompressedTexture2D"
-
-[params]
-
-compress/mode=2
-compress/high_quality=false
-mipmaps/generate=true
-process/fix_alpha_border=true
-"""
-
-TILE_STUB = """[remap]
-
-importer="texture"
-type="CompressedTexture2D"
-
-[params]
-
-compress/mode=0
-mipmaps/generate=false
-process/fix_alpha_border=true
-"""
-
+VRAM_STUB, TILE_STUB = CHARACTER_SHEET, TILE_ATLAS   # the stubs of the project's texture import policy (vram, atlas)
 VRAM_WANT = {'compress/mode': '2', 'compress/high_quality': 'false', 'mipmaps/generate': 'true'}
 TILE_WANT = {'compress/mode': '0', 'mipmaps/generate': 'false'}
 

@@ -17,12 +17,11 @@ import numpy as np
 from PIL import Image, ImageDraw
 from scipy import ndimage
 
-from pack import HERE, ROOT, extract, fitted
+from pack import HERE, ROOT, extract, fitted, ensure_policy
 
 SOURCE = HERE / "sources/equipment_fit"
 OUT = ROOT / "assets/art_studies/equipment_fit"
 DOC = ROOT / "docs/art/equipment-fit"
-PRESET = '[remap]\nimporter="texture"\ntype="CompressedTexture2D"\n\n[params]\ncompress/mode=0\nmipmaps/generate=false\nprocess/fix_alpha_border=true\n'
 YY, XX = np.mgrid[:256, :256].astype(np.float32)
 
 
@@ -250,9 +249,7 @@ def build() -> None:
             image, rectangles = atlas(cells)
             filename = f"{name}_{clip}.webp"
             image.save(OUT / filename, lossless=True, method=4, exact=True)
-            imp = OUT / (filename + ".import")
-            if not imp.exists():
-                imp.write_text(PRESET)
+            ensure_policy(OUT / filename)
             for row in poses:
                 for pose in row:
                     for part in pose["parts"].values():

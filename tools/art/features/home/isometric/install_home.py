@@ -9,14 +9,17 @@ Owned destinations (everything else is refused, exit 2, nothing written):
   assets/data/home/                                         mirrored (rooms/room_tNN.json)
   assets/iso_tiles/floor_*.png (+ .import) and tiles_floors.json     only these files of the folder; the folder itself belongs to P22
   lua/config/props_features.lua
-Godot-generated `.import` / `.uid` files that already exist in the repo are kept and never overwritten (they hold the uid and the import params); a new stub from the stage is copied.
+Godot-generated `.import` / `.uid` files that already exist in the repo are kept and never overwritten (they hold the uid); a new stub from the stage is copied, and every installed
+texture is then held to the project's import policy (tools/import/write_import_stubs.py, review REND-03: a stale .import gets the preset's params, its uid kept).
 A file a later art pack supersedes (tools/art/drawn/fixture_recipes.json, review REND-10: the painted pack draws that id) is not installed.
 """
 from __future__ import annotations
 import argparse, shutil, sys
 from pathlib import Path
 import homepaths
+sys.path.insert(0, str(homepaths.REPO / 'tools/import'))
 sys.path.insert(0, str(homepaths.ART / 'drawn'))
+from write_import_stubs import ensure_policy   # noqa: E402  the one texture import policy
 import drawn_art                               # noqa: E402
 
 DIRS = ['iso_props/home', 'iso_props/furniture', 'iso_props/interior', 'iso_props/fx', 'iso_props/features', 'icons/home', 'data/home']
@@ -123,6 +126,9 @@ def main():
         d.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(s, d)
     for p in removals:
         p.unlink()
+    for s, d in copies:
+        if d.suffix in ('.png', '.webp'):
+            ensure_policy(d, root=repo)
     for rel in DIRS:                                                  # prune empty dirs
         for p in sorted((ra / rel).rglob('*'), reverse=True):
             if p.is_dir() and not any(p.iterdir()):
