@@ -113,6 +113,23 @@ func until(cond: Callable, timeout: float = 5.0) -> bool:
 	return true
 
 
+## Polls `cond` once per process frame until it returns true or `game_timeout` GAME seconds (game_seconds()) pass; `each` (optional) runs every
+## frame before the poll, e.g. to page a dialogue on. Use it for anything the game animates by its own delta (tweens, event waits, walks): a fixed
+## frame count is no bound for that, because an uncapped headless run draws thousands of frames per wall second (1500 frames measured 0.2 s on
+## an M-series Mac, less than one 0.25 s camera move of a festival scene) while a loaded runner draws a few hundred. Returns whether `cond` became true.
+func until_game(cond: Callable, game_timeout: float, each: Callable = Callable()) -> bool:
+	var t0 := game_seconds()
+	while true:
+		if each.is_valid():
+			each.call()
+		if cond.call():
+			return true
+		if game_seconds() - t0 > game_timeout:
+			return false
+		await tree.process_frame
+	return false
+
+
 ## Waits for `sig` to fire (e.g. t.autoload("EventBus").day_started) for at most `timeout` seconds.
 ## Returns the emitted arguments as an Array ([] for a signal without arguments) or null on timeout.
 func wait_signal(sig: Signal, timeout: float = 5.0) -> Variant:
