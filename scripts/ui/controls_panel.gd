@@ -5,7 +5,7 @@ const L := preload("res://scripts/ui/social/social_layout.gd")
 ## [label key, actions]: the actions of one row (their bindings are listed); rows with a special text are built in _row_texts().
 const ROWS := [
 	["NAV_CONTROLS_MOVE", []], ["NAV_CONTROLS_RUN", [&"run"]], ["NAV_CONTROLS_INTERACT", [&"interact"]],
-	["NAV_CONTROLS_TOOL", [&"use_tool"]], ["NAV_CONTROLS_JUMP", [&"jump"]], ["NAV_CONTROLS_DODGE", [&"dodge"]],
+	["NAV_CONTROLS_TOOL", [&"use_tool"]], ["NAV_CONTROLS_CLICK", []], ["NAV_CONTROLS_JUMP", [&"jump"]], ["NAV_CONTROLS_DODGE", [&"dodge"]],
 	["NAV_CONTROLS_LIGHT", [&"light"]], ["NAV_CONTROLS_DRINK", [&"drink"]], ["NAV_CONTROLS_FLY", [&"fly_toggle"]],
 	["NAV_CONTROLS_DESCEND", [&"fly_descend"]], ["NAV_CONTROLS_ZOOM", []], ["NAV_CONTROLS_HOTBAR", []],
 	["INV_TITLE", [&"inventory"]], ["MAP_TITLE", [&"map"]], ["QJ_TITLE", [&"journal"]], ["PAUSE_PEOPLE", [&"people"]],
@@ -71,6 +71,9 @@ func _row_texts(row: Array) -> Array[String]:
 	match str(row[0]):
 		"NAV_CONTROLS_MOVE":
 			return [UiHints.glyph_set([&"move_forward", &"move_left", &"move_back", &"move_right"], kb) + " / " + UiHints.glyph_set([&"ui_up", &"ui_left", &"ui_down", &"ui_right"], kb), tr("NAV_PAD_LSTICK")]
+		"NAV_CONTROLS_CLICK":
+			# A click works the clicked cell around the hero; the pad and the X key work the cell in front.
+			return [tr("NAV_CONTROLS_CLICK_GROUND"), tr("NAV_CONTROLS_TILE_AHEAD")]
 		"NAV_CONTROLS_ZOOM":
 			return [tr("NAV_CONTROLS_WHEEL"), UiHints.glyph_pair(&"zoom_in", &"zoom_out", pad)]
 		"NAV_CONTROLS_HOTBAR":

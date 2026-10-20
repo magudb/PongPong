@@ -14,6 +14,7 @@ Released Windows and macOS builds can be downloaded from GitHub Releases. Extrac
 | Climb / descend during flight | Space / Shift | A / LT |
 | Interact / talk | E or Enter | A (hops when there is nothing to use) |
 | Use selected tool; attack in adventure areas | Left mouse button or X | X |
+| Work or attack a chosen tile | Click the ground around the character | (the tile in front) |
 | Jump; dodge in adventure areas | Space | A; B |
 | Fairy light | Q | Y |
 | Drink a healing supply | R | RB |
@@ -37,7 +38,7 @@ Use arrows, Enter and Escape to navigate panels; Q / E (or PgUp / PgDn) switch t
 
 Follow the first-days quests to learn planting, watering, harvesting and shipping. Shops keep their posted hours and close for relevant festivals. Talk at the separate counter host to speak with a keeper; the shop host opens stock. The post office shows mail, people and current locations. The journal contains quests, relationships, calendar and the mother's investigation.
 
-On the farm, the highlighted tile in front of your character is the working tile. Select the hoe to till it, seeds to plant, and the watering can to water. Hold the left mouse button while walking to work successive tiles. A plot is worked once per pass; release and press again to repeat an action on it. Water can go on before or after planting. Repeated watering has no effect, except when a moonflower still needs its special night watering. Dry crops pause their growth for the day. Rain and fairy watering supplies can do the watering for you.
+On the farm, the highlighted tile in front of your character is the working tile. Select the hoe to till it, seeds to plant, and the watering can to water. With the mouse, the highlight follows the cursor instead: click any of the eight tiles around your character (or the one you stand on, except for seeds and placed objects) and the character turns and works that tile; a click farther away works the neighbouring tile in that direction. Clicking a ripe crop picks it, as E does. The X key and the controller keep working the tile in front. Hold the left mouse button while walking, or drag the cursor, to work successive tiles. A plot is worked once per pass; release and press again to repeat an action on it. Water can go on before or after planting. Repeated watering has no effect, except when a moonflower still needs its special night watering. Dry crops pause their growth for the day. Rain and fairy watering supplies can do the watering for you.
 
 Ripe crops show a harvest prompt: press E, or use the scythe for a wider sweep. Harvested soil stays tilled and keeps that day's water, so you can plant straight away. Strawberries regrow every four watered nights in spring; glow berries regrow every four watered nights in summer and autumn. A full backpack leaves the harvest intact. Crops wither when their growing season ends; multi-season crops survive while the next season is still suitable. Clear dead plants with the scythe. An axe or pickaxe can deliberately remove a living crop. The shipping bin takes the selected harvest stack with E and pays the next morning.
 
@@ -65,7 +66,7 @@ In the forest, mend the lamp's three stitches to reveal a map, return a travelle
 
 Watch hearts, oil and the selected weapon. Dodging avoids attacks during its protection window; cream telegraphs mark the danger before an enemy strikes. Fairy light reveals ambushes. Berry drops heal on pickup, and supplies can restore health or oil. Weapons, crafting, forging, gem appraisal and lantern gems offer different loadouts.
 
-Walk onto stairs and doorways to travel. Dodges, attacks and knockback do not trigger entrances; if an action leaves you standing on one, step away and walk back in. Keyboard and controller attacks retain the precise movement direction while the character uses the nearest painted pose. Moving the mouse aims toward the cursor.
+Walk onto stairs and doorways to travel. Dodges, attacks and knockback do not trigger entrances; if an action leaves you standing on one, step away and walk back in. Keyboard and controller attacks retain the precise movement direction while the character uses the nearest painted pose. Moving the mouse aims toward the cursor, and a click swings toward the spot of ground you clicked. With an axe or pickaxe selected, clicking a tree or rock next to you chops or mines it; a click on empty ground, or on something the tool cannot work, is an attack in that direction.
 
 The forest uses lantern oil instead of advancing the day clock. To meet Natteblik after dark, take the lift back to town, wait there until night, then return to his Hollow on floor 2, 6 or 10.
 

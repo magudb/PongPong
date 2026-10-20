@@ -556,7 +556,8 @@ func _controls_page(t) -> void:
 		texts[str(cell[0][0])] = [str(cell[1].text), str(cell[2].text)]
 	var listed: bool = texts["NAV_CONTROLS_TOOL"][0].contains("X") and texts["NAV_CONTROLS_TOOL"][0].contains(str(TranslationServer.translate("KEY_MOUSE_LEFT"))) \
 		and texts["NAV_CONTROLS_RUN"][1] == "LT" and texts["NAV_CONTROLS_FLY"] == ["F", "Y"] and texts["INDRET_TITLE"][0] == "H" \
-		and texts["INV_TITLE"] == ["I / Tab", str(TranslationServer.translate("NAV_CONTROLS_PAUSE_ROW"))] and texts["NAV_CONTROLS_HOTBAR"][0] == "1–8"
+		and texts["INV_TITLE"] == ["I / Tab", str(TranslationServer.translate("NAV_CONTROLS_PAUSE_ROW"))] and texts["NAV_CONTROLS_HOTBAR"][0] == "1–8" \
+		and texts["NAV_CONTROLS_CLICK"] == [str(TranslationServer.translate("NAV_CONTROLS_CLICK_GROUND")), str(TranslationServer.translate("NAV_CONTROLS_TILE_AHEAD"))]
 	var complete := true
 	for key in texts:
 		complete = complete and texts[key][0] != "" and texts[key][1] != ""
