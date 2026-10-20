@@ -289,6 +289,7 @@ func _static_checks(t) -> void:
 	var offenders_zone: Array[String] = []
 	var offenders_mouse: Array[String] = []
 	var offenders_da: Array[String] = []
+	var offenders_thread: Array[String] = []
 	var rx_da := RegEx.new()
 	rx_da.compile("\"[^\"\\n]*[æøåÆØÅ][^\"\\n]*\"")
 	for path in _gd_files("res://scripts"):
@@ -298,6 +299,12 @@ func _static_checks(t) -> void:
 		# mouse_mode is forbidden in world AND ui scripts (pause_menu captured the cursor once; the autoload lint did not reach it)
 		if text.contains("mouse_mode") and (path.contains("scripts/world2d/") or path.contains("scripts/ui/")):
 			offenders_mouse.append(path)
+		# Textures may only be made off the main thread through TextureLoads (the dummy renderer's texture owner is not thread-safe).
+		# The dungeon floor worker builds pure data (DungeonGen text + AreaMap), no resource or texture.
+		if not path.ends_with("scripts/world2d/texture_loads.gd"):
+			for token in ["load_threaded_request(", "load_threaded_get(", "load_threaded_get_status(", "Thread.new(", "WorkerThreadPool."]:
+				if text.contains(token) and not (token == "WorkerThreadPool." and path.ends_with("scripts/dungeon/floors/dungeon_floors.gd")):
+					offenders_thread.append("%s: %s" % [path, token])
 		if path.contains("scripts/world2d/"):
 			for line in text.split("\n"):
 				var code: String = line.get_slice("#", 0)
@@ -306,6 +313,14 @@ func _static_checks(t) -> void:
 	t.check("zone_entered_only_from_world_root", offenders_zone.is_empty(), "other emitters: %s" % [offenders_zone])
 	t.check("no_mouse_capture_in_world_scripts", offenders_mouse.is_empty(), "world2d + ui scripts: %s" % [offenders_mouse])
 	t.check("no_danish_literals_in_world_scripts", offenders_da.is_empty(), "%s" % [offenders_da.slice(0, 3)])
+	t.check("threaded_loads_only_through_texture_loads", offenders_thread.is_empty(), "every threaded resource load goes through TextureLoads (main-thread loads under the dummy renderer), the one worker task is the dungeon floor's pure-data build; others: %s" % [offenders_thread])
+	# ... and under the dummy renderer TextureLoads starts no loader thread: the sheet is made by take() on the main thread
+	var sheet := "res://assets/isometric_characters/%s/%s" % [IsoChibiSprite2D.resolve_id("fairy"), str(IsoChibiSprite2D.meta_for(IsoChibiSprite2D.resolve_id("fairy")).animations.idle.sheet)]
+	var requested: Error = TextureLoads.request(sheet)
+	var no_thread: bool = ResourceLoader.load_threaded_get_status(sheet) == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE
+	var taken: Texture2D = TextureLoads.take(sheet) as Texture2D
+	t.check("texture_loads_stay_on_the_main_thread_headless", not TextureLoads.threaded() and requested == OK and no_thread and TextureLoads.status(sheet) == ResourceLoader.THREAD_LOAD_LOADED and taken != null,
+		"headless (%s): threaded %s, request %s, a loader thread started %s, take() gave %s" % [DisplayServer.get_name(), TextureLoads.threaded(), error_string(requested), not no_thread, taken])
 	var da_in_lua: Array[String] = []
 	for path2 in ["res://lua/config/props.lua", "res://lua/config/ambient.lua"]:
 		var body: String = FileAccess.get_file_as_string(path2)
@@ -2665,9 +2680,9 @@ func _art_prefetch_targets(t) -> void:
 	var w: WorldRoot2D = _world as WorldRoot2D
 	var pf: AreaArtPrefetch = w.art_prefetch
 	pf.release()
-	# headless stages synchronously, so the approach load is injected by hand (the theme: no texture upload under the dummy renderer)
+	# headless stages synchronously, so the approach load is injected by hand (TextureLoads: no loader thread under the dummy renderer)
 	var path := "res://assets/ui/theme.tres"
-	ResourceLoader.load_threaded_request(path)
+	TextureLoads.request(path)
 	pf.pending.append(path)
 	pf.request(&"farm")
 	var moved: bool = pf.pending.is_empty() and pf.abandoned.has(path) and pf.staged.is_empty()
