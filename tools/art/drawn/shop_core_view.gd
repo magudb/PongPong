@@ -1,8 +1,13 @@
 extends "res://tools/art/drawn/interiors_view.gd"
 ## Art review of the towns package's room snapshots, without gameplay managers.
+## The snapshots live in docs/ (not exported), so only this tool and the tests read them, never the shipped PaintedShopArt.
+const ROOM_CONTRACTS := "res://docs/art/shop-core/room-contracts.json"
+
+static func rooms() -> Dictionary:
+	return (PaintedShopArt.table(ROOM_CONTRACTS)["rooms"] as Dictionary).duplicate(true)
 
 func setup_core(id: String, stand_in: bool = false, night: bool = false, room_definition: Dictionary = {}, review_keeper: String = "") -> void:
-	room = PaintedShopArt.rooms()[id] if room_definition.is_empty() else room_definition
+	room = rooms()[id] if room_definition.is_empty() else room_definition
 	var floor := TileMapLayer.new()
 	floor.tile_set = AreaTileSet.tile_set(&"iso")
 	floor.collision_enabled = false
@@ -78,7 +83,7 @@ func setup_core(id: String, stand_in: bool = false, night: bool = false, room_de
 	for post in room["posts"]:
 		if str(post.get("kind", "")) != "keeper":
 			continue
-		var keeper_id: String = review_keeper if not review_keeper.is_empty() else str(PaintedShopArt.table("res://docs/art/shop-core/room-contracts.json")["keepers"][id])
+		var keeper_id: String = review_keeper if not review_keeper.is_empty() else str(PaintedShopArt.table(ROOM_CONTRACTS)["keepers"][id])
 		var npc: Dictionary = Svc.node("LuaRuntime").get_npc(keeper_id)
 		var keeper := IsoChibiSprite2D.create(str(npc["visual"]))
 		keeper.name = "ShopKeeper"

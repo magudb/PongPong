@@ -14,9 +14,6 @@ static func table(path: String) -> Dictionary:
 static func pieces() -> Dictionary:
 	return (table(PACK + "shops.json")["items"] as Dictionary).duplicate(true)
 
-static func rooms() -> Dictionary:
-	return (table("res://docs/art/shop-core/room-contracts.json")["rooms"] as Dictionary).duplicate(true)
-
 static func special_pieces() -> Dictionary:
 	return (table(SPECIAL + "shops.json")["items"] as Dictionary).duplicate(true)
 
