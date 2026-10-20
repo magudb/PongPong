@@ -2,6 +2,8 @@
 #
 #   default <size>       limit of a plain blob whose path matches no line below
 #   lfs-object <size>    limit of the object a Git LFS pointer names
+#   plain-on-lfs <mode>  a plain blob on a Git LFS path: `warn` (passes when it fits the plain limit of its path)
+#                        or `error` (always rejected)
 #   <size> <pattern>     limit of a plain blob on a matching path; the first matching line wins
 #
 # Patterns are repo-relative: `**` spans directories, `*` and `?` stay inside one path component.
@@ -10,6 +12,9 @@
 
 default 1MiB
 lfs-object 64MiB
+# git-lfs is not installed yet on the Mac where the commits are made, so media there lands as plain blobs. Switch to
+# `error` once it is, in the same commit as `size_guard.py --grandfather` (docs/DEVELOPMENT.md, "Repository size").
+plain-on-lfs warn
 
 # Shipped art and audio: Godot imports these, so they stay plain blobs (largest today: a 5.2 MiB crown sheet).
 8MiB assets/**

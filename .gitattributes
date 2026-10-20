@@ -17,7 +17,8 @@
 # New media under docs/ (QA screenshots, art review sheets, recordings) and tools/art/ (source art, review sheets) is
 # stored in LFS. Both trees have a .gdignore, so Godot never imports a pointer and the shipped assets/ stay plain blobs.
 # Files committed before this policy are grandfathered as plain blobs by docs/.gitattributes and
-# tools/art/.gitattributes. tools/ci/size_guard.py rejects a plain blob on an LFS path.
+# tools/art/.gitattributes. tools/ci/size_guard.py checks plain blobs on LFS paths (a warning while git-lfs is not
+# installed everywhere, see `plain-on-lfs` in tools/ci/size_allowlist.txt).
 [attr]plain-blob -filter -diff -merge -text
 docs/**/*.png filter=lfs diff=lfs merge=lfs -text
 docs/**/*.jpg filter=lfs diff=lfs merge=lfs -text

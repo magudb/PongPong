@@ -1,7 +1,8 @@
 name: repository size
 
 # Repository growth guard (REPO-01; policy in docs/DEVELOPMENT.md, "Repository size"). Every blob a push or pull
-# request adds or changes must fit tools/ci/size_allowlist.txt, and media on Git LFS paths must be LFS pointers.
+# request adds or changes must fit tools/ci/size_allowlist.txt, and media on Git LFS paths should be LFS pointers
+# (a small plain blob there is a warning while the allowlist says `plain-on-lfs warn`).
 # The checkout is blobless and sparse (tools/ci and .github), so the job reads a few MB of trees instead of the 2.4 GB
 # tree; tools/ci/size_guard.py fetches only the blobs it measures.
 
@@ -55,5 +56,5 @@ jobs:
           fi
           python3 tools/ci/size_guard.py --range "$span"
 
-      - name: LFS patterns cover no plain blob
+      - name: LFS patterns cover no large plain blob
         run: python3 tools/ci/size_guard.py --audit HEAD

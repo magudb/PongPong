@@ -3,9 +3,10 @@
 # The root .gitattributes stores new media under docs/ in Git LFS. The files below were committed as plain blobs
 # before that. Switching LFS on for them without a history migration would make them look modified to every
 # git-lfs user, so they stay plain blobs until the planned migration, which deletes this file.
-# Never add a line: a new file belongs in LFS. Delete a line when its file is removed, or when you convert that one
-# file (with git-lfs installed: delete the line, then `git rm --cached <file> && git add <file>`).
-# tools/ci/size_guard.py --audit fails when a plain blob on an LFS path is missing here.
+# Add a line only for a file whose blob is already in the history (a move): a new file belongs in LFS, and
+# tools/ci/size_guard.py --range rejects any other added line. Delete a line when its file is removed, or when you
+# convert that one file (with git-lfs installed: delete the line, then `git rm --cached <file> && git add <file>`).
+# tools/ci/size_guard.py --audit reports a plain blob on an LFS path that is missing here, and --grandfather adds it.
 
 Trætoppen[[:space:]]Style[[:space:]]Guide[[:space:]]Review/refs/figurer_v2_render.png plain-blob
 Trætoppen[[:space:]]Style[[:space:]]Guide[[:space:]]Review/refs/miljoer_v2_render.png plain-blob

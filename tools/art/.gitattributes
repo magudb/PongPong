@@ -3,9 +3,12 @@
 # The root .gitattributes stores new media under tools/art/ in Git LFS. The files below were committed as plain blobs
 # before that. Switching LFS on for them without a history migration would make them look modified to every
 # git-lfs user, so they stay plain blobs until the planned migration, which deletes this file.
-# Never add a line: a new file belongs in LFS. Delete a line when its file is removed, or when you convert that one
-# file (with git-lfs installed: delete the line, then `git rm --cached <file> && git add <file>`).
-# tools/ci/size_guard.py --audit fails when a plain blob on an LFS path is missing here.
+# Add a line only for a file whose blob is already in the history (a move): a new file belongs in LFS, and
+# tools/ci/size_guard.py --range rejects any other added line. Delete a line when its file is removed, or when you
+# convert that one file (with git-lfs installed: delete the line, then `git rm --cached <file> && git add <file>`).
+# tools/ci/size_guard.py --audit reports a plain blob on an LFS path that is missing here, and --grandfather adds it.
+# storybook/watercolor_paper.png moved here from assets/art/ (REND-10); tools/art/storybook/bake.gd reads it with
+# Image.load_from_file, so it stays a plain blob.
 
 cast_v2/review_v2/cast_closeup_zoom09.png plain-blob
 cast_v2/review_v2/cast_next_to_pack_zoom04.png plain-blob
@@ -355,3 +358,4 @@ ghost/review/sketch_vs_baked.png plain-blob
 ghost_family/sources/family_rears.png plain-blob
 ghost_family/sources/family_turnarounds.png plain-blob
 ghost_family/sources/silke_refined.png plain-blob
+storybook/watercolor_paper.png plain-blob

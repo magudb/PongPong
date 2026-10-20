@@ -5,7 +5,8 @@
 #   tools/dev/install_hooks.sh --remove   remove it again
 #
 # The hook runs `tools/ci/size_guard.py --staged`: it refuses a commit that stages a blob over the limits of
-# tools/ci/size_allowlist.txt, or a plain blob on a Git LFS path (git-lfs not installed). CI applies the same rules to
+# tools/ci/size_allowlist.txt, and warns about (or, with `plain-on-lfs error`, refuses) a plain blob on a Git LFS path
+# (git-lfs not installed). CI applies the same rules to
 # every push and pull request, so the hook only moves the failure to commit time; `git commit --no-verify` skips it once.
 # Hooks live in the shared git directory, so one install covers every worktree of the clone. A pre-commit hook that this
 # script did not write is never overwritten (exit 2).

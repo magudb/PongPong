@@ -81,10 +81,17 @@ history stays as it is until the migration below; these rules stop the growth.
 * **Git LFS for new media.** The root `.gitattributes` stores new images, audio, video and archives under `docs/` and
   `tools/art/` in Git LFS. Both trees have a `.gdignore`, so Godot never imports a pointer; `assets/` stays plain (the
   game imports it) and so do `docs/qa/ui_baseline/*.png` (the UI sections read and re-record them). Files that existed
-  before are grandfathered as plain blobs, one line each, in `docs/.gitattributes` and `tools/art/.gitattributes`: never
-  add a line there. A commit made without git-lfs stores a plain blob on an LFS path, which the guard rejects, so run
-  `brew install git-lfs && git lfs install` once before committing media there. To move one grandfathered file into
-  LFS, delete its line and `git rm --cached <file> && git add <file>`.
+  before are grandfathered as plain blobs, one line each, in `docs/.gitattributes` and `tools/art/.gitattributes`. A
+  line may only be added for a file whose blob is already committed (a move); the guard rejects any other added line.
+  Run `brew install git-lfs && git lfs install` once before committing media there. A commit made without git-lfs
+  stores a plain blob on an LFS path: while `tools/ci/size_allowlist.txt` says `plain-on-lfs warn` (today: the dev Mac
+  has no git-lfs yet) the guard only warns when it fits the 1 MiB plain limit and rejects it above that. To move one
+  grandfathered file into LFS, delete its line and `git rm --cached <file> && git add <file>`.
+* **Switching LFS on for real** (lead, once): install git-lfs on every machine that commits or runs the gate (the
+  art sections decode `tools/art` review sheets, so a clone without git-lfs would read pointer text once pointers
+  exist), run `python3 tools/ci/size_guard.py --grandfather` to add the plain blobs committed meanwhile to the
+  grandfather lists, and set `plain-on-lfs error` in the same commit. `--grandfather` also regenerates the lists for
+  anything that landed on `main` before this policy did.
 * **Not in git at all:** raw QA screenshot runs and long run logs. Keep them as CI artifacts or locally and commit a
   summary and a few small crops.
 * **CI.** The playtest jobs pull the LFS files that tests can read (art review sheets, source paintings) from a cache keyed
