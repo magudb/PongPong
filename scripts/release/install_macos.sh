@@ -40,20 +40,22 @@ finish() {
   exit "$code"
 }
 trap finish EXIT
-[[ "$parent_pid" =~ ^[0-9]+$ && "$expected_sha" =~ ^[0-9a-f]{64}$ ]]
+# Bash 3.2 (shipped with macOS) can ignore errexit for [[ ]] containing command
+# substitutions. Reject failed validation explicitly before touching the installation.
+[[ "$parent_pid" =~ ^[0-9]+$ && "$expected_sha" =~ ^[0-9a-f]{64}$ ]] || exit 1
 reason=folder
-[[ "$target" == /*/Traetoppen.app && -d "$target" && ! -L "$target" && -w "$(dirname "$target")" ]]
+[[ "$target" == /*/Traetoppen.app && -d "$target" && ! -L "$target" && -w "$(dirname "$target")" ]] || exit 1
 reason=checksum
-[[ "$(/usr/bin/shasum -a 256 "$archive" | /usr/bin/awk '{print $1}')" == "$expected_sha" ]]
+[[ "$(/usr/bin/shasum -a 256 "$archive" | /usr/bin/awk '{print $1}')" == "$expected_sha" ]] || exit 1
 reason=package
 /usr/bin/zipinfo -1 "$archive" | /usr/bin/awk '/(^\/|(^|\/)\.\.(\/|$)|\\)/ {exit 1}'
 stage=$(/usr/bin/mktemp -d "$(dirname "$target")/.Traetoppen-update.XXXXXX")
 backup="$stage/previous.app"
 /usr/bin/ditto -x -k "$archive" "$stage"
 replacement="$stage/Traetoppen.app"
-[[ -x "$replacement/Contents/MacOS/Trætoppen" ]]
-[[ -z "$(/usr/bin/find "$replacement" -type l -print -quit)" ]]
-[[ "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$replacement/Contents/Info.plist")" == io.github.magudb.traetoppen ]]
+[[ -x "$replacement/Contents/MacOS/Trætoppen" ]] || exit 1
+[[ -z "$(/usr/bin/find "$replacement" -type l -print -quit)" ]] || exit 1
+[[ "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$replacement/Contents/Info.plist")" == io.github.magudb.traetoppen ]] || exit 1
 /usr/bin/codesign --verify --deep --strict "$replacement"
 printf ready > "$result.ready"
 ready=1

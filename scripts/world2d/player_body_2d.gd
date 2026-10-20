@@ -11,6 +11,11 @@ var farm: Node
 var visual: IsoChibiSprite2D
 var camera: Camera2D
 var state: int = S.FREE
+## Identity (MP1). Single-player defaults: one local hero `p0` on peer 1, slot 0.
+var player_id: StringName = &"p0"
+var peer_id: int = 1
+var is_local: bool = true
+var player_slot: int = 0
 var facing8: int = 0
 var facing_vec: Vector2 = Vector2(0, 1)
 var forced_clip: StringName = &""
@@ -73,7 +78,8 @@ func _ready() -> void:
 	camera.limit_smoothed = true
 	camera.zoom = Vector2.ONE * Iso.DEFAULT_ZOOM
 	add_child(camera)
-	camera.make_current()
+	if is_local:
+		camera.make_current()
 	var gm: Node = GameData.gm()
 	set_character(GameData.visual_for_skin(StringName(str(gm.get("character_skin")))) if gm != null else "fox")
 	EventBus.player_character_changed.connect(_on_character_changed)

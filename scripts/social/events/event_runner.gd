@@ -151,7 +151,7 @@ func _say(who: String, lines: Array, choices: Array, generation: int) -> Diction
 
 func _actor(id: String) -> Node:
 	if actor_resolver.is_valid(): return actor_resolver.call(id)
-	if id == "player": return get_tree().get_first_node_in_group("player")
+	if id == "player": return PlayerRegistry.local_player(get_tree())
 	return NpcDirector.node_of(id) if id != "" else null
 
 func _take_actor(actor: Node) -> void:

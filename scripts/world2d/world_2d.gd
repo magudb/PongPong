@@ -47,6 +47,9 @@ const WARM_TIMEOUT_MS := 5000
 const FADE_IN := 0.25
 
 var player: Node2D
+## Player slots (MP1). `player` stays as the deprecated alias of `players[0]`.
+var players: Array = []
+var player_by_peer: Dictionary = {}
 var farm: Node
 var greenhouse_farm: FarmGrid
 var area: IsoArea
@@ -195,6 +198,7 @@ func _ready() -> void:
 	add_child(day_night)
 	day_night.glow_changed.connect(_on_glow_changed)
 	player = _make_player()
+	_register_player(player, 0, 1)   # identity before add_child: _ready reads is_local for the camera
 	add_child(player)
 	weather_fx = WeatherFx.new()
 	add_child(weather_fx)
@@ -222,6 +226,9 @@ func _ready() -> void:
 	EventBus.home_upgraded.connect(_on_home_upgraded)
 	EventBus.furniture_changed.connect(_on_furniture_changed)
 	EventBus.player_spawned.emit(player)
+	for p in all_players():
+		if p != player:
+			EventBus.player_spawned.emit(p)
 
 	var start: StringName = default_area_id()
 	var spawn: StringName = &"default"
@@ -316,6 +323,90 @@ func _make_player() -> Node2D:
 	stub.name = "Player"
 	_give_farm(stub)
 	return stub
+
+
+## Creates up to MAX_PLAYERS bodies (MP1). Single-player boots with one; tests may ask for more.
+func _make_players(count: int = 1) -> Array:
+	var out: Array = []
+	var n: int = clampi(count, 1, PlayerRegistry.MAX_PLAYERS)
+	for i in n:
+		out.append(_make_player())
+	return out
+
+
+## Registers a body in the slot table. `peer_id` 1 is the host. Call BEFORE add_child so
+## the body's _ready sees the right is_local (camera.make_current).
+func _register_player(p: Node2D, slot: int, peer_id: int = 1) -> void:
+	if p == null or slot < 0 or slot >= PlayerRegistry.MAX_PLAYERS:
+		return
+	while players.size() <= slot:
+		players.append(null)
+	players[slot] = p
+	player_by_peer[peer_id] = p
+	p.set("player_slot", slot)
+	p.set("player_id", StringName("p%d" % slot))
+	p.set("peer_id", peer_id)
+	p.set("is_local", peer_id == 1)
+	if slot == 0:
+		player = p
+
+
+## Removes a body from the slot table and emits player_despawned. Returns the player_id.
+func _unregister_player(p: Node2D) -> StringName:
+	var pid: StringName = &""
+	if p == null:
+		return pid
+	if "player_id" in p:
+		pid = StringName(str(p.get("player_id")))
+	var idx: int = players.find(p)
+	if idx >= 0:
+		players[idx] = null
+	if idx == 0 and player == p:
+		player = players[0] if players.size() > 0 else null
+	for k in player_by_peer.keys():
+		if player_by_peer[k] == p:
+			player_by_peer.erase(k)
+			break
+	if p.get_parent() != null:
+		p.get_parent().remove_child(p)
+	p.queue_free()
+	if pid != &"":
+		EventBus.player_despawned.emit(pid)
+	return pid
+
+
+# ---------------------------------------------------------------- player registry (MP1)
+
+
+func local_player() -> Node2D:
+	if players.size() > 0 and is_instance_valid(players[0]):
+		return players[0]
+	return player
+
+
+func player_by_id(player_id: StringName) -> Node2D:
+	for p in players:
+		if p != null and is_instance_valid(p) and StringName(str(p.get("player_id"))) == player_id:
+			return p as Node2D
+	return null
+
+
+func player_by_peer_id(peer_id: int) -> Node2D:
+	var p: Variant = player_by_peer.get(peer_id)
+	return p as Node2D if p != null and is_instance_valid(p) else null
+
+
+func all_players() -> Array:
+	var out: Array = []
+	for p in players:
+		if p != null and is_instance_valid(p):
+			out.append(p)
+	return out
+
+
+## The player an input event belongs to. MP1: always the local player (device binding is MP2).
+func player_for_event(_event: InputEvent) -> Node2D:
+	return local_player()
 
 
 func _give_farm(p: Node) -> void:

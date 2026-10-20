@@ -144,7 +144,7 @@ func perform(activity: Dictionary) -> void:
 							_notice(tr("SOC_EV_POTLUCK") % potluck_count())
 		"feast":
 			_mark(id)
-			var player := get_tree().get_first_node_in_group("player")
+			var player := PlayerRegistry.local_player(get_tree())
 			if player != null:
 				player.heal_full()
 				player.restore_stamina(player.max_stamina)

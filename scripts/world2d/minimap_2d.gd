@@ -82,7 +82,7 @@ func _paint() -> void:
 	_texture.update(_image)
 func update_map(force := false) -> void:
 	if not is_instance_valid(area) or (not force and not is_visible_in_tree()): return
-	var player := get_tree().get_first_node_in_group("player") as Node2D
+	var player := PlayerRegistry.local_player(get_tree()) as Node2D
 	if player == null: return
 	var cell := area.global_to_cell(player.global_position)
 	if force or cell != _last_cell:

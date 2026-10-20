@@ -27,7 +27,7 @@ func set_awake(on: bool) -> void:
 	super.set_awake(on)
 func _physics_process(dt: float) -> void:
 	if state == S.DEAD or GameManager.is_modal_open(): return
-	if not is_instance_valid(player): player = get_tree().get_first_node_in_group("player") as Node2D
+	if not is_instance_valid(player): player = PlayerRegistry.local_player(get_tree()) as Node2D
 	if player == null: return
 	if (player is Player2D and player.state == PlayerBody2D.S.FAINTED) or Iso.ground_dist(player.global_position,home) > 1800:
 		reset_fight()

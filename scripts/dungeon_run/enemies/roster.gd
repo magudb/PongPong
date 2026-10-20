@@ -20,7 +20,7 @@ func _process(dt: float) -> void:
 	_elapsed = 0
 	refresh()
 func refresh() -> void:
-	var player := get_tree().get_first_node_in_group("player") as Node2D
+	var player := PlayerRegistry.local_player(get_tree()) as Node2D
 	if player == null: return
 	enemies = enemies.filter(func(ref): return ref.get_ref() != null)
 	var candidates := []

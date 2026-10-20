@@ -53,7 +53,7 @@ func _connect_player() -> void:
 		return
 	if not EventBus.player_spawned.is_connected(bind_player):
 		EventBus.player_spawned.connect(bind_player)
-	bind_player(get_tree().get_first_node_in_group(&"player"))
+	bind_player(PlayerRegistry.local_player(get_tree()))
 
 func bind_player(node: Node) -> void:
 	var previous: Node = _player.get_ref() if _player != null else null

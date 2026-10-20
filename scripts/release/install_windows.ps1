@@ -67,9 +67,11 @@ try {
     $reason = 'locked'
     $backup = Join-Path $stage 'previous'
     # Defender and the search indexer briefly hold files of a process that has just exited.
+    # Rename the whole directory on the same volume. Move-Item can fall back to moving
+    # individual files when a file is locked, leaving a partial backup that retries nest into.
     for ($attempt = 0; ; $attempt++) {
         try {
-            Move-Item -LiteralPath $Target -Destination $backup
+            [IO.Directory]::Move($Target, $backup)
             break
         } catch {
             if ($attempt -ge 5) { throw }
@@ -77,7 +79,7 @@ try {
         }
     }
     $moved = $true
-    Move-Item -LiteralPath $replacement -Destination $Target
+    [IO.Directory]::Move($replacement, $Target)
     # The outcome is written before the new build starts, so a failed write never rolls back a running game.
     $reason = 'unknown'
     Write-Result 'installed' ''
@@ -102,7 +104,7 @@ try {
     if ($moved -and !$installed) {
         try {
             if (Test-Path -LiteralPath $Target) { Remove-Item -LiteralPath $Target -Recurse -Force }
-            Move-Item -LiteralPath $backup -Destination $Target
+            [IO.Directory]::Move($backup, $Target)
             $restored = $true
         } catch {
             $reason = 'restore'

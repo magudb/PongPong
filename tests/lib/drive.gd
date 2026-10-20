@@ -66,9 +66,9 @@ func first(group: StringName) -> Node:
 	return tree.get_first_node_in_group(group)
 
 
-## The player node (group "player"); null before the world is up.
+## The local player node (PlayerRegistry); null before the world is up.
 func player() -> Node:
-	return tree.get_first_node_in_group(&"player")
+	return PlayerRegistry.local_player(tree)
 
 
 # ---------------------------------------------------------------- time
@@ -94,6 +94,15 @@ func seconds(s: float) -> void:
 ## Time.get_ticks_msec(): the result is the same in a normal run and under `run_playtest.sh --fast` (--fixed-fps 60), where the wall clock runs far behind.
 func game_seconds() -> float:
 	return float(Engine.get_physics_frames()) / float(Engine.physics_ticks_per_second)
+
+
+## True when the harness runs with `--fast` (run_playtest.sh --fast): frames are not paced by the wall clock
+## (`--fixed-fps 60`). Set by tests/playtest.gd from the user args — engine flags are not in OS.get_cmdline_args().
+## Monte Carlo sections (tools/ci/sections.py SIMULATIONS) use this to keep their full sample counts under --fast and
+## a reduced smoke sample at normal pace, so the plain `--strict` gate still exercises them without simulating an hour of play.
+var fast: bool = false
+func fixed_fps() -> bool:
+	return fast
 
 
 ## Seconds of unscaled frame time (Engine.time_scale does not apply). That is the wall clock in a normal run; under `run_playtest.sh --fast` (--fixed-fps 60)

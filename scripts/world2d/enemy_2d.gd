@@ -131,7 +131,7 @@ func _ready() -> void:
 	_attack.add_child(_attack_shape)
 	add_child(_attack)
 	home = global_position
-	player = get_tree().get_first_node_in_group("player") as Node2D
+	player = PlayerRegistry.local_player(get_tree()) as Node2D
 	if ambush:
 		ambush_state = "hidden"
 		visual.visible = false
@@ -178,7 +178,7 @@ func _physics_process(dt: float) -> void:
 	if _stop > 0:
 		_stop -= 1
 		return
-	if not is_instance_valid(player): player = get_tree().get_first_node_in_group("player") as Node2D
+	if not is_instance_valid(player): player = PlayerRegistry.local_player(get_tree()) as Node2D
 	if player == null: return
 	var gm := Svc.node("GameManager")
 	if gm != null and gm.is_modal_open(): return

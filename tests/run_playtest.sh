@@ -173,6 +173,7 @@ if [ "$FAST" = 1 ]; then
 			*" --fixed-fps"*) ;;
 			*) GODOT_EXTRA_ARGS="--fixed-fps 60${GODOT_EXTRA_ARGS:+ $GODOT_EXTRA_ARGS}" ;;
 		esac
+		ARGS+=("--fast")
 	fi
 fi
 # shellcheck disable=SC2206

@@ -45,7 +45,7 @@ static func invite_king() -> bool:
 	runtime.actor_resolver = func(id: String) -> Node:
 		if id=="fairy_king":return ref.get_ref()
 		if old.is_valid():return old.call(id)
-		return tree.get_first_node_in_group("player") if id=="player" else NpcDirector.node_of(id)
+		return PlayerRegistry.local_player(tree) if id=="player" else NpcDirector.node_of(id)
 	var played := await runtime.play(ROYAL,LuaData.dict(Svc.lua_config("home_amenities.royal_scene",{})))
 	runtime.actor_resolver = old
 	if is_instance_valid(ref.get_ref()):ref.get_ref().queue_free()
