@@ -68,6 +68,7 @@ func run(t) -> void:
 	AudioManager.play_ambience("forest",0.05)
 	await t.seconds(0.1)
 	t.check("rapid_fades_keep_one_final_stream",AudioManager._ambient_players.filter(func(player):return player.playing).size()==1 and AudioManager._ambient_players[AudioManager._ambient_slot].stream==AudioManager._load_stream(AudioManager.AMBIENT_DIR,"forest"))
+	await _fades_leave_playing_players_alone(t)
 	var count := AudioManager.get_children().filter(func(node):return node is AudioStreamPlayer).size()
 	t.check("thirteen_plain_players",count==13 and AudioManager.get_children().all(func(node):return not node is AudioStreamPlayer3D))
 	for tool in ["sfx_synth.py","ambience_synth.py","music_synth.py"]:
@@ -123,3 +124,38 @@ func _steps(t,world: WorldRoot2D) -> void:
 	t.check("real_player_walk_emits_steps",AudioManager.cue_log().any(func(row):return str(row.id).begins_with("step_") and row.played))
 func run_windowed(t) -> void:
 	await run(t)
+
+## Godot 4.7.2 frees a playback's old bus details one frame after AudioStreamPlayer.volume_db changes on a playing stream, while the
+## mixer thread may still copy them: a tween on volume_db swapped them every frame and crashed a headless run in the audio thread.
+## AudioManager fades its fader buses instead; a playing player's volume_db never moves while music and ambience fade.
+func _fades_leave_playing_players_alone(t) -> void:
+	var players: Array = AudioManager.get_children().filter(func(node):return node is AudioStreamPlayer)
+	var before := {}
+	var changed: Array[String] = []
+	var faders := {}
+	var watch := func() -> void:
+		for player in players:
+			if not player.playing:
+				before.erase(player)
+			elif not before.has(player):
+				before[player] = player.volume_db
+			elif not is_equal_approx(before[player],player.volume_db) and str(player.name) not in changed:
+				changed.append(str(player.name))
+		for bus in [AudioManager._music_fader]+AudioManager._ambient_faders:
+			var db: float = AudioManager._fader_db(bus)
+			var span: Array = faders.get(bus,[db,db])
+			faders[bus] = [minf(span[0],db),maxf(span[1],db)]
+	AudioManager.play_music("dungeon_act1",0.3)
+	AudioManager.play_ambience("farm_day",0.3)
+	await t.until_game(func():return false,0.5,watch)
+	AudioManager.duck_ambience(-6)
+	AudioManager.stop_music(0.2)
+	await t.until_game(func():return false,0.4,watch)
+	AudioManager.duck_ambience(0)
+	var moved: Array = faders.keys().filter(func(bus):return faders[bus][1]-faders[bus][0]>3.0)
+	var sources: Array[String] = []
+	for path in ["res://scripts/autoload/audio_manager.gd","res://scripts/audio/audio_director.gd","res://scripts/audio/footsteps.gd"]:
+		if FileAccess.get_file_as_string(path).contains('"volume_db"'):sources.append(path)
+	t.check("fades_leave_playing_players_alone",changed.is_empty() and moved.size()>=2 and sources.is_empty(),
+		"playing players whose volume_db moved during the fades: %s; fader buses that moved: %s of %s; scripts tweening \"volume_db\": %s" % [changed,moved,faders,sources])
+

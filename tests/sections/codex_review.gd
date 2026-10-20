@@ -244,8 +244,11 @@ func _music_races() -> void:
 	audio.play_music("same", 0.0)
 	await t.tree.create_timer(0.3).timeout
 	t.check("same_track_cancels_replacement", audio._music_player.stream == audio.streams["same"]
-		and is_equal_approx(audio._music_player.volume_db, audio.music_volume_db), "requesting the playing track cancels pending replacement and restores volume")
+		and is_equal_approx(audio._music_player.volume_db, audio.music_volume_db) and is_equal_approx(audio._fader_db(audio._music_fader), 0.0)
+		and audio._music_fader != AudioManager._music_fader, "requesting the playing track cancels pending replacement and restores volume (on the probe's own fader bus)")
+	var fader: String = audio._music_fader
 	audio.free()
+	t.check("probe_fader_bus_removed", AudioServer.get_bus_index(fader) == -1, fader)
 
 func _midnight_in_transit() -> void:
 	await t.start_world("animal")
