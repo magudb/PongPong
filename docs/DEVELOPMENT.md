@@ -41,8 +41,9 @@ world is a test platform (title -> New game -> pick a hero -> a floating farm is
 
 **The gate** is the CI split, not one plain run: `.github/workflows/playtest.yml` runs every hero in 4 shards
 (`tools/ci/sections.py`), the ordinary sections at normal pace and the two seeded simulations with `--fast`, all `--strict`
-with `TT_PERF_SCALE=4`, plus the harness self-test. `tools/dev/ci_local.sh` runs exactly that on a Mac (one APFS clone per
-shard, 4 at a time; `--races=`, `--shards=`, `--parallel=`, `--out=`) and writes a summary; a plain
+with `TT_PERF_SCALE=4`, plus the harness self-test. `tools/dev/ci_local.sh` runs that on a Mac (one APFS clone per
+shard, 4 at a time; `--races=`, `--shards=`, `--parallel=`, `--out=`; its shards also hold the hero-neutral sections that CI runs
+once) and writes a summary; a plain
 `tests/run_playtest.sh --strict` of every section in one process takes well over an hour for one hero and is not needed.
 While working on a section use the inner loop, `tests/run_playtest.sh --strict --no-boot --only=<section>`.
 
@@ -96,12 +97,13 @@ fails on a raw wall-clock comparison and on a frame-count wait that ends in `t.f
 `tools/dev/selftest_harness.sh` is the harness's own test (negative tests: an injected error, an uncompilable section, a hang,
 `--fast`, the isolation between sections, `press()`, the skip budget, `perf_ok`); CI runs it as its own job.
 
-CI (`.github/workflows/playtest.yml`) has three jobs. `project` runs once: the tooling tests, the fresh-checkout import
+CI (`.github/workflows/playtest.yml`) has four jobs. `project` runs once: the tooling tests, the fresh-checkout import
 (`tests/tools/boot_check.py --fresh --in-place --strict`: the second import and a 30-frame boot print no engine error or warning),
 the `check_project.gd` mutants (`tests/tools/mutation_check.py`) and the sections that do not depend on the hero
 (`tools/ci/sections.py --neutral`). `playtest` runs the other sections for each hero in four shards, balanced by
 `tools/ci/section_seconds.json` (refresh it from the report artifacts with `sections.py --update-timings`). `windowed` runs the
-`run_windowed(t)` sections under Xvfb with Mesa's software renderer; it is advisory until it is green. A section that starts to use
+`run_windowed(t)` sections under Xvfb with Mesa's software renderer; it is advisory until it is green. `selftest` runs
+`tools/dev/selftest_harness.sh`. A section that starts to use
 the hero (`t.start_world`, `t.character`, `UiAudit`, ...) leaves `NEUTRAL` in `tools/ci/sections.py`: `sections.py --check` fails
 until it does. The boot gate on a test copy: `python3 -I tests/tools/boot_check.py --project <COPY> --fresh --strict`.
 

@@ -9,7 +9,8 @@
 #   2. two imports of THIS checkout; the second one must print no ERROR / WARNING line;
 #   3. per hero x shard (4 x 4): an APFS clone of this checkout (.godot included, so it starts warm), the shard's ordinary
 #      sections (tools/ci/sections.py --pace normal) with --strict --timeout=2700, then its seeded simulations (--pace simulation)
-#      with --strict --fast --timeout=1800, exactly as the CI job does; N clones run at a time (default 4, one Godot each);
+#      with --strict --fast --timeout=1800, as the CI job does; N clones run at a time (default 4, one Godot each). Without
+#      --hero the shards also hold the hero-neutral sections, which CI runs once in its `project` job;
 #   4. the harness self-test (tools/dev/selftest_harness.sh, the CI job "harness self-test") in a clone of its own;
 #   5. a summary (DIR/SUMMARY.txt): one line per run; exit 0 only when every step passed.
 # TT_PERF_SCALE defaults to 4 like CI (shared CPUs). It tests the working tree as it is, uncommitted changes included.
@@ -38,7 +39,7 @@ for a in "$@"; do
 		--races=*) RACES="${a#--races=}" ;;
 		--shards=*) SHARDS="${a#--shards=}" ;;
 		--no-selftest) SELFTEST=0 ;;
-		-h|--help) sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+		-h|--help) sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
 		*) echo "ci_local: unknown option $a (see --help)" >&2; exit 2 ;;
 	esac
 done
