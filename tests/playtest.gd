@@ -370,6 +370,7 @@ func _snapshot_state() -> Dictionary:
 		"locale": str(loc.get("current_locale")) if loc != null else TranslationServer.get_locale(),
 		"overrides": (overrides as Dictionary).duplicate() if overrides is Dictionary else {},
 		"svc": (svc_fakes as Dictionary).duplicate() if svc_fakes is Dictionary else {},
+		"modals": gm.call("modal_stack") if gm != null and gm.has_method("modal_stack") else [],
 		"engine_meta": _metas(Engine),
 		"seams": _seams(),
 	}
@@ -395,10 +396,18 @@ func _restore_state(before: Dictionary, section_name: String) -> void:
 		for key in (before["svc"] as Dictionary):
 			if is_instance_valid(before["svc"][key]):
 				svc.call("override", key, before["svc"][key])
-	if gm != null and gm.has_method("is_modal_open") and gm.call("is_modal_open"):
-		fixed.append("open modals %s" % str(gm.call("modal_stack")))
-		gm.call("pop_all_modals")
-		paused = false
+	# only the modals the section opened: one that was open before it (left by the world start) is not its doing. pop_modal
+	# re-applies the pause of what stays open, and a TTScreen whose modal is popped closes itself (TTScreen._on_modal_changed).
+	if gm != null and gm.has_method("modal_stack"):
+		var opened: Array[StringName] = []
+		for modal_name in gm.call("modal_stack"):
+			if not (modal_name in before["modals"]):
+				opened.append(modal_name)
+		if not opened.is_empty():
+			fixed.append("open modals %s" % str(opened))
+			opened.reverse()
+			for modal_name in opened:
+				gm.call("pop_modal", modal_name)
 	var metas := _restore_metas(Engine, before["engine_meta"])
 	if not metas.is_empty():
 		fixed.append("Engine meta %s" % ", ".join(metas))
