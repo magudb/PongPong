@@ -297,8 +297,10 @@ MUTANTS = [
     ("gitignore_stage_missing", ["project.gitignore_has_feature_entries"], lambda r: sub_once(r, ".gitignore", "tools/features/reports/\n", "")),
     ("gitignore_import_back", ["p01.gitignore_commits_import_and_uid"], lambda r: append(r, ".gitignore", "*.import\n")),
     ("gitignore_translation_dropped", ["p01.gitignore_commits_import_and_uid", "p01.gitignore_keeps_base_and_tool_entries"], lambda r: sub_once(r, ".gitignore", "*.translation\n", "")),
-    ("gitattributes_binary_missing", ["p01.gitattributes_binary_and_commented_lfs"], lambda r: sub_once(r, ".gitattributes", "*.webp binary\n", "")),
-    ("gitattributes_lfs_active", ["p01.gitattributes_binary_and_commented_lfs"], lambda r: sub_once(r, ".gitattributes", "#assets/**/*.webp filter=lfs", "assets/**/*.webp filter=lfs")),
+    ("gitattributes_binary_missing", ["p01.gitattributes_binary_and_lfs_outside_godot"], lambda r: sub_once(r, ".gitattributes", "*.webp binary\n", "")),
+    # REPO-01: an LFS pointer under assets/ would reach the importer in a clone without git-lfs
+    ("gitattributes_lfs_on_assets", ["p01.gitattributes_binary_and_lfs_outside_godot"], lambda r: append(r, ".gitattributes", "assets/**/*.webp filter=lfs diff=lfs merge=lfs -text\n")),
+    ("gitattributes_baselines_in_lfs", ["p01.gitattributes_binary_and_lfs_outside_godot"], lambda r: sub_once(r, ".gitattributes", "docs/qa/ui_baseline/*.png plain-blob\n", "")),
     ("gdignore_removed", ["p01.docs_gdignore_exists"], lambda r: remove_file(r, "docs/.gdignore")),
     ("stale_docs_import", ["p01.docs_has_no_stale_import_files"], lambda r: write(os.path.join(r, "docs", "audio", "stale.mp3.import"), "[remap]\n")),
     ("design_plan_missing", ["p01.design_files_exist"], lambda r: remove_file(r, "docs/design/PLAN_2D_FEATURES.md")),

@@ -121,10 +121,64 @@ staging area `tools/art/_stage/` is not. Every texture's import preset comes fro
 run that tool after adding art, before the first import. Its `--check` runs before every playtest and CI job and also holds
 the exported textures to a size budget. An id a later art pack repaints keeps no file of its own in the earlier pack.
 
+## Repository size
+
+The repo is 2.4 GB packed, about 1.6 GB of it QA screenshots, review sheets and source paintings (REPO-01). The
+history stays as it is until the migration below; these rules stop the growth.
+
+* **Size guard.** `tools/ci/size_guard.py` measures every blob a commit adds or changes; CI runs it on each push and pull
+  request (`.github/workflows/repo.yml`, a blobless checkout of a few MB). A plain blob may be at most 1 MiB unless a
+  line of `tools/ci/size_allowlist.txt` gives its path more (shipped `assets/` 8 MiB, UI baselines and the style-audit
+  ledger 4 MiB). Files committed before the guard are only measured once they change. Raise a limit in the same commit
+  that needs it and say why. `tools/dev/install_hooks.sh` installs an optional pre-commit hook with the same check on
+  the staged files (`--remove` takes it out again; `git commit --no-verify` skips it once).
+* **Git LFS for new media.** The root `.gitattributes` stores new images, audio, video and archives under `docs/` and
+  `tools/art/` in Git LFS. Both trees have a `.gdignore`, so Godot never imports a pointer; `assets/` stays plain (the
+  game imports it) and so do `docs/qa/ui_baseline/*.png` (the UI sections read and re-record them). Files that existed
+  before are grandfathered as plain blobs, one line each, in `docs/.gitattributes` and `tools/art/.gitattributes`. A
+  line may only be added for a file whose blob is already committed (a move); the guard rejects any other added line.
+  Run `brew install git-lfs && git lfs install` once before committing media there. A commit made without git-lfs
+  stores a plain blob on an LFS path: while `tools/ci/size_allowlist.txt` says `plain-on-lfs warn` (today: the dev Mac
+  has no git-lfs yet) the guard only warns when it fits the 1 MiB plain limit and rejects it above that. To move one
+  grandfathered file into LFS, delete its line and `git rm --cached <file> && git add <file>`.
+* **Switching LFS on for real** (lead, once): install git-lfs on every machine that commits or runs the gate (the
+  art sections decode `tools/art` review sheets, so a clone without git-lfs would read pointer text once pointers
+  exist), run `python3 tools/ci/size_guard.py --grandfather` to add the plain blobs committed meanwhile to the
+  grandfather lists, and set `plain-on-lfs error` in the same commit. `--grandfather` also regenerates the lists for
+  anything that landed on `main` before this policy did.
+* **Not in git at all:** raw QA screenshot runs and long run logs. Keep them as CI artifacts or locally and commit a
+  summary and a few small crops.
+* **CI.** The playtest jobs pull the LFS files that tests can read (art review sheets, source paintings) from a cache keyed
+  by object id, skipping `docs/qa` and `docs/review`, which no test reads. The export jobs need none: gdignored trees are
+  never exported. With no LFS file in the tree (today) these steps are skipped.
+
+### Planned history migration (lead, separately)
+
+Only a history rewrite shrinks the clone. Do it in one window, with every branch merged or parked:
+
+1. **Paths:** all media under `docs/` except `docs/qa/ui_baseline/` (about 1.2 GB packed: `docs/qa` 0.92 GB,
+   `docs/art` 0.23 GB) and under `tools/art/` (about 0.38 GB, nearly all `tools/art/drawn/sources`); optionally
+   `legacy/` (0.09 GB; or tag it `legacy-archive` and delete it from `main`, which does not shrink the history).
+   `assets/` (about 0.5 GB) stays plain.
+2. **Expected size:** about 1.6 GB moves to LFS storage (check the account's LFS storage and bandwidth quota first);
+   the git pack drops from 2.4 GB to about 0.7 GB, and a playtest checkout to about that plus the cached LFS files.
+3. **Steps,** in a fresh `git clone --mirror` with git-lfs 3.x and git-filter-repo: drop the grandfather lists from all
+   history first (`git filter-repo --invert-paths --path docs/.gitattributes --path tools/art/.gitattributes`; left in,
+   they would mark the converted files plain and checkouts would show pointer text), then
+   `git lfs migrate import --everything --include="docs/**/*.png,...,tools/art/**/*.png,..." --exclude="docs/qa/ui_baseline/**"`
+   with the extensions of the root `.gitattributes`. Verify with `git lfs fsck`, `python3 tools/ci/size_guard.py --audit`
+   and a full strict gate on a clone of the result.
+4. **Consequences:** every commit and tag gets a new SHA, so `main` and the release tags (`v0.1.0`, `v0.2.0`) are force
+   pushed, and their provenance attestations name commits that are no longer on `main` (the released files stay
+   byte-identical). Every clone, worktree and open branch must be re-cloned or re-created; old branches cannot be merged
+   afterwards. GitHub keeps the old objects reachable through pull request refs until support runs a GC. On the push
+   that replaced history the repo workflow checks only the newest commit. Afterwards every clone that touches art or
+   QA media needs git-lfs.
+
 ## Layout notes
 
 * `legacy/` is an archive of the original package (3D models, old scenes, lossless PNG masters). Godot ignores it
   (`legacy/.gdignore`); nothing depends on it; see `legacy/README.md`.
 * `docs/design/` holds the plan the game is built from; `docs/Trætoppen Style Guide Review/` is the UI/look reference.
 * Commits: short imperative subject, a body that says what and why, and the `Co-Authored-By` trailer when an assistant wrote it.
-  Large art is stored as plain git blobs (Git LFS is not enabled).
+  New media under `docs/` and `tools/art/` goes through Git LFS; see Repository size.
