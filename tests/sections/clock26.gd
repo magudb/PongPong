@@ -397,7 +397,7 @@ func _pass_out_and_bed() -> void:
 	var day_faint: int = gm.total_day()
 	tm.pause_time()
 	Engine.time_scale = 4.0
-	bus.player_defeated.emit()
+	bus.player_defeated.emit(PlayerRegistry.local_id(), )
 	gm.advance_time(2)                        # 26:00 = the roll + midnight_passed, inside the 1.3 s before the faint fades out
 	await t.frames(2)
 	var pass_out_started: bool = _world.sleeping
@@ -424,7 +424,7 @@ func _pass_out_and_bed() -> void:
 	gm.advance_time(2)                        # 26:00: the roll, midnight_passed, the pass-out starts fading out
 	await t.frames(2)
 	var fading: bool = _world.sleeping
-	bus.player_defeated.emit()
+	bus.player_defeated.emit(PlayerRegistry.local_id(), )
 	var fade_faint_done: bool = await t.until(func() -> bool: return not _world._faint_pending and not _world.sleeping and not _world.traveling, 12.0)
 	Engine.time_scale = 1.0
 	tm.resume_time()

@@ -12,13 +12,13 @@ func _ready() -> void:
 	EventBus.weather_changed.connect(func(_weather):refresh())
 	EventBus.day_started.connect(func(_day,_season):refresh())
 	EventBus.game_event.connect(_event)
-	EventBus.item_purchased.connect(func(_item,_amount,_cost):_sfx("coin_clink"))
-	EventBus.gold_changed.connect(func(_total,delta):
+	EventBus.item_purchased.connect(func(_player_id: StringName, _item,_amount,_cost):_sfx("coin_clink"))
+	EventBus.gold_changed.connect(func(_player_id: StringName, _total,delta):
 		if delta>0:_sfx("coin_clink"))
-	EventBus.friend_changed.connect(func(_npc,_hearts):_sfx("heart_up"))
+	EventBus.friend_changed.connect(func(_player_id: StringName, _npc,_hearts):_sfx("heart_up"))
 	EventBus.crop_harvested.connect(func(_plot,_crop,_amount):_sfx("pickup_soft"))
-	EventBus.quest_accepted.connect(func(_quest):_sfx("page_turn"))
-	EventBus.quest_completed.connect(func(_quest):_sfx("stage_up"))
+	EventBus.quest_accepted.connect(func(_player_id: StringName, _quest):_sfx("page_turn"))
+	EventBus.quest_completed.connect(func(_player_id: StringName, _quest):_sfx("stage_up"))
 	EventBus.whisper_requested.connect(_whisper)
 	EventBus.modal_changed.connect(func(_stack):_sfx("page_turn"))
 	var world := get_tree().get_first_node_in_group("world_2d")

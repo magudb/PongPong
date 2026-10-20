@@ -64,7 +64,7 @@ func restore(record: Dictionary) -> void:
 	rare = int(record.get("rare", 0))
 	kills = int(record.get("kills", 0))
 	best = str(record.get("best", ""))
-func _item(id: StringName, amount: int) -> void:
+func _item(_player_id: StringName, id: StringName, amount: int) -> void:
 	if not active: return
 	if id == &"tornebaer": _berry_seen = true
 	finds += amount

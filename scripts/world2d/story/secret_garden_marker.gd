@@ -34,10 +34,10 @@ func _enter_tree() -> void:
 	if is_node_ready():
 		refresh.call_deferred()
 
-func _progress(id: StringName, _objective: StringName, _current: int, _target: int) -> void:
-	_quest(id)
+func _progress(player_id: StringName, id: StringName, _objective: StringName, _current: int, _target: int) -> void:
+	_quest(player_id, id)
 
-func _quest(id: StringName) -> void:
+func _quest(_player_id: StringName, id: StringName) -> void:
 	if id == SecretGardenStory.QUEST:
 		refresh()
 

@@ -34,6 +34,14 @@ static func local_player(tree: SceneTree = null) -> Node:
 	return null
 
 
+## Save id of the local player (`p0` when nothing is up). What player-scoped EventBus signals carry (MP3).
+static func local_id(tree: SceneTree = null) -> StringName:
+	var p := local_player(tree)
+	if p != null and "player_id" in p:
+		return StringName(str(p.get("player_id")))
+	return &"p0"
+
+
 ## Player by stable save id (`p0`..`p3`).
 static func by_id(player_id: StringName, tree: SceneTree = null) -> Node:
 	var w := world(tree)

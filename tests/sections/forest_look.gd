@@ -143,7 +143,7 @@ func _run(t,native: bool) -> void:
 	var skin: StringName = gm.character_skin
 	var alternate: String = {"animal":"animal_monkey","fairy":"fairy_birk","hobbit":"hobbit_bodil","ghost":"ghost_hviske"}[t.character]
 	gm.character_skin = StringName(alternate)
-	EventBus.player_character_changed.emit(gm.character_skin)
+	EventBus.player_character_changed.emit(PlayerRegistry.local_id(), gm.character_skin)
 	await t.frames(3)
 	world.player.get_node("ForestActorLight").refresh()
 	var layers: WardrobeLayers = world.player.outfit_layers
@@ -151,7 +151,7 @@ func _run(t,native: bool) -> void:
 	for picture in layers.layers.values(): shade_ok = shade_ok and "unshaded" in picture.material.shader.code
 	t.check("alternate_hero_clothing_keeps_shaders",shade_ok and not layers.layers.is_empty() and layers.occluder.material == layers.mask_material)
 	gm.character_skin = skin
-	EventBus.player_character_changed.emit(skin)
+	EventBus.player_character_changed.emit(PlayerRegistry.local_id(), skin)
 	if native:
 		DungeonFloors.inst().enter(2)
 		await t.until(func(): return world.area.map.id == &"moerkeskoven_f2" and not world.traveling,10)

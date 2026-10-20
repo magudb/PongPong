@@ -1178,7 +1178,7 @@ func _when_grammar(t) -> void:
 		"hour:8-18 re-asked at 10:00 (edge %s), not at 09:30 (%s) or 10:15 (%s), at 11:15 after a skip (%s), at raw 24:00 (%s), 25:00 (%s) and 02:00 (%s); start %s" % [edge, mid_hour, same_hour, skipped_into, at_midnight, at_one, after_roll, start_ok])
 	# a stale answer is fixed by the other triggers: friend_changed (hearts / stage), the game events of the autoload's list, day_started
 	fake.answers["open:bakery"] = false
-	bus.friend_changed.emit(&"pip", 4)
+	bus.friend_changed.emit(PlayerRegistry.local_id(), &"pip", 4)
 	var on_friend: bool = not o_node.visible
 	var every_event: bool = true
 	for ev in FakeSocial.WHEN_REFRESH_EVENTS:
@@ -2395,7 +2395,7 @@ func _sleep_and_passout(t) -> void:
 		_world._enter(&"_fixture_ortho", &"default")
 		_seen.clear()
 		bus.whisper_requested.connect(wcb)
-		bus.player_defeated.emit()
+		bus.player_defeated.emit(PlayerRegistry.local_id(), )
 		var back: bool = await t.until(func() -> bool: return _world.area.map.id == &"farm" and not _world._faint_pending, 8.0)
 		bus.whisper_requested.disconnect(wcb)
 		t.check("faint_returns_to_the_farm", back and _seen.has("WHISPER_FAINT"), "player_defeated -> farm, whisper WHISPER_FAINT")

@@ -98,7 +98,7 @@ func _connect_bus() -> void:
 	bus.connect(&"item_gained", _on_item_gained)
 
 
-func _on_item_gained(item_id: StringName, _amount: int) -> void:
+func _on_item_gained(_player_id: StringName, item_id: StringName, _amount: int) -> void:
 	_pending_item = {"id": item_id, "frame": Engine.get_process_frames()}
 
 

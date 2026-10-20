@@ -58,11 +58,11 @@ func _run(t, skin := "") -> void:
 	var gm: Node = t.autoload("GameManager")
 	var old_skin: StringName = gm.character_skin
 	gm.character_skin = StringName(alternative)
-	EventBus.player_character_changed.emit(gm.character_skin)
+	EventBus.player_character_changed.emit(PlayerRegistry.local_id(), gm.character_skin)
 	t.check("existing_actor_refits_on_hero_change", clock.resolved_id != body, "resolved %s" % clock.resolved_id)
 	t.check("hero_change_keeps_owned_outfit", layers.current_outfit == original and layers._body_id == clock.resolved_id)
 	gm.character_skin = old_skin
-	EventBus.player_character_changed.emit(old_skin)
+	EventBus.player_character_changed.emit(PlayerRegistry.local_id(), old_skin)
 	if native:
 		var ui: Node = t.world().game_ui.get_screen(&"garderobe")
 		ui.open()

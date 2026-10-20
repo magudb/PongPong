@@ -151,11 +151,11 @@ func _ready() -> void:
 	add_child(preload("res://scenes/ui/dungeon/loot_reveal.tscn").instantiate())
 	preload("res://scripts/dungeon_run/cues.gd").attach(self)
 	EventBus.player_spawned.connect(_spawned)
-	EventBus.player_health_changed.connect(_health)
-	EventBus.player_oil_changed.connect(_oil)
+	EventBus.player_health_changed.connect(func(_player_id: StringName, half_hearts, max_half_hearts) -> void: _health(half_hearts, max_half_hearts))
+	EventBus.player_oil_changed.connect(func(_player_id: StringName, seconds, max_seconds) -> void: _oil(seconds, max_seconds))
 	EventBus.boss_bar_changed.connect(_boss)
 	EventBus.area_changed.connect(_area_changed)
-	EventBus.player_inventory_changed.connect(_inventory)
+	EventBus.player_inventory_changed.connect(func(_player_id: StringName, inventory) -> void: _inventory(inventory))
 	EventBus.game_event.connect(_event)
 	EventBus.modal_changed.connect(func(stack):
 		# the whisper follows the toasts: above a panel, hidden under the dialogue and an event scene

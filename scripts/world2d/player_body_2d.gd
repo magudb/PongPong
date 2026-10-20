@@ -119,7 +119,7 @@ func set_character(visual_id: String) -> void:
 		visual.load_character(visual_id)
 
 
-func _on_character_changed(_character_id: StringName) -> void:
+func _on_character_changed(_player_id: StringName, _character_id: StringName) -> void:
 	var gm: Node = GameData.gm()
 	if gm != null:
 		set_character(GameData.visual_for_skin(StringName(str(gm.get("character_skin")))))
@@ -260,8 +260,8 @@ func restore_after_sleep() -> void:
 
 ## Mirrors the local stats_changed on the contract signals: the HUD screens listen to the bus, not to this stub.
 func _emit_stats_on_bus() -> void:
-	EventBus.player_health_changed.emit(half_hearts, max_half_hearts)
-	EventBus.player_stats_changed.emit({"half_hearts": half_hearts, "max_half_hearts": max_half_hearts, "stamina": stamina, "max_stamina": max_stamina})
+	EventBus.player_health_changed.emit(PlayerRegistry.local_id(), half_hearts, max_half_hearts)
+	EventBus.player_stats_changed.emit(PlayerRegistry.local_id(), {"half_hearts": half_hearts, "max_half_hearts": max_half_hearts, "stamina": stamina, "max_stamina": max_stamina})
 
 
 ## The cell in front of the feet (the one a tool or E acts on).
@@ -363,7 +363,7 @@ func _update_prompt(delta: float = 0.0) -> void:
 	var text := interaction_text(it)
 	if text != _prompt:
 		_prompt = text
-		EventBus.interaction_prompt_changed.emit(text)
+		EventBus.interaction_prompt_changed.emit(PlayerRegistry.local_id(), text)
 
 func interaction_text(it: Node) -> String:
 	return str(it.call("get_interaction_prompt")) if it != null and it.has_method("get_interaction_prompt") else ""

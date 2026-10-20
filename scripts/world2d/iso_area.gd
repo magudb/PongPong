@@ -1646,7 +1646,7 @@ func _exit_tree() -> void:
 	EventBus.flag_changed.disconnect(_on_flag_event)
 
 
-func _on_quest_event(_quest_id: StringName) -> void:
+func _on_quest_event(_player_id: StringName, _quest_id: StringName) -> void:
 	refresh_when()
 
 
@@ -1674,7 +1674,7 @@ func _on_game_event(_event_name: StringName, _payload: Dictionary) -> void:
 
 
 ## `hearts:<npc>:<n>` and `stage:<npc>:<stage>` change with friend_changed (a typed signal, not a game event).
-func _on_friend_event(_npc_id: StringName, _hearts: int) -> void:
+func _on_friend_event(_player_id: StringName, _npc_id: StringName, _hearts: int) -> void:
 	_refresh_delegated()
 
 

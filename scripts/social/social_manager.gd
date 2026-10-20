@@ -103,10 +103,10 @@ func _ready() -> void:
 	EventBus.load_completed.connect(_on_load_completed)
 	EventBus.shop_opened.connect(_on_shop_opened)
 	EventBus.shop_closed.connect(_on_shop_closed)
-	EventBus.item_purchased.connect(_on_item_purchased)
+	EventBus.item_purchased.connect(func(_player_id: StringName, item_id, amount, cost) -> void: _on_item_purchased(item_id, amount, cost))
 	EventBus.visitor_gift.connect(func(npc,_item):
 		if str(npc)!="":mark_event_seen("home_visit:"+str(npc),week()+1))
-	EventBus.player_inventory_changed.connect(_retry_event_items)
+	EventBus.player_inventory_changed.connect(func(_player_id: StringName, _inv: Dictionary) -> void: _retry_event_items())
 	var sm := Svc.node("SaveManager")
 	if sm != null and sm.has_method("register_section"):
 		sm.call("register_section", SECTION, self, SECTION_ORDER)
@@ -306,7 +306,7 @@ func add_points(npc: Variant, delta: int, source: StringName = &"", opts: Dictio
 	result["stage_after"] = after_stage
 	EventBus.game_event.emit(EV_POINTS, {"npc": id, "delta": gained, "points": int(row["p"]), "hearts": after_hearts, "source": String(source)})
 	if after_hearts > before_hearts:
-		EventBus.friend_changed.emit(StringName(id), after_hearts)
+		EventBus.friend_changed.emit(PlayerRegistry.local_id(), StringName(id), after_hearts)
 		var loot := Svc.node("LootService")
 		if loot != null and loot.has_method("check_friend_gifts"):
 			loot.call("check_friend_gifts", StringName(id))

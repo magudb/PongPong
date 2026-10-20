@@ -1530,7 +1530,7 @@ func _toast_stack_caps_and_rarity(t) -> void:
 	_drop_host()
 	host = _fresh(t)
 	stack = await _toast_stack(t, host)
-	_bus.item_gained.emit(best, 1)
+	_bus.item_gained.emit(PlayerRegistry.local_id(), best, 1)
 	_bus.notification_posted.emit("Fået genstand", "Fund x1", "item")
 	await t.frames(2)
 	var rare_toast: Node = stack.toasts()[0]
@@ -1547,7 +1547,7 @@ func _toast_stack_caps_and_rarity(t) -> void:
 	# the forest HUD leaves item notifications to the loot feed
 	stack.item_toasts = false
 	var before := stack.toasts().size()
-	_bus.item_gained.emit(best, 1)
+	_bus.item_gained.emit(PlayerRegistry.local_id(), best, 1)
 	_bus.notification_posted.emit("Fået genstand", "Fund x1", "item")
 	_bus.notification_posted.emit("Fund", "Id", String(best))
 	await t.frames(1)
@@ -1565,7 +1565,7 @@ func _prompt_pill_follows_device(t) -> void:
 	host.add_child(pill)
 	await t.frames(2)
 	var hidden_ok: bool = not pill.shown()["visible"]
-	_bus.interaction_prompt_changed.emit("E: Sov")
+	_bus.interaction_prompt_changed.emit(PlayerRegistry.local_id(), "E: Sov")
 	await t.frames(2)
 	var kb := pill.shown()
 	var kb_ok: bool = kb["visible"] and kb["key"] and kb["cap"] == "E" and kb["verb"] == "Sov"
@@ -1577,14 +1577,14 @@ func _prompt_pill_follows_device(t) -> void:
 	await UiAudit.device_swap(t, "keyboard")
 	var back_ok: bool = pill.shown()["cap"] == "E"
 	# the verb keeps its text; a verb-only prompt gets the cap of `interact` as well; "E · Tal med X" splits too
-	_bus.interaction_prompt_changed.emit("E · Tal med Pippin")
+	_bus.interaction_prompt_changed.emit(PlayerRegistry.local_id(), "E · Tal med Pippin")
 	await t.frames(1)
 	var talk_ok: bool = pill.shown()["verb"] == "Tal med Pippin" and pill.shown()["cap"] == "E"
-	_bus.interaction_prompt_changed.emit("Sov")
+	_bus.interaction_prompt_changed.emit(PlayerRegistry.local_id(), "Sov")
 	await t.frames(1)
 	var verb_only: bool = pill.shown()["verb"] == "Sov" and pill.shown()["key"] and pill.shown()["cap"] == "E"
 	# a translation key is translated and follows the language
-	_bus.interaction_prompt_changed.emit("UI_SLEEP")
+	_bus.interaction_prompt_changed.emit(PlayerRegistry.local_id(), "UI_SLEEP")
 	await t.frames(1)
 	var key_da: bool = pill.shown()["verb"] == "Sov"
 	TranslationServer.set_locale("en")
@@ -1593,7 +1593,7 @@ func _prompt_pill_follows_device(t) -> void:
 	TranslationServer.set_locale("da")
 	await t.frames(1)
 	# an empty text hides the pill
-	_bus.interaction_prompt_changed.emit("")
+	_bus.interaction_prompt_changed.emit(PlayerRegistry.local_id(), "")
 	await t.frames(1)
 	var cleared: bool = not pill.shown()["visible"]
 	# not focusable, not clickable; the look is the theme's PromptPill (ink pill, 2 px gold border)

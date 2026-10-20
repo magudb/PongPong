@@ -21,7 +21,7 @@ func _ready() -> void:
 	EventBus.time_of_day_changed.connect(_date_changed)
 	EventBus.area_changed.connect(func(_area): refresh())
 	EventBus.modal_changed.connect(func(_stack): refresh())
-	EventBus.friend_changed.connect(func(_npc, _hearts): refresh())
+	EventBus.friend_changed.connect(func(_player_id: StringName, _npc, _hearts): refresh())
 	EventBus.dialogue_ended.connect(refresh)
 	if get_parent() is GameUI:
 		get_parent().mode_changed.connect(func(_mode): refresh())

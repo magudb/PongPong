@@ -1179,24 +1179,24 @@ func _shop() -> void:
 	var m := _fresh(8)                                         # a Monday
 	var bus: Node = t.autoload("EventBus")
 	bus.shop_opened.emit(&"bakery")
-	bus.item_purchased.emit(&"cookie", 1, 250)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie", 1, 250)
 	t.expect(m.points("baker_maja") == 2 and m.row_of("baker_maja")["pc"] % 1000 == 50, "250 gold in the bakery = 2 points and 50 gold carried (the keeper is Maja)")
-	bus.item_purchased.emit(&"cookie", 1, 60)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie", 1, 60)
 	t.expect(m.points("baker_maja") == 3, "the carried gold counts: 50 + 60 = 1 more point")
-	bus.item_purchased.emit(&"cookie", 1, 5000)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie", 1, 5000)
 	var capped_week = m.points("baker_maja")
-	bus.item_purchased.emit(&"cookie", 1, 5000)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie", 1, 5000)
 	var in_week = m.points("baker_maja")
 	# another keeper has his own cap; no shop open = nothing; a shop without a keeper = nothing
 	bus.shop_closed.emit(&"bakery")
-	bus.item_purchased.emit(&"cookie", 1, 5000)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie", 1, 5000)
 	var closed_nothing = m.points("baker_maja") == in_week
 	bus.shop_opened.emit(&"seed_shop")
-	bus.item_purchased.emit(&"carrot_seed", 1, 700)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"carrot_seed", 1, 700)
 	var pip = m.points("merchant_pip")
 	bus.shop_closed.emit(&"seed_shop")
 	bus.shop_opened.emit(&"a_festival_stall_without_a_keeper")
-	bus.item_purchased.emit(&"cookie", 1, 5000)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie", 1, 5000)
 	var stall := true
 	for id in SocialData.friend_ids():
 		if id not in ["baker_maja", "merchant_pip"] and m.points(id) != 0:
@@ -1204,7 +1204,7 @@ func _shop() -> void:
 	bus.shop_closed.emit(&"a_festival_stall_without_a_keeper")
 	SocialFixture.jump(15)
 	bus.shop_opened.emit(&"bakery")
-	bus.item_purchased.emit(&"cookie", 1, 5000)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie", 1, 5000)
 	var next_week = m.points("baker_maja")
 	bus.shop_closed.emit(&"bakery")
 	t.check("purchase_points_capped", capped_week == 10 and in_week == 10 and closed_nothing and pip == 7 and stall and next_week == 20 and m.hearts("baker_maja") == 0,

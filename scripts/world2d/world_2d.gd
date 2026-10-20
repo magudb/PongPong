@@ -50,6 +50,8 @@ var player: Node2D
 ## Player slots (MP1). `player` stays as the deprecated alias of `players[0]`.
 var players: Array = []
 var player_by_peer: Dictionary = {}
+## Per-player profile rows (MP3). Not an autoload (DT-MP6).
+var roster: PlayerRoster
 var farm: Node
 var greenhouse_farm: FarmGrid
 var area: IsoArea
@@ -197,6 +199,9 @@ func _ready() -> void:
 	day_night.name = "DayNight"
 	add_child(day_night)
 	day_night.glow_changed.connect(_on_glow_changed)
+	roster = PlayerRoster.new()
+	add_child(roster)
+	roster.reset()
 	player = _make_player()
 	_register_player(player, 0, 1)   # identity before add_child: _ready reads is_local for the camera
 	add_child(player)
@@ -886,7 +891,7 @@ func _restore_player() -> void:
 		player.set("stamina", player.get("max_stamina"))
 	if "half_hearts" in player and "max_half_hearts" in player:
 		player.set("half_hearts", player.get("max_half_hearts"))
-		EventBus.player_health_changed.emit(int(player.get("half_hearts")), int(player.get("max_half_hearts")))
+		EventBus.player_health_changed.emit(PlayerRegistry.local_id(), int(player.get("half_hearts")), int(player.get("max_half_hearts")))
 
 
 func _wake_area() -> StringName:
@@ -895,7 +900,7 @@ func _wake_area() -> StringName:
 
 
 ## Gentle defeat: the next morning at home, all items kept, a rounded-down gold fee.
-func _on_player_defeated() -> void:
+func _on_player_defeated(_player_id: StringName) -> void:
 	if _faint_pending:
 		return
 	_faint_pending = true
@@ -949,7 +954,7 @@ func _on_player_defeated() -> void:
 	_faint_pending = false
 
 
-func _on_quest_completed(_quest_id: StringName) -> void:
+func _on_quest_completed(_player_id: StringName, _quest_id: StringName) -> void:
 	var pv: Variant = player.get("visual") if player != null and "visual" in player else null
 	if pv is Object and (pv as Object).has_method("play_action") and ("state" in player and int(player.get("state")) == 0):
 		(pv as Object).call("play_action", &"celebrate")

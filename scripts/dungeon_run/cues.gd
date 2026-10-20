@@ -23,7 +23,7 @@ func _ready() -> void:
 	EventBus.enemy_encountered.connect(_noticed)
 	EventBus.player_spawned.connect(_player)
 	_player(PlayerRegistry.local_player(get_tree()))
-func _item(id: StringName, _amount: int) -> void:
+func _item(_player_id: StringName, id: StringName, _amount: int) -> void:
 	if DungeonRulesData.player() != null and DungeonFloors.floor_of(DungeonRulesData.player().area) > 0: play(rarity_cue(ItemKinds.rarity_of(id)))
 func _whisper(key: String) -> void:
 	if key == "DEXP_OIL_LOW": play("sfx/lantern_low")

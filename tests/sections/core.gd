@@ -23,11 +23,8 @@ const DA_WEATHER := {"KLART": "Solskin", "REGN": "Regn", "TAAGE": "Tåge", "SNE"
 const EN_WEATHER := {"KLART": "Sunny", "REGN": "Rain", "TAAGE": "Fog", "SNE": "Snow", "TORDEN": "Thunder"}
 
 ## Signals that existed before the 2D rewrite and keep their arity (argument names and types).
+## Player-scoped signals moved to MP3_SIGNALS when they gained player_id (DT-MP5).
 const LEGACY_SIGNALS := {
-	"player_character_changed": "character_id:StringName",
-	"player_inventory_changed": "inventory:Dictionary",
-	"player_stats_changed": "stats:Dictionary",
-	"player_moved": "zone:StringName",
 	"day_started": "day:int,season:StringName",
 	"day_ended": "day:int,season:StringName",
 	"time_of_day_changed": "hour:int,minute:int",
@@ -37,16 +34,8 @@ const LEGACY_SIGNALS := {
 	"crop_harvested": "plot_id:StringName,crop_id:StringName,amount:int",
 	"crop_stage_changed": "plot_id:StringName,stage:int",
 	"plot_unlocked": "plot_id:StringName",
-	"gold_changed": "amount:int,delta:int",
-	"item_purchased": "item_id:StringName,amount:int,cost:int",
-	"item_sold": "item_id:StringName,amount:int,revenue:int",
 	"shop_opened": "shop_id:StringName",
 	"shop_closed": "shop_id:StringName",
-	"quest_offered": "quest_id:StringName",
-	"quest_accepted": "quest_id:StringName",
-	"quest_objective_updated": "quest_id:StringName,objective_id:StringName,progress:int,target:int",
-	"quest_completed": "quest_id:StringName",
-	"quest_failed": "quest_id:StringName",
 	"dialogue_started": "npc_id:StringName,dialogue_id:StringName",
 	"dialogue_line_shown": "speaker:String,text:String,voice_key:String",
 	"dialogue_ended": "",
@@ -65,11 +54,11 @@ const LEGACY_SIGNALS := {
 }
 
 ## PLAN 3.5: the retyped signal, the new signals and R.13 (hotbar_assign_requested, game_event).
+## Player-scoped signals moved to MP3_SIGNALS when they gained player_id (DT-MP5).
 const PLAN_SIGNALS := {
 	"player_spawned": "player:Node2D",
 	"new_game_started": "",
 	"zone_unlocked": "zone_id:StringName",
-	"item_gained": "item_id:StringName,amount:int",
 	"recipe_crafted": "recipe_id:StringName,amount:int",
 	"building_built": "building_id:StringName,building_type:StringName",
 	"animal_adopted": "animal_id:StringName,species:StringName",
@@ -77,21 +66,16 @@ const PLAN_SIGNALS := {
 	"animal_product_collected": "animal_id:StringName,product_id:StringName,amount:int",
 	"area_change_requested": "area_id:StringName,spawn_name:StringName",
 	"area_changed": "area_id:StringName",
-	"player_health_changed": "half_hearts:int,max_half_hearts:int",
-	"player_oil_changed": "seconds:float,max_seconds:float",
-	"hotbar_changed": "entries:Array,selected:int",
 	"boss_bar_changed": "name_key:String,ratio:float,visible:bool",
 	"whisper_requested": "text_key:String",
-	"interaction_prompt_changed": "text:String",
 	"weather_changed": "weather:StringName",
 	"enemy_defeated": "enemy_id:StringName,kind:StringName,loot:Array",
-	"player_defeated": "",
 	"modal_changed": "stack:Array",
-	"hotbar_assign_requested": "slot:int,item_id:StringName",
 	"game_event": "name:StringName,payload:Dictionary",
 }
 
 ## Addendum 3.1: the 14 feature signals, exact arities.
+## Player-scoped ones moved to MP3_SIGNALS when they gained player_id (DT-MP5).
 const FEATURE_SIGNALS := {
 	"home_upgrade_started": "from_tier:int,to_tier:int,ready_total_day:int",
 	"home_upgrade_progress": "days_left:int,total_days:int",
@@ -101,11 +85,8 @@ const FEATURE_SIGNALS := {
 	"furniture_placed": "item_id:StringName,uid:int",
 	"furniture_picked_up": "item_id:StringName,uid:int",
 	"decorate_mode_changed": "active:bool",
-	"outfit_changed": "equipped:Dictionary",
-	"garment_equipped": "item_id:StringName,slot:StringName",
 	"loot_rolled": "source_id:StringName,results:Array",
 	"visitor_gift": "npc_id:StringName,item_id:StringName",
-	"friend_changed": "npc_id:StringName,hearts:int",
 	"item_discovered": "item_id:StringName,rarity:StringName,category:StringName",
 }
 
@@ -118,9 +99,34 @@ const REVIEW_SIGNALS := {
 	"lua_reloaded": "",
 }
 
-## Multiplayer track (MP1+): player registry signals that are allowed in wave 1.
+## Multiplayer track: player registry + the MP3 player_id cut (DT-MP5) + session signals for MP4.
 const MULTIPLAYER_SIGNALS := {
 	"player_despawned": "player_id:StringName",
+	"player_joined": "player_id:StringName,peer_id:int,profile:Dictionary",
+	"player_left": "player_id:StringName,reason:StringName",
+	"net_session_changed": "state:StringName",
+	"player_character_changed": "player_id:StringName,character_id:StringName",
+	"player_inventory_changed": "player_id:StringName,inventory:Dictionary",
+	"player_stats_changed": "player_id:StringName,stats:Dictionary",
+	"player_moved": "player_id:StringName,zone:StringName",
+	"player_health_changed": "player_id:StringName,half_hearts:int,max_half_hearts:int",
+	"player_oil_changed": "player_id:StringName,seconds:float,max_seconds:float",
+	"player_defeated": "player_id:StringName",
+	"hotbar_changed": "player_id:StringName,entries:Array,selected:int",
+	"hotbar_assign_requested": "player_id:StringName,slot:int,item_id:StringName",
+	"interaction_prompt_changed": "player_id:StringName,text:String",
+	"gold_changed": "player_id:StringName,amount:int,delta:int",
+	"item_gained": "player_id:StringName,item_id:StringName,amount:int",
+	"item_purchased": "player_id:StringName,item_id:StringName,amount:int,cost:int",
+	"item_sold": "player_id:StringName,item_id:StringName,amount:int,revenue:int",
+	"quest_offered": "player_id:StringName,quest_id:StringName",
+	"quest_accepted": "player_id:StringName,quest_id:StringName",
+	"quest_objective_updated": "player_id:StringName,quest_id:StringName,objective_id:StringName,progress:int,target:int",
+	"quest_completed": "player_id:StringName,quest_id:StringName",
+	"quest_failed": "player_id:StringName,quest_id:StringName",
+	"outfit_changed": "player_id:StringName,equipped:Dictionary",
+	"garment_equipped": "player_id:StringName,item_id:StringName,slot:StringName",
+	"friend_changed": "player_id:StringName,npc_id:StringName,hearts:int",
 }
 
 var t
@@ -187,10 +193,11 @@ func _test_signal_contract() -> void:
 		"%d signals; missing %s, wrong %s, not in the contract %s" % [declared.size(), missing, wrong, undeclared])
 	t.check("legacy_signals_keep_arity", _subset_matches(declared, LEGACY_SIGNALS), "%d legacy signals" % LEGACY_SIGNALS.size())
 	t.check("plan_3_5_signals", _subset_matches(declared, PLAN_SIGNALS), "%d signals of PLAN 3.5 + R.13" % PLAN_SIGNALS.size())
-	t.check("feature_signals_14", FEATURE_SIGNALS.size() == 14 and _subset_matches(declared, FEATURE_SIGNALS), "addendum 3.1")
+	t.check("feature_signals_14", FEATURE_SIGNALS.size() == 11 and _subset_matches(declared, FEATURE_SIGNALS), "addendum 3.1 (outfit/garment/friend moved to MP3_SIGNALS)")
+	t.check("mp3_signals_exact", _subset_matches(declared, MULTIPLAYER_SIGNALS) and MULTIPLAYER_SIGNALS.size() >= 4, "player registry + player_id cut")
 	t.check("review_fix_signals", _subset_matches(declared, REVIEW_SIGNALS), "devin-review additions (flag_changed)")
 	t.check("farm_upgraded_removed", not declared.has("farm_upgraded"), "PLAN 3.5: removed, never used")
-	t.check("r13_escape_hatch_and_hotbar_assign", declared.get("game_event", "") == "name:StringName,payload:Dictionary" and declared.get("hotbar_assign_requested", "") == "slot:int,item_id:StringName", "R.13")
+	t.check("r13_escape_hatch_and_hotbar_assign", declared.get("game_event", "") == "name:StringName,payload:Dictionary" and declared.get("hotbar_assign_requested", "") == "player_id:StringName,slot:int,item_id:StringName", "R.13")
 	# player_spawned takes a Node2D in the 2D game
 	var got: Array = []
 	var cb := func(p) -> void: got.append(p is Node2D)
@@ -225,11 +232,11 @@ func _test_signal_lint() -> void:
 		feature_ok = feature_ok and sigs.get(sig_name, -1) == want_arity
 	t.check("signal_arity_lint", violations.is_empty(), "%d EventBus uses in %d files, %d violation(s) %s; covers %d feature signals" % [
 		uses, files.size(), violations.size(), violations.slice(0, 3), FEATURE_SIGNALS.size()])
-	t.check("signal_arity_lint_covers_14_feature_signals", feature_ok and FEATURE_SIGNALS.size() == 14, "arity of every addendum 3.1 signal")
+	t.check("signal_arity_lint_covers_14_feature_signals", feature_ok and FEATURE_SIGNALS.size() == 11, "arity of every addendum 3.1 signal")
 	# the lint itself must see mistakes (a lint that scans nothing would stay green forever)
-	var bad := "EventBus.gold_changed.emit(5)\nEventBus.nope.emit()\nEventBus.day_started.connect(func(a): pass)\nEventBus.home_upgraded.connect(_h)\nfunc _h(a, b, c):\n\tpass\nEventBus.save_completed.connect(_t2)\nfunc _t2():\n\tpass\nEventBus.item_sold.emit(\n\t&\"x\", clampi(1, 0, 5)\n)\nMyEventBus.nope.emit()\n"
+	var bad := "EventBus.gold_changed.emit(5)\nEventBus.nope.emit()\nEventBus.day_started.connect(func(a): pass)\nEventBus.home_upgraded.connect(_h)\nfunc _h(a, b, c):\n\tpass\nEventBus.save_completed.connect(_t2)\nfunc _t2():\n\tpass\nEventBus.item_sold.emit(\n\t&\"p0\", &\"x\", clampi(1, 0, 5)\n)\nMyEventBus.nope.emit()\n"
 	var bad_result := _lint_text("sample", bad, sigs, members)
-	var good := "EventBus.gold_changed.emit(5, 1) # EventBus.nope.emit()\nEventBus.home_upgraded.connect(_h)\nvar s := \"EventBus.nope.emit()\"\nEventBus.day_started.connect(func(_a, _b): pass)\nfunc _h(a, b):\n\tpass\nEventBus.item_purchased.emit(\n\t&\"x\", clampi(1, 0, 5), int(Vector2(1, 2).x)\n)\nEventBus.quest_objective_updated.connect(func(_q: StringName, _o: StringName, _p: int, _t: int = 0) -> void: pass)\nEventBus.save_completed.connect(_s2, CONNECT_ONE_SHOT)\nfunc _s2(slot: int = 0):\n\tpass\nEventBus.load_completed.connect(_inherited)\nEventBus.shop_opened.connect(_on_x.bind(1))\n"
+	var good := "EventBus.gold_changed.emit(&\"p0\", 5, 1) # EventBus.nope.emit()\nEventBus.home_upgraded.connect(_h)\nvar s := \"EventBus.nope.emit()\"\nEventBus.day_started.connect(func(_a, _b): pass)\nfunc _h(a, b):\n\tpass\nEventBus.item_purchased.emit(\n\t&\"p0\", &\"x\", clampi(1, 0, 5), int(Vector2(1, 2).x)\n)\nEventBus.quest_objective_updated.connect(func(_p: StringName, _q: StringName, _o: StringName, _pr: int, _t: int = 0) -> void: pass)\nEventBus.save_completed.connect(_s2, CONNECT_ONE_SHOT)\nfunc _s2(slot: int = 0):\n\tpass\nEventBus.load_completed.connect(_inherited)\nEventBus.shop_opened.connect(_on_x.bind(1))\n"
 	var good_result := _lint_text("sample", good, sigs, members)
 	t.check("signal_arity_lint_detects_mismatch", (bad_result["violations"] as Array).size() == 6 and (good_result["violations"] as Array).is_empty(),
 		"bad sample %s, good sample %s" % [bad_result["violations"], good_result["violations"]])
@@ -663,7 +670,7 @@ func _test_new_game() -> void:
 	var skin_args: Array = []
 	for entry in w["log"]:
 		if entry[0] == "player_character_changed":
-			skin_args.append(entry[1][0])
+			skin_args.append(entry[1][1] if (entry[1] as Array).size() > 1 else entry[1][0])
 	t.check("new_game_skin_announced_final", skin_args == [&"fairy_meadow"] and seen.get("skin") == &"fairy_meadow", "player_character_changed %s" % [skin_args])
 	t.check("new_game_state_reset_before_signal", seen.get("day") == 1 and seen.get("season") == &"foraar" and seen.get("year") == 1 and seen.get("hour") == 6
 		and seen.get("flags") == {&"intro_pending": true, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0} and seen.get("zones") == [&"farm", &"city"] and seen.get("modals") == [] and seen.get("phase") == PH.PLAYING,
@@ -741,8 +748,8 @@ func _test_from_dict() -> void:
 	var skin_args: Array = []
 	for entry in w["log"]:
 		if entry[0] == "player_character_changed":
-			skin_args.append(entry[1][0])
-	t.check("from_dict_emits_character_changed", skin_args == [&"fairy_stardust"] and not _names(w["log"]).has("new_game_started") and not _names(w["log"]).has("day_started"), "%s" % [_names(w["log"])])
+			skin_args.append(entry[1][1] if (entry[1] as Array).size() > 1 else entry[1][0])
+	t.check("from_dict_emits_character_changed", skin_args == [&"fairy_stardust"] and not _names(w["log"]).has("new_game_started") and not _names(w["log"]).has("day_started"), "%s" % [skin_args])
 	_unwatch(w)
 	t.check("to_dict_total_day", int(saved["total_day"]) == gm.total_day_for(16, &"sommer", 2) and typeof(saved["season"]) == TYPE_STRING and typeof(saved["character_type"]) == TYPE_INT, "total_day %s in the dictionary for the title screen" % saved["total_day"])
 	# a legacy / partial dictionary must not break

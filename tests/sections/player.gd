@@ -25,7 +25,7 @@ func run(t) -> void:
 	t.check("geometry", p.scale == Vector2.ONE and p.visual.scale == Vector2.ONE and p.get_node("Body").shape.points.size() == 12)
 	t.check("perks_speed_energy_applied", is_equal_approx(p._walk, 285.0 * (1.0 + Perks.total("speed"))) and is_equal_approx(p._run, 450.0 * (1.0 + Perks.total("speed"))) and is_equal_approx(p.max_stamina, 100.0 + Perks.total("energy")) and p._accel == 2500 and p._decel == 3300)
 	var seen: Array = []
-	var stats := func(values: Dictionary) -> void: seen.append(values.duplicate())
+	var stats := func(_player_id: StringName, values: Dictionary) -> void: seen.append(values.duplicate())
 	bus.player_stats_changed.connect(stats)
 	var idle_started := Time.get_ticks_usec()
 	for frame in 100:
@@ -63,12 +63,12 @@ func run(t) -> void:
 	t.check("configured_stamina_regen", is_equal_approx(p.stamina, 10.0 + float(GameData.player_cfg("stamina_regen_per_second", 12))))
 	p.restore_after_sleep()
 	var hb: Array = []
-	var hotbar_signal := func(entries: Array, selected: int) -> void: hb.append({"entries": entries, "selected": selected})
+	var hotbar_signal := func(_player_id: StringName, entries: Array, selected: int) -> void: hb.append({"entries": entries, "selected": selected})
 	bus.hotbar_changed.connect(hotbar_signal)
 	p._emit_hotbar()
 	t.check("hotbar_signal_shape", hb.size() == 1 and hb[0].entries.size() == 8 and hb[0].entries[0].has_all(["id", "amount", "name", "rare"]))
 	p.hotbar.assign(0, &"")
-	bus.hotbar_assign_requested.emit(-1, &"carrot_seeds")
+	bus.hotbar_assign_requested.emit(PlayerRegistry.local_id(), -1, &"carrot_seeds")
 	t.check("hotbar_assign_first_free", p.hotbar.slots[0] == &"carrot_seeds")
 	var first := p.hotbar.selected
 	var dpad := InputEventJoypadButton.new()
@@ -157,7 +157,7 @@ func run(t) -> void:
 	p.combat.tick(2.0)
 	p.half_hearts = 2
 	var defeats: Array = []
-	var defeated := func() -> void: defeats.append(true)
+	var defeated := func(_player_id: StringName) -> void: defeats.append(true)
 	# Avoid a real scene transition here; D0 tests the complete wake sequence separately.
 	bus.player_defeated.disconnect(world._on_player_defeated)
 	bus.player_defeated.connect(defeated)
@@ -181,7 +181,7 @@ func run(t) -> void:
 	eco.add_item(&"health_tonic", 2, true)
 	var tonics: int = eco.count_item(&"health_tonic")
 	var observations: Array = []
-	var consumed := func(_values: Dictionary) -> void:
+	var consumed := func(_player_id: StringName, _values: Dictionary) -> void:
 		observations.append([eco.count_item(&"health_tonic"), eco.use_item(&"health_tonic")])
 	bus.player_stats_changed.connect(consumed)
 	t.check("consume_tonic", eco.use_item(&"health_tonic"))

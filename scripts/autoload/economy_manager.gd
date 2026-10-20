@@ -152,7 +152,16 @@ func after_transaction(action: Callable) -> void:
 		action.call()
 
 
+## Player-scoped EventBus signals that take player_id as their first argument (MP3 / DT-MP5).
+const PLAYER_SCOPED_EVENTS: Array[StringName] = [
+	&"player_inventory_changed", &"player_oil_changed", &"gold_changed",
+	&"item_gained", &"item_purchased", &"item_sold", &"hotbar_assign_requested",
+]
+
+
 func _publish(event_name: StringName, args: Array) -> void:
+	if event_name in PLAYER_SCOPED_EVENTS:
+		args = [PlayerRegistry.local_id()] + args
 	after_transaction(func() -> void: EventBus.emit_signal.callv([event_name] + args))
 
 

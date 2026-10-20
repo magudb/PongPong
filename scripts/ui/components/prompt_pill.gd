@@ -64,7 +64,7 @@ func _connect() -> void:
 			w.device_changed.connect(_on_device_changed)
 
 
-func _on_prompt(text: String) -> void:
+func _on_prompt(_player_id: StringName, text: String) -> void:
 	set_prompt(text)
 
 

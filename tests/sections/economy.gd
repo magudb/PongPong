@@ -266,7 +266,7 @@ func _gold() -> void:
 	t.expect(eco.spend_gold(40) and eco.gold == 60, "spend_gold pays")
 	var deltas: Array = []
 	for a in _args(w, "gold_changed"):
-		deltas.append(a[1])
+		deltas.append(a[2] if (a as Array).size() > 2 else a[1])
 	t.check("gold_clamp", deltas == [eco.MAX_GOLD - 500, -eco.MAX_GOLD, 100, -40] and eco.can_afford(60) and not eco.can_afford(61), "gold_changed deltas %s" % str(deltas))
 	_unwatch(w)
 	_gold_saturation()
@@ -292,7 +292,7 @@ func _gold_saturation() -> void:
 	var after_neg: int = eco.gold
 	var deltas: Array = []
 	for a in _args(w, "gold_changed"):
-		deltas.append(a[1])
+		deltas.append(a[2] if (a as Array).size() > 2 else a[1])
 	_unwatch(w)
 	t.check("gold_saturates", after_floor == 0 and after_max == eco.MAX_GOLD and after_min == 0 and after_second == eco.MAX_GOLD and after_neg == 0 and deltas == [-60, 60, eco.MAX_GOLD - 60, -eco.MAX_GOLD, 250, eco.MAX_GOLD - 250, -eco.MAX_GOLD], "add_gold(INT64_MAX) ends at MAX_GOLD instead of wrapping to 0, add_gold(INT64_MIN) ends at 0 (%d, %d, %d, %d, %d); deltas %s" % [after_floor, after_max, after_min, after_second, after_neg, str(deltas)])
 	var huge_amount := (1 << 62) + 1
@@ -452,7 +452,7 @@ func _signals() -> void:
 	_fresh()
 	var w := _watch(["item_gained", "rare_item_found", "player_inventory_changed", "notification_posted"])
 	t.expect(eco.add_item(&"wood", 150), "add 150 wood")
-	t.check("item_gained_once_per_add", _count(w, "item_gained") == 1 and _args(w, "item_gained")[0] == [&"wood", 150] and _count(w, "rare_item_found") == 0, "one item_gained(wood, 150) for a two-stack add: %s" % str(_args(w, "item_gained")))
+	t.check("item_gained_once_per_add", _count(w, "item_gained") == 1 and (_args(w, "item_gained")[0] as Array).slice(1) == [&"wood", 150] and _count(w, "rare_item_found") == 0, "one item_gained(wood, 150) for a two-stack add: %s" % str(_args(w, "item_gained")))
 	t.expect(_count(w, "notification_posted") == 1 and _count(w, "player_inventory_changed") == 1, "one toast and one backpack update for it")
 	t.expect(eco.add_item(&"moss", 3, true) and _count(w, "item_gained") == 1 and _count(w, "notification_posted") == 1 and _count(w, "player_inventory_changed") == 2, "a silent add fires neither item_gained nor a toast but still updates the backpack")
 	t.expect(not eco.add_item(&"wood", 0) and _count(w, "item_gained") == 1, "a refused add fires nothing")
@@ -757,7 +757,7 @@ func _use_item() -> void:
 	# placeables go to the hotbar
 	eco.add_item(&"scarecrow", 1, true)
 	var w := _watch(["hotbar_assign_requested", "game_event"])
-	t.expect(eco.use_item(&"scarecrow") and _args(w, "hotbar_assign_requested") == [[-1, &"scarecrow"]] and eco.count_item(&"scarecrow") == 1, "a placeable asks the hotbar to take it (slot -1 = first free) and stays in the backpack")
+	t.expect(eco.use_item(&"scarecrow") and (_args(w, "hotbar_assign_requested")[0] as Array).slice(1) == [-1, &"scarecrow"] and eco.count_item(&"scarecrow") == 1, "a placeable asks the hotbar to take it (slot -1 = first free) and stays in the backpack")
 	# animals
 	var husbandry := _fake(FakeHusbandry.new()) as FakeHusbandry
 	Svc.override("AnimalHusbandry", husbandry)
@@ -1009,7 +1009,7 @@ func _prices_and_selling() -> void:
 	t.expect(shop.get_buy_price("seed_shop", &"carrot_seeds") == 20 and int(carrot["price"]) == 20 and shop.get_buy_total("seed_shop", &"carrot_seeds", 3) == 60, "carrot seeds are listed at 20, three cost 60")
 	var w := _watch(["item_purchased", "item_gained", "gold_changed"])
 	t.expect(shop.buy_item("seed_shop", &"carrot_seeds", 3) and g - eco.gold == 60 and eco.count_item(&"carrot_seeds") == 3, "buying three takes 60 and gives three")
-	t.expect(_args(w, "item_purchased") == [[&"carrot_seeds", 3, 60]] and _count(w, "item_gained") == 1, "item_purchased(item, 3, 60) and one item_gained")
+	t.expect((_args(w, "item_purchased")[0] as Array).slice(1) == [&"carrot_seeds", 3, 60] and _count(w, "item_gained") == 1, "item_purchased(item, 3, 60) and one item_gained")
 	_unwatch(w)
 	t.expect(not shop.buy_item("seed_shop", &"carrot_seeds", 0) and shop.last_refusal == &"invalid_amount" and not shop.buy_item("seed_shop", &"carrot_seeds", -2), "an amount <= 0 is refused")
 	t.expect(not shop.buy_item("seed_shop", &"wood", 1) and shop.last_refusal == &"not_offered" and not shop.buy_item("no_such_shop", &"wood", 1) and shop.last_refusal == &"unknown_shop", "an item the shop does not sell and an unknown shop are refused")
@@ -1024,7 +1024,7 @@ func _prices_and_selling() -> void:
 	var gold_before: int = eco.gold
 	t.expect(shop.get_sell_price("seed_shop", &"turnip") == 45 and shop.get_sell_price("seed_shop", &"fern") == 1, "sell prices: a turnip 45, a fern 1")
 	var sw := _watch(["item_sold"])
-	t.expect(shop.sell_item("seed_shop", &"turnip", 4) and eco.gold - gold_before == 180 and eco.count_item(&"turnip") == 0 and _args(sw, "item_sold") == [[&"turnip", 4, 180]], "selling 4 turnips pays 180 and fires item_sold(turnip, 4, 180)")
+	t.expect(shop.sell_item("seed_shop", &"turnip", 4) and eco.gold - gold_before == 180 and eco.count_item(&"turnip") == 0 and (_args(sw, "item_sold")[0] as Array).slice(1) == [&"turnip", 4, 180], "selling 4 turnips pays 180 and fires item_sold(turnip, 4, 180)")
 	_unwatch(sw)
 	t.expect(not shop.sell_item("seed_shop", &"turnip", 1) and shop.last_refusal == &"not_owned", "selling what you do not have is refused (not_owned)")
 	t.expect(not shop.sell_item("seed_shop", &"fern", 4) and eco.count_item(&"fern") == 3 and shop.last_refusal == &"not_owned", "selling more than you have is refused and takes nothing")

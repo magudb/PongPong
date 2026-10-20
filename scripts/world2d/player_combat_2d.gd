@@ -303,7 +303,7 @@ func take_damage(amount: int, from: Vector2 = Vector2.ZERO) -> bool:
 		player.state = S.FAINTED
 		player.visual.play_loop(&"sleep")
 		player.emit_signal("fainted")
-		EventBus.player_defeated.emit()
+		EventBus.player_defeated.emit(PlayerRegistry.local_id())
 	else:
 		player.state = S.HURT
 		_remaining = 0.28

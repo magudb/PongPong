@@ -15,7 +15,7 @@ func _ready() -> void:
 	actor = get_parent()
 	refresh()
 	EventBus.outfit_changed.connect(_outfit_changed)
-func _outfit_changed(_outfit: Dictionary) -> void:
+func _outfit_changed(_player_id: StringName, _outfit: Dictionary) -> void:
 	refresh.call_deferred()
 func _process(delta: float) -> void:
 	_poll -= delta

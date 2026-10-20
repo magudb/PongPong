@@ -1022,9 +1022,9 @@ func _hint_checks(t) -> void:
 	var prompt: PromptPill = hud.get_node("PromptPill")
 	var whisper: WhisperLine = hud.get_node("WhisperLine")
 	var climb := prompt.tr("LEVEL_PROMPT_CLIMB")
-	EventBus.interaction_prompt_changed.emit(climb)
+	EventBus.interaction_prompt_changed.emit(PlayerRegistry.local_id(), climb)
 	var prompt_ok: bool = prompt.shown().visible and prompt.shown().cap!="" and prompt.shown().verb==climb
-	EventBus.interaction_prompt_changed.emit("")
+	EventBus.interaction_prompt_changed.emit(PlayerRegistry.local_id(), "")
 	prompt_ok=prompt_ok and not prompt.shown().visible
 	_city.signs[0].interact(_world.player)
 	var whisper_ok := whisper.is_showing() and whisper.shown_text()==whisper.tr("TRAE_SIGN_FARM")
@@ -2416,7 +2416,7 @@ func _chain_with_d2(t) -> void:
 	if floor_id != &"" and on_floor:
 		_world._enter(floor_id, &"default")
 		await t.physics(3)
-		EventBus.player_defeated.emit()
+		EventBus.player_defeated.emit(PlayerRegistry.local_id())
 		woke = await t.until(func() -> bool: return _world.area != null and _world.area.map.id == &"farm" and not _world.traveling, 10.0)
 		await t.seconds(0.6)
 		woke = woke and _world.player.global_position.distance_to(_world.area.get_spawn("from_home")) < 8.0

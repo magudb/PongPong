@@ -264,7 +264,7 @@ func start_new_game(p_name: String, p_type: CharacterType, p_farm: String = "", 
 	_base_phase = GamePhase.PLAYING
 	_drop_modals()
 	# the skin is final here; the reset wave of every other system comes last
-	EventBus.player_character_changed.emit(character_skin)
+	EventBus.player_character_changed.emit(PlayerRegistry.local_id(), character_skin)
 	EventBus.new_game_started.emit()
 
 
@@ -658,7 +658,7 @@ func from_dict(data: Dictionary) -> void:
 	unlocked_zones.assign(_string_names(data.get("unlocked_zones", _default_zones())))
 	discovered_locations.assign(_string_names(data.get("discovered_locations", [])))
 	play_time_seconds = float(data.get("play_time_seconds", 0.0))
-	EventBus.player_character_changed.emit(character_skin)
+	EventBus.player_character_changed.emit(PlayerRegistry.local_id(), character_skin)
 
 
 func _sanitized_flags(source: Variant) -> Dictionary:
