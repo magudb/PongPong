@@ -7,11 +7,10 @@ from pathlib import Path
 
 from PIL import Image
 
-from pack import extract, ROOT, HERE
+from pack import extract, ROOT, HERE, ensure_policy
 
 OUT = ROOT / "assets/art_studies/equipment"
 SOURCE = "tools/art/drawn/sources/"
-PRESET = '[remap]\nimporter="texture"\ntype="CompressedTexture2D"\n\n[params]\ncompress/mode=0\nmipmaps/generate=false\nprocess/fix_alpha_border=true\n'
 HEROES = [
     ("rasmus", "Rasmus", "animal_fox", "fox", "Ear openings; tail stays outside the lower layer."),
     ("kiki", "Kiki", "animal_monkey", "monkey", "Round ear openings; curled tail stays clear of the belt."),
@@ -58,9 +57,7 @@ def export(name: str, image: Image.Image, source: str, canvas: tuple[int, int]) 
     frame = Image.new("RGBA", canvas)
     frame.alpha_composite(image, ((canvas[0] - image.width) // 2, canvas[1] - image.height - 8))
     frame.save(OUT / (name + ".webp"), lossless=True, method=4, exact=True)
-    preset = OUT / (name + ".webp.import")
-    if not preset.exists():
-        preset.write_text(PRESET)
+    ensure_policy(OUT / (name + ".webp"))
     return {"file": str((OUT / (name + ".webp")).relative_to(ROOT)), "size": list(canvas),
             "source": SOURCE + source, "status": "concept", "views": ["front_three_quarter"]}
 

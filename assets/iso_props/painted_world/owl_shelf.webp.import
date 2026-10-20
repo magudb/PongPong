@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cwb3sblasb8yo"
-path="res://.godot/imported/owl_shelf.webp-625553dcbb6d3360c5d17c7c5934769b.ctex"
+path.s3tc="res://.godot/imported/owl_shelf.webp-625553dcbb6d3360c5d17c7c5934769b.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/painted_world/owl_shelf.webp"
-dest_files=["res://.godot/imported/owl_shelf.webp-625553dcbb6d3360c5d17c7c5934769b.ctex"]
+dest_files=["res://.godot/imported/owl_shelf.webp-625553dcbb6d3360c5d17c7c5934769b.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

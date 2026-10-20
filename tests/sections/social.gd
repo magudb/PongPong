@@ -138,15 +138,10 @@ func _done() -> void:
 	sm.director_path = SocialManager.DIRECTOR
 
 
-func _py() -> String:
-	var venv := ProjectSettings.globalize_path("res://tools/art/.venv/bin/python")
-	return venv if FileAccess.file_exists(venv) else "python3"
-
-
 func _run_py(res_script: String, args: PackedStringArray) -> Dictionary:
 	var full := PackedStringArray(["-B", "-I", ProjectSettings.globalize_path(res_script)])       # -B: no __pycache__ next to the tools (the tree stays clean)
 	full.append_array(args)
-	return t.run_tool(_py(), full)
+	return t.run_tool(t.python(), full)
 
 
 func _user_path(name: String) -> String:
@@ -1795,11 +1790,13 @@ func _perf() -> void:
 	t.tree.root.remove_child(probe)
 	probe.free()
 	sv.register_section("social", sm, SocialManager.SECTION_ORDER)           # the probe's _ready took the registration over: give it back
-	t.check("perf_boot_ms_added", ready_ms < 5.0 and sv.section_node("social") == sm, "what the autoload adds to the boot: creating the node and its _ready (nine signal connections, the section registration) takes %.2f ms (budget 5 ms); compiling the 1,250 line script costs %.1f ms once at start-up (measured with CACHE_MODE_IGNORE on a loaded machine, reported, not asserted); the real node holds the section again" % [ready_ms, compile_ms])
+	t.check("perf_boot_section_handed_back", sv.section_node("social") == sm, "the real node holds the social save section again after the probe")
+	t.check("perf_boot_ms_added", t.perf_ok("perf_boot_ms_added", ready_ms, 5.0), "what the autoload adds to the boot: creating the node and its _ready (nine signal connections, the section registration) takes %.2f ms (budget 5 ms); compiling the 1,250 line script costs %.1f ms once at start-up (measured with CACHE_MODE_IGNORE on a loaded machine, reported, not asserted); the real node holds the section again" % [ready_ms, compile_ms])
 	var line: Array[String] = []
 	for name in samples:
 		line.append("%s %.1f/%.1f" % [name, float(samples[name]["median"]), float(samples[name]["p95"])])
-	t.check("perf_lookup_p95_under_100us", t.perf_ok("perf_lookup_p95_under_100us", worst, 100.0) and reset_ms < 5.0, "lookups, median / p95 in microseconds (native reference p95 < 100, runner limit %.1f; the order's 6 us for a one-term eval_when and 20 us for festival_active are quiet-machine targets, reported here, not asserted on a shared machine): %s; reset() %.2f ms" % [t.perf_limit(100.0), ", ".join(line), reset_ms])
+	t.check("perf_lookup_p95_under_100us", t.perf_ok("perf_lookup_p95_under_100us", worst, 100.0), "lookups, median / p95 in microseconds (native reference p95 < 100, runner limit %.1f; the order's 6 us for a one-term eval_when and 20 us for festival_active are quiet-machine targets, reported here, not asserted on a shared machine): %s" % [t.perf_limit(100.0), ", ".join(line)])
+	t.check("perf_reset_ms", t.perf_ok("perf_reset_ms", reset_ms, 5.0), "reset() %.2f ms (native reference 5)" % reset_ms)
 	_done()
 
 

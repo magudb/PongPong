@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ble26o2iio37t"
-path="res://.godot/imported/piano_star_r1_float.webp-14b9f12e23203b11d75fe4b433b00db3.ctex"
+path.s3tc="res://.godot/imported/piano_star_r1_float.webp-14b9f12e23203b11d75fe4b433b00db3.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/piano_star_r1_float.webp"
-dest_files=["res://.godot/imported/piano_star_r1_float.webp-14b9f12e23203b11d75fe4b433b00db3.ctex"]
+dest_files=["res://.godot/imported/piano_star_r1_float.webp-14b9f12e23203b11d75fe4b433b00db3.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

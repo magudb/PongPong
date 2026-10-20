@@ -3,6 +3,7 @@ const SECTION := "social_fest_content"
 const TIMEOUT_S := 300.0
 const IDS := ["blomsterfesten","honningdagen","midsommerlanterner","badedagen","hoestfesten","maanemarkedet","vinterlysene","bagedagen","aarsskiftet"]
 const FAMILY := ["ghostfam_dyne","ghostfam_gnist","ghostfam_silke","ghostfam_blund"]
+const FINISH_GAME_S := 10.0
 var world: WorldRoot2D
 var director: SocialEventDirector
 var ui: Node
@@ -114,9 +115,14 @@ func _run(t,native: bool) -> void:
 	director.reset()
 	t.new_game()
 
+## A festival scene runs about a game second (two 0.25 s camera moves and its pages): bounded by game time, never by a frame count (TEST-03).
 func _finish(t) -> void:
-	for i in 1500:
+	# the director starts a scene from a deferred flush: a few frames pass before "nothing active" means finished
+	for i in 12:
 		await t.frames(1)
-		if ui.is_open() and GameManager.top_modal() == &"dialogue": ui._advance()
-		if i > 12 and director.runner.active == "" and director.queue.is_empty(): return
-	t.fail("festival scene did not finish")
+		_page()
+	if not await t.until_game(func():return director.runner.active == "" and director.queue.is_empty(),FINISH_GAME_S,_page):
+		t.fail("festival scene did not finish within %s game seconds (active '%s', queue %s, top modal '%s')" % [FINISH_GAME_S,director.runner.active,director.queue.map(func(row):return row.id),GameManager.top_modal()])
+
+func _page() -> void:
+	if ui.is_open() and GameManager.top_modal() == &"dialogue": ui._advance()

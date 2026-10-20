@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b2u08iiqdbk4f"
-path="res://.godot/imported/chair_mossy_r1.webp-e60c9ba425eb941beb43d14a0da586ea.ctex"
+path.s3tc="res://.godot/imported/chair_mossy_r1.webp-e60c9ba425eb941beb43d14a0da586ea.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/chair_mossy_r1.webp"
-dest_files=["res://.godot/imported/chair_mossy_r1.webp-e60c9ba425eb941beb43d14a0da586ea.ctex"]
+dest_files=["res://.godot/imported/chair_mossy_r1.webp-e60c9ba425eb941beb43d14a0da586ea.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

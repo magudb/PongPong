@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://beuy7mkfkt7wn"
-path="res://.godot/imported/sofa_cloud_r2_float.webp-93291aa87900bf62f4d90b7d221e0f15.ctex"
+path.s3tc="res://.godot/imported/sofa_cloud_r2_float.webp-93291aa87900bf62f4d90b7d221e0f15.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/sofa_cloud_r2_float.webp"
-dest_files=["res://.godot/imported/sofa_cloud_r2_float.webp-93291aa87900bf62f4d90b7d221e0f15.ctex"]
+dest_files=["res://.godot/imported/sofa_cloud_r2_float.webp-93291aa87900bf62f4d90b7d221e0f15.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

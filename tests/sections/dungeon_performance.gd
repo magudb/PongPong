@@ -66,21 +66,19 @@ func run_windowed(t) -> void:
 	var cpu := []
 	for sample in samples:cpu.append(sample.cpu_render_ms)
 	cpu.sort()
-	t.check("busy_floor_cpu_render_budget",float(cpu[1])>0 and float(cpu[1])<=12,str(samples))
+	t.check("busy_floor_cpu_render_measured",float(cpu[1])>0,str(cpu))
+	t.check("busy_floor_cpu_render_budget",t.perf_ok("busy_floor_cpu_render_budget",float(cpu[1]),12),str(samples))
 	var hud: Control = world.game_ui.get_screen(&"forest_hud")
-	var began := Time.get_ticks_usec()
-	for i in 180:hud._process(1.0/60)
-	var hud_ms := (Time.get_ticks_usec()-began)/180000.0
-	t.check("forest_hud_logic_budget",hud_ms<=.4,"%.5f ms <=0.4" % hud_ms)
+	var hud_ms: float = t.median_usec(func() -> void: hud._process(1.0/60),9,20)/1000.0
+	t.check("forest_hud_logic_budget",t.perf_ok("forest_hud_logic_budget",hud_ms,.4),"%.5f ms, median of 9 batches of 20 (native reference 0.4)" % hud_ms)
 	await t.capture("busy_floor_24_enemies_12_lights")
 	var reveal: CanvasLayer = t.tree.get_first_node_in_group("loot_reveal")
 	EconomyManager.add_item(&"gem_rune_heart",1,true)
 	EventBus.rare_item_found.emit(&"gem_rune_heart",&"legendary")
 	await t.frames(3)
-	began = Time.get_ticks_usec()
-	for i in 180:reveal._process(.001)
-	var reveal_ms := (Time.get_ticks_usec()-began)/180000.0
-	t.check("reveal_logic_budget",not reveal.active.is_empty() and reveal_ms<=.3,"%.5f ms <=0.3" % reveal_ms)
+	var reveal_ms: float = t.median_usec(func() -> void: reveal._process(.001),9,20)/1000.0
+	t.check("reveal_is_showing",not reveal.active.is_empty())
+	t.check("reveal_logic_budget",t.perf_ok("reveal_logic_budget",reveal_ms,.3),"%.5f ms, median of 9 batches of 20 (native reference 0.3)" % reveal_ms)
 	await t.capture("busy_floor_legendary_reveal")
 	reveal.finish()
 	RenderingServer.viewport_set_measure_render_time(viewport,false)

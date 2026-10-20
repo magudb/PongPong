@@ -112,7 +112,9 @@ Trætoppen is in active development. Milestone *M1b, full usable towns* was merg
 **Requirements**
 - [Godot 4.7](https://godotengine.org/). The project uses the GL Compatibility renderer, and CI runs Godot 4.7.2.
 - macOS is the main development platform: the dev scripts are bash and use `/usr/bin/lockf`.
-- Git. The clone is large (about 2.3 GB of history), because art is stored as plain git blobs and Git LFS is not used.
+- Git. The clone is large (about 2.3 GB of history), because the art committed so far is stored as plain git blobs.
+  New media under `docs/` and `tools/art/` goes through Git LFS: install it before you commit media there
+  (`brew install git-lfs && git lfs install`). See [Repository size](docs/DEVELOPMENT.md#repository-size).
 
 ```sh
 git clone https://github.com/magudb/PongPong.git

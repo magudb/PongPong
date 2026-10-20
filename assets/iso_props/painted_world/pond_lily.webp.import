@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cefwhwe8v7vjr"
-path="res://.godot/imported/pond_lily.webp-10cf28dfc6a7b25b3a207e2d0cb4870d.ctex"
+path.s3tc="res://.godot/imported/pond_lily.webp-10cf28dfc6a7b25b3a207e2d0cb4870d.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/painted_world/pond_lily.webp"
-dest_files=["res://.godot/imported/pond_lily.webp-10cf28dfc6a7b25b3a207e2d0cb4870d.ctex"]
+dest_files=["res://.godot/imported/pond_lily.webp-10cf28dfc6a7b25b3a207e2d0cb4870d.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -192,7 +192,7 @@ func _economy(t,config: Dictionary) -> void:
 	handle.store_string(JSON.stringify(data,"  "))
 	handle.close()
 	var tool := ProjectSettings.globalize_path("res://tools/ghostfam_seek/economy_check.py")
-	var result: Dictionary = t.run_tool("python3",[tool,"--input",ProjectSettings.globalize_path(source),"--out",ProjectSettings.globalize_path("res://docs/qa/mechanics/social/seek-economy.json")])
+	var result: Dictionary = t.run_tool(t.python(), [tool,"--input",ProjectSettings.globalize_path(source),"--out",ProjectSettings.globalize_path("res://docs/qa/mechanics/social/seek-economy.json")])
 	t.check("independent_live_economy",int(result.code)==0,str(result.output))
 	var changed: Dictionary = data.duplicate(true)
 	changed.items.floor_lamp_honey.rarity = "legendary"
@@ -200,14 +200,14 @@ func _economy(t,config: Dictionary) -> void:
 	handle = FileAccess.open(mutant,FileAccess.WRITE)
 	handle.store_string(JSON.stringify(changed))
 	handle.close()
-	result = t.run_tool("python3",[tool,"--input",ProjectSettings.globalize_path(mutant)])
+	result = t.run_tool(t.python(), [tool,"--input",ProjectSettings.globalize_path(mutant)])
 	t.check("independent_checker_catches_rarity_mutant",int(result.code)==1 and str(result.output).contains("rarity mismatch"))
 	changed = data.duplicate(true)
 	changed.recipes.test_lamp_loop = {"ingredients":{"table_lamp_clay":1}}
 	handle = FileAccess.open(mutant,FileAccess.WRITE)
 	handle.store_string(JSON.stringify(changed))
 	handle.close()
-	result = t.run_tool("python3",[tool,"--input",ProjectSettings.globalize_path(mutant)])
+	result = t.run_tool(t.python(), [tool,"--input",ProjectSettings.globalize_path(mutant)])
 	t.check("independent_checker_catches_recipe_mutant",int(result.code)==1 and str(result.output).contains("recipe ingredient"))
 func _native_near(t,distance: float) -> void:
 	var city := CityBuilder.of(world.area)

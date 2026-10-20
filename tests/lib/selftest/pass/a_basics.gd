@@ -84,14 +84,34 @@ func run(t) -> void:
 	t.expect(t.has_autoload("EventBus") and t.autoload("EventBus") != null, "autoload() / has_autoload()")
 	t.expect(not t.has_autoload("NoSuchAutoloadAnywhere"), "has_autoload() is false for a missing autoload")
 	t.expect_eq(t.character_type("fairy"), 1, "character_type()")
+	var top := CanvasLayer.new()
+	top.layer = 1000
+	t.root.add_child(top)
 	var button := Button.new()
 	button.name = "SelfTestButton"
+	button.text = "press me"
+	button.position = Vector2(300, 200)
+	button.size = Vector2(120, 40)
 	var hits := [0]
 	button.pressed.connect(func() -> void: hits[0] += 1)
-	t.root.add_child(button)
-	t.expect(t.press("SelfTestButton") and hits[0] == 1, "press() emits pressed on a button found under root")
-	t.expect(t.node("SelfTestButton") == button, "node() finds a node by name")
-	button.queue_free()
+	top.add_child(button)
+	await t.frames(2)
+	t.expect(t.press("%SelfTestButton") and hits[0] == 1, "press() clicks a visible button found under root: pressed fires once")
+	var toggle := CheckBox.new()
+	toggle.name = "SelfTestToggle"
+	toggle.position = Vector2(300, 300)
+	toggle.size = Vector2(120, 40)
+	top.add_child(toggle)
+	await t.frames(2)
+	t.expect(t.press("%SelfTestToggle") and toggle.button_pressed, "press() on a toggle button flips it like a click")
+	t.expect(t.node("%SelfTestButton") == button, "node() finds a node by name anywhere under root (%Name)")
+	button.visible = false
+	t.expect(t.press_unchecked("%SelfTestButton") and hits[0] == 2, "press_unchecked() emits pressed without the checks (a hidden button)")
+	top.queue_free()
+	# the one Python of the tools
+	t.expect(t.python().ends_with("python") or t.python().ends_with("python3"), "python() names the tooling Python (%s)" % t.python())
+	t.expect(t.has_tool(t.python()), "has_tool() finds the tooling Python")
+	t.expect(not t.has_tool("tt-selftest-no-such-tool"), "has_tool() is false for a program that does not exist")
 	var line := LineEdit.new()
 	line.name = "SelfTestLine"
 	t.root.add_child(line)

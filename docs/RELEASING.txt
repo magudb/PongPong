@@ -16,7 +16,8 @@ sections retain normal pacing. Lua 5.4 checks live data independently, and
 Xvfb/Mesa supplies software rendering for the art probes. On shared CI CPUs
 (TT_PERF_SCALE=4) computation timings are information first: a timing over its
 native reference passes and is listed as SLOW in the summary, the JSON report
-and a GitHub notice; it fails only past 4x the reference. The full UI-audit
+and a GitHub notice; it fails only past 4x the reference (on a runner whose
+load average is above 1.5 per core it is listed as NOT JUDGED instead). The full UI-audit
 time reference scales with its screen registry (10 seconds for fixtures plus 3
 per screen), including its intentional focus/localization frame waits. Native
 runs keep the authored reference limits. Game-time

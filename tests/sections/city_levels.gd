@@ -44,10 +44,10 @@ const GENERATOR_PATH := "res://scripts/world2d/levels/source/build_traetoppen_js
 ## them by its owner (P04 / P05) makes this check fail on purpose - update the hash in the same commit.
 const PINNED := {
 	"res://scripts/world2d/iso_area.gd": "4a4c138f9798ba542af57b88fdc5d96aa5cad7e4d5ddb05f7c41bedbba104e29",
-	"res://scripts/world2d/world_2d.gd": "8f04b1c5dec15ba8dab29abafbcea2d1b335e6a6fbd275d160885eae80394b44",
+	"res://scripts/world2d/world_2d.gd": "bcd0fabcd301b4d86ca4f1c06e42213c06ab1801a91fa59fc01d6b1a3fc1a5be",
 	"res://scripts/world2d/game_data.gd": "1482455c8c0cb634a4bfe8dc35215e6b45631cbc6c5ea6861e1fd33944ba519e",
-	"res://scripts/world2d/art_catalog.gd": "d63c4e78103a600ac646269f9f50113a1d1b5b81858b8a5aff02b44d69dc9261",
-	"res://scripts/isometric/iso_chibi_sprite_2d.gd": "223f6ef7eec8446ea3b0410a1ebb7b2aa58a141a5b271325f8cea51e4d73e977",
+	"res://scripts/world2d/art_catalog.gd": "622d0890087a6e4814b6f85cb9717b27c557dc46f252f449254a23c6d7ca073d",
+	"res://scripts/isometric/iso_chibi_sprite_2d.gd": "a1e1e63e5835c1093d2edf77709951e3ff6c069353299571e2f0cbbc0cb28602",
 	"res://scripts/isometric/character_catalog.gd": "2a56f24f8abf4312709284391e5f605e0894b386a68e6f08d8093b86dc11e556",
 }
 
@@ -1712,7 +1712,8 @@ func _budgets(t) -> void:
 			avg_ms = float(sum) / float(samples.size()) / 1000.0
 		if best_ms <= 0.2:
 			break
-	t.check("tracker_cost_ms", best_ms <= 0.2 and calls_per_tick <= 80.0 and tr.actors.size() == 20, "tracker tick for %d actors that all moved: %.1f polygon tests per tick (<= 80), best tick %.3f ms, median %.3f ms, average %.3f ms (budget 0.05 estimated, asserted: the best tick <= 0.2; this machine was busy with other builds)" % [tr.actors.size(), calls_per_tick, best_ms, median_ms, avg_ms])
+	t.check("tracker_polygon_tests_per_tick", calls_per_tick <= 80.0 and tr.actors.size() == 20, "%d actors, %.1f polygon tests per tick (<= 80)" % [tr.actors.size(), calls_per_tick])
+	t.check("tracker_cost_ms", t.perf_ok("tracker_cost_ms", best_ms, 0.2), "tracker tick for %d actors that all moved: %.1f polygon tests per tick (<= 80), best tick %.3f ms, median %.3f ms, average %.3f ms (budget 0.05 estimated, asserted: the best tick <= 0.2; this machine was busy with other builds)" % [tr.actors.size(), calls_per_tick, best_ms, median_ms, avg_ms])
 	for h in holder:
 		h.queue_free()
 	await t.physics(2)
@@ -1730,7 +1731,7 @@ func _budgets(t) -> void:
 			best = minf(best, float(a.build_ms))
 			worst_rebuild = maxf(worst_rebuild, float(a.build_ms))
 		host.free()
-	t.check("rebuild_ms_warm", best <= 40.0, "IsoArea.setup of the levelled city (stand-in art): warm rebuild best %.0f ms, worst %.0f ms (budget 40 ms warm; the stage itself took %.1f ms)" % [best, worst_rebuild, _stage.build_ms])
+	t.check("rebuild_ms_warm", t.perf_ok("rebuild_ms_warm", best, 40.0), "IsoArea.setup of the levelled city (stand-in art): warm rebuild best %.0f ms, worst %.0f ms (budget 40 ms warm; the stage itself took %.1f ms)" % [best, worst_rebuild, _stage.build_ms])
 	var nodes: int = 0
 	var stack: Array[Node] = [_area]
 	var sprites: int = 0
@@ -1853,7 +1854,8 @@ func run_windowed(t) -> void:
 		if window >= 2 and best_avg <= 6.0:
 			break
 	DisplayServer.window_set_vsync_mode(old_vsync as DisplayServer.VSyncMode)
-	t.check("frame_ms_zoom_0_4_windowed", best_avg <= 6.0 and peak_calls <= 250, "levelled city (vector stand-in art) at zoom 0.4, 1280x720, vsync off: best window %.2f ms per frame (budget 6), draw calls average %d, peak %d (the design's budget is 250; the stand-in's Polygon2D / Line2D shapes are not baked sprites, so real art has to be gated again by V4)" % [best_avg, calls_sum / maxi(calls_n, 1), peak_calls])
+	t.check("draw_calls_zoom_0_4_windowed", peak_calls <= 250, "peak %d draw calls (<= 250)" % peak_calls)
+	t.check("frame_ms_zoom_0_4_windowed", t.perf_ok("frame_ms_zoom_0_4_windowed", best_avg, 6.0), "levelled city (vector stand-in art) at zoom 0.4, 1280x720, vsync off: best window %.2f ms per frame (budget 6), draw calls average %d, peak %d (the design's budget is 250; the stand-in's Polygon2D / Line2D shapes are not baked sprites, so real art has to be gated again by V4)" % [best_avg, calls_sum / maxi(calls_n, 1), peak_calls])
 	_world.game_ui.show()
 	# --- leaving the city (fix round): the player in the real start area after the city is the player of before - ground_block in the mask,
 	#     the shadow under the figure at its absolute z -5 (it used to stay at z 78 and draw over everything), no level - and the picture shows it

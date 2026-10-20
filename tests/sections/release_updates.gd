@@ -1,5 +1,10 @@
 extends RefCounted
 const SECTION := "release_updates"
+## Above the section's own bounds, so a slow helper fails its handshake check with the helper's reason instead of the watchdog:
+## per helper (Windows via pwsh, macOS) ReleaseUpdates.handshake() polls up to 120 game seconds and the exit wait is 60 s, and
+## the PowerShell warm start before the Windows one waits up to 180 s (540 s in all). The default 120 s ran out in the local gate
+## (four shards at once) while the pwsh handshake was still polling; there the whole section took 93 s where it takes 2 s alone.
+const TIMEOUT_S := 600.0
 const V := preload("res://scripts/release/release_version.gd")
 
 func _release() -> Dictionary:
@@ -22,6 +27,10 @@ func run(t) -> void:
 		release.assets[0][property] = "https://example.com/update.zip" if property == "browser_download_url" else "" if property == "digest" else 2147483648
 		t.check("reject_asset_" + property, V.select_asset(release, "1.0.0", "magudb/PongPong", "windows").is_empty())
 	var updates := ReleaseUpdates.inst()
+	# without the boot stage (--no-boot) nothing created the service yet: inst() adds it to the root deferred, and the
+	# handshake below needs its tree
+	if not updates.is_inside_tree():
+		await t.frames(1)
 	t.check("development_does_not_auto_check", not ReleaseUpdates.production())
 	updates._completed(HTTPRequest.RESULT_CANT_CONNECT, 0, PackedStringArray(), PackedByteArray())
 	t.check("offline_is_nonfatal", updates.state == "unavailable")
@@ -224,15 +233,39 @@ func _helpers_end_to_end(t, updates: ReleaseUpdates) -> void:
 		var target := _fake_update(platform, root, updates)
 		var result := root.path_join("install-e2e.json")
 		var command := updates.helper_command(platform, ReleaseUpdates.write_helper(platform), target, result, 0, false)
+		if platform == "windows" and not await _interpreter_warm(t, program, updates.downloaded_path):
+			continue
 		var process := OS.create_process(program, command[1])
-		t.check("helper_e2e_%s_handshake" % platform, await updates.handshake(process, result), updates.failure)
-		await t.until(func(): return not OS.is_process_running(process), 60.0)
+		var started := Time.get_ticks_msec()
+		var ready: bool = await updates.handshake(process, result)
+		var waited := float(Time.get_ticks_msec() - started) / 1000.0  # raw-time-ok: reported in the detail, never compared
+		t.check("helper_e2e_%s_handshake" % platform, ready, "%s (pid %d, handshake %.1f s)" % [updates.failure, process, waited])
+		# A failed handshake has reaped the helper already: it saw it exit, or OS.kill waited for it, and the engine's process
+		# table does not learn of a kill, so polling that pid again raises "does not exist or is not a child" (ECHILD).
+		if ready:
+			await t.until(func(): return not OS.is_process_running(process), 60.0)
 		var installed := FileAccess.get_file_as_string(target.path_join("Traetoppen.pck" if platform == "windows" else "Contents/Resources/version.txt"))
 		t.check("helper_e2e_%s_installed" % platform, ReleaseUpdates.read_result(result) == {"status": "installed", "reason": ""} and installed == "new", installed)
 	_remove_tree(root)
 	updates.available.clear()
 	updates.downloaded_path = ""
 	updates._set_state("current")
+
+## PowerShell is .NET: its cold start on a loaded machine (four gate shards next to on-access malware scanning of its several
+## hundred assemblies) took 90-120 s where it takes under a second alone, the whole 120 s the game gives the helper to say
+## "ready", so the handshake failed and was killed in some gate shards and passed in others. The interpreter is started once
+## with the helper's own assembly loads and awaited (a child process: wall clock), so the handshake times the helper and not the
+## cold start, and a machine that cannot start PowerShell at all fails a check that says so.
+func _interpreter_warm(t, program: String, archive: String) -> bool:
+	var started := Time.get_ticks_msec()
+	var warm := OS.create_process(program, ["-NoProfile", "-NonInteractive", "-Command", "Add-Type -AssemblyName System.IO.Compression.FileSystem; Get-FileHash -LiteralPath '%s' -Algorithm SHA256 | Out-Null" % archive.replace("'", "''")])
+	var done: bool = warm > 0 and await t.until(func(): return not OS.is_process_running(warm), 180.0)
+	var waited := float(Time.get_ticks_msec() - started) / 1000.0  # raw-time-ok: reported in the detail, never compared
+	var code := OS.get_process_exit_code(warm) if done else -1
+	if warm > 0 and not done:
+		OS.kill(warm)  # reaps it: the pid is not polled again
+	t.check("helper_e2e_windows_interpreter_starts", done and code == 0, "%s (pid %d, exit %d, %.1f s)" % [program, warm, code, waited])
+	return done and code == 0
 
 func _helper_program(platform: String) -> String:
 	var out := []

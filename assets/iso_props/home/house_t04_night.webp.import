@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://sqx1r8j0ted6"
-path="res://.godot/imported/house_t04_night.webp-4849162295909f6418891e4690284ce5.ctex"
+path.s3tc="res://.godot/imported/house_t04_night.webp-4849162295909f6418891e4690284ce5.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/home/house_t04_night.webp"
-dest_files=["res://.godot/imported/house_t04_night.webp-4849162295909f6418891e4690284ce5.ctex"]
+dest_files=["res://.godot/imported/house_t04_night.webp-4849162295909f6418891e4690284ce5.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

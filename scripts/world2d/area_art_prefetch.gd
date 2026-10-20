@@ -83,24 +83,24 @@ func request(id: StringName) -> void:
 				if meta.animations.has(clip):
 					paths["res://assets/isometric_characters/"+art+"/"+str(meta.animations[clip].sheet)] = true
 	for path in paths:
-		if DisplayServer.get_name() == "headless":
-			# Dummy textures must be created on the main thread.
+		if not TextureLoads.threaded():
+			# Dummy textures must be created on the main thread (TextureLoads); stage them at once.
 			if ResourceLoader.exists(path):staged[path]=load(path)
 			continue
-		if ResourceLoader.exists(path) and ResourceLoader.load_threaded_request(path, "Texture2D", true) == OK:
+		if ResourceLoader.exists(path) and TextureLoads.request(path, "Texture2D", true) == OK:
 			pending.append(path)
 
 func _poll() -> void:
 	for path in abandoned.duplicate():
-		var done := ResourceLoader.load_threaded_get_status(path)
+		var done := TextureLoads.status(path)
 		if done == ResourceLoader.THREAD_LOAD_LOADED:
-			ResourceLoader.load_threaded_get(path)
+			TextureLoads.drop(path)
 		if done != ResourceLoader.THREAD_LOAD_IN_PROGRESS:
 			abandoned.erase(path)
 	for path in pending.duplicate():
-		var status := ResourceLoader.load_threaded_get_status(path)
+		var status := TextureLoads.status(path)
 		if status == ResourceLoader.THREAD_LOAD_LOADED:
-			staged[path] = ResourceLoader.load_threaded_get(path)
+			staged[path] = TextureLoads.take(path)
 			pending.erase(path)
 		elif status == ResourceLoader.THREAD_LOAD_FAILED or status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
 			pending.erase(path)
@@ -137,7 +137,7 @@ func _exit_tree() -> void:
 	# Join the engine's outstanding requests; no orphan coroutine or retained
 	# loader result survives a cancelled approach/world.
 	for path in pending + abandoned:
-		ResourceLoader.load_threaded_get(path)
+		TextureLoads.drop(path)
 	pending.clear()
 	abandoned.clear()
 	release()

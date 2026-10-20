@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://xbwcn5oosgt5"
-path="res://.godot/imported/glowmush_teal_glow.png-38e673215bae357174acfaf3453c67aa.ctex"
+path.s3tc="res://.godot/imported/glowmush_teal_glow.png-38e673215bae357174acfaf3453c67aa.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/glowmush_teal_glow.png"
-dest_files=["res://.godot/imported/glowmush_teal_glow.png-38e673215bae357174acfaf3453c67aa.ctex"]
+dest_files=["res://.godot/imported/glowmush_teal_glow.png-38e673215bae357174acfaf3453c67aa.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

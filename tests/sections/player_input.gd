@@ -17,6 +17,12 @@ func _mouse(button: MouseButton, pressed := true) -> InputEventMouseButton:
 	ev.pressed = pressed
 	return ev
 
+## A click on the ground point `at` (a real click always has a position: the hero works the clicked cell).
+func _mouse_at(p: Player2D, at: Vector2, pressed := true) -> InputEventMouseButton:
+	var ev := _mouse(MOUSE_BUTTON_LEFT, pressed)
+	ev.position = p.get_canvas_transform() * at
+	return ev
+
 func _pad(button: JoyButton, pressed := true) -> InputEventJoypadButton:
 	var ev := InputEventJoypadButton.new()
 	ev.button_index = button
@@ -134,8 +140,9 @@ func _attack_before_tool(t, world: WorldRoot2D, p: Player2D, eco: Node) -> void:
 		var used := []
 		var record := func(item, _cell, ok): used.append([item, ok])
 		p.tool_used.connect(record)
-		p._unhandled_input(_mouse(MOUSE_BUTTON_LEFT))
-		p._unhandled_input(_mouse(MOUSE_BUTTON_LEFT, false))
+		var ore_at: Vector2 = world.area.cell_to_global(ore_cell)
+		p._unhandled_input(_mouse_at(p, ore_at))
+		p._unhandled_input(_mouse_at(p, ore_at, false))
 		var mined: bool = p.state == PlayerBody2D.S.USING and ore.hp == hp - 1 and used == [[&"pickaxe_wooden", true]] and not p.combat.attack_held
 		t.check("action_area_pickaxe_mines_ore_in_front", mined, "state %d, ore hp %d -> %d, tool_used %s" % [p.state, hp, ore.hp, used])
 		# The ore takes only the pickaxe (accepts_tool, GAP3-03): with an axe selected the same click attacks.
@@ -144,18 +151,18 @@ func _attack_before_tool(t, world: WorldRoot2D, p: Player2D, eco: Node) -> void:
 		p.hotbar.assign(0, &"axe_wooden")
 		p.hotbar.select(0)
 		hp = ore.hp
-		p._unhandled_input(_mouse(MOUSE_BUTTON_LEFT))
+		p._unhandled_input(_mouse_at(p, ore_at))
 		var axe_attacked: bool = p.state == PlayerBody2D.S.SWING and ore.hp == hp and used.size() == 1
-		p._unhandled_input(_mouse(MOUSE_BUTTON_LEFT, false))
+		p._unhandled_input(_mouse_at(p, ore_at, false))
 		t.check("action_area_axe_attacks_beside_ore", axe_attacked, "state %d, ore hp %d -> %d, tool_used %s" % [p.state, hp, ore.hp, used])
 		p.hotbar.assign(0, &"pickaxe_wooden")
 		p.hotbar.select(0)
 		ore.queue_free()
 		_free(p)
 		await t.physics(2)
-		p._unhandled_input(_mouse(MOUSE_BUTTON_LEFT))
+		p._unhandled_input(_mouse_at(p, ore_at))
 		var attacked: bool = p.state == PlayerBody2D.S.SWING and p.combat.attack_held and used.size() == 1
-		p._unhandled_input(_mouse(MOUSE_BUTTON_LEFT, false))
+		p._unhandled_input(_mouse_at(p, ore_at, false))
 		p.tool_used.disconnect(record)
 		t.check("action_area_pickaxe_attacks_with_no_target", attacked, "state %d, tool_used %s" % [p.state, used])
 		_free(p)
@@ -549,7 +556,8 @@ func _controls_page(t) -> void:
 		texts[str(cell[0][0])] = [str(cell[1].text), str(cell[2].text)]
 	var listed: bool = texts["NAV_CONTROLS_TOOL"][0].contains("X") and texts["NAV_CONTROLS_TOOL"][0].contains(str(TranslationServer.translate("KEY_MOUSE_LEFT"))) \
 		and texts["NAV_CONTROLS_RUN"][1] == "LT" and texts["NAV_CONTROLS_FLY"] == ["F", "Y"] and texts["INDRET_TITLE"][0] == "H" \
-		and texts["INV_TITLE"] == ["I / Tab", str(TranslationServer.translate("NAV_CONTROLS_PAUSE_ROW"))] and texts["NAV_CONTROLS_HOTBAR"][0] == "1–8"
+		and texts["INV_TITLE"] == ["I / Tab", str(TranslationServer.translate("NAV_CONTROLS_PAUSE_ROW"))] and texts["NAV_CONTROLS_HOTBAR"][0] == "1–8" \
+		and texts["NAV_CONTROLS_CLICK"] == [str(TranslationServer.translate("NAV_CONTROLS_CLICK_GROUND")), str(TranslationServer.translate("NAV_CONTROLS_TILE_AHEAD_FMT")) % "X"]
 	var complete := true
 	for key in texts:
 		complete = complete and texts[key][0] != "" and texts[key][1] != ""

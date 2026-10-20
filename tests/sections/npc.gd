@@ -79,12 +79,8 @@ func _spawn(t, id: String, params: Dictionary = {}) -> Npc2D:
 	return _actor
 
 func _to_choices(t, dialogue: Control) -> void:
-	for i in 30:
-		if not dialogue.is_open() or dialogue._wants_focus():
-			return
-		t.tap(&"interact")
-		await t.frames(2)
-	t.fail("Dialogue did not reach its choices")
+	if not await t.page_to_choices(dialogue):
+		t.fail("Dialogue did not reach its choices in 10 game seconds")
 
 func _roster(t, dialogue: Control) -> void:
 	var roster: Dictionary = t.autoload("LuaRuntime").get_npcs()

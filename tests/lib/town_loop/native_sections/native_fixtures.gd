@@ -19,7 +19,7 @@ func run_windowed(t) -> void:
 	gm.set_config_override("towns.curfew.enabled",false)
 	await LoopClock.at(t,1,10)
 	await t.world().travel(&"int_froebutikken",&"default")
-	t.check("prefetched_room_build",t.world().area.build_ms<=60,str(t.world().area.build_ms))
+	t.check("prefetched_room_build",t.perf_ok("prefetched_room_build",t.world().area.build_ms,60),str(t.world().area.build_ms))
 	var shops := preload("res://tests/lib/town_loop/shops.gd").new()
 	shops.suite=suite
 	await shops.host(t,"talk")

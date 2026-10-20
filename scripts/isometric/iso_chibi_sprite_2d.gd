@@ -385,17 +385,19 @@ func get_portrait() -> Texture2D:
 	return load(path) as Texture2D
 
 
-## Loads sheets ahead of use on worker threads (call during a fade). Returns immediately.
+## Loads sheets ahead of use on worker threads (call during a fade). Returns immediately. Under the dummy renderer of headless runs
+## nothing is loaded ahead (TextureLoads: its textures must be made on the main thread); the first use loads the sheet.
 func preload_clips(clips: Array) -> void:
 	for clip in clips:
 		var path := _sheet_path(StringName(str(clip)))
 		if path != "":
-			ResourceLoader.load_threaded_request(path)
+			TextureLoads.request(path)
 
 
 ## Awaitable warm-up: sheets are requested on worker threads and FINALISED ONE PER FRAME, because the GPU upload of a
 ## 12 MB sheet costs ~20 ms on the main thread (measured). Call it behind the area fade; afterwards the first use of a
-## clip no longer hitches. `clips` = clip names (e.g. ["idle", "walk", "run", "interact"]).
+## clip no longer hitches. `clips` = clip names (e.g. ["idle", "walk", "run", "interact"]). Under the dummy renderer the sheets are
+## loaded on the main thread instead (TextureLoads), still one a frame.
 func warm_clips(clips: Array) -> void:
 	if not is_inside_tree():
 		return
@@ -410,13 +412,13 @@ func warm_clips(clips: Array) -> void:
 				keys.append(key)
 				paths[key] = path
 				resident[key] = ResourceLoader.has_cached(path)
-				ResourceLoader.load_threaded_request(path)
+				TextureLoads.request(path)
 	for key in keys:
-		while ResourceLoader.load_threaded_get_status(paths[key]) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		while TextureLoads.status(paths[key]) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
 			if not is_inside_tree():
 				return
 			await get_tree().process_frame
-		var tex := ResourceLoader.load_threaded_get(paths[key]) as Texture2D
+		var tex := TextureLoads.take(paths[key]) as Texture2D
 		if tex != null:
 			_textures[key] = tex
 		if not is_inside_tree():

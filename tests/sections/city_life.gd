@@ -120,12 +120,8 @@ func run(t) -> void:
 	gm.clear_config_overrides()
 
 func _choices(t, dialogue: Control) -> void:
-	for i in 20:
-		if not dialogue.is_open() or dialogue._wants_focus():
-			return
-		t.tap(&"interact")
-		await t.frames(2)
-	t.fail("Service dialogue never reached choices")
+	if not await t.page_to_choices(dialogue):
+		t.fail("Service dialogue never reached choices in 10 game seconds")
 
 func _bath(t) -> void:
 	var gm: Node = t.autoload("GameManager")

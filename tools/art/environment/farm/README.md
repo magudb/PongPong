@@ -40,8 +40,9 @@ SKIP line, never silently. `warp_gate_stone` (P22's forest-hub prop) and `dock_x
 
 ## Import settings and memory (TOWNS addendum TE9 / DT29)
 
-`tools/import/write_import_stubs.py` (P05) covers only the character sheets, the tile atlases and the wardrobe layers, so `assets/iso_props/**` and `assets/backdrops/**` would stay lossless
-(the kit 56 MB). This package writes the same minimal stub itself (`write_farm_imports.py`, audit with `--check`): the ten props, `farm_far` and `farm_canopy` use `compress/mode=2`
+`tools/import/write_import_stubs.py` now holds one import policy for every texture (review REND-03: props and backdrops S3TC), and the painted consistency pass repaints the ten
+props and the far layer (ArtCatalog draws those; the N03 bakes are no longer kept, review REND-10). Before that, P05's tool covered only the character sheets, the tile atlases and the
+wardrobe layers, so `assets/iso_props/**` and `assets/backdrops/**` would have stayed lossless (the kit 56 MB), and this package wrote the same minimal stub itself (`write_farm_imports.py`, audit with `--check`): the ten props, `farm_far` and `farm_canopy` use `compress/mode=2`
 (VRAM compressed S3TC, `high_quality=false`) with mipmaps and `process/fix_alpha_border=true` (`project.godot` has `import_s3tc_bptc=true`; BPTC does not exist in the Compatibility renderer
 on macOS); only `field_grass.png` stays lossless **without** mipmaps (periodic cells bleed into each other at mip >= 1). A stub is honoured on the first import in Godot 4.7.2
 (`trunk_giant_a`: a 3.95 MB `.s3tc.ctex`).

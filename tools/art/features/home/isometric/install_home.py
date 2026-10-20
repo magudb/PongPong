@@ -9,12 +9,18 @@ Owned destinations (everything else is refused, exit 2, nothing written):
   assets/data/home/                                         mirrored (rooms/room_tNN.json)
   assets/iso_tiles/floor_*.png (+ .import) and tiles_floors.json     only these files of the folder; the folder itself belongs to P22
   lua/config/props_features.lua
-Godot-generated `.import` / `.uid` files that already exist in the repo are kept and never overwritten (they hold the uid and the import params); a new stub from the stage is copied.
+Godot-generated `.import` / `.uid` files that already exist in the repo are kept and never overwritten (they hold the uid); a new stub from the stage is copied, and every installed
+texture is then held to the project's import policy (tools/import/write_import_stubs.py, review REND-03: a stale .import gets the preset's params, its uid kept).
+A file a later art pack supersedes (tools/art/drawn/fixture_recipes.json, review REND-10: the painted pack draws that id) is not installed.
 """
 from __future__ import annotations
 import argparse, shutil, sys
 from pathlib import Path
 import homepaths
+sys.path.insert(0, str(homepaths.REPO / 'tools/import'))
+sys.path.insert(0, str(homepaths.ART / 'drawn'))
+from write_import_stubs import ensure_policy   # noqa: E402  the one texture import policy
+import drawn_art                               # noqa: E402
 
 DIRS = ['iso_props/home', 'iso_props/furniture', 'iso_props/interior', 'iso_props/fx', 'iso_props/features', 'icons/home', 'data/home']
 META = ('.import', '.uid')
@@ -49,11 +55,17 @@ def same(a: Path, b: Path) -> bool:
     return KEEP_NOISE and renderer_noise(a, b)
 
 
+def superseded(path: Path, repo_assets: Path) -> bool:
+    """`path` (or the texture of an .import) is a copy a later art pack supersedes: the painted pack draws that id, the copy is not kept."""
+    texture = path.with_suffix('') if path.suffix == '.import' else path
+    return drawn_art.superseded(texture.resolve(), repo_assets.parent)
+
+
 def plan_dir(stage: Path, repo_assets: Path, rel: str):
     """(copies, removals) that make repo_assets/rel the mirror of stage/rel"""
     src, dst = stage / rel, repo_assets / rel
     copies, removals = [], []
-    want = {p.relative_to(src) for p in src.rglob('*') if p.is_file()}
+    want = {p.relative_to(src) for p in src.rglob('*') if p.is_file() and not superseded(dst / p.relative_to(src), repo_assets)}
     for r in sorted(want):
         s, d = src / r, dst / r
         if is_meta(s) and d.exists():
@@ -114,6 +126,9 @@ def main():
         d.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(s, d)
     for p in removals:
         p.unlink()
+    for s, d in copies:
+        if d.suffix in ('.png', '.webp'):
+            ensure_policy(d, root=repo)
     for rel in DIRS:                                                  # prune empty dirs
         for p in sorted((ra / rel).rglob('*'), reverse=True):
             if p.is_dir() and not any(p.iterdir()):

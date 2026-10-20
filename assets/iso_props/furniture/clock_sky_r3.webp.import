@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dtpvcom6w0jcu"
-path="res://.godot/imported/clock_sky_r3.webp-df4284465bd1a9c4fc61b8b83db3903d.ctex"
+path.s3tc="res://.godot/imported/clock_sky_r3.webp-df4284465bd1a9c4fc61b8b83db3903d.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/clock_sky_r3.webp"
-dest_files=["res://.godot/imported/clock_sky_r3.webp-df4284465bd1a9c4fc61b8b83db3903d.ctex"]
+dest_files=["res://.godot/imported/clock_sky_r3.webp-df4284465bd1a9c4fc61b8b83db3903d.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

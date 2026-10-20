@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://hh26marqwqe1"
-path="res://.godot/imported/shelf_mint_r0.webp-ccc975767ecf58bf8295851afb7f66aa.ctex"
+path.s3tc="res://.godot/imported/shelf_mint_r0.webp-ccc975767ecf58bf8295851afb7f66aa.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/shelf_mint_r0.webp"
-dest_files=["res://.godot/imported/shelf_mint_r0.webp-ccc975767ecf58bf8295851afb7f66aa.ctex"]
+dest_files=["res://.godot/imported/shelf_mint_r0.webp-ccc975767ecf58bf8295851afb7f66aa.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

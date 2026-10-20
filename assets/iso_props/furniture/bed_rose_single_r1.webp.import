@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dabc6s4rciku6"
-path="res://.godot/imported/bed_rose_single_r1.webp-4a3f9f40e9b0fe8913c38a6104e23afa.ctex"
+path.s3tc="res://.godot/imported/bed_rose_single_r1.webp-4a3f9f40e9b0fe8913c38a6104e23afa.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/bed_rose_single_r1.webp"
-dest_files=["res://.godot/imported/bed_rose_single_r1.webp-4a3f9f40e9b0fe8913c38a6104e23afa.ctex"]
+dest_files=["res://.godot/imported/bed_rose_single_r1.webp-4a3f9f40e9b0fe8913c38a6104e23afa.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

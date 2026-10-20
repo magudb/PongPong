@@ -145,12 +145,6 @@ func _events_named(name: StringName) -> Array:
 	return out
 
 
-func _py(t) -> String:
-	if FileAccess.file_exists("res://tools/art/.venv/bin/python"):
-		return ProjectSettings.globalize_path("res://tools/art/.venv/bin/python")
-	return "python3"
-
-
 ## Every descendant of a node (the node included).
 func _all_nodes(root: Node) -> Array[Node]:
 	var out: Array[Node] = []
@@ -288,7 +282,7 @@ func _keys_and_config(t) -> void:
 	for key in rows:
 		if not str(key).begins_with("TRAE_"):
 			foreign.append(str(key))
-	var lint: Dictionary = t.run_tool(_py(t), PackedStringArray(["-I", ProjectSettings.globalize_path("res://tools/loc/csv_lint.py")]))
+	var lint: Dictionary = t.run_tool(t.python(), PackedStringArray(["-I", ProjectSettings.globalize_path("res://tools/loc/csv_lint.py")]))
 	var lint_lines: PackedStringArray = lint["lines"]
 	t.check("keys_da_en_complete", missing.is_empty() and empty.is_empty() and names_ok and unnamed.is_empty() and foreign.is_empty() and int(lint["code"]) == 0 \
 		and FileAccess.file_exists(CSV_PATH + ".import") and FileAccess.get_file_as_string(CSV_PATH + ".import").contains("importer=\"keep\""),
@@ -706,7 +700,8 @@ func _budgets(t) -> void:
 			city_best = minf(city_best, CityBuilder.of(a).build_ms)
 		host.free()
 	var nodes: int = _all_nodes(_area).size()
-	t.check("builds_in_budget", best <= 40.0 and nodes < 1500, "IsoArea.setup of the city with V5's art and the preview citizens: warm rebuild best %.0f ms, worst %.0f ms (budget 40; the builder itself %.1f ms); %d nodes in the area (the first visit of a session also loads the textures: 0.4-0.6 s behind the black screen, later visits are warm, so no `@cache true`)" % [best, worst, city_best, nodes])
+	t.check("builds_node_budget", nodes < 1500, "%d nodes (< 1500)" % nodes)
+	t.check("builds_in_budget", t.perf_ok("builds_in_budget", best, 40.0), "IsoArea.setup of the city with V5's art and the preview citizens: warm rebuild best %.0f ms, worst %.0f ms (budget 40; the builder itself %.1f ms); %d nodes in the area (the first visit of a session also loads the textures: 0.4-0.6 s behind the black screen, later visits are warm, so no `@cache true`)" % [best, worst, city_best, nodes])
 	# a builder area is never parked: leaving it frees it, coming back builds again
 	var before: IsoArea = _area
 	_world._enter(&"farm", &"default")
@@ -2289,7 +2284,8 @@ func run_windowed(t) -> void:
 			break
 	DisplayServer.window_set_vsync_mode(old_vsync as DisplayServer.VSyncMode)
 	_world.game_ui.visible = hud_visible
-	t.check("frame_budget", best_avg <= 6.0 and peak_calls <= 250, "the city area with approved painted art and scheduled citizens at zoom 0.4, 1280x720, vsync off: best window %.2f ms per frame (budget 6), draw calls average %d, peak %d (budget 250)" % [best_avg, int(float(calls_sum) / float(maxi(calls_n, 1))), peak_calls])
+	t.check("frame_draw_calls", peak_calls <= 250, "peak %d draw calls (<= 250)" % peak_calls)
+	t.check("frame_budget", t.perf_ok("frame_budget", best_avg, 6.0), "the city area with approved painted art and scheduled citizens at zoom 0.4, 1280x720, vsync off: best window %.2f ms per frame (budget 6), draw calls average %d, peak %d (budget 250)" % [best_avg, int(float(calls_sum) / float(maxi(calls_n, 1))), peak_calls])
 	# --- the prompt overlay in the picture: at the foot of the ladder the player reads "E: Klatre", a sign's whisper and a toast stand above it
 	_world.day_night.override_hour = 11.0
 	_world.day_night.snap()

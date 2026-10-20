@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dmxab7mpkq24o"
-path="res://.godot/imported/piano_sky_r0.webp-cb9736e2a5f06666bbafdde99462a318.ctex"
+path.s3tc="res://.godot/imported/piano_sky_r0.webp-cb9736e2a5f06666bbafdde99462a318.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/piano_sky_r0.webp"
-dest_files=["res://.godot/imported/piano_sky_r0.webp-cb9736e2a5f06666bbafdde99462a318.ctex"]
+dest_files=["res://.godot/imported/piano_sky_r0.webp-cb9736e2a5f06666bbafdde99462a318.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

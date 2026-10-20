@@ -20,7 +20,14 @@ var slow: Array[Dictionary] = []
 var stats: Dictionary = {}
 ## Print every ok line (default: stop after max_ok_lines per section and count the rest).
 var verbose: bool = false
+## --strict run (CI): a missing external tool is a failure, not a skip (require_tool).
+var strict: bool = false
 var max_ok_lines: int = 400
+## Set by the harness when the section that holds this `t` timed out (tests/playtest.gd). The stuck coroutine may still run on
+## until it reaches one of the wait helpers of tests/lib/drive.gd, which park it for good. What it checks, skips, times or notes until
+## then is printed as a `late` line naming the timed-out section and counted nowhere: the run already failed on the timeout, and
+## the counts and the failure list belong to the sections after it (they hold a fresh `t`).
+var detached: bool = false
 
 var _ok_printed: int = 0
 var _ok_suppressed: int = 0
@@ -45,6 +52,8 @@ func end_section() -> void:
 
 
 func _count(ok: bool) -> void:
+	if detached:
+		return
 	checks += 1
 	var s: Dictionary = stats.get(section, {})
 	if not s.is_empty():
@@ -54,6 +63,9 @@ func _count(ok: bool) -> void:
 
 
 func _ok_line(text: String) -> void:
+	if detached:
+		_late("ok    " + text)
+		return
 	if verbose or _ok_printed < max_ok_lines:
 		_ok_printed += 1
 		print("  ok    ", text)
@@ -62,6 +74,9 @@ func _ok_line(text: String) -> void:
 
 
 func _record_failure(label: String) -> void:
+	if detached:
+		_late("FAIL  " + label)
+		return
 	failed += 1
 	failures.append("%s.%s" % [section, label])
 	print("  FAIL  ", label)
@@ -89,6 +104,8 @@ func check(check_name: String, cond: Variant, detail: Variant = "") -> bool:
 		label += " (%s)" % str(detail)
 	if ok:
 		_ok_line(label)
+	elif detached:
+		_late("FAIL  " + label)
 	else:
 		failed += 1
 		failures.append("%s.%s" % [section, check_name])
@@ -141,8 +158,12 @@ func fail(label: Variant) -> void:
 	_record_failure(str(label))
 
 
-## A check that cannot run here (missing optional package, headless-only gap). Printed and counted as skipped, never a failure.
+## A check that cannot run here (missing optional package, headless-only gap). Printed and counted as skipped, never a failure
+## by itself; under --strict the harness fails a section that skips more than its budget (tests/lib/skip_budget.txt).
 func skip(label: Variant) -> void:
+	if detached:
+		_late("SKIP  " + str(label))
+		return
 	skipped += 1
 	var s: Dictionary = stats.get(section, {})
 	if not s.is_empty():
@@ -150,8 +171,48 @@ func skip(label: Variant) -> void:
 	print("  SKIP  ", str(label))
 
 
+## The ONE Python every section runs its tools with: the art venv (tools/art/.venv: Python 3.12 with the pinned packages; CI builds
+## it with tools/art/setup_env.sh, worktrees and test copies link it) when it exists, else `python3` from PATH. Pair it with
+## require_tool() when the tool needs the venv's packages.
+func python() -> String:
+	var venv := ProjectSettings.globalize_path("res://tools/art/.venv/bin/python")
+	return venv if FileAccess.file_exists(venv) else "python3"
+
+
+## True when the program `exe` (an absolute path, or a name looked up on PATH) exists.
+func has_tool(exe: String) -> bool:
+	if exe.is_absolute_path():
+		return FileAccess.file_exists(exe)
+	for dir in OS.get_environment("PATH").split(":", false):
+		if FileAccess.file_exists(dir.path_join(exe)):
+			return true
+	return false
+
+
+## Guard for checks that need an external program: true when `exe` exists. Otherwise the check is skipped with `label`, and under
+## --strict (CI installs every tool) it FAILS instead, so a missing tool can never turn a gate into a skip.
+##   if t.require_tool("lua5.4", "independent Lua data check"):
+func require_tool(exe: String, label: Variant = "") -> bool:
+	if has_tool(exe):
+		return true
+	var text := "%s: %s is not installed" % [str(label) if str(label) != "" else "tool check", exe]
+	if strict:
+		fail(text + " (--strict needs every tool; see tools/art/setup_env.sh)")
+	else:
+		skip(text)
+	return false
+
+
 func info(message: Variant) -> void:
+	if detached:
+		_late("info  " + str(message))
+		return
 	print("  info  ", str(message))
+
+
+## A line of a timed-out section that woke up again (see `detached`): never read as a line of the section that runs now.
+func _late(text: String) -> void:
+	print("  late  %s   [from %s, which timed out: not counted]" % [text, section])
 
 
 func _show(v: Variant, limit: int = 60) -> String:

@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bki5a26cd4uu3"
-path="res://.godot/imported/sofa_walnut_two_r0.webp-c6eb179df19367a87c45b3569e0e3f54.ctex"
+path.s3tc="res://.godot/imported/sofa_walnut_two_r0.webp-c6eb179df19367a87c45b3569e0e3f54.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/sofa_walnut_two_r0.webp"
-dest_files=["res://.godot/imported/sofa_walnut_two_r0.webp-c6eb179df19367a87c45b3569e0e3f54.ctex"]
+dest_files=["res://.godot/imported/sofa_walnut_two_r0.webp-c6eb179df19367a87c45b3569e0e3f54.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

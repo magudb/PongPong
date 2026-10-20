@@ -13,6 +13,7 @@ import argparse
 import json
 import math
 import re
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -22,6 +23,10 @@ from scipy import ndimage
 ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
 SOURCES = HERE / "sources"
+sys.path.insert(0, str(ROOT / "tools/import"))
+# The one texture import policy (review REND-03): a baker calls ensure_policy(path) after writing a texture,
+# which writes the preset's stub before the first import or patches a stale .import in place (its uid kept).
+from write_import_stubs import ensure_policy  # noqa: E402,F401
 CHARACTERS = ROOT / "assets/isometric_characters"
 # Read the game's geometry instead of maintaining a second projection ratio.
 _iso_source = (ROOT / "scripts/world2d/iso.gd").read_text()

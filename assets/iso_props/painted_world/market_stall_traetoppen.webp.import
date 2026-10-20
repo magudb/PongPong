@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cqmmu8dwoargg"
-path="res://.godot/imported/market_stall_traetoppen.webp-8804b12525d977d4b8e3075bfaa7cd1c.ctex"
+path.s3tc="res://.godot/imported/market_stall_traetoppen.webp-8804b12525d977d4b8e3075bfaa7cd1c.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/painted_world/market_stall_traetoppen.webp"
-dest_files=["res://.godot/imported/market_stall_traetoppen.webp-8804b12525d977d4b8e3075bfaa7cd1c.ctex"]
+dest_files=["res://.godot/imported/market_stall_traetoppen.webp-8804b12525d977d4b8e3075bfaa7cd1c.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

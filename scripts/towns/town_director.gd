@@ -150,7 +150,7 @@ func _exit_tree() -> void:
 	clear_all()
 	for id in _staging:
 		for path in _staging[id]:
-			ResourceLoader.load_threaded_get(path)
+			TextureLoads.drop(path)
 	_staging.clear()
 	_landed.clear()
 	_sheets.clear()
@@ -306,7 +306,8 @@ func resync(hard := true, only := "", ctx: Dictionary = {}) -> void:
 		EventBus.game_event.emit(&"area_populated", {"area": area_id, "citizens": live.size(), "visuals": looks.size(), "dropped": last_dropped})
 
 ## True when an arrival's idle and walking sheets are resident. Otherwise they are requested on worker threads and he is spawned by
-## _poll_staging once they are in (REND-02: a 3-4 MB sheet loaded with plain load() costs a frame or more). Only the clips the director
+## _poll_staging once they are in (REND-02: a 3-4 MB sheet loaded with plain load() costs a frame or more; under the dummy renderer of
+## headless runs TextureLoads loads them on the main thread in _poll_staging instead, its textures must not be made on a loader thread). Only the clips the director
 ## plays are staged: update_motion is called without `flying`, so a flyer idles or walks in town and never shows his hover sheet.
 func _stage(id: String) -> bool:
 	if _sheets.has(id):
@@ -324,7 +325,7 @@ func _stage(id: String) -> bool:
 		_sheets[id] = paths.map(func(path: String) -> Resource: return ResourceLoader.load(path))
 		return true
 	for path in paths:
-		ResourceLoader.load_threaded_request(path)
+		TextureLoads.request(path)
 	_staging[id] = paths
 	_landed[id] = []
 	return false
@@ -335,9 +336,9 @@ func _stage(id: String) -> bool:
 func _poll_staging() -> void:
 	for id in _staging:
 		var pending: Array = _staging[id]
-		var index := pending.find_custom(func(path: String) -> bool: return ResourceLoader.load_threaded_get_status(path) != ResourceLoader.THREAD_LOAD_IN_PROGRESS)
+		var index := pending.find_custom(func(path: String) -> bool: return TextureLoads.status(path) != ResourceLoader.THREAD_LOAD_IN_PROGRESS)
 		if index >= 0:
-			(_landed[id] as Array).append(ResourceLoader.load_threaded_get(pending[index]))
+			(_landed[id] as Array).append(TextureLoads.take(pending[index]))
 			pending.remove_at(index)
 			stats.sheets_finalized += 1
 			return

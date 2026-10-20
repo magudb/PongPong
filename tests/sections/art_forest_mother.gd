@@ -10,7 +10,9 @@ func run(t) -> void:
 		var art := ArtCatalog.prop(StringName(id))
 		t.check("runtime_art_"+id,art.real and art.texture.resource_path == folder+str(spec.file) and art.size == Vector2(spec.size[0],spec.size[1]))
 		t.check("selected_source_"+id,FileAccess.get_sha256("res://"+str(spec.source)) == str(spec.source_sha256))
-		t.check("cutout_"+id,art.texture.get_image().get_pixel(0,0).a == 0 and FileAccess.get_file_as_bytes(folder+str(spec.file)).size() <= 204800)
+		var cut: Image = art.texture.get_image()
+		if cut.is_compressed(): cut.decompress()   # world props import S3TC (tools/import/write_import_stubs.py POLICY)
+		t.check("cutout_"+id,cut.get_pixel(0,0).a == 0 and FileAccess.get_file_as_bytes(folder+str(spec.file)).size() <= 204800)
 	for row in MotherStory.EVIDENCE:
 		if row.has("art"): t.check("evidence_art_"+str(row.id),ArtCatalog.has_real_prop(StringName(str(row.art))))
 	var audit: Dictionary = t.run_godot_script("res://tools/art/drawn/coverage.gd",PackedStringArray(["--strict","--details","--report=res://docs/art/style-audit/current/catalog.json"]))

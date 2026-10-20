@@ -81,7 +81,7 @@ func run(t) -> void:
 	await _continue(t)
 	await _extension_and_fallback(t)
 	await _skip_and_dispose(t)
-	var validation: Dictionary = t.run_tool("python3", ["-B", "-I", ProjectSettings.globalize_path("res://tools/farm_tutorial/tutorial_check.py"), "--selftest"])
+	var validation: Dictionary = t.run_tool(t.python(), ["-B", "-I", ProjectSettings.globalize_path("res://tools/farm_tutorial/tutorial_check.py"), "--selftest"])
 	t.check("installed_references_and_five_mutants", validation.code == 0, validation.output)
 	var csv := FileAccess.open("res://localization/farm_tutorial.csv", FileAccess.READ)
 	csv.get_csv_line()

@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bqgd2xcmb7cnq"
-path="res://.godot/imported/sconce_copper_r0.webp-f8df627695231177e1ac47704530a887.ctex"
+path.s3tc="res://.godot/imported/sconce_copper_r0.webp-f8df627695231177e1ac47704530a887.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/sconce_copper_r0.webp"
-dest_files=["res://.godot/imported/sconce_copper_r0.webp-f8df627695231177e1ac47704530a887.ctex"]
+dest_files=["res://.godot/imported/sconce_copper_r0.webp-f8df627695231177e1ac47704530a887.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

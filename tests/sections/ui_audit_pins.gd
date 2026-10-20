@@ -1770,7 +1770,7 @@ func _g_more_escape(t) -> void:
 	var rep2: Dictionary = await UiAudit.escape_chain(t, func() -> void: node.open_internal(), 1, {"internal_layers": 1, "internal_depth": Callable(node, "internal_depth"), "settle_seconds": 4.0})
 	var took := Time.get_ticks_msec() - started
 	_clean_rep(t, "pin_escape_internal_layer_that_fades_out", rep2, "(a layer that closes 0.15 s after Esc)")
-	t.check("pin_escape_internal_wait_ends_when_the_depth_moved", took < 2500, "settle_seconds 4: the wait ended after %d ms, not at the timeout" % took)
+	t.check("pin_escape_internal_wait_ends_when_the_depth_moved", took < 2500, "settle_seconds 4: the wait ended after %d ms, not at the timeout" % took) # raw-time-ok: tells "ended on the depth change (0.15 s)" from "ran into the 4 s timeout", not a budget
 	await _drop(t)
 
 

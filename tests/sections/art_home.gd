@@ -1121,8 +1121,10 @@ func _props() -> void:
 		if not pj.has(id):
 			bad.append("%s not in props.json" % id)
 			continue
-		var m: Dictionary = pj[id]
-		var im := _img(FEATURES_DIR.path_join(String(m["file"])))
+		# the entry the game draws: a later art pack may repaint the id (the painted chests, the tent); the superseded copy is not kept (review REND-10)
+		var m: Dictionary = ArtCatalog.prop_metadata(StringName(id))
+		var dir: String = str(m.get("_dir", FEATURES_DIR + "/"))
+		var im := _img(dir.path_join(String(m.get("file", ""))))
 		if im == null:
 			bad.append("%s: sprite missing" % id)
 			continue
@@ -1134,7 +1136,7 @@ func _props() -> void:
 		var fp: Array = m["footprint"]
 		if fp.size() != 2 or int(fp[0]) < 1 or int(fp[1]) < 1:
 			bad.append("%s: bad footprint" % id)
-		if m.has("glow") and _img(FEATURES_DIR.path_join(String(m["glow"]["file"]))) == null:
+		if m.has("glow") and _img(dir.path_join(String(m["glow"]["file"])).simplify_path()) == null:
 			bad.append("%s: glow file missing" % id)
 		if ["dig_glimmer", "unique_glimmer"].has(id) and String(m.get("blend", "")) != "add":
 			bad.append("%s: an additive soft sprite must say blend add" % id)
