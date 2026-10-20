@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b1oxmmhouthcd"
-path="res://.godot/imported/crystal_emerald_glow.png-1e7e52e0354244b34ba36b7e43c073fc.ctex"
+path.s3tc="res://.godot/imported/crystal_emerald_glow.png-1e7e52e0354244b34ba36b7e43c073fc.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/crystal_emerald_glow.png"
-dest_files=["res://.godot/imported/crystal_emerald_glow.png-1e7e52e0354244b34ba36b7e43c073fc.ctex"]
+dest_files=["res://.godot/imported/crystal_emerald_glow.png-1e7e52e0354244b34ba36b7e43c073fc.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

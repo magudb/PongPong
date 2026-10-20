@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cyo2u8u7sfp8g"
-path="res://.godot/imported/bed_moon_r3.webp-627c9e8fb82323fccd9259ae5cbaf86c.ctex"
+path.s3tc="res://.godot/imported/bed_moon_r3.webp-627c9e8fb82323fccd9259ae5cbaf86c.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/bed_moon_r3.webp"
-dest_files=["res://.godot/imported/bed_moon_r3.webp-627c9e8fb82323fccd9259ae5cbaf86c.ctex"]
+dest_files=["res://.godot/imported/bed_moon_r3.webp-627c9e8fb82323fccd9259ae5cbaf86c.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

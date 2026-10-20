@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ybl0xtoivpya"
-path="res://.godot/imported/warp_gate_stone_glow.png-b85b0362d590ae1d9a52bc11ff3e0cfa.ctex"
+path.s3tc="res://.godot/imported/warp_gate_stone_glow.png-b85b0362d590ae1d9a52bc11ff3e0cfa.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/warp_gate_stone_glow.png"
-dest_files=["res://.godot/imported/warp_gate_stone_glow.png-b85b0362d590ae1d9a52bc11ff3e0cfa.ctex"]
+dest_files=["res://.godot/imported/warp_gate_stone_glow.png-b85b0362d590ae1d9a52bc11ff3e0cfa.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

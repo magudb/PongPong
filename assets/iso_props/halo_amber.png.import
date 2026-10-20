@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://4wx7ybfhm16p"
-path="res://.godot/imported/halo_amber.png-78a86cbd6a276cd067b1d7cd744c06aa.ctex"
+path.s3tc="res://.godot/imported/halo_amber.png-78a86cbd6a276cd067b1d7cd744c06aa.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/halo_amber.png"
-dest_files=["res://.godot/imported/halo_amber.png-78a86cbd6a276cd067b1d7cd744c06aa.ctex"]
+dest_files=["res://.godot/imported/halo_amber.png-78a86cbd6a276cd067b1d7cd744c06aa.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

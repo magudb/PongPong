@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://sg0thjiyqqvh"
-path="res://.godot/imported/bush_berry.webp-d4f2ef267648e35b7b2b16b69a4878cf.ctex"
+path.s3tc="res://.godot/imported/bush_berry.webp-d4f2ef267648e35b7b2b16b69a4878cf.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/drawn/bush_berry.webp"
-dest_files=["res://.godot/imported/bush_berry.webp-d4f2ef267648e35b7b2b16b69a4878cf.ctex"]
+dest_files=["res://.godot/imported/bush_berry.webp-d4f2ef267648e35b7b2b16b69a4878cf.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

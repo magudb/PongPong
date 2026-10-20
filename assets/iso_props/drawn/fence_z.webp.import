@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://diuqq28y6itay"
-path="res://.godot/imported/fence_z.webp-0a959a8e8ff550539af527369b4749b3.ctex"
+path.s3tc="res://.godot/imported/fence_z.webp-0a959a8e8ff550539af527369b4749b3.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/drawn/fence_z.webp"
-dest_files=["res://.godot/imported/fence_z.webp-0a959a8e8ff550539af527369b4749b3.ctex"]
+dest_files=["res://.godot/imported/fence_z.webp-0a959a8e8ff550539af527369b4749b3.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

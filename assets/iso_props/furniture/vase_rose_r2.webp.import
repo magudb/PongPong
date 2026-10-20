@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cht7e71m8ke6"
-path="res://.godot/imported/vase_rose_r2.webp-d8995d2ead84c3b8be573c19cbfed3fa.ctex"
+path.s3tc="res://.godot/imported/vase_rose_r2.webp-d8995d2ead84c3b8be573c19cbfed3fa.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/vase_rose_r2.webp"
-dest_files=["res://.godot/imported/vase_rose_r2.webp-d8995d2ead84c3b8be573c19cbfed3fa.ctex"]
+dest_files=["res://.godot/imported/vase_rose_r2.webp-d8995d2ead84c3b8be573c19cbfed3fa.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

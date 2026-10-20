@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dfuvxk5r1ac7c"
-path="res://.godot/imported/table_stump_r2.webp-3b816d292e13d9272c0c2efe015d7adf.ctex"
+path.s3tc="res://.godot/imported/table_stump_r2.webp-3b816d292e13d9272c0c2efe015d7adf.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/table_stump_r2.webp"
-dest_files=["res://.godot/imported/table_stump_r2.webp-3b816d292e13d9272c0c2efe015d7adf.ctex"]
+dest_files=["res://.godot/imported/table_stump_r2.webp-3b816d292e13d9272c0c2efe015d7adf.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

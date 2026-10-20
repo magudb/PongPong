@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bdcpgaxd3kh7v"
-path="res://.godot/imported/trunk_hole_owl_b.webp-b6fee36bc4bf6b27da5f1ce87dc1e45b.ctex"
+path.s3tc="res://.godot/imported/trunk_hole_owl_b.webp-b6fee36bc4bf6b27da5f1ce87dc1e45b.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/painted_world/trunk_hole_owl_b.webp"
-dest_files=["res://.godot/imported/trunk_hole_owl_b.webp-b6fee36bc4bf6b27da5f1ce87dc1e45b.ctex"]
+dest_files=["res://.godot/imported/trunk_hole_owl_b.webp-b6fee36bc4bf6b27da5f1ce87dc1e45b.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

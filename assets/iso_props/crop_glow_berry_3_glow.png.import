@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c7rjuhbhvh5e1"
-path="res://.godot/imported/crop_glow_berry_3_glow.png-6f9e407064ce574ecfcb26734739886f.ctex"
+path.s3tc="res://.godot/imported/crop_glow_berry_3_glow.png-6f9e407064ce574ecfcb26734739886f.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/crop_glow_berry_3_glow.png"
-dest_files=["res://.godot/imported/crop_glow_berry_3_glow.png-6f9e407064ce574ecfcb26734739886f.ctex"]
+dest_files=["res://.godot/imported/crop_glow_berry_3_glow.png-6f9e407064ce574ecfcb26734739886f.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

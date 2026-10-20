@@ -539,7 +539,7 @@ func _imports() -> void:
 		if str(prm.get("compress/mode", "")) != str(want[0]) or str(prm.get("mipmaps/generate", "")) != str(want[1]):
 			wrong.append("%s: compress/mode %s mipmaps %s, want %s / %s" % [path.get_file(), str(prm.get("compress/mode", "?")), str(prm.get("mipmaps/generate", "?")), str(want[0]), str(want[1])])
 	t.check("import_stubs_written_by_this_package", tool_here and missing.is_empty(),
-		"tools/art/environment/farm/write_farm_imports.py exists (P05's write_import_stubs.py covers only the character sheets, the tile atlases and the wardrobe layers, so assets/iso_props/** and assets/backdrops/** would stay lossless) and every file of the kit carries an .import: missing %s" % str(missing))
+		"tools/art/environment/farm/write_farm_imports.py exists and every file of the kit the game draws carries an .import (tools/import/write_import_stubs.py --check holds them to the import policy): missing %s" % str(missing))
 	var ps: Variant = ProjectSettings.get_setting("rendering/textures/vram_compression/import_s3tc_bptc", false)
 	var imported_as_vram: Array[String] = []
 	for path in _shipped_files():

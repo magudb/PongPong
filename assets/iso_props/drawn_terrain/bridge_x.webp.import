@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bw6i5oyb2d0hc"
-path="res://.godot/imported/bridge_x.webp-e9096ce170402f4341dd9f5d591fffce.ctex"
+path.s3tc="res://.godot/imported/bridge_x.webp-e9096ce170402f4341dd9f5d591fffce.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/drawn_terrain/bridge_x.webp"
-dest_files=["res://.godot/imported/bridge_x.webp-e9096ce170402f4341dd9f5d591fffce.ctex"]
+dest_files=["res://.godot/imported/bridge_x.webp-e9096ce170402f4341dd9f5d591fffce.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

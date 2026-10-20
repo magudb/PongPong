@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://h7cdnrmtul6t"
-path="res://.godot/imported/hut_l_straw.webp-2ae66d1f211c4cbd17fbec1c3ead8d12.ctex"
+path.s3tc="res://.godot/imported/hut_l_straw.webp-2ae66d1f211c4cbd17fbec1c3ead8d12.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/painted_world/hut_l_straw.webp"
-dest_files=["res://.godot/imported/hut_l_straw.webp-2ae66d1f211c4cbd17fbec1c3ead8d12.ctex"]
+dest_files=["res://.godot/imported/hut_l_straw.webp-2ae66d1f211c4cbd17fbec1c3ead8d12.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

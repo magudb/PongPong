@@ -65,7 +65,9 @@ header of `tests/sections/ui_audit.gd`).
 `tools/art/drawn/` packages the painted character, building and outdoor terrain sources into the shipped atlases (see its README).
 The other `tools/art/` bakers still supply floors, furniture, icons and source experiments. The Python environment is `tools/art/.venv`
 (`tools/art/setup_env.sh`, Python 3.12); worktrees link to the main one. Baked output is committed under `assets/`; the
-staging area `tools/art/_stage/` is not.
+staging area `tools/art/_stage/` is not. Every texture's import preset comes from one table, `POLICY` in
+`tools/import/write_import_stubs.py` (S3TC for painted world art, lossless without mipmaps for atlases, lossless for UI):
+run that tool after adding art, before the first import. Its `--check` runs before every playtest and CI job. An id a later art pack repaints keeps no file of its own in the earlier pack.
 
 ## Layout notes
 

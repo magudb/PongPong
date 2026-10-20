@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cbbvbaq5jqfid"
-path="res://.godot/imported/sofa_cherry_three_r1.webp-b72f735344e667395caa791b361f49f9.ctex"
+path.s3tc="res://.godot/imported/sofa_cherry_three_r1.webp-b72f735344e667395caa791b361f49f9.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/sofa_cherry_three_r1.webp"
-dest_files=["res://.godot/imported/sofa_cherry_three_r1.webp-b72f735344e667395caa791b361f49f9.ctex"]
+dest_files=["res://.godot/imported/sofa_cherry_three_r1.webp-b72f735344e667395caa791b361f49f9.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

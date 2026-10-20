@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://rh8efstv4373"
-path="res://.godot/imported/chandelier_star_r1.webp-06c5cd5cc9a5dde48707585a5c7adb87.ctex"
+path.s3tc="res://.godot/imported/chandelier_star_r1.webp-06c5cd5cc9a5dde48707585a5c7adb87.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/chandelier_star_r1.webp"
-dest_files=["res://.godot/imported/chandelier_star_r1.webp-06c5cd5cc9a5dde48707585a5c7adb87.ctex"]
+dest_files=["res://.godot/imported/chandelier_star_r1.webp-06c5cd5cc9a5dde48707585a5c7adb87.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

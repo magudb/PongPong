@@ -23,7 +23,7 @@ const CITY_JSON := "res://data/traetoppen/traetoppen.json"
 const README := "res://tools/art/environment/city/README.md"
 const TOL := 2                                  # px: the work order's size tolerance
 const K_REF := 3.0                              # the scale the table is written for
-const BUDGET_MB := 70.0
+const BUDGET_MB := 24.0                         # S3TC upload of the drawn set (18.1 MB measured); 70 MB while it was counted as RGBA8
 const SIDE_LIMIT := 2048
 ## the 4 widths of trunk bark, the 4 discs, the roof colours of the huts
 const BARKS: Array[int] = [367, 404, 441, 698]
@@ -659,6 +659,12 @@ func _backdrop_path(layer: String) -> String:
 	return tex.resource_path if tex != null else ""
 
 
+## bytes per pixel of the upload: S3TC (DXT5, compress/mode=2) 1, a lossless import RGBA8 4
+func _import_bpp(path: String) -> float:
+	var settings := ConfigFile.new()
+	return 1.0 if settings.load(path + ".import") == OK and int(settings.get_value("params", "compress/mode", 0)) == 2 else 4.0
+
+
 func _import_mipmaps(path: String) -> bool:
 	if not FileAccess.file_exists(path + ".import"):
 		return true                                  # no .import yet: the project default (mipmaps on)
@@ -669,7 +675,7 @@ func _import_mipmaps(path: String) -> bool:
 	return m == null or m.get_string(1) == "true"
 
 
-## total texture memory (RGBA8 + mipmaps where the import keeps them) of the whole set at K, nothing above 2048 px on a side
+## total texture memory (S3TC 1 byte / lossless RGBA8 4 bytes per pixel, + mipmaps where the import keeps them) of the whole set at K, nothing above 2048 px on a side
 func _vram(props: Dictionary) -> void:
 	var total := 0.0
 	var count := 0
@@ -687,7 +693,7 @@ func _vram(props: Dictionary) -> void:
 		var mips: bool = _import_mipmaps(path)
 		if not mips:
 			no_mips.append(str(id))
-		total += float(im.get_width() * im.get_height()) * 4.0 * (4.0 / 3.0 if mips else 1.0)
+		total += float(im.get_width() * im.get_height()) * _import_bpp(path) * (4.0 / 3.0 if mips else 1.0)
 		count += 1
 		biggest = maxi(biggest, maxi(im.get_width(), im.get_height()))
 		if maxi(im.get_width(), im.get_height()) > SIDE_LIMIT:
@@ -702,7 +708,7 @@ func _vram(props: Dictionary) -> void:
 		var mips: bool = _import_mipmaps(bp)
 		if not mips:
 			no_mips.append(b)
-		var mb: float = float(bi.get_width() * bi.get_height()) * 4.0 * (4.0 / 3.0 if mips else 1.0)
+		var mb: float = float(bi.get_width() * bi.get_height()) * _import_bpp(bp) * (4.0 / 3.0 if mips else 1.0)
 		total += mb
 		backdrop_mb += mb
 		count += 1
@@ -714,8 +720,8 @@ func _vram(props: Dictionary) -> void:
 		if no_mips.has(str(id)):
 			bad.append("%s is imported without mipmaps (props keep them)" % id)
 	var mb_total: float = total / 1.0e6
-	_t.check("vram_budget", bad.is_empty() and mb_total <= BUDGET_MB and mb_total > 30.0 and count >= 70,
-		"%d textures, %.1f MB RGBA8 + mipmaps (budget %.0f MB; backdrops %.1f MB, imported without mipmaps: %s), largest side %d px; %s" % [count, mb_total, BUDGET_MB, backdrop_mb / 1.0e6, str(no_mips), biggest, str(bad.slice(0, 3))])
+	_t.check("vram_budget", bad.is_empty() and mb_total <= BUDGET_MB and mb_total > 8.0 and count >= 70,
+		"%d textures, %.1f MB uploaded with mipmaps (budget %.0f MB; backdrops %.1f MB, imported without mipmaps: %s), largest side %d px; %s" % [count, mb_total, BUDGET_MB, backdrop_mb / 1.0e6, str(no_mips), biggest, str(bad.slice(0, 3))])
 
 
 func _scale_with_k(props: Dictionary) -> void:

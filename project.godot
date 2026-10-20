@@ -57,7 +57,9 @@ theme/custom="res://assets/ui/theme.tres"
 [importer_defaults]
 
 texture={
-"mipmaps/generate": true
+"compress/mode": 0,
+"mipmaps/generate": true,
+"process/fix_alpha_border": true
 }
 
 [input]
