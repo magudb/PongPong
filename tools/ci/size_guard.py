@@ -100,7 +100,7 @@ def limit_for(path, limits, rules):
 
 
 def split_z(data):
-    return [token for token in data.decode("utf-8", errors="surrogateescape").split("\0")]
+    return data.decode("utf-8", errors="surrogateescape").split("\0")
 
 
 def raw_entries(tokens):
@@ -141,7 +141,7 @@ def tree_entries(repo, rev):
     for token in split_z(git(repo, "ls-tree", "-r", "-z", "--full-tree", rev)):
         if token:
             meta, path = token.split("\t", 1)
-            mode, kind, oid = meta.split()
+            _, kind, oid = meta.split()
             if kind == "blob":
                 entries.append((path, oid))
     return entries
