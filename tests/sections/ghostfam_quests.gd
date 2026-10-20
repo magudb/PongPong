@@ -104,7 +104,7 @@ func run(t) -> void:
 	t.check("silke_talk_hook_collects_parcel",GhostFamHook.before_talk(silke,t.world().player) and bool(runtime.meta.parcel_given) and EconomyManager.count_item(StringName(item))==1)
 	silke.queue_free()
 	t.check("deferred_parcel_no_duplicate",quests.collect_parcel() and EconomyManager.count_item(StringName(item))==1)
-	t.check("content_reproducible",int(t.run_tool("python3",[ProjectSettings.globalize_path("res://tools/social/content/build_family_quests.py"),"--check"]).code)==0)
+	t.check("content_reproducible",int(t.run_tool(t.python(), [ProjectSettings.globalize_path("res://tools/social/content/build_family_quests.py"),"--check"]).code)==0)
 	t.check("family_lua_has_no_new_findings",not LuaRuntime.lint_report.any(func(row):return str(row.get("path","")).contains("ghostfam")))
 	await t.go_menu()
 func _has_quest_choice(page: Dictionary,id: StringName) -> bool:

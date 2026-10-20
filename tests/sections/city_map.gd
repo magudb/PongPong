@@ -145,12 +145,6 @@ func _events_named(name: StringName) -> Array:
 	return out
 
 
-func _py(t) -> String:
-	if FileAccess.file_exists("res://tools/art/.venv/bin/python"):
-		return ProjectSettings.globalize_path("res://tools/art/.venv/bin/python")
-	return "python3"
-
-
 ## Every descendant of a node (the node included).
 func _all_nodes(root: Node) -> Array[Node]:
 	var out: Array[Node] = []
@@ -288,7 +282,7 @@ func _keys_and_config(t) -> void:
 	for key in rows:
 		if not str(key).begins_with("TRAE_"):
 			foreign.append(str(key))
-	var lint: Dictionary = t.run_tool(_py(t), PackedStringArray(["-I", ProjectSettings.globalize_path("res://tools/loc/csv_lint.py")]))
+	var lint: Dictionary = t.run_tool(t.python(), PackedStringArray(["-I", ProjectSettings.globalize_path("res://tools/loc/csv_lint.py")]))
 	var lint_lines: PackedStringArray = lint["lines"]
 	t.check("keys_da_en_complete", missing.is_empty() and empty.is_empty() and names_ok and unnamed.is_empty() and foreign.is_empty() and int(lint["code"]) == 0 \
 		and FileAccess.file_exists(CSV_PATH + ".import") and FileAccess.get_file_as_string(CSV_PATH + ".import").contains("importer=\"keep\""),

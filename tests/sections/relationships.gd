@@ -175,7 +175,7 @@ func run(t) -> void:
 	t.check("named_visit_and_history_saved",SaveManager.save_game(3) and SaveManager.load_game(3) and HomeManager.visit_today()==visit and SocialManager.event_stamp("home_visit:"+named)==SocialManager.week()+1)
 	for npc in candidates:
 		if not SocialManager.can_befriend(npc):t.check("hero_twin_not_a_partner",FLOW.reason(npc,"hjertebuket")=="PARTNER_NOT_ADULT")
-	var gen: Dictionary = t.run_tool("python3",[ProjectSettings.globalize_path("res://tools/social/content/build_relationships.py"),"--check"])
+	var gen: Dictionary = t.run_tool(t.python(), [ProjectSettings.globalize_path("res://tools/social/content/build_relationships.py"),"--check"])
 	t.check("authored_relationship_data_current",int(gen.code)==0,str(gen.output))
 	await t.go_menu()
 

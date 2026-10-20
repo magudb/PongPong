@@ -1209,9 +1209,7 @@ func _bridge_and_the_city(t) -> void:
 
 func _tool_selftest(t) -> void:
 	var root: String = ProjectSettings.globalize_path("res://")
-	var py: String = root + "tools/art/.venv/bin/python"
-	if not FileAccess.file_exists("res://tools/art/.venv/bin/python"):
-		py = "python3"
+	var py: String = t.python()
 	var plain: Dictionary = t.run_tool(py, PackedStringArray(["-I", root + CHECKER, root + "data/maps/farm.map"]))
 	t.check("offline_checker_passes_on_the_map", int(plain["code"]) == 0, "python %s data/maps/farm.map: exit %s, %s" % [CHECKER, plain["code"], (plain["lines"] as PackedStringArray)[-1] if not (plain["lines"] as PackedStringArray).is_empty() else ""])
 	var res: Dictionary = t.run_tool(py, PackedStringArray(["-I", root + CHECKER, "--selftest"]))

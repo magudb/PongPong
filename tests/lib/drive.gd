@@ -9,6 +9,10 @@ extends "res://tests/lib/asserts.gd"
 ##    several process frames can pass inside one physics tick, so t.frames() is NOT enough for them.
 ##  * t.tap(action) sends a press+release InputEventAction pair in the same frame (event handlers see both,
 ##    Input.is_action_just_pressed() polling does not). Use `await t.tap_held(action)` for polling code.
+##  * t.press(path) is a real click on the button's centre: it fails when the button is hidden, disabled, outside the window
+##    or covered by another control. t.press_unchecked(path) only emits `pressed` (for the few cases that need that).
+##  * State a section changes for its own checks (a locale, a config override, a fixture path) is put back with
+##    t.on_cleanup(func): the harness runs those after the section, also when a script error or a timeout ended it early.
 
 ## The SceneTree the harness runs in and its root window (set by bind()).
 var tree: SceneTree
@@ -26,12 +30,47 @@ var rng := RandomNumberGenerator.new()
 ## The Logger capture (tests/lib/error_catcher.gd), set by the harness (untyped: duck-typed, loaded at runtime).
 var catcher
 
+## `detached` (tests/lib/asserts.gd) is set when the section that holds this `t` timed out: a coroutine cannot be cancelled in
+## GDScript, so from then on every wait helper of this `t` (frames, physics, seconds, real_seconds, until, ...) parks the stuck
+## section for good instead of returning, on entry and on wake-up. That is the limit of the isolation: a stuck section that
+## waits on something else (a game method's own timer loop, a node signal) wakes up later and runs on until it reaches one of
+## these helpers. Its checks are then printed as `late` lines and not counted; other side effects (a process it starts, autoload
+## state it changes) land in the section that runs then. The harness hands the next sections a fresh `t`.
+
 var _held: Dictionary = {}     # action -> true while held through t.hold()
+var _cleanups: Array[Callable] = []
+
+## Never emitted: what a detached `t` parks its section on.
+signal _parked
 
 
 func bind(p_tree: SceneTree) -> void:
 	tree = p_tree
 	root = p_tree.root
+
+
+## Registers `fn` (a Callable without arguments; it may await) to run when the current section ends, after its last check, also
+## when a script error or a timeout ended it early. Cleanups run last-registered first, and only once.
+##   var before: String = t.autoload("LocalizationManager").current_locale
+##   t.on_cleanup(func() -> void: t.autoload("LocalizationManager").set_locale(before, false))
+func on_cleanup(fn: Callable) -> void:
+	_cleanups.append(fn)
+
+
+## Runs and forgets the cleanups of the section (called by the harness). Returns how many ran.
+func run_cleanups() -> int:
+	var n := 0
+	while not _cleanups.is_empty():
+		var fn: Callable = _cleanups.pop_back()
+		if fn.is_valid():
+			await fn.call()
+			n += 1
+	return n
+
+
+func _park_if_detached() -> void:
+	if detached:
+		await _parked
 
 
 # ---------------------------------------------------------------- autoloads and nodes
@@ -75,19 +114,25 @@ func player() -> Node:
 
 ## `n` process frames.
 func frames(n: int) -> void:
+	await _park_if_detached()
 	for i in n:
 		await tree.process_frame
+		await _park_if_detached()
 
 
 ## `n` physics ticks. Required before asserting anything driven by _physics_process.
 func physics(n: int) -> void:
+	await _park_if_detached()
 	for i in n:
 		await tree.physics_frame
+		await _park_if_detached()
 
 
 ## Game seconds (Engine.time_scale applies; the timer keeps running while the tree is paused).
 func seconds(s: float) -> void:
+	await _park_if_detached()
 	await tree.create_timer(s, true, false, false).timeout
+	await _park_if_detached()
 
 
 ## Game time in seconds since the engine started: physics ticks / ticks per second, the clock the game animates by. Measure a duration with this, not with
@@ -100,16 +145,20 @@ func game_seconds() -> float:
 ## every frame counts 1/60 s whatever it costs, so the wait runs ahead of the wall clock like everything else the engine animates. A wait for something
 ## outside the engine loop (a thread, a child process) is `until(cond, timeout)`, which counts the wall clock.
 func real_seconds(s: float) -> void:
+	await _park_if_detached()
 	await tree.create_timer(s, true, false, true).timeout
+	await _park_if_detached()
 
 
 ## Polls `cond` once per process frame until it returns true or `timeout` WALL-CLOCK seconds pass (also under --fast). Returns whether it became true.
 func until(cond: Callable, timeout: float = 5.0) -> bool:
+	await _park_if_detached()
 	var t0 := Time.get_ticks_msec()
 	while not cond.call():
 		if float(Time.get_ticks_msec() - t0) / 1000.0 > timeout:
 			return false
 		await tree.process_frame
+		await _park_if_detached()
 	return true
 
 
@@ -264,10 +313,54 @@ func click(pos: Vector2, button: MouseButton = MOUSE_BUTTON_LEFT) -> void:
 	tree.root.push_input(up)
 
 
-## What a click on a button does: toggle buttons flip, then `pressed` fires. Fails when the node is missing,
-## is not a button, or is disabled (a real click would do nothing). `tolerate_disabled` turns the disabled case
-## into a quiet no-op (the legacy select screen disables the race button that is already selected).
+## A real click on a button, with the checks a player's click implies: fails when the node is missing, is not a button, is
+## disabled, is hidden (not visible in the tree), has its centre outside the window, or is covered there by another control
+## (the click went elsewhere: the failure names what is on top). Toggle buttons flip and `pressed` fires as for a user, through
+## the GUI (focus and hover move as well); the mouse is parked outside the window afterwards. `tolerate_disabled` turns the
+## disabled case into a quiet no-op (the legacy select screen disables the race button that is already selected). A button that
+## does not react to a click a player can make (a pressed member of a ButtonGroup) passes: it was reached, which is the check.
 func press(path: String, tolerate_disabled: bool = false) -> bool:
+	var n := node(path)
+	if not (n is BaseButton):
+		fail("button %s not found in %s" % [path, scene_name()])
+		return false
+	return press_button(n as BaseButton, path, tolerate_disabled)
+
+
+## press() for a button node already at hand (a choice row, a dialog's own button). `label` names it in a failure.
+func press_button(b: BaseButton, label: String = "", tolerate_disabled: bool = false) -> bool:
+	var what := label if label != "" else str(b.get_path())
+	if b.disabled:
+		if tolerate_disabled:
+			return true
+		fail("button %s is disabled" % what)
+		return false
+	if not b.is_visible_in_tree():
+		fail("button %s is hidden: a player cannot click it (t.press_unchecked() emits pressed without the checks)" % what)
+		return false
+	var pos := button_center(b)
+	if not Rect2(Vector2.ZERO, Vector2(root.size)).has_point(pos):
+		fail("button %s is outside the window (centre %s, window %s)" % [what, pos, root.size])
+		return false
+	var reached := [false]
+	var probe := func(event: InputEvent) -> void:
+		if event is InputEventMouseButton and (event as InputEventMouseButton).pressed:
+			reached[0] = true
+	b.gui_input.connect(probe)
+	click(pos)
+	var on_top := root.gui_get_hovered_control()
+	if is_instance_valid(b) and b.gui_input.is_connected(probe):
+		b.gui_input.disconnect(probe)
+	move_mouse(Vector2(-16, -16))
+	if not reached[0]:
+		fail("button %s did not get the click at %s: %s is on top of it" % [what, pos, str(on_top.get_path()) if on_top != null else "nothing that takes the mouse"])
+		return false
+	return true
+
+
+## Emits `pressed` (toggle buttons flip first) without any of the checks of press(): no visibility, hit test or window bounds.
+## Only for a button that a player reaches some other way in the state under test (say so in a comment at the call).
+func press_unchecked(path: String, tolerate_disabled: bool = false) -> bool:
 	var n := node(path)
 	if not (n is BaseButton):
 		fail("button %s not found in %s" % [path, scene_name()])
@@ -282,6 +375,11 @@ func press(path: String, tolerate_disabled: bool = false) -> bool:
 		b.button_pressed = not b.button_pressed
 	b.pressed.emit()
 	return true
+
+
+## The centre of a control in root viewport coordinates (what click() takes), through CanvasLayers and the canvas transform.
+func button_center(c: Control) -> Vector2:
+	return c.get_global_transform_with_canvas() * (c.size * 0.5)
 
 
 ## Types into a LineEdit / TextEdit (fires text_changed like typing does).

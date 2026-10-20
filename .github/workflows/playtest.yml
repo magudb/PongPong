@@ -7,11 +7,20 @@ name: playtest
 #   exit 0 = PASS, 1 = failed checks / engine errors or warnings,
 #   2 = usage or infrastructure, 124 = timeout.
 # --strict ignores tests/lib/known_issues.txt so tolerated warnings cannot pile up here.
+# tools/dev/ci_local.sh runs the same jobs on a developer machine.
+#
+# Timeouts: each harness step has a wrapper timeout (--timeout) and a slightly longer step
+# timeout, and the two harness steps plus setup fit inside the job timeout, so a hang is
+# reported by the wrapper (exit 124, with its log) instead of the runner cancelling the job.
+# The nightly run shuffles the section order (--shuffle=<run id>) to expose sections that
+# depend on state an earlier section left behind.
 
 on:
   push:
     branches: [main]
   pull_request:
+  schedule:
+    - cron: "17 2 * * *"
   workflow_dispatch:
   workflow_call:
 
@@ -19,14 +28,53 @@ permissions:
   contents: read
 
 concurrency:
-  group: playtest-${{ github.workflow }}-${{ github.ref }}
+  group: playtest-${{ github.workflow }}-${{ github.ref }}-${{ github.event_name == 'schedule' && 'nightly' || 'push' }}
   cancel-in-progress: true
 
 jobs:
+  selftest:
+    name: harness self-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      PYTHONUNBUFFERED: "1"
+      TT_PERF_SCALE: "4"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Cache Godot binary
+        id: cache-godot
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/.godot-bin
+          key: godot-linux-${{ hashFiles('tools/ci/godot.json') }}
+
+      - name: Install checksum-pinned Godot
+        run: python tools/ci/install_godot.py
+
+      - name: Import project
+        run: |
+          set -euo pipefail
+          "$GODOT" --headless --path . --import
+          "$GODOT" --headless --path . --import
+
+      - name: Run the harness's negative tests
+        # The harness's own test: an injected error, a warning, a failed check, an uncompilable section,
+        # hangs, the skip budget, perf_ok and --fast must all fail or pass exactly as documented.
+        timeout-minutes: 20
+        run: tools/dev/selftest_harness.sh
+
   playtest:
     name: headless harness (${{ matrix.character }}, part ${{ matrix.shard }})
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 100
     strategy:
       fail-fast: false
       matrix:
@@ -83,13 +131,17 @@ jobs:
           "$GODOT" --headless --path . --import
 
       - name: Run playtest (strict)
+        timeout-minutes: 50
         run: |
           set -euo pipefail
           sections="$(python tools/ci/sections.py --shard ${{ matrix.shard }} --count 4 --pace normal)"
-          xvfb-run -a tests/run_playtest.sh --strict --timeout=2700 --only="$sections" --character=${{ matrix.character }} --report=/tmp/playtest-${{ matrix.character }}-${{ matrix.shard }}.json
+          xvfb-run -a tests/run_playtest.sh --strict --timeout=2700 --only="$sections" --character=${{ matrix.character }} $SHUFFLE --report=/tmp/playtest-${{ matrix.character }}-${{ matrix.shard }}.json
+        env:
+          SHUFFLE: ${{ github.event_name == 'schedule' && format('--shuffle={0}', github.run_id) || '' }}
 
       - name: Run seeded combat simulations at fixed physics steps
         if: ${{ !cancelled() }}
+        timeout-minutes: 35
         run: |
           set -euo pipefail
           sections="$(python tools/ci/sections.py --shard ${{ matrix.shard }} --count 4 --pace simulation)"

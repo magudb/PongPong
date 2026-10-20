@@ -14,8 +14,8 @@ There is **one project**: this folder (`PongPong/`, git branch `main`). Everythi
 tools/dev/worktree.sh new wave-4           # branch + worktree from main, venv linked, import cache cloned, warm import done
 tools/dev/worktree.sh list                 # every worktree: clean/dirty, branch, path
 cd ../PongPong-worktrees/wave-4            # work, commit, run the tests here
-tests/run_playtest.sh --strict             # headless harness (all sections), exit code 0 = green
-tests/run_playtest.sh --fast --only=area   # the same, with physics and frames running ahead of the wall clock (see Tests)
+tests/run_playtest.sh --strict --no-boot --only=area   # the inner loop: one section, seconds (add --character=fairy etc.)
+tools/dev/ci_local.sh                      # the gate: exactly what CI runs (4 heroes x 4 shards, strict), about an hour; exit 0 = green
 tools/dev/run_windowed.sh --only=area      # real 1280x720 window sections (one window at a time)
 # when the branch is done and green, from THIS folder (main):
 git merge --no-ff wave-4 && tools/dev/worktree.sh remove wave-4 --delete-branch
@@ -38,6 +38,24 @@ world is a test platform (title -> New game -> pick a hero -> a floating farm is
 `--character=animal|fairy|hobbit|ghost`, `--strict`. It imports the project first when needed. Windowed sections
 (`run_windowed(t)` in a section) are run with `tools/dev/run_windowed.sh`; they open a real window for a few seconds.
 `tools/dev/test_in_copy.sh NAME` runs the harness in an APFS clone, so a half-edited tree is never imported.
+
+**The gate** is the CI split, not one plain run: `.github/workflows/playtest.yml` runs every hero in 4 shards
+(`tools/ci/sections.py`), the ordinary sections at normal pace and the two seeded simulations with `--fast`, all `--strict`
+with `TT_PERF_SCALE=4`, plus the harness self-test. `tools/dev/ci_local.sh` runs exactly that on a Mac (one APFS clone per
+shard, 4 at a time; `--races=`, `--shards=`, `--parallel=`, `--out=`) and writes a summary; a plain
+`tests/run_playtest.sh --strict` of every section in one process takes well over an hour for one hero and is not needed.
+While working on a section use the inner loop, `tests/run_playtest.sh --strict --no-boot --only=<section>`.
+
+One Godot per checkout: `run_playtest.sh` and `play.sh` refuse to start while another run uses the same folder (clone it
+instead). Sections share one process; after every section the harness runs the section's `t.on_cleanup(func)` callables and
+puts back the locale, config overrides, Svc fakes, the modal stack, Engine metadata and the autoloads' `*_path` seams it left
+behind (a note names them: register a cleanup instead). A section that times out fails the run, but the next ones still run,
+with a fresh `t` and a fresh world. The stuck coroutine cannot be cancelled: it is parked when it next reaches a wait helper of
+its `t`; until then it runs on (its checks print as `late` lines and count nowhere, other side effects land in a later section).
+`--shuffle=N` runs the sections in a seeded random order (the nightly CI run does). `t.press()` is a real click (it fails on a
+hidden, covered or off-screen button); `t.python()` is the one Python for tools (the art venv, else `python3`) and
+`t.require_tool()` guards a check that needs a program (a skip locally, a failure under `--strict`). Under `--strict` a section
+may not skip more checks than `tests/lib/skip_budget.txt` allows.
 
 **`--fast`** makes a headless run cheap in wall time: the wrapper passes `--fixed-fps 60` to Godot (it is the same as
 `GODOT_EXTRA_ARGS="--fixed-fps 60"`, which the wrapper forwards to the engine in any case). Without it the engine paces every
@@ -75,7 +93,8 @@ fails on a raw wall-clock comparison and on a frame-count wait that ends in `t.f
   (a dialogue paged to its choices: `t.page_to_choices(dialogue)`), never a frame count: an uncapped headless run draws thousands of frames per second, so 1500 frames took 0.2 s on a Mac, less than
   one camera move of the scene. A wall-clock comparison that is not a budget carries `# raw-time-ok: <reason>` on its line.
 
-`tools/dev/selftest_harness.sh` is the harness's own test (negative tests: an injected error, an uncompilable section, a hang, `--fast`).
+`tools/dev/selftest_harness.sh` is the harness's own test (negative tests: an injected error, an uncompilable section, a hang,
+`--fast`, the isolation between sections, `press()`, the skip budget, `perf_ok`); CI runs it as its own job.
 
 UI screens: every screen has a row in the UI audit's registry (`tests/lib/ui_screens.json`, plus one file per package in
 `tests/lib/ui_screens.d/*.json` with the same row schema: the audit merges the folder, a screen id may exist only once; see the

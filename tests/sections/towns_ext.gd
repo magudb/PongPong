@@ -37,7 +37,7 @@ func run(t) -> void:
 	for rule in [["feasible",TownsValidate.routines_feasible],["places",TownsValidate.places_exist],["hours",func():return TownsValidate.hours_consistency(LuaRuntime.get_shops().keys())],["keepers",TownsValidate.keepers_cover_hours],["capacity",TownsValidate.post_capacity],["looks",func():return TownsValidate.visual_budget(looks)],["visits",TownsValidate.visits_inside_hours],["short_visits",TownsValidate.no_short_visits],["wrap",TownsValidate.day_wrap]]:
 		var errors: Array = rule[1].call()
 		t.check("full_roster_"+str(rule[0]),errors.is_empty(),str(errors.slice(0,12)))
-	t.check("content_reproducible",int(t.run_tool("python3",[ProjectSettings.globalize_path("res://tools/towns/authoring/build_ext_content.py"),"--check"]).code) == 0)
+	t.check("content_reproducible",int(t.run_tool(t.python(), [ProjectSettings.globalize_path("res://tools/towns/authoring/build_ext_content.py"),"--check"]).code) == 0)
 	GameManager.season = &"foraar"
 	GameManager.day = 5
 	GameManager.hour = 20

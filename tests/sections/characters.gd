@@ -433,11 +433,6 @@ func _meta_parse(t) -> void:
 
 # ---------------------------------------------------------------- import stubs
 
-func _python() -> String:
-	var venv := ProjectSettings.globalize_path("res://tools/art/.venv/bin/python")
-	return venv if FileAccess.file_exists(venv) else "python3"
-
-
 func _write_text(abs_path: String, text: String) -> void:
 	DirAccess.make_dir_recursive_absolute(abs_path.get_base_dir())
 	var f := FileAccess.open(abs_path, FileAccess.WRITE)
@@ -460,7 +455,7 @@ func _rm_rf(abs_dir: String) -> void:
 
 func _import_stubs(t) -> void:
 	var tool := ProjectSettings.globalize_path("res://tools/import/write_import_stubs.py")
-	var py := _python()
+	var py: String = t.python()
 	t.check("stub_tool_exists", FileAccess.file_exists(tool), tool)
 	# the real project: every sheet carries the S3TC preset (the harness runs this tool on every assets/ change as well)
 	var res: Dictionary = t.run_tool(py, PackedStringArray([tool, "--check"]))
