@@ -12,6 +12,9 @@ extends RefCounted
 ##   drawn), compression_error_of_the_imported_textures (the textures read back out of the S3TC import against the source files), the contact sheets drawn from the IMPORTED textures,
 ##   field_grass_seams (grass + field_grass at zoom 0.3 / 0.4 / 0.7 + a negative control), farm_trunks_visible (the real farm at noon / dusk / night, the trunks in the picture).
 ##
+## The ids, footprints and contract are N03's (assets/iso_props/farm/props.json); the files checked are the ones the game draws: ArtCatalog's effective entry of each id.
+## The painted consistency pass repaints all ten (same canvases and pivots, except the tool shed: see KIT), and the superseded N03 bakes are not kept (review REND-10).
+##
 ## Honest SKIP lines: the farm SKY is Codex's painted assets/backdrops/farm_sky.png (it lives on main; art_catalog.gd of main loads <theme>_sky.png when no .webp exists).  This package
 ## ships NO farm_sky.webp (it would shadow it), so on a tree without that file ArtCatalog.backdrop(&"farm").real stays false and the check says so with a SKIP line naming the lead's merge.
 const SECTION := "art_farm"
@@ -33,7 +36,7 @@ const KIT := {
 	"trunk_giant_b": [1274, 2142, 685, 1903, 3, 3],
 	"trunk_under_a": [907, 1352, 454, 139, 1, 1],
 	"trunk_under_b": [746, 1306, 371, 117, 1, 1],
-	"tool_shed": [316, 313, 140, 246, 2, 2],
+	"tool_shed": [293, 320, 146, 236, 2, 2],     # the painted consistency pass re-canvased the shed (approved in docs/art/style-audit); the prototype measured 316x313 (140,246)
 	"shipping_bin": [226, 182, 100, 138, 2, 1],
 	"stake_sign": [84, 124, 38, 105, 1, 1],
 	"rope_stake_x": [87, 97, 41, 72, 1, 1],
@@ -154,18 +157,34 @@ func _import_dest(res_path: String) -> String:
 	return ""
 
 
+## The entry the game draws for a kit id (ArtCatalog's effective entry; `_dir` is its pack folder) and its file.
+func _kit_entry(id: String) -> Dictionary:
+	return ArtCatalog.prop_metadata(StringName(id))
+
+
+func _kit_path(id: String) -> String:
+	var e: Dictionary = _kit_entry(id)
+	return str(e.get("_dir", FARM_DIR)) + str(e.get("file", id + ".png"))
+
+
+## The far layer the game draws: ArtCatalog serves the painted backdrop_farm_far prop (N03's farm_far.webp is superseded and not kept).
+func _far_path() -> String:
+	var far: Texture2D = ArtCatalog.backdrop(&"farm")["far"]
+	return far.resource_path if far != null else BACKDROP_DIR + "farm_far.webp"
+
+
 func _shipped_files() -> Array[String]:
 	var out: Array[String] = []
 	for id in KIT:
-		out.append("%s%s.png" % [FARM_DIR, id])
-	out.append(BACKDROP_DIR + "farm_far.webp")
+		out.append(_kit_path(id))
+	out.append(_far_path())
 	out.append(BACKDROP_DIR + "farm_canopy.webp")
 	out.append(TILES_DIR + "field_grass.png")
 	return out
 
 
 func _kind_of(path: String) -> String:
-	if path.begins_with(FARM_DIR):
+	if path.begins_with(P22_MANIFEST.get_base_dir()):
 		return "props"
 	if path.begins_with(BACKDROP_DIR):
 		return "backdrop"
@@ -181,7 +200,7 @@ func _kit_ids_exist(man: Dictionary) -> void:
 		if not man.has(id):
 			bad.append("%s: not in props.json" % id)
 			continue
-		var file: String = FARM_DIR + str((man[id] as Dictionary).get("file", ""))
+		var file: String = _kit_path(id)
 		if _image(file) == null:
 			bad.append("%s: no readable file %s" % [id, file])
 		if not ArtCatalog.has_real_prop(StringName(id)):
@@ -209,12 +228,13 @@ func _kit_ids_exist(man: Dictionary) -> void:
 func _pivots_inside_images(man: Dictionary) -> void:
 	var bad: Array[String] = []
 	for id in KIT:
-		var e: Dictionary = man.get(id, {})
-		if e.is_empty():
+		if not man.has(id):
 			continue
+		var e: Dictionary = _kit_entry(id)
 		var c: Array = KIT[id]
-		var im: Image = _image(FARM_DIR + str(e.get("file", "")))
+		var im: Image = _image(_kit_path(id))
 		if im == null:
+			bad.append("%s: %s unreadable" % [id, _kit_path(id)])
 			continue
 		var size: Array = GameData.array_of(e.get("size", []))
 		var pivot: Array = GameData.array_of(e.get("pivot", []))
@@ -274,18 +294,18 @@ func _sizes_match_art_budget_table(man: Dictionary) -> void:
 		var r: Array = rows[id]
 		if int(r[0]) != int(c[0]) or int(r[1]) != int(c[1]) or str(r[2]) != "[%d, %d]" % [int(c[2]), int(c[3])]:
 			bad.append("%s: table %s, prototype %s" % [id, str(r), str(c)])
-		var im: Image = _image(FARM_DIR + id + ".png")
-		if im != null and (im.get_width() != int(c[0]) or im.get_height() != int(c[1])):
-			bad.append("%s: file %dx%d, prototype %dx%d" % [id, im.get_width(), im.get_height(), int(c[0]), int(c[1])])
+		var im: Image = _image(_kit_path(id))
+		if im == null or im.get_width() != int(c[0]) or im.get_height() != int(c[1]):
+			bad.append("%s: file %s, prototype %dx%d" % [id, "unreadable" if im == null else "%dx%d" % [im.get_width(), im.get_height()], int(c[0]), int(c[1])])
 	var back: Dictionary = {"farm_far.webp": [2048, 1024], "farm_canopy.webp": [2048, 360], "field_grass.png": [576, 336]}
 	for f in back:
-		var im2: Image = _image((BACKDROP_DIR if str(f).ends_with(".webp") else TILES_DIR) + str(f))
+		var im2: Image = _image(_far_path() if f == "farm_far.webp" else (BACKDROP_DIR if str(f).ends_with(".webp") else TILES_DIR) + str(f))
 		var r2: Array = rows.get(f, [])
 		var want: Array = back[f]
 		if im2 == null or im2.get_width() != int(want[0]) or im2.get_height() != int(want[1]) or r2.size() < 2 or int(r2[0]) != int(want[0]) or int(r2[1]) != int(want[1]):
 			bad.append("%s: %s file, table %s, prototype %s" % [f, "unreadable" if im2 == null else "%dx%d" % [im2.get_width(), im2.get_height()], str(r2), str(want)])
 	_t.check("sizes_match_art_budget_table", bad.is_empty() and man.size() == KIT.size(),
-		"every w x h and pivot of tools/art/environment/farm/art_budget.txt (made from the shipped files) = the measured prototype table (trunk_giant_a 1227x2405 (622,2092), trunk_giant_b 1274x2142 (685,1903), trunk_under_a 907x1352 (454,139), trunk_under_b 746x1306 (371,117), tool_shed 316x313 (140,246), shipping_bin 226x182 (100,138), stake_sign 84x124 (38,105), rope_stake 87x97 (41,72), build_stake 76x118 (35,100), farm_far 2048x1024, farm_canopy 2048x360, field_grass 576x336) = the files: %s" % str(bad))
+		"every w x h and pivot of tools/art/environment/farm/art_budget.txt (made from the shipped files) = the measured prototype table (trunk_giant_a 1227x2405 (622,2092), trunk_giant_b 1274x2142 (685,1903), trunk_under_a 907x1352 (454,139), trunk_under_b 746x1306 (371,117), tool_shed 293x320 (146,236) as painted, shipping_bin 226x182 (100,138), stake_sign 84x124 (38,105), rope_stake 87x97 (41,72), build_stake 76x118 (35,100), farm_far 2048x1024, farm_canopy 2048x360, field_grass 576x336) = the files: %s" % str(bad))
 
 
 func _p22_farm_props() -> void:
@@ -336,7 +356,7 @@ func _props_extra_rows() -> void:
 
 func _backdrops() -> void:
 	var t = _t
-	var far: Image = _image(BACKDROP_DIR + "farm_far.webp")
+	var far: Image = _image(_far_path())
 	var can: Image = _image(BACKDROP_DIR + "farm_canopy.webp")
 	var bad: Array[String] = []
 	if far == null or far.get_width() != 2048 or far.get_height() != 1024:

@@ -9,9 +9,12 @@ extends RefCounted
 ##   farm_contract_props_sizes_and_footprints  farm_rows_complete  farm_ids_resolved_by_installed_pack  no_foreign_or_dropped_ids
 ##   forest_art_ids_exist  forest_crowns_baked_at_36  dungeon_crowns_present_and_sized  forest_albedo_within_ambient_headroom  dungeon_prop_defs_complete
 ##   dungeon_ids_in_catalog  image_props_contract  backdrops_present  fixtures_missing_only_pending  hyggebyen_map_art_complete  ortho_decision_*  budget  readme_verdict
-##   prop_packs_listed (review REND-10: ArtCatalog reads the packs in its explicit PROP_PACKS order, never by folder name)
+##   prop_packs_listed (review REND-10: ArtCatalog reads the packs in its explicit PROP_PACKS order, never by folder name)  no_superseded_art_files
 ## Windowed (tests/run_playtest.sh --windowed --only=art_environment): filter_seams_mixed_terrains (grass + flowers, forest floor + glow, iso and ortho, at zoom 0.3 / 0.4 /
 ## 0.7 and a negative control), forest_ortho_readable (the outline (75,60,73) and the crowns on #1c2138 at zoom 0.4), plus the screenshots the package is judged by.
+##
+## The ids and their metadata are P22's (iso_props/props.json); the files checked are the ones the game draws: ArtCatalog's effective entry of each id, so an id a
+## later art pack repaints is checked in its painted file (the superseded P22 copies are not kept, review REND-10).
 ##
 ## PENDING lines: ids whose art belongs to a LATER package (N03 farm kit, N06 dress, V5 city, P04's wall rows) are listed as SKIP lines naming the package; they are never
 ## silently accepted: the check that carries them counts everything else strictly.
@@ -108,14 +111,20 @@ func _tiles() -> Dictionary:
 	return out
 
 
+## P22's ids, each with ArtCatalog's effective entry (the pack that wins; `_dir` is its folder).
 func _props() -> Dictionary:
 	var out: Dictionary = {}
 	var d: Variant = _json(PROPS_DIR + "props.json")
 	if d is Dictionary:
 		for k in (d as Dictionary):
 			if not str(k).begins_with("_"):
-				out[str(k)] = (d as Dictionary)[k]
+				out[str(k)] = ArtCatalog.prop_metadata(StringName(str(k)))
 	return out
+
+
+## The file the game draws for an entry (or for one of its layers, `file` relative to the entry's pack folder).
+func _path(e: Dictionary, file: Variant = null) -> String:
+	return (str(e.get("_dir", PROPS_DIR)) + str(e.get("file", "") if file == null else file)).simplify_path()
 
 
 func _image(path: String) -> Image:
@@ -316,6 +325,46 @@ func _packs() -> void:
 	var empty: Array = ArtCatalog.PROP_PACKS.filter(func(f: String) -> bool: return not folders.has(f))
 	_t.check("prop_packs_listed", unlisted.is_empty() and empty.is_empty() and folders.size() >= 10,
 		"%d pack folders, all in ArtCatalog.PROP_PACKS (the override order); unlisted %s, listed without a props.json %s" % [folders.size(), str(unlisted), str(empty)])
+	# A superseded entry keeps its id and metadata (P22 / V5 / N03 contracts, CityData's geometry), but not its files: a copy nobody draws would ship and
+	# invite edits that never show (review REND-10). Drawn = named by the entry ArtCatalog uses for its id.
+	var entries: Dictionary = {}                    # id -> [[pack folder, entry], ...] in override order
+	var drawn: Dictionary = {}
+	for dir in [PROPS_DIR] + ArtCatalog.PROP_PACKS.map(func(pack: String) -> String: return PROPS_DIR + pack + "/"):
+		var d: Variant = _json(dir + "props.json")
+		if not (d is Dictionary):
+			continue
+		for id in d:
+			if not str(id).begins_with("_") and d[id] is Dictionary:
+				if not entries.has(id):
+					entries[id] = []
+				entries[id].append([dir, d[id]])
+	for id in entries:
+		var last: Array = entries[id].back()
+		for f in _entry_files(last[0], last[1]):
+			drawn[f] = true
+	var superseded: Array[String] = []
+	var n := 0
+	for id in entries:
+		for pair in entries[id].slice(0, -1):
+			n += 1
+			for f in _entry_files(pair[0], pair[1]):
+				if not drawn.has(f) and FileAccess.file_exists(f):
+					superseded.append("%s (%s, drawn from %s)" % [f.trim_prefix(PROPS_DIR), id, str(entries[id].back()[0]).trim_prefix(PROPS_DIR)])
+	# the backdrops: ArtCatalog prefers <theme>_sky.png over <theme>_sky.webp and the painted backdrop_<theme>_far prop over <theme>_far.webp
+	for f in DirAccess.get_files_at(BACKDROP_DIR):
+		var theme := f.get_basename().trim_suffix("_sky").trim_suffix("_far")
+		if (f.ends_with("_sky.webp") and FileAccess.file_exists(BACKDROP_DIR + theme + "_sky.png")) or (f.ends_with("_far.webp") and entries.has("backdrop_%s_far" % theme)):
+			superseded.append("backdrops/%s (ArtCatalog draws the painted layer instead)" % f)
+	_t.check("no_superseded_art_files", superseded.is_empty() and n > 100, "%d superseded pack entries keep no file of their own, no backdrop is shadowed by a painted one: %s" % [n, str(superseded.slice(0, 5))])
+
+
+## The files an entry of a pack names (its sprite and its glow / ground layers), as simplified res:// paths.
+func _entry_files(dir: String, e: Dictionary) -> Array[String]:
+	var out: Array[String] = [(dir + str(e.get("file", ""))).simplify_path()]
+	for layer in ["glow", "ground"]:
+		if e.get(layer) is Dictionary:
+			out.append((dir + str((e[layer] as Dictionary).get("file", ""))).simplify_path())
+	return out
 
 
 func _props_checks(props: Dictionary) -> void:
@@ -324,9 +373,9 @@ func _props_checks(props: Dictionary) -> void:
 	var listed_files: Dictionary = {}
 	for id in props:
 		var e: Dictionary = props[id]
-		var file: String = str(e.get("file", ""))
+		var file: String = _path(e)
 		listed_files[file] = true
-		var im: Image = _image(PROPS_DIR + file)
+		var im: Image = _image(file)
 		if im == null:
 			bad.append("%s: no readable file %s" % [id, file])
 			continue
@@ -341,15 +390,15 @@ func _props_checks(props: Dictionary) -> void:
 			bad.append("%s: footprint %s" % [id, str(fp)])
 		var g: Variant = e.get("glow", null)
 		if g is Dictionary:
-			listed_files[str((g as Dictionary).get("file", ""))] = true
-			if not FileAccess.file_exists(PROPS_DIR + str((g as Dictionary).get("file", ""))):
+			listed_files[_path(e, (g as Dictionary).get("file", ""))] = true
+			if not FileAccess.file_exists(_path(e, (g as Dictionary).get("file", ""))):
 				bad.append("%s: glow file missing" % id)
 	t.check("props_manifest_sane", bad.is_empty(), "%d props: every file reads, size = image size, the pivot (ground origin) is inside the image, footprints are positive; %s" % [props.size(), str(bad.slice(0, 4))])
 	var stray: Array[String] = []
 	var dir := DirAccess.open(PROPS_DIR)
 	if dir != null:
 		for f in dir.get_files():
-			if f.ends_with(".png") and not listed_files.has(f):
+			if f.ends_with(".png") and not listed_files.has(PROPS_DIR + f):
 				stray.append(f)
 	t.check("no_stray_prop_files", stray.is_empty(), "every png of assets/iso_props is a prop or a glow of one: stray %s" % str(stray.slice(0, 5)))
 	var foreign: Array[String] = []
@@ -477,10 +526,12 @@ func _farm_checks(props: Dictionary) -> void:
 		var size: Array = GameData.array_of(e.get("size", []))
 		var pivot: Array = GameData.array_of(e.get("pivot", []))
 		var fp: Vector2i = _fp(e)
-		if int(size[0]) != c[0] or int(size[1]) != c[1] or int(pivot[0]) != c[2] or int(pivot[1]) != c[3] or fp != Vector2i(c[4], c[5]):
+		# a painted pack may re-canvas the sprite (props_manifest_sane holds its size and pivot to its image); the footprint is gameplay and never moves
+		var canvas_ok: bool = str(e.get("_dir", PROPS_DIR)) != PROPS_DIR or (int(size[0]) == c[0] and int(size[1]) == c[1] and int(pivot[0]) == c[2] and int(pivot[1]) == c[3])
+		if not canvas_ok or fp != Vector2i(c[4], c[5]):
 			bad.append("%s: %s pivot %s fp %s vs %s" % [id, str(size), str(pivot), str(fp), str(c)])
 	t.check("farm_contract_props_sizes_and_footprints", bad.is_empty(),
-		"coop_small 350x295 (155,218) 3x2, barn_small 472x424 (208,313) 4x3, animal_house 319x270 (143,199) 3x2, paw_prints 39x49 (16,29), apple_tree 359x398 (172,355), bench 174x144 (78,107) 2x1, signpost 84x130 (38,112): %s" % str(bad))
+		"footprints coop_small 3x2, barn_small 4x3, animal_house 3x2, bench 2x1, the rest 1x1, and the P22 canvases coop_small 350x295 (155,218), barn_small 472x424 (208,313), animal_house 319x270 (143,199), paw_prints 39x49 (16,29), apple_tree 359x398 (172,355), bench 174x144 (78,107), signpost 84x130 (38,112) where P22's bake is the drawn art (a painted repaint keeps the footprint, its canvas is its own): %s" % str(bad))
 	var row_bad: Array[String] = []
 	for id in FARM_ROWS:
 		var r: Array = FARM_ROWS[id]
@@ -528,7 +579,7 @@ func _crowns(props: Dictionary) -> void:
 			if e.is_empty():
 				bad_size.append(id + " missing")
 				continue
-			var im: Image = _image(PROPS_DIR + str(e["file"]))
+			var im: Image = _image(_path(e))
 			var pivot: Array = GameData.array_of(e["pivot"])
 			var size: Array = GameData.array_of(e["size"])
 			var b: Array = _bounds(im, 230)
@@ -559,23 +610,20 @@ func _albedo(props: Dictionary) -> void:
 	var t = _t
 	var bad: Array[String] = []
 	var checked: Array[String] = []
-	var recipes: Dictionary = _json("res://tools/art/drawn/fixture_recipes.json")["assets"]
 	for id in props:
 		var e: Dictionary = props[id]
 		var pal: String = str(e.get("palette", ""))
 		if not PALETTE.has(pal) or str(e.get("kind", "")) == "texture":
 			continue
-		var path: String = PROPS_DIR + str(e["file"])
-		var recipe: Dictionary = recipes.get(path.trim_prefix("res://"), {})
-		if not recipe.has("source"):
-			bad.append("%s: no approved painting recipe" % id)
+		# the drawn file is the approved painting itself (its entry names the source illustration)
+		if str(e.get("illustration", "")) == "" or not FileAccess.file_exists("res://" + str(e["illustration"])):
+			bad.append("%s: drawn from %s, which names no approved painting" % [id, _path(e)])
 			continue
-		var actual: Vector3 = _mean_rgb(_image(path), 240)
-		var want: Vector3 = _mean_rgb(_image("res://" + str(recipe["source"])), 240)
+		var actual: Vector3 = _mean_rgb(_image(_path(e)), 240)
 		var m: Vector3 = actual * AMBIENT / 255.0
 		checked.append("%s %02x%02x%02x" % [id, int(m.x), int(m.y), int(m.z)])
-		if actual.distance_to(want) > 1.0 or minf(m.x, minf(m.y, m.z)) < 8.0:
-			bad.append("%s: fixture pigment differs from its approved painting or loses ambient headroom" % id)
+		if minf(m.x, minf(m.y, m.z)) < 8.0:
+			bad.append("%s: the painting loses ambient headroom under the forest grade" % id)
 	# the emissive things are additive layers and the clamped ones say so: nothing above the ceiling is baked bright into a night prop
 	for id in ADDITIVE_IDS:
 		if str(GameData.dict_of(props.get(id, {})).get("blend", "")) != "add":
@@ -584,7 +632,7 @@ func _albedo(props: Dictionary) -> void:
 		if not bool(GameData.dict_of(props.get(id, {})).get("clamped", false)):
 			bad.append("%s: above the ceiling (R > 77, G > 94, B > 133) but not marked clamped" % id)
 	t.check("forest_albedo_within_ambient_headroom", bad.is_empty() and checked.size() >= 20,
-		"%d forest fixtures keep approved painted pigments under the forest grade, usable ambient headroom and separate additive lights: %s" % [checked.size(), str(bad)])
+		"%d forest props are drawn from approved paintings with usable ambient headroom under the forest grade and separate additive lights: %s" % [checked.size(), str(bad)])
 
 
 func _defs(props: Dictionary) -> void:
@@ -667,7 +715,7 @@ func _image_props(props: Dictionary) -> void:
 		if not _arr_eq(size2, [256, 256]) or not bool(e2.get("seamless", false)):
 			bad.append("%s: not a 256 px seamless texture" % id)
 			continue
-		var im: Image = _image(PROPS_DIR + str(e2["file"]))
+		var im: Image = _image(_path(e2))
 		var edge: float = 0.0
 		var inner: float = 0.0
 		for k in 256:
@@ -677,7 +725,7 @@ func _image_props(props: Dictionary) -> void:
 			bad.append("%s: wrap-around step %.1f vs inner %.1f" % [id, edge / 512.0, inner / 512.0])
 	# lantern_light: 1.0 at the centre, 0.31 at 60 % of the radius, 0 at 100 %
 	var ll: Dictionary = props.get("lantern_light", {})
-	var lim: Image = _image(PROPS_DIR + str(ll.get("file", "")))
+	var lim: Image = _image(_path(ll))
 	if lim == null or lim.get_width() != 512 or lim.get_height() != 512:
 		bad.append("lantern_light: 512 px expected")
 	else:
@@ -689,7 +737,7 @@ func _image_props(props: Dictionary) -> void:
 	# telegraph rings are ground circles: squashed to sin 36
 	for id in ["telegraph_ring_s", "telegraph_ring_m", "telegraph_ring_l"]:
 		var e3: Dictionary = props.get(id, {})
-		var b: Array = _bounds(_image(PROPS_DIR + str(e3.get("file", ""))), 200)
+		var b: Array = _bounds(_image(_path(e3)), 200)
 		if b.is_empty() or absf(float(b[3] - b[1]) / float(b[2] - b[0]) - SIN36) > 0.03:
 			bad.append("%s: not a ground ellipse squashed to .59 (%s)" % [id, str(b)])
 	var firefly: Dictionary = props.get("firefly_dot", {})
@@ -719,7 +767,7 @@ func _backdrops() -> void:
 		var far: Texture2D = art["far"]
 		if sky.get_width() != 1920 or sky.get_height() != 1080 or far.get_width() != 2048 or far.get_height() != 1280:
 			bad.append("%s: sky %dx%d far %dx%d" % [theme, sky.get_width(), sky.get_height(), far.get_width(), far.get_height()])
-		var fim: Image = _image(BACKDROP_DIR + theme + "_far.webp")
+		var fim: Image = _image(far.resource_path)
 		if fim == null:
 			bad.append("%s: far layer unreadable" % theme)
 			continue
@@ -732,7 +780,7 @@ func _backdrops() -> void:
 		var top: Color = fim.get_pixel(1000, 5)
 		if top.a > 0.05:
 			bad.append("%s: far layer must be transparent at the top (the sky shows above the treetops)" % theme)
-	t.check("backdrops_present", bad.is_empty(), "hyggebyen (lavender dusk) and forest (night navy with haze): <theme>_sky.webp 1920x1080 + <theme>_far.webp 2048x1280, seamless in x, transparent top edge: %s" % str(bad))
+	t.check("backdrops_present", bad.is_empty(), "hyggebyen (lavender dusk) and forest (night navy with haze): the sky 1920x1080 + the far layer 2048x1280 ArtCatalog serves (the painted backdrop_<theme>_far prop), seamless in x, transparent top edge: %s" % str(bad))
 	t.check("farm_backdrop_installed",bool(ArtCatalog.backdrop(&"farm").get("real",false)),"the selected painted farm backdrop is installed")
 
 

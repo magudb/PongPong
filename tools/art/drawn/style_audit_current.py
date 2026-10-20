@@ -69,7 +69,6 @@ def roles(catalog: dict) -> tuple[dict, dict]:
     for row in catalog["props"]:
         for part in row.get("auxiliary", []):
             selected[local(part["path"]).resolve()] = "technical-" + part["role"]
-    selected[(ROOT / "assets/art/watercolor_paper.png").resolve()] = "shared-ui-paper-texture"
     # These are separately consumed art kits; ArtCatalog alone does not see them.
     for directory, filename, role in [("shops/core", "shops.json", "core-shop-view"),
                                        ("shops/special", "shops.json", "specialist-shop-view"),

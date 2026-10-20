@@ -2,6 +2,9 @@ extends RefCounted
 ## Section art_city (package V5-art-city, M1a stage 2): the art of Traetoppen, the levelled treetop city - platform discs, tileable trunks, round huts with additive
 ## night layers, pennants, lanterns, the procedural-bridge tiles, the landmark set dressing, the front foliage, the canopy frame and the treetop backdrop - as shipped in
 ## res://assets/iso_props/city/ and res://assets/backdrops/treetop_*.webp against the work order and the city data of V3 (data/traetoppen/traetoppen.json, lua/config/traetoppen.lua).
+## The ids and geometry are V5's (city/props.json); the files checked are the ones the game draws, i.e. the effective art of the pack that wins in ArtCatalog
+## (CityData.city_props(): most of the set ships from painted_world, the pennants from the painted consistency pass, the fire and the soft shadow from city/).
+## Superseded copies are not kept (review REND-10), so every check below reads the shipped file.
 ##
 ## Headless (independent of the Python validator tools/art/environment/city/validate_city.py, which implements the same checks a second time):
 ##   inputs_present  sizes_match_json  props_manifest_sane  discs_ellipse_planks_no_hole  trunk_tiles_seamless_pixels  huts_have_night_layers  night_layers_additive
@@ -49,7 +52,8 @@ const TABLE: Dictionary = {
 	"foliage_front_a": [1020, 720], "foliage_front_b": [1020, 720], "canopy_top_strip": [2048, 320], "shadow_soft": [256, 128],
 }
 ## the backdrops are not props (ArtCatalog.backdrop loads them by theme name)
-const BACKDROP_TABLE: Dictionary = {"treetop_sky": [16, 1024], "treetop_far": [2048, 1024]}
+## the sky and the far layer ArtCatalog serves for &"treetop" (the painted sky, the painted_world far prop); V5's treetop_*.webp are superseded and not kept
+const BACKDROP_LAYERS: Array[String] = ["sky", "far"]
 ## they do not scale with K: screen-space frame, backdrops, the shared shadow; the bark tile height
 const FIXED: Array[String] = ["canopy_top_strip", "shadow_soft"]
 const LANDMARK_IDS: Array[String] = ["market_stall_traetoppen", "fire_pit", "fire_flame", "bath_tub_back", "bath_tub_front", "planter_box", "planter_box_berry", "log_stack",
@@ -77,10 +81,10 @@ func run(t) -> void:
 	_landmarks(props)
 	_city_json_art(props, city)
 	_backdrop()
-	_formats()
+	_formats(props)
 	_vram(props)
 	_scale_with_k(props)
-	_foliage()
+	_foliage(props)
 	_readme()
 
 
@@ -93,8 +97,13 @@ func _json(path: String) -> Variant:
 
 
 func _props() -> Dictionary:
-	var d: Variant = _json(DIR + "props.json")
-	return (d as Dictionary) if d is Dictionary else {}
+	CityData.clear_cache()
+	return CityData.city_props().duplicate(true)
+
+
+## The file the game draws for a city entry: its pack folder (`_dir` of the effective entry) + file.
+func _path(e: Dictionary) -> String:
+	return str(e.get("_dir", DIR)) + str(e.get("file", ""))
 
 
 func _city() -> Dictionary:
@@ -121,7 +130,7 @@ func _image(path: String) -> Image:
 func _prop_image(props: Dictionary, id: String) -> Image:
 	if not props.has(id):
 		return null
-	return _image(DIR + str((props[id] as Dictionary).get("file", "")))
+	return _image(_path(props[id]))
 
 
 func _expected(id: String, k: float) -> Vector2i:
@@ -590,19 +599,7 @@ func _backdrop() -> void:
 		bad.append("sky %s" % [str(sky.get_size()) if sky != null else "null"])
 	if far == null or far.get_width() != 2048 or far.get_height() != 1024:
 		bad.append("far %s" % [str(far.get_size()) if far != null else "null"])
-	var sim: Image = _image(BACKDROP_DIR + "treetop_sky.webp")
-	if sim != null:
-		var painting := _image(BACKDROP_DIR + "treetop_sky.png")
-		painting = painting.duplicate()
-		painting.resize(16, 1024, Image.INTERPOLATE_LANCZOS)
-		for y in [0, 560, 1023]:
-			var c: Color = sim.get_pixel(8, int(y))
-			var w: Color = painting.get_pixel(8, y)
-			if maxf(absf(c.r - w.r), maxf(absf(c.g - w.g), absf(c.b - w.b))) * 255.0 > 18.0:
-				bad.append("sky at row %d differs from the approved painted sky" % y)
-	else:
-		bad.append("treetop_sky.webp unreadable")
-	var fim: Image = _image(BACKDROP_DIR + "treetop_far.webp")
+	var fim: Image = _image(far.resource_path) if far != null else null
 	if fim != null:
 		# Seamless painted foliage, with enough opacity to separate the far trees.
 		var st: Dictionary = _wrap_steps(fim, false)
@@ -618,21 +615,19 @@ func _backdrop() -> void:
 	var mm: Array[String] = ArtCatalog.missing()
 	if mm.has("backdrop:treetop"):
 		bad.append("ArtCatalog.missing() lists backdrop:treetop")
-	_t.check("backdrop_loads_through_artcatalog", bad.is_empty(), "runtime sky %s; historical sky uses the approved painting, far trees wrap and remain visible; %s" % [sky_size, str(bad.slice(0, 3))])
+	_t.check("backdrop_loads_through_artcatalog", bad.is_empty(), "runtime sky %s (the approved painting); far trees wrap and remain visible; %s" % [sky_size, str(bad.slice(0, 3))])
 
 
 ## no lossy WebP: every file is VP8L (lossless) or a PNG; a 'VP8 ' chunk is lossy
-func _formats() -> void:
+func _formats(props: Dictionary) -> void:
 	var bad: Array[String] = []
 	var n := 0
 	var paths: Array[String] = []
-	var d := DirAccess.open(DIR)
-	if d != null:
-		for f in d.get_files():
-			if f.ends_with(".webp") or f.ends_with(".png"):
-				paths.append(DIR + f)
-	for b in BACKDROP_TABLE:
-		paths.append(BACKDROP_DIR + b + ".webp")
+	for id in props:
+		if not str(id).begins_with("_") and not paths.has(_path(props[id])):
+			paths.append(_path(props[id]))
+	for b in BACKDROP_LAYERS:
+		paths.append(_backdrop_path(b))
 	for p in paths:
 		n += 1
 		if p.ends_with(".png"):
@@ -652,9 +647,16 @@ func _formats() -> void:
 			elif fourcc == "VP8L":
 				lossless = true
 			pos += 8 + size + (size & 1)
-		if lossy or not lossless:
+		# V5's own files (city/, the backdrops) and their painted_world copies are lossless; the painted consistency pass encodes its pennants lossy and
+		# imports them S3TC like the rest of its pack
+		if (lossy or not lossless) and not p.contains("/zz_painted_consistency/"):
 			bad.append("%s: %s" % [p.get_file(), "LOSSY (VP8)" if lossy else "no VP8L chunk"])
-	_t.check("no_lossy_webp", bad.is_empty() and n >= 77, "%d files of the city set are lossless WebP (VP8L chunks only); %s" % [n, str(bad.slice(0, 3))])
+	_t.check("no_lossy_webp", bad.is_empty() and n >= 77, "%d files of the city set are WebP, lossless except the consistency pass's pennants; %s" % [n, str(bad.slice(0, 3))])
+
+
+func _backdrop_path(layer: String) -> String:
+	var tex: Texture2D = ArtCatalog.backdrop(&"treetop").get(layer, null)
+	return tex.resource_path if tex != null else ""
 
 
 func _import_mipmaps(path: String) -> bool:
@@ -678,7 +680,7 @@ func _vram(props: Dictionary) -> void:
 		if str(id).begins_with("_"):
 			continue
 		var e: Dictionary = props[id]
-		var path: String = DIR + str(e.get("file", ""))
+		var path: String = _path(e)
 		var im: Image = _image(path)
 		if im == null:
 			continue
@@ -691,8 +693,8 @@ func _vram(props: Dictionary) -> void:
 		if maxi(im.get_width(), im.get_height()) > SIDE_LIMIT:
 			bad.append("%s %dx%d is above %d px on a side" % [id, im.get_width(), im.get_height(), SIDE_LIMIT])
 	var backdrop_mb := 0.0
-	for b in BACKDROP_TABLE:
-		var bp: String = BACKDROP_DIR + b + ".webp"
+	for b in BACKDROP_LAYERS:
+		var bp: String = _backdrop_path(b)
 		var bi: Image = _image(bp)
 		if bi == null:
 			bad.append("%s unreadable" % b)
@@ -754,10 +756,10 @@ func _scale_with_k(props: Dictionary) -> void:
 	_t.check("sizes_scale_with_k", bad.is_empty(), "sizes = round(size at K=3 x K / 3) for K 2.0 / 2.4 / 3.0 / 3.2 (tile height, canopy, backdrops fixed); the set is baked for the Lua scale %.1f; %s %s" % [_k(), ran, str(bad.slice(0, 3))])
 
 
-func _foliage() -> void:
+func _foliage(props: Dictionary) -> void:
 	var bad: Array[String] = []
 	for id in ["foliage_front_a", "foliage_front_b"]:
-		var im: Image = _image(DIR + id + ".webp")
+		var im: Image = _prop_image(props, id)
 		if im == null:
 			bad.append("%s unreadable" % id)
 			continue

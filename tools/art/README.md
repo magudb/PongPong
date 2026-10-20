@@ -28,7 +28,8 @@ gentler pass without contours or value bands. Additive lights, night layers, flo
 their source files. UI SVGs and the runtime prop painters have matching wandering lines and painted shading.
 
 The title illustration, five zone skies and watercolor-paper material were created with the built-in imagegen tool,
-using the original drawings and the existing style guides. Exact prompts are in `storybook/prompts.json`. The source
+using the original drawings and the existing style guides. The paper (`storybook/watercolor_paper.png`) is read only by the
+offline bake, so it lives here and is not exported with the game. Exact prompts are in `storybook/prompts.json`. The source
 designs remain in `docs/original_drawings/` and `generator/`.
 
 To finish a **pristine** asset export (use a separate checkout for source; applying the pass twice compounds the color):

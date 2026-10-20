@@ -105,16 +105,20 @@ same alpha and animation; the pink cloth is a palette variant.
 `optimize_environment.py` exports the approved full-colour sky masters in
 `sources/environment_masters/`. Painted sky PNGs use 128 colours, the native
 1920 by 1080 crop and the farm's S3TC/mipmap background preset. It then restores
-the painted compatibility fixtures, including the crown and terrain atlases.
+the painted compatibility fixtures, including the terrain atlases.
 `environment-export.json` records sky dimensions, colour error,
 alpha comparisons and the combined 40 MB painted compatibility-fixture disk budget.
 Live city VRAM, farm upload and home disk limits remain separate checks.
 
-Historical fixture paths now receive the approved paintings too. `fixtures.py`
-uses `fixture_recipes.json` to export 285 images at those paths while preserving
-canvases, tile cells and ground anchors; 13 neutral radial light kernels remain
-functional masks. Trimmed hut light layers adopt the painted window bounds and
-offsets. `sources/fixture_geometry.npz` stores only measured channel sums and alpha
+Historical fixture paths the game still draws (tile atlases, interior walls, the
+farm canopy and the soft glow kernel) receive the approved paintings too. `fixtures.py`
+uses `fixture_recipes.json` to export those 61 images while preserving canvases,
+tile cells and ground anchors; the neutral glow kernel remains a functional mask.
+Copies that a later art pack supersedes (the P22, V5 and N03 bakes the painted
+passes replaced, and backdrops a painted layer shadows) are not kept: nothing draws
+them, so they only shipped and invited edits that never showed (review REND-10);
+`art_environment.no_superseded_art_files` fails when one comes back.
+`sources/fixture_geometry.npz` stores only measured channel sums and alpha
 for material joints/silhouettes; other recipes need only body bounds. Exporters
 read those immutable measurements, preventing repeated painted re-shading.
 The production packer and optimizer restore painted fixtures last. Run
