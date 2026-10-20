@@ -64,8 +64,10 @@ trap stop_all INT TERM
 
 # ---------------------------------------------------------------- 1. checks without Godot
 step() {   # step NAME CMD...  -> OUT/NAME.log, OUT/NAME.rc
-	"$@" >"$OUT/$1.log" 2>&1
-	echo $? >"$OUT/$1.rc"
+	local name="$1"
+	shift
+	"$@" >"$OUT/$name.log" 2>&1
+	echo $? >"$OUT/$name.rc"
 }
 lint_loc() { "$PY" tools/loc/csv_lint.py --strict --quiet; }
 release_tests() { "$PY" -m unittest discover -s tools/release/tests -v; }
