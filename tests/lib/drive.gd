@@ -130,6 +130,21 @@ func until_game(cond: Callable, game_timeout: float, each: Callable = Callable()
 	return false
 
 
+## Pages an open dialogue (`interact` every other frame, as a player taps through it) until it offers its choices or closes, for at most
+## `game_timeout` GAME seconds: its lines type by the game's delta, so a frame count is no bound for it (TEST-03). Returns whether it got there.
+func page_to_choices(dialogue: Control, game_timeout: float = 10.0) -> bool:
+	return await until_game(_paged_to_choices.bind(dialogue, {"frame": 0}), game_timeout)
+
+
+func _paged_to_choices(dialogue: Control, state: Dictionary) -> bool:
+	if not dialogue.is_open() or dialogue._wants_focus():
+		return true
+	if int(state.frame) % 2 == 0:
+		tap(&"interact")
+	state.frame = int(state.frame) + 1
+	return false
+
+
 ## Waits for `sig` to fire (e.g. t.autoload("EventBus").day_started) for at most `timeout` seconds.
 ## Returns the emitted arguments as an Array ([] for a signal without arguments) or null on timeout.
 func wait_signal(sig: Signal, timeout: float = 5.0) -> Variant:

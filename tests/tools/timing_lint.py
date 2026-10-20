@@ -4,8 +4,10 @@
   raw_wall_clock_budgets   a check / expect that limits a wall-clock measurement from above (`ms <= 0.4`) outside
                            t.perf_ok(): a difference of Time.get_ticks_usec() / get_ticks_msec() readings or a timing
                            the game measured itself (`area.build_ms`, `nav.bake_us`, `last_tick_usec`)
-  frame_count_waits        a `for i in N:` loop of single frames that gives up with t.fail(): a frame count is
-                           no bound for anything the game animates by its delta (use t.until_game())
+  frame_count_waits        a `for i in N:` loop of frame waits (`await t.frames(n)`, a process frame) that gives up with
+                           t.fail(), or that leaves early (break / return) and is then judged by a check: a frame count is no
+                           bound for anything the game animates by its delta (use t.until_game()). A loop over a fixed number
+                           of frames that samples every one (a frame-time or callback measurement) is no wait and is not flagged
   lint_detects_mutants     the rules flag the built-in bad samples and none of the good ones
 
 A wall-clock comparison that is not a budget (a wait that has to end well before its own timeout) carries
@@ -28,7 +30,9 @@ LOOP_VAR = re.compile(r"^\s*for\s+([A-Za-z_]\w*)\s+in\s+(.+):\s*$")
 GAME_TIMING = re.compile(r"\.\w*_(?:ms|usec|us)\b")
 EXEMPT = "# raw-time-ok:"
 FRAME_LOOP = re.compile(r"^(\s*)for \w+ in (\d+):\s*$")
-ONE_FRAME = re.compile(r"await (?:t\.frames\(1\)|t\.tree\.process_frame|get_tree\(\)\.process_frame)")
+FRAME_WAIT = re.compile(r"await (?:t\.frames\(\d*\)|t\.tree\.process_frame|get_tree\(\)\.process_frame)")
+EARLY_EXIT = re.compile(r"^\s*(?:if\b.*:\s*)?(?:break|return)\b")
+JUDGED = re.compile(r"^(?:t\.check|t\.expect|suite\._check|_check)\(")
 
 
 def measurements(lines):
@@ -136,7 +140,8 @@ def frame_waits(path, text):
             body.append(lines[j])
             j += 1
         after = lines[j].strip() if j < len(lines) else ""
-        if any(ONE_FRAME.search(b) for b in body) and after.startswith("t.fail("):
+        waits = any(FRAME_WAIT.search(b) for b in body)
+        if waits and (after.startswith("t.fail(") or (JUDGED.match(after) and any(EARLY_EXIT.match(b) for b in body))):
             found.append("%s:%d %s ... %s" % (path, i + 1, line.strip(), after[:80]))
     return found
 
@@ -160,6 +165,8 @@ BAD = {
     ],
     "frames": [
         "func _finish(t) -> void:\n\tfor i in 800:\n\t\tawait t.frames(1)\n\t\tif done(): return\n\tt.fail(\"did not release\")\n",
+        "func _choices(t, d) -> void:\n\tfor i in 20:\n\t\tif d._wants_focus():\n\t\t\treturn\n\t\tt.tap(&\"interact\")\n\t\tawait t.frames(2)\n\tt.fail(\"never reached choices\")\n",
+        "for i in 40:\n\tawait t.frames(1)\n\tif done(): break\nt.check(\"done\", done())\n",
     ],
 }
 GOOD = {
@@ -170,7 +177,7 @@ GOOD = {
     ],
     "frames": [
         "func _finish(t) -> void:\n\tif not await t.until_game(func(): return done(), 10.0):\n\t\tt.fail(\"did not release\")\n",
-        "for i in 40:\n\tawait t.frames(1)\n\tif done(): break\nt.check(\"done\", done())\n",
+        "var worst := 0.0\nfor frame in 180:\n\tawait t.frames(1)\n\tworst = maxf(worst, load())\nt.check(\"steady\", worst < 3.0)\n",
     ],
 }
 
@@ -190,7 +197,7 @@ def main(argv):
     files, raw, frames = scan(root)
     missed, false_hits = mutants()
     ok = True
-    for rule, found, what in (("raw_wall_clock_budgets", raw, "raw wall-clock comparison(s) outside t.perf_ok()"), ("frame_count_waits", frames, "frame-count wait(s) ending in t.fail()")):
+    for rule, found, what in (("raw_wall_clock_budgets", raw, "raw wall-clock comparison(s) outside t.perf_ok()"), ("frame_count_waits", frames, "frame-count wait(s) that a failure or check ends")):
         if found:
             ok = False
             print("FAIL %s %d %s in %d files:" % (rule, len(found), what, len(files)))
