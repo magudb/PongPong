@@ -648,8 +648,9 @@ func _formats(props: Dictionary) -> void:
 				lossless = true
 			pos += 8 + size + (size & 1)
 		# V5's own files (city/, the backdrops) and their painted_world copies are lossless; the painted consistency pass encodes its pennants lossy and
-		# imports them S3TC like the rest of its pack
-		if (lossy or not lossless) and not p.contains("/zz_painted_consistency/"):
+		# imports them S3TC like the rest of its pack (pennant_<colour>[_f1].webp); any other lossy file of the city set fails
+		var pennant: bool = p.get_base_dir().ends_with("/zz_painted_consistency") and p.get_file().begins_with("pennant_")
+		if (lossy or not lossless) and not pennant:
 			bad.append("%s: %s" % [p.get_file(), "LOSSY (VP8)" if lossy else "no VP8L chunk"])
 	_t.check("no_lossy_webp", bad.is_empty() and n >= 77, "%d files of the city set are WebP, lossless except the consistency pass's pennants; %s" % [n, str(bad.slice(0, 3))])
 
