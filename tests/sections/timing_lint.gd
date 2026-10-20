@@ -25,13 +25,17 @@ func run(t) -> void:
 			OS.delay_usec(50000)
 	var stalled: float = t.median_usec(work, 5, 10)
 	t.check("median_usec_ignores_one_stalled_batch", calls.n == 50 and stalled < 1000.0, "%d calls, median %.1f us per call (the stalled batch averages 5000 us)" % [calls.n, stalled]) # raw-time-ok: tests the helper itself, a 50x margin
-	# perf_ok: inside the reference passes quietly, over the runner limit fails, except on an overloaded machine (not judged)
+	# perf_ok: inside the reference passes quietly, over the runner limit fails, except on an overloaded scaled local run (not judged)
 	t.check("perf_ok_passes_inside_the_reference", t.perf_ok("perf_ok_probe", 1.0, 2.0))
 	var load: Dictionary = t.machine_overloaded()
-	var overloaded: bool = load.overloaded
-	var judged_before: int = t.slow.filter(func(row) -> bool: return not bool(row.get("judged", true))).size()
+	var exempt: bool = t.not_judged(t.perf_limit(2.0) + 0.001, t.perf_limit(2.0), t.perf_scaled(), t.on_ci(), bool(load.overloaded))
+	var judged_before: int = t.not_judged_count()
 	var over: bool = t.perf_ok("perf_ok_probe", t.perf_limit(2.0) + 0.001, 2.0)
-	var not_judged: int = t.slow.filter(func(row) -> bool: return not bool(row.get("judged", true))).size() - judged_before
-	t.check("perf_ok_fails_past_the_runner_limit", over == overloaded and not_judged == (1 if overloaded else 0), "runner limit %.1f for a reference of 2, %s: passed %s, not judged %d" % [t.perf_limit(2.0), load.text, over, not_judged])
-	if overloaded:
+	var not_judged: int = t.not_judged_count() - judged_before
+	t.check("perf_ok_fails_past_the_runner_limit", over == exempt and not_judged == (1 if exempt else 0), "runner limit %.1f for a reference of 2, %s, scaled %s, CI %s: passed %s, not judged %d" % [t.perf_limit(2.0), load.text, t.perf_scaled(), t.on_ci(), over, not_judged])
+	if exempt:
 		t.slow.pop_back() # the probe is not a timing of the game: keep it out of the summary
+	# ... and who may skip the verdict: only a scaled local run on an overloaded machine, up to OVERLOAD_CEILING x the limit
+	var ceiling: float = 8.0 * t.OVERLOAD_CEILING
+	t.check("not_judged_only_overloaded_scaled_local_runs", t.not_judged(9.0, 8.0, true, false, true) and not t.not_judged(9.0, 8.0, true, false, false) and not t.not_judged(9.0, 8.0, false, false, true) and not t.not_judged(9.0, 8.0, true, true, true), "overloaded scaled local run: not judged; a quiet machine, an unscaled (native or windowed) run and a CI job judge")
+	t.check("not_judged_has_a_ceiling", t.not_judged(ceiling, 8.0, true, false, true) and not t.not_judged(ceiling + 0.001, 8.0, true, false, true), "past %.1fx the runner limit a timing fails under any load" % t.OVERLOAD_CEILING)
