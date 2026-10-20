@@ -5,6 +5,8 @@ signal weapon_drawn(item_id: StringName)
 const S := PlayerBody2D.S
 const RULES := "res://scripts/dungeon_run/dungeon_run.gd"
 const FX := "res://scripts/combat/weapon_fx.gd"
+## The slash is drawn, and its hits are tested, this far above the feet: a cursor aim measures from the same point.
+const SLASH_LIFT := -6.0 * Iso.S
 var player: PlayerBody2D
 var cooldowns := {"slash": 0.0, "dodge": 0.0, "light": 0.0, "drink": 0.0}
 var durations := {"slash": 0.4, "dodge": 0.9, "light": 7.0, "drink": 1.0}
@@ -25,6 +27,8 @@ var _buffer: StringName = &""
 var _buffer_time: float = 0.0
 ## The weapon a buffered or held slash swings ("" = the equipped one; a hotbar weapon in an iso area names itself).
 var _buffer_item: StringName = &""
+## The clicked ground point a buffered slash aims at (null: the live aim of aim_ground when it fires).
+var _buffer_aim: Variant = null
 var _last_spark: bool = false
 var _burst: PointLight2D
 var _query := PhysicsShapeQueryParameters2D.new()
@@ -56,21 +60,24 @@ func _assist(key: String, fallback: Variant = 0.0) -> Variant:
 func _feel(key: String, fallback: Variant) -> Variant:
 	return GameData.cfg("dungeon_run.feel." + key, fallback)
 
-func request(ability: StringName, item: StringName = &"") -> void:
+## `aim` is the clicked ground point (global) of a mouse press: the slash goes there even when the buffer fires it later.
+func request(ability: StringName, item: StringName = &"", aim: Variant = null) -> void:
 	_buffer = ability
 	_buffer_time = float(_feel("input_buffer", 0.15))
 	if ability == &"slash":
 		_buffer_item = item
+		_buffer_aim = aim
 		attack_held = true
 	_attempt_buffer()
 
 func _attempt_buffer() -> void:
 	if _buffer == &"":
 		return
-	var ok := swing(_buffer_item) if _buffer == &"slash" else dodge()
+	var ok := swing(_buffer_item, _buffer_aim) if _buffer == &"slash" else dodge()
 	if ok:
 		_buffer = &""
 		_buffer_time = 0.0
+		_buffer_aim = null
 
 func tick(delta: float) -> void:
 	stopped_this_tick = hit_stop > 0
@@ -138,9 +145,15 @@ func _read_weapon(item: StringName = &"") -> Dictionary:
 	info["id"] = item
 	return info
 
-func aim_ground() -> Vector2:
-	if bool(player.get("mouse_aim")):
-		var direction := Iso.to_ground(player.get_global_mouse_position() - player.global_position - Vector2(0, -24.0 * Iso.S))
+## The ground direction of a swing: toward `at` (a clicked ground point), else toward the cursor while the mouse is the
+## device in use, else the precise walking direction. A point is measured from the slash's own origin (SLASH_LIFT), so the
+## drawn arc is centred on the clicked spot.
+func aim_ground(at: Variant = null) -> Vector2:
+	if at == null and bool(player.get("mouse_aim")) and player.has_method("cursor_global"):
+		at = player.call("cursor_global")
+	if at is Vector2:
+		var point: Vector2 = at
+		var direction := Iso.to_ground(point - player.global_position - Vector2(0, SLASH_LIFT))
 		if direction.length() > 8.0 * Iso.S:
 			return direction.normalized()
 	var precise: Variant = player.get("combat_aim")
@@ -148,16 +161,16 @@ func aim_ground() -> Vector2:
 		return precise.normalized()
 	return Iso.to_ground(player.facing_vec).normalized()
 
-func swing(item: StringName = &"") -> bool:
+func swing(item: StringName = &"", aim: Variant = null) -> bool:
 	if not player.world_input_allowed() or player.state != S.FREE or float(cooldowns.slash) > 0.0 or player.is_flying:
 		return false
 	_weapon = _read_weapon(item)
 	if _weapon.is_empty():
 		return false
-	_swing_direction = aim_ground()
+	_swing_direction = aim_ground(aim)
 	# Eight keyboard directions need half a 45-degree sector of assistance;
 	# otherwise a 22-degree spear leaves blind angles between directions.
-	var nudge := deg_to_rad(15.0) if bool(player.get("mouse_aim")) else PI/8
+	var nudge := deg_to_rad(15.0) if aim is Vector2 or bool(player.get("mouse_aim")) else PI/8
 	var closest := INF
 	var target_angle := _swing_direction.angle()
 	for enemy in get_tree().get_nodes_in_group("enemy"):
@@ -184,7 +197,7 @@ func swing(item: StringName = &"") -> bool:
 	_shape.points = points
 	var slash := Slash2D.new()
 	slash.setup(_swing_direction, radius, half, _swing_duration)
-	slash.position.y = -6.0 * Iso.S
+	slash.position.y = SLASH_LIFT
 	slash.tint = Rarity.ui(_weapon.get("rarity", "normal")).ring
 	player.add_child(slash)
 	player.visual.play_action(&"interact", player.visual.clip_duration(&"interact", 1.0) / _swing_duration)
@@ -194,7 +207,7 @@ func swing(item: StringName = &"") -> bool:
 	return true
 
 func _apply_hits() -> void:
-	_query.transform = Transform2D(0.0, player.global_position + Vector2(0, -6.0 * Iso.S))
+	_query.transform = Transform2D(0.0, player.global_position + Vector2(0, SLASH_LIFT))
 	for result in player.get_world_2d().direct_space_state.intersect_shape(_query, 32):
 		var target: Node = result.collider
 		if target is Area2D:
@@ -324,6 +337,7 @@ func clear_buffer() -> void:
 	_buffer = &""
 	_buffer_time = 0.0
 	_buffer_item = &""
+	_buffer_aim = null
 
 func cancel_action() -> void:
 	_hit.clear()
