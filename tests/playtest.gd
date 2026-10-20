@@ -46,8 +46,10 @@ extends SceneTree
 ## releases held input, resets Engine.time_scale and the pause, and puts back what the section changed and did not restore
 ## itself (a note names each): the locale, GameManager config overrides, Svc fakes, the modal stack, Engine metadata (the
 ## sections' probe channel) and the String *_path / *_dir seams of the autoloads. A section that times out fails the run, but the next sections
-## still run: its `t` is detached (its wait helpers park the stuck coroutine for good), the scene is cleared, and the rest of the
-## run gets a fresh `t`. Only the boot stage and --max-seconds stop a run early.
+## still run: its `t` is detached, the world is replaced and the rest of the run gets a fresh `t`. The stuck coroutine is parked
+## for good when it next reaches a wait helper of its `t`; code it runs before that (after an await on a game timer or a signal)
+## still runs, its checks print as `late` lines and count nowhere (see tests/lib/drive.gd). Only the boot stage and --max-seconds
+## stop a run early.
 ##
 ## This script compiles BEFORE the autoloads exist: it never names an autoload (tests/lib reaches them with
 ## root.get_node) and loads its libraries with load().
@@ -335,7 +337,8 @@ func _timeout_abort(what: String, limit: float) -> void:
 
 
 ## A section timed out: it fails the run, and the run goes on with the next section. The stuck coroutine keeps the old `t`,
-## which is detached (its frames / physics / seconds / until park the coroutine for good when it reaches one), the world it
+## which is detached (its frames / physics / seconds / until park the coroutine for good when it reaches one; its checks before
+## that print as `late` lines and are not counted), the world it
 ## left is replaced by a fresh one (what the boot stage gives the sections; a windowed run gets an empty scene), and the next
 ## sections get a fresh `t` that carries the run's counts on.
 func _isolate_timeout(what: String, limit: float) -> void:
@@ -357,7 +360,7 @@ func _isolate_timeout(what: String, limit: float) -> void:
 		await _t.clear_scene()
 	elif not await _guarded(60.0, func() -> void: await _t.start_world(_character)):
 		_problems.append("no fresh world after the timeout of section %s" % what)
-	print("  note  the next sections still run: the stuck section is parked, the world was replaced")
+	print("  note  the next sections still run with a fresh t and a fresh world; the stuck section is parked at its next wait (late lines of it are not counted)")
 
 
 ## What a section may change for its own checks and must leave as it found it (see the header). Taken before every section.

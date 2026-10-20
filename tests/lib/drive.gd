@@ -30,10 +30,12 @@ var rng := RandomNumberGenerator.new()
 ## The Logger capture (tests/lib/error_catcher.gd), set by the harness (untyped: duck-typed, loaded at runtime).
 var catcher
 
-## Set by the harness when the section that holds this `t` timed out (tests/playtest.gd): a coroutine cannot be cancelled in
-## GDScript, so from then on every wait helper of this `t` parks the stuck section for good instead of returning, and it cannot
-## run on into the sections after it. The harness hands the next sections a fresh `t`.
-var detached: bool = false
+## `detached` (tests/lib/asserts.gd) is set when the section that holds this `t` timed out: a coroutine cannot be cancelled in
+## GDScript, so from then on every wait helper of this `t` (frames, physics, seconds, real_seconds, until, ...) parks the stuck
+## section for good instead of returning, on entry and on wake-up. That is the limit of the isolation: a stuck section that
+## waits on something else (a game method's own timer loop, a node signal) wakes up later and runs on until it reaches one of
+## these helpers. Its checks are then printed as `late` lines and not counted; other side effects (a process it starts, autoload
+## state it changes) land in the section that runs then. The harness hands the next sections a fresh `t`.
 
 var _held: Dictionary = {}     # action -> true while held through t.hold()
 var _cleanups: Array[Callable] = []

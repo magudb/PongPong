@@ -49,7 +49,9 @@ While working on a section use the inner loop, `tests/run_playtest.sh --strict -
 One Godot per checkout: `run_playtest.sh` and `play.sh` refuse to start while another run uses the same folder (clone it
 instead). Sections share one process; after every section the harness runs the section's `t.on_cleanup(func)` callables and
 puts back the locale, config overrides, Svc fakes, the modal stack, Engine metadata and the autoloads' `*_path` seams it left
-behind (a note names them: register a cleanup instead). A section that times out fails the run, but the next ones still run.
+behind (a note names them: register a cleanup instead). A section that times out fails the run, but the next ones still run,
+with a fresh `t` and a fresh world. The stuck coroutine cannot be cancelled: it is parked when it next reaches a wait helper of
+its `t`; until then it runs on (its checks print as `late` lines and count nowhere, other side effects land in a later section).
 `--shuffle=N` runs the sections in a seeded random order (the nightly CI run does). `t.press()` is a real click (it fails on a
 hidden, covered or off-screen button); `t.python()` is the one Python for tools (the art venv, else `python3`) and
 `t.require_tool()` guards a check that needs a program (a skip locally, a failure under `--strict`). Under `--strict` a section

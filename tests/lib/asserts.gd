@@ -23,6 +23,11 @@ var verbose: bool = false
 ## --strict run (CI): a missing external tool is a failure, not a skip (require_tool).
 var strict: bool = false
 var max_ok_lines: int = 400
+## Set by the harness when the section that holds this `t` timed out (tests/playtest.gd). The stuck coroutine may still run on
+## until it reaches one of the wait helpers of tests/lib/drive.gd, which park it for good. What it checks, skips or notes until
+## then is printed as a `late` line naming the timed-out section and counted nowhere: the run already failed on the timeout, and
+## the counts and the failure list belong to the sections after it (they hold a fresh `t`).
+var detached: bool = false
 
 var _ok_printed: int = 0
 var _ok_suppressed: int = 0
@@ -47,6 +52,8 @@ func end_section() -> void:
 
 
 func _count(ok: bool) -> void:
+	if detached:
+		return
 	checks += 1
 	var s: Dictionary = stats.get(section, {})
 	if not s.is_empty():
@@ -56,6 +63,9 @@ func _count(ok: bool) -> void:
 
 
 func _ok_line(text: String) -> void:
+	if detached:
+		_late("ok    " + text)
+		return
 	if verbose or _ok_printed < max_ok_lines:
 		_ok_printed += 1
 		print("  ok    ", text)
@@ -64,6 +74,9 @@ func _ok_line(text: String) -> void:
 
 
 func _record_failure(label: String) -> void:
+	if detached:
+		_late("FAIL  " + label)
+		return
 	failed += 1
 	failures.append("%s.%s" % [section, label])
 	print("  FAIL  ", label)
@@ -91,6 +104,8 @@ func check(check_name: String, cond: Variant, detail: Variant = "") -> bool:
 		label += " (%s)" % str(detail)
 	if ok:
 		_ok_line(label)
+	elif detached:
+		_late("FAIL  " + label)
 	else:
 		failed += 1
 		failures.append("%s.%s" % [section, check_name])
@@ -146,6 +161,9 @@ func fail(label: Variant) -> void:
 ## A check that cannot run here (missing optional package, headless-only gap). Printed and counted as skipped, never a failure
 ## by itself; under --strict the harness fails a section that skips more than its budget (tests/lib/skip_budget.txt).
 func skip(label: Variant) -> void:
+	if detached:
+		_late("SKIP  " + str(label))
+		return
 	skipped += 1
 	var s: Dictionary = stats.get(section, {})
 	if not s.is_empty():
@@ -186,7 +204,15 @@ func require_tool(exe: String, label: Variant = "") -> bool:
 
 
 func info(message: Variant) -> void:
+	if detached:
+		_late("info  " + str(message))
+		return
 	print("  info  ", str(message))
+
+
+## A line of a timed-out section that woke up again (see `detached`): never read as a line of the section that runs now.
+func _late(text: String) -> void:
+	print("  late  %s   [from %s, which timed out: not counted]" % [text, section])
 
 
 func _show(v: Variant, limit: int = 60) -> String:

@@ -13,7 +13,8 @@
 #   allow()                expected warnings/errors pass; anything else still fails; scoped to the section
 #   uncompilable section   exit 1 FAST, nothing else ran; with --only=<other> it is reported but not fatal
 #   section timeout        exit 1 after the section's TIMEOUT_S, not after minutes; the sections after it still run and the
-#                          stuck one stays parked; --max-seconds stops a whole run;
+#                          stuck one stays parked; one woken by a non-t await prints its checks as uncounted `late` lines;
+#                          --max-seconds stops a whole run;
 #                          a Godot stuck in a synchronous loop is killed by the wrapper (exit 124), one killed from outside
 #                          (out of memory) is reported as killed (exit 137), not as a timeout
 #   isolation              t.on_cleanup() runs after a script error; locale, config overrides, Engine metas, autoload *_path
@@ -167,6 +168,13 @@ rm -rf "${ROOT:?}/.selftest"
 run_case section_timeout 1 30 'timed out after 2 s' 'never_reached' --no-boot --sections-dir="$ST/hang"
 run_case timeout_keeps_the_run_going 1 30 'ok +b_next\.the_stuck_section_stays_parked' '^ZOMBIE-RAN-ON|never_reached|not run because' --no-boot --sections-dir="$ST/hang_then_next"
 if grep -q 'timed out after 2 s' "$WORK/timeout_keeps_the_run_going.log" && grep -q 'ok    b_next.gets_a_fresh_t' "$WORK/timeout_keeps_the_run_going.log"; then note_ok "the timed-out section fails the run and the next one gets a fresh t"; else note_fail "timeout isolation: no timeout or no fresh t"; fi
+run_case late_lines_of_a_timed_out_section_count_nowhere 1 30 'late  ok    a_late\.late_check_after_the_timeout   \[from a_late, which timed out: not counted\]' '^ZOMBIE-RAN-ON|never_reached|FAILED   (a_late\.late|b_next)' --no-boot --sections-dir="$ST/hang_late"
+LL="$WORK/late_lines_of_a_timed_out_section_count_nowhere.log"
+if grep -q '^  late  FAIL  late failure after the timeout' "$LL" && grep -q '^  late  SKIP  late skip after the timeout' "$LL" && grep -q 'ok    b_next.own_counts_only' "$LL" && grep -q '^== summary: 2 section(s) run, 2 checks (0 failed, 0 skipped)' "$LL"; then
+	note_ok "a woken timed-out section prints late lines, and neither the next section nor the run counts them"
+else
+	note_fail "late lines of a timed-out section: missing, or counted ($(grep '^== summary' "$LL"))"
+fi
 run_case run_watchdog 1 40 'run watchdog: the whole run exceeded 3 s' 'never_reached' --no-boot --sections-dir="$ST/hang_global" --max-seconds=3
 run_case wrapper_timeout_kills_a_spinning_godot 124 60 'TIMEOUT after 6s' '' --no-boot --sections-dir="$ST/spin" --timeout=6
 FAKE_GODOT_KILL=1 GODOT="$ST/fast/fake_godot.sh" run_case killed_engine_is_not_a_timeout 137 30 'Godot was KILLED \(SIGKILL\).*out of memory' 'TIMEOUT after' --no-boot
