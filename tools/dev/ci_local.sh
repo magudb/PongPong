@@ -38,7 +38,7 @@ for a in "$@"; do
 		--races=*) RACES="${a#--races=}" ;;
 		--shards=*) SHARDS="${a#--shards=}" ;;
 		--no-selftest) SELFTEST=0 ;;
-		-h|--help) sed -n '2,21p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+		-h|--help) sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
 		*) echo "ci_local: unknown option $a (see --help)" >&2; exit 2 ;;
 	esac
 done
@@ -71,7 +71,7 @@ tree_of() {   # tree_of PID...: the live processes of these trees, one per line 
 stop_all() {
 	trap - INT TERM
 	echo "ci_local: interrupted, stopping the running shards" >&2
-	local all="" new i
+	local all="" new
 	# shellcheck disable=SC2046,SC2086
 	while new="$(tree_of $(jobs -p) $all | tr '\n' ' ')"; [ "$new" != "$all" ]; do
 		all="$new"
@@ -83,7 +83,7 @@ stop_all() {
 		kill -TERM $all 2>/dev/null
 		# shellcheck disable=SC2086
 		kill -CONT $all 2>/dev/null
-		for i in $(seq 1 40); do
+		for _ in $(seq 1 40); do
 			# shellcheck disable=SC2086
 			[ -n "$(tree_of $all)" ] || break
 			sleep 0.5
