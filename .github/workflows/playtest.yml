@@ -43,6 +43,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      # Media under docs/ and tools/art/ goes into Git LFS from now on (docs/DEVELOPMENT.md, "Repository size"), and
+      # some art sections read review sheets and source paintings there. QA screenshots (docs/qa, docs/review) are
+      # never read by a test and are not downloaded. The rest comes from a cache keyed by the object ids, so 16 jobs
+      # do not each spend LFS bandwidth; with no such LFS file in the tree both steps are skipped.
+      - name: List Git LFS objects
+        id: lfs
+        env:
+          LFS_EXCLUDE: docs/qa/**,docs/review/**
+        run: |
+          set -euo pipefail
+          git lfs ls-files --long --exclude="$LFS_EXCLUDE" | cut -d ' ' -f1 | sort > "$RUNNER_TEMP/lfs-objects.txt"
+          echo "count=$(wc -l < "$RUNNER_TEMP/lfs-objects.txt" | tr -d ' ')" >> "$GITHUB_OUTPUT"
+          echo "key=lfs-$(sha256sum "$RUNNER_TEMP/lfs-objects.txt" | cut -c1-32)" >> "$GITHUB_OUTPUT"
+          echo "exclude=$LFS_EXCLUDE" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Git LFS objects
+        if: steps.lfs.outputs.count != '0'
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .git/lfs/objects
+          key: ${{ steps.lfs.outputs.key }}
+          restore-keys: lfs-
+
+      - name: Check out Git LFS files
+        if: steps.lfs.outputs.count != '0'
+        run: git lfs install --local && git lfs pull --exclude="${{ steps.lfs.outputs.exclude }}"
+
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"

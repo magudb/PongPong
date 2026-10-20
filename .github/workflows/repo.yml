@@ -1,0 +1,55 @@
+name: repository size
+
+# Repository growth guard (REPO-01; policy in docs/DEVELOPMENT.md, "Repository size"). Every blob a push or pull
+# request adds or changes must fit tools/ci/size_allowlist.txt, and media on Git LFS paths must be LFS pointers.
+# The checkout is blobless and sparse (tools/ci only), so the job reads a few MB of trees instead of the 2.4 GB
+# tree; tools/ci/size_guard.py fetches only the blobs it measures.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repo-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  size-guard:
+    name: size guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          filter: blob:none
+          sparse-checkout: tools/ci
+
+      - name: Size guard self-test
+        run: python3 -m unittest discover -s tools/ci/tests -v
+
+      - name: Reject new large blobs and plain blobs on LFS paths
+        env:
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT" == pull_request ]]; then
+            span="$PR_BASE..$PR_HEAD"
+          elif [[ "$EVENT" == push && -n "$BEFORE" ]] && git merge-base --is-ancestor "$BEFORE" "$GITHUB_SHA" 2>/dev/null; then
+            span="$BEFORE..$GITHUB_SHA"
+          else
+            # a manual run, or a push that replaced history (the planned LFS migration): the newest commit only
+            span="$GITHUB_SHA~1..$GITHUB_SHA"
+          fi
+          python3 tools/ci/size_guard.py --range "$span"
+
+      - name: LFS patterns cover no plain blob
+        run: python3 tools/ci/size_guard.py --audit HEAD
