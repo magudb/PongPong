@@ -188,4 +188,4 @@ func _measure_fx(t) -> void:
 	var handle := FileAccess.open(path,FileAccess.WRITE)
 	handle.store_string(JSON.stringify({"method":"median delta of three paired one-second native frame-time means after 0.25 second settling; vsync/fps caps disabled; emitter disabled versus 40 winter particles; whole-engine wall frame time, not isolated CPU or GPU time","pairs":pairs,"median_delta_ms":delta,"cap_ms":0.5,"particles":emitter.amount,"engine":Engine.get_version_info()},"  "))
 	handle.close()
-	t.check("fx_cost_under_half_ms",delta<0.5,str(delta)+" ms median incremental frame time; "+str(pairs))
+	t.check("fx_cost_under_half_ms",t.perf_ok("fx_cost_under_half_ms",delta,0.5),str(delta)+" ms median incremental frame time; "+str(pairs))

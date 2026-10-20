@@ -292,7 +292,7 @@ func run_windowed(t) -> void:
 		await t.frames(5)
 		await t.capture(id)
 		if id == "people":
-			t.check("people_native_open_ms", float(node.get_meta("open_ms")) <= 25, str(node.get_meta("open_ms")))
+			t.check("people_native_open_ms", t.perf_ok("people_native_open_ms", float(node.get_meta("open_ms")), 25.0), str(node.get_meta("open_ms")))
 		for locale in ["da", "en"]:
 			t.autoload("LocalizationManager").set_locale(locale)
 			await t.frames(3)

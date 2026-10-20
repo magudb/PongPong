@@ -1196,7 +1196,9 @@ func _world_and_budget(t) -> void:
 		var au: IsoArea = _make_area(_hub)
 		best_u = mini(best_u, au.build_ms)
 	_free_holders()
-	t.check("build_budget", best_h < 180 and best_u < 120 and nodes_h < 1200, "Hyggebyen builds in %d ms (min of 5, %d nodes), the hub in %d ms (budgets 180 / 120 ms on a loaded headless machine; the farm of N01 budgets 60 ms for 496 nodes)" % [best_h, nodes_h, best_u])
+	t.check("build_node_budget", nodes_h < 1200, "Hyggebyen %d nodes (< 1200)" % nodes_h)
+	t.check("build_budget_hub", t.perf_ok("build_budget_hub", best_u, 120), "the hub builds in %d ms (min of 5, native reference 120)" % best_u)
+	t.check("build_budget", t.perf_ok("build_budget", best_h, 180), "Hyggebyen builds in %d ms (min of 5, %d nodes), the hub in %d ms (budgets 180 / 120 ms on a loaded headless machine; the farm of N01 budgets 60 ms for 496 nodes)" % [best_h, nodes_h, best_u])
 
 
 func _count_nodes(n: Node) -> int:

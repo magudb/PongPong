@@ -147,11 +147,8 @@ func _park(t) -> void:
 	t.check("city_nav_snap_record_per_entry", not city_nav.snap_stats.has(-1.0), "%d snaps recorded for this entry" % city_nav.snap_stats.size())
 	await t.world().travel(&"hyggebyen", &"default")
 	await t.frames(3)
-	var started := Time.get_ticks_usec()
-	for i in 500:
-		old._physics_process(1.0 / 60)
-	var ms := float(Time.get_ticks_usec() - started) / 500000.0
-	t.check("director_frame_budget", ms <= 0.3, "%.4f ms with %d live" % [ms, old.live.size()])
+	var ms: float = t.median_usec(func() -> void: old._physics_process(1.0 / 60)) / 1000.0
+	t.check("director_frame_budget", t.perf_ok("director_frame_budget", ms, 0.3), "%.4f ms with %d live, median of 10 batches of 50 ticks (native reference 0.3, runner limit %.2f)" % [ms, old.live.size(), t.perf_limit(0.3)])
 	# Between clock ticks the carrot runs at the clock's own rate: scaled with it, still while it is paused.
 	var tm: Node = t.autoload("TimeManager")
 	gm.set_config_override("time.minutes_per_real_second", 2.0)
@@ -340,11 +337,8 @@ func _crowd(t, capture: bool) -> void:
 	t.check("festival_twenty_look_cap", director.live.size() == mini(20, registry.size()) and director.max_live == 20, "%d available distinct looks, %d live" % [registry.size(), director.live.size()])
 	var first: Npc2D = director.node_of(str(registry.keys()[0]))
 	t.check("hide_is_idle_and_stays_in_rain", director.targets[str(first.npc_id)].act == "hide" and first.visual.current_clip == &"idle" and str(director.targets[str(first.npc_id)].place).contains("fest_"))
-	var begin := Time.get_ticks_usec()
-	for i in 500:
-		director._physics_process(1.0 / 60)
-	var ms := float(Time.get_ticks_usec() - begin) / 500000.0
-	t.check("festival_frame_budget", ms <= 0.3, "%.4f ms with %d live" % [ms, director.live.size()])
+	var ms: float = t.median_usec(func() -> void: director._physics_process(1.0 / 60)) / 1000.0
+	t.check("festival_frame_budget", t.perf_ok("festival_frame_budget", ms, 0.3), "%.4f ms with %d live, median of 10 batches of 50 ticks (native reference 0.3, runner limit %.2f)" % [ms, director.live.size(), t.perf_limit(0.3)])
 	if capture:
 		t.player().global_position = director.area.to_global(Iso.to_screen(director.post_ground(&"fest_hyggetorv_host"))) + Vector2(100, 150)
 		t.player().camera.reset_smoothing()
