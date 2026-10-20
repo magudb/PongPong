@@ -44,10 +44,10 @@ const GENERATOR_PATH := "res://scripts/world2d/levels/source/build_traetoppen_js
 ## them by its owner (P04 / P05) makes this check fail on purpose - update the hash in the same commit.
 const PINNED := {
 	"res://scripts/world2d/iso_area.gd": "4a4c138f9798ba542af57b88fdc5d96aa5cad7e4d5ddb05f7c41bedbba104e29",
-	"res://scripts/world2d/world_2d.gd": "2769c1a7143041de8089c2995b842d3c3058657a383b6ba659710b8144bbbc75",
+	"res://scripts/world2d/world_2d.gd": "f4642e532eac7442dcb95f5aa469af96b432099bff52d8d112b7472a0b73faec",
 	"res://scripts/world2d/game_data.gd": "1482455c8c0cb634a4bfe8dc35215e6b45631cbc6c5ea6861e1fd33944ba519e",
 	"res://scripts/world2d/art_catalog.gd": "622d0890087a6e4814b6f85cb9717b27c557dc46f252f449254a23c6d7ca073d",
-	"res://scripts/isometric/iso_chibi_sprite_2d.gd": "223f6ef7eec8446ea3b0410a1ebb7b2aa58a141a5b271325f8cea51e4d73e977",
+	"res://scripts/isometric/iso_chibi_sprite_2d.gd": "a1e1e63e5835c1093d2edf77709951e3ff6c069353299571e2f0cbbc0cb28602",
 	"res://scripts/isometric/character_catalog.gd": "2a56f24f8abf4312709284391e5f605e0894b386a68e6f08d8093b86dc11e556",
 }
 
