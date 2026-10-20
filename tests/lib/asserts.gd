@@ -24,7 +24,7 @@ var verbose: bool = false
 var strict: bool = false
 var max_ok_lines: int = 400
 ## Set by the harness when the section that holds this `t` timed out (tests/playtest.gd). The stuck coroutine may still run on
-## until it reaches one of the wait helpers of tests/lib/drive.gd, which park it for good. What it checks, skips or notes until
+## until it reaches one of the wait helpers of tests/lib/drive.gd, which park it for good. What it checks, skips, times or notes until
 ## then is printed as a `late` line naming the timed-out section and counted nowhere: the run already failed on the timeout, and
 ## the counts and the failure list belong to the sections after it (they hold a fresh `t`).
 var detached: bool = false

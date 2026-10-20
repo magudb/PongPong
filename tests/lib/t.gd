@@ -60,6 +60,10 @@ func perf_ok(check_name: String, measured: float, reference: float) -> bool:
 	var ok := measured <= limit
 	if measured <= reference:
 		return true
+	if detached:
+		# a timed-out section that woke up: its timing is no SLOW row of the run (see `detached` in tests/lib/asserts.gd)
+		_late("slow  %s.%s: %s over its native reference %s (runner limit %s)" % [section, check_name, measured, reference, limit])
+		return ok
 	var entry := {"check": "%s.%s" % [section, check_name], "measured": measured, "reference": reference, "limit": limit, "ratio": snappedf(measured / reference, 0.01), "judged": true}
 	if ok:
 		slow.append(entry)

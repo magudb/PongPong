@@ -170,7 +170,7 @@ run_case timeout_keeps_the_run_going 1 30 'ok +b_next\.the_stuck_section_stays_p
 if grep -q 'timed out after 2 s' "$WORK/timeout_keeps_the_run_going.log" && grep -q 'ok    b_next.gets_a_fresh_t' "$WORK/timeout_keeps_the_run_going.log"; then note_ok "the timed-out section fails the run and the next one gets a fresh t"; else note_fail "timeout isolation: no timeout or no fresh t"; fi
 run_case late_lines_of_a_timed_out_section_count_nowhere 1 30 'late  ok    a_late\.late_check_after_the_timeout   \[from a_late, which timed out: not counted\]' '^ZOMBIE-RAN-ON|never_reached|FAILED   (a_late\.late|b_next)' --no-boot --sections-dir="$ST/hang_late"
 LL="$WORK/late_lines_of_a_timed_out_section_count_nowhere.log"
-if grep -q '^  late  FAIL  late failure after the timeout' "$LL" && grep -q '^  late  SKIP  late skip after the timeout' "$LL" && grep -q 'ok    b_next.own_counts_only' "$LL" && grep -q '^== summary: 2 section(s) run, 2 checks (0 failed, 0 skipped)' "$LL"; then
+if grep -q '^  late  FAIL  late failure after the timeout' "$LL" && grep -q '^  late  SKIP  late skip after the timeout' "$LL" && grep -q '^  late  slow  a_late.late_timing' "$LL" && ! grep -q 'SLOW .*a_late' "$LL" && grep -q 'ok    b_next.own_counts_only' "$LL" && grep -q '^== summary: 2 section(s) run, 2 checks (0 failed, 0 skipped)' "$LL"; then
 	note_ok "a woken timed-out section prints late lines, and neither the next section nor the run counts them"
 else
 	note_fail "late lines of a timed-out section: missing, or counted ($(grep '^== summary' "$LL"))"

@@ -12,6 +12,7 @@ func run(t) -> void:
 	t.check("late_check_after_the_timeout", true)
 	t.fail("late failure after the timeout")
 	t.skip("late skip after the timeout")
+	t.check("late_timing", t.perf_ok("late_timing", 10.0, 1.0))
 	await t.frames(1)
 	print("ZOMBIE-RAN-ON")
 	t.check("never_reached", true)
