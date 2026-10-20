@@ -23,6 +23,8 @@ from PIL import Image
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
+sys.path.insert(0, str(REPO / 'tools/art/drawn'))
+from drawn_art import catalog   # noqa: E402  ArtCatalog's pack override order
 
 ISO_TERRAINS = ['grass', 'grass_flowers', 'grass_hyggebyen', 'grass_hyggebyen_flowers', 'soil_tilled', 'soil_watered', 'path_dirt', 'deck_farm', 'deck_hyggebyen',
                 'cobble_hyggebyen', 'forest_floor', 'forest_floor_glow', 'void_haze', 'water_0', 'water_1', 'water_2', 'water_3']
@@ -57,20 +59,8 @@ def img(p):
     return Image.open(p).convert('RGBA')
 
 
-def catalog(root):
-    """ArtCatalog's prop entries: iso_props/props.json, then every pack of ArtCatalog.PROP_PACKS in order (a later pack wins); '_dir' is the entry's folder."""
-    src = (root / 'scripts/world2d/art_catalog.gd').read_text()
-    packs = re.findall(r'"([^"]+)"', re.search(r'const PROP_PACKS: Array\[String\] = \[(.*?)\]', src, re.S)[1])
-    out = {}
-    for folder in [root / 'assets/iso_props'] + [root / 'assets/iso_props' / p for p in packs]:
-        for pid, e in load(folder / 'props.json').items():
-            if not pid.startswith('_') and isinstance(e, dict):
-                out[pid] = dict(e, _dir=folder)
-    return out
-
-
 def drawn(root, pj):
-    """P22's ids, each with the entry ArtCatalog draws for it."""
+    """P22's ids, each with the entry ArtCatalog draws for it (the last pack of ArtCatalog.PROP_PACKS that defines it; '_dir' is its folder)."""
     entries = catalog(root)
     return {pid: entries[pid] for pid in pj if not pid.startswith('_')}
 

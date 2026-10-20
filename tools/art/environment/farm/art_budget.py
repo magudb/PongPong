@@ -8,10 +8,10 @@ Same table as the prototype's design3/farm/scripts/art_budget.py (kind id w h pi
   s3tc      DXT5 = 1 byte per pixel (+1/3 mipmaps) for the ten props and the two backdrops (compress/mode=2 stubs), field_grass stays lossless
 The prototype measured the kit in a window (RENDER_TEXTURE_MEM_USED): 65.5 MB lossless / 15.8 MB with S3TC, mean error 0.85-1.7 / 255.  tests/sections/art_farm.gd re-measures it
 (windowed) and asserts the arithmetic here (headless).  Rows of the table are the contract of art_farm.sizes_match_art_budget_table.
+Each row reads the file the game draws: a kit id or farm_far that a later art pack repaints is measured in its painted file (the N03 copy is not kept, review REND-10).
 """
 from __future__ import annotations
 import argparse
-import json
 import sys
 from pathlib import Path
 
@@ -19,6 +19,8 @@ from PIL import Image
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[3]
+sys.path.insert(0, str(HERE.parents[1] / 'drawn'))
+import drawn_art   # noqa: E402
 KIT_IDS = ['trunk_giant_a', 'trunk_giant_b', 'trunk_under_a', 'trunk_under_b', 'tool_shed', 'shipping_bin', 'stake_sign', 'rope_stake_x', 'rope_stake_z', 'build_stake']
 TRUNKS = KIT_IDS[:4]
 MB = 1048576.0
@@ -26,16 +28,21 @@ MB = 1048576.0
 
 def rows(root: Path) -> list:
     out = []
-    man = json.loads((root / 'assets/iso_props/farm/props.json').read_text())
     for i in sorted(KIT_IDS):
-        w, h = Image.open(root / 'assets/iso_props/farm' / f'{i}.png').size
-        out.append(('props', i, w, h, man[i]['pivot'], w * h * 4 * 4 / 3 / MB, w * h * 1 * 4 / 3 / MB))
+        w, h = Image.open(drawn_art.drawn_file(i, root)).size
+        out.append(('props', i, w, h, drawn_art.catalog(root)[i]['pivot'], w * h * 4 * 4 / 3 / MB, w * h * 1 * 4 / 3 / MB))
     for f in ('farm_canopy.webp', 'farm_far.webp'):
-        w, h = Image.open(root / 'assets/backdrops' / f).size
+        w, h = Image.open(far_file(root, f)).size
         out.append(('back', f, w, h, None, w * h * 4 * 4 / 3 / MB, w * h * 1 * 4 / 3 / MB))
     w, h = Image.open(root / 'assets/iso_tiles/field_grass.png').size
     out.append(('tiles', 'field_grass.png', w, h, None, w * h * 4 / MB, w * h * 4 / MB))
     return out
+
+
+def far_file(root: Path, f: str) -> Path:
+    """assets/backdrops/<f>, or the painted backdrop_<name> prop that supersedes it."""
+    path = root / 'assets/backdrops' / f
+    return drawn_art.drawn_file('backdrop_' + f.removesuffix('.webp'), root) if drawn_art.superseded(path.resolve(), root) else path
 
 
 def table(rs: list) -> str:

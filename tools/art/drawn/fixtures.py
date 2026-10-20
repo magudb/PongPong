@@ -6,8 +6,9 @@ Only trimmed city window layers adopt the painted window bounds and offsets.
 No illustration is drawn here: all visible pigments come from approved masters.
 
 A recipe marked "superseded" belongs to a copy that a later art pack replaced; the
-file is not exported (review REND-10), but its measured geometry stays, because the
-painted_world and consistency bakers still read those silhouettes and bounds.
+file is not exported (review REND-10), and an export removes it when a geometry-stage
+install wrote it again. Its measured geometry stays, because the painted_world and
+consistency bakers still read those silhouettes and bounds.
 """
 from __future__ import annotations
 
@@ -126,6 +127,15 @@ def build(check: bool = False) -> None:
     report, manifests, failures = {}, {}, []
     for path, rec in recipes().items():
         if rec.get("superseded"):
+            # A geometry-stage install (P22 props, V5 city, N03 farm) writes the copy again; the drawn art is a later pack's.
+            target = ROOT / path
+            if target.exists():
+                if check:
+                    failures.append(path + ": superseded copy is back (a later art pack draws this id)")
+                else:
+                    target.unlink()
+                    target.with_name(target.name + ".import").unlink(missing_ok=True)
+                    print("removed superseded copy " + path)
             continue
         target = ROOT / path
         if rec["mode"] == "technical":

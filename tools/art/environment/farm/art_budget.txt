@@ -13,8 +13,8 @@ back   farm_canopy.webp     2048    360 -                   3.75      0.94
 back   farm_far.webp        2048   1024 -                  10.67      2.67
 tiles  field_grass.png       576    336 -                   0.74      0.74
 
-props  total   40.98 MB lossless    10.24 MB s3tc
+props  total   40.95 MB lossless    10.24 MB s3tc
 back   total   14.42 MB lossless     3.60 MB s3tc
 tiles  total    0.74 MB lossless     0.74 MB s3tc
-kit    total   56.13 MB lossless    14.59 MB s3tc   (trunks 40.1 / 10.0, other props 0.9 / 0.2, backdrops 14.4 / 3.6, field_grass 0.74)
+kit    total   56.11 MB lossless    14.58 MB s3tc   (trunks 40.1 / 10.0, other props 0.9 / 0.2, backdrops 14.4 / 3.6, field_grass 0.74)
 prototype (measured in a window, with the 1024 x 1024 farm_sky this package does not ship): 65.5 MB lossless, 15.8 MB with S3TC; budget kit <= 20 MB compressed
