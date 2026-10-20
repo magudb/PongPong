@@ -26,9 +26,9 @@ func run(t, suite) -> void:
 	var bytes := FileAccess.get_file_as_bytes(saves.slot_path(3)).size()
 	suite._check(t, "L13", "l13_save_writes", saved, "20 disk saves of the full cast (%d)" % SocialData.friend_ids().size())
 	suite._check(t, "L13", "l13_save_size", bytes <= 60 * 1024, "%d bytes <= 60 KiB" % bytes)
-	# The best of 20 saves is the budget, the cost of a save itself: a save writes, flushes and renames files, and a disk that other jobs
-	# keep busy (APFS clones of whole trees) measured a median of 207 ms and a p95 of 376 ms next to 8.5 ms quiet; both are reported.
-	suite._check(t, "L13", "l13_save_cost", t.perf_ok("l13_save_cost", costs[0], 25.0), "best %.3f ms, median %.3f ms, p95 %.3f ms of 20 saves (native reference 25 ms for the best, runner limit %.0f)" % [costs[0], costs[10], costs[18], t.perf_limit(25.0)])
+	# The p95 of 20 saves is the budget (TOWNS_FARM_SOCIAL_ADDENDUM: save_game p95 <= 25 ms): an occasional slow save is the hitch a player
+	# feels. A disk that other jobs keep busy only moves it inside the TT_PERF_SCALE allowance; the best save and the median are reported.
+	suite._check(t, "L13", "l13_save_cost", t.perf_ok("l13_save_cost", costs[18], 25.0), "p95 %.3f ms, median %.3f ms, best %.3f ms of 20 saves (native reference 25 ms for the p95, runner limit %.0f)" % [costs[18], costs[10], costs[0], t.perf_limit(25.0)])
 	gm.set_flag(&"loop_digest_probe", true)
 	eco.add_gold(1)
 	var loaded := await _load(t, 3)
