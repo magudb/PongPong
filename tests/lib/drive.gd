@@ -274,10 +274,54 @@ func click(pos: Vector2, button: MouseButton = MOUSE_BUTTON_LEFT) -> void:
 	tree.root.push_input(up)
 
 
-## What a click on a button does: toggle buttons flip, then `pressed` fires. Fails when the node is missing,
-## is not a button, or is disabled (a real click would do nothing). `tolerate_disabled` turns the disabled case
-## into a quiet no-op (the legacy select screen disables the race button that is already selected).
+## A real click on a button, with the checks a player's click implies: fails when the node is missing, is not a button, is
+## disabled, is hidden (not visible in the tree), has its centre outside the window, or is covered there by another control
+## (the click went elsewhere: the failure names what is on top). Toggle buttons flip and `pressed` fires as for a user, through
+## the GUI (focus and hover move as well); the mouse is parked outside the window afterwards. `tolerate_disabled` turns the
+## disabled case into a quiet no-op (the legacy select screen disables the race button that is already selected). A button that
+## does not react to a click a player can make (a pressed member of a ButtonGroup) passes: it was reached, which is the check.
 func press(path: String, tolerate_disabled: bool = false) -> bool:
+	var n := node(path)
+	if not (n is BaseButton):
+		fail("button %s not found in %s" % [path, scene_name()])
+		return false
+	return press_button(n as BaseButton, path, tolerate_disabled)
+
+
+## press() for a button node already at hand (a choice row, a dialog's own button). `label` names it in a failure.
+func press_button(b: BaseButton, label: String = "", tolerate_disabled: bool = false) -> bool:
+	var what := label if label != "" else str(b.get_path())
+	if b.disabled:
+		if tolerate_disabled:
+			return true
+		fail("button %s is disabled" % what)
+		return false
+	if not b.is_visible_in_tree():
+		fail("button %s is hidden: a player cannot click it (t.press_unchecked() emits pressed without the checks)" % what)
+		return false
+	var pos := button_center(b)
+	if not Rect2(Vector2.ZERO, Vector2(root.size)).has_point(pos):
+		fail("button %s is outside the window (centre %s, window %s)" % [what, pos, root.size])
+		return false
+	var reached := [false]
+	var probe := func(event: InputEvent) -> void:
+		if event is InputEventMouseButton and (event as InputEventMouseButton).pressed:
+			reached[0] = true
+	b.gui_input.connect(probe)
+	click(pos)
+	var on_top := root.gui_get_hovered_control()
+	if is_instance_valid(b) and b.gui_input.is_connected(probe):
+		b.gui_input.disconnect(probe)
+	move_mouse(Vector2(-16, -16))
+	if not reached[0]:
+		fail("button %s did not get the click at %s: %s is on top of it" % [what, pos, str(on_top.get_path()) if on_top != null else "nothing that takes the mouse"])
+		return false
+	return true
+
+
+## Emits `pressed` (toggle buttons flip first) without any of the checks of press(): no visibility, hit test or window bounds.
+## Only for a button that a player reaches some other way in the state under test (say so in a comment at the call).
+func press_unchecked(path: String, tolerate_disabled: bool = false) -> bool:
 	var n := node(path)
 	if not (n is BaseButton):
 		fail("button %s not found in %s" % [path, scene_name()])
@@ -292,6 +336,11 @@ func press(path: String, tolerate_disabled: bool = false) -> bool:
 		b.button_pressed = not b.button_pressed
 	b.pressed.emit()
 	return true
+
+
+## The centre of a control in root viewport coordinates (what click() takes), through CanvasLayers and the canvas transform.
+func button_center(c: Control) -> Vector2:
+	return c.get_global_transform_with_canvas() * (c.size * 0.5)
 
 
 ## Types into a LineEdit / TextEdit (fires text_changed like typing does).
