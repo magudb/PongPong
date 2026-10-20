@@ -12,6 +12,7 @@ extends RefCounted
 ##   line    PackedInt32Array    1-based line of the first character
 ##   findings Array[Dictionary]  tokenizer-level lint findings {line, rule, token, message}:
 ##                               long brackets / block comments, escape sequences, unterminated strings, stray characters
+##                               (also `!` `?` `@` `$` `\` and a backtick: they are not Lua outside a string)
 ## Comments (`-- ...` and `--[[ ... ]]`) are skipped, so they never reach a consumer.
 
 const NAME := 0
@@ -111,8 +112,10 @@ static func tokenize(src: String) -> Dictionary:
 				op = two
 		if op == "":
 			op = char(c)
-			if c > 126 or (c < 32 and c != 9):
-				findings.append(_finding(line, "stray_character", op, "unexpected character outside a string"))
+			if c == 33:
+				findings.append(_finding(line, "stray_character", op, "`!` is not a Lua operator: not equal is `~=`, negation is `not`"))
+			elif c > 126 or (c < 32 and c != 9) or c == 63 or c == 64 or c == 36 or c == 92 or c == 96:
+				findings.append(_finding(line, "stray_character", op, "unexpected character `%s` outside a string" % op))
 		types.append(OP)
 		texts.append(op)
 		starts.append(i)

@@ -47,6 +47,10 @@ const LAYER_PLAYER_ATTACK := 256
 const LAYER_ENEMY_ATTACK := 512
 const LAYER_PICKUP := 1024
 ## What a walking figure collides with (world + npc + resource nodes + ground blocks) and what a flier collides with.
+## ONE rule for the player and the walking actors: they block each other both ways, so nobody shoves anybody. The
+## player's mask has LAYER_NPC, and every actor on LAYER_NPC (town citizens, wandering Npc2D, farm animals) has
+## LAYER_PLAYER in its own mask. Actors never collide with each other (no LAYER_NPC in their masks), which is also why
+## the counter hatch bars on LAYER_NPC stop only the player.
 const MASK_WALKING := 1 + 4 + 64 + 128
 const MASK_FLYING := 1 + 4 + 64
 

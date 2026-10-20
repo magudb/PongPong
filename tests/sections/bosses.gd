@@ -41,6 +41,9 @@ func _run(t, native: bool) -> void:
 		t.check("dash_speed_"+row[1],boss.state == Enemy2D.S.LUNGE and is_equal_approx(boss.ground_velocity.length(),float(boss.cfg.patterns.dash_speed)))
 		boss._recover()
 		t.check("dazed_window_"+row[1],boss.state == Enemy2D.S.RECOVER and is_equal_approx(boss.remaining,float(boss.cfg.dazed)))
+		boss.take_hit(1,world.player.global_position)
+		t.check("hit_keeps_dazed_window_"+row[1],boss.remaining >= float(boss.cfg.dazed)-.001 and boss.cooldown >= float(boss.cfg.dazed)-.001,"remaining %.2f cooldown %.2f" % [boss.remaining,boss.cooldown])
+		boss.hp = boss.max_hp
 		boss.hp = floori(boss.max_hp*.65)
 		boss._on_health_changed()
 		t.check("first_wave_"+row[1],boss.phase == 1 and boss.summoned.size() == int(row[3])/2)

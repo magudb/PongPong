@@ -8,10 +8,10 @@ extends RefCounted
 ## keys_da_en_complete, config_numbers_documented, save_inside_city_roundtrip, shot_overview_0_2 (windowed), frame_budget (windowed),
 ## skovlift_reaches_floor_1_and_back + defeat_wakes_at_the_farm (SKIP `capability missing: D2 landed`, REQUIRED by DQ's E1 / E2),
 ## chain_checks_skip_without_d2, planter_kinds_skipped_without_p19, town_attach_called, no_board_bath_markers_in_city;
-## preview mode (lead amendment M1a-V4): preview_citizens_placed_for_every_npc_marker, preview_citizens_have_no_collision,
-## preview_citizens_inert_when_p14_present, preview_skips_are_visible, every_level_reachable_with_the_stub_player, walk_farm_to_hyggebyen_windowed.
+## the real marker handlers: npc_markers_use_the_real_handler, handler_made_nodes_are_levelled, when_markers_follow_flags, every_level_reachable_with_the_stub_player,
+## walk_farm_to_hyggebyen_windowed (the M1a preview citizens and hints were removed once the town director and the HUD landed).
 ## fix round of the review (regressions): canopy_gives_way_when_zoomed_out, camera_headroom_above_the_top_platforms, overview_keeps_the_top_platforms_in_view,
-## preview_labels_above_the_decks_and_apart, preview_hints_show_prompts_whispers_and_toasts, preview_hints_step_aside_for_a_hud, and windowed
+## scheduled_citizens_replace_preview_labels, hud_owns_prompts_whispers_and_toasts, and windowed
 ## overview_shows_the_top_platforms, vram_city_increment_within_budget, hints_visible_at_the_ladder_foot.
 ## Every check that needs a package of the next milestone SKIPs with a visible line `capability missing: <package>`.
 const SECTION := "city_map"
@@ -33,7 +33,6 @@ const CONFIG_WANT := {
 	"board": {"givers": ["mayor_lyra", "baker_maja", "merchant_pip", "farmer_rosa", "fairy_lily", "smith_thorin"], "max": 5},
 	"bath": {"minutes": 30, "once_per_day": true},
 	"swap": {"give": {"carrot": 2}, "table": {"moonflower_seeds": 3, "glow_berry_seeds": 2}, "once_per_day": true},
-	"stall": {"weekdays": [5, 6]},
 	"caches": {"slots": 5, "gold_min": 20, "gold_max": 50},
 	"skovlift": {"to_area": "moerkeskoven", "spawn": "from_traetoppen", "seconds": 1.6},
 }
@@ -263,7 +262,7 @@ func _keys_and_config(t) -> void:
 	for i in range(1, 11):
 		want.append("TRAE_LANDMARK_%d" % i)
 	want.append_array(["TRAE_PROMPT_BOARD", "TRAE_PROMPT_BATH", "TRAE_PROMPT_SEEDS", "TRAE_PROMPT_CACHE", "TRAE_PROMPT_TRAVEL", "TRAE_LIFT_CLOSED", "TRAE_LIFT_LOCKED",
-		"TRAE_SIGN_FARM", "TRAE_SIGN_HYGGEBYEN", "TRAE_SIGN_SKOVLIFT", TraetoppenPreviewCitizens.TAG_KEY])
+		"TRAE_SIGN_FARM", "TRAE_SIGN_HYGGEBYEN", "TRAE_SIGN_SKOVLIFT"])
 	var missing: Array[String] = []
 	var empty: Array[String] = []
 	for key in want:
@@ -719,16 +718,7 @@ func _budgets(t) -> void:
 		"leaving the city frees the area (parked: %s, freed: %s) and the next visit builds a new one; WorldRoot2D.is_parkable is false for a @builder map" % [parked, freed])
 
 
-# ================================================================== markers, citizens (preview mode)
-
-## The citizens of a built area: the figures of the preview (group `preview_citizen`) that live in THIS area's Objects.
-func _citizens(a: IsoArea) -> Array[Node2D]:
-	var out: Array[Node2D] = []
-	for n in a.objects.get_children():
-		if n.is_in_group(TraetoppenPreviewCitizens.GROUP):
-			out.append(n as Node2D)
-	return out
-
+# ================================================================== markers, citizens
 
 func _markers_and_citizens(t) -> void:
 	var a: IsoArea = _area
@@ -810,7 +800,7 @@ func _markers_and_citizens(t) -> void:
 					break
 		t.check("npc_markers_resolve_to_the_handler", made >= 6, "P14's npc handler exists: %d of the 7 markers produced an Npc2D node" % made)
 	else:
-		_skip(t, "npc_markers_resolve_in_npcs_lua", "P14-npc-dialogue", "the handler part: the markers resolve to Npc2D nodes through scripts/world2d/npc_2d.gd; the preview citizens stand in")
+		_skip(t, "npc_markers_resolve_in_npcs_lua", "P14-npc-dialogue", "the handler part: the markers resolve to Npc2D nodes through scripts/world2d/npc_2d.gd")
 	# --- V6 / V7 / P06: the next milestone
 	var v6_missing: Array[String] = []
 	for ty in V6_TYPES:
@@ -833,12 +823,6 @@ func _markers_and_citizens(t) -> void:
 		t.check("player_is_the_real_player", str((_world.player.get_script() as Script).resource_path) != "res://scripts/world2d/player_stub_2d.gd", "P06's Player2D walks the city")
 	else:
 		_skip(t, "player_features", "P06-player-farm-core", "the built PlayerStub2D (walk, run, jump-free, E) walks the city; hearts, stamina, tools and the hotbar come with Player2D")
-	# --- the preview citizens
-	var cits: Array[Node2D] = _citizens(a)
-	if p14:
-		t.check("preview_citizens_are_inert_with_the_real_handler", cits.is_empty() and TraetoppenPreviewCitizens.inert(), "P14's handler exists: no preview citizen is placed")
-	else:
-		_preview_checks(t, a, cits, npcs)
 	# --- the kitchen gardens are `node` markers (P19): skipped silently while its handler is missing
 	var kinds: Array[String] = []
 	for rec in a.find_markers("node"):
@@ -871,126 +855,11 @@ func _markers_and_citizens(t) -> void:
 		"the data and the built markers hold no board, bath or mailbox marker (their handlers live inside the interiors of the towns track, RT29); the notice board, the tub halves and the red mailbox are decor props only; data marker types %s, built %s, interactables named like them %s" % [types.keys(), live_types.keys(), bad_nodes])
 
 
-func _preview_checks(t, a: IsoArea, cits: Array[Node2D], npcs: Array[Dictionary]) -> void:
-	var gm: Node = t.autoload("GameManager")
-	var seen: Array[String] = []
-	var problems: Array[String] = []
-	var window_rank: int = LuaData.int_of(LuaData.dict(_data.get("decor_ranks", {})).get("owl_holes", 175), 175) + 1
-	for c in cits:
-		var id: String = str(c.get_meta("npc_id", ""))
-		seen.append(id)
-		var marker: Dictionary = {}
-		for m in npcs:
-			if str(m["id"]) == id and str(m["when"]) == str(c.get_meta("when", "")):
-				marker = m
-		if marker.is_empty():
-			problems.append("%s: no marker" % id)
-			continue
-		var visual: IsoChibiSprite2D = c.get_node_or_null("Visual") as IsoChibiSprite2D
-		var want_art: String = CharacterCatalog.resolve(str(GameData.cfg("npcs.%s.visual" % id, "")))
-		var window: bool = bool(marker["window"])
-		var rank: int = window_rank if window else CityData.rank_of(_data, marker["level"])
-		if visual == null or want_art == "" or visual.resolved_id != want_art or visual.current_clip != &"idle":
-			problems.append("%s: visual %s want %s clip %s" % [id, visual.resolved_id if visual != null else null, want_art, visual.current_clip if visual != null else ""])
-		if c.get_parent() != a.objects or c.z_index != rank or c.global_position.distance_to(marker["pose"] as Vector2) > 1.0:
-			problems.append("%s: z %d want %d at %s want %s" % [id, c.z_index, rank, c.global_position, marker["pose"]])
-		if visual != null and visual.shadow != null:
-			if window:
-				if visual.shadow.visible:
-					problems.append("%s: a figure in a hole shows a shadow" % id)
-			elif not visual.shadow.visible or visual.shadow.z_as_relative or visual.shadow.z_index != rank - 2:
-				problems.append("%s: shadow z %d rel %s want %d absolute" % [id, visual.shadow.z_index, visual.shadow.z_as_relative, rank - 2])
-		# facing: the first step ahead is open floor of the same level (the deck is where the figure looks), for a figure that stands on one
-		var pos: Vector2 = marker["pose"]
-		if not window and _reg.level_id_at(pos) == StringName(str(marker["level"])) and visual != null:
-			var step: Vector2 = Iso.to_screen(Iso.to_ground(Iso.dir8_vector(visual.direction_index)).normalized() * TraetoppenPreviewCitizens.FACING_STEP_PX)
-			if _reg.level_id_at(pos + step) != StringName(str(marker["level"])):
-				problems.append("%s faces a wall: direction %d" % [id, visual.direction_index])
-		var labels: Array[Label] = []
-		for ch in c.get_children():
-			if ch is Label:
-				labels.append(ch as Label)
-		var plate_ok: bool = labels.size() == 2
-		if plate_ok:
-			var name_key: String = str(GameData.cfg("npcs.%s.name_key" % id, ""))
-			var plate: Label = labels[1]
-			var tag: Label = labels[0]
-			plate_ok = plate.text == name_key and plate.theme_type_variation == TraetoppenPreviewCitizens.NAME_VARIATION and tag.text == TraetoppenPreviewCitizens.TAG_KEY \
-				and tag.theme_type_variation == TraetoppenPreviewCitizens.TAG_VARIATION and plate.tr(name_key) != name_key and tag.tr(TraetoppenPreviewCitizens.TAG_KEY) != TraetoppenPreviewCitizens.TAG_KEY
-		if not plate_ok:
-			problems.append("%s: label" % id)
-	seen.sort()
-	var host: Node = a.get_node_or_null(TraetoppenPreviewCitizens.HOST_NAME)
-	t.check("preview_citizens_placed_for_every_npc_marker", cits.size() == 7 and seen == ["appraiser_fru_ugle", "bathkeeper_sofus", "carpenter_brumme", "carpenter_brumme", "gardener_hoppe", "guard_oak", "postman_pip"] \
-		and _city.citizens_placed == 7 and TraetoppenPreviewCitizens.last_placed == 7 and TraetoppenPreviewCitizens.PREVIEW_ONLY and host != null and problems.is_empty(),
-		"P14's npc handler is absent: %d preview citizens (%s) stand at their slots, each the baked idle sprite of its cast id (IsoChibiSprite2D, the player's path), y-sorted in Objects at the rank of its level (a figure in a trunk hole at 176), a soft shadow (none in a hole), facing open floor, a NamePlate with the Danish name key and an EnergyTag `%s`; PREVIEW_ONLY = %s; problems %s" % [cits.size(), seen, TraetoppenPreviewCitizens.TAG_KEY, TraetoppenPreviewCitizens.PREVIEW_ONLY, problems])
-	# --- no collision, no interaction
-	var offenders: Array[String] = []
-	for c in cits:
-		for n in _all_nodes(c):
-			if n is CollisionObject2D or n is CollisionShape2D or n is CollisionPolygon2D or n is Interactable2D or n.has_method("interact") or n.is_in_group("npc") or n.is_in_group("interactable"):
-				offenders.append("%s/%s" % [c.name, n.name])
-	var space: PhysicsDirectSpaceState2D = a.get_world_2d().direct_space_state
-	var hit_names: Array[String] = []
-	for c in cits:
-		var q := PhysicsPointQueryParameters2D.new()
-		q.position = c.global_position
-		q.collide_with_areas = true
-		q.collide_with_bodies = true
-		q.collision_mask = 0xFFFFFFFF
-		for r in space.intersect_point(q, 16):
-			if c.is_ancestor_of(r["collider"] as Node):
-				hit_names.append(String(c.name))
-	var p: Node2D = _world.player
-	var saved_pos: Vector2 = p.global_position
-	var near_interact: Array[String] = []
-	for c in cits:
-		if c.visible and not bool(c.get_meta("window", false)):
-			p.global_position = c.global_position + Vector2(0, 40)
-			var it: Node = p.call("nearest_interactable") if p.has_method("nearest_interactable") else null
-			if it != null and c.is_ancestor_of(it):
-				near_interact.append(String(c.name))
-	p.global_position = saved_pos
-	t.check("preview_citizens_have_no_collision", offenders.is_empty() and hit_names.is_empty() and near_interact.is_empty() and not cits.is_empty(),
-		"%d preview citizens: no CollisionObject2D / shape / Interactable2D / `interact` method / npc or interactable group anywhere in their subtrees %s; a physics point query at each figure finds none of their nodes %s; the player's own E query beside them finds none %s" % [cits.size(), offenders, hit_names, near_interact])
-	# --- Brumme: the flags win when they exist, the weekday rule answers while neither is set
-	var brumme: Array[Node2D] = []
-	for c in cits:
-		if str(c.get_meta("npc_id", "")) == "carpenter_brumme":
-			brumme.append(c)
-	var host_node: Node = a.get_node_or_null(TraetoppenPreviewCitizens.HOST_NAME)
-	var by_default: Array[bool] = []
-	for c in brumme:
-		by_default.append(c.visible)
-	var flags_ok: bool = true
-	gm.set_flag(&"brumme_at_stall", 1)
-	gm.set_flag(&"brumme_at_work", 0)
-	host_node.call("refresh_visibility")
-	for c in brumme:
-		flags_ok = flags_ok and c.visible == (str(c.get_meta("when", "")) == "flag:brumme_at_stall")
-	gm.set_flag(&"brumme_at_stall", 0)
-	gm.set_flag(&"brumme_at_work", 1)
-	host_node.call("refresh_visibility")
-	for c in brumme:
-		flags_ok = flags_ok and c.visible == (str(c.get_meta("when", "")) == "flag:brumme_at_work")
-	gm.clear_flag(&"brumme_at_stall")
-	gm.clear_flag(&"brumme_at_work")
-	host_node.call("refresh_visibility")
-	var tm: Node = t.autoload("TimeManager")
-	var weekday: int = int(tm.call("weekday_index"))
-	var stall_day: bool = CityData.stall_weekdays().has(weekday)
-	var derived_ok: bool = true
-	for c in brumme:
-		derived_ok = derived_ok and c.visible == ((str(c.get_meta("when", "")) == "flag:brumme_at_stall") == stall_day)
-	t.check("preview_brumme_follows_flags_then_weekday", brumme.size() == 2 and flags_ok and derived_ok and by_default.count(true) == 1,
-		"the two Brumme figures: exactly one is shown (%s); when the flags exist they decide (stall day / workday both ways: %s); with neither flag the stall weekdays %s of lua/config/traetoppen.lua decide (today is weekday %d: stall %s: %s)" % [by_default, flags_ok, CityData.stall_weekdays(), weekday, stall_day, derived_ok])
-
-
 # ================================================================== fix round of the review: regressions
 
 ## The overview's top edge lies this far above the sketch's top edge (the camera has CityBuilder.HEADROOM_PX of room above it).
 const OVERVIEW_ABOVE_PX := 100.0
-## A figure's head above its feet in world px (the name plates sit at TraetoppenPreviewCitizens.LABEL_HEAD_Y).
+## A figure's head above its feet in world px.
 const HEAD_PX := 222.0
 ## Clearance between the canopy's lower edge and what must stay in view, screen px.
 const CANOPY_CLEAR_PX := 4.0
@@ -1076,6 +945,20 @@ func _fix_round_checks(t) -> void:
 		live.append("%.2f -> %.3f" % [z, share])
 		if absf(share - CityBuilder.CanopyFrame.fraction_for(float(z))) > 0.002:
 			curve_ok = false
+	# --- the canopy frame (CanvasLayer 3) follows the night colour: the world's CanvasModulate does not reach its canvas (review REND-01)
+	var dn: DayNight = _world.day_night
+	dn.override_hour = 22.0
+	dn.snap()
+	await t.frames(2)
+	var night_tint: Color = canopy.sprite.modulate
+	var night_ok: bool = night_tint == dn.color and night_tint.get_luminance() < 0.8
+	dn.override_hour = 12.0
+	dn.snap()
+	await t.frames(2)
+	var day_ok: bool = canopy.sprite.modulate == dn.color
+	dn.override_hour = -1.0
+	dn.snap()
+	t.check("canopy_frame_follows_night_colour", night_ok and day_ok, "22:00: the frame's tint %s = the city's night colour (luminance %.2f); noon: back to %s" % [night_tint, night_tint.get_luminance(), canopy.sprite.modulate])
 	t.check("canopy_gives_way_when_zoomed_out", curve_ok,
 		"the canopy fringe takes %.0f percent of the screen height at the game zoom 0.4 and only %.0f percent at the area's minimum zoom 0.2 (linear in between, clamped beyond; %s): the live strip follows the camera zoom frame by frame (zoom -> share of the screen: %s)" % [frac[2] * 100.0, frac[0] * 100.0, frac, live])
 	# --- the camera may look above the sketch: a player on the north rim of A or B at the game zoom stands below the canopy, head included
@@ -1115,48 +998,11 @@ func _fix_round_checks(t) -> void:
 				out_of_view.append("disc %s ends at y %.0f below the screen" % [id, yb])
 	t.check("overview_keeps_the_top_platforms_in_view", out_of_view.is_empty(),
 		"at the minimum zoom 0.2 (the whole composition of the sketch, view top %d px above the sketch) the discs and huts of the top platforms A and B lie below the canopy's lower edge (%.0f px), and F / G end inside the %.0f px screen: %s; problems %s" % [int(OVERVIEW_ABOVE_PX), cb, vp.y, seen, out_of_view])
-	# --- the name plates: above every deck (absolute z), never overlapping each other (Pip and Oak stand side by side on B)
-	var host: TraetoppenPreviewCitizens.Host = _area.get_node_or_null(TraetoppenPreviewCitizens.HOST_NAME) as TraetoppenPreviewCitizens.Host
-	var z_bad: Array[String] = []
-	var max_rank: int = 0
-	for lv in LuaData.arr(_data.get("levels", [])):
-		max_rank = maxi(max_rank, LuaData.int_of((lv as Dictionary)["rank"]))
-	var overlaps: Array[String] = []
-	var stacked: int = 0
-	var would_overlap: int = 0
-	if host != null:
-		for rec in host.citizens:
-			for key in ["plate", "tag"]:
-				var l: Label = rec[key]
-				if l.z_as_relative or l.z_index != TraetoppenPreviewCitizens.LABEL_Z or l.z_index <= max_rank + 100:
-					z_bad.append("%s/%s z %d rel %s" % [(rec["node"] as Node).name, key, l.z_index, l.z_as_relative])
-		for z in [0.2, 0.4, 0.7]:
-			p.camera.zoom = Vector2.ONE * float(z)
-			await t.frames(3)
-			var blocks: Array[Rect2] = []
-			var raw: Array[Rect2] = []
-			var names: Array[String] = []
-			for rec in host.citizens:
-				if (rec["node"] as Node2D).visible:
-					var block: Rect2 = host.block_of(rec)
-					blocks.append(block)
-					raw.append(Rect2(block.position - Vector2(0.0, float(rec.get("shift", 0.0))), block.size))      # where the block would stand without the nudge
-					names.append(String((rec["node"] as Node).name))
-					stacked += 1 if absf(float(rec.get("shift", 0.0))) > 0.0 else 0
-			for i in blocks.size():
-				for j in range(i + 1, blocks.size()):
-					if blocks[i].intersects(blocks[j]):
-						overlaps.append("%s x %s at zoom %.1f" % [names[i], names[j], z])
-					if raw[i].intersects(raw[j]):
-						would_overlap += 1
+	# --- the live citizens carry their own bubbles above their bodies (the M1a name plates are gone)
 	var director := _current_director()
-	if host==null and director!=null:
-		t.check("scheduled_citizens_replace_preview_labels",_citizens(_area).is_empty() and director.live.values().all(func(actor):return actor._bubble_label!=null and actor._bubble_label.position.y<0 and actor._bubble_label.get_parent()==actor),
-			"live citizens own their quest/heart/candle bubbles above their bodies; prototype name/tag stacks are absent; names use the real interaction prompt")
-	else:
-		t.check("preview_labels_above_the_decks_and_apart", host != null and z_bad.is_empty() and overlaps.is_empty() and stacked > 0 and would_overlap > 0,
-			"every name plate and tag of the preview citizens is drawn at the absolute z %d (above the highest rank %d + 100, so no deck rim or hut cuts it off); at the zooms 0.2 / 0.4 / 0.7 no two visible blocks overlap (%d block pairs would overlap without the nudge, %d blocks were stacked by it; overlaps left %s, z problems %s)" % [TraetoppenPreviewCitizens.LABEL_Z, max_rank, would_overlap, stacked, overlaps, z_bad])
-	# --- the M1a prompt / whisper / toast overlay (nothing else shows them before the HUD of M1b)
+	t.check("scheduled_citizens_replace_preview_labels",director!=null and director.live.values().all(func(actor):return actor._bubble_label!=null and actor._bubble_label.position.y<0 and actor._bubble_label.get_parent()==actor),
+		"live citizens own their quest/heart/candle bubbles above their bodies; names use the real interaction prompt")
+	# --- the HUD shows prompts, whispers and toasts in the city
 	await _hint_checks(t)
 	# --- back to a clean city (the player was moved around; trigger circles and the tracker start fresh)
 	p.camera.zoom = saved_zoom
@@ -1169,94 +1015,32 @@ func _fix_round_checks(t) -> void:
 
 
 func _hint_checks(t) -> void:
-	var hints: TraetoppenPreviewCitizens.Hints = _city.preview_hints as TraetoppenPreviewCitizens.Hints
-	var canopy: CityBuilder.CanopyFrame = _canopy()
-	if hints==null and _world.game_ui!=null:
-		var hud: Node = _world.game_ui.get_screen(&"hud")
-		var prompt: PromptPill = hud.get_node("PromptPill")
-		var whisper: WhisperLine = hud.get_node("WhisperLine")
-		var climb := prompt.tr("LEVEL_PROMPT_CLIMB")
-		EventBus.interaction_prompt_changed.emit(climb)
-		var prompt_ok: bool = prompt.shown().visible and prompt.shown().cap!="" and prompt.shown().verb==climb
-		EventBus.interaction_prompt_changed.emit("")
-		prompt_ok=prompt_ok and not prompt.shown().visible
-		_city.signs[0].interact(_world.player)
-		var whisper_ok := whisper.is_showing() and whisper.shown_text()==whisper.tr("TRAE_SIGN_FARM")
-		hud.toasts.clear()
-		await t.frames(1)
-		EventBus.notification_posted.emit("toast title","toast message","zone")
-		await t.frames(2)
-		var toasts: Array = hud.toasts.toasts()
-		var toast_ok: bool = toasts.size()==1 and toasts[0].title_label.text=="toast title" and toasts[0].message_label.text=="toast message"
-		t.check("hud_owns_prompts_whispers_and_toasts",prompt_ok and whisper_ok and toast_ok and _area.get_node_or_null(TraetoppenPreviewCitizens.HINTS_NAME)==null,
-			"real HUD receives translated prompt/empty hide, the sign's whisper and notification title/message; no duplicate prototype overlay")
-		hud.toasts.clear()
-		whisper._hide()
+	if _world.game_ui == null:
+		t.check("hud_owns_prompts_whispers_and_toasts",false,"the production HUD does not exist")
 		return
-	if hints == null:
-		t.check("preview_hints_show_prompts_whispers_and_toasts",false,"neither the production HUD nor the legacy overlay exists")
-		return
-	var glyph: String = TraetoppenPreviewCitizens.Hints.key_glyph()
-	var problems: Array[String] = []
-	if hints.get_parent() != _area or _area.get_node_or_null(TraetoppenPreviewCitizens.HINTS_NAME) != hints or hints.layer <= canopy.layer or glyph == "":
-		problems.append("node: parent %s layer %d glyph '%s'" % [hints.get_parent(), hints.layer, glyph])
-	# the prompt of the player's nearest interactable: "Klatre" has no key in front (levels.csv), "E: Læs" has one
-	var climb: String = hints.tr("LEVEL_PROMPT_CLIMB")
+	var hud: Node = _world.game_ui.get_screen(&"hud")
+	var prompt: PromptPill = hud.get_node("PromptPill")
+	var whisper: WhisperLine = hud.get_node("WhisperLine")
+	var climb := prompt.tr("LEVEL_PROMPT_CLIMB")
 	EventBus.interaction_prompt_changed.emit(climb)
-	if not hints.prompt.visible or hints.prompt.text != "%s: %s" % [glyph, climb] or climb == "LEVEL_PROMPT_CLIMB":
-		problems.append("prompt '%s' visible %s" % [hints.prompt.text, hints.prompt.visible])
-	var read: String = hints.tr("UI_READ")
-	EventBus.interaction_prompt_changed.emit(read)
-	if hints.prompt.text != read or not read.begins_with(glyph + ":"):
-		problems.append("prompt with its own key '%s'" % hints.prompt.text)
+	var prompt_ok: bool = prompt.shown().visible and prompt.shown().cap!="" and prompt.shown().verb==climb
 	EventBus.interaction_prompt_changed.emit("")
-	if hints.prompt.visible:
-		problems.append("prompt stays after the empty text")
-	# a whisper through the real E of the first sign (whisper_requested(TRAE_SIGN_FARM))
-	var sign_key: String = "TRAE_SIGN_FARM"
+	prompt_ok=prompt_ok and not prompt.shown().visible
 	_city.signs[0].interact(_world.player)
-	if not hints.whisper.visible or hints.whisper.text != hints.tr(sign_key) or hints.whisper.text == sign_key or hints.whisper.text == "":
-		problems.append("whisper '%s' visible %s" % [hints.whisper.text, hints.whisper.visible])
-	hints.tick(TraetoppenPreviewCitizens.HINT_WHISPER_S + 0.1)
-	if hints.whisper.visible:
-		problems.append("the whisper stays")
-	# a toast (the zone unlock of the first arrival is one): title and message on two lines, gone after its time, empty ones ignored
-	EventBus.notification_posted.emit("toast title", "toast message", "zone")
-	if not hints.toast.visible or hints.toast.text != "toast title\ntoast message":
-		problems.append("toast '%s' visible %s" % [hints.toast.text, hints.toast.visible])
-	hints.tick(TraetoppenPreviewCitizens.HINT_TOAST_S + 0.1)
-	if hints.toast.visible:
-		problems.append("the toast stays")
-	EventBus.notification_posted.emit("", "", "welcome")
-	if hints.toast.visible:
-		problems.append("an empty notification shows a plate")
-	# a text wider than the plate limit wraps instead of running off the screen
-	hints.set_text(hints.whisper, "word ".repeat(80))
-	var wrapped: bool = hints.whisper.autowrap_mode == TextServer.AUTOWRAP_WORD_SMART and hints.whisper.custom_minimum_size.x <= hints.max_width() + 0.5
-	hints.set_text(hints.whisper, "short")
-	if not wrapped or hints.whisper.autowrap_mode != TextServer.AUTOWRAP_OFF:
-		problems.append("wrapping: %s" % wrapped)
-	hints.whisper.visible = false
-	t.check("preview_hints_show_prompts_whispers_and_toasts", problems.is_empty(),
-		"the prompt overlay of the preview (PreviewHints, CanvasLayer %d above the canopy): the prompt of the nearest interactable with the key glyph `%s` in front when the text has none (\"%s\" -> \"%s: %s\"), the sign's real E -> a whisper that shows the translated key and goes after %.0f s, a notification as title + message and gone after %.0f s, an empty one ignored, long text wraps; problems %s" % [hints.layer, glyph, climb, glyph, climb, TraetoppenPreviewCitizens.HINT_WHISPER_S, TraetoppenPreviewCitizens.HINT_TOAST_S, problems])
-	# --- a real HUD screen (P17) takes over: the overlay hides itself, and comes back when the screen goes
-	var gs := GDScript.new()
-	gs.source_code = "extends Node\nfunc has_screen(id: StringName) -> bool:\n\treturn id == &\"hud\"\n"
-	gs.reload()
-	var fake: Node = gs.new() as Node
-	fake.add_to_group(&"game_ui")
-	_world.add_child(fake)
-	hints.refresh_hud()
-	var hidden_with_hud: bool = TraetoppenPreviewCitizens.Hints.hud_present(_world.get_tree()) and not hints.visible
-	_world.remove_child(fake)
-	fake.free()
-	hints.refresh_hud()
-	var back: bool = hints.visible == not TraetoppenPreviewCitizens.Hints.hud_present(_world.get_tree())
-	t.check("preview_hints_step_aside_for_a_hud", hidden_with_hud and back,
-		"with a GameUI screen `hud` in the tree (a fake with has_screen) the overlay hides itself (%s); without it the overlay's visibility follows the real GameUI (%s) - the real HUD owns prompts, whispers and toasts once it exists" % [hidden_with_hud, back])
+	var whisper_ok := whisper.is_showing() and whisper.shown_text()==whisper.tr("TRAE_SIGN_FARM")
+	hud.toasts.clear()
+	await t.frames(1)
+	EventBus.notification_posted.emit("toast title","toast message","zone")
+	await t.frames(2)
+	var toasts: Array = hud.toasts.toasts()
+	var toast_ok: bool = toasts.size()==1 and toasts[0].title_label.text=="toast title" and toasts[0].message_label.text=="toast message"
+	t.check("hud_owns_prompts_whispers_and_toasts",prompt_ok and whisper_ok and toast_ok,
+		"real HUD receives translated prompt/empty hide, the sign's whisper and notification title/message")
+	hud.toasts.clear()
+	whisper._hide()
 
 
-# ================================================================== with a real marker handler (P14 / P19 present): the preview steps aside
+# ================================================================== with a real marker handler (P14 / P19 present)
 
 ## The section as the marker handler of the checks (the technique of tests/sections/area.gd): create_marker(params, pos, cell, area).
 static func create_marker(params: Dictionary, _pos: Vector2, _cell: Vector2i, _area_node: IsoArea) -> Node:
@@ -1303,15 +1087,13 @@ func _fake_handlers(t) -> void:
 			kinds.append(str((m as Dictionary).get("kind", "")))
 	ids.sort()
 	kinds.sort()
-	var no_preview: bool = _citizens(a).is_empty() and a.get_node_or_null(TraetoppenPreviewCitizens.HOST_NAME) == null and city.citizens_placed == 0 and TraetoppenPreviewCitizens.inert() \
-		and city.preview_hints == null and a.get_node_or_null(TraetoppenPreviewCitizens.HINTS_NAME) == null and TraetoppenPreviewCitizens.attach_hints(a) == null
 	var recorded: int = 0
 	for rec in a.markers:
 		if str(rec["type"]) in ["npc", "node"] and rec["node"] != null and (rec["node"] as Node).get_parent() == a.objects:
 			recorded += 1
-	t.check("preview_citizens_inert_when_p14_present", no_preview and ids == ["appraiser_fru_ugle", "bathkeeper_sofus", "carpenter_brumme", "carpenter_brumme", "gardener_hoppe", "guard_oak", "postman_pip"] and recorded == 10 \
+	t.check("npc_markers_use_the_real_handler", ids == ["appraiser_fru_ugle", "bathkeeper_sofus", "carpenter_brumme", "carpenter_brumme", "gardener_hoppe", "guard_oak", "postman_pip"] and recorded == 10 \
 		and not a.skipped_markers.has("npc") and not a.skipped_markers.has("node") and int(a.skipped_markers.get("seed_basket", 0)) == 1 and errors.is_empty() and city.planters_drawn == 0,
-		"with a fake `npc` / `node` handler registered (marker_handlers override, the technique of area.gd): no preview citizen, no preview host and no prompt overlay (PreviewHints) exists, the handler was called for the 7 npc markers %s and the 3 node kinds %s, all 10 nodes sit in Objects and in area.markers, skipped_markers %s, no decor planter is drawn (the node draws itself); engine messages %s" % [ids, kinds, a.skipped_markers, errors.slice(0, 2)])
+		"with a fake `npc` / `node` handler registered (marker_handlers override, the technique of area.gd): the handler was called for the 7 npc markers %s and the 3 node kinds %s, all 10 nodes sit in Objects and in area.markers, skipped_markers %s, no decor planter is drawn (the node draws itself); engine messages %s" % [ids, kinds, a.skipped_markers, errors.slice(0, 2)])
 	# --- the made bodies are levelled: by the tracker, or by the data where no level holds the position; a figure in a hole is above the decals and locked
 	var z_by: Dictionary = {}
 	var locked: Array[String] = []
@@ -2343,20 +2125,13 @@ func _current_director() -> TownDirector:
 
 
 func _refresh_native_citizens() -> void:
-	var preview := _area.get_node_or_null(TraetoppenPreviewCitizens.HOST_NAME)
-	if preview != null:
-		preview.call("refresh_visibility")
-	else:
-		NpcDirector.resync()
+	NpcDirector.resync()
 
 
 func _clear_native_hints() -> void:
-	if _city.preview_hints != null:
-		_city.preview_hints.call("tick",100.0)
-	else:
-		var hud: Node = _world.game_ui.get_screen(&"hud")
-		hud.toasts.clear()
-		hud.get_node("AreaBanner")._dismiss()
+	var hud: Node = _world.game_ui.get_screen(&"hud")
+	hud.toasts.clear()
+	hud.get_node("AreaBanner")._dismiss()
 
 
 func run_windowed(t) -> void:
@@ -2525,50 +2300,29 @@ func run_windowed(t) -> void:
 	p.camera.position_smoothing_enabled = true
 	p.facing8 = Iso.dir8_of(Vector2.UP)
 	await _look(t, (ladder["bottom"] as Vector2) + Vector2(0, 40), 0.4, 0.6)
-	if _city.preview_hints != null:
-		await t.until(func() -> bool: return (_city.preview_hints as Node).get("prompt").visible, 3.0)
-		var hint_node: TraetoppenPreviewCitizens.Hints = _city.preview_hints as TraetoppenPreviewCitizens.Hints
-		var prompt_text: String = hint_node.prompt.text
-		var shot_prompt: Image = await t.capture("city_06_hints_prompt_at_the_ladder")
-		var prompt_rect := Rect2i(hint_node.prompt.get_global_rect().grow(-2.0))
-		var prompt_stats: Dictionary = t.region_stats(shot_prompt, prompt_rect, 2)
-		_city.signs[0].interact(p)
-		EventBus.notification_posted.emit("toast title", "toast message", "zone")
-		await t.seconds(0.3)
-		var shot_all: Image = await t.capture("city_06_hints_whisper_and_toast")
-		var whisper_rect := Rect2i(hint_node.whisper.get_global_rect().grow(-2.0))
-		var toast_rect := Rect2i(hint_node.toast.get_global_rect().grow(-2.0))
-		var whisper_stats: Dictionary = t.region_stats(shot_all, whisper_rect, 2)
-		var toast_stats: Dictionary = t.region_stats(shot_all, toast_rect, 2)
-		var plate_pixels: Callable = func(st: Dictionary) -> bool: return float(st["luma_min"]) < 0.2 and float(st["luma_max"]) > 0.7 and float(st["luma_std"]) > 0.15
-		t.check("hints_visible_at_the_ladder_foot", prompt_text == "%s: %s" % [TraetoppenPreviewCitizens.Hints.key_glyph(), hint_node.tr("LEVEL_PROMPT_CLIMB")] and prompt_rect.size.x > 40 \
-			and plate_pixels.call(prompt_stats) and hint_node.whisper.visible and plate_pixels.call(whisper_stats) and hint_node.toast.visible and plate_pixels.call(toast_stats),
-			"windowed: at the foot of the ladder (the nearest interactable is its climb lane) the overlay shows `%s` as a dark ink plate with chalk text (region luma min %.2f, max %.2f, std %.2f); the sign's whisper (min %.2f, max %.2f) and a toast (min %.2f, max %.2f) stand above it; shots city_06_hints_*.png" % [prompt_text, float(prompt_stats["luma_min"]), float(prompt_stats["luma_max"]), float(prompt_stats["luma_std"]), float(whisper_stats["luma_min"]), float(whisper_stats["luma_max"]), float(toast_stats["luma_min"]), float(toast_stats["luma_max"])])
-		hint_node.tick(100.0)
-	else:
-		var hud: Node = _world.game_ui.get_screen(&"hud")
-		var prompt: PromptPill = hud.get_node("PromptPill")
-		var whisper: WhisperLine = hud.get_node("WhisperLine")
-		await t.until(func() -> bool:return bool(prompt.shown().visible),3.0)
-		var shown := prompt.shown()
-		var shot_prompt: Image = await t.capture("city_06_hints_prompt_at_the_ladder")
-		var prompt_rect := Rect2i((prompt.get_node("%Pill") as Control).get_global_rect().grow(-2))
-		var prompt_stats: Dictionary = t.region_stats(shot_prompt,prompt_rect,2)
-		_city.signs[0].interact(p)
-		EventBus.notification_posted.emit("toast title","toast message","zone")
-		await t.seconds(0.3)
-		var shot_all: Image = await t.capture("city_06_hints_whisper_and_toast")
-		var whisper_rect := Rect2i((whisper.get_node("%Panel") as Control).get_global_rect().grow(-2))
-		var whisper_stats: Dictionary = t.region_stats(shot_all,whisper_rect,2)
-		var toasts: Array = hud.toasts.toasts()
-		var toast_stats := {"luma_min":1.0,"luma_max":0.0,"luma_std":0.0}
-		if not toasts.is_empty():
-			toast_stats=t.region_stats(shot_all,Rect2i((toasts.back() as Control).get_global_rect().grow(-2)),2)
-		var has_ink: Callable = func(st: Dictionary)->bool:return float(st.luma_min)<0.25 and float(st.luma_max)>0.65 and float(st.luma_std)>0.1
-		t.check("hints_visible_at_the_ladder_foot",shown.visible and str(shown.cap)!="" and shown.verb==prompt.tr("LEVEL_PROMPT_CLIMB") and prompt_rect.size.x>40 and has_ink.call(prompt_stats) and whisper.is_showing() and has_ink.call(whisper_stats) and not toasts.is_empty() and has_ink.call(toast_stats),
-			"current HUD at the real ladder: %s; prompt, sign whisper and notification have visible ink/text contrast: %s / %s / %s; city_06_hints_*.png" % [shown,prompt_stats,whisper_stats,toast_stats])
-		_clear_native_hints()
-		whisper._hide()
+	var hud: Node = _world.game_ui.get_screen(&"hud")
+	var prompt: PromptPill = hud.get_node("PromptPill")
+	var whisper: WhisperLine = hud.get_node("WhisperLine")
+	await t.until(func() -> bool:return bool(prompt.shown().visible),3.0)
+	var pill := prompt.shown()
+	var shot_prompt: Image = await t.capture("city_06_hints_prompt_at_the_ladder")
+	var prompt_rect := Rect2i((prompt.get_node("%Pill") as Control).get_global_rect().grow(-2))
+	var prompt_stats: Dictionary = t.region_stats(shot_prompt,prompt_rect,2)
+	_city.signs[0].interact(p)
+	EventBus.notification_posted.emit("toast title","toast message","zone")
+	await t.seconds(0.3)
+	var shot_all: Image = await t.capture("city_06_hints_whisper_and_toast")
+	var whisper_rect := Rect2i((whisper.get_node("%Panel") as Control).get_global_rect().grow(-2))
+	var whisper_stats: Dictionary = t.region_stats(shot_all,whisper_rect,2)
+	var toasts: Array = hud.toasts.toasts()
+	var toast_stats := {"luma_min":1.0,"luma_max":0.0,"luma_std":0.0}
+	if not toasts.is_empty():
+		toast_stats=t.region_stats(shot_all,Rect2i((toasts.back() as Control).get_global_rect().grow(-2)),2)
+	var has_ink: Callable = func(st: Dictionary)->bool:return float(st.luma_min)<0.25 and float(st.luma_max)>0.65 and float(st.luma_std)>0.1
+	t.check("hints_visible_at_the_ladder_foot",pill.visible and str(pill.cap)!="" and pill.verb==prompt.tr("LEVEL_PROMPT_CLIMB") and prompt_rect.size.x>40 and has_ink.call(prompt_stats) and whisper.is_showing() and has_ink.call(whisper_stats) and not toasts.is_empty() and has_ink.call(toast_stats),
+		"current HUD at the real ladder: %s; prompt, sign whisper and notification have visible ink/text contrast: %s / %s / %s; city_06_hints_*.png" % [pill,prompt_stats,whisper_stats,toast_stats])
+	_clear_native_hints()
+	whisper._hide()
 	# --- the walk: from the farm bridge over the whole city to Hyggebyen
 	await _enter_city(t, &"from_farm")
 	p = _world.player

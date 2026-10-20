@@ -298,6 +298,23 @@ func _flag_changed_signal() -> void:
 	gm.clear_flag(&"review_flag")           # not there: no fire
 	bus.flag_changed.disconnect(cb)
 	t.check("flag_changed_fires", seen == [["review_flag", true], ["review_flag", 7], ["review_flag", false]], str(seen))
+	# ARCH-07: the flags that mirror an owner are not Lua's to write; HomeManager's load always re-mirrors its tier
+	var lr: Node = t.autoload("LuaRuntime")
+	var hm: Node = t.autoload("HomeManager")
+	t.allow("api.set_flag(\"home_tier\") refused")
+	t.allow("api.set_flag(\"friend_baker_maja\") refused")
+	var tier_before: int = gm.flag_int(&"home_tier", 1)
+	var hearts_before: Variant = gm.get_flag(&"friend_baker_maja", null)
+	lr.lua_set_flag("home_tier", tier_before + 3)
+	lr.lua_set_flag("friend_baker_maja", 9)
+	lr.lua_set_flag("review_lua_flag", 2)
+	t.check("lua_cannot_write_owner_flags", gm.flag_int(&"home_tier", 1) == tier_before and gm.get_flag(&"friend_baker_maja", null) == hearts_before and gm.flag_int(&"review_lua_flag") == 2 and lr.is_owner_flag("friend_last_x") and not lr.is_owner_flag("friendly_note"),
+		"api.set_flag refuses home_tier and friend_<npc> (the owners write them), any other flag is written")
+	gm.clear_flag(&"review_lua_flag")
+	var section: Dictionary = hm.to_dict()
+	gm.set_flag(&"home_tier", int(hm.tier) % 10 + 1)
+	hm.from_dict(section)
+	t.check("home_load_remirrors_tier_flag", gm.flag_int(&"home_tier", 0) == int(hm.tier), "a usable home_tier flag that disagrees with the tier is rewritten on load (flag %d, tier %d)" % [gm.flag_int(&"home_tier", 0), int(hm.tier)])
 
 
 func _new_game() -> void:
@@ -411,6 +428,35 @@ func _quest_rewards() -> void:
 	var invalid: Dictionary = before.duplicate(true)
 	invalid["pending_rewards"] = {"review_save_during_grant": {"turnip": "bad"}}
 	t.check("invalid_pending_rewards_rejected_without_mutation", not qm.from_dict(invalid) and qm.to_dict() == before, "")
+
+	# A reward that completes another quest (SYS-07): that quest's rewards arrive in the same claim, not on the next pickup.
+	_fresh()
+	_full_backpack()
+	_quest("review_chain_a", "x", {"items": {"turnip": 1}})
+	_quest("review_chain_b", "collect_turnip", {"items": {"carrot": 2}})
+	qm.accept_quest(&"review_chain_a")
+	qm.accept_quest(&"review_chain_b")
+	qm.update_objective(&"review_chain_a", &"x")
+	eco.remove_item(&"wood", 99)
+	eco.remove_item(&"wood", 99)
+	await t.frames(2)
+	t.check("chained_quest_rewards_claimed_together", qm.is_completed(&"review_chain_b") and eco.count_item(&"turnip") == 1 and eco.count_item(&"carrot") == 2 and qm.pending_rewards.is_empty(), "turnip %d, carrot %d, owed %s" % [eco.count_item(&"turnip"), eco.count_item(&"carrot"), str(qm.pending_rewards)])
+
+	# SYS-16: a stack that only partly fits is delivered in part, a garment the player already owns is sold at once instead of owed forever.
+	_fresh()
+	_full_backpack()
+	eco.remove_item(&"wood", 99)
+	_quest("review_partial", "x", {"items": {"turnip": 150}})
+	qm.accept_quest(&"review_partial")
+	qm.update_objective(&"review_partial", &"x")
+	t.check("partial_stack_reward_delivers_what_fits", eco.count_item(&"turnip") == 99 and qm.pending_rewards.get(&"review_partial", {}) == {"turnip": 51}, "turnip %d, owed %s" % [eco.count_item(&"turnip"), str(qm.pending_rewards)])
+	eco.inventory.clear()
+	eco.add_item(&"hat_chef_white", 1)
+	var gold_hat: int = eco.gold
+	_quest("review_owned_hat", "x", {"items": {"hat_chef_white": 1}})
+	qm.accept_quest(&"review_owned_hat")
+	qm.update_objective(&"review_owned_hat", &"x")
+	t.check("owned_garment_reward_is_sold_not_owed", not qm.pending_rewards.has(&"review_owned_hat") and eco.count_item(&"hat_chef_white") == 1 and eco.gold > gold_hat, "owed %s, hats %d, gold %d -> %d" % [str(qm.pending_rewards), eco.count_item(&"hat_chef_white"), gold_hat, eco.gold])
 
 
 func _repeatable_quests() -> void:
@@ -538,11 +584,12 @@ func _animal_validation() -> void:
 	_fresh()
 	ah.from_dict(_animal())
 	var before: Dictionary = ah.to_dict()
+	# (an unknown species and an unknown building type used to be in this list; since SAVE-07 they are content drift that loads into
+	# the orphans bucket, checked below)
 	var invalid: Array = [
-		_animal("missing_species"),
 		{"animals": {"bad": 7}},
 		{"animals": []},
-		{"buildings": {"bad": {"building_type": "missing_building"}}},
+		{"buildings": {"bad": {"building_type": ""}}},
 		_animal("chicken", {"happiness": "happy"}),
 		_animal("chicken", {"age_days": -1}),
 		_animal("chicken", {"products_ready": 1.5}),
@@ -557,8 +604,12 @@ func _animal_validation() -> void:
 	for data in invalid:
 		rejected = rejected and not ah.from_dict(data) and ah.to_dict() == before
 	t.check("invalid_husbandry_records_rejected_without_mutation", rejected, "")
+	var drifted := _animal("missing_species")
+	drifted["buildings"] = {"building_1": {"id": "building_1", "building_type": "missing_building", "animals_inside": []}}
+	t.check("unknown_husbandry_types_kept_as_orphans", ah.from_dict(drifted) and ah.animals.is_empty() and ah.buildings.is_empty() and ah.orphans.animals.has("animal_1") and ah.orphans.buildings.has("building_1"), "")
+	ah.from_dict(before)
 	var payload: Dictionary = sm.gather_payload()
-	payload["husbandry"] = _animal("missing_species")
+	payload["husbandry"] = _animal("chicken", {"happiness": "happy"})
 	var file := FileAccess.open(sm.slot_path(1), FileAccess.WRITE)
 	file.store_string(JSON.stringify(payload))
 	file.close()

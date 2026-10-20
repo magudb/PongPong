@@ -79,6 +79,9 @@ func run(t) -> void:
 		tm.set_weather(&"klart")
 	t.check("out_of_season_mature_crop_also_withers", grid.state_of(cell) == FarmGrid.State.WITHERED)
 	t.check("multiseason_crop_survives_season_boundary", grid.state_of(next_cell) != FarmGrid.State.WITHERED and grid.get_plot(next_cell).crop_id == &"carrot")
-	var bad := {"plots": {"1,1": {"state": 2, "crop_id": "carrot", "regrowing": true}}}
+	# SAVE-07: a crop that does not regrow (any more) but is saved as regrowing is content drift, not damage: the plot loads and
+	# grows on as a fresh planting (this check used to pin a rejection of the whole crop model)
+	var drifted := {"plots": {"%d,%d" % [cell.x, cell.y]: {"state": 2, "crop_id": "carrot", "regrowing": true}}}
 	var original := grid.to_dict()
-	t.check("rejects_impossible_regrowth_without_mutation", not grid.from_dict(bad) and grid.to_dict() == original)
+	t.check("repairs_impossible_regrowth", FarmGrid.validate_dict(drifted) and grid.from_dict(drifted) and grid.get_plot(cell) != null and grid.get_plot(cell).crop_id == &"carrot" and not grid.get_plot(cell).regrowing)
+	grid.from_dict(original)

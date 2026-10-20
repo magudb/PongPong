@@ -43,6 +43,16 @@ var load_preset_button: Button
 var perk_label: Label
 var _refresh_pending := false
 var _assigning := ""
+## UIC-10: the filter column is built once per tab and the item cells once per item; a refresh (every equip, try-on, hotbar change) only
+## updates their state instead of freeing and instancing ~600 nodes and duplicating the chip styles again.
+var _filters_tab := -1
+var _filter_specs: Array = []                 # [key, label key] of the built filter buttons
+var _filter_icons: Dictionary = {}            # filter key -> TTItemIcon (the worn piece of a clothes cell)
+var _worn_header: Label
+var _worn_labels: Dictionary = {}             # equipment slot -> Label (Hands tab)
+var _item_cells: Dictionary = {}              # item id -> MarginContainer holding its slot button
+var _item_group := ButtonGroup.new()
+var _empty_label: Label
 
 func _init() -> void:
 	super._init()
@@ -54,6 +64,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	super._ready()
+	_item_group.set_meta("tt_value_selection",true)
 	L.scrim(self)
 	var book := L.panel(self,"PanelBook",Rect2(50,30,1180,660))
 	var body := L.box(L.margin(book,20),true,12)
@@ -194,6 +205,13 @@ func _place_preview() -> void:
 		preview.position = Vector2(preview_well.size.x/2,preview_well.size.y-16)
 
 func close() -> void:
+	_drop_preview()
+	super.close()
+
+func _force_closed() -> void:
+	_drop_preview()
+
+func _drop_preview() -> void:
 	_assigning = ""
 	if is_instance_valid(preview):
 		preview_well.remove_child(preview)
@@ -203,7 +221,6 @@ func close() -> void:
 	preview_held = null
 	preview_outfit.clear()
 	_try_on.clear()
-	super.close()
 
 func _initial_focus() -> Control:
 	for button in item_buttons:
@@ -280,55 +297,74 @@ func _refresh_texts() -> void:
 			hotbar_buttons[index].setup_item(player.hotbar.slots[index],0,str(index+1))
 			hotbar_buttons[index].set_pressed_no_signal(index == player.hotbar.selected)
 	perk_label.text = tr("GARDEROBE_CURRENT_PERKS_FMT") % [roundi(Perks.total("speed")*100),roundi(Perks.total("energy")),roundi(Perks.total("luck")*100),roundi(Perks.total("discount")*100)]
-	_wire()
+	# _select() above wired the screen; the hotbar slots only changed their pictures.
 
 func _build_filters() -> void:
-	L.clear(filters)
-	filter_buttons.clear()
-	var specs: Array = [["",tr("GARDEROBE_ALL")]]
+	var specs: Array = [["","GARDEROBE_ALL"]]
 	if tab == 0:
 		for cell in CELLS:
-			specs.append([cell[0],tr("SLOTCELL_"+cell[0])])
+			specs.append([cell[0],"SLOTCELL_"+cell[0]])
 	else:
-		specs.append_array([["weapon",tr("HUD_ITEM_WEAPON")],["tool",tr("GARDEROBE_TOOLS")],["gem",tr("GARDEROBE_LANTERN_GEM")]])
+		specs.append_array([["weapon","HUD_ITEM_WEAPON"],["tool","GARDEROBE_TOOLS"],["gem","GARDEROBE_LANTERN_GEM"]])
+	if _filters_tab != tab or specs != _filter_specs or (tab == 1 and _worn_labels.size() != EconomyManager.equipment.size()):
+		_make_filters(specs)
+	for button in filter_buttons:
+		var key: String = button.get_meta("filter_key")
+		button.text = tr(str(button.get_meta("filter_label")))
+		button.set_pressed_no_signal(filter == key)
+		if _filter_icons.has(key):
+			var worn := ""
+			for cell in CELLS:
+				if cell[0] == key:
+					for slot in cell[1]:
+						worn = str(WardrobeManager.equipped.get(slot,worn))
+			button.tooltip_text = button.text+": "+_name(worn)
+			_filter_icons[key].item_id = StringName(worn)
+			_filter_icons[key].rarity = ItemKinds.rarity_of(worn)
+	if _worn_header != null:
+		_worn_header.text = tr("GARDEROBE_WORN")
+	for slot in _worn_labels:
+		_worn_labels[slot].text = _name(str(EconomyManager.equipment.get(slot,"")))
+
+func _make_filters(specs: Array) -> void:
+	L.clear(filters)
+	filter_buttons.clear()
+	_filter_icons.clear()
+	_worn_labels.clear()
+	_worn_header = null
+	_filters_tab = tab
+	_filter_specs = specs.duplicate(true)
 	var group := ButtonGroup.new()
 	group.set_meta("tt_value_selection",true)
 	for spec in specs:
-		var button := L.button(filters,spec[1],"PillTab")
+		var button := L.button(filters,"","PillTab")
 		button.toggle_mode = true
 		button.button_group = group
-		button.set_pressed_no_signal(filter == spec[0])
+		button.set_meta("filter_key",spec[0])
+		button.set_meta("filter_label",spec[1])
 		button.pressed.connect(_filter.bind(spec[0]))
 		if tab == 0 and spec[0] != "":
-			for cell in CELLS:
-				if cell[0] != spec[0]:
-					continue
-				var worn := ""
-				for slot in cell[1]:
-					worn = str(WardrobeManager.equipped.get(slot,worn))
-				button.custom_minimum_size = Vector2(178,48)
-				button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-				button.tooltip_text = spec[1]+": "+_name(worn)
-				for state in ["normal","hover","pressed","hover_pressed","disabled","focus"]:
-					var box := button.get_theme_stylebox(state).duplicate() as StyleBox
-					box.content_margin_left = 50
-					button.add_theme_stylebox_override(state,box)
-				var icon := TTItemIcon.new()
-				icon.item_id = StringName(worn)
-				icon.rarity = ItemKinds.rarity_of(worn)
-				icon.id_fallback = false
-				icon.size = Vector2(32,32)
-				button.add_child(icon)
-				button.resized.connect(_place_icon.bind(button,icon))
-				_place_icon(button,icon)
+			button.custom_minimum_size = Vector2(178,48)
+			button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+			for state in ["normal","hover","pressed","hover_pressed","disabled","focus"]:
+				var box := button.get_theme_stylebox(state).duplicate() as StyleBox
+				box.content_margin_left = 50
+				button.add_theme_stylebox_override(state,box)
+			var icon := TTItemIcon.new()
+			icon.id_fallback = false
+			icon.size = Vector2(32,32)
+			button.add_child(icon)
+			button.resized.connect(_place_icon.bind(button,icon))
+			_place_icon(button,icon)
+			_filter_icons[spec[0]] = icon
 		filter_buttons.append(button)
 	if tab == 1:
-		L.label(filters,tr("GARDEROBE_WORN"),"Heavy17")
+		_worn_header = L.label(filters,"","Heavy17")
 		for slot in EconomyManager.equipment:
-			var id := str(EconomyManager.equipment[slot])
-			var label := L.label(filters,_name(id),"Muted14")
+			var label := L.label(filters,"","Muted14")
 			label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 			label.custom_minimum_size.x = 178
+			_worn_labels[slot] = label
 
 func _place_icon(button: Button, icon: Control) -> void:
 	icon.position = Vector2(10,(button.size.y-32)/2)
@@ -342,38 +378,51 @@ func _filter(key: String) -> void:
 func _build_items() -> void:
 	var focus := get_viewport().gui_get_focus_owner()
 	var restore := focus in item_buttons
-	L.clear(grid)
+	for cell in _item_cells.values():
+		cell.visible = false
+		(cell.get_child(0) as Control).focus_mode = Control.FOCUS_NONE
 	item_buttons.clear()
 	var ids: Array = ItemKinds.all_ids("clothing") if tab == 0 and show_all else WardrobeManager.owned_ids() if tab == 0 else EconomyManager.loadout_ids()
 	ids = Rarity.sorted(ids,func(id): return ItemKinds.rarity_of(id),func(id): return str(id))
-	var selection := ButtonGroup.new()
-	selection.set_meta("tt_value_selection",true)
 	for value in ids:
 		var id := str(value)
-		var category := str(ItemKinds.def(id).get("category",""))
 		if tab == 1 and EconomyManager.equip_slot_of(id) == "":
 			continue
 		if filter != "" and not _matches(id):
 			continue
-		var button: Button = SLOT.instantiate()
-		button.button_group = selection
-		button.custom_minimum_size = Vector2(56,56)
-		# Reserve the theme's external focus ring inside the clipped viewport.
-		# Scroll the padded cell, so first/last rows retain the whole ring too.
-		var cell := L.margin(grid,6)
-		cell.add_child(button)
-		button.focus_entered.connect(func(): _scroll_to_cell.call_deferred(cell))
+		var cell: MarginContainer = _item_cells.get(id)
+		if cell == null:
+			cell = _make_item_cell(id)
+		var button: Button = cell.get_child(0)
 		button.setup_item(StringName(id),0)
 		button.tooltip_text = _name(id)
 		button.modulate.a = 1.0 if _owned(id) else 0.45
-		button.pressed.connect(_activate.bind(id))
+		button.focus_mode = Control.FOCUS_ALL
+		cell.visible = true
+		grid.move_child(cell,item_buttons.size())
 		item_buttons.append(button)
 	owned_label.text = tr("GARDEROBE_COUNT_FMT") % item_buttons.size()
-	if item_buttons.is_empty():
-		var empty_label := L.label(grid,tr("GARDEROBE_EMPTY"),"Body",true)
-		empty_label.custom_minimum_size.x = 380
+	if _empty_label == null:
+		_empty_label = L.label(grid,"","Body",true)
+		_empty_label.custom_minimum_size.x = 380
+	_empty_label.text = tr("GARDEROBE_EMPTY")
+	_empty_label.visible = item_buttons.is_empty()
+	grid.move_child(_empty_label,item_buttons.size())
 	if restore:
 		_initial_focus().grab_focus()
+
+func _make_item_cell(id: String) -> MarginContainer:
+	var button: Button = SLOT.instantiate()
+	button.button_group = _item_group
+	button.custom_minimum_size = Vector2(56,56)
+	# Reserve the theme's external focus ring inside the clipped viewport.
+	# Scroll the padded cell, so first/last rows retain the whole ring too.
+	var cell := L.margin(grid,6)
+	cell.add_child(button)
+	button.focus_entered.connect(func(): _scroll_to_cell.call_deferred(cell))
+	button.pressed.connect(_activate.bind(id))
+	_item_cells[id] = cell
+	return cell
 
 func _scroll_to_cell(cell: Variant) -> void:
 	# A queued focus notification may outlive the grid rebuild it came from.

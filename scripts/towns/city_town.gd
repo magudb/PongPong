@@ -34,6 +34,7 @@ static func attach(area: IsoArea, area_id := "traetoppen") -> Node:
 			counter.position = Iso.to_screen(point) + Vector2(0, 48)
 			if kind == "talk":
 				counter.position.x += -96 if host_index == 1 else 96
+				counter.keeper_anchor = Iso.to_screen(point)
 			area.objects.add_child(counter)
 	var director := TownDirector.create(area, {}, col)
 	area.add_child(director)

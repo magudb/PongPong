@@ -27,11 +27,15 @@ const ACTIONS: Dictionary = {
 	"interact": {"keys": [KEY_E, KEY_ENTER], "joy": [JOY_BUTTON_A]},
 	"jump": {"keys": [KEY_SPACE], "joy": [JOY_BUTTON_A]},
 	"dodge": {"keys": [KEY_SPACE], "joy": [JOY_BUTTON_B]},
-	"run": {"keys": [KEY_SHIFT]},
-	"fly_toggle": {"keys": [KEY_F]},
-	"fly_descend": {"keys": [KEY_CTRL]},
-	"use_tool": {"mouse": [MOUSE_BUTTON_LEFT], "joy": [JOY_BUTTON_X]},
-	"attack": {"mouse": [MOUSE_BUTTON_LEFT], "joy": [JOY_BUTTON_X]},
+	# The pad runs and descends on LT, takes off on Y (light only acts in action areas, where nobody flies) and
+	# zooms with the right stick (review UX-04: a pad player could not run, fly or zoom)
+	"run": {"keys": [KEY_SHIFT], "axes": [[JOY_AXIS_TRIGGER_LEFT, 1.0]]},
+	"fly_toggle": {"keys": [KEY_F], "joy": [JOY_BUTTON_Y]},
+	# Shift, not Ctrl: Ctrl + arrows switches Spaces on macOS (review UX-16). Running is off while flying, so Shift is free there.
+	"fly_descend": {"keys": [KEY_SHIFT], "axes": [[JOY_AXIS_TRIGGER_LEFT, 1.0]]},
+	# X is the keyboard tool / attack key (review UX-03: mouse-free play), the same letter as the pad button
+	"use_tool": {"keys": [KEY_X], "mouse": [MOUSE_BUTTON_LEFT], "joy": [JOY_BUTTON_X]},
+	"attack": {"keys": [KEY_X], "mouse": [MOUSE_BUTTON_LEFT], "joy": [JOY_BUTTON_X]},
 	"light": {"keys": [KEY_Q], "joy": [JOY_BUTTON_Y]},
 	"drink": {"keys": [KEY_R], "joy": [JOY_BUTTON_RIGHT_SHOULDER]},
 	"slot_1": {"keys": [KEY_1]},
@@ -49,8 +53,8 @@ const ACTIONS: Dictionary = {
 	"journal": {"keys": [KEY_J]},
 	"pause": {"keys": [KEY_ESCAPE], "joy": [JOY_BUTTON_START]},
 	"build_menu": {"keys": [KEY_B]},
-	"zoom_in": {"mouse": [MOUSE_BUTTON_WHEEL_UP]},
-	"zoom_out": {"mouse": [MOUSE_BUTTON_WHEEL_DOWN]},
+	"zoom_in": {"mouse": [MOUSE_BUTTON_WHEEL_UP], "axes": [[JOY_AXIS_RIGHT_Y, -1.0]]},
+	"zoom_out": {"mouse": [MOUSE_BUTTON_WHEEL_DOWN], "axes": [[JOY_AXIS_RIGHT_Y, 1.0]]},
 	# addendum 3.3 (features); no mouse wheel binding: Indretning consumes the wheel itself
 	"decorate": {"keys": [KEY_H], "joy": [JOY_BUTTON_BACK]},
 	"wardrobe": {"keys": [KEY_G]},
@@ -58,7 +62,7 @@ const ACTIONS: Dictionary = {
 	"rotate_item": {"keys": [KEY_R], "joy": [JOY_BUTTON_RIGHT_SHOULDER]},
 	"pickup_item": {"keys": [KEY_X], "mouse": [MOUSE_BUTTON_RIGHT], "joy": [JOY_BUTTON_X]},
 	# towns addendum (RT3): the People book. P is free (the used keys are W A S D arrows E Enter Space
-	# Shift F Ctrl Q R 0-9 I Tab J Esc B H G C X); no pad button: the pause menu has a row "Folk"
+	# Shift F Q R 0-9 I Tab J Esc B H G C X M); no pad button: the pause menu has a row "Folk"
 	"people": {"keys": [KEY_P]},
 	# N04: name the existing eight-slot D-pad cycle so dialogue/hints use
 	# the same binding contract as the production player.
@@ -75,7 +79,8 @@ const HOTBAR: Array = ["hotbar_previous", "hotbar_next"]
 const NAVIGATION: Array = ["map"]
 
 ## The `ui_*` overrides that give a pad the paging keys (UI_NAVIGATION.md F10): the tab / page
-## actions of every screen (`ui_page_up` = LB, `ui_page_down` = RB).
+## actions of every screen (`ui_page_up` = LB, `ui_page_down` = RB), plus Q / E for keyboards without PgUp / PgDn (a MacBook,
+## review UX-16; UiNav.page_pressed() leaves the letters to a focused text field).
 const UI_PAGE_ACTIONS: Array = ["ui_page_up", "ui_page_down"]
 
 const DEADZONE: float = 0.2
@@ -92,8 +97,8 @@ const ANY_DEVICE: int = -1
 const UI_OVERRIDES: Dictionary = {
 	"ui_accept": {"logical": [KEY_ENTER, KEY_KP_ENTER, KEY_SPACE], "joy": [JOY_BUTTON_A]},
 	"ui_cancel": {"logical": [KEY_ESCAPE], "joy": [JOY_BUTTON_B]},
-	"ui_page_up": {"logical": [KEY_PAGEUP], "joy": [JOY_BUTTON_LEFT_SHOULDER]},
-	"ui_page_down": {"logical": [KEY_PAGEDOWN], "joy": [JOY_BUTTON_RIGHT_SHOULDER]},
+	"ui_page_up": {"keys": [KEY_Q], "logical": [KEY_PAGEUP], "joy": [JOY_BUTTON_LEFT_SHOULDER]},
+	"ui_page_down": {"keys": [KEY_E], "logical": [KEY_PAGEDOWN], "joy": [JOY_BUTTON_RIGHT_SHOULDER]},
 }
 
 ## The D-pad button the engine defaults of the focus-walk actions must keep.
@@ -113,6 +118,10 @@ static func expected_shared() -> Dictionary:
 		"mouse:%d" % MOUSE_BUTTON_LEFT: ["attack", "use_tool"],
 		"joy:%d" % JOY_BUTTON_A: ["interact", "jump"],
 		"joy:%d" % JOY_BUTTON_X: ["attack", "pickup_item", "use_tool"],
+		"key:%d" % KEY_X: ["attack", "pickup_item", "use_tool"],
+		"key:%d" % KEY_SHIFT: ["fly_descend", "run"],
+		"axis:%d:+" % JOY_AXIS_TRIGGER_LEFT: ["fly_descend", "run"],
+		"joy:%d" % JOY_BUTTON_Y: ["fly_toggle", "light"],
 		"key:%d" % KEY_R: ["drink", "rotate_item"],
 		"joy:%d" % JOY_BUTTON_RIGHT_SHOULDER: ["drink", "rotate_item"],
 	}
@@ -242,6 +251,13 @@ static func ui_probes() -> Array:
 		["PageDown", _key_event(KEY_PAGEDOWN), "ui_page_down", true, "page"],
 		["PageUp", _key_event(KEY_PAGEUP), "ui_page_down", false, "page"],
 		["PageDown", _key_event(KEY_PAGEDOWN), "ui_page_up", false, "page"],
+		["Q", _key_event(KEY_Q), "ui_page_up", true, "page"],
+		["E", _key_event(KEY_E), "ui_page_down", true, "page"],
+		["Q", _key_event(KEY_Q), "ui_page_down", false, "page"],
+		["E", _key_event(KEY_E), "ui_page_up", false, "page"],
+		# the letter paging keeps the world meaning of the keys (a modal consumes the press on top)
+		["Q", _key_event(KEY_Q), "light", true, "page"],
+		["E", _key_event(KEY_E), "interact", true, "page"],
 		["joy A", _joy_event(JOY_BUTTON_A), "ui_page_up", false, "page"],
 		["joy A", _joy_event(JOY_BUTTON_A), "ui_page_down", false, "page"],
 		["joy X", _joy_event(JOY_BUTTON_X), "ui_page_up", false, "page"],
@@ -304,8 +320,8 @@ static func ui_nav_errors() -> Array:
 	return errors
 
 
-## Pad paging (UI_NAVIGATION.md F10, task UI.1): ui_page_up = PageUp + LB (joy 9) and nothing else,
-## ui_page_down = PageDown + RB (joy 10) and nothing else; LB pages up, RB pages down, neither the
+## Pad paging (UI_NAVIGATION.md F10, task UI.1): ui_page_up = Q + PageUp + LB (joy 9) and nothing else,
+## ui_page_down = E + PageDown + RB (joy 10) and nothing else; LB pages up, RB pages down, neither the
 ## other way round, and RB still triggers drink and rotate_item.
 static func ui_page_errors() -> Array:
 	var errors: Array = _override_errors(UI_PAGE_ACTIONS)

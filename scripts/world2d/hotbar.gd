@@ -26,9 +26,21 @@ func assign(index: int, item: StringName) -> void:
 	if item != &"" and GameData.item_def(item).is_empty():
 		return
 	if index == -1:
-		index = slots.find(&"")
+		# "Use" from the backpack puts the item in hand: the slot that already holds it, else the first free slot.
+		# A full hotbar refuses with a whisper instead of overwriting the selected tool.
+		index = slots.find(item)
 		if index == -1:
-			index = selected
+			index = slots.find(&"")
+		if index == -1:
+			EventBus.whisper_requested.emit("HUD_HOTBAR_FULL")
+			return
+		if slots[index] == item:
+			select(index)
+			return
+		slots[index] = item
+		selected = index
+		changed.emit()
+		return
 	if index < 0 or index >= SIZE or slots[index] == item:
 		return
 	slots[index] = item

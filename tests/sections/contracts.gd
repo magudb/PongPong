@@ -94,7 +94,7 @@ func _husbandry(t, ah, lr) -> void:
 	var bsrc: Dictionary = cfg.get("buildings", {})
 	var bfb: Dictionary = ah.BUILDINGS
 	t.check("husbandry_buildings_matches_lua", bsrc.size() == bfb.size() and _buildings_equal(bsrc, bfb),
-		"%d buildings in Lua == the fallback (%d)" % [bsrc.size(), bfb.size()])
+		"%d buildings in Lua == the fallback (%d); neither has a build_days (an animal building is finished at once, GAP4-08)" % [bsrc.size(), bfb.size()])
 
 	# The live tables ARE the Lua ones (loaded at _ready): same keys, product_interval is the enum.
 	t.check("husbandry_loaded_from_lua",
@@ -171,7 +171,7 @@ func _buildings_equal(src: Dictionary, fallback: Dictionary) -> bool:
 			return false
 		var da: Dictionary = a as Dictionary
 		var db: Dictionary = b as Dictionary
-		if str(da.get("name_key", "")) != str(db.get("name_key", "")) or int(da.get("capacity", -1)) != int(db.get("capacity", -2)) or int(da.get("build_days", -1)) != int(db.get("build_days", -2)):
+		if str(da.get("name_key", "")) != str(db.get("name_key", "")) or int(da.get("capacity", -1)) != int(db.get("capacity", -2)) or da.has("build_days") or db.has("build_days"):
 			return false
 		var ca: Dictionary = da.get("build_cost", {})
 		var cb: Dictionary = db.get("build_cost", {})

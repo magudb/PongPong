@@ -7,7 +7,7 @@ This is a **new isometric 2D starter inside the supplied PongPong project**. It 
 1. Open `project.godot` in **Godot 4.7** (the target version from the submitted project). The project starts in `res://scenes/isometric/demo_isometric_2d.tscn`.
 2. Wait for Godot to import the PNG atlases. Press F5.
 3. Walk with **WASD / arrows**, hold **Shift** to run, **Space** to jump, **Tab** to cycle characters. Press **C** to cheer or **E** to try an action.
-4. With **Bat** or **Fairy**, press **F** to toggle flight, **Space** to rise, and **Ctrl** to descend.
+4. With **Bat** or **Fairy**, press **F** to toggle flight, **Space** to rise, and **Shift** to descend (**LT** on a controller).
 5. The green diamonds are a demonstration drawn by `isometric_ground_2d.gd`; they are **not** the full game map or a production TileMapLayer.
 
 ## Assets and scenes

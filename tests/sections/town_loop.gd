@@ -307,6 +307,9 @@ func _finish_dialogue(t, action := "close") -> Dictionary:
 				index = screen._choices.size() - 1
 			selected = screen._choices[index].duplicate()
 			screen._buttons[index].grab_focus()
+			# A press inside the choice grace answers nothing (UX-12): wait until the choices count as seen.
+			if screen._choice_grace > 0.0:
+				await t.seconds(screen._choice_grace + 0.02)
 			t.tap(&"ui_accept")
 		else:
 			t.tap(&"interact")

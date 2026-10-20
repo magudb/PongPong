@@ -40,10 +40,19 @@ func run(t) -> void:
 	for extra in extras:extra.free()
 	silke._refresh()
 	t.check("lantern_returns_when_budget_free",silke.light.visible)
+	var began := Time.get_ticks_usec()
+	for i in 20:silke._enabled_lights(world)
+	var count_us := (Time.get_ticks_usec()-began)/20.0
+	t.check("lantern_light_count_cost",t.perf_ok("lantern_light_count_cost",count_us,300),"%.1f us per count of the world's lights" % count_us)
 	world.area.set_night_factor(0)
 	for glow in glows:glow._refresh()
 	t.check("noon_hides_all_halos",glows.all(func(g):return not g.halo.visible))
 	t.check("noon_hides_lantern",not silke.light.visible and is_zero_approx(silke.light.energy))
+	# By day the lantern is off: a refresh must not walk the world tree for the light budget.
+	began = Time.get_ticks_usec()
+	for i in 100:silke._refresh()
+	var noon_us := (Time.get_ticks_usec()-began)/100.0
+	t.check("noon_lantern_skips_light_count",t.perf_ok("noon_lantern_skips_light_count",noon_us,30),"%.1f us per refresh at noon" % noon_us)
 	var clone := Npc2D.create({"id":"ghostfam_silke"})
 	clone.area = world.area
 	world.area.objects.add_child(clone)

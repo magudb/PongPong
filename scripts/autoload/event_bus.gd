@@ -35,7 +35,8 @@ signal modal_changed(stack: Array)
 
 # --- Farm ---
 signal crop_planted(plot_id: StringName, crop_id: StringName)
-signal crop_watered(plot_id: StringName)
+signal crop_watered(plot_id: StringName)                 # the PLAYER watered (the can): quests and tutorial hints count it
+signal crop_auto_watered(plot_id: StringName, source: StringName)   # a crop watered without the player: rain, sprinkler, supply, partner
 signal crop_harvested(plot_id: StringName, crop_id: StringName, amount: int)
 signal crop_stage_changed(plot_id: StringName, stage: int)
 signal plot_unlocked(plot_id: StringName)
@@ -87,6 +88,8 @@ signal notification_posted(title: String, message: String, icon: String)
 ## An open/close REQUEST that the owning panel acts on (it is not a state report; GameManager.modal_changed is).
 signal ui_panel_toggled(panel_name: StringName, is_open: bool)
 signal save_completed(slot: int)
+## A save could not be written (SaveManager.last_error carries the detail). code: write | gather.
+signal save_failed(slot: int, code: String)
 signal load_completed(slot: int)
 
 # --- Feature addendum 3.1: home, hygge, furniture, wardrobe, loot, friends ---
@@ -111,6 +114,9 @@ signal item_discovered(item_id: StringName, rarity: StringName, category: String
 
 # --- Lua bridge and generic escape hatch ---
 signal lua_event(event_name: StringName, payload: Dictionary)
+## LuaRuntime re-read every Lua file (F9 in a debug build, reload_scripts() from tools and tests; also once at boot, before
+## the later autoloads exist): whoever copied Lua data re-reads or drops it.
+signal lua_reloaded()
 ## For signals nobody foresaw (R.13). Quest bindings of the feature content use it with these names, emitted by the
 ## owner next to the dedicated signal: furniture_placed {item, rarity}, hygge_level {level}, festival_held {},
 ## home_upgraded {tier}, garment_equipped {slot, item, rarity}, open_home_builder {tier}, open_home_chest {}.

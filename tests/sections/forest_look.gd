@@ -58,6 +58,33 @@ func _run(t,native: bool) -> void:
 			for x in area.map.width:
 				masks_match = masks_match and (mask.get_pixel(x,y).r > .5) == (area.map.ground_at(Vector2i(x,y)) in SoftGround.FEATURES[feature].chars)
 	t.check("soft_ground_masks_follow_cells",masks_match and look.soft_ground.sprites.size() == 3)
+	# each decal covers its feature's cells plus SoftGround.MARGIN, not the whole map, and keeps the painting anchored to the map corner (review REND-07)
+	var cell_px := Vector2(Iso.ORTHO_W,Iso.ORTHO_H)
+	var corner: Vector2 = area.ground_fx.to_local(area.cell_to_global(Vector2i.ZERO))-cell_px*.5
+	var crops_ok := true
+	var smaller := 0
+	var crops := []
+	for feature in SoftGround.FEATURES:
+		var picture: Sprite2D = null
+		for sprite in look.soft_ground.sprites:
+			if sprite.name == str(feature).capitalize()+"Decal": picture = sprite
+		if picture == null: continue
+		var low := Vector2i(area.map.width,area.map.height)
+		var high := Vector2i(-1,-1)
+		for y in area.map.height:
+			for x in area.map.width:
+				if area.map.ground_at(Vector2i(x,y)) in SoftGround.FEATURES[feature].chars:
+					low = low.min(Vector2i(x,y))
+					high = high.max(Vector2i(x,y))
+		var want := Rect2i(low-Vector2i.ONE*SoftGround.MARGIN,high-low+Vector2i.ONE*(1+2*SoftGround.MARGIN)).intersection(Rect2i(0,0,area.map.width,area.map.height))
+		var got := Rect2((picture.position-corner)/cell_px,picture.texture.get_size()/8.0)
+		var material := picture.material as ShaderMaterial
+		var paint: Texture2D = material.get_shader_parameter("paint")
+		var anchored: bool = ((material.get_shader_parameter("origin") as Vector2)*paint.get_size()).is_equal_approx(Vector2(want.position)*cell_px)
+		crops_ok = crops_ok and got.is_equal_approx(Rect2(want)) and anchored
+		smaller += 1 if want.get_area() < area.map.width*area.map.height else 0
+		crops.append("%s %s" % [feature,want])
+	t.check("soft_ground_decals_cover_only_their_features",crops_ok and smaller >= 1,"decal rects in cells: %s (map %dx%d)" % [crops,area.map.width,area.map.height])
 	t.check("soft_ground_keeps_cells_walkable",area.map.ground == original_grid and area.is_walkable(Vector2i(20,20)) and not area.is_walkable(Vector2i(28,13)))
 	await t.physics(2)
 	var point := PhysicsPointQueryParameters2D.new()

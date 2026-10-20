@@ -7,6 +7,9 @@ const Row := preload("res://scripts/ui/components/shop_item_row.gd")
 const HoursText := preload("res://scripts/towns/hours.gd")
 const Prices := preload("res://scripts/economy/price_curve.gd")
 const Talk := "res://scripts/social/talk/social_talk.gd"
+## ShopSystem.last_refusal -> the keeper's line (KEEP_ANY_<kind>, keepers.csv); any other refusal is KEEP_ANY_CANNOT (UX-10: a full backpack
+## used to read "sold out")
+const REFUSAL_LINES := {&"no_gold": "CANNOT_PAY", &"no_stock": "SOLD_OUT", &"no_room": "NO_ROOM", &"closed": "CLOSED"}
 @onready var stepper: Control = %Stepper
 @onready var item_grid: GridContainer = %ItemGrid
 @onready var buy_btn: Button = %BuyButton
@@ -60,6 +63,7 @@ func _ready() -> void:
 	EventBus.player_inventory_changed.connect(func(_inventory): _schedule_refresh())
 	EventBus.friend_changed.connect(func(_npc, _hearts): _schedule_refresh())
 	EventBus.outfit_changed.connect(func(_outfit): _schedule_refresh())
+	%HintBar.on_dark = true
 	%HintBar.set_hints([{"pair": [&"ui_up", &"ui_down"], "key": "HINT_MOVE"}, {"action": &"ui_accept", "key": "HINT_OK"}, {"action": &"ui_cancel", "key": "HINT_BACK"}])
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("shop", Callable(get_script(), &"fixture_setup"))
 
@@ -86,6 +90,10 @@ func close() -> void:
 	ShopSystem.close_shop(current_shop)
 	_clear_rows()
 	_closing = false
+
+func _force_closed() -> void:
+	ShopSystem.close_shop(current_shop)
+	_clear_rows()
 
 func _shop_closed(id: StringName) -> void:
 	if id == current_shop and is_open() and not _closing:
@@ -144,6 +152,7 @@ func _refresh_texts() -> void:
 	_clear(%TabRow)
 	_tab_buttons.clear()
 	var group := ButtonGroup.new()
+	group.set_meta(UiNav.TAB_ROW_META, true)
 	for index in _tabs.size():
 		var tab := Button.new()
 		tab.name = "Tab_" + str(_tabs[index].id)
@@ -284,8 +293,15 @@ func _footer() -> void:
 	var limit := mini(99, available)
 	if not _selling() and unit > 0:
 		limit = mini(limit, int(EconomyManager.gold / unit))
+	var husbandry := Svc.node("AnimalHusbandry")
+	var animal_room := int(husbandry.call("room_for_item", _selected_id)) if not _selling() and husbandry != null and husbandry.has_method("room_for_item") else -1
+	if animal_room > 0:
+		limit = mini(limit, animal_room)      # baby animals: no more than the buildings can take at once (GAP4-05)
+	var wallet_full := _selling() and unit > 0 and EconomyManager.wallet_room() < unit
+	if _selling() and unit > 0:
+		limit = mini(limit, int(EconomyManager.wallet_room() / unit))      # the pay must fit below the gold cap
 	stepper.set_range(1, maxi(1, limit))
-	var enabled := not closed_shop and not owned and not _selected.is_empty() and available > 0 and unit > 0 and (_selling() or EconomyManager.gold >= unit)
+	var enabled := not closed_shop and not owned and not _selected.is_empty() and available > 0 and unit > 0 and (_selling() or EconomyManager.gold >= unit) and not wallet_full
 	stepper.focus_mode = Control.FOCUS_ALL if enabled else Control.FOCUS_NONE
 	stepper.mouse_filter = Control.MOUSE_FILTER_STOP if enabled else Control.MOUSE_FILTER_IGNORE
 	stepper.visible = not owned
@@ -297,6 +313,8 @@ func _footer() -> void:
 	total_label.text = (tr("SHOP_TOTAL") % Fmt.thousands(total)) if not _selected.is_empty() else ""
 	if available <= 0 and not _selected.is_empty():
 		total_label.text = tr("SHOP_UI_SOLD_OUT")
+	elif wallet_full and not _selected.is_empty():
+		total_label.text = tr("STORE_WALLET_FULL_FMT") % Fmt.thousands(EconomyManager.MAX_GOLD)
 
 func _wire() -> void:
 	var header: Array = _tab_buttons.duplicate()
@@ -330,7 +348,7 @@ func _confirm() -> void:
 	var selling := _selling()
 	var success := ShopSystem.sell_item(current_shop, id, amount) if selling else ShopSystem.buy_item(current_shop, id, amount)
 	_busy = false
-	_greeting_key = _keeper_key("THANKS" if success else ("CANNOT_PAY" if ShopSystem.last_refusal == &"no_gold" else "SOLD_OUT"))
+	_greeting_key = _keeper_key("THANKS" if success else str(REFUSAL_LINES.get(ShopSystem.last_refusal, "CANNOT")))
 	keeper_speech.text = tr(_greeting_key)
 	_refresh()
 	if success:
@@ -341,8 +359,12 @@ func _confirm() -> void:
 			if equip_now and is_instance_valid(wardrobe):
 				wardrobe.call("equip", id)
 
+## The keeper's answer to a transaction: KEEP_ANY_<kind> itself, else its numbered variants (KEEP_ANY_<kind>_1 ...), else the greeting.
 func _keeper_key(kind: String) -> String:
-	var variants: Array = Svc.static_call(Talk, &"variants", ["KEEP_ANY_" + kind], [])
+	var key := "KEEP_ANY_" + kind
+	if LocalizationManager.has_key(key):
+		return key
+	var variants: Array = Svc.static_call(Talk, &"variants", [key], [])
 	return str(variants[0]) if not variants.is_empty() else str(_info.get("greeting_key", "SHOP_GREETING_DEFAULT"))
 
 func _clear(parent: Node) -> void:

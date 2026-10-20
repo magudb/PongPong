@@ -59,21 +59,27 @@ static func array_of(v: Variant) -> Array:
 
 # ----------------------------------------------------------------------------- race, perks, combat, player
 
+static var _enum_script: Script = null
+static var _enum_names: Dictionary = {}      # CharacterType value -> lower-case name, read once per GameManager script
+
+
 ## "animal" | "fairy" | "hobbit" | "ghost": the enum name of GameManager.character_type, checked against lua/config/characters.lua `races`.
+## perk() asks on every call and hot paths call perk() every tick: get_script_constant_map() builds the whole constant map, so the
+## names of the enum are read once.
 static func race_key() -> String:
 	var g: Node = gm()
 	if g == null:
 		return "animal"
 	var idx: int = int(g.get("character_type"))
-	var named: String = ""
 	var script: Script = g.get_script()
-	if script != null:
-		var enum_dict: Variant = script.get_script_constant_map().get("CharacterType", null)
+	if script != _enum_script:
+		_enum_script = script
+		_enum_names = {}
+		var enum_dict: Variant = script.get_script_constant_map().get("CharacterType", null) if script != null else null
 		if enum_dict is Dictionary:
 			for k in (enum_dict as Dictionary):
-				if int((enum_dict as Dictionary)[k]) == idx:
-					named = str(k).to_lower()
-					break
+				_enum_names[int((enum_dict as Dictionary)[k])] = str(k).to_lower()
+	var named: String = str(_enum_names.get(idx, ""))
 	if named != "" and not CharacterCatalog.race(named).is_empty():
 		return named
 	return str(RACE_KEYS.get(idx, "animal"))

@@ -3,6 +3,9 @@ extends Node
 ## Weapons stay owned outside the backpack; the equipped copy is never spare stock.
 const CAP := 9
 var owned: Dictionary = {}
+## Weapons of a save that this build cannot hold (content drift: no longer a weapon, or copies above today's cap): {id: count}.
+## Saved as they were and owned again by the load that can hold them.
+var orphans: Dictionary = {}
 func count_total(id: Variant) -> int:
 	return int(owned.get(StringName(str(id)),0))
 func count_stock(id: Variant) -> int:
@@ -26,15 +29,25 @@ func remove(id: Variant, amount: int = 1) -> bool:
 	return true
 func reset() -> void:
 	owned.clear()
+	orphans.clear()
+## {id: count}, plus "_orphans": {id: count} while there are any (no weapon id starts with an underscore).
 func to_dict() -> Dictionary:
 	var out := {}
 	for id in owned: out[str(id)] = owned[id]
+	if not orphans.is_empty(): out["_orphans"] = orphans.duplicate()
 	return out
 func from_dict(data: Dictionary) -> bool:
 	reset()
-	for id in data:
-		var n: Variant = data[id]
-		if typeof(n) not in [TYPE_INT,TYPE_FLOAT] or not is_finite(float(n)) or float(n) < 1 or float(n) != floorf(float(n)): continue
-		if str(ItemKinds.def(id).get("category","")) != "weapon": continue
-		owned[StringName(str(id))] = int(minf(float(n),1 if ItemKinds.is_one_of_a_kind(id) else CAP))
+	var all := {}
+	var kept: Variant = data.get("_orphans", {})
+	for source in [data, kept if kept is Dictionary else {}]:
+		for id in source:
+			var n: Variant = source[id]
+			if str(id) == "_orphans" or typeof(n) not in [TYPE_INT,TYPE_FLOAT] or not is_finite(float(n)) or float(n) < 1 or float(n) != floorf(float(n)): continue
+			all[str(id)] = int(all.get(str(id), 0)) + int(n)
+	for id in all:
+		var cap := 1 if ItemKinds.is_one_of_a_kind(id) else CAP
+		var fits := mini(int(all[id]), cap) if str(ItemKinds.def(id).get("category","")) == "weapon" else 0
+		if fits > 0: owned[StringName(id)] = fits
+		if int(all[id]) > fits and not (fits > 0 and ItemKinds.is_one_of_a_kind(id)): orphans[id] = int(all[id]) - fits
 	return true

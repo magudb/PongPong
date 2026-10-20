@@ -122,6 +122,8 @@ var builder_error: String = ""
 var night_factor: float = 0.0
 
 var _terrain_of: Dictionary = {}            # Vector2i -> terrain id of the ground tile
+var _tile_cache: Dictionary = {}            # terrain id -> [source id, atlas variants], only while _paint_ground() runs
+var _painting: bool = false
 var _when_nodes: Array[Dictionary] = []     # {nodes: Array[Node], when: String, active: bool, delegated: bool, flag: bool}
 var _glows: Array[Dictionary] = []          # {node: CanvasItem, base: float}
 var _lights: Array[Dictionary] = []         # {node: PointLight2D, base: float}
@@ -376,9 +378,21 @@ func is_farmable(c: Vector2i) -> bool:
 
 ## Swaps the terrain of one cell (FarmGrid: soil_tilled / soil_watered). reset_terrain() restores what the map says.
 func set_terrain(c: Vector2i, terrain_id: StringName) -> void:
-	var sid: int = AreaTileSet.source_for(projection, terrain_id)
-	ground.set_cell(c, sid, AreaTileSet.atlas_coords_for(terrain_id, c))
+	var tile: Array = _terrain_tile(terrain_id)
+	ground.set_cell(c, tile[0], Iso.atlas_coords(c, tile[1]))
 	_terrain_of[c] = terrain_id
+
+
+## [source id, atlas variants] of a terrain. Both lookups build a fresh dictionary (AreaTileSet.get_set, ArtCatalog.terrain through
+## TextureRefs), so while _paint_ground() runs they are made once per terrain instead of once per cell (review REND-05).
+func _terrain_tile(terrain_id: StringName) -> Array:
+	var hit: Variant = _tile_cache.get(terrain_id)
+	if hit != null:
+		return hit
+	var tile: Array = [AreaTileSet.source_for(projection, terrain_id), ArtCatalog.terrain(terrain_id)["variants"]]
+	if _painting:
+		_tile_cache[terrain_id] = tile
+	return tile
 
 
 func reset_terrain(c: Vector2i) -> void:
@@ -514,9 +528,12 @@ static func terrain_id(ch: String, p_projection: StringName, theme: StringName) 
 
 
 func _paint_ground() -> void:
+	_painting = true
 	for y in map.height:
 		for x in map.width:
 			_paint_cell(Vector2i(x, y))
+	_painting = false
+	_tile_cache.clear()
 	if projection == &"iso":
 		_place_iso_walls()
 
@@ -537,14 +554,13 @@ func _paint_cell(c: Vector2i) -> void:
 		farmable[c] = true
 	if ch == "W" and projection == &"ortho":
 		# a flat dark floor under the wall so the sort order never shows a hole
-		ground.set_cell(c, AreaTileSet.source_for(projection, &"wall_void_o"), AreaTileSet.atlas_coords_for(&"wall_void_o", c))
-		_terrain_of[c] = &"wall_void_o"
+		set_terrain(c, &"wall_void_o")
 		walls.set_cell(c, AreaTileSet.wall_source_for(_wall_prop_for(c)), Vector2i(0, 0))
 		return
 	if ch == "~" and projection == &"iso":
 		for i in water_layers.size():
-			var wid: StringName = AreaTileSet.WATER_FRAMES[i]
-			water_layers[i].set_cell(c, AreaTileSet.source_for(projection, wid), AreaTileSet.atlas_coords_for(wid, c))
+			var water: Array = _terrain_tile(AreaTileSet.WATER_FRAMES[i])
+			water_layers[i].set_cell(c, water[0], Iso.atlas_coords(c, water[1]))
 		_terrain_of[c] = &"water_0"
 		_has_water = true
 		return
@@ -945,8 +961,6 @@ func place_prop(prop_id: String, cell: Vector2i, params: Dictionary = {}) -> Nod
 	# building strip is nearest. Its pivot is the same footprint centre.
 	var ground_contact: Sprite2D = _attach_ground_contact(art, pivot_pos, prop_id)
 	prop_nodes.append({"id": prop_id, "cell": cell, "nodes": nodes, "body": body, "ground": ground_contact})
-	if night_factor > 0.0:
-		_apply_night()
 	return first
 
 
@@ -1299,6 +1313,7 @@ func _make_light(m: Dictionary, pos: Vector2) -> Node2D:
 	l.position = Vector2(0, -float(m.get("h", 40)))
 	holder.add_child(l)
 	_lights.append({"node": l, "base": 0.9 if kind == "lantern" else 0.8})
+	_apply_night_one(_lights.back())
 	var halo := Sprite2D.new()
 	halo.texture = Glow.halo_texture()
 	halo.scale = Vector2.ONE * (radius / 128.0) * 0.5
@@ -1307,6 +1322,7 @@ func _make_light(m: Dictionary, pos: Vector2) -> Node2D:
 	halo.material = Glow.additive_material()
 	holder.add_child(halo)
 	_glows.append({"node": halo, "base": 0.55})
+	_apply_night_one(_glows.back())
 	objects.add_child(holder)
 	var prop_id := StringName(str(m.get("prop", "")))
 	if prop_id != &"":

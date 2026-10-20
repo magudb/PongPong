@@ -17,7 +17,7 @@
 
 Open `project.godot`, press F5, and explore all **twelve** characters.
 
-**Controls:** WASD/arrows to move, Shift to run, Space to jump, Tab to swap characters, C to celebrate, E to interact. Bat and fairy can also press F to toggle flying (Space = rise, Ctrl = descend).
+**Controls:** WASD/arrows to move, Shift to run, Space to jump, Tab to swap characters, C to celebrate, E to interact. Bat and fairy can also press F to toggle flying (Space = rise, Shift = descend; LT on a controller).
 
 All atlases have 8 rendered directions and animation frames in columns. This optimized project uses **WebP RGBA** sprite sheets at quality 97 to reduce download size. Godot 4 supports importing WebP as 2D textures. The separate PNG pack contains lossless master atlases.
 

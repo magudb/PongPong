@@ -373,9 +373,9 @@ func _run_live() -> void:
 	# 39 contract actions (including People, hotbar and map) + four ui_* overrides.
 	_check("project.ui_page_pad_bindings",
 		perr.is_empty() and Contract.UI_OVERRIDES.size() == 4 and Contract.ACTIONS.size() + Contract.UI_OVERRIDES.size() == 43 and Contract.UI_PAGE_ACTIONS.size() == 2
-		and Contract.actual_signatures("ui_page_up") == ["joy:%d" % JOY_BUTTON_LEFT_SHOULDER, "logicalkey:%d" % KEY_PAGEUP]
-		and Contract.actual_signatures("ui_page_down") == ["joy:%d" % JOY_BUTTON_RIGHT_SHOULDER, "logicalkey:%d" % KEY_PAGEDOWN],
-		"; ".join(perr) if not perr.is_empty() else "ui_page_up must be PageUp + LB (joy 9) and ui_page_down PageDown + RB (joy 10), nothing else; 39 + 4 overrides = 43 actions")
+		and Contract.actual_signatures("ui_page_up") == ["joy:%d" % JOY_BUTTON_LEFT_SHOULDER, "key:%d" % KEY_Q, "logicalkey:%d" % KEY_PAGEUP]
+		and Contract.actual_signatures("ui_page_down") == ["joy:%d" % JOY_BUTTON_RIGHT_SHOULDER, "key:%d" % KEY_E, "logicalkey:%d" % KEY_PAGEDOWN],
+		"; ".join(perr) if not perr.is_empty() else "ui_page_up must be Q + PageUp + LB (joy 9) and ui_page_down E + PageDown + RB (joy 10), nothing else (Q / E: review UX-16); 39 + 4 overrides = 43 actions")
 
 	# repo hygiene
 	_check_hygiene()

@@ -74,7 +74,7 @@ const AGE_FAMILY := {
 ## edit by the file's owner makes no_foreign_csv_touched fail on purpose: update the hash in the same commit. Overrides of their keys go through P26's zz_final.csv.
 ## P14 d4aac01 moved DIALOGUE_CONTINUE_HINT to npc_ui.csv (glyph-aware); adopt that owner edit.
 const FOREIGN_CSV_PINS := {
-	"res://localization/ui.csv": "da7f54aa2f31ca5da31de96a71f090a7633ac924a07e32034318829762c274c3",
+	"res://localization/ui.csv": "1bab43a8a2a76f533663542854825bf06cfa3feb5ff92a3dd91b2892f48c5f5f",
 	"res://localization/finds.csv": "6835f34203801e28d1c4a116f3fe15debae6b72d8d893c116b00a563c83e6118",
 	"res://localization/furniture.csv": "ae3acc062997339785012e4de6cc1c80d763e0f9e206ddd15a7ba79f9930c75f",
 }

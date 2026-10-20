@@ -3,19 +3,25 @@
 The game reads its data (config, items, quests, dialogue, shops, recipes, registries) from `lua/**` through `LuaRuntime`
 (`scripts/autoload/lua_runtime.gd`), a pure-GDScript interpreter of a small, documented Lua **subset**.
 Everything outside the subset is reported at load time by the lint (`LuaRuntime.lint_report`), never as an engine warning.
+The authoring reference (what a file of each kind looks like, the quest hooks, the dialogue actions, the api) is
+`docs/lua_api.md`; this file is the subset and its tooling.
 
 ## The subset in one paragraph
 
 Top-level assignments of literal tables (`config = { ... }`, `items = { ... }`, `shops = { ... }`, `recipes = { ... }`),
 a `kind = "config|items|quest|dialogue|recipes|shops|registry"` header (it decides what a file is, in any directory, also under
-`lua/data/**`), and top-level `function name(args) ... end` bodies made of `local x = expr`, `if cond then ... end`
-(nesting and one-line `if` are fine), `return <table literal or expression>` and the calls `api.add_gold add_item remove_item
+`lua/data/**`), and top-level `function name(args) ... end` bodies made of `local x = expr`, `x = expr`,
+`if cond then ... elseif cond then ... else ... end` (nesting and one-line `if` are fine; a `local` lives until the end of
+its block), `return <expression>` and the calls `api.add_gold add_item remove_item
 set_flag get_flag has_flag has_item get_gold notification unlock_zone emit log offer_quest complete_quest` and the four social
 functions `get_hearts add_hearts is_birthday festival` (below).
 Expressions: literals, `context.x`, `api.f(...)`, `and or not == ~= < <= > >= ..` with Lua precedence and truthiness
 (only `nil` and `false` are false). A bare identifier that is not a local or a parameter reads the **world flag** of that
 name, so `local tier = context.home_tier or home_tier or 1` works.
-Table values are literals (string, number, `true`/`false`, nested table); `{}` arrives as an empty Dictionary.
+Values of a top-level DATA table are literals (string, number, `true`/`false`, nested table); `{}` arrives as an empty
+Dictionary. A table built INSIDE a function is an expression: `{ text_key = greet, shop_id = context.shop or "seed_shop" }`
+evaluates its values when it runs (a nil value leaves the key out), so a dialogue varies a page with `if`/`elseif`/`else`
+and shared tables instead of copying it; a table of literals only is folded into a constant.
 
 ## The `registry` kind - one Lua file per citizen / building / festival
 
@@ -59,9 +65,15 @@ godot --headless --path . -s res://tools/lua/lint.gd -- --files=res://lua/quests
 ```
 
 Prints `PASS <file>` or `FAIL <file>:<line>:<rule> <message>` per finding and a `lint: N file(s), M finding(s)` line.
-Rules: `else elseif loop long_bracket local_function module_function escape length stdlib method_call vararg arithmetic
-bitwise mixed_table reserved_key table_value nil_value kind_missing kind_unknown unbalanced unterminated_string stray_character`
-(and, from the loader: `duplicate_key rarity tables_header registry_header`). `LuaRuntime.lint_source(text)` lints a string (docs, tests).
+Rules: `loop long_bracket local_function module_function escape length stdlib method_call vararg arithmetic
+bitwise mixed_table reserved_key table_value nil_value kind_missing kind_unknown unbalanced unterminated_string stray_character
+unknown_function` over the tokens, the grammar findings of the parser `syntax local_list field_assignment function_value
+unsupported top_level` (what it could not use: `!=`, `if a = b then`, `retrun x`, a statement after `return`, `t.x = v`,
+`local f = function() ... end`, a call that is not `api.<name>(...)` ...), and, from the loader: `duplicate_key rarity
+tables_header registry_header`. `LuaRuntime.lint_source(text)` lints a string (docs, tests).
+The lint is a deny-list; the independent gate is real Lua: `data.lua_real_syntax` runs `luac5.4 -p` over every file under
+`res://lua` (the playtest workflow installs lua5.4; without it the check is skipped locally and fails on CI).
+`LuaRuntime` lints at load only in debug builds (`lint_on_load`); a release build keeps the loader's data-level checks.
 
 ## `gen_probe_ref.sh` - reference values from REAL Lua
 

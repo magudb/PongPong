@@ -17,6 +17,14 @@ func run(t) -> void:
 	var title: Control = t.tree.current_scene
 	await t.frames(3)
 	t.check("initial_focus_title", title.get_viewport().gui_get_focus_owner() == title.get_node("%NewGameButton"))
+	# PERF-02: the idle title loads GameUI's screens one per frame, so entering the world only instances them.
+	var warmed: bool = await t.until(func(): return not title.is_processing(), 60.0)
+	var cold: Array = []
+	for id in GameUI.SCREEN_ORDER:
+		var path := GameUI.scene_path(id)
+		if ResourceLoader.exists(path) and not GameUI._scenes.get(path) is PackedScene:
+			cold.append(id)
+	t.check("title_warms_game_ui_screens", warmed and cold.is_empty(), "not loaded by the title: %s" % str(cold))
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(2)
 	t.check("title_esc_inert", t.tree.current_scene == title)
@@ -98,8 +106,42 @@ func run(t) -> void:
 		await t.frames(2)
 		t.expect(not pause.is_open() and not t.tree.paused, "Pause refused while " + flag)
 		world.set(flag, false)
+	# focus loss / a pad disconnect pause a free world (review UX-07); the harness switches the real notification off, so drive the hook
+	var focus_paused: bool = pause.auto_open() and pause.is_open() and t.tree.paused
+	pause.close()
+	await t.frames(2)
+	var config := ConfigFile.new()
+	config.load(SettingsUI.PATH)
+	var before: Variant = config.get_value("game", "pause_on_focus_loss") if config.has_section_key("game", "pause_on_focus_loss") else null
+	config.set_value("game", "pause_on_focus_loss", false)
+	config.save(SettingsUI.PATH)
+	var opted_out: bool = not pause.auto_open() and not pause.is_open()
+	if before == null: config.erase_section_key("game", "pause_on_focus_loss")
+	else: config.set_value("game", "pause_on_focus_loss", before)
+	config.save(SettingsUI.PATH)
+	world.set("traveling", true)
+	var not_while_traveling: bool = not pause.auto_open() and not pause.is_open()
+	world.set("traveling", false)
+	var script_off: bool = pause.get_script().get("auto_pause") == false
+	# the real hooks, with the static switched on for a moment: the application focus-out notification and a pad that disconnects
+	pause.get_script().set("auto_pause", true)
+	pause.notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
+	var on_focus_out: bool = pause.is_open()
+	pause.close()
+	await t.frames(2)
+	Input.joy_connection_changed.emit(0, true)
+	var on_connect: bool = pause.is_open()
+	Input.joy_connection_changed.emit(0, false)
+	var on_disconnect: bool = pause.is_open()
+	pause.close()
+	pause.get_script().set("auto_pause", false)
+	await t.frames(2)
+	focus_paused = focus_paused and on_focus_out and not on_connect and on_disconnect
+	t.check("focus_loss_pauses_a_free_world", focus_paused and opted_out and not_while_traveling and script_off,
+		"auto_open() (and the focus-out notification, a pad disconnect but not a connect): opens and pauses %s; settings pause_on_focus_loss=false refuses %s; refused while traveling %s; harness switched the real notification off %s" % [focus_paused, opted_out, not_while_traveling, script_off])
 	await _all_pause_rows(t, pause, game_ui)
 	await _save_flows(t, pause, game_ui)
+	await _quit_saves(t)
 	await _title_states(t)
 	save_manager.save_dir = previous_save_dir
 
@@ -155,6 +197,10 @@ func _settings(t, settings: TTScreen) -> void:
 	config.load(SettingsUI.PATH)
 	config.set_value("other_owner", "kept", "unchanged")
 	config.save(SettingsUI.PATH)
+	# The rest timer is paused while the four buses are stepped: a busy runner can take longer than SAVE_DELAY between two taps,
+	# and the check is about "no write per step", not about wall-clock speed.
+	var rest: Timer = settings._save_timer
+	rest.paused = true
 	for bus in SettingsUI.BUSES:
 		var slider: TTSlider = settings.get_node("%" + bus + "Slider")
 		slider.grab_focus()
@@ -162,6 +208,35 @@ func _settings(t, settings: TTScreen) -> void:
 		t.tap_key(KEY_LEFT)
 		await t.frames(2)
 		t.expect(is_equal_approx(slider.value, before - 0.05), bus + " keyboard changes by five percent")
+		var live := db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("SFX" if bus == "Sfx" else bus)))
+		t.expect(is_equal_approx(live, slider.value), bus + " slider sets its AudioManager bus at once (%.2f)" % live)
+	# REPO-09: a slider step is heard at once but saved once the slider rests, in ONE write.
+	config.load(SettingsUI.PATH)
+	t.check("slider_save_waits_for_rest", not is_equal_approx(float(config.get_value("audio", "master", 0.8)), 0.75) and settings._unsaved.get("audio", {}).size() == SettingsUI.BUSES.size() and not rest.is_stopped(), str(settings._unsaved))
+	rest.paused = false
+	await t.seconds(SettingsUI.SAVE_DELAY + 0.2)
+	config.load(SettingsUI.PATH)
+	t.check("slider_saves_after_rest", is_equal_approx(float(config.get_value("audio", "master", 0.8)), 0.75) and is_equal_approx(float(config.get_value("audio", "voice", 0.8)), 0.75))
+	# An unreadable settings file (a parse error, a sync client's lock) is never replaced by the few values the screen holds.
+	var kept := FileAccess.get_file_as_string(SettingsUI.PATH)
+	var broken := FileAccess.open(SettingsUI.PATH, FileAccess.WRITE)
+	broken.store_string("[audio\nmaster = ??\n")
+	broken.close()
+	t.allow("is unreadable")
+	t.allow("ConfigFile parse error")
+	var music: TTSlider = settings.get_node("%MusicSlider")
+	music.grab_focus()
+	t.tap_key(KEY_RIGHT)
+	await t.seconds(SettingsUI.SAVE_DELAY + 0.2)
+	t.check("unreadable_settings_file_left_alone", FileAccess.get_file_as_string(SettingsUI.PATH) == "[audio\nmaster = ??\n")
+	t.tap_key(KEY_LEFT)
+	var restore := FileAccess.open(SettingsUI.PATH, FileAccess.WRITE)
+	restore.store_string(kept)
+	restore.close()
+	await t.seconds(SettingsUI.SAVE_DELAY + 0.2)
+	# UX-01: presets are points; a Retina Mac (scale 2) gets twice the pixels, a small screen clamps them and disables what cannot fit.
+	t.check("size_presets_scale_to_retina_points", SettingsUI.preset_pixels(Vector2i(1280, 720), 2.0, Vector2i(2940, 1830)) == Vector2i(2560, 1440) and SettingsUI.preset_pixels(Vector2i(1280, 720), 1.0, Vector2i.ZERO) == Vector2i(1280, 720))
+	t.check("size_presets_clamp_to_usable_screen", SettingsUI.preset_pixels(Vector2i(1280, 720), 1.0, Vector2i(1366, 697)) == Vector2i(1280, 697) and not SettingsUI.preset_fits(Vector2i(1920, 1080), 1.0, Vector2i(1366, 697)) and SettingsUI.preset_fits(Vector2i(1600, 900), 2.0, Vector2i(3456, 2160)) and not SettingsUI.preset_fits(Vector2i(1920, 1080), 2.0, Vector2i(2880, 1772)))
 	var fullscreen: CheckBox = settings.get_node("%FullscreenCheck")
 	fullscreen.grab_focus()
 	t.tap_key(KEY_RIGHT)
@@ -170,6 +245,29 @@ func _settings(t, settings: TTScreen) -> void:
 	t.tap_key(KEY_LEFT)
 	await t.frames(2)
 	t.check("window_mode_reenables_sizes", not fullscreen.button_pressed and not (settings.get_node("%Size0") as Button).disabled)
+	# the auto-pause toggle (review UX-07): reached by keyboard below the window sizes, left switches it off, right on, saved in [game]
+	var auto_pause: CheckBox = settings.get_node("%AutoPauseCheck")
+	config.load(SettingsUI.PATH)
+	var auto_before: Variant = config.get_value("game", "pause_on_focus_loss") if config.has_section_key("game", "pause_on_focus_loss") else null
+	var starts_on: bool = auto_pause.button_pressed == SettingsUI.pause_on_focus_loss()
+	settings.get_node("%Size0").grab_focus()
+	t.tap_key(KEY_DOWN)
+	await t.frames(2)
+	var reached: bool = settings.get_viewport().gui_get_focus_owner() == auto_pause
+	auto_pause.grab_focus()
+	t.tap_key(KEY_LEFT)
+	await t.frames(2)
+	config.load(SettingsUI.PATH)
+	var switched_off: bool = not auto_pause.button_pressed and config.get_value("game", "pause_on_focus_loss") == false and not SettingsUI.pause_on_focus_loss()
+	t.tap_key(KEY_RIGHT)
+	await t.frames(2)
+	config.load(SettingsUI.PATH)
+	var switched_on: bool = auto_pause.button_pressed and config.get_value("game", "pause_on_focus_loss") == true and SettingsUI.pause_on_focus_loss()
+	if auto_before == null: config.erase_section_key("game", "pause_on_focus_loss")
+	else: config.set_value("game", "pause_on_focus_loss", auto_before)
+	config.save(SettingsUI.PATH)
+	t.check("auto_pause_toggle_persists", starts_on and reached and switched_off and switched_on,
+		"SET_AUTO_PAUSE shows the saved value %s, Down from the sizes reaches it %s, Left saves pause_on_focus_loss=false %s, Right saves true %s" % [starts_on, reached, switched_off, switched_on])
 	settings.get_node("%Size0").grab_focus()
 	t.tap_key(KEY_RIGHT)
 	t.tap_key(KEY_ENTER)
@@ -194,17 +292,28 @@ func _save_flows(t, pause: TTScreen, game_ui: GameUI) -> void:
 	await t.frames(2)
 	var slots: TTScreen = game_ui.get_screen(&"save_load_ui")
 	t.check("save_nests_under_pause", slots.is_open() and gm.modal_stack() == [&"pause", &"save_load"] and slots._rows.size() == 7)
+	# SAVE-13: the real time since a save and its play time, at a fixed clock
+	var now := 1_800_000_000.0
+	var ago: Array = [slots.saved_ago(now - 20, now), slots.saved_ago(now - 600, now), slots.saved_ago(now - 7300, now), slots.saved_ago(now - 90000, now), slots.saved_ago(now - 5 * 86400, now), slots.saved_ago(0.0, now)]
+	var want: Array = [str(TranslationServer.translate("SAVELOAD_SAVED_NOW")), TranslationServer.translate("SAVELOAD_SAVED_MINUTES") % 10, TranslationServer.translate("SAVELOAD_SAVED_HOURS") % 2,
+		str(TranslationServer.translate("SAVELOAD_SAVED_YESTERDAY")), TranslationServer.translate("SAVELOAD_SAVED_DAYS") % 5, ""]
+	t.check("slot_row_saved_ago", ago == want and slots.saved_ago(now - 90 * 86400, now).contains("."), "%s" % [ago])
+	t.check("slot_row_play_time", slots.played(30) == "" and slots.played(125) == TranslationServer.translate("SAVELOAD_PLAYED_MINUTES") % 2 and slots.played(3 * 3600 + 12 * 60) == TranslationServer.translate("SAVELOAD_PLAYED_HOURS") % [3, 12], "%s / %s" % [slots.played(125), slots.played(11520)])
 	t.check("autosave_row_read_only", not UiNav.is_stop(slots._rows[6]) and not UiNav.is_stop(slots._deletes[6]))
 	slots._rows[0].grab_focus()
 	t.tap_key(KEY_ENTER)
 	await t.frames(3)
 	t.check("empty_slot_saves_without_confirm", sm.has_save(0) and gm.modal_stack() == [&"pause", &"save_load"])
+	var row_text: String = (slots._rows[0].find_children("*", "Label", true, false)[1] as Label).text
+	t.check("slot_row_shows_save_time", row_text.contains(TranslationServer.translate("SAVELOAD_SAVED_NOW")), "row 0: '%s'" % row_text)
 	var saved_gold: int = eco.gold
 	eco.add_gold(77)
 	slots._rows[0].grab_focus()
 	t.tap_key(KEY_ENTER)
 	await t.frames(2)
 	t.check("overwrite_asks_confirm", gm.modal_stack().size() == 3)
+	var overwrite_text: String = (slots.find_children("*", "UiConfirm", true, false).back().get_node("%TextLabel") as Label).text
+	t.check("overwrite_confirm_names_the_save", overwrite_text.contains(gm.farm_name) and overwrite_text.contains(TranslationServer.translate("SAVELOAD_SAVED_NOW")), "SAVE-13: '%s'" % overwrite_text)
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(2)
 	t.check("overwrite_cancel_keeps_file", int(sm.get_save_summary(0).gold) == saved_gold and gm.modal_stack() == [&"pause", &"save_load"])
@@ -215,6 +324,14 @@ func _save_flows(t, pause: TTScreen, game_ui: GameUI) -> void:
 	t.tap_key(KEY_ENTER)
 	await t.frames(3)
 	t.check("overwrite_accept_saves_once", int(sm.get_save_summary(0).gold) == saved_gold + 77 and gm.modal_stack() == [&"pause", &"save_load"])
+	# SAVE-05: a save that fails says so on its own row (the toast may be under this screen)
+	DirAccess.make_dir_recursive_absolute(sm.slot_path(2) + ".tmp")
+	slots._rows[2].grab_focus()
+	t.tap_key(KEY_ENTER)
+	await t.frames(3)
+	var failed_text: String = slots._details[2].text
+	t.check("failed_save_shown_on_its_row", not sm.has_save(2) and failed_text == TranslationServer.translate("NOTIF_SAVE_FAILED_MSG") % 3 and gm.modal_stack() == [&"pause", &"save_load"], "row 3: '%s'" % failed_text)
+	DirAccess.remove_absolute(sm.slot_path(2) + ".tmp")
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(2)
 	t.check("save_close_returns_to_pause_opener", pause.get_viewport().gui_get_focus_owner() == pause.get_node("%SaveButton"))
@@ -233,9 +350,36 @@ func _save_flows(t, pause: TTScreen, game_ui: GameUI) -> void:
 	t.tap_key(KEY_DELETE)
 	await t.frames(2)
 	t.check("delete_key_asks_confirm", gm.modal_stack().size() == 3)
+	var delete_text: String = (slots.find_children("*", "UiConfirm", true, false).back().get_node("%TextLabel") as Label).text
+	t.check("delete_confirm_names_the_save", delete_text.contains(gm.farm_name) and delete_text.contains("1"), "SAVE-13: '%s'" % delete_text)
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(2)
 	t.check("delete_cancel_keeps_file", sm.has_save(0))
+	# UIC-13: the key acts on the row that has focus NOW: from slot 0 to Luk, Delete asks nothing
+	slots._rows[0].grab_focus()
+	await t.frames(1)
+	slots.get_node("%CloseButton").grab_focus()
+	await t.frames(1)
+	var hint_on_close: bool = slots.get_node("%HintBar")._items.any(func(item: Dictionary) -> bool: return item.get("key", "") == "HINT_DELETE")
+	t.tap_key(KEY_DELETE)
+	await t.frames(2)
+	t.check("delete_key_ignores_stale_slot", gm.modal_stack() == [&"pause", &"save_load"] and sm.has_save(0) and not hint_on_close, "Delete on Luk after slot 0 had focus: no confirm, no Delete hint")
+	slots._deletes[0].grab_focus()
+	await t.frames(1)
+	var hint_on_row: bool = slots.get_node("%HintBar")._items.any(func(item: Dictionary) -> bool: return item.get("key", "") == "HINT_DELETE")
+	t.tap_key(KEY_BACKSPACE)
+	await t.frames(2)
+	t.check("delete_backspace_on_focused_slet_asks", gm.modal_stack().size() == 3 and hint_on_row, "Backspace (a Mac's delete key) on slot 0's Slet asks; the hint shows Delete while a Slet is focused")
+	t.tap_key(KEY_ESCAPE)
+	await t.frames(2)
+	# A MacBook has no forward Delete: Backspace asks the same question (review UX-16).
+	slots._rows[0].grab_focus()
+	t.tap_key(KEY_BACKSPACE)
+	await t.frames(2)
+	t.check("backspace_key_asks_confirm", gm.modal_stack().size() == 3)
+	t.tap_key(KEY_ESCAPE)
+	await t.frames(2)
+	t.check("backspace_cancel_keeps_file", sm.has_save(0))
 	sm.save_game(1)
 	slots._refresh_texts()
 	slots._rows[1].grab_focus()
@@ -254,9 +398,76 @@ func _save_flows(t, pause: TTScreen, game_ui: GameUI) -> void:
 	t.check("save_load_resume_roundtrip", t.world() != null and t.player() != null and not t.tree.paused and not gm.is_modal_open() and eco.gold == saved_gold + 77 and sm.current_slot == 0)
 	sm.save_dir = dir_before
 
+## ARCH-04: every way out (the window's close button, Cmd+Q / Alt+F4, the pause menu's Quit) goes through GameManager.quit_game,
+## whose save_before_quit autosaves a running world and asks before a quit that would lose progress. (quit_game itself ends the
+## process: the checks drive save_before_quit, the signal wiring, and the pause menu's Quit row with GameManager.quit_seam set.)
+func _quit_saves(t) -> void:
+	var sm: Node = t.autoload("SaveManager")
+	var gm: Node = t.autoload("GameManager")
+	var eco: Node = t.autoload("EconomyManager")
+	var dir_before: String = sm.save_dir
+	sm.save_dir = "user://menus-quit-save"
+	DirAccess.make_dir_recursive_absolute(sm.save_dir)
+	await t.frames(2)
+	t.check("window_close_goes_through_quit_game", t.tree.root.close_requested.is_connected(gm.quit_game) and not t.tree.auto_accept_quit, "close_requested -> GameManager.quit_game, auto_accept_quit off")
+	eco.add_gold(31)
+	var gold: int = eco.gold
+	var saved: bool = await gm.save_before_quit()
+	t.check("quit_autosaves_running_world", saved and sm.has_save(sm.AUTO_SLOT) and int(sm.get_save_summary(sm.AUTO_SLOT).get("gold", -1)) == gold, "save_before_quit wrote the auto slot (gold %s, want %d)" % [sm.get_save_summary(sm.AUTO_SLOT).get("gold", -1), gold])
+	gm.push_modal(&"event", false)
+	sm.delete_save(sm.AUTO_SLOT)
+	var during_event: bool = await gm.save_before_quit()
+	gm.pop_modal(&"event")
+	t.check("quit_during_event_does_not_save", during_event and not sm.has_save(sm.AUTO_SLOT), "an event scene in progress is not saved, the quit goes on")
+	# a save that fails asks first (Cancel by default keeps playing; OK quits anyway)
+	DirAccess.make_dir_recursive_absolute(sm.slot_path(sm.AUTO_SLOT) + ".tmp")
+	var answers: Array = []
+	var asking := func() -> void: answers.append(await gm.save_before_quit())
+	asking.call()
+	await t.frames(3)
+	t.check("quit_failed_save_asks", answers.is_empty() and gm.top_modal() == UiConfirm.MODAL, "the failed autosave puts PAUSE_SAVE_FAILED_CONFIRM up (top modal %s)" % gm.top_modal())
+	t.tap_key(KEY_ENTER)
+	await t.frames(3)
+	t.check("quit_failed_save_cancel_keeps_playing", answers == [false] and not gm.is_modal_open(), "Cancel (the default) answers false: %s" % [answers])
+	asking.call()
+	await t.frames(3)
+	t.tap_key(KEY_LEFT)
+	t.tap_key(KEY_ENTER)
+	await t.frames(3)
+	t.check("quit_failed_save_ok_quits", answers == [false, true], "OK answers true: %s" % [answers])
+	DirAccess.remove_absolute(sm.slot_path(sm.AUTO_SLOT) + ".tmp")
+	# the pause menu's Quit row, pressed: quit_game saves first and then ends (the seam stands in for the end of the process)
+	var pause: TTScreen = t.world().game_ui.get_screen(&"pause_menu")
+	sm.delete_save(sm.AUTO_SLOT)
+	eco.add_gold(5)
+	var quit_codes: Array = []
+	gm.quit_seam = func(code: int) -> void: quit_codes.append(code)
+	pause.open()
+	await t.frames(3)
+	var quit_row: Button = pause._rows.filter(func(row: Control) -> bool: return str(row.name) == "QuitGameButton").front()
+	quit_row.pressed.emit()
+	await t.frames(3)
+	gm.quit_seam = Callable()
+	t.check("pause_quit_uses_quit_game", quit_codes == [0] and sm.has_save(sm.AUTO_SLOT) and int(sm.get_save_summary(sm.AUTO_SLOT).get("gold", -1)) == eco.gold,
+		"Quit in the pause menu reached quit_game's end (%s) after the autosave (auto slot gold %s, want %d)" % [quit_codes, sm.get_save_summary(sm.AUTO_SLOT).get("gold", -1), eco.gold])
+	if pause.is_open():
+		pause.close()
+	gm.pop_all_modals()
+	await t.frames(2)
+	sm.delete_save(sm.AUTO_SLOT)
+	sm.save_dir = dir_before
+
+
 func run_windowed(t) -> void:
 	const Fixtures := preload("res://scripts/ui/dev/ui_fixtures.gd")
 	await t.clear_scene()
+	# UX-01: the title's saved window (here the largest preset) never resizes the harness's 1280x720 window; Godot hides
+	# `--resolution` from OS.get_cmdline_args(), so the harness marks the window instead (SettingsUI.KEEP_WINDOW).
+	SettingsStore.store("video", "size", SettingsUI.SIZES.size() - 1)
+	SettingsUI.apply_window(false)
+	await t.frames(3)
+	t.check("title_keeps_harness_window", SettingsUI.keeps_window(t.tree.root) and t.window_size() == Vector2i(1280, 720), str(t.window_size()))
+	SettingsStore.store("video", "size", 0)
 	for name in ["title_guide", "select_guide4", "select2", "settings", "saveload", "pause"]:
 		var host := Control.new()
 		host.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -315,6 +526,26 @@ func _title_states(t) -> void:
 	sm.save_game(1)
 	title._refresh_labels()
 	t.check("title_multiple_saves_and_latest_day", title.get_node("%LoadButton").visible and title.get_node("%ContinueInfo").text.contains("7"))
+	# SAVE-01: with a save on disk, New game asks first, names the run and defaults to Cancel
+	title.get_node("%NewGameButton").grab_focus()
+	t.tap_key(KEY_ENTER)
+	await t.frames(3)
+	var dialog: Node = title.find_children("*", "UiConfirm", true, false).front() if not title.find_children("*", "UiConfirm", true, false).is_empty() else null
+	var asked: bool = dialog != null and gm.top_modal() == UiConfirm.MODAL and t.tree.current_scene == title
+	var names_run: bool = dialog != null and (dialog.get_node("%TextLabel") as Label).text.contains(gm.farm_name) and (dialog.get_node("%TextLabel") as Label).text.contains("7")
+	t.check("title_new_game_asks_when_a_save_exists", asked and names_run and title.get_viewport().gui_get_focus_owner() == dialog.get_node("%CancelButton"), "a confirm naming '%s' (day 7) with Cancel focused" % gm.farm_name)
+	t.tap_key(KEY_ENTER)
+	await t.frames(3)
+	t.check("title_new_game_cancel_stays", t.tree.current_scene == title and not gm.is_modal_open() and title.get_viewport().gui_get_focus_owner() == title.get_node("%NewGameButton"), "Cancel keeps the title and its focus")
+	t.tap_key(KEY_ENTER)
+	await t.frames(3)
+	t.tap_key(KEY_LEFT)
+	t.tap_key(KEY_ENTER)
+	await t.frames(4)
+	t.check("title_new_game_confirm_opens_select", t.tree.current_scene.scene_file_path == SELECT, "OK goes on to the character select")
+	await t.go_menu()
+	title = t.tree.current_scene
+	await t.frames(2)
 	# Files can disappear after the title enabled Continue. The failure needs visible feedback.
 	sm.delete_save(0)
 	sm.delete_save(1)
@@ -325,6 +556,19 @@ func _title_states(t) -> void:
 	title._refresh_labels()
 	await t.frames(2)
 	t.check("title_returns_focus_after_save_removal", title.get_viewport().gui_get_focus_owner() == title.get_node("%NewGameButton"))
+	# SAVE-02: an auto save that cannot be read is not hidden: Load opens the list that names its state
+	var f := FileAccess.open(sm.slot_path(sm.AUTO_SLOT), FileAccess.WRITE)
+	f.store_string("{ damaged")
+	f.close()
+	title._refresh_labels()
+	t.check("title_shows_unreadable_save", title.get_node("%LoadButton").visible and not title.get_node("%LoadButton").disabled and title.get_node("%ContinueButton").disabled, "Continue stays off, Load is offered for the damaged autosave")
+	sm.delete_save(sm.AUTO_SLOT)
+	title._refresh_labels()
+	title.get_node("%NewGameButton").grab_focus()
+	t.tap_key(KEY_ENTER)
+	await t.frames(4)
+	t.check("title_new_game_without_saves_does_not_ask", t.tree.current_scene.scene_file_path == SELECT, "no confirm when nothing is saved: straight to the character select")
+	await t.go_menu()
 	sm.clock_override = clock
 	sm.save_dir = previous
 

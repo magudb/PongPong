@@ -150,6 +150,8 @@ func run(t) -> void:
 	await _sleep_and_passout(t)
 	await _save_dict_and_intro(t)
 	_warm_jobs(t)
+	await _warm_one_survives_a_freed_sprite(t)
+	await _art_prefetch_targets(t)
 	await _clear_colour_after_quit(t)
 	_cleanup(t)
 
@@ -626,6 +628,17 @@ func _fixture_build(t) -> void:
 		if (l["node"] as PointLight2D).energy < 0.4:
 			lights_on = false
 	t.check("glow_and_lights_ramp_with_night", halo_off and halo_on and lights_on and a._glows.size() >= 2 and a._lights.size() >= 2, "%d additive glows and %d PointLights: hidden at factor 0, on at 1" % [a._glows.size(), a._lights.size()])
+	# a prop placed at night lights only its own records: an existing glow keeps a marker alpha (review REND-06: place_prop re-walked them all)
+	var marker_node := a._glows[0]["node"] as CanvasItem
+	marker_node.modulate.a = 0.123
+	var glows_before: int = a._glows.size()
+	var night_prop := a.place_prop("house_farm", Vector2i(2, 2))
+	var new_lit: bool = a._glows.size() > glows_before
+	for g3 in a._glows.slice(glows_before):
+		new_lit = new_lit and (g3["node"] as CanvasItem).visible and (g3["node"] as CanvasItem).modulate.a > 0.4
+	t.check("place_prop_at_night_lights_only_its_own_glow", new_lit and is_equal_approx(marker_node.modulate.a, 0.123),
+		"the new house's glow is on (%s), an existing glow was not re-walked (alpha %.3f)" % [new_lit, marker_node.modulate.a])
+	a.remove_prop(night_prop)
 	a.set_night_factor(0.0)
 	# the Objects layer holds the props, y-sorted; the player stands in it
 	t.check("objects_layer_holds_props_and_player", a.objects.get_child_count() >= a.prop_nodes.size() and _world.player.get_parent() == a.objects, "%d children of Objects" % a.objects.get_child_count())
@@ -1765,6 +1778,18 @@ func _area_switch_and_cache(t) -> void:
 	var travelled: bool = _world.area.map.id == &"_fixture_ortho" and not _world.traveling and _world._fade.color.a == 0.0
 	await _world.travel(&"_fixture_iso", &"default")
 	t.check("travel_fades_and_ends_clear", travelled and _world.area.map.id == &"_fixture_iso" and not _world.traveling and _world._fade.color.a == 0.0, "fade out 0.22 s, swap, fade in 0.25 s")
+	# during a travel E cannot open a screen under the fade, and a pause does not freeze the fade half black (review GAP1-03)
+	_world.travel(&"_fixture_ortho", &"default")
+	await t.frames(2)
+	var blocked: bool = _world.traveling and not p.world_input_allowed()
+	t.tree.paused = true
+	var through_pause: bool = await t.until(func() -> bool: return _world._fade.color.a >= 0.999 or not _world.traveling, 3.0)
+	t.tree.paused = false
+	var ended: bool = await t.until(func() -> bool: return not _world.traveling, 5.0)
+	var free_after: bool = p.world_input_allowed()
+	await _world.travel(&"_fixture_iso", &"default")
+	t.check("travel_blocks_world_input_and_fades_through_a_pause", blocked and through_pause and ended and free_after and _world._fade.color.a == 0.0,
+		"input refused while traveling %s, the fade went on under a paused tree %s, travel ended %s, input back afterwards %s" % [blocked, through_pause, ended, free_after])
 	if FileAccess.file_exists("res://data/maps/farm.map") and WorldRoot2D.has_area(&"farm"):
 		_world._enter(&"farm", &"default")
 		var farm_ok: bool = _world.area.map.id == &"farm"
@@ -1869,6 +1894,17 @@ func _farm_sized_map(t) -> void:
 	t.check("farm_sized_map_builds", a.map.id == &"_t_big" and a.map.width == 44 and a.map.height == 44 and a.farmable.size() == 84 and a.prop_nodes.size() > 40 and a.unknown_chars.is_empty() and ms < 2500 and _world.player.get_parent() == a.objects,
 		"44 x 44 cells, 84 tillable, %d props, %d skirts, built in %d ms with the placeholders cached, %d ground cells, %d physics bodies" % [a.prop_nodes.size(), a.skirt_nodes.size(), ms, a.ground.get_used_cells().size(), a.colliders.get_child_count()])
 	t.check("farm_sized_map_camera_limits", a.camera_rect().size.x > 5000.0 and a.camera_rect().size.y > 2800.0, "camera rect %s" % [a.camera_rect()])
+	# tile painting looks each terrain up once per build, not once per cell (review REND-05): the per-build cache is gone afterwards and
+	# every probed cell carries the source and atlas coords of the uncached lookups (grass, tillable soil, path, each water frame)
+	var painted_ok: bool = a._tile_cache.is_empty() and not a._painting
+	for c in [Vector2i(5, 5), Vector2i(10, 14), Vector2i(22, 16)]:
+		var kind: StringName = a.cell_kind(c)
+		painted_ok = painted_ok and kind != &"" and a.ground.get_cell_source_id(c) == AreaTileSet.source_for(&"iso", kind) and a.ground.get_cell_atlas_coords(c) == AreaTileSet.atlas_coords_for(kind, c)
+	var wc := Vector2i(8, 21)
+	for i in a.water_layers.size():
+		var wid: StringName = AreaTileSet.WATER_FRAMES[i]
+		painted_ok = painted_ok and a.water_layers[i].get_cell_source_id(wc) == AreaTileSet.source_for(&"iso", wid) and a.water_layers[i].get_cell_atlas_coords(wc) == AreaTileSet.atlas_coords_for(wid, wc)
+	t.check("tile_painting_caches_terrains_per_build", painted_ok and a.water_layers.size() == 4, "cached sources and atlas coords match the per-cell lookups; the cache is released after the build")
 	_world._enter(&"_fixture_iso", &"default")
 	_world._cache.erase(&"_t_big")
 	if is_instance_valid(a):
@@ -2455,12 +2491,12 @@ func _save_dict_and_intro(t) -> void:
 			if is_instance_valid(pa) and (pa as Node).get_parent() == null:
 				parked_before.append(pa)
 		t.new_game()
-		sm.set("pending_world", {"v": 1, "area": "_fixture_ortho", "player_pos": [310.0, 140.0], "placed": [{"item": "fence_x", "cell": [1, 1]}], "area_flags": {"_fixture_ortho": {"seen": true}}})
+		sm.set("pending_world", {"v": 1, "area": "_fixture_ortho", "player_pos": [310.0, 140.0], "placed": [{"item": "fence", "cell": [1, 1]}], "area_flags": {"_fixture_ortho": {"seen": true}}})     # a real farm placeable: an unknown item is set aside as an orphan (SAVE-07)
 		var ok: bool = await t.change_scene("res://scenes/main/world.tscn", 20.0)
 		await t.until(func() -> bool: return t.player() != null, 10.0)
 		await t.frames(5)
 		var w2: Node = t.world()
-		t.check("pending_world_is_consumed_in_ready", ok and w2 != null and w2.area.map.id == &"_fixture_ortho" and w2.player.global_position.distance_to(Vector2(310, 140)) < 2.0 and w2.placed_items == [{"item": "fence_x", "cell": [1, 1]}] and (sm.get("pending_world") as Dictionary).is_empty(),
+		t.check("pending_world_is_consumed_in_ready", ok and w2 != null and w2.area.map.id == &"_fixture_ortho" and w2.player.global_position.distance_to(Vector2(310, 140)) < 2.0 and w2.placed_items == [{"item": "fence", "cell": [1, 1]}] and (sm.get("pending_world") as Dictionary).is_empty(),
 			"Continue starts the world in the saved area at the saved position; the hand-over dictionary is cleared")
 		t.check("welcome_toast_is_not_shown_on_continue_in_the_saved_area", toasts.is_empty(), "Continue in the area it was saved in shows no welcome toast: %s" % [toasts])
 		toasts.clear()
@@ -2616,6 +2652,94 @@ func _warm_jobs(t) -> void:
 	t.check("warm_clips_skips_the_dummy_renderer", w.warm_skipped == skipped + 1 and near.visual.warm_calls == 0, "headless: no threaded sheet loads (they raced the dummy renderer in 2 of 120 runs); counted in warm_skipped")
 	near.queue_free()
 	far.queue_free()
+
+
+# ================================================================== art prefetch: a new destination, a parked area
+
+## AreaArtPrefetch.request() for another destination drops the old one's loads from what finish() waits for (the fade must not wait for
+## the city the player turned away from), still collects them, and does not re-parse a parked area (review REND-13).
+func _art_prefetch_targets(t) -> void:
+	var w: WorldRoot2D = _world as WorldRoot2D
+	var pf: AreaArtPrefetch = w.art_prefetch
+	pf.release()
+	# headless stages synchronously, so the approach load is injected by hand (the theme: no texture upload under the dummy renderer)
+	var path := "res://assets/ui/theme.tres"
+	ResourceLoader.load_threaded_request(path)
+	pf.pending.append(path)
+	pf.request(&"farm")
+	var moved: bool = pf.pending.is_empty() and pf.abandoned.has(path) and pf.staged.is_empty()
+	var started: float = t.game_seconds()
+	await pf.finish()
+	var waited: float = t.game_seconds() - started
+	var collected: bool = await t.until(func() -> bool: return pf.abandoned.is_empty(), 10.0)
+	t.check("prefetch_abandons_the_old_destination", moved and waited < 0.05 and collected,
+		"a request for another area moves the pending load to `abandoned` (%s), finish() returns at once (%.3f s), _poll still collects it (%s)" % [moved, waited, collected])
+	var room := &"int_froebutikken"
+	w._cache[room] = null                    # parked (the value is never read by the prefetch)
+	pf.request(room)
+	var skipped: bool = pf.staged.is_empty() and pf.pending.is_empty()
+	w._cache.erase(room)
+	pf.request(room)
+	var staged_fresh: int = pf.staged.size()
+	pf.release()
+	t.check("prefetch_skips_a_parked_area", skipped and staged_fresh > 0, "parked: nothing parsed or staged; not parked: %d paths staged" % staged_fresh)
+
+
+## A citizen freed during its warm-up (TownDirector at a routine boundary) must not strand the travel that warms it (review GAP1-01): the
+## awaiting chain of a coroutine whose owner is freed never resumes, so warm_one() polls a ticket and the sprite's life instead.
+func _warm_one_survives_a_freed_sprite(t) -> void:
+	var w: WorldRoot2D = _world as WorldRoot2D
+	var slow := SlowVisual.new()
+	w.area.objects.add_child(slow)
+	var kept := {"done": false}
+	_warm_probe(w, slow, kept)
+	await t.frames(3)
+	var waiting: bool = not bool(kept["done"])
+	var finished: bool = await t.until(func() -> bool: return bool(kept["done"]), 5.0)
+	t.check("warm_one_waits_for_the_sprite", waiting and finished and slow.finished, "the warm-up of %d frames is awaited to its end (still waiting after 3 frames: %s, done %s)" % [SlowVisual.FRAMES, waiting, finished])
+	var doomed := SlowVisual.new()
+	w.area.objects.add_child(doomed)
+	var freed := {"done": false}
+	_warm_probe(w, doomed, freed)
+	await t.frames(2)
+	doomed.queue_free()
+	var resumed: bool = await t.until(func() -> bool: return bool(freed["done"]), 3.0)
+	t.check("warm_one_survives_a_freed_sprite", resumed, "the sprite was freed two frames into its warm-up: warm_one() returned (%s) instead of keeping the travel on a black screen" % resumed)
+	# the job list is taken up front: the NEXT sprite can be freed while the first one warms, and must be skipped, not passed on freed
+	var first := SlowVisual.new()
+	var second := SlowVisual.new()
+	var third := SlowVisual.new()
+	for v in [first, second, third]:
+		w.area.objects.add_child(v)
+	var each := {"done": false}
+	_warm_each_probe(w, [[first, ["idle"]], [second, ["idle"]], [third, ["idle"]]], each)
+	await t.frames(2)
+	second.queue_free()
+	var each_done: bool = await t.until(func() -> bool: return bool(each["done"]), 5.0)
+	t.check("warm_each_skips_a_sprite_freed_while_another_warms", each_done and first.finished and third.finished,
+		"the second of 3 sprites was freed while the first warmed: the list finished %s, first warmed %s, third warmed %s" % [each_done, first.finished, third.finished])
+	for v in [slow, first, third]:
+		v.queue_free()
+
+
+func _warm_probe(w: WorldRoot2D, visual: Object, box: Dictionary) -> void:
+	await w.warm_one(visual, ["idle", "talk"])
+	box["done"] = true
+
+
+func _warm_each_probe(w: WorldRoot2D, jobs: Array, box: Dictionary) -> void:
+	await w.warm_each(jobs)
+	box["done"] = true
+
+
+class SlowVisual extends Node:
+	const FRAMES := 12
+	var finished := false
+
+	func warm_clips(_clips: Array) -> void:
+		for i in FRAMES:
+			await get_tree().process_frame
+		finished = true
 
 
 class FakeVisual extends RefCounted:

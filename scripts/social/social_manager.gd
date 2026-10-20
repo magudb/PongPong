@@ -48,7 +48,6 @@ const GIFT_RULES := "res://scripts/social/gifts/gift_rules.gd"      # S-gifts (w
 const GIFT_FLOW := "res://scripts/social/gifts/gift_flow.gd"
 const DIRECTOR := "res://scripts/towns/npc_director.gd"             # the static facade of the towns track (decision DT11: there is no NpcDirector autoload)
 
-const SLEEP_KEY := "time.sleep_from_hour"      # the config key WorldRoot2D.can_sleep_now reads (the bed seam)
 const TRAVEL_LEAD_HOURS := 1.0                 # citizens set off one game hour before a festival window, shops close then (keepers leave)
 
 var world_seed: int = 0
@@ -80,11 +79,6 @@ var _bday_index: Dictionary = {}
 var _bday_memo_td: int = -1
 var _bday_memo: Array[String] = []
 
-# the bed hold: what this node set on GameManager's config override and what stood there before
-var _hold_value: int = 0
-var _hold_had_prev: bool = false
-var _hold_prev: Variant = null
-
 # `when=` parse cache: spec -> Array of [neg, kind, arg, rest]
 var _when_cache: Dictionary = {}
 
@@ -106,8 +100,6 @@ func _ready() -> void:
 	EventBus.new_game_started.connect(reset)
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.time_of_day_changed.connect(_on_time_changed)
-	EventBus.area_changed.connect(_on_area_changed)
-	EventBus.game_event.connect(_on_game_event)
 	EventBus.load_completed.connect(_on_load_completed)
 	EventBus.shop_opened.connect(_on_shop_opened)
 	EventBus.shop_closed.connect(_on_shop_closed)
@@ -167,34 +159,13 @@ func week() -> int:
 
 # ======================================================================================= late-bound siblings
 
-## The towns track's NpcDirector in the ONE form of decision DT11: a node injected by a test first, then the static facade by path (what Svc.static_call does, with the
-## loaded script and the "is it static" answer remembered per path and method: a festival day asks about 30 citizens per roster, and Svc.static_call alone costs
-## about 30 microseconds a call, measured; the answer for an absent script, an absent method and an instance method is the safe default, like Svc's).
-var _dir_path: String = "<unset>"
-var _dir_script: Script = null
-var _dir_static: Dictionary = {}
-
-
+## The towns track's NpcDirector in the ONE form of decision DT11: a node injected by a test first, then the static facade by path
+## (Svc.static_call remembers the resolved script per path and method: a festival day asks about 30 citizens per roster).
 func _director(method: StringName, npc: String, default_value: Variant) -> Variant:
 	var d := Svc.node("NpcDirector")
 	if d != null and d.has_method(method):
 		return d.call(method, npc)
-	if director_path != _dir_path:
-		_dir_path = director_path
-		_dir_static.clear()
-		_dir_script = (load(director_path) as Script) if ResourceLoader.exists(director_path) else null
-	if _dir_script == null:
-		return default_value
-	if not _dir_static.has(method):
-		var is_static := false
-		if _dir_script.has_method(method):
-			for m in _dir_script.get_script_method_list():
-				if str(m["name"]) == str(method):
-					is_static = (int(m["flags"]) & METHOD_FLAG_STATIC) != 0
-		_dir_static[method] = is_static
-	if not bool(_dir_static[method]):
-		return default_value
-	return _dir_script.callv(method, [npc])
+	return Svc.static_call(director_path, method, [npc], default_value)
 
 
 ## The hero-twin rule: the player chose this citizen's look, so he is not in the world and cannot be befriended.
@@ -807,7 +778,8 @@ func festival_shop_state(shop_id: String, ctx: Dictionary = {}) -> Variant:
 	return {"open":open,"reason":"open" if open else "festival","opens_at":window.from,"closes_at":window.to,"next_weekday":0}
 
 
-## The earliest hour the bed accepts while a festival with bed_hold runs (0 = no hold): the window end, rounded up.
+## The earliest hour the bed accepts while a festival with bed_hold runs (0 = no hold): the window end, rounded up. A public RULE, computed from the
+## clock: WorldRoot2D.sleep_from_hour() asks it (ARCH-08: no config override is written for it).
 func bed_hold_hour() -> int:
 	var f := festival_active()
 	if f == &"":
@@ -816,49 +788,8 @@ func bed_hold_hour() -> int:
 	return ceili(float(festival_window(f)["to"])) if bool(meta.get("bed_hold", false)) else 0
 
 
-## THE ZERO-EDIT BED SEAM. WorldRoot2D.can_sleep_now reads the config time.sleep_from_hour; while a festival with bed_hold runs this node keeps the override
-## time.sleep_from_hour = the window end on GameManager and takes it away afterwards (restoring an override that a test had set before). Because that override is
-## a never-saved test seam wiped by clear_config_overrides(), nothing relies on it surviving: this is called from the STATE (festival_active + bed_hold) on every
-## flush, every load, every area_changed and every town_festival_* event, and it is idempotent.
-func _apply_bed_hold() -> void:
-	var want := bed_hold_hour()
-	if want <= 0:
-		_release_bed_hold()
-		return
-	var overrides := _overrides()
-	var has := overrides.has(SLEEP_KEY)
-	if _hold_value == 0 or not has or overrides[SLEEP_KEY] != _hold_value:
-		# the current state is not ours (first time, wiped by clear_config_overrides, or somebody else set it): remember what is there
-		_hold_had_prev = has
-		_hold_prev = overrides.get(SLEEP_KEY, null)
-	if not (has and overrides[SLEEP_KEY] == want):
-		GameManager.set_config_override(SLEEP_KEY, want)
-	_hold_value = want
-
-
-## GameManager's live override table (a test / debug seam, never saved); {} when it cannot be read.
-func _overrides() -> Dictionary:
-	var live: Variant = GameManager.get("_config_overrides")
-	return live as Dictionary if typeof(live) == TYPE_DICTIONARY else {}
-
-
-func _release_bed_hold() -> void:
-	if _hold_value == 0:
-		return
-	var overrides := _overrides()
-	if overrides.has(SLEEP_KEY) and overrides[SLEEP_KEY] == _hold_value:
-		if _hold_had_prev:
-			GameManager.set_config_override(SLEEP_KEY, _hold_prev)
-		else:
-			overrides.erase(SLEEP_KEY)
-			GameManager.invalidate_config_cache()
-	_hold_value = 0
-	_hold_had_prev = false
-	_hold_prev = null
-
-
 ## The festival state machine: emits town_festival_ended / started on a CHANGE, keeps the world flag `festival_now` (the id of the festival active now, absent
-## when none) and re-applies the bed hold. Never called from from_dict (a load restores the state silently, see _restore_state).
+## when none). Never called from from_dict (a load restores the state silently, see _restore_state).
 func _update_festival_state() -> void:
 	var now := festival_active()
 	if now != _festival_active:
@@ -870,7 +801,6 @@ func _update_festival_state() -> void:
 		if now != &"":
 			EventBus.game_event.emit(EV_FEST_START, {"id": String(now)})
 	_write_festival_flag()
-	_apply_bed_hold()
 
 
 func _write_festival_flag() -> void:
@@ -1240,15 +1170,6 @@ func _on_time_changed(_hour: int, _minute: int) -> void:
 	_defer()
 
 
-func _on_area_changed(_area_id: StringName) -> void:
-	_apply_bed_hold()
-
-
-func _on_game_event(event_name: StringName, _payload: Dictionary) -> void:
-	if event_name == EV_FEST_START or event_name == EV_FEST_END:
-		_apply_bed_hold()
-
-
 func _on_load_completed(_slot: int) -> void:
 	_defer()
 	_retry_event_items()
@@ -1306,7 +1227,6 @@ func _restore_state() -> void:
 	_write_birthday_flag(birthdays_today())
 	_festival_active = festival_active()
 	_write_festival_flag()
-	_apply_bed_hold()
 
 
 # ======================================================================================= save / reset
@@ -1324,7 +1244,6 @@ func reset() -> void:
 	_toast_next_ms = 0
 	_shop_now = ""
 	_event_owed.clear()
-	_release_bed_hold()
 	world_seed = 0
 	for id in SocialData.friend_ids():
 		var h := GameManager.flag_int(StringName("friend_" + id), 0)
@@ -1335,7 +1254,7 @@ func reset() -> void:
 			if last > 0:
 				row["wk"] = CalendarUtil.week_of(last)
 	_last_day = today()
-	# the derived flags (birthday_today, festival_now) and the bed hold are brought in line by the flush that follows (a new game's world flags stay exactly its own
+	# the derived flags (birthday_today, festival_now) are brought in line by the flush that follows (a new game's world flags stay exactly its own
 	# at the moment new_game_started fires): _festival_active is cleared so a festival that is running by then is announced like any other state change
 	_festival_active = &""
 	_defer()

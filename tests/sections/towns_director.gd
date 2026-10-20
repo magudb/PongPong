@@ -14,6 +14,11 @@ func _director(t) -> TownDirector:
 			return node
 	return null
 
+## The sheet path of one clip of a look ("" when the look has no such clip).
+func _sheet(look: String, clip: String) -> String:
+	var spec: Dictionary = LuaData.dict(LuaData.dict(IsoChibiSprite2D.meta_for(look).get("animations", {})).get(clip, {}))
+	return "" if spec.is_empty() else IsoChibiSprite2D.CHARACTERS_DIR + look + "/" + str(spec.get("sheet", clip + IsoChibiSprite2D.TEXTURE_EXTENSION))
+
 func _time(t, hour: int, minute := 0) -> void:
 	var gm: Node = t.autoload("GameManager")
 	gm.hour = hour
@@ -82,6 +87,7 @@ func run(t) -> void:
 			t.check("both_talk_hosts_forward_to_keeper", talk_hosts == 2)
 			await _talk(t, director, "merchant_pip")
 	await _crowd(t, false)
+	await _arrivals(t)
 	await _park(t)
 	await _curfew(t)
 	gm.clear_config_overrides()
@@ -109,6 +115,7 @@ func _park(t) -> void:
 	await t.world().travel(&"hyggebyen", &"default")
 	await t.frames(4)
 	var old := _director(t)
+	var grid: NavGrid = old.nav
 	var old_actors: Array = old.live.values().map(func(actor): return weakref(actor))
 	for i in 30:
 		await t.world().travel(&"farm", &"default")
@@ -118,11 +125,141 @@ func _park(t) -> void:
 		await t.world().travel(&"hyggebyen", &"default")
 		await t.frames(3)
 		t.check("park_reenter_" + str(i), _director(t) == old and old.ready_for_population and t.tree.get_nodes_in_group("town_director").size() == 1 and NpcDirector._active.size() == 1)
+	# A parked town keeps its baked grid; the city's level graph and reflowed festival posts are shared by every entry (SIM-05).
+	t.check("parked_town_keeps_its_grid", grid != null and old.nav == grid and old.init_ms > 0.0, "re-entry initialization %.3f ms" % old.init_ms)
+	await t.world().travel(&"traetoppen", &"default")
+	await t.frames(4)
+	var city := _director(t)
+	var city_nav: LevelNav = city.level_nav
+	var posts := {}
+	for name in city.anchors:
+		if str(name).begins_with("fest_"):
+			posts[name] = city.anchors[name]
+	# The shared nav's snap record must not grow over a session: an entry starts it again (a stale marker is gone).
+	city_nav.snap_stats.append(-1.0)
+	await t.world().travel(&"hyggebyen", &"default")
+	await t.frames(3)
+	await t.world().travel(&"traetoppen", &"default")
+	await t.frames(4)
+	var again := _director(t)
+	var same_posts := not posts.is_empty() and posts.keys().all(func(name): return again.anchors.get(name) == posts[name])
+	t.check("city_reentry_reuses_static_geometry", again != city and city_nav != null and again.level_nav == city_nav and same_posts, "re-entry initialization %.3f ms" % again.init_ms)
+	t.check("city_nav_snap_record_per_entry", not city_nav.snap_stats.has(-1.0), "%d snaps recorded for this entry" % city_nav.snap_stats.size())
+	await t.world().travel(&"hyggebyen", &"default")
+	await t.frames(3)
 	var started := Time.get_ticks_usec()
 	for i in 500:
 		old._physics_process(1.0 / 60)
 	var ms := float(Time.get_ticks_usec() - started) / 500000.0
 	t.check("director_frame_budget", ms <= 0.3, "%.4f ms with %d live" % [ms, old.live.size()])
+	# Between clock ticks the carrot runs at the clock's own rate: scaled with it, still while it is paused.
+	var tm: Node = t.autoload("TimeManager")
+	gm.set_config_override("time.minutes_per_real_second", 2.0)
+	tm.set_time_scale(2.0)
+	var scaled: float = old.clock_rate()
+	tm.pause_time()
+	var paused: float = old.clock_rate()
+	tm.resume_time()
+	tm.set_time_scale(1.0)
+	gm.set_config_override("time.minutes_per_real_second", 0.0)
+	t.check("director_follows_the_clock_rate", is_equal_approx(scaled, 4.0) and paused == 0.0, "scaled %s paused %s" % [scaled, paused])
+
+## Seats, arrivals and the minute tick of a running town: stable seats (SIM-08), quiet resyncs (SIM-01), staged sheets (REND-02).
+func _arrivals(t) -> void:
+	await t.world().travel(&"hyggebyen", &"default")
+	await t.frames(4)
+	var director := _director(t)
+	var place := ""
+	for name in RouteTable.anchors_of("hyggebyen"):
+		var cap := RouteTable.capacity("hyggebyen." + str(name))
+		if cap >= 3 and cap < 99 and not str(name).begins_with("fest_"):
+			place = "hyggebyen." + str(name)
+			break
+	var everyone: Array = Routines.npc_ids()
+	var cast: Array = everyone.slice(0, 3)
+	var registry := {}
+	for i in 2:
+		registry[cast[i]] = {"priority": 50, "plans": {"day": {"blocks": [{"from": 6.0, "at": place, "act": "stand"}]}}, "select": [{"plan": "day"}]}
+	Routines.override_registry = registry
+	Routines.clear_cache()
+	director.resync()
+	var first: Dictionary = director._post_offsets.duplicate()
+	registry[cast[2]] = registry[cast[0]].duplicate(true)
+	Routines.clear_cache()
+	director.resync()
+	var kept := first.keys().all(func(id): return director._post_offsets.get(id) == first[id])
+	var seats: Array = cast.map(func(id): return director._post_offsets.get(id, Vector2.INF))
+	var apart := not seats.has(Vector2.INF)
+	for i in seats.size():
+		for j in range(i + 1, seats.size()):
+			apart = apart and seats[i].distance_to(seats[j]) >= 40
+	t.check("seats_stay_when_a_guest_joins", place != "" and first.size() == 2 and kept and apart, "%s: %s then %s" % [place, first, seats])
+	var populated := [0]
+	var listener := func(id: StringName, _payload: Dictionary) -> void:
+		if id == &"area_populated":
+			populated[0] += 1
+	t.autoload("EventBus").game_event.connect(listener)
+	director.resync(false)
+	director.resync(false)
+	var quiet: int = populated[0]
+	registry.erase(cast[2])
+	Routines.clear_cache()
+	director.resync()
+	t.autoload("EventBus").game_event.disconnect(listener)
+	t.check("area_populated_only_on_change", quiet == 0 and populated[0] == 1, "%d events for unchanged resyncs, %d after a departure" % [quiet, populated[0] - quiet])
+	var before: int = director.stats.resyncs
+	for i in 120:
+		director._physics_process(1.0 / 60)
+	t.check("no_resync_between_minute_ticks", director.stats.resyncs == before, "%d resyncs in two seconds without a tick" % (director.stats.resyncs - before))
+	# A batch of walk-ins whose sheets are not resident appears once they are: loaded on worker threads, finalized one sheet a
+	# frame, then spawned together by ONE resync (one area_populated). A flyer stages what the director plays (idle, walk), not hover.
+	var lr: Node = t.autoload("LuaRuntime")
+	var look_of := func(id: String) -> String: return IsoChibiSprite2D.resolve_id(str(lr.get_npc(id).get("visual", "fairy")))
+	var newcomers: Array = []
+	var looks := {}
+	var flyers: Array = everyone.filter(func(id): return bool(IsoChibiSprite2D.meta_for(look_of.call(id)).get("flyer", false)))
+	for id in flyers + everyone:
+		var look: String = look_of.call(id)
+		if newcomers.size() < 3 and not id in cast and not id in newcomers and not looks.has(look) and not ResourceLoader.has_cached(_sheet(look, "idle")):
+			newcomers.append(id)
+			looks[look] = true
+	var flyer: bool = newcomers.any(func(id): return id in flyers)
+	for id in cast:
+		registry.erase(id)
+	Routines.clear_cache()
+	director.resync()
+	for id in newcomers:
+		registry[id] = {"priority": 50, "plans": {"day": {"blocks": [{"from": 6.0, "at": place, "act": "stand"}]}}, "select": [{"plan": "day"}]}
+	Routines.clear_cache()
+	var resident := {}
+	var spawned := func(id: String, _node: Node2D) -> void:
+		if id in newcomers:
+			resident[id] = ["idle", "walk"].all(func(clip): return _sheet(look_of.call(id), clip) == "" or ResourceLoader.has_cached(_sheet(look_of.call(id), clip)))
+	director.citizen_spawned.connect(spawned)
+	director.resync(false)
+	var staged: bool = newcomers.all(func(id): return director._staging.has(id) and not director.live.has(id))
+	var hover := newcomers.any(func(id): return _sheet(look_of.call(id), "hover") != "" and (director._staging.get(id, []) as Array).has(_sheet(look_of.call(id), "hover")))
+	var sheets: int = newcomers.reduce(func(sum, id): return sum + (director._staging.get(id, []) as Array).size(), 0)
+	populated[0] = 0
+	t.autoload("EventBus").game_event.connect(listener)
+	var resyncs: int = director.stats.resyncs
+	var finalized := [director.stats.sheets_finalized]
+	var sample := func() -> void: finalized.append(director.stats.sheets_finalized)
+	director.get_tree().physics_frame.connect(sample)
+	await t.until(func(): return newcomers.all(func(id): return director.live.has(id)), 8.0)
+	director.get_tree().physics_frame.disconnect(sample)
+	t.autoload("EventBus").game_event.disconnect(listener)
+	director.citizen_spawned.disconnect(spawned)
+	var per_frame := 0
+	for i in range(1, finalized.size()):
+		per_frame = maxi(per_frame, finalized[i] - finalized[i - 1])
+	t.check("walk_in_spawns_after_threaded_sheets", newcomers.size() == 3 and staged and resident.size() == 3 and resident.values().all(func(v): return v) and director._staging.is_empty(), "%s staged %s resident at spawn %s" % [newcomers, staged, resident])
+	t.check("walk_in_batch_spawns_in_one_resync", director.stats.resyncs - resyncs == 1 and populated[0] == 1, "%d resyncs and %d area_populated for a batch of %d" % [director.stats.resyncs - resyncs, populated[0], newcomers.size()])
+	t.check("staging_finalizes_one_sheet_a_frame", per_frame == 1 and director.stats.sheets_finalized - finalized[0] == sheets, "%d sheets finalized over %d frames, at most %d in one" % [director.stats.sheets_finalized - finalized[0], finalized.size() - 1, per_frame])
+	t.check("flyer_stages_no_hover_sheet", not hover, "a flyer among the walk-ins %s; hover staged %s" % [flyer, hover])
+	Routines.override_registry = {}
+	Routines.clear_cache()
+	director.resync()
 
 func _curfew(t) -> void:
 	var gm: Node = t.autoload("GameManager")

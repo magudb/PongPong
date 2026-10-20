@@ -157,12 +157,15 @@ class FakeLoot extends Node:
 	var item := "plank_pine"
 	var empty := false                 # refuses every opening (ok = false, reason cooldown)
 	var empty_openings := 0            # the next openings are ok but hold nothing (reason nothing), then the find comes
+	var full := false                  # refuses every opening as LootService does for a full backpack (ok = false, reason full)
 	var gm: Node = null
 
 	func open_container(zone: String, container: String, uid: String, _ctx: Dictionary = {}) -> Dictionary:
 		calls.append({"zone": zone, "container": container, "uid": uid, "day": gm.total_day() if gm != null else -1})
 		if empty:
 			return {"ok": false, "results": [], "reason": &"cooldown"}
+		if full:
+			return {"ok": false, "results": [], "reason": &"full"}
 		if empty_openings > 0:
 			empty_openings -= 1
 			return {"ok": true, "results": [], "reason": &"nothing"}
@@ -173,7 +176,7 @@ class FakeLoot extends Node:
 class FakeLootSignal extends Node:
 	var calls := 0
 
-	func open_container(_zone: String, _container: String, _uid: String) -> void:
+	func open_container(_zone: String, _container: String, _uid: String, _ctx: Dictionary = {}) -> void:
 		calls += 1
 		var bus: Node = (Engine.get_main_loop() as SceneTree).root.get_node("EventBus")
 		bus.loot_rolled.emit(&"home:visit", [{"id": "stone_block", "amount": 2, "rarity": "normal", "kind": "material"}])
@@ -253,6 +256,8 @@ func run(t) -> void:
 	_atomic_transfers(t)
 	_festival(t)
 	_visits(t)
+	await _visit_waits_when_full(t)
+	await _visit_waits_with_real_loot(t)
 	_guests(t)
 	_save_section(t)
 	_project_godot(t)
@@ -725,7 +730,7 @@ func _flag_mirror(t) -> void:
 	_ck(_gm.flag_int(&"home_tier", 0) == 4 and typeof(_gm.get_flag(&"home_tier")) == TYPE_INT, "load: a text flag is repaired too", bag)
 	_gm.set_flag(&"home_tier", 3.0)
 	_hm.from_dict(_hm.to_dict())
-	_ck(_gm.flag_int(&"home_tier", 0) == 3, "load: a usable value of the game section (the float of a JSON round trip) is kept as it was loaded", bag)
+	_ck(_gm.flag_int(&"home_tier", 0) == 4 and typeof(_gm.get_flag(&"home_tier")) == TYPE_INT, "load: a usable value of the game section that disagrees with the tier (3.0 for tier 4) is rewritten from the section too: the flag is a mirror (ARCH-07)", bag)
 	_gm.set_flag(&"home_tier", 4)
 	_gm.set_flag(&"home_building", 8)
 	_gm.set_flag(&"home_castle_built", true)
@@ -1229,6 +1234,88 @@ func _visits(t) -> void:
 	no_loot.free()
 	_hm.reset()
 	_eco.reset()
+
+
+## SYS-10: a full backpack on a visit morning does not cost the week's gift: it waits at the door (named toast, saved) and arrives once there is room.
+func _visit_waits_when_full(t) -> void:
+	var bag: Array[String] = []
+	var loot := FakeLoot.new()
+	loot.gm = _gm
+	Svc.override("LootService", loot)
+	Fresh.new_game(t)
+	_rec.clear()
+	loot.full = true
+	_hm.set_tier(3)
+	_set_date(&"foraar", 3, 1)
+	_gm.end_day()
+	var waiting := _rec.toasts.filter(func(x): return str(x[1]) == _lm.t("HOME_GUEST_GIFT_WAITING"))
+	_ck(loot.calls.size() == 1 and _rec.gifts.is_empty() and _hm.last_visit.get("reason", "") == "full" and waiting.size() == 1, "Thursday with a full backpack: one refused opening, no gift yet, a toast that says the gift waits at the door (%s)" % str(_hm.last_visit), bag)
+	_ck(_hm.to_dict().get("visits_owed", []) == [{"week": 0, "index": 0, "npc": ""}], "the waiting gift is saved (%s)" % str(_hm.to_dict().get("visits_owed", [])), bag)
+	_hm.from_dict(JSON.parse_string(JSON.stringify(_hm.to_dict())))
+	_eco.add_item(&"wood", 1, true)
+	await t.frames(2)
+	_ck(loot.calls.size() == 2 and _rec.gifts.is_empty() and _rec.toasts.filter(func(x): return str(x[1]) == _lm.t("HOME_GUEST_GIFT_WAITING")).size() == 1, "still full: the retry after an inventory change is refused quietly, the gift keeps waiting", bag)
+	loot.full = false
+	_eco.add_item(&"wood", 1, true)
+	await t.frames(2)
+	var uids: Array = loot.calls.map(func(c): return c["uid"])
+	_ck(_rec.gifts == [["", "plank_pine"]] and uids[-1] == "home:visit:0:0" and _hm.last_visit.get("ok", false) and _hm.to_dict().get("visits_owed", []).is_empty(), "with room again the same visit's gift arrives once (%s)" % str(uids), bag)
+	_eco.add_item(&"wood", 1, true)
+	await t.frames(2)
+	_ck(_rec.gifts.size() == 1, "and only once", bag)
+	t.check("guest_gift_waits_when_backpack_full", bag.is_empty(), "a full backpack keeps the week's guest gift at the door until there is room: %s" % str(bag.slice(0, 3)))
+	Svc.clear_overrides()
+	loot.free()
+	_hm.reset()
+
+
+## SYS-10 with the REAL LootService: the full morning gives ONE toast (the guest's, not LootService's generic "inventory full" on top of it), and a retry that
+## is refused again stays quiet. The farm's `trae` is narrowed to its backpack materials so the find cannot go to a store of its own.
+func _visit_waits_with_real_loot(t) -> void:
+	var ls: Node = Svc.node("LootService")
+	if ls == null or not ls.has_method("set_loot_config"):
+		t.skip("home.guest_gift_waits_real_loot_one_toast: LootService (F4-loot-shops) is not installed yet")
+		return
+	var bag: Array[String] = []
+	Fresh.new_game(t)
+	_eco.reset()
+	var cfg: Dictionary = (ls.call("loot_cfg") as Dictionary).duplicate(true)
+	var trae: Dictionary = cfg["containers"]["trae"]
+	trae["kinds"] = {"material": 1}
+	trae["odds"] = {"normal": 10000, "uncommon": 0, "rare": 0}
+	trae["wander_bp"] = 0
+	ls.call("set_loot_config", cfg)
+	var finds := ["nails", "plank_pine", "straw_bundle"]
+	for id in ItemKinds.all_ids("building_material") + ["wood", "stone", "moss", "iron_ore", "copper_ore", "apple", "carrot", "turnip", "honey", "milk", "egg", "wool"]:
+		if _eco.free_slots() <= 0:
+			break
+		if not id in finds:
+			_eco.add_item(StringName(id), 1, true)
+	var filler := StringName(str(ItemKinds.all_ids("building_material").filter(func(id): return not id in finds)[0]))
+	_rec.clear()
+	_hm.set_tier(3)
+	_set_date(&"foraar", 3, 1)
+	_gm.end_day()
+	var full_title: String = _lm.t("NOTIF_INVENTORY_FULL_TITLE")
+	var count_full := func() -> int: return _rec.toasts.filter(func(x): return str(x[0]) == full_title).size()
+	var count_waiting := func() -> int: return _rec.toasts.filter(func(x): return str(x[1]) == _lm.t("HOME_GUEST_GIFT_WAITING")).size()
+	_ck(_eco.free_slots() == 0 and _hm.last_visit.get("reason", "") == "full", "a full backpack: the real LootService refuses Thursday's visit as full (%s, %d free)" % [str(_hm.last_visit), _eco.free_slots()], bag)
+	_ck(count_waiting.call() == 1 and count_full.call() == 0, "the full morning gives exactly one toast, the guest's: %d waiting, %d inventory-full" % [count_waiting.call(), count_full.call()], bag)
+	_ck(_eco.add_item(filler, 1, true), "one more %s still fits its stack" % filler, bag)
+	await t.frames(2)
+	_ck(_hm.to_dict().get("visits_owed", []).size() == 1 and count_waiting.call() == 1 and count_full.call() == 0, "an inventory change that leaves no free slot: the gift keeps waiting, no toast", bag)
+	var quiet: Dictionary = ls.call("open_container", "farm", "trae", "home:visit:0:0", {"quiet_full": true})
+	_ck(str(quiet.get("reason", "")) == "full" and count_full.call() == 0, "a retry the real service refuses as full stays quiet with quiet_full (%s)" % str(quiet.get("reason", "")), bag)
+	ls.call("open_container", "farm", "trae", "home:visit:0:0")
+	_ck(count_full.call() == 1, "without quiet_full the same refusal posts the generic inventory-full toast (the flag is what keeps it quiet)", bag)
+	_eco.remove_item(filler, _eco.count_item(filler))
+	await t.frames(2)
+	var gift_toasts := _rec.toasts.filter(func(x): return str(x[0]) == _lm.t("HOME_UNLOCK_GUEST_VISITS") and str(x[1]) != _lm.t("HOME_GUEST_GIFT_WAITING"))
+	_ck(_rec.gifts.size() == 1 and str(_rec.gifts[0][1]) in finds and gift_toasts.size() == 1 and _hm.to_dict().get("visits_owed", []).is_empty() and count_full.call() == 1, "a free slot: the waiting gift arrives once with its own toast (%s)" % str(_rec.gifts), bag)
+	t.check("guest_gift_waits_real_loot_one_toast", bag.is_empty(), "with the real LootService a full visit morning toasts once and a refused retry stays quiet: %s" % str(bag.slice(0, 3)))
+	ls.call("set_loot_config", null)
+	_eco.reset()
+	_hm.reset()
 
 
 func _visit_with_real_loot(t) -> void:

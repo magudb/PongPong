@@ -102,7 +102,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 90
+    "rows": 92
   },
   "localization/levels.csv": {
     "status": "draft",
@@ -130,14 +130,14 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 32
+    "rows": 56
   },
   "localization/quests.csv": {
     "status": "draft",
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 147
+    "rows": 149
   },
   "localization/social_sys.csv": {
     "status": "draft",
@@ -158,14 +158,14 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 21
+    "rows": 20
   },
   "localization/ui.csv": {
     "status": "ai_reviewed",
     "reviewed_by": "canonical guide baseline",
     "date": "",
     "voice_frozen": false,
-    "rows": 139
+    "rows": 140
   },
   "localization/wardrobe.csv": {
     "status": "draft",
@@ -927,14 +927,14 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 14
+    "rows": 20
   },
   "localization/menus.csv": {
     "status": "draft",
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 34
+    "rows": 49
   },
   "localization/zz_final.csv": {
     "status": "draft",
@@ -948,14 +948,14 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 8
+    "rows": 15
   },
   "localization/shop_ui.csv": {
     "status": "draft",
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 19
+    "rows": 22
   },
   "localization/dialogue.csv": {
     "status": "draft",
@@ -1181,7 +1181,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 66
+    "rows": 69
   },
   "localization/heart_events.csv": {
     "status": "draft",
@@ -1251,6 +1251,6 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 20
+    "rows": 32
   }
 }

@@ -160,6 +160,7 @@ func set_awake(on: bool) -> void:
 		_cancel_attack()
 		state = S.IDLE
 		ground_velocity = Vector2.ZERO
+		hop_altitude = 0
 	if not on and is_instance_valid(_eyes): _eyes.visible = false
 	process_mode = PROCESS_MODE_INHERIT if on else PROCESS_MODE_DISABLED
 
@@ -249,6 +250,7 @@ func begin_windup(geometry: Dictionary, seconds: float, mode: String) -> bool:
 	warning = ring
 	warning_serial = warning.serial
 	ground_velocity = Vector2.ZERO
+	hop_altitude = 0
 	EventBus.game_event.emit(&"audio_cue",{"cue":"sfx/telegraph_tick"})
 	return true
 
@@ -308,6 +310,7 @@ func stun(seconds: float) -> void:
 	reveal()
 	_cancel_attack()
 	state = S.STUN
+	hop_altitude = 0
 	remaining = maxf(.01,seconds)
 	cooldown = .4
 func hit_stop(frames: int) -> void:

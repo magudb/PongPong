@@ -129,17 +129,17 @@ tools/dev/play.sh --throwaway   # same, with a temporary profile that is deleted
 |---|---|
 | Move / run | WASD or arrows / Shift |
 | Interact, talk | E or Enter |
-| Use tool / attack | Left mouse |
+| Use tool / attack | Left mouse or X |
 | Jump / dodge | Space |
-| Fairy flight / descend | F / Ctrl |
+| Fairy flight / descend | F / Shift (Space climbs) |
 | Fairy light / drink a supply | Q / R |
 | Inventory · journal · wardrobe | I or Tab · J · G |
 | Farm upgrades (on the farm) · decorate · people | B · H · P |
 | Hotbar | 1–8 |
 | Rotate / pick up furniture | R / X or right mouse |
-| Zoom | Mouse wheel |
+| Zoom | Mouse wheel or trackpad |
 | Area map | M |
-| Pause · cheat menu | Esc · F8 |
+| Pause · cheat menu (debug builds) | Esc · F8 |
 
 More detail is in [docs/PLAYING.md](docs/PLAYING.md).
 

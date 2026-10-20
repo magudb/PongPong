@@ -9,6 +9,8 @@ var light: PointLight2D
 var _halo_alpha := 0.9
 var _light_energy := 0.3
 var _tick := 0.0
+var _count_tick := 0.0
+var _others := 0
 static func attach(actor: Node) -> Node:
 	if actor.has_node("NpcGlow"):return actor.get_node("NpcGlow")
 	var row := LuaData.dict(Svc.lua_config("npc_glow."+str(actor.get("npc_id")),{}))
@@ -51,25 +53,32 @@ func _ready() -> void:
 	_refresh()
 func _process(delta: float) -> void:
 	_tick += delta
+	_count_tick += delta
 	if _tick < .1:return
 	_tick = 0
-	_refresh()
-func _refresh() -> void:
+	# Other lights come and go rarely: recount them once a second, the fade follows the night at 10 Hz.
+	var recount := _count_tick >= 1.0
+	if recount:_count_tick = 0
+	_refresh(recount)
+func _refresh(recount := true) -> void:
 	if not is_instance_valid(npc):return
 	var factor := npc.area.night_factor if is_instance_valid(npc.area) else 0.0
 	var hidden := bool(npc.get_meta("ghostfam_hiding",false))
 	halo.visible = factor>.004 and not hidden
 	halo.modulate.a = factor*_halo_alpha
 	if light == null:return
-	# Silke yields first if another effect uses the last safe light slot.
-	var world := get_tree().get_first_node_in_group("world_2d")
-	var others := _enabled_lights(world) if world != null else 0
-	light.visible = factor>.004 and not hidden and others<CITY_LIGHT_CAP
+	# Silke yields first if another effect uses the last safe light slot. By day (or hidden) her
+	# lantern is off, so the other lights are not counted at all.
+	var lit := factor>.004 and not hidden
+	if lit and (recount or not light.visible):
+		var world := get_tree().get_first_node_in_group("world_2d")
+		_others = _enabled_lights(world) if world != null else 0
+	light.visible = lit and _others<CITY_LIGHT_CAP
 	light.energy = factor*_light_energy if light.visible else 0.0
 	lantern_halo.visible = factor>.004 and not hidden
 	lantern_halo.modulate.a = factor*.7
 func _enabled_lights(root: Node) -> int:
 	var count := 0
-	if root is PointLight2D and root!=light and root.is_visible_in_tree() and root.energy>.004:count += 1
-	for child in root.get_children():count += _enabled_lights(child)
+	for node in root.find_children("*","PointLight2D",true,false):
+		if node!=light and (node as PointLight2D).is_visible_in_tree() and (node as PointLight2D).energy>.004:count += 1
 	return count

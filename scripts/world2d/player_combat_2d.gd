@@ -23,6 +23,8 @@ var _swing_half: float = 1.0
 var _hit: Dictionary = {}
 var _buffer: StringName = &""
 var _buffer_time: float = 0.0
+## The weapon a buffered or held slash swings ("" = the equipped one; a hotbar weapon in an iso area names itself).
+var _buffer_item: StringName = &""
 var _last_spark: bool = false
 var _burst: PointLight2D
 var _query := PhysicsShapeQueryParameters2D.new()
@@ -37,19 +39,10 @@ func setup(body: PlayerBody2D) -> void:
 	_query.collision_mask = Iso.LAYER_ENEMY
 	_query.collide_with_areas = true
 	_query.collide_with_bodies = true
-	var hurtbox := Area2D.new()
-	hurtbox.name = "Hurtbox"
-	hurtbox.collision_layer = Iso.LAYER_PLAYER
-	hurtbox.collision_mask = Iso.LAYER_ENEMY_ATTACK
-	var collision := CollisionShape2D.new()
-	var shape := CapsuleShape2D.new()
-	shape.radius = 16.0 * Iso.S
-	shape.height = 48.0 * Iso.S
-	collision.shape = shape
-	collision.position.y = -34.0 * Iso.S
-	hurtbox.add_child(collision)
-	player.add_child(hurtbox)
-	hurtbox.area_entered.connect(_on_hurtbox_area_entered)
+	# No hurtbox Area2D: attacks hit only through the ground-plane tests at the
+	# feet (Enemy2D._during_attack, hazards), which match the drawn telegraph.
+	# An upper-body capsule overlapping the ground polygon hit players standing
+	# up to ~120 screen px south of the band.
 	_burst = PointLight2D.new()
 	_burst.name = "BurstLight"
 	_burst.texture = Glow.light_texture()
@@ -63,17 +56,18 @@ func _assist(key: String, fallback: Variant = 0.0) -> Variant:
 func _feel(key: String, fallback: Variant) -> Variant:
 	return GameData.cfg("dungeon_run.feel." + key, fallback)
 
-func request(ability: StringName) -> void:
+func request(ability: StringName, item: StringName = &"") -> void:
 	_buffer = ability
 	_buffer_time = float(_feel("input_buffer", 0.15))
 	if ability == &"slash":
+		_buffer_item = item
 		attack_held = true
 	_attempt_buffer()
 
 func _attempt_buffer() -> void:
 	if _buffer == &"":
 		return
-	var ok := swing() if _buffer == &"slash" else dodge()
+	var ok := swing(_buffer_item) if _buffer == &"slash" else dodge()
 	if ok:
 		_buffer = &""
 		_buffer_time = 0.0
@@ -93,7 +87,7 @@ func tick(delta: float) -> void:
 		if _buffer_time <= 0.0:
 			_buffer = &""
 	if attack_held and bool(_assist("assist_auto_swing", false)) and player.world_input_allowed():
-		swing()
+		swing(_buffer_item)
 	var flash_reduced := bool(_assist("assist_reduce_flash", false))
 	player.visual.modulate.a = 0.6 if _iframes > 0 and player.state != S.DODGE and not flash_reduced and int(_iframes * 14.0) % 2 == 0 else 1.0
 	if _shake > 0.0:
@@ -227,8 +221,13 @@ func dodge() -> bool:
 			return false
 	elif player.state != S.FREE:
 		return false
+	# The stick / keys are already a GROUND vector (walking uses them as one), so the
+	# dodge runs parallel to the walk; only the screen facing row needs converting.
 	var direction := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	_dodge_direction = Iso.to_ground(direction if direction != Vector2.ZERO else player.facing_vec).normalized()
+	if direction == Vector2.ZERO:
+		var precise: Variant = player.get("combat_aim")
+		direction = precise if precise is Vector2 and precise.length_squared() > .01 else Iso.to_ground(player.facing_vec)
+	_dodge_direction = direction.normalized()
 	player.state = S.DODGE
 	_remaining = float(GameData.combat("dodge_time", 0.3))
 	durations.dodge = float(GameData.combat("dodge_cooldown", 0.9))
@@ -312,11 +311,6 @@ func take_damage(amount: int, from: Vector2 = Vector2.ZERO) -> bool:
 		player.visual.play_action(&"hit")
 	return true
 
-func _on_hurtbox_area_entered(area: Area2D) -> void:
-	var host := area.get_parent()
-	if host != null and host.has_method("hit_damage"):
-		take_damage(int(host.call("hit_damage")), host.global_position if host is Node2D else player.global_position)
-
 func _shake_camera(strength: float) -> void:
 	if not bool(_assist("assist_reduce_flash", false)):
 		_shake = 0.08
@@ -325,10 +319,15 @@ func _shake_camera(strength: float) -> void:
 func _effect(method: StringName, args: Array) -> void:
 	Svc.static_call(FX, method, args)
 
-func cancel_action() -> void:
-	_hit.clear()
+## A press buffered before a pause or modal is dropped: it never fires on resume.
+func clear_buffer() -> void:
 	_buffer = &""
 	_buffer_time = 0.0
+	_buffer_item = &""
+
+func cancel_action() -> void:
+	_hit.clear()
+	clear_buffer()
 	attack_held = false
 	hit_stop = 0
 	extra_altitude = 0.0

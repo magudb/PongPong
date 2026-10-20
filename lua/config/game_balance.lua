@@ -21,14 +21,18 @@ config = {
     gravity = 1750,                -- visual hop gravity, px/s^2
     flight_altitude = 150,         -- Fe flight: hover height above the ground shadow, px
     flight_climb = 225,            -- Fe flight: climb / descend speed, px/s
+    flight_min_stamina = 15,       -- Fe flight: the energy a take-off needs
+    zoom_stick_per_second = 0.5,   -- camera zoom per second with the pad's right stick fully tilted (a wheel notch is 0.05)
     body_rx = 25,                  -- collision ellipse of a figure, ground px (x radius)
     body_ry = 14.8,                -- collision ellipse of a figure, ground px (y radius, flattened by the 36 degree view)
-    interaction_range = 45,        -- E-query circle at the facing cell, ground px (D20)
+    interaction_range = 45,        -- E-query circles at the facing cell and one radius ahead of the feet, ground px (D20)
     max_health = 100,              -- legacy 3D scale; the 2D player uses combat.max_half_hearts
     max_stamina = 100,             -- energy ("Energi"); Perks.total("energy") is added on top
     stamina_regen_per_second = 12, -- energy regained per second while not running or working
     run_cost_per_second = 15,      -- energy spent per second while running
     run_recover_ratio = 0.2,       -- an exhausted run (stamina hit 0) ends again at 20% stamina
+    stamina_regen_delay = 1.0,     -- seconds after spending energy before it regenerates
+    tool_seconds = 0.34,           -- duration of one tool use (divided by the race's dig_speed)
   },
 
   -- farm: FarmGrid (P06) rules that are not per crop
@@ -89,7 +93,6 @@ config = {
     first_weekday = 0,             -- weekday of day 1 of every season: 0 = Monday ... 6 = Sunday
     night_start_hour = 20,         -- is_night(): hour >= night_start_hour or hour < night_end_hour (the raw hours 24 and 25 count as night)
     night_end_hour = 5,
-    auto_save_minutes = 30,
     -- weather rolled once per day: weights per season (normalised by the roller); ids klart regn taage sne torden
     weather_chances = {
       foraar = { klart = 0.60, regn = 0.25, taage = 0.15 },

@@ -36,8 +36,13 @@ var _interact_range: float = 45.0
 ## fallback still catches an interactable that appears while standing still).
 var _prompt_last_pos: Vector2 = Vector2(INF, INF)
 var _prompt_last_facing: int = -1
+var _prompt_last_ready := false
 var _prompt_stale: float = 0.0
 const PROMPT_REFRESH_S := 0.5
+## The short action states during which the E prompt keeps its last text (E itself still waits for FREE).
+const BRIEF_STATES: Array[S] = [S.USING, S.DODGE, S.SWING, S.HURT]
+## One mouse-wheel notch of zoom; a trackpad pan counts its delta in notches.
+const ZOOM_STEP := 0.05
 
 
 func _ready() -> void:
@@ -60,6 +65,9 @@ func _ready() -> void:
 	add_child(cs)
 	camera = Camera2D.new()
 	camera.name = "Camera2D"
+	# Bodies move on the 60 Hz physics tick. A camera that smoothed every rendered frame moved between
+	# those steps, so on a 120/144 Hz display the hero and the citizens juddered against the background.
+	camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 6.0
 	camera.limit_smoothed = true
@@ -145,13 +153,38 @@ func _apply_camera_limits() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if GameData.gm().is_modal_open() or state == S.TALKING or area == null:
 		return
-	if event.is_action_pressed("zoom_in"):
-		_set_zoom(_target_zoom + 0.05)
-	elif event.is_action_pressed("zoom_out"):
-		_set_zoom(_target_zoom - 0.05)
+	if _zoom_input(event):
+		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("interact"):
 		if try_interact():
 			get_viewport().set_input_as_handled()
+
+
+## Wheel notches, and the macOS trackpad, which sends a two-finger scroll as InputEventPanGesture and a pinch as
+## InputEventMagnifyGesture instead of wheel buttons (review UX-04). The pad's right stick is held, not stepped:
+## _zoom_stick() polls it, so its motion events are skipped here.
+func _zoom_input(event: InputEvent) -> bool:
+	if event is InputEventPanGesture:
+		_set_zoom(_target_zoom - (event as InputEventPanGesture).delta.y * ZOOM_STEP)
+	elif event is InputEventMagnifyGesture:
+		_set_zoom(_target_zoom * (event as InputEventMagnifyGesture).factor)
+	elif event is InputEventJoypadMotion:
+		return false
+	elif event.is_action_pressed("zoom_in"):
+		_set_zoom(_target_zoom + ZOOM_STEP)
+	elif event.is_action_pressed("zoom_out"):
+		_set_zoom(_target_zoom - ZOOM_STEP)
+	else:
+		return false
+	return true
+
+
+## The right stick zooms while it is held (player.zoom_stick_per_second at full tilt). A wheel notch is released
+## within its own event flush, so it adds nothing here.
+func _zoom_stick(delta: float) -> void:
+	var push := Input.get_action_strength("zoom_in") - Input.get_action_strength("zoom_out")
+	if push != 0.0:
+		_set_zoom(_target_zoom + push * float(GameData.player_cfg("zoom_stick_per_second", 0.5)) * delta)
 
 
 ## Mouse wheel zoom: steps accumulate on the TARGET value and stay inside the area's zoom range.
@@ -167,6 +200,8 @@ func _physics_process(delta: float) -> void:
 	var in_dir := Vector2.ZERO
 	if state == S.FREE:
 		in_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	if not GameData.gm().is_modal_open():
+		_zoom_stick(delta)
 	var speed: float = _run if Input.is_action_pressed("run") else _walk
 	_gvel = _gvel.move_toward(in_dir * speed, (_accel if in_dir != Vector2.ZERO else _decel) * delta)
 	velocity = Iso.to_screen(_gvel)
@@ -232,36 +267,68 @@ func target_global() -> Vector2:
 	return area.cell_to_global(target_cell())
 
 
-## E-query: a circle of r = interaction_range ground px at the facing cell on layer `interactable` (D20), nearest host wins.
-func nearest_interactable() -> Node:
+## Centre of the reach circle: one interaction radius ahead of the feet, toward the facing cell (ground space).
+func reach_global() -> Vector2:
+	var feet := area.global_to_cell(global_position)
+	var step: Vector2 = Iso.to_ground(target_global() - area.cell_to_global(feet)).normalized()
+	return global_position + Iso.to_screen(step * _interact_range)
+
+
+## E-query (D20): the hosts on layer `interactable` whose area overlaps a circle of r = interaction_range ground px at
+##   * the facing cell (what a tile tool acts on),
+##   * the feet, for counter bands only (DT53: the small end host may be underfoot while the facing cell is behind the hatch),
+##   * the reach point (reach_global): a host the body touches is found wherever the feet stand inside their cell.
+## The facing and counter circles decide: among their hosts the one nearest to the player wins. A host only the reach circle
+## finds (an NPC beside or behind, a touching one when the facing circle sits far ahead) wins only when they find no live host,
+## so a citizen in the next cell never takes E from the notice board the player faces. A spent host (is_spent(): an opened
+## chest, a dug spot) wins only when nothing live is in reach, so it still answers E with its resting whisper but never hides
+## a live host. `accept` (host -> bool) narrows the candidates for a tool: the pail looks for a cow, the axe for a tree.
+func nearest_interactable(accept: Callable = Callable()) -> Node:
 	if state != S.FREE or area == null:
 		return null
 	_ensure_interact_query()
-	_interact_query.transform = Transform2D(Vector2.RIGHT, Vector2(0.0, Iso.squash()), target_global())
-	var best: Node = null
-	var best_d: float = 1e9
-	var hits := get_world_2d().direct_space_state.intersect_shape(_interact_query, 8)
-	# A counter band decides by where the customer stands (DT53). Its small
-	# end host may be underfoot while the facing cell is already behind the
-	# hatch. Other world targets still use only the normal facing-cell query.
-	_interact_query.transform = Transform2D(Vector2.RIGHT, Vector2(0.0, Iso.squash()), global_position)
-	for hit in get_world_2d().direct_space_state.intersect_shape(_interact_query, 8):
-		var collider: Object = hit["collider"]
-		var host: Node = collider.get_parent() if collider is Area2D else null
-		if host != null and bool(host.get_meta("counter_foot_host", false)):
-			hits.append(hit)
-	for r in hits:
-		var a: Object = r["collider"]
-		var host: Node = (a as Node).get_parent() if a is Area2D else null
-		if host != null and host != self and host.has_method("interact") and host is Node2D:
-			var d: float = Iso.ground_dist((host as Node2D).global_position, global_position)
-			if d < best_d:
-				best_d = d
-				best = host
+	var hosts: Array[Node2D] = []
+	_query_hosts(target_global(), hosts, "")
+	_query_hosts(global_position, hosts, "counter")
+	var facing_count := hosts.size()
+	_query_hosts(reach_global(), hosts, "world")
+	var best: Node2D = null
+	# Rank (spent, reach only, distance to the player); Vector3 compares x, then y, then z.
+	var best_rank := Vector3.INF
+	for i in hosts.size():
+		var host := hosts[i]
+		if accept.is_valid() and not bool(accept.call(host)):
+			continue
+		var spent: bool = host.has_method("is_spent") and bool(host.call("is_spent"))
+		var rank := Vector3(1.0 if spent else 0.0, 1.0 if i >= facing_count else 0.0, Iso.ground_dist(host.global_position, global_position))
+		if rank < best_rank:
+			best = host
+			best_rank = rank
 	return best
 
 
+## Appends the hosts found by one query circle at `at`; `only` keeps "counter" hosts or the other ("world") ones, "" both.
+func _query_hosts(at: Vector2, hosts: Array[Node2D], only: String) -> void:
+	_interact_query.transform = Transform2D(Vector2.RIGHT, Vector2(0.0, Iso.squash()), at)
+	for hit in get_world_2d().direct_space_state.intersect_shape(_interact_query, 8):
+		var collider: Object = hit["collider"]
+		var host: Node = (collider as Node).get_parent() if collider is Area2D else null
+		if host == null or host == self or not host.has_method("interact") or not host is Node2D or hosts.has(host):
+			continue
+		var counter := bool(host.get_meta("counter_foot_host", false))
+		if (only == "counter" and not counter) or (only == "world" and counter):
+			continue
+		hosts.append(host as Node2D)
+
+
+## The one gate of the E prompt and of E itself, so the prompt never offers what E refuses (review GAP3-07).
+func can_interact_now() -> bool:
+	return state == S.FREE
+
+
 func try_interact() -> bool:
+	if not can_interact_now():
+		return false
 	var it: Node = nearest_interactable()
 	if it == null:
 		return false
@@ -271,15 +338,22 @@ func try_interact() -> bool:
 
 func _update_prompt(delta: float = 0.0) -> void:
 	_prompt_stale += delta
-	# The prompt only changes when the player moves or turns; skip the physics query otherwise,
-	# but still refresh at PROMPT_REFRESH_S so a newly-available interactable is not missed.
-	if global_position.is_equal_approx(_prompt_last_pos) and facing8 == _prompt_last_facing \
+	# A swing, a tool use, a dodge or a hit lasts a moment: keep the last prompt through it instead of blinking
+	# the pill off and on with every action. Only a lasting refusal (flight, a talk, fainting) hides it.
+	if state in BRIEF_STATES:
+		return
+	# The prompt only changes when the player moves, turns or can / cannot interact any more (take-off, the end of
+	# a talk); skip the physics query otherwise, but still refresh at PROMPT_REFRESH_S so a newly-available
+	# interactable is not missed.
+	var ready := can_interact_now()
+	if global_position.is_equal_approx(_prompt_last_pos) and facing8 == _prompt_last_facing and ready == _prompt_last_ready \
 			and _prompt_stale < PROMPT_REFRESH_S:
 		return
 	_prompt_stale = 0.0
 	_prompt_last_pos = global_position
 	_prompt_last_facing = facing8
-	var it: Node = nearest_interactable()
+	_prompt_last_ready = ready
+	var it: Node = nearest_interactable() if ready else null
 	var text := interaction_text(it)
 	if text != _prompt:
 		_prompt = text

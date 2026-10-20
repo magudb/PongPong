@@ -6,7 +6,10 @@ const VOICE_DIR := "res://assets/audio/voice"
 const SFX_DIR := "res://assets/audio/sfx"
 const MUSIC_DIR := "res://assets/audio/music"
 const AMBIENT_DIR := "res://assets/audio/amb"
-const SETTINGS_PATH := "user://settings.cfg"
+const SETTINGS_PATH := SettingsStore.PATH
+## The buses whose volume settings.cfg [audio] keeps (keys: the lower-case bus name). SettingsUI shows four of them.
+const VOLUME_BUSES: Array[String] = ["Master","SFX","Music","Voice","Ambient"]
+const DEFAULT_VOLUME := 0.8
 
 var _sfx_pool: Array[AudioStreamPlayer] = []
 var _sfx_rr: int = 0                    # round-robin cursor: the slot stolen next when the pool is full (the "oldest" in FIFO order)
@@ -201,11 +204,14 @@ func _record(kind: String,id: String,played: bool) -> void:
 	if _cues.size()>256:_cues.pop_front()
 
 func apply_saved_volumes() -> void:
-	var config := ConfigFile.new()
-	config.load(SETTINGS_PATH)
-	for bus in ["Master","SFX","Music","Voice","Ambient"]:
-		var value: Variant = config.get_value("audio",str(bus).to_lower(),0.8)
-		_apply_bus(bus,clampf(float(value),0,1) if value is float or value is int else 0.8)
+	var config := SettingsStore.read()
+	for bus in VOLUME_BUSES:
+		_apply_bus(bus,saved_volume(config,bus))
+
+## The saved linear volume of a bus (0..1); a missing or garbage value is DEFAULT_VOLUME.
+static func saved_volume(config: ConfigFile,bus: String) -> float:
+	var value: Variant = config.get_value("audio",bus.to_lower(),DEFAULT_VOLUME)
+	return clampf(float(value),0,1) if value is float or value is int else DEFAULT_VOLUME
 
 func _apply_bus(bus: String,linear: float) -> void:
 	var index := AudioServer.get_bus_index(bus)
@@ -213,14 +219,12 @@ func _apply_bus(bus: String,linear: float) -> void:
 	AudioServer.set_bus_mute(index,linear<=0)
 	AudioServer.set_bus_volume_db(index,linear_to_db(maxf(linear,0.0001)))
 
-func set_bus_volume(bus: String,linear: float) -> void:
-	if bus not in ["Master","SFX","Music","Voice","Ambient"]:return
+## Applies a volume and, with `persist`, saves it. SettingsUI applies every slider step live and saves once the slider rests.
+func set_bus_volume(bus: String,linear: float,persist := true) -> void:
+	if bus not in VOLUME_BUSES:return
 	linear = clampf(linear,0,1)
 	_apply_bus(bus,linear)
-	var config := ConfigFile.new()
-	config.load(SETTINGS_PATH)
-	config.set_value("audio",bus.to_lower(),linear)
-	config.save(SETTINGS_PATH)
+	if persist:SettingsStore.store("audio",bus.to_lower(),linear,"volume")
 
 func _fade_ambient(index: int,target: float,seconds: float,stop := false) -> void:
 	var player := _ambient_players[index]

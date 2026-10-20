@@ -75,6 +75,9 @@ func _run(t,native: bool) -> void:
 	t.check("floor_banner_suppressed_by_boss",hud.floor_banner.arrivals == arrivals+1 and not hud.floor_banner.visible)
 	t.check("no_focusable_controls",_focusable(hud) == 0)
 	t.check("ability_keys_resolve_real_actions",hud.abilities.light.action == &"light" and hud.abilities.light.key_label.text == "Q")
+	var ability_art := {}
+	for key in hud.abilities: ability_art[hud.abilities[key].icon.icon_path()] = true
+	t.check("ability_slots_draw_four_pictures",not ability_art.has("") and ability_art.size() == 4 and hud.drink_count.has_theme_stylebox_override("normal"),str(ability_art.keys()))
 	t.check("equipped_item_indicator_preserved",hud.current_item_badge != null and hud.current_item_badge.is_visible_in_tree())
 	if native:
 		var started := Time.get_ticks_usec()

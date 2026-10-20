@@ -60,9 +60,11 @@ func _run(t, native: bool) -> void:
 		await t.capture("stones_and_results")
 	await t.tap(&"ui_cancel")
 	await t.frames(3)
-	t.check("escape_closes_and_frees_modal",not is_instance_valid(ui) and gm.top_modal() != &"appraisal")
+	# UIC-08: GameUI owns the screen (SCREEN_ORDER, below the pause menu); closing hides it and the next request reopens the same one.
+	t.check("escape_closes_modal_keeps_registered_screen",is_instance_valid(ui) and not ui.is_open() and gm.top_modal() != &"appraisal" and world.game_ui.get_screen(&"appraisal_ui") == ui)
 	EventBus.game_event.emit(&"open_appraisal",{"npc":"appraiser_fru_ugle"})
 	await t.frames(2)
-	t.check("reopens_once_after_free",loot._appraisal_ui != null and is_instance_valid(loot._appraisal_ui) and loot._appraisal_ui.is_open())
+	var order: Array[StringName] = world.game_ui.loaded_screens()
+	t.check("reopens_the_registered_screen",loot._appraisal_ui == ui and ui.is_open() and world.game_ui.find_children("AppraisalUi*","",false,false).size() == 1 and order.find(&"appraisal_ui") < order.find(&"pause_menu") and ui.get_index() < world.game_ui.get_screen(&"pause_menu").get_index())
 	loot._appraisal_ui.close()
 	await t.frames(2)

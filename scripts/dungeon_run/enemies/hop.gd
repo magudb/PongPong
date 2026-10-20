@@ -2,6 +2,10 @@ extends RefCounted
 const Chase := preload("res://scripts/dungeon_run/enemies/chase_lunge.gd")
 static func tick(enemy, dt: float, direction: Vector2, distance: float) -> void:
 	Chase.tick(enemy,dt,direction,distance)
+	# A wind-up that just began stands still on the ground: the hop must not overwrite its stop (DUN-03).
+	if enemy.state != enemy.S.CHASE:
+		enemy.hop_altitude = 0
+		return
 	var row := LuaData.dict(enemy.cfg.get("hop",{}))
 	var seconds := float(row.get("time",.35))
 	var phase := fmod(enemy.clock,seconds+float(row.get("pause",.2)))

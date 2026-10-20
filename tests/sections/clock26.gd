@@ -6,7 +6,7 @@ extends RefCounted
 ##
 ## Named checks (all prefixed clock26.): config_day_runs_06_to_26, day_end_hour_config_edges, advance_time_conserves_calendar_minutes, hours_24_25_are_the_same_game_day,
 ## real_time_day_is_10_minutes, display_hours_wrap, game_hour_normaliser, from_dict_old_and_new_saves, save_payload_at_01_40, night_rules_after_midnight, date_and_shop_day_until_the_roll,
-## shop_opening_weekday_after_midnight, towns_hours_after_midnight (SKIP until T-towns-core), no_pass_out_at_midnight, whole_day_passes_out_at_02_00, pass_out_at_02_00, bed_after_midnight_passes_one_day, bed_after_the_roll_skips_no_second_day,
+## shop_opening_weekday_after_midnight, towns_hours_after_midnight (SKIP until T-towns-core), no_pass_out_at_midnight, whole_day_passes_out_at_02_00, pass_out_at_02_00, bed_after_midnight_passes_one_day, bed_after_the_roll_skips_no_second_day, faint_just_before_02_00_rolls_one_day, faint_during_the_pass_out_wakes_once,
 ## bed_hours_18_to_06, night_after_midnight (day / night look and glow), windowed: night_look_is_continuous_across_midnight.
 ## The section is a sandbox: it drives the autoloads synchronously for the pure part (no frame passes between a state change and its assertion), then starts the real world for the pass-out.
 ## Which clock the section runs at (DT55 of TOWNS_FARM_SOCIAL_ADDENDUM): this section is NOT about the opening-hours rule, so the one check that asks ShopSystem.is_open runs with the switch
@@ -347,6 +347,12 @@ func _pass_out_and_bed() -> void:
 	# --- the pass-out at the day end: 01:50 + 20 min crosses 26:00 = 02:00 -> sleep, fade, toast, wake at 06:00, exactly one new day
 	notes.clear()
 	w["log"].clear()
+	var keep_dir: String = sm.save_dir
+	var keep_autosave: bool = sm.autosave_enabled
+	sm.save_dir = "user://clock26-pass-out"
+	DirAccess.make_dir_recursive_absolute(sm.save_dir)
+	sm.delete_save(sm.AUTO_SLOT)
+	sm.autosave_enabled = true
 	gm.set("hour", gm.day_end_hour() - 1)
 	gm.set("minute", 50)
 	var day_pass: int = gm.total_day()
@@ -361,6 +367,13 @@ func _pass_out_and_bed() -> void:
 		toast = toast or (n[2] == "sleep" and n[1] == _world.tr("NOTIF_PASSED_OUT"))
 	t.check("pass_out_at_02_00", passing and pass_done and gm.total_day() == day_pass + 1 and gm.hour == gm.day_start_hour() and gm.minute < 10 and toast and _names(w["log"]).count("day_ended") == 1 and _names(w["log"]).count("day_started") == 1,
 		"raw 25:50 + 20 min: sleeping %s, awake again %s, total_day %d -> %d (ONE day: the roll, then sleep_until_morning skips none), %02d:%02d, NOTIF_PASSED_OUT %s, %s" % [passing, pass_done, day_pass, gm.total_day(), gm.hour, gm.minute, toast, _names(w["log"])])
+	# SAVE-09: the day-end autosave of the roll records 02:00 where the player collapsed; the wake-up at home is saved again
+	var woke: Dictionary = sm.get_save_summary(sm.AUTO_SLOT)
+	t.check("pass_out_saves_the_wake_up", int(woke.get("hour", -1)) == gm.day_start_hour() and int(woke.get("total_day", -1)) == day_pass + 1 and str(woke.get("area", "")) == String(_world.area.map.id) and String(_world.area.map.id) == String(_world._wake_area()),
+		"the auto slot holds %02d:%02d of day %s in '%s' (the wake area is '%s'), not the collapse at 02:00" % [int(woke.get("hour", -1)), int(woke.get("minute", -1)), woke.get("total_day", "-"), woke.get("area", ""), _world._wake_area()])
+	sm.delete_save(sm.AUTO_SLOT)
+	sm.autosave_enabled = keep_autosave
+	sm.save_dir = keep_dir
 	# --- the bed after the roll (a save resumed at 02:xx awake, a roll during a travel): it must not skip a SECOND day
 	notes.clear()
 	w["log"].clear()
@@ -374,6 +387,51 @@ func _pass_out_and_bed() -> void:
 	Engine.time_scale = 1.0
 	t.check("bed_after_the_roll_skips_no_second_day", after_done and gm.total_day() == day_after and gm.hour == gm.day_start_hour() and _names(w["log"]).is_empty(),
 		"bed at raw 03:10 (after the 02:00 roll, before the wake-up): same date, wakes at 06:00, no day_ended: total_day %d -> %d" % [day_after, gm.total_day()])
+	# --- a faint at raw 25:59 (iso combat): the day end passes during the faint's delay; the pass-out must not start a second night, and the
+	# faint's own wake-up must not roll the calendar again (review SYS-01: the second sleep_until_morning() at 06:00 ran end_day)
+	notes.clear()
+	w["log"].clear()
+	_world._enter(&"_fixture_iso", &"default")
+	gm.set("hour", gm.day_end_hour() - 1)
+	gm.set("minute", 59)
+	var day_faint: int = gm.total_day()
+	tm.pause_time()
+	Engine.time_scale = 4.0
+	bus.player_defeated.emit()
+	gm.advance_time(2)                        # 26:00 = the roll + midnight_passed, inside the 1.3 s before the faint fades out
+	await t.frames(2)
+	var pass_out_started: bool = _world.sleeping
+	var faint_done: bool = await t.until(func() -> bool: return not _world._faint_pending and not _world.sleeping and not _world.traveling, 12.0)
+	Engine.time_scale = 1.0
+	tm.resume_time()
+	t.check("faint_just_before_02_00_rolls_one_day", faint_done and not pass_out_started and gm.total_day() == day_faint + 1 and gm.hour == gm.day_start_hour() and _names(w["log"]).count("day_ended") == 1,
+		"defeated at raw 25:59, the roll at 26:00 inside the faint delay: pass-out started %s, faint finished %s, total_day %d -> %d, %02d:%02d, %s" % [pass_out_started, faint_done, day_faint, gm.total_day(), gm.hour, gm.minute, _names(w["log"])])
+	# --- a defeat during the pass-out's fade-out (enemies and hazards still hit a TALKING player): the pass-out wakes the player at home,
+	# the faint must neither wake a second time at 06:00 (end_day = a skipped day) nor rescue again (fade, teleport, gold fee). Review SYS-01.
+	notes.clear()
+	w["log"].clear()
+	_world._enter(&"_fixture_iso", &"default")
+	var eco: Node = t.autoload("EconomyManager")
+	eco.add_gold(100 - int(eco.gold))
+	var whispers: Array = []
+	var wcb: Callable = func(key: String) -> void: whispers.append(key)
+	bus.whisper_requested.connect(wcb)
+	gm.set("hour", gm.day_end_hour() - 1)
+	gm.set("minute", 59)
+	var day_fade: int = gm.total_day()
+	tm.pause_time()
+	Engine.time_scale = 4.0
+	gm.advance_time(2)                        # 26:00: the roll, midnight_passed, the pass-out starts fading out
+	await t.frames(2)
+	var fading: bool = _world.sleeping
+	bus.player_defeated.emit()
+	var fade_faint_done: bool = await t.until(func() -> bool: return not _world._faint_pending and not _world.sleeping and not _world.traveling, 12.0)
+	Engine.time_scale = 1.0
+	tm.resume_time()
+	bus.whisper_requested.disconnect(wcb)
+	t.check("faint_during_the_pass_out_wakes_once", fading and fade_faint_done and gm.total_day() == day_fade + 1 and gm.hour == gm.day_start_hour() and _names(w["log"]).count("day_ended") == 1 and int(eco.gold) == 100 and not whispers.has("WHISPER_FAINT"),
+		"defeated while the 02:00 pass-out fades out (sleeping %s): finished %s, total_day %d -> %d, %02d:%02d, %s, gold 100 -> %d, faint whisper %s" % [fading, fade_faint_done, day_fade, gm.total_day(), gm.hour, gm.minute, _names(w["log"]), int(eco.gold), whispers.has("WHISPER_FAINT")])
+	_world._enter(&"_fixture_iso", &"default")
 	# --- the bed hours: 18:00 until the wake-up, including the raw hours 24 / 25 and the transient 2..5; never in the day
 	var sweep := ""
 	var bed_ok := true

@@ -151,3 +151,5 @@ LUANOTIF_DARK_FOREST_MINING_ACCEPT_TEXT,"Pas på! Tag en lygte med.","Be careful
 ; --- QuestManager toast: a delivery without the goods in the backpack ---
 QUEST_NEEDS_ITEMS_TITLE,"Du mangler noget","You are missing something"
 QUEST_NEEDS_ITEMS_TEXT,"Det, du skal aflevere, ligger ikke i rygsækken endnu.","What you are to hand over is not in your backpack yet."
+QUEST_NEEDS_ITEMS_FMT,"Du mangler stadig: %s.","You are still missing: %s."
+QUEST_NEEDS_ITEM_ROW_FMT,"%s %d af %d","%s %d of %d"

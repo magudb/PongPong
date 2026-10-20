@@ -27,7 +27,8 @@ extends Node
 ## Flags: `after_others = true` (a turn-in: counts only when every objective that is not itself a turn-in was done BEFORE the event),
 ## `have = true` (on = item_gained: progress = how many the player owns, stays done once reached), `needs = { item = n }` (+ `consume = true`: a
 ## delivery - the items leave the backpack in the same commit as the progress; also read by item_in_use for quest_spot objectives).
-## completed_flag names an already-earned saved achievement that also satisfies an event objective on acceptance/load.
+## completed_flag names an already-earned saved achievement that also satisfies an event objective on acceptance/load (the whole target; while
+## the flag is unset the objective counts its events as usual).
 ## An objective without `on` is manual, except for the old id convention that review_regressions pins: harvest_<crop> / harvest_any are fed by
 ## crop_harvested and collect_<item> by item_gained or resource_node_depleted (for direct node loot).
 ##
@@ -41,10 +42,13 @@ enum QuestState { LOCKED, AVAILABLE, ACTIVE, COMPLETED, FAILED }
 
 const _Svc := preload("res://scripts/data/svc.gd")
 const _Data := preload("res://scripts/data/lua_data.gd")
+const _Kinds := preload("res://scripts/data/item_kinds.gd")
 
 const QUEST_LUA_DIR := "res://lua/quests"
 const FRIEND_CAP := 10
 const DEFAULT_TRACKED := 3
+## The version of the "quests" section this build writes (SaveManager: a newer "v" makes the slot "newer", not damaged).
+const SECTION_VERSION := 2
 const QUEST_TAGS: Array[String] = ["FIND", "HØST", "BYG", "SKOV", "LÆR", "VENSKAB"]
 
 ## on = <kind> -> the objective fields that must equal the same-named entry of the event. `dialogue_started` also reads any_of, the
@@ -107,8 +111,13 @@ var completed_days: Dictionary = {}
 var pending_rewards: Dictionary = {}
 
 var _claiming_rewards: bool = false
+var _claim_again: bool = false           # a claim was asked for while one ran (a reward completed another quest): run another pass
 var _reward_claim_queued: bool = false
 var _refresh_queued: bool = false
+var _dispatch_depth: int = 0
+var _giver_index: Dictionary = {}        # meta.giver -> [quest ids, sorted]: built once per set of definitions, not per offerable() call (SYS-04)
+var _giver_index_size: int = -1          # quest_defs.size() the index was built for (-1 = stale)
+var _missing: Dictionary = {}            # item id -> amount a delivery needs, gathered while one event is dispatched: ONE toast per event
 var _accept_counter: int = 0
 var _state_queries: Dictionary = {}      # query name -> Callable(objective def) -> int, registered by the owner of the data
 var _offer_gates: Dictionary = {} # quest id -> a static eligibility query; retained across runs
@@ -147,6 +156,7 @@ class QuestRuntime:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	EventBus.lua_event.connect(_on_lua_event)
+	EventBus.lua_reloaded.connect(_on_lua_reloaded)
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.new_game_started.connect(reset)
 	EventBus.player_inventory_changed.connect(_on_inventory_changed)
@@ -182,6 +192,8 @@ func reset() -> void:
 	offered_quests.clear()
 	completed_days.clear()
 	pending_rewards.clear()
+	_claim_again = false
+	_missing.clear()
 	_reward_claim_queued = false
 	_refresh_queued = false
 	_accept_counter = 0
@@ -198,8 +210,19 @@ func register_quest_from_lua(quest_data: Dictionary) -> void:
 	# Lua defines availability; we only store the definition cache
 	quest_defs[quest_id] = quest_data
 	_objective_cache.erase(str(quest_id))
+	_giver_index_size = -1
 	if str(quest_data.get("source_path", "")) != "":
 		_report_binding_findings(quest_data)
+
+
+## LuaRuntime re-read the files (F9): the definition of a quest whose file is gone or renamed is dropped (it would stay
+## registered and, without its is_available hook, always available). Definitions registered by code (no source_path) are
+## kept, and the progress of a quest is never touched; the objective cache is rebuilt on demand.
+func _on_lua_reloaded() -> void:
+	for quest_id in quest_defs.keys():
+		if str((quest_defs[quest_id] as Dictionary).get("source_path", "")) != "" and not LuaRuntime.has_quest(str(quest_id)):
+			quest_defs.erase(quest_id)
+	_objective_cache.clear()
 
 
 func get_quest_def(quest_id: StringName) -> Dictionary:
@@ -400,14 +423,27 @@ func _quests_of_giver(giver: String) -> Array[StringName]:
 		var meta_giver := str(_Data.dict(get_quest_def(quest_id).get("meta", {})).get("giver", ""))
 		if quest_defs.has(quest_id) and (meta_giver == "" or meta_giver == giver) and not (quest_id in out):
 			out.append(quest_id)
-	var extra: Array[String] = []
-	for quest_id in quest_defs:
-		if str(_Data.dict(_Data.dict(quest_defs[quest_id]).get("meta", {})).get("giver", "")) == giver and not (StringName(str(quest_id)) in out):
-			extra.append(str(quest_id))
-	extra.sort()
-	for q in extra:
-		out.append(StringName(q))
+	for q in _quests_naming_giver(giver):
+		if quest_defs.has(StringName(q)) and not (StringName(q) in out):
+			out.append(StringName(q))
 	return out
+
+
+## The quests whose own meta names `giver`, in id order. Every NPC asks offerable() on each broadcast, so the scan over every definition runs once per
+## set of definitions (rebuilt after a registration, or when the number of definitions changed).
+func _quests_naming_giver(giver: String) -> Array:
+	if _giver_index_size != quest_defs.size():
+		_giver_index = {}
+		for quest_id in quest_defs:
+			var named := str(_Data.dict(_Data.dict(quest_defs[quest_id]).get("meta", {})).get("giver", ""))
+			if named != "":
+				if not _giver_index.has(named):
+					_giver_index[named] = []
+				(_giver_index[named] as Array).append(str(quest_id))
+		for named in _giver_index:
+			(_giver_index[named] as Array).sort()
+		_giver_index_size = quest_defs.size()
+	return _giver_index.get(giver, [])
 
 
 ## One quest of offerable(): defined, not active, startable (not done / cooled down, Lua is_available) and its zone unlocked. P14's offer
@@ -626,26 +662,60 @@ func _grant_friendship(hearts_by_npc: Dictionary) -> void:
 		EventBus.friend_changed.emit(StringName(str(npc)), after)
 
 
-## Delivers what fits, retaining the rest in the save. Called again after inventory changes and successful loads.
-## Returns true when nothing remains owed. The guard prevents item-gained listeners from claiming a grant twice.
+## Delivers what fits, retaining the rest in the save. Called again after inventory changes and successful loads. A backpack stack
+## that only partly fits is delivered in part; a piece its store refuses (a garment already owned, furniture at its cap) goes through
+## LootService.deliver, which sells such a duplicate at once (SYS-16), so it is never owed forever.
+## Returns true when nothing remains owed. The guard prevents item-gained listeners from claiming a grant twice; a claim asked for
+## during a pass (a reward that completed another quest owes that quest's rewards) runs as one more pass before the guard is released.
 func claim_rewards() -> bool:
 	if _claiming_rewards:
+		_claim_again = true
 		return pending_rewards.is_empty()
 	_claiming_rewards = true
+	_claim_again = true
+	while _claim_again:
+		_claim_again = false
+		_claim_pass()
+	_claiming_rewards = false
+	return pending_rewards.is_empty()
+
+
+func _claim_pass() -> void:
 	for quest_id in pending_rewards.keys():
+		if not pending_rewards.has(quest_id):
+			continue
 		var owed: Dictionary = pending_rewards[quest_id]
 		for item_id in owed.keys():
 			var amount := int(owed[item_id])
-			if not EconomyManager.can_add_item(StringName(item_id), amount):
+			var give := _claimable(StringName(item_id), amount)
+			if give <= 0:
 				continue
 			# item_gained listeners may save immediately: at that point the grant is owned and must no longer be owed.
-			owed.erase(item_id)
-			if not EconomyManager.add_item(StringName(item_id), amount):
+			if give < amount:
+				owed[item_id] = amount - give
+			else:
+				owed.erase(item_id)
+			if not _deliver_reward(StringName(item_id), give):
 				owed[item_id] = amount
 		if owed.is_empty():
 			pending_rewards.erase(quest_id)
-	_claiming_rewards = false
-	return pending_rewards.is_empty()
+
+
+## How many of an owed reward to hand over now: all of it when it fits, else what the backpack has room for; a piece with a store of its
+## own is handed over whole (the store takes it, or LootService sells the duplicate).
+func _claimable(item_id: StringName, amount: int) -> int:
+	if EconomyManager.can_add_item(item_id, amount):
+		return amount
+	if _Kinds.storage_of(item_id) == _Kinds.BACKPACK:
+		return mini(amount, EconomyManager.backpack_room_for(item_id))
+	return amount
+
+
+func _deliver_reward(item_id: StringName, amount: int) -> bool:
+	var loot := _Svc.node("LootService")
+	if loot != null and loot.has_method("deliver"):
+		return bool(_Data.dict(loot.call("deliver", item_id, amount)).get("ok", false))
+	return EconomyManager.add_item(item_id, amount)
 
 
 func _on_inventory_changed(_inventory: Dictionary) -> void:
@@ -832,9 +902,12 @@ func _on_friend_changed(_npc_id: StringName, _hearts: int) -> void:
 func _dispatch(kind: StringName, ctx: Dictionary) -> void:
 	if active_quests.is_empty():
 		return
+	_dispatch_depth += 1
 	for quest_id in active_quests.keys():
 		if active_quests.has(quest_id):
 			_dispatch_to_quest(quest_id, kind, ctx)
+	_dispatch_depth -= 1
+	_flush_missing()
 
 
 func _dispatch_to_quest(quest_id: StringName, kind: StringName, ctx: Dictionary) -> void:
@@ -931,7 +1004,7 @@ func _apply_hit(quest_id: StringName, objective_id: Variant, step: int, od: Dict
 	var obj: Dictionary = rt.objectives[objective_id]
 	var needs := _needs_of(od)
 	if not needs.is_empty() and not EconomyManager.has_items(needs):
-		_toast_missing_items()
+		_note_missing(needs)
 		return
 	var commit := func() -> void:
 		if not _Data.strings(od.get("any_of", [])).is_empty():
@@ -941,13 +1014,33 @@ func _apply_hit(quest_id: StringName, objective_id: Variant, step: int, od: Dict
 		update_objective(quest_id, StringName(str(objective_id)), step)
 	if bool(od.get("consume", false)) and not needs.is_empty():
 		if not EconomyManager.consume_backpack_items(needs, commit):
-			_toast_missing_items()
+			_note_missing(needs)
 		return
 	commit.call()
 
 
-func _toast_missing_items() -> void:
-	EventBus.notification_posted.emit(tr("QUEST_NEEDS_ITEMS_TITLE"), tr("QUEST_NEEDS_ITEMS_TEXT"), "quest")
+## A delivery that lacks its goods: the shortfall is gathered and told once when the event has been dispatched to every quest (SYS-11).
+func _note_missing(needs: Dictionary) -> void:
+	for item_id in needs:
+		_missing[str(item_id)] = maxi(int(_missing.get(str(item_id), 0)), int(needs[item_id]))
+	_flush_missing()
+
+
+## One toast that names what is missing: "Gulerod 10 af 12". The generic text when every item is owned but cannot be handed over (a piece
+## that is not in the backpack).
+func _flush_missing() -> void:
+	if _dispatch_depth > 0 or _missing.is_empty():
+		return
+	var needs := _missing
+	_missing = {}
+	var rows: Array[String] = []
+	for item_id in needs:
+		var have := EconomyManager.count_item(StringName(item_id))
+		if have < int(needs[item_id]):
+			var shown := tr(str(EconomyManager.item_def(item_id).get("name_key", "ITEM_%s" % item_id.to_upper())))
+			rows.append(LocalizationManager.t("QUEST_NEEDS_ITEM_ROW_FMT", [shown, have, int(needs[item_id])]))
+	var text := LocalizationManager.t("QUEST_NEEDS_ITEMS_FMT", [", ".join(rows)]) if not rows.is_empty() else tr("QUEST_NEEDS_ITEMS_TEXT")
+	EventBus.notification_posted.emit(tr("QUEST_NEEDS_ITEMS_TITLE"), text, "quest")
 
 
 ## Every objective that is not a turn-in is done: the moment a turn-in (after_others) may count.
@@ -1001,8 +1094,10 @@ func _refresh_quest(quest_id: StringName) -> void:
 			value = _have_value(od)
 		elif str(od.get("completed_flag", "")) != "":
 			# Event objectives may also accept a permanent, previously earned
-			# achievement on acceptance/load. The original live event still counts.
-			value = int(bool(GameManager.get_flag(StringName(str(od.completed_flag)), false)))
+			# achievement on acceptance/load: the flag fills the objective, an unset one leaves the live event progress alone (SYS-05).
+			if not bool(GameManager.get_flag(StringName(str(od.completed_flag)), false)):
+				continue
+			value = int(obj["target"])
 		if value < 0:
 			continue
 		if bool(od.get("after_others", false)) and not _non_turn_ins_done(rt, defs):
@@ -1201,7 +1296,7 @@ func to_dict() -> Dictionary:
 	for qid in active_quests:
 		active[qid] = (active_quests[qid] as QuestRuntime).to_dict()
 	return {
-		"v": 2,
+		"v": SECTION_VERSION,
 		"active": active,
 		"completed": completed_quests.duplicate(),
 		"failed": failed_quests.duplicate(),

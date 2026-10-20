@@ -4,8 +4,15 @@ extends Node
 ## FILES (user://saves). save_0.json .. save_5.json are the six MANUAL slots, save_auto.json is the one AUTO slot
 ## (AUTO_SLOT = 6, an int so it travels through EventBus.save_completed(slot: int)). A manual save rolls the previous
 ## file of its slot to save_N.bak.json first (only when that file is a valid save payload); the auto slot has no backup.
+## RUNS. Every game has a run id (meta.run_id; a new one on new_game_started, the loaded save's on a load, a new one for a save
+## written before run ids existed: its derived "legacy:" id cannot tell two runs of the same names and hero apart). Before an autosave
+## replaces save_auto.json it looks at that file: the autosave of ANOTHER run moves to save_auto.prev.json (PREV_AUTO_SLOT, read
+## only, listed by describe_slots() when it exists, never picked by Continue), so "New game" never destroys the only autosave of
+## the run before it; a file that does not load (damaged, content drift, a newer build) is kept as save_auto.damaged-<unix>.json
+## (the newest QUARANTINE_KEEP of them) instead of being overwritten, and the player is told the file name (NOTIF_AUTO_SET_ASIDE_*).
 ## Every write goes to <file>.tmp, is read back and compared, and only then renamed over the real file: a crash or a
-## full disk never leaves half a save behind and never replaces a good save with a bad one.
+## full disk never leaves half a save behind and never replaces a good save with a bad one (on Windows the old file is moved
+## to <file>.old first, see _commit_temp; start-up finishes an interrupted replacement, see _recover_interrupted_writes).
 ##
 ## AUTOSAVE writes ONLY the auto slot, never a manual one: every AUTOSAVE_INTERVAL_SECONDS real seconds while the phase
 ## is PLAYING, and once after every day end (EventBus.day_ended fires at the bed and at every crossed day end, game hour 26 = 02:00). The day-end
@@ -13,7 +20,7 @@ extends Node
 ## day_started listeners (crops, shop stock, animals) have run, so the deferred save sees the finished new day.
 ##
 ## PAYLOAD v2 (meta.version = PAYLOAD_VERSION; GameManager.SAVE_VERSION is only the version of the "game" dict):
-##   meta{version, timestamp, saved_at, summary}  game  time  economy  quests  husbandry  shops  <registered sections>  world
+##   meta{version, timestamp, saved_at, run_id, summary}  game  time  economy  quests  husbandry  shops  <registered sections>  world
 ## game/time/economy/quests are REQUIRED, husbandry/shops/registered sections are optional (a section missing from a
 ## save has its reset() called, it is never left stale), world is an OPAQUE Dictionary (WorldRoot2D.to_dict: area,
 ## player_pos, farm, hotbar, placed items, area flags). Apply order (ascending `order`, then registration): game -60,
@@ -25,6 +32,10 @@ extends Node
 ## to_dict() -> Dictionary, from_dict(d) (may return false to reject the data) and reset(); each section carries its own
 ## "v" (the payload version stays 2). gather = {name: node.to_dict()}. An optional pure validate_dict(d) -> bool
 ## checks nested records during slot inspection, before any live state changes or a backup is rotated.
+## SECTION VERSIONS, one policy: a section's script declares its version as SECTION_VERSION (or SAVE_VERSION / SAVE_V), its data
+## carries it as "v" ("version" in the game dict). Data NEWER than the running build's declaration makes the slot &"newer" at
+## inspection (shown as such, never loaded half-way); older data is the section's own migration. A top-level key of a save that
+## no section of this build owns (a feature of a newer or a removed build) is carried along unchanged into the next save.
 ##
 ## LOADING. load_game(slot) VALIDATES first (root is an object, meta.version is a whole number <= PAYLOAD_VERSION,
 ## older versions go through the _migrate chain, required sections are objects with their required keys), then
@@ -54,22 +65,32 @@ extends Node
 ##   has_save(slot) has_any_save() delete_save(slot) get_latest_slot() -> int (NO_SLOT = -1)
 ##   get_save_summary(slot) -> Dictionary                describe_slots() -> [{slot, is_auto, state, summary}]   inspect_slot(slot)
 ##   register_section(name, node, order = 100) unregister_section(name) has_section(name) section_names() registered_section_names()
-##   gather_payload() validate_payload(data) slot_path(slot) backup_path(slot)   constants MANUAL_SLOTS AUTO_SLOT NO_SLOT FEATURE_ORDERS
-##   vars current_slot pending_world last_error autosave_enabled auto_save_interval_seconds save_dir clock_override world_scene
+##   gather_payload() validate_payload(data) slot_path(slot) backup_path(slot)   constants MANUAL_SLOTS AUTO_SLOT PREV_AUTO_SLOT NO_SLOT FEATURE_ORDERS
+##   vars current_slot run_id pending_world last_error autosave_enabled auto_save_interval_seconds save_dir clock_override world_scene
 ##
-## TEST SEAMS (no behaviour of their own): save_dir, clock_override and world_scene are variables; _system_bias_minutes() (the time zone
-## offset used to read a v1 local time stamp) and _store_text(file, text) (the one place where bytes go into the temp file)
-## are methods that a test overrides in a subclass, to pin the time zone and to model a disk that loses bytes silently.
+## TEST SEAMS (no behaviour of their own): save_dir, clock_override, world_scene and replace_via_old are variables; _system_bias_minutes()
+## (the time zone offset used to read a v1 local time stamp), _store_text(file, text) (the one place where bytes go into the temp file)
+## and _replace_file(source, destination) are methods that a test overrides in a subclass, to pin the time zone, to model a disk
+## that loses bytes silently and a move that fails.
 
 const SAVE_DIR := "user://saves"
 const SAVE_FILE := "save_%d.json"
 const BACKUP_FILE := "save_%d.bak.json"
 const AUTO_FILE := "save_auto.json"
+const PREV_AUTO_FILE := "save_auto.prev.json"
+const QUARANTINE_FILE := "save_auto.damaged-%d.json"
+## The run id of a save written before run ids existed starts with this (see _run_id_of).
+const LEGACY_RUN_PREFIX := "legacy:"
+const QUARANTINE_KEEP := 3
 const PAYLOAD_VERSION := 2
 const MANUAL_SLOTS := 6
 const AUTO_SLOT := 6
+## The autosave of the run played before this one (read only: it is loaded, never written by save_game).
+const PREV_AUTO_SLOT := 7
 const NO_SLOT := -1
 const AUTOSAVE_INTERVAL_SECONDS := 300.0
+## A failed autosave is tried again this many seconds later, not a whole interval later.
+const AUTOSAVE_RETRY_SECONDS := 30.0
 const WORLD_SCENE := "res://scenes/main/world.tscn"
 const MAX_SAVE_BYTES := 8 * 1024 * 1024
 const DEFAULT_SECTION_ORDER := 100
@@ -98,13 +119,20 @@ var save_dir: String = SAVE_DIR
 ## Manual slot (0..5) of the last manual save or of the last load from a manual slot, NO_SLOT (-1) after a new game.
 ## Autosaves and loads of the auto slot never change it, and it is never AUTO_SLOT.
 var current_slot: int = NO_SLOT
+## Identity of the running game (meta.run_id): a new one per new game, the loaded save's after a load (a new one when the save has none).
+var run_id: String = ""
 ## The world state of the loaded save, waiting for WorldRoot2D._ready (opaque: SaveManager never looks inside).
 var pending_world: Dictionary = {}
 var auto_save_interval_seconds: float = AUTOSAVE_INTERVAL_SECONDS
 ## Switch for BOTH autosave triggers (the timer and the day end); tests of other packages may turn it off.
 var autosave_enabled: bool = true
-## {slot, code, detail} of the last failed load or save, {} after a success. code: missing corrupt invalid version apply scene slot write.
+## True from a failed save until the next successful one (the HUD shows it; only the first autosave failure of a streak toasts).
+var save_failing: bool = false
+## {slot, code, detail} of the last failed load or save, {} after a success. code: missing corrupt invalid version apply scene slot write gather event.
 var last_error: Dictionary = {}
+## How a verified temp file replaces its target (see _commit_temp): through <file>.old on Windows, a plain atomic rename elsewhere.
+## A test seam too (a test runs the Windows protocol on any machine).
+var replace_via_old: bool = OS.get_name() == "Windows"
 ## Test seam: a value >= 0 replaces Time.get_unix_time_from_system() as the time stamp of a save.
 var clock_override: float = -1.0
 ## The scene load_and_enter / continue_latest change to (a test points it at a scene that does not exist; the game never changes it).
@@ -118,6 +146,14 @@ var _sections: Array[Dictionary] = []     # registered sections: {name, node, or
 ## Section registration/reset invalidates every cached validator result.
 var _backup_validation: Dictionary = {}
 var _section_seq: int = 0
+## Sections whose to_dict() failed during the last gather_payload() (save_game refuses to write such a payload).
+var _gather_failures: Array[String] = []
+## sha256 and run id of the auto file this session wrote last: the next autosave need not read it again to know whose it is.
+var _auto_file_seen: Dictionary = {}
+## slot -> {key, info}: the last inspect_slot() verdict and what it was made from (see inspect_slot).
+var _inspect_cache: Dictionary = {}
+## Top-level keys of the loaded save that no section of this build owns: written back unchanged by gather_payload().
+var _carried_sections: Dictionary = {}
 
 
 ## Counts the script/engine ERRORS that the main thread raises while sections apply a save (warnings are tolerated).
@@ -146,8 +182,9 @@ class ApplyGuard extends Logger:
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	run_id = _new_run_id()
 	_ensure_dir()
-	_remove_stale_temp_files()
+	_recover_interrupted_writes()
 	EventBus.new_game_started.connect(reset)
 	EventBus.day_ended.connect(_on_day_ended)
 
@@ -163,11 +200,15 @@ func _process(delta: float) -> void:
 ## New game (EventBus.new_game_started): no current slot, timers zero, nothing waits for a world, no stale error.
 func reset() -> void:
 	_backup_validation.clear()
+	_inspect_cache.clear()
+	run_id = _new_run_id()
 	current_slot = NO_SLOT
 	_auto_save_timer = 0.0
 	_autosave_queued = false
 	pending_world = {}
 	last_error = {}
+	save_failing = false
+	_carried_sections = {}
 
 
 # ------------------------------------------------------------------ slots and paths
@@ -176,8 +217,14 @@ static func is_manual_slot(slot: int) -> bool:
 	return slot >= 0 and slot < MANUAL_SLOTS
 
 
+## A slot save_game can write: a manual slot or the auto slot.
 static func is_valid_slot(slot: int) -> bool:
 	return is_manual_slot(slot) or slot == AUTO_SLOT
+
+
+## A slot that can be inspected and loaded: every writable slot and PREV_AUTO_SLOT.
+static func is_readable_slot(slot: int) -> bool:
+	return is_valid_slot(slot) or slot == PREV_AUTO_SLOT
 
 
 ## [0, 1, 2, 3, 4, 5, AUTO_SLOT]
@@ -190,16 +237,18 @@ static func all_slots() -> Array[int]:
 
 
 func slot_path(slot: int) -> String:
+	if slot == PREV_AUTO_SLOT:
+		return save_dir.path_join(PREV_AUTO_FILE)
 	return save_dir.path_join(AUTO_FILE if slot == AUTO_SLOT else SAVE_FILE % slot)
 
 
-## The .bak file of a manual slot; "" for the auto slot (it has none).
+## The .bak file of a manual slot; "" for the auto slots (they have none).
 func backup_path(slot: int) -> String:
-	return "" if slot == AUTO_SLOT else save_dir.path_join(BACKUP_FILE % slot)
+	return "" if slot >= AUTO_SLOT else save_dir.path_join(BACKUP_FILE % slot)
 
 
 func has_save(slot: int = 0) -> bool:
-	return is_valid_slot(slot) and FileAccess.file_exists(slot_path(slot))
+	return is_readable_slot(slot) and FileAccess.file_exists(slot_path(slot))
 
 
 ## True when at least one slot (manual or auto) can be loaded: the Continue button's enabled state.
@@ -210,7 +259,7 @@ func has_any_save() -> bool:
 func delete_save(slot: int = 0) -> void:
 	if not is_valid_slot(slot):
 		return
-	for path in [slot_path(slot), backup_path(slot), slot_path(slot) + ".tmp"]:
+	for path in [slot_path(slot), backup_path(slot), slot_path(slot) + ".tmp", slot_path(slot) + ".old"]:
 		if path != "" and FileAccess.file_exists(path):
 			DirAccess.remove_absolute(path)
 	if current_slot == slot:
@@ -221,8 +270,8 @@ func delete_save(slot: int = 0) -> void:
 
 ## Saves into `slot` (0..5, or AUTO_SLOT). `is_auto` forces the auto slot whatever `slot` says (the old autosave
 ## overwrote the current manual slot). Autosaves are silent and leave current_slot alone; a manual save toasts
-## NOTIF_SAVED_* and becomes current_slot. Returns false (and toasts NOTIF_SAVE_FAILED_* for a manual save) when the
-## file could not be written; the old file of the slot is then untouched.
+## NOTIF_SAVED_* and becomes current_slot. Returns false when the file could not be written (see _save_failed); the old file
+## of the slot is then untouched.
 func save_game(slot: int = 0, is_auto: bool = false) -> bool:
 	if GameManager.is_modal_open(&"event"):
 		last_error = {"slot":slot,"code":"event","detail":"scene effects have not committed"}
@@ -233,24 +282,47 @@ func save_game(slot: int = 0, is_auto: bool = false) -> bool:
 		last_error = {"slot": slot, "code": "slot", "detail": "slot %d does not exist" % slot}
 		return false
 	var silent := slot == AUTO_SLOT
-	var text := JSON.stringify(gather_payload(), "\t", true, true)
+	var payload := gather_payload()
+	if not _gather_failures.is_empty():
+		# A section that could not describe itself would be missing from the file and reset to new-game state on the next load:
+		# nothing is written, the file of the slot (and its .bak) stays as it was.
+		last_error = {"slot": slot, "code": "gather", "detail": "to_dict() failed for %s" % ", ".join(_gather_failures)}
+		return _save_failed(slot, silent)
+	var text := JSON.stringify(payload, "\t", true, true)
 	_ensure_dir()
 	if not silent:
 		_roll_backup(slot)
+	else:
+		_keep_foreign_auto_file()
 	if not _write_atomic(slot_path(slot), text):
 		last_error = {"slot": slot, "code": "write", "detail": "could not write %s" % slot_path(slot)}
-		if not silent:
-			_toast(tr("NOTIF_SAVE_FAILED_TITLE"), tr("NOTIF_SAVE_FAILED_MSG"), slot + 1)
-		return false
+		return _save_failed(slot, silent)
 	last_error = {}
+	save_failing = false
 	if silent:
 		_auto_save_timer = 0.0
+		_auto_file_seen = {"hash": FileAccess.get_sha256(slot_path(slot)), "run": run_id}
 	else:
 		current_slot = slot
 	EventBus.save_completed.emit(slot)
 	if not silent:
 		_toast(tr("NOTIF_SAVED_TITLE"), tr("NOTIF_SAVED_MSG"), slot + 1)
 	return true
+
+
+## A save that could not be written (last_error is set): EventBus.save_failed, save_failing, and feedback. A manual save toasts
+## NOTIF_SAVE_FAILED_*; an autosave toasts only the first failure of a streak (the HUD keeps showing it) and is tried again after
+## AUTOSAVE_RETRY_SECONDS instead of a whole interval. Always false.
+func _save_failed(slot: int, silent: bool) -> bool:
+	if silent:
+		_auto_save_timer = maxf(0.0, auto_save_interval_seconds - AUTOSAVE_RETRY_SECONDS)
+		if not save_failing:
+			EventBus.notification_posted.emit(tr("NOTIF_SAVE_FAILED_TITLE"), tr("NOTIF_SAVE_FAILED_AUTO_MSG"), "save")
+	else:
+		_toast(tr("NOTIF_SAVE_FAILED_TITLE"), tr("NOTIF_SAVE_FAILED_MSG"), slot + 1)
+	save_failing = true
+	EventBus.save_failed.emit(slot, str(last_error.get("code", "")))
+	return false
 
 
 ## Writes the auto slot (never a manual one) and restarts the autosave countdown.
@@ -287,7 +359,7 @@ func _game_running() -> bool:
 ## does not (see current_slot).
 func load_game(slot: int = 0) -> bool:
 	last_error = {}
-	if not is_valid_slot(slot):
+	if not is_readable_slot(slot):
 		return _fail_load(slot, "missing", "slot %d does not exist" % slot)
 	var info := inspect_slot(slot)
 	match info["state"]:
@@ -298,10 +370,21 @@ func load_game(slot: int = 0) -> bool:
 		&"corrupt":
 			return _fail_load(slot, str(info["code"]), str(info["detail"]))
 	var applied := _apply_payload(info["payload"])
+	if not applied["ok"] and not info["from_backup"]:
+		# the file passed every check and still did not apply (a section refused it): its .bak is the next best thing
+		var backup := _inspect_backup(slot)
+		if not backup.is_empty() and _apply_payload(backup["payload"])["ok"]:
+			info = backup
+			applied = {"ok": true, "detail": ""}
 	if not applied["ok"]:
 		return _fail_load(slot, "apply", str(applied["detail"]))
-	if slot != AUTO_SLOT:                       # the auto slot is not a place the player saves to: keep the manual slot of this run
+	if is_manual_slot(slot):                   # the auto slots are not places the player saves to: keep the manual slot of this run
 		current_slot = slot
+	run_id = _run_id_of(info["payload"])
+	if run_id.begins_with(LEGACY_RUN_PREFIX):
+		run_id = _new_run_id()                 # written into every later save of this run: one derived id must never join two runs for good
+	if slot == AUTO_SLOT:
+		_auto_file_seen = {"hash": FileAccess.get_sha256(slot_path(slot)), "run": run_id}   # the auto file IS this run
 	_auto_save_timer = 0.0
 	if info["from_backup"]:
 		_toast(tr("NOTIF_LOAD_BACKUP_TITLE"), tr("NOTIF_LOAD_BACKUP_MSG"), slot + 1)
@@ -368,10 +451,38 @@ func _load_fail_text(code: String) -> String:
 ## State of one slot without loading it: {state, code, detail, payload, from_backup, saved_at}.
 ## state: &"empty" (no file), &"ok", &"backup" (the file is damaged but its .bak loads), &"newer" (written by a newer
 ## build), &"corrupt" (neither file loads; code corrupt or invalid). `payload` (validated, migrated, whole numbers
-## as ints) is set for ok and backup.
+## as ints) is set for ok and backup. The verdict is memoised by the sha256 of the slot's file and .bak, the section nodes that
+## validated it and the time zone that dated a v1 stamp (_inspect_cache), so the title and the slot list do not parse and validate
+## every file again on every refresh.
 func inspect_slot(slot: int) -> Dictionary:
+	if not is_readable_slot(slot):
+		return _inspect_uncached(slot)
+	var bak_path := backup_path(slot)
+	var key := "%s|%s|%s|%d" % [_file_digest(slot_path(slot)), _file_digest(bak_path) if bak_path != "" else "", _validator_key(), _system_bias_minutes()]
+	var cached: Dictionary = _inspect_cache.get(slot, {})
+	if str(cached.get("key", "")) != key:
+		cached = {"key": key, "info": _inspect_uncached(slot)}
+		_inspect_cache[slot] = cached
+	return (cached["info"] as Dictionary).duplicate(true)
+
+
+## "" for a missing file, else its sha256.
+func _file_digest(path: String) -> String:
+	return FileAccess.get_sha256(path) if FileAccess.file_exists(path) else ""
+
+
+## Which nodes validate a payload right now (a section registered, replaced or overridden changes the verdict of the same bytes).
+func _validator_key() -> String:
+	var ids: Array[String] = []
+	for entry in _ordered_entries():
+		var node := _node_of(entry)
+		ids.append("%s:%d" % [entry["name"], node.get_instance_id() if node != null else 0])
+	return ",".join(ids)
+
+
+func _inspect_uncached(slot: int) -> Dictionary:
 	var out := {"state": &"empty", "code": "missing", "detail": "", "payload": {}, "from_backup": false, "saved_at": 0.0}
-	if not is_valid_slot(slot):
+	if not is_readable_slot(slot):
 		out["detail"] = "slot %d does not exist" % slot
 		return out
 	var primary := _read_json_file(slot_path(slot))
@@ -387,18 +498,30 @@ func inspect_slot(slot: int) -> Dictionary:
 			return out
 		failure = {"code": checked["code"], "detail": checked["detail"]}
 	var bak_path := backup_path(slot)
-	if bak_path != "" and FileAccess.file_exists(bak_path):
-		var backup := _read_json_file(bak_path)
-		if backup["state"] == "ok":
-			var bak_checked := validate_payload(backup["data"])
-			if bak_checked["ok"]:
-				return _inspect_result(out, &"backup", bak_checked["payload"], true)
+	var backup := _inspect_backup(slot)
+	if not backup.is_empty():
+		return backup
 	if primary["state"] == "missing" and (bak_path == "" or not FileAccess.file_exists(bak_path)):
 		return out
 	out["state"] = &"corrupt"
 	out["code"] = failure["code"]
 	out["detail"] = failure["detail"]
 	return out
+
+
+## inspect_slot's verdict for the .bak of a manual slot alone (state &"backup"), {} when there is none that loads.
+func _inspect_backup(slot: int) -> Dictionary:
+	var bak_path := backup_path(slot)
+	if bak_path == "" or not FileAccess.file_exists(bak_path):
+		return {}
+	var backup := _read_json_file(bak_path)
+	if backup["state"] != "ok":
+		return {}
+	var checked := validate_payload(backup["data"])
+	if not checked["ok"]:
+		return {}
+	var out := {"state": &"empty", "code": "missing", "detail": "", "payload": {}, "from_backup": false, "saved_at": 0.0}
+	return _inspect_result(out, &"backup", checked["payload"], true)
 
 
 func _inspect_result(out: Dictionary, state: StringName, payload: Dictionary, from_backup: bool) -> Dictionary:
@@ -411,7 +534,7 @@ func _inspect_result(out: Dictionary, state: StringName, payload: Dictionary, fr
 
 
 ## What the slot list shows: {} for an empty, damaged or newer-version slot, else farm name, character, day, season,
-## year, total_day, gold, play time, hour/minute, area, time stamp (+ slot, is_auto, from_backup). player_name, day,
+## year, total_day, gold, play time, hour/minute, area, time stamp (+ slot, is_auto, is_previous, from_backup). player_name, day,
 ## season, year, gold and play_time_seconds are the legacy keys. Works for v1 saves (no meta.summary) too. meta.summary is
 ## only a cache: when it lacks a key or holds a value of the wrong type (a hand-edited or half-written file) the summary is
 ## rebuilt from the sections, so the values always have the types SUMMARY_TYPES lists and a "%d" never meets a string.
@@ -432,7 +555,8 @@ func _summary_of(info: Dictionary, slot: int) -> Dictionary:
 	summary = summary.duplicate()
 	summary["play_time_seconds"] = float(summary.get("play_time_seconds", 0.0))   # a whole 600.0 came back as the int 600
 	summary["slot"] = slot
-	summary["is_auto"] = slot == AUTO_SLOT
+	summary["is_auto"] = slot >= AUTO_SLOT
+	summary["is_previous"] = slot == PREV_AUTO_SLOT
 	summary["from_backup"] = info["from_backup"]
 	summary["timestamp"] = str(meta.get("timestamp", ""))
 	summary["saved_at"] = info["saved_at"]
@@ -443,25 +567,34 @@ func _summary_of(info: Dictionary, slot: int) -> Dictionary:
 ## meta.saved_at (meta.timestamp for v1 saves); a tie goes to the lower manual slot, then to the auto slot.
 ## Damaged slots without a usable .bak, and saves of a newer build, are skipped: Continue never picks them.
 func get_latest_slot() -> int:
+	return latest_slot_of(describe_slots())
+
+
+## get_latest_slot() over rows of describe_slots() that the caller already has (the title reads the slots once per refresh).
+static func latest_slot_of(rows: Array[Dictionary]) -> int:
 	var best := NO_SLOT
 	var best_time := -INF
-	for slot in all_slots():
-		var info := inspect_slot(slot)
-		if info["state"] != &"ok" and info["state"] != &"backup":
+	for row in rows:
+		var slot := int(row["slot"])
+		if not is_valid_slot(slot) or (row["state"] != &"ok" and row["state"] != &"backup"):
 			continue
-		var stamp := float(info["saved_at"])
+		var stamp := float((row["summary"] as Dictionary).get("saved_at", 0.0))
 		if stamp > best_time:
 			best_time = stamp
 			best = slot
 	return best
 
 
-## One row per slot, manual slots first and the auto slot last: [{slot, is_auto, state, summary}].
+## One row per slot, manual slots first, then the auto slot, then PREV_AUTO_SLOT when its file exists:
+## [{slot, is_auto, is_previous, state, summary}].
 func describe_slots() -> Array[Dictionary]:
 	var rows: Array[Dictionary] = []
-	for slot in all_slots():
+	var slots := all_slots()
+	if has_save(PREV_AUTO_SLOT):
+		slots.append(PREV_AUTO_SLOT)
+	for slot in slots:
 		var info := inspect_slot(slot)
-		rows.append({"slot": slot, "is_auto": slot == AUTO_SLOT, "state": info["state"], "summary": _summary_of(info, slot)})
+		rows.append({"slot": slot, "is_auto": slot >= AUTO_SLOT, "is_previous": slot == PREV_AUTO_SLOT, "state": info["state"], "summary": _summary_of(info, slot)})
 	return rows
 
 
@@ -472,6 +605,7 @@ func describe_slots() -> Array[Dictionary]:
 ## order. Returns false (with an error) for a bad name, a node without the three methods, or a built-in/reserved name.
 func register_section(section_name: String, node: Node, order: int = DEFAULT_SECTION_ORDER) -> bool:
 	_backup_validation.clear()
+	_inspect_cache.clear()
 	var rx := RegEx.new()
 	rx.compile("^[a-z][a-z0-9_]{0,31}$")
 	if rx.search(section_name) == null:
@@ -500,6 +634,7 @@ func register_section(section_name: String, node: Node, order: int = DEFAULT_SEC
 
 func unregister_section(section_name: String) -> void:
 	_backup_validation.clear()
+	_inspect_cache.clear()
 	for i in range(_sections.size() - 1, -1, -1):
 		if _sections[i]["name"] == section_name:
 			_sections.remove_at(i)
@@ -577,9 +712,11 @@ func _node_of(entry: Dictionary) -> Node:
 # ------------------------------------------------------------------ payload: gather
 
 ## The save as a dictionary: meta, every section's to_dict() (sanitized: arrays instead of vectors, plain Strings) and
-## the world. `quests` carries no Lua definitions.
+## the world. `quests` carries no Lua definitions. A section whose to_dict() does not return a Dictionary is left out and
+## named in _gather_failures, which makes save_game() refuse to write the payload.
 func gather_payload() -> Dictionary:
 	var payload: Dictionary = {}
+	_gather_failures.clear()
 	for entry in _ordered_entries():
 		var node := _node_of(entry)
 		if node == null or not node.has_method("to_dict"):
@@ -587,15 +724,20 @@ func gather_payload() -> Dictionary:
 		var data: Variant = node.call("to_dict")
 		if typeof(data) != TYPE_DICTIONARY:
 			push_error("SaveManager: %s.to_dict() did not return a Dictionary, the section '%s' is not saved" % [node.name, entry["name"]])
+			_gather_failures.append(str(entry["name"]))
 			continue
 		payload[entry["name"]] = _json_safe(data, str(entry["name"]))
 	_strip_quest_defs(payload)
+	for key in _carried_sections:
+		if not payload.has(key):
+			payload[key] = (_carried_sections[key] as Variant)
 	payload["world"] = _json_safe(_gather_world(), "world")
 	var stamp := clock_override if clock_override >= 0.0 else Time.get_unix_time_from_system()
 	payload["meta"] = {
 		"version": PAYLOAD_VERSION,
 		"timestamp": Time.get_datetime_string_from_system(),
 		"saved_at": stamp,
+		"run_id": run_id,
 		"summary": _summarize(payload),
 	}
 	return payload
@@ -692,6 +834,10 @@ func validate_payload(data: Variant) -> Dictionary:
 				if not _has_type((section as Dictionary)[key], str(keys[key])):
 					return _verdict(false, "invalid", "section '%s': '%s' should be %s" % [section_name, key, keys[key]])
 			var node := _node_of(entry)
+			var declared := _declared_version(node)
+			var written: Variant = (section as Dictionary).get("v", (section as Dictionary).get("version"))
+			if declared > 0 and _is_number(written) and float(written) > float(declared):
+				return _verdict(false, "version", "section '%s' has version %s, this build reads up to %d" % [section_name, str(written), declared])
 			if node != null and node.has_method("validate_dict") and not bool(node.call("validate_dict", section)):
 				return _verdict(false, "invalid", "section '%s' contains invalid records" % section_name)
 		elif entry.get("required", false):
@@ -706,6 +852,18 @@ func validate_payload(data: Variant) -> Dictionary:
 	if not SvcLib.static_call("res://scripts/farm/farm_equipment.gd", &"validate_placed", [saved_world.get("placed", [])], true):
 		return _verdict(false, "invalid", "world contains invalid farm equipment")
 	return _verdict(true, "", "", payload)
+
+
+## The section version a node's script declares (SECTION_VERSION, SAVE_VERSION or SAVE_V), 0 when it declares none.
+func _declared_version(node: Node) -> int:
+	var script: Script = node.get_script() if node != null else null
+	if script == null:
+		return 0
+	var constants := script.get_script_constant_map()
+	for name in ["SECTION_VERSION", "SAVE_VERSION", "SAVE_V"]:
+		if constants.get(name) is int:
+			return int(constants[name])
+	return 0
 
 
 func _verdict(ok: bool, code: String, detail: String, payload: Dictionary = {}) -> Dictionary:
@@ -921,6 +1079,11 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 			break
 	if failure == "":
 		pending_world = _dict_of(payload.get("world")).duplicate(true)
+		var known := section_names()
+		_carried_sections = {}
+		for key in payload:
+			if not (str(key) in known) and not (str(key) in RESERVED_SECTION_NAMES):
+				_carried_sections[str(key)] = payload[key].duplicate(true) if payload[key] is Dictionary or payload[key] is Array else payload[key]
 	else:
 		for entry in touched:                      # sections that were never reached still hold their own state
 			var node := _node_of(entry)
@@ -930,6 +1093,69 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 	return {"ok": failure == "", "detail": failure}
 
 
+# ------------------------------------------------------------------ runs and the auto file
+
+func _new_run_id() -> String:
+	return Crypto.new().generate_random_bytes(8).hex_encode()
+
+
+## meta.run_id of a payload; a save written before run ids existed gets LEGACY_RUN_PREFIX + who played it (name, farm, hero). That
+## derived id never equals the id of a running game (load_game gives such a run a new one), so an old auto file is only ever
+## overwritten without a copy when this session loaded that very file (_auto_file_seen).
+func _run_id_of(payload: Dictionary) -> String:
+	var meta: Dictionary = _dict_of(payload.get("meta"))
+	if meta.get("run_id") is String and str(meta["run_id"]) != "":
+		return str(meta["run_id"])
+	var game: Dictionary = _dict_of(payload.get("game"))
+	return LEGACY_RUN_PREFIX + "%s|%s|%s" % [str(game.get("player_name", "")), str(game.get("farm_name", "")), str(game.get("character_type", ""))]
+
+
+## Before an autosave replaces save_auto.json (see RUNS in the header): the autosave of another run becomes save_auto.prev.json,
+## a file that does not load is quarantined. Neither ever stops the autosave itself.
+func _keep_foreign_auto_file() -> void:
+	var path := slot_path(AUTO_SLOT)
+	if not FileAccess.file_exists(path):
+		return
+	if str(_auto_file_seen.get("run", "")) == run_id and str(_auto_file_seen.get("hash", "")) == FileAccess.get_sha256(path):
+		return                                 # the file this session wrote last for this run
+	var parsed := _read_json_file(path)
+	var checked := validate_payload(parsed["data"]) if parsed["state"] == "ok" else {"ok": false}
+	if not checked["ok"]:
+		_quarantine_auto_file(path)
+		return
+	if _run_id_of(checked["payload"]) == run_id:
+		return
+	var temp := slot_path(PREV_AUTO_SLOT) + ".tmp"
+	if DirAccess.copy_absolute(path, temp) != OK:
+		DirAccess.remove_absolute(temp)
+		return
+	_commit_temp(temp, slot_path(PREV_AUTO_SLOT))
+
+
+## Moves an auto file that does not load to save_auto.damaged-<unix>.json and keeps only the newest QUARANTINE_KEEP of those.
+func _quarantine_auto_file(path: String) -> void:
+	var stamp := int(clock_override if clock_override >= 0.0 else Time.get_unix_time_from_system())
+	var target := save_dir.path_join(QUARANTINE_FILE % stamp)
+	while FileAccess.file_exists(target):
+		stamp += 1
+		target = save_dir.path_join(QUARANTINE_FILE % stamp)
+	if _replace_file(path, target) != OK:
+		return
+	print("[Save] the auto file did not load; it was kept as %s" % ProjectSettings.globalize_path(target))
+	EventBus.notification_posted.emit(tr("NOTIF_AUTO_SET_ASIDE_TITLE"), tr("NOTIF_AUTO_SET_ASIDE_MSG") % target.get_file(), "save")
+	var kept: Array[String] = []
+	for file_name in DirAccess.get_files_at(save_dir):
+		if file_name.begins_with("save_auto.damaged-") and file_name.ends_with(".json"):
+			kept.append(file_name)
+	kept.sort_custom(func(a: String, b: String) -> bool: return _quarantine_stamp(a) > _quarantine_stamp(b))
+	for i in range(QUARANTINE_KEEP, kept.size()):
+		DirAccess.remove_absolute(save_dir.path_join(kept[i]))
+
+
+static func _quarantine_stamp(file_name: String) -> int:
+	return int(file_name.trim_prefix("save_auto.damaged-").trim_suffix(".json"))
+
+
 # ------------------------------------------------------------------ files
 
 func _ensure_dir() -> void:
@@ -937,11 +1163,27 @@ func _ensure_dir() -> void:
 		DirAccess.make_dir_recursive_absolute(save_dir)
 
 
-## A crash between the temp write and the rename leaves a .tmp behind; it is garbage, the real file is intact.
-func _remove_stale_temp_files() -> void:
-	for file_name in DirAccess.get_files_at(save_dir):
-		if file_name.ends_with(".tmp"):
-			DirAccess.remove_absolute(save_dir.path_join(file_name))
+## Finishes or undoes a write that a crash (or a failed move) interrupted, at start-up. <file>.tmp next to an intact <file> is
+## garbage (the crash came before the rename) and is removed. A <file>.tmp WITHOUT <file> is a verified write whose move failed
+## (or a Windows replacement cut off after the old file was moved aside): when it parses as a JSON object it becomes the file.
+## A <file>.old (the file a Windows replacement moved aside) is put back when nothing better took its place, else removed.
+func _recover_interrupted_writes() -> void:
+	var files := DirAccess.get_files_at(save_dir)
+	for file_name in files:
+		if not file_name.ends_with(".tmp"):
+			continue
+		var temp := save_dir.path_join(file_name)
+		var target := temp.trim_suffix(".tmp")
+		if not FileAccess.file_exists(target) and _read_json_file(temp)["state"] == "ok" and _replace_file(temp, target) == OK:
+			continue
+		DirAccess.remove_absolute(temp)
+	for file_name in files:
+		if not file_name.ends_with(".old"):
+			continue
+		var old := save_dir.path_join(file_name)
+		var target := old.trim_suffix(".old")
+		if FileAccess.file_exists(target) or _replace_file(old, target) != OK:
+			DirAccess.remove_absolute(old)
 
 
 ## {state: missing | unreadable | corrupt | ok, data, detail}. The first byte of a save must be '{' (a binary file is
@@ -982,7 +1224,7 @@ func _store_text(file: FileAccess, text: String) -> void:
 	file.store_string(text)
 
 
-## Temp file, read back and compared, rename over the target. False leaves the target as it was.
+## Temp file, read back and compared, then moved over the target (_commit_temp). False leaves the target as it was.
 func _write_atomic(path: String, text: String) -> bool:
 	var temp := path + ".tmp"
 	var file := FileAccess.open(temp, FileAccess.WRITE)
@@ -995,11 +1237,41 @@ func _write_atomic(path: String, text: String) -> bool:
 	if write_error != OK or FileAccess.get_file_as_bytes(temp) != text.to_utf8_buffer():
 		DirAccess.remove_absolute(temp)
 		return false
-	var rename_error := _replace_file(temp, path)
-	if rename_error != OK:
-		DirAccess.remove_absolute(temp)
+	return _commit_temp(temp, path)
+
+
+## Moves a verified temp file over `path`. A POSIX rename replaces the target atomically. The engine's Windows rename deletes the
+## target and THEN moves (DirAccessWindows::rename), so a move that fails there (an antivirus or backup tool holding the temp)
+## would leave no file at all: with replace_via_old the old file is first moved aside to <path>.old, the temp moved in, the .old
+## removed, and a failed move puts the .old back. A verified temp is never deleted while the target is missing; whatever a
+## failure leaves behind, _recover_interrupted_writes() sorts out at the next start.
+func _commit_temp(temp: String, path: String) -> bool:
+	if not replace_via_old:
+		if _replace_file(temp, path) == OK:
+			return true
+		if _occupied(path):                    # the old file is still there: the temp is only garbage
+			DirAccess.remove_absolute(temp)
 		return false
+	var old := path + ".old"
+	var had_target := FileAccess.file_exists(path)
+	if had_target:
+		if FileAccess.file_exists(old):
+			DirAccess.remove_absolute(old)
+		if _replace_file(path, old) != OK:     # nothing was moved: the target is as it was
+			DirAccess.remove_absolute(temp)
+			return false
+	if _replace_file(temp, path) != OK:
+		if had_target and _replace_file(old, path) == OK:
+			DirAccess.remove_absolute(temp)
+		return false
+	if had_target:
+		DirAccess.remove_absolute(old)
 	return true
+
+
+## A file or a directory sits at `path`.
+func _occupied(path: String) -> bool:
+	return FileAccess.file_exists(path) or DirAccess.dir_exists_absolute(path)
 
 
 ## Replacement failure must preserve the existing file; also a seam for disk-failure probes.
@@ -1029,8 +1301,7 @@ func _roll_backup(slot: int) -> void:
 	if DirAccess.copy_absolute(path, temp) != OK:
 		DirAccess.remove_absolute(temp)
 		return
-	if _replace_file(temp, backup) != OK:
-		DirAccess.remove_absolute(temp)
+	_commit_temp(temp, backup)
 
 
 # ------------------------------------------------------------------ feedback

@@ -12,6 +12,15 @@ func run(t) -> void:
 		if result.code != 0:
 			return
 	t.check("table_loads_and_plans", RouteTable.load_table())
+	# Legs are timed at the clock's real rate (time.minutes_per_real_second), never a missing key's default.
+	var time_cfg: Dictionary = t.autoload("LuaRuntime")._config["time"]
+	var rate: Variant = time_cfg["minutes_per_real_second"]
+	time_cfg["minutes_per_real_second"] = 3.0
+	RouteTable.load_table()
+	var timed := is_equal_approx(RouteTable.game_min_per_s, 3.0)
+	time_cfg["minutes_per_real_second"] = rate
+	RouteTable.load_table()
+	t.check("legs_use_the_clock_rate", timed and is_equal_approx(RouteTable.game_min_per_s, float(rate)), "%s game min/s" % RouteTable.game_min_per_s)
 	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/towns/routes.json"))
 	t.expect(data.get("inputs", {}).size() == Baker.input_paths().size(), "Route source inventory also catches removed inputs")
 	for path in Baker.input_paths():

@@ -59,6 +59,7 @@ func run(t) -> void:
 	await _input_and_actions(t, dialogue, ui)
 	await _lifetime_and_schedule(t, dialogue)
 	await _extensions(t, dialogue)
+	await _bubble_refresh(t)
 	await _quests(t, dialogue)
 	await _journal(t, ui.get_screen(&"quest_journal"))
 	await _turn_ins(t, dialogue)
@@ -148,6 +149,12 @@ func _input_and_actions(t, dialogue: Control, ui: GameUI) -> void:
 	await t.frames(2)
 	await _to_choices(t, dialogue)
 	t.check("choice_focus", dialogue.get_viewport().gui_get_focus_owner() == dialogue._buttons[0])
+	# UX-12: a tap right after the choices appear answers nothing (the player has not seen them yet), and no continue button offers to pick one.
+	t.tap(&"interact")
+	await t.frames(1)
+	t.check("choice_grace_ignores_rapid_tap", dialogue.is_open() and dialogue._wants_focus() and ends.size() == 1 and not dialogue.get_node("%NextButton").visible,
+		"open %s, choices %s, ended %d, continue button %s" % [dialogue.is_open(), dialogue._wants_focus(), ends.size(), dialogue.get_node("%NextButton").visible])
+	await t.seconds(dialogue.CHOICE_GRACE_SECONDS + 0.05)
 	dialogue._buttons[-1].grab_focus()
 	t.tap_key(KEY_DOWN)
 	await t.frames(2)
@@ -166,6 +173,7 @@ func _input_and_actions(t, dialogue: Control, ui: GameUI) -> void:
 	npc.interact(t.player())
 	await t.frames(2)
 	await _to_choices(t, dialogue)
+	await t.seconds(dialogue.CHOICE_GRACE_SECONDS + 0.05)
 	dialogue._buttons[-1].grab_focus()
 	UiAudit.press_pad(t, JOY_BUTTON_A)
 	await t.frames(3)
@@ -178,6 +186,39 @@ func _input_and_actions(t, dialogue: Control, ui: GameUI) -> void:
 	await t.frames(3)
 	t.check("temporary_actor_disposal_ends_once", ends.size() == 4 and not dialogue.is_open() and t.player().state == PlayerBody2D.S.FREE)
 	bus.dialogue_ended.disconnect(counter)
+
+## SYS-04: a storm of broadcasts (a load emits one flag_changed per flag) queues ONE bubble refresh per NPC for the next frame, and the giver index of
+## QuestManager answers what a scan over every definition answers.
+func _bubble_refresh(t) -> void:
+	var qm: Node = t.autoload("QuestManager")
+	var gm: Node = t.autoload("GameManager")
+	var npc := _spawn(t, "baker_maja")
+	await t.frames(2)
+	var shown: String = npc._bubble_label.text
+	for i in 40:
+		gm.set_flag(StringName("zz_bubble_%d" % i), true)
+	var queued_once: bool = npc._bubble_queued
+	await t.frames(1)
+	t.check("bubble_refresh_coalesced", queued_once and not npc._bubble_queued and npc._bubble_label.text == shown, "40 flag changes in one frame queue one refresh (queued %s), the next frame shows the same bubble '%s'" % [queued_once, npc._bubble_label.text])
+	for i in 40:
+		gm.clear_flag(StringName("zz_bubble_%d" % i))
+	var wrong: Array = []
+	for id in t.autoload("LuaRuntime").get_npcs():
+		var want: Array[StringName] = []
+		for q in LuaData.strings(LuaData.dict(t.autoload("LuaRuntime").get_npc(str(id))).get("quests_offered", [])):
+			var giver := str(LuaData.dict(qm.get_quest_def(StringName(q)).get("meta", {})).get("giver", ""))
+			if qm.quest_defs.has(StringName(q)) and (giver == "" or giver == str(id)) and not StringName(q) in want:
+				want.append(StringName(q))
+		var named: Array[String] = []
+		for q in qm.quest_defs:
+			if str(LuaData.dict(LuaData.dict(qm.quest_defs[q]).get("meta", {})).get("giver", "")) == str(id) and not StringName(str(q)) in want:
+				named.append(str(q))
+		named.sort()
+		for q in named:
+			want.append(StringName(q))
+		if qm._quests_of_giver(str(id)) != want:
+			wrong.append(str(id))
+	t.check("giver_index_matches_full_scan", wrong.is_empty(), "the quests of every giver from the index equal a scan over every definition: %s" % str(wrong))
 
 func _quests(t, dialogue: Control) -> void:
 	var gm: Node = t.autoload("GameManager")
@@ -224,10 +265,30 @@ func _journal(t, journal: Control) -> void:
 		var rules := UiAudit.rule_report(journal)
 		t.check("journal_rules_" + locale, rules.ok, str(rules.defects))
 	t.autoload("LocalizationManager").set_locale("da")
+	# UIC-03: a clicked quest row toggles inside its own radio group and leaves the current tab pressed.
+	var clicked: Button = journal._rows[0]
+	clicked.set_pressed_no_signal(false)
+	clicked.button_pressed = true
+	await t.frames(1)
+	t.check("journal_row_click_keeps_tab_pressed", journal._tabs[0].button_pressed and clicked.button_pressed and journal._tab == 0,
+		"tab pressed %s, row pressed %s, tab %d" % [journal._tabs[0].button_pressed, clicked.button_pressed, journal._tab])
 	journal._rows[0].grab_focus()
 	t.tap_key(KEY_RIGHT)
 	await t.frames(3)
 	t.check("journal_list_right_changes_tab", journal._tab == 1)
+	# UIC-01: Up out of the calendar (day grid -> season chips -> tab row) lands on the CURRENT tab, not on the first one.
+	if journal._calendar != null:
+		journal._on_page(1)
+		await t.frames(3)
+		journal._calendar.cells[0].grab_focus()
+		await t.frames(1)
+		t.tap_key(KEY_UP)
+		await t.frames(2)
+		t.tap_key(KEY_UP)
+		await t.frames(2)
+		var landed: Control = t.tree.root.gui_get_focus_owner()
+		t.check("journal_up_from_calendar_keeps_tab", journal._tab == 2 and landed == journal.get_node("%TabCalendar"),
+			"tab %d, focus %s" % [journal._tab, landed.name if landed != null else "none"])
 	t.tap_key(KEY_J)
 	await t.frames(3)
 	t.check("journal_j_closes_in_gui", not journal.is_open() and not t.tree.paused)
@@ -263,6 +324,13 @@ func _lifetime_and_schedule(t, dialogue: Control) -> void:
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(3)
 	t.check("dialogue_reentrant_second_result", outcomes.size() == 2 and outcomes[1].index == 2 and not dialogue.is_open())
+	# UIC-07: a dropped modal stack (quit to the title, load) still resolves the awaited session, so no NPC stays in its talk.
+	show_page.call(3)
+	await t.frames(2)
+	t.autoload("GameManager").pop_all_modals()
+	await t.frames(2)
+	t.check("dropped_stack_resolves_dialogue_session", outcomes.size() == 3 and outcomes[2].index == 3 and not outcomes[2].result.completed and not dialogue.is_open() and not dialogue._session,
+		str(outcomes))
 	var npc := _spawn(t, "mapseller_natteblik", {"reach": 420})
 	npc.global_position += Vector2(350, 0)
 	await t.frames(3)

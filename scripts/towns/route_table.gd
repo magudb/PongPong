@@ -7,7 +7,7 @@ extends RefCounted
 
 const PORTAL_SECONDS_DEFAULT := 0.5
 const SPEED_DEFAULT := 185.0                   # ground px / s of a scheduled leg (towns.npc_speed 0.65 x walk 285)
-const GAME_MIN_PER_S_DEFAULT := 2.0            # game.minutes_per_real_second
+const GAME_MIN_PER_S_DEFAULT := 2.0            # time.minutes_per_real_second (lua/config/game_balance.lua), the clock rate the legs are timed at
 
 static var _loaded: bool = false
 static var _names: Dictionary = {}             # area -> PackedStringArray
@@ -27,7 +27,7 @@ static var fallbacks_used: int = 0
 static func load_table(path: String = "res://data/towns/routes.json") -> bool:
 	speed = maxf(1.0, LuaData.num(Svc.lua_config("towns.npc_speed", 0.65)) * LuaData.num(Svc.lua_config("player.walk_speed", 285.0)))
 	portal_seconds = maxf(0.0, LuaData.num(Svc.lua_config("towns.portal_seconds", PORTAL_SECONDS_DEFAULT)))
-	game_min_per_s = maxf(0.001, LuaData.num(Svc.lua_config("game.minutes_per_real_second", GAME_MIN_PER_S_DEFAULT)))
+	game_min_per_s = maxf(0.001, LuaData.num(Svc.lua_config("time.minutes_per_real_second", GAME_MIN_PER_S_DEFAULT)))
 	_names.clear()
 	_idx.clear()
 	_d.clear()
