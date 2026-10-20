@@ -42,9 +42,11 @@ func _run() -> void:
 	await world.travel(&"home", &"default")
 	_check("Home runtime data", world.area.map.id == &"home" and not world.area.ground.get_used_cells().is_empty())
 	game.pop_all_modals()
-	world.queue_free()
+	# Release smoke exits immediately after this world. Free it synchronously so the engine's
+	# shutdown leak check cannot run before queued nodes/resources (notably parked areas) are released.
 	tree.current_scene = null
-	for frame in 3: await tree.process_frame
+	world.free()
+	await tree.process_frame
 	var report := {"result": "pass" if failures.is_empty() else "fail", "failures": failures, "version": ProjectSettings.get_setting("application/config/version", ""), "channel": ProjectSettings.get_setting("release/channel", "")}
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--report="):

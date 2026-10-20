@@ -101,8 +101,10 @@ func run(t) -> void:
 	await t.clear_scene()
 	await t.frames(3)
 	var elapsed := (Time.get_ticks_usec() - started) / 1000000.0
-	var limit := 15.0 if OS.get_environment("GODOT_EXTRA_ARGS").contains("--fixed-fps") else 120.0
-	_check(t, "L14", "l14_wall_time", elapsed <= limit, "%.3fs <= %.0fs" % [elapsed, limit])
+	var limit := 15.0 if t.fixed_fps() else 120.0
+	# This is a computation timing, not simulated game time. Shared CI runners use the same
+	# bounded allowance and SLOW reporting as the other wall-clock performance checks.
+	_check(t, "L14", "l14_wall_time", t.perf_ok("l14_wall_time", elapsed, limit), "%.3fs <= %.0fs (runner limit %.0fs)" % [elapsed, limit, t.perf_limit(limit)])
 	_check(t, "L14", "l14_area_switch_times", not build_samples.is_empty() and build_samples.values().all(func(row): return int(row.ms) <= 150), str(build_samples.values()))
 	var growth: int = int(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT)) - orphans
 	_check(t, "L14", "l14_no_orphans", growth <= 5, "growth=" + str(growth))
