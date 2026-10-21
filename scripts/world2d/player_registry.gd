@@ -9,6 +9,24 @@ const PLAYER_GROUP := &"player"
 const WORLD_GROUP := &"world_2d"
 const MAX_PLAYERS := 4
 
+## Shared `p0` row used while no WorldRoot2D roster exists (autoload boot, unit tests).
+## The managers must see the same row or they diverge.
+static var _fallback_state := PlayerState.new()
+
+
+## The acting player's profile row (MP3). Prefers the world roster; falls back to the shared `p0` row.
+static func state(player_id: StringName = &"", tree: SceneTree = null) -> PlayerState:
+	var id := player_id if player_id != &"" else local_id(tree)
+	var w := world(tree)
+	if w != null and w.has_method("get"):
+		var roster: Variant = w.get("roster")
+		if roster is PlayerRoster:
+			return (roster as PlayerRoster).state(id)
+	if id == &"p0" or id == &"":
+		return _fallback_state
+	# No roster yet: only p0 exists; other ids share the fallback until the world is up.
+	return _fallback_state
+
 
 ## The live WorldRoot2D, or null when no world is in the tree.
 static func world(tree: SceneTree = null) -> Node:

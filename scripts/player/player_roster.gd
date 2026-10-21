@@ -27,7 +27,9 @@ func local_state() -> PlayerState:
 
 func reset() -> void:
 	rows.clear()
-	state(&"p0").reset_profile()
+	# Adopt the shared fallback row: managers may already have written their new-game
+	# state into it before the world scene exists. Do not wipe it here.
+	rows[&"p0"] = PlayerRegistry._fallback_state
 
 
 func to_dict() -> Dictionary:

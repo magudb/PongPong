@@ -98,17 +98,10 @@ const STATE_QUERIES := {
 	"friend_hearts_at_least": {"fields": ["npc", "hearts"], "threshold": true},
 }
 
-var active_quests: Dictionary = {}   # quest_id -> QuestRuntime
-var completed_quests: Array[StringName] = []     # oldest completion first; a repeated completion moves the id to the end
-var failed_quests: Array[StringName] = []
-var offered_quests: Array[StringName] = []
-var quest_flags: Dictionary = {}
 ## Lua quest definitions by id (registered at LuaRuntime load, never saved, survive reset()/from_dict()).
 var quest_defs: Dictionary = {}
-## Absolute completion day per quest; completed_quests remains the history used by dialogue and map conditions.
-var completed_days: Dictionary = {}
-## quest id -> {item id: amount} still owed. Successful deliveries are removed before another claim can run.
-var pending_rewards: Dictionary = {}
+## Per-player quest rows (MP3). active/completed/failed/offered/flags/days/rewards live on PlayerState.quests;
+## single-player has one row and this facade is unchanged from the outside. quest_defs stays global.
 
 var _claiming_rewards: bool = false
 var _claim_again: bool = false           # a claim was asked for while one ran (a reward completed another quest): run another pass
@@ -151,6 +144,61 @@ class QuestRuntime:
 		q.order = int(d.get("order", -1))
 		q.meta = d.get("meta", {}).duplicate()
 		return q
+
+
+## The acting player's quest row (MP3). Shared fallback when no world is up.
+func state(player_id: StringName = &"") -> PlayerState:
+	return PlayerRegistry.state(player_id)
+
+
+func _log() -> Dictionary:
+	var q: Dictionary = state().quests
+	if not q.has("active"):
+		q["active"] = {}
+		q["completed"] = [] as Array[StringName]
+		q["failed"] = [] as Array[StringName]
+		q["offered"] = [] as Array[StringName]
+		q["flags"] = {}
+		q["completed_days"] = {}
+		q["pending_rewards"] = {}
+	return q
+
+
+var active_quests: Dictionary:
+	get: return _log()["active"]
+	set(value): _log()["active"] = value
+
+
+var completed_quests: Array[StringName]:
+	get: return _log()["completed"]
+	set(value): _log()["completed"] = value
+
+
+var failed_quests: Array[StringName]:
+	get: return _log()["failed"]
+	set(value): _log()["failed"] = value
+
+
+var offered_quests: Array[StringName]:
+	get: return _log()["offered"]
+	set(value): _log()["offered"] = value
+
+
+var quest_flags: Dictionary:
+	get: return _log()["flags"]
+	set(value): _log()["flags"] = value
+
+
+## Absolute completion day per quest; completed_quests remains the history used by dialogue and map conditions.
+var completed_days: Dictionary:
+	get: return _log()["completed_days"]
+	set(value): _log()["completed_days"] = value
+
+
+## quest id -> {item id: amount} still owed. Successful deliveries are removed before another claim can run.
+var pending_rewards: Dictionary:
+	get: return _log()["pending_rewards"]
+	set(value): _log()["pending_rewards"] = value
 
 
 func _ready() -> void:

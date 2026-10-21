@@ -7,7 +7,7 @@ func run(t) -> void:
 	var w: Node = t.autoload("WardrobeManager")
 	var eco: Node = t.autoload("EconomyManager")
 	var events: Array = []
-	var record := func(outfit): events.append(outfit.duplicate())
+	var record := func(_player_id: StringName, outfit: Dictionary): events.append(outfit.duplicate())
 	EventBus.outfit_changed.connect(record)
 	t.check("starter_outfit_and_owned_dress", w.equipped == {"shirt":"shirt_linen_cream", "pants":"pants_trousers_brown", "shoes":"shoes_boots_brown"} and w.count_total("dress_sun_cream") == 1)
 	t.check("clothes_use_wardrobe_store", not eco.get_inventory_dict().has(&"shirt_linen_cream") and eco.has_item(&"shirt_linen_cream"))

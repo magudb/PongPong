@@ -6,13 +6,45 @@ signal presets_changed
 const PRESETS := ["work", "forest", "festival"]
 ## Version of the "wardrobe" save section (SaveManager refuses a newer one at inspection, see SECTION VERSIONS there).
 const SECTION_VERSION := 1
-var owned: Dictionary = {}
-var equipped: Dictionary = {}
-var presets: Dictionary = {}
+## Per-player rows (MP3). owned/equipped/presets live on PlayerState.wardrobe;
+## single-player has one row and this facade is unchanged from the outside.
+var _checking_sets := false
+
+## The acting player's row (MP3). Shared fallback when no world is up.
+func state(player_id: StringName = &"") -> PlayerState:
+	return PlayerRegistry.state(player_id)
+
+
+func _w() -> Dictionary:
+	var w: Dictionary = state().wardrobe
+	if not w.has("owned"):
+		w["owned"] = {}
+		w["equipped"] = {}
+		w["presets"] = {}
+		w["orphans"] = {}
+	return w
+
+
+var owned: Dictionary:
+	get: return _w()["owned"]
+	set(value): _w()["owned"] = value
+
+
+var equipped: Dictionary:
+	get: return _w()["equipped"]
+	set(value): _w()["equipped"] = value
+
+
+var presets: Dictionary:
+	get: return _w()["presets"]
+	set(value): _w()["presets"] = value
+
+
 ## Clothing of a save that this build has no slot for (content drift: renamed, removed, moved to another slot): {id: 1}. Saved as it
 ## was and owned again by the load whose catalogue knows it.
-var orphans: Dictionary = {}
-var _checking_sets := false
+var orphans: Dictionary:
+	get: return _w()["orphans"]
+	set(value): _w()["orphans"] = value
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
