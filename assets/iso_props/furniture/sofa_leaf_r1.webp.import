@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ograb1hgptex"
-path="res://.godot/imported/sofa_leaf_r1.webp-6715d21eb8f7ba994b4ea7f85802eef8.ctex"
+path.s3tc="res://.godot/imported/sofa_leaf_r1.webp-6715d21eb8f7ba994b4ea7f85802eef8.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/sofa_leaf_r1.webp"
-dest_files=["res://.godot/imported/sofa_leaf_r1.webp-6715d21eb8f7ba994b4ea7f85802eef8.ctex"]
+dest_files=["res://.godot/imported/sofa_leaf_r1.webp-6715d21eb8f7ba994b4ea7f85802eef8.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

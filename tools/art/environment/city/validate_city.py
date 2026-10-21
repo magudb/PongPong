@@ -4,6 +4,7 @@ sizes against the table at the Lua scale, pivot inside the image, footprint pair
 <= 70 MB RGBA8 + mips, nothing above 2048 px.   python tools/art/environment/city/validate_city.py [--assets assets] [--stage DIR] ; exit 1 on any failure.
 
 --stage DIR validates the PNG masters of a stage instead of the installed WebP files (before install).
+The installed check leaves out the copies a later art pack supersedes (they are not kept, review REND-10; art_city checks the files ArtCatalog draws).
 """
 from __future__ import annotations
 import argparse, json, re, sys
@@ -14,6 +15,8 @@ from PIL import Image
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import city_spec as S   # noqa: E402
+sys.path.insert(0, str(HERE.parents[1] / 'drawn'))
+import drawn_art   # noqa: E402
 
 BUDGET_MB = 70.0
 
@@ -54,6 +57,16 @@ def main() -> int:
         pdir = Path(a.assets) / 'iso_props' / 'city'
         bdir = Path(a.assets) / 'backdrops'
         ext = '.webp'
+    root = Path(a.assets).resolve().parent
+    superseded = []
+
+    def gone(sid: str, f: Path) -> bool:
+        """An installed copy a later art pack supersedes: not kept, not checked here."""
+        if a.stage or not drawn_art.superseded(f.resolve(), root):
+            return False
+        superseded.append(sid)
+        return True
+
     props = json.loads((pdir / 'props.json').read_text())
     props.pop('_results', None)
     k = S.K
@@ -73,6 +86,8 @@ def main() -> int:
             fail(f'{sid}: not in props.json')
             continue
         f = pdir / Path(e['file']).with_suffix(ext).name
+        if gone(sid, f):
+            continue
         if not f.exists():
             fail(f'{sid}: {f.name} missing')
             continue
@@ -107,6 +122,8 @@ def main() -> int:
             continue
         n = props[nid]
         f = pdir / Path(n['file']).with_suffix(ext).name
+        if gone(nid, f):
+            continue
         im = np.asarray(Image.open(f).convert('RGBA'), np.float32)
         total += im.shape[0] * im.shape[1] * 4 * S.MIP
         if n.get('blend') != 'add':
@@ -122,6 +139,8 @@ def main() -> int:
             fail(f'{nid}: offset {off} outside the day sprite')
     for b in ('treetop_sky', 'treetop_far'):
         f = bdir / (b + ext)
+        if gone(b, f):
+            continue
         if not f.exists():
             fail(f'{b}{ext} missing')
             continue
@@ -139,7 +158,8 @@ def main() -> int:
         fail(f'memory {mb:.1f} MB > {BUDGET_MB} MB')
     if biggest > 2048:
         fail(f'a side of {biggest} px is above 2048')
-    print(f'validate_city: K {k}, {len(table)} textures, {mb:.1f} MB RGBA8 + mips (sky / far without), largest side {biggest}')
+    print(f'validate_city: K {k}, {len(table)} textures, {mb:.1f} MB RGBA8 + mips (sky / far without), largest side {biggest}'
+          + (f'; {len(superseded)} superseded copies left to the painted packs' if superseded else ''))
     for m in fails:
         print('FAIL', m)
     print('PASS' if not fails else f'{len(fails)} FAILURES')

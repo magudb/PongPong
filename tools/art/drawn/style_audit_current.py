@@ -69,7 +69,6 @@ def roles(catalog: dict) -> tuple[dict, dict]:
     for row in catalog["props"]:
         for part in row.get("auxiliary", []):
             selected[local(part["path"]).resolve()] = "technical-" + part["role"]
-    selected[(ROOT / "assets/art/watercolor_paper.png").resolve()] = "shared-ui-paper-texture"
     # These are separately consumed art kits; ArtCatalog alone does not see them.
     for directory, filename, role in [("shops/core", "shops.json", "core-shop-view"),
                                        ("shops/special", "shops.json", "specialist-shop-view"),
@@ -145,6 +144,8 @@ def roles(catalog: dict) -> tuple[dict, dict]:
         if row["id"] in technical:
             selected[local(row["path"]).resolve()] = "technical-effect-or-readability-mask"
     for name, rec in read(ROOT / "tools/art/drawn/fixture_recipes.json")["assets"].items():
+        if rec.get("superseded"):
+            continue  # only its geometry is kept; the file is gone (REND-10)
         path = (ROOT / name).resolve()
         family = "terrain" if "/iso_tiles/" in name else "backdrop" if "/backdrops/" in name else "city" if "/city/" in name else "interior" if "/interior/" in name else "props"
         selected[path] = "technical-historical-light-kernel" if rec["mode"] == "technical" else "painted-fixture-" + family

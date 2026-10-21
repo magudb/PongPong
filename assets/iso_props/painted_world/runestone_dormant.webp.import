@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cg7td8y3xwula"
-path="res://.godot/imported/runestone_dormant.webp-2ec8f775f842813c48aca053401f1e85.ctex"
+path.s3tc="res://.godot/imported/runestone_dormant.webp-2ec8f775f842813c48aca053401f1e85.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/painted_world/runestone_dormant.webp"
-dest_files=["res://.godot/imported/runestone_dormant.webp-2ec8f775f842813c48aca053401f1e85.ctex"]
+dest_files=["res://.godot/imported/runestone_dormant.webp-2ec8f775f842813c48aca053401f1e85.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

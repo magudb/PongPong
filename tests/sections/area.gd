@@ -212,8 +212,9 @@ func _static_checks(t) -> void:
 	var uniq: Dictionary = {}
 	for c in clipped:
 		uniq[c] = true
-	t.check("growth_cells_are_clipped_to_the_map", clipped.size() == 12 * 4 + 1 + 1 and uniq.size() == clipped.size() and clipped.has(Vector2i(11, 3)) and clipped.has(Vector2i(4, 4)) and clipped.has(Vector2i(11, 11)) and not clipped.has(Vector2i(12, 0)) and not clipped.has(Vector2i(-5, 2)) and problems.size() == 4 and took < 200,
+	t.check("growth_cells_are_clipped_to_the_map", clipped.size() == 12 * 4 + 1 + 1 and uniq.size() == clipped.size() and clipped.has(Vector2i(11, 3)) and clipped.has(Vector2i(4, 4)) and clipped.has(Vector2i(11, 11)) and not clipped.has(Vector2i(12, 0)) and not clipped.has(Vector2i(-5, 2)) and problems.size() == 4,
 		"0..99999999999999999999 x 0..3 -> the 12 x 4 cells of the map, a reversed range is swapped (and adds nothing new), 'x,1' is refused, 11..30 is clipped, -5..-1 is outside (4 problems): %d cells, %d ms, problems %s" % [clipped.size(), took, problems])
+	t.check("growth_cells_clip_without_expanding", t.perf_ok("growth_cells_clip_without_expanding", took, 200), "the clipped parse took %d ms (native reference 200)" % took)
 	var refused: Array[String] = []
 	var unbounded: Array[Vector2i] = IsoArea.parse_cells("0..999999,0..999999;2,3", Vector2i(-1, -1), refused)
 	t.check("growth_cells_without_a_map_size_refuse_absurd_ranges", unbounded == [Vector2i(2, 3)] and refused.size() == 1, "no map size known: a part naming more than %d cells is refused (%s), the rest parses" % [IsoArea.MAX_PARSED_CELLS, refused])
@@ -288,6 +289,7 @@ func _static_checks(t) -> void:
 	var offenders_zone: Array[String] = []
 	var offenders_mouse: Array[String] = []
 	var offenders_da: Array[String] = []
+	var offenders_thread: Array[String] = []
 	var rx_da := RegEx.new()
 	rx_da.compile("\"[^\"\\n]*[æøåÆØÅ][^\"\\n]*\"")
 	for path in _gd_files("res://scripts"):
@@ -297,6 +299,12 @@ func _static_checks(t) -> void:
 		# mouse_mode is forbidden in world AND ui scripts (pause_menu captured the cursor once; the autoload lint did not reach it)
 		if text.contains("mouse_mode") and (path.contains("scripts/world2d/") or path.contains("scripts/ui/")):
 			offenders_mouse.append(path)
+		# Textures may only be made off the main thread through TextureLoads (the dummy renderer's texture owner is not thread-safe).
+		# The dungeon floor worker builds pure data (DungeonGen text + AreaMap), no resource or texture.
+		if not path.ends_with("scripts/world2d/texture_loads.gd"):
+			for token in ["load_threaded_request(", "load_threaded_get(", "load_threaded_get_status(", "Thread.new(", "WorkerThreadPool."]:
+				if text.contains(token) and not (token == "WorkerThreadPool." and path.ends_with("scripts/dungeon/floors/dungeon_floors.gd")):
+					offenders_thread.append("%s: %s" % [path, token])
 		if path.contains("scripts/world2d/"):
 			for line in text.split("\n"):
 				var code: String = line.get_slice("#", 0)
@@ -305,6 +313,14 @@ func _static_checks(t) -> void:
 	t.check("zone_entered_only_from_world_root", offenders_zone.is_empty(), "other emitters: %s" % [offenders_zone])
 	t.check("no_mouse_capture_in_world_scripts", offenders_mouse.is_empty(), "world2d + ui scripts: %s" % [offenders_mouse])
 	t.check("no_danish_literals_in_world_scripts", offenders_da.is_empty(), "%s" % [offenders_da.slice(0, 3)])
+	t.check("threaded_loads_only_through_texture_loads", offenders_thread.is_empty(), "every threaded resource load goes through TextureLoads (main-thread loads under the dummy renderer), the one worker task is the dungeon floor's pure-data build; others: %s" % [offenders_thread])
+	# ... and under the dummy renderer TextureLoads starts no loader thread: the sheet is made by take() on the main thread
+	var sheet := "res://assets/isometric_characters/%s/%s" % [IsoChibiSprite2D.resolve_id("fairy"), str(IsoChibiSprite2D.meta_for(IsoChibiSprite2D.resolve_id("fairy")).animations.idle.sheet)]
+	var requested: Error = TextureLoads.request(sheet)
+	var no_thread: bool = ResourceLoader.load_threaded_get_status(sheet) == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE
+	var taken: Texture2D = TextureLoads.take(sheet) as Texture2D
+	t.check("texture_loads_stay_on_the_main_thread_headless", not TextureLoads.threaded() and requested == OK and no_thread and TextureLoads.status(sheet) == ResourceLoader.THREAD_LOAD_LOADED and taken != null,
+		"headless (%s): threaded %s, request %s, a loader thread started %s, take() gave %s" % [DisplayServer.get_name(), TextureLoads.threaded(), error_string(requested), not no_thread, taken])
 	var da_in_lua: Array[String] = []
 	for path2 in ["res://lua/config/props.lua", "res://lua/config/ambient.lua"]:
 		var body: String = FileAccess.get_file_as_string(path2)
@@ -372,7 +388,7 @@ func _art_and_boot_cost(t) -> void:
 	var t1: int = Time.get_ticks_msec()
 	a2.setup(AreaMap.load_file("res://data/maps/_fixture_iso.map"))
 	var second_ms: int = Time.get_ticks_msec() - t1
-	t.check("placeholder_boot_cost", best_paint < 200.0 or best_paint * 3.25 <= full_paint, "painting the placeholders of the iso fixture from cold (%d terrains / props / backdrop painted) took %.0f ms of a %d ms build (best of %d cold builds; budget 200 ms on an idle machine, i.e. at least 3.25x faster than the %.0f ms the same set costs at full resolution, the spike's 650 ms)" % [ArtCatalog.missing().size(), best_paint, first_ms, attempts, full_paint])
+	t.check("placeholder_boot_cost", t.perf_ok("placeholder_boot_cost", best_paint, 200.0) or best_paint * 3.25 <= full_paint, "painting the placeholders of the iso fixture from cold (%d terrains / props / backdrop painted) took %.0f ms of a %d ms build (best of %d cold builds; budget 200 ms on an idle machine, i.e. at least 3.25x faster than the %.0f ms the same set costs at full resolution, the spike's 650 ms)" % [ArtCatalog.missing().size(), best_paint, first_ms, attempts, full_paint])
 	t.check("placeholders_are_cached", absf(ArtCatalog.paint_ms() - cached_before) < 0.5, "a second build of the same area painted %.2f ms more and took %d ms (cold build %d ms)" % [ArtCatalog.paint_ms() - cached_before, second_ms, first_ms])
 	# expected missing set: exactly the ids of the fixture that have no real asset
 	var wanted: Dictionary = {}
@@ -1524,7 +1540,8 @@ func _skirts_and_growth(t) -> void:
 	var hms0: int = Time.get_ticks_msec()
 	harea.setup(huge)
 	var hms: int = Time.get_ticks_msec() - hms0
-	t.check("growth_cells_absurd_range_does_not_freeze_the_build", hms < 1500 and harea.growth_cells(1).size() == 28 and harea.map.errors.size() >= 1, "0..99999999999999999999 x 0..2000000000 builds in %d ms with %d growth cells" % [hms, harea.growth_cells(1).size()])
+	t.check("growth_cells_absurd_range_is_clipped", harea.growth_cells(1).size() == 28 and harea.map.errors.size() >= 1, "%d growth cells, %d map errors" % [harea.growth_cells(1).size(), harea.map.errors.size()])
+	t.check("growth_cells_absurd_range_does_not_freeze_the_build", t.perf_ok("growth_cells_absurd_range_does_not_freeze_the_build", hms, 1500), "0..99999999999999999999 x 0..2000000000 builds in %d ms (native reference 1500)" % hms)
 	holder.queue_free()
 	await t.frames(1)
 
@@ -1891,8 +1908,9 @@ func _farm_sized_map(t) -> void:
 	var ms: int = Time.get_ticks_msec() - t0
 	var a: IsoArea = _world.area
 	await t.physics(3)
-	t.check("farm_sized_map_builds", a.map.id == &"_t_big" and a.map.width == 44 and a.map.height == 44 and a.farmable.size() == 84 and a.prop_nodes.size() > 40 and a.unknown_chars.is_empty() and ms < 2500 and _world.player.get_parent() == a.objects,
+	t.check("farm_sized_map_builds", a.map.id == &"_t_big" and a.map.width == 44 and a.map.height == 44 and a.farmable.size() == 84 and a.prop_nodes.size() > 40 and a.unknown_chars.is_empty() and _world.player.get_parent() == a.objects,
 		"44 x 44 cells, 84 tillable, %d props, %d skirts, built in %d ms with the placeholders cached, %d ground cells, %d physics bodies" % [a.prop_nodes.size(), a.skirt_nodes.size(), ms, a.ground.get_used_cells().size(), a.colliders.get_child_count()])
+	t.check("farm_sized_map_build_time", t.perf_ok("farm_sized_map_build_time", ms, 2500), "%d ms with the placeholders cached (native reference 2500)" % ms)
 	t.check("farm_sized_map_camera_limits", a.camera_rect().size.x > 5000.0 and a.camera_rect().size.y > 2800.0, "camera rect %s" % [a.camera_rect()])
 	# tile painting looks each terrain up once per build, not once per cell (review REND-05): the per-build cache is gone afterwards and
 	# every probed cell carries the source and atlas coords of the uncached lookups (grass, tillable soil, path, each water frame)
@@ -2662,9 +2680,9 @@ func _art_prefetch_targets(t) -> void:
 	var w: WorldRoot2D = _world as WorldRoot2D
 	var pf: AreaArtPrefetch = w.art_prefetch
 	pf.release()
-	# headless stages synchronously, so the approach load is injected by hand (the theme: no texture upload under the dummy renderer)
+	# headless stages synchronously, so the approach load is injected by hand (TextureLoads: no loader thread under the dummy renderer)
 	var path := "res://assets/ui/theme.tres"
-	ResourceLoader.load_threaded_request(path)
+	TextureLoads.request(path)
 	pf.pending.append(path)
 	pf.request(&"farm")
 	var moved: bool = pf.pending.is_empty() and pf.abandoned.has(path) and pf.staged.is_empty()

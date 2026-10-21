@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bsdyrlew25of6"
-path="res://.godot/imported/chest_rune_r1_float.webp-6a72b3cfd84fbdc777d9fd6f4205d31d.ctex"
+path.s3tc="res://.godot/imported/chest_rune_r1_float.webp-6a72b3cfd84fbdc777d9fd6f4205d31d.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/chest_rune_r1_float.webp"
-dest_files=["res://.godot/imported/chest_rune_r1_float.webp-6a72b3cfd84fbdc777d9fd6f4205d31d.ctex"]
+dest_files=["res://.godot/imported/chest_rune_r1_float.webp-6a72b3cfd84fbdc777d9fd6f4205d31d.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

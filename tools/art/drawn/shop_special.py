@@ -13,8 +13,8 @@ from collections import defaultdict
 import numpy as np
 from PIL import Image, ImageFilter
 
-from pack import ROOT, HERE, extract
-from consistency import matte, PRESET
+from pack import ROOT, HERE, extract, ensure_policy
+from consistency import matte
 from shop_core import body, wall_body, read, write, rgba_bytes
 
 SRC = HERE / "sources/shop_special"
@@ -70,9 +70,7 @@ def effect(image: Image.Image, name: str) -> tuple[Image.Image, tuple[int, ...]]
 def save(image: Image.Image, stem: str, lossless: bool = False) -> str:
     path = OUT / (stem + ".webp")
     image.save(path, lossless=lossless, quality=90, method=6, exact=True)
-    stub = path.with_name(path.name + ".import")
-    if not stub.exists():
-        stub.write_text(PRESET)
+    ensure_policy(path)
     return path.name
 
 

@@ -33,8 +33,8 @@ func run(t) -> void:
 		uploaded_bytes += _upload_bytes(texture)
 	var backdrop: Dictionary = ArtCatalog.backdrop(&"treetop")
 	uploaded_bytes += _upload_bytes(backdrop["sky"]) + _upload_bytes(backdrop["far"])
-	t.check("effective_city_texture_budget", uploaded_bytes <= 70.0e6,
-		"%.1f MB RGBA8 including imported mipmaps; existing budget 70 MB" % (uploaded_bytes / 1.0e6))
+	t.check("effective_city_texture_budget", uploaded_bytes <= 24.0e6,
+		"%.1f MB uploaded (S3TC 1 byte, lossless 4 bytes per pixel) including imported mipmaps; budget 24 MB (70 MB while the set was lossless RGBA8)" % (uploaded_bytes / 1.0e6))
 	for id in ["foliage_front_a", "foliage_front_b"]:
 		var texture: Texture2D = ArtCatalog.prop(StringName(id))["texture"]
 		var im := Image.new()
@@ -64,4 +64,5 @@ func _upload_bytes(texture: Texture2D) -> float:
 	var settings := ConfigFile.new()
 	settings.load(texture.resource_path + ".import")
 	var mips: bool = settings.get_value("params", "mipmaps/generate", false)
-	return float(texture.get_width() * texture.get_height()) * 4.0 * (4.0 / 3.0 if mips else 1.0)
+	var bytes_per_px: float = 1.0 if int(settings.get_value("params", "compress/mode", 0)) == 2 else 4.0   # S3TC (DXT5) or RGBA8
+	return float(texture.get_width() * texture.get_height()) * bytes_per_px * (4.0 / 3.0 if mips else 1.0)

@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dpnvldrl12gwj"
-path="res://.godot/imported/chair_honey_r1.webp-df3db06aec28466296e6a6e398007bb0.ctex"
+path.s3tc="res://.godot/imported/chair_honey_r1.webp-df3db06aec28466296e6a6e398007bb0.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/chair_honey_r1.webp"
-dest_files=["res://.godot/imported/chair_honey_r1.webp-df3db06aec28466296e6a6e398007bb0.ctex"]
+dest_files=["res://.godot/imported/chair_honey_r1.webp-df3db06aec28466296e6a6e398007bb0.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

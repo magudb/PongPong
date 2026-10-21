@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://pe4lxossae2f"
-path="res://.godot/imported/clock_moon_r3_float.webp-88aa8e8b622ef4e86aeb31d280c64c6e.ctex"
+path.s3tc="res://.godot/imported/clock_moon_r3_float.webp-88aa8e8b622ef4e86aeb31d280c64c6e.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/clock_moon_r3_float.webp"
-dest_files=["res://.godot/imported/clock_moon_r3_float.webp-88aa8e8b622ef4e86aeb31d280c64c6e.ctex"]
+dest_files=["res://.godot/imported/clock_moon_r3_float.webp-88aa8e8b622ef4e86aeb31d280c64c6e.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

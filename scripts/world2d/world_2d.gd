@@ -663,9 +663,9 @@ func warm_jobs() -> Array:
 
 ## Warms the clip sheets the next seconds need (the player's and the NPCs in view) so the first step / the first word does not
 ## hitch. IsoChibiSprite2D.warm_clips() requests the sheets on worker threads and finalises one per frame, so this is meant to run
-## behind the fade. The DUMMY renderer of headless runs has no GPU upload to hide, and creating textures from loader threads there
-## raced in about 2 percent of the runs (engine message "texture_2d_initialize: Parameter t is null" + a leaked RID at exit, measured:
-## 2 of 120 runs with the warm-up, 0 of 120 without), so headless runs skip it unless `warm_in_headless` is set.
+## behind the fade. The DUMMY renderer of headless runs has no GPU upload to hide, so headless runs skip it unless `warm_in_headless`
+## is set (then TextureLoads loads the sheets on the main thread: dummy textures made on loader threads raced, engine message
+## "texture_2d_initialize: Parameter t is null" + a leaked RID at exit, measured 2 of 120 runs with the threaded warm-up).
 func warm_clips() -> void:
 	# Population waits for collider registration. Warm only after those real
 	# citizens have appeared, so their first frame is also behind the travel fade.

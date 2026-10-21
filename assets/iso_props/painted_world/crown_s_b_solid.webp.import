@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://co36pmc7jxfis"
-path="res://.godot/imported/crown_s_b_solid.webp-37dd20c18e8c61dc8b5bf5e10298539c.ctex"
+path.s3tc="res://.godot/imported/crown_s_b_solid.webp-37dd20c18e8c61dc8b5bf5e10298539c.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/painted_world/crown_s_b_solid.webp"
-dest_files=["res://.godot/imported/crown_s_b_solid.webp-37dd20c18e8c61dc8b5bf5e10298539c.ctex"]
+dest_files=["res://.godot/imported/crown_s_b_solid.webp-37dd20c18e8c61dc8b5bf5e10298539c.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

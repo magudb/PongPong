@@ -414,13 +414,19 @@ func _check_hygiene() -> void:
 	for ext: String in ["webp", "png", "ogg", "ttf", "jpg"]:
 		if not attr_lines.has("*.%s binary" % ext):
 			binary_missing.append(ext)
-	var lfs_commented: bool = attr_lines.has("#assets/**/*.webp filter=lfs diff=lfs merge=lfs -text")
-	var lfs_active: bool = false
+	# REPO-01: Git LFS only where Godot never imports (a pointer must never reach the importer), UI baselines plain
+	var lfs_lines: int = 0
+	var lfs_outside: Array = []
 	for l: String in attr_lines:
 		if l.contains("filter=lfs") and not l.begins_with("#"):
-			lfs_active = true
-	_check("p01.gitattributes_binary_and_commented_lfs", binary_missing.is_empty() and lfs_commented and not lfs_active,
-		"binary missing for %s, commented LFS line %s, LFS active %s" % [str(binary_missing), lfs_commented, lfs_active])
+			lfs_lines += 1
+			if not (l.begins_with("docs/") or l.begins_with("tools/art/")):
+				lfs_outside.append(l)
+	var lfs_ignored: bool = FileAccess.file_exists("res://docs/.gdignore") and FileAccess.file_exists("res://tools/art/.gdignore")
+	var baselines_plain: bool = attr_lines.has("[attr]plain-blob -filter -diff -merge -text") and attr_lines.has("docs/qa/ui_baseline/*.png plain-blob")
+	_check("p01.gitattributes_binary_and_lfs_outside_godot", binary_missing.is_empty() and lfs_lines > 0 and lfs_outside.is_empty() and lfs_ignored and baselines_plain,
+		"binary missing for %s, %d LFS line(s), outside docs/ and tools/art/: %s, both trees gdignored %s, UI baselines plain %s"
+		% [str(binary_missing), lfs_lines, str(lfs_outside), lfs_ignored, baselines_plain])
 
 	_check("p01.docs_gdignore_exists", FileAccess.file_exists("res://docs/.gdignore"), "docs/.gdignore is missing")
 	var stale: Array = _find_files("res://docs", ".import", ["PongPong_Isometric2D"])

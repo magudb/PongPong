@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0vq7bdwh6rbx"
-path="res://.godot/imported/house_farm.webp-c7733c7383f0f8ae5078247ece2b5e41.ctex"
+path.s3tc="res://.godot/imported/house_farm.webp-c7733c7383f0f8ae5078247ece2b5e41.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/drawn/house_farm.webp"
-dest_files=["res://.godot/imported/house_farm.webp-c7733c7383f0f8ae5078247ece2b5e41.ctex"]
+dest_files=["res://.godot/imported/house_farm.webp-c7733c7383f0f8ae5078247ece2b5e41.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -71,9 +71,9 @@ func run(t) -> void:
 	await _gathering(t)
 	await _kin(t)
 	_hook(t)
-	var copy: Dictionary = t.run_tool("python3", [ProjectSettings.globalize_path("res://tools/ghostfam/prepare_copy.py")])
+	var copy: Dictionary = t.run_tool(t.python(), [ProjectSettings.globalize_path("res://tools/ghostfam/prepare_copy.py")])
 	t.check("copy_regenerates_identically", copy.code == 0, copy.output)
-	copy = t.run_tool("python3", [ProjectSettings.globalize_path("res://tools/ghostfam/check_copy.py")])
+	copy = t.run_tool(t.python(), [ProjectSettings.globalize_path("res://tools/ghostfam/check_copy.py")])
 	t.check("tone_gender_barks_and_literal_keys", copy.code == 0, copy.output)
 	gm.clear_config_overrides()
 

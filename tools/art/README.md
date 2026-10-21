@@ -28,7 +28,8 @@ gentler pass without contours or value bands. Additive lights, night layers, flo
 their source files. UI SVGs and the runtime prop painters have matching wandering lines and painted shading.
 
 The title illustration, five zone skies and watercolor-paper material were created with the built-in imagegen tool,
-using the original drawings and the existing style guides. Exact prompts are in `storybook/prompts.json`. The source
+using the original drawings and the existing style guides. The paper (`storybook/watercolor_paper.png`) is read only by the
+offline bake, so it lives here and is not exported with the game. Exact prompts are in `storybook/prompts.json`. The source
 designs remain in `docs/original_drawings/` and `generator/`.
 
 To finish a **pristine** asset export (use a separate checkout for source; applying the pass twice compounds the color):
@@ -112,7 +113,7 @@ upper left). **Sprites are never scaled individually**: every `animations.json` 
 | Portrait | `portrait.webp` 256 x 256, head-and-shoulders bust from a **14 degree** camera (`bake_sprite_atlases.py --bust-only`); the 12 pack busts live in `assets/portraits/<id>.webp`. A bust is cut at the torso by design, but **never at the top or the sides** (`validate_new_assets.py` checks both the character portraits and `--portraits` for the pack busts; framing: see "Bust framing") |
 | `animations.json` | `character, cell_size, directions, pivot, animations{clip:{frames,fps,loop,sheet}}`; the baker adds `family, clip_set, flyer, portrait` (and `partial: true` after `--clips`), the exporter `role, clip_set, family, flyer, portrait, display_scale, glow` |
 | Character id | folder name = id = **`[a-z0-9_]+`** (lower case ASCII). The 12 pack ids are protected whatever the letter case (`Fox` is `fox` on a default APFS volume) |
-| Import | clip sheets VRAM-compressed **S3TC** (`compress/mode=2`, `high_quality=false`, mipmaps on) through a hand-written `.import` stub written **before** the first `godot --import` (review R.7); portraits, props, icons lossless; tile atlases lossless **without mipmaps** (R.1) |
+| Import | ONE policy for every texture under `assets/`: the `POLICY` table of `tools/import/write_import_stubs.py` (review REND-03). Clip sheets, painted wardrobe, props, furniture and buildings are VRAM-compressed **S3TC** (`compress/mode=2`, `high_quality=false`, mipmaps on), backdrops S3TC; tile atlases and packed frames lossless **without mipmaps** (R.1); portraits, icons, UI, the soft shadow and the few light kernels that band under DXT lossless. Stubs are written **before** the first `godot --import` (review R.7): the bakers and installers take them from that table (`ensure_policy()` after writing a texture, `stub_for()` for a stage tree such as `export_home.py`'s; P08's self-contained `export/import_stubs.py` keeps identical inline texts for its sandbox selftest); run `tools/import/write_import_stubs.py` after an install; its `--check` runs before every playtest and CI job |
 
 Clips (name: frames at fps, loop):
 

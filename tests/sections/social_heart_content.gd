@@ -73,7 +73,7 @@ func run(t) -> void:
 	t.check("area_guard_even_if_presence_reports_true",SocialManager.events_ready("gardener_hoppe").is_empty())
 	Svc.clear_overrides()
 	fake.free()
-	t.check("source_reproducible",int(t.run_tool("python3",[ProjectSettings.globalize_path("res://tools/social/content/build_hearts.py"),"--check"]).code) == 0)
+	t.check("source_reproducible",int(t.run_tool(t.python(), [ProjectSettings.globalize_path("res://tools/social/content/build_hearts.py"),"--check"]).code) == 0)
 	director.reset()
 	await t.go_menu()
 func _stage(t,npc: String,meta: Dictionary) -> bool:

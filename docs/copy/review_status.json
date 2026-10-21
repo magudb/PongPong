@@ -130,7 +130,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 56
+    "rows": 59
   },
   "localization/quests.csv": {
     "status": "draft",
@@ -927,7 +927,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 20
+    "rows": 21
   },
   "localization/menus.csv": {
     "status": "draft",

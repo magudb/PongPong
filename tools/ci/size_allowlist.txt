@@ -1,0 +1,26 @@
+# Blob size limits of tools/ci/size_guard.py (REPO-01; policy in docs/DEVELOPMENT.md, "Repository size").
+#
+#   default <size>       limit of a plain blob whose path matches no line below
+#   lfs-object <size>    limit of the object a Git LFS pointer names
+#   plain-on-lfs <mode>  a plain blob on a Git LFS path: `warn` (passes when it fits the plain limit of its path)
+#                        or `error` (always rejected)
+#   <size> <pattern>     limit of a plain blob on a matching path; the first matching line wins
+#
+# Patterns are repo-relative: `**` spans directories, `*` and `?` stay inside one path component.
+# Only blobs that a commit adds or changes are measured, so files committed before the guard keep working until
+# they are changed. Raise a line in the same commit as the file that needs it and say why in the message.
+
+default 1MiB
+lfs-object 64MiB
+# git-lfs is not installed yet on the Mac where the commits are made, so media there lands as plain blobs. Switch to
+# `error` once it is, in the same commit as `size_guard.py --grandfather` (docs/DEVELOPMENT.md, "Repository size").
+plain-on-lfs warn
+
+# Shipped art and audio: Godot imports these, so they stay plain blobs (largest today: a 5.2 MiB crown sheet).
+8MiB assets/**
+# UI audit baselines the tests compare against (title.png is 1.5 MiB).
+4MiB docs/qa/ui_baseline/*.png
+# The visual review ledger that tools/art/drawn/style_audit_current.py writes and art_style_consistency reads; it
+# lists every file under assets/, so it grows with them (1.1 MiB today).
+4MiB docs/art/style-audit/current/*.json
+4MiB docs/art/style-audit/current/*.csv

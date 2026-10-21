@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://btt8ub018sh52"
-path="res://.godot/imported/sofa_sky_two_r1.webp-9e5f186366c76543ae10d853b02f7012.ctex"
+path.s3tc="res://.godot/imported/sofa_sky_two_r1.webp-9e5f186366c76543ae10d853b02f7012.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/sofa_sky_two_r1.webp"
-dest_files=["res://.godot/imported/sofa_sky_two_r1.webp-9e5f186366c76543ae10d853b02f7012.ctex"]
+dest_files=["res://.godot/imported/sofa_sky_two_r1.webp-9e5f186366c76543ae10d853b02f7012.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -7,6 +7,7 @@ body-specific sockets; it never redraws/recolors a body or uses inventory icons.
 from pathlib import Path
 import hashlib
 import json
+import sys
 import numpy as np
 from PIL import Image
 from scipy.signal import correlate2d
@@ -32,7 +33,8 @@ ITEMS = [('hoe_wooden',100),('hoe_iron',100),
          ('pickaxe_wooden',100),('pickaxe_copper',100),('pickaxe_iron',100),
          ('axe_wooden',82),('scythe',120),('fishing_rod',132),
          ('sword_rusty',86),('iron_sword',86),('brush',58),('milking_pail',60)]
-PRESET = '[remap]\nimporter="texture"\ntype="CompressedTexture2D"\n\n[params]\ncompress/mode=0\nmipmaps/generate=false\nprocess/fix_alpha_border=true\n'
+sys.path.insert(0, str(ROOT / 'tools/import'))
+from write_import_stubs import ensure_policy   # noqa: E402  the one texture import policy (atlas: lossless, no mipmaps)
 
 def track(reference, frame, authored):
     """Match the authored hand's local painted patch in the actual baked frame.
@@ -84,7 +86,7 @@ def main():
     pixels=np.array(atlas);pixels[pixels[:,:,3]<24]=0
     pixels[:,:,3]=np.where(pixels[:,:,3]>=248,255,pixels[:,:,3])
     Image.fromarray(pixels).save(OUT/'tools.webp',lossless=True,exact=True)
-    (OUT/'tools.webp.import').write_text(PRESET)
+    ensure_policy(OUT/'tools.webp')
     manifest={'version':1,'canvas':[256,256],'anchor':[128,200],
               'directions':['S','SW','W','NW','N','NE','E','SE'],
               'source':str(SOURCE.relative_to(ROOT)),

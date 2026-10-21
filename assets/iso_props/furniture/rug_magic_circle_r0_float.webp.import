@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://desbm8ys3j8i4"
-path="res://.godot/imported/rug_magic_circle_r0_float.webp-15cce01d1ece80c94871d89efebc0bf0.ctex"
+path.s3tc="res://.godot/imported/rug_magic_circle_r0_float.webp-15cce01d1ece80c94871d89efebc0bf0.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/rug_magic_circle_r0_float.webp"
-dest_files=["res://.godot/imported/rug_magic_circle_r0_float.webp-15cce01d1ece80c94871d89efebc0bf0.ctex"]
+dest_files=["res://.godot/imported/rug_magic_circle_r0_float.webp-15cce01d1ece80c94871d89efebc0bf0.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -2,9 +2,9 @@ extends RefCounted
 const SECTION := "voice"
 const TIMEOUT_S := 120.0
 func run(t) -> void:
-	var result: Dictionary = t.run_tool("python3",["-B",ProjectSettings.globalize_path("res://tools/voice/generate_voice.py"),"--check"])
+	var result: Dictionary = t.run_tool(t.python(), ["-B",ProjectSettings.globalize_path("res://tools/voice/generate_voice.py"),"--check"])
 	t.check("manifest_in_sync",result.code==0,str(result.output))
-	var index: Dictionary = t.run_tool("python3",["-B",ProjectSettings.globalize_path("res://tools/voice/build_index.py"),"--check"])
+	var index: Dictionary = t.run_tool(t.python(), ["-B",ProjectSettings.globalize_path("res://tools/voice/build_index.py"),"--check"])
 	t.check("index_matches_csv",index.code==0,str(index.output))
 	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets/audio/voice/manifest.json"))
 	var real := 0
