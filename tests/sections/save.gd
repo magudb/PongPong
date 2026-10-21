@@ -527,7 +527,7 @@ func _test_api_surface() -> void:
 		if not sm.has_method(m):
 			missing.append(m)
 	t.check("api_surface", missing.is_empty(), "missing %s" % [missing])
-	t.check("slot_constants", sm.MANUAL_SLOTS == 6 and sm.AUTO_SLOT == 6 and sm.NO_SLOT == -1 and sm.PAYLOAD_VERSION == 2 and sm.all_slots() == [0, 1, 2, 3, 4, 5, 6],
+	t.check("slot_constants", sm.MANUAL_SLOTS == 6 and sm.AUTO_SLOT == 6 and sm.NO_SLOT == -1 and sm.PAYLOAD_VERSION == 3 and sm.all_slots() == [0, 1, 2, 3, 4, 5, 6],
 		"six manual slots 0..5, auto slot %d, payload version %d" % [sm.AUTO_SLOT, sm.PAYLOAD_VERSION])
 	# reset() is wired to new_game_started (core.new_game_wires_SaveManager asserts the same from the other side)
 	var wired := false
@@ -941,7 +941,7 @@ func _test_validation() -> void:
 		["version_zero", _edit(good, ["meta", "version"], 0), "corrupt"],
 		["version_negative", _edit(good, ["meta", "version"], -3), "corrupt"],
 		["version_fraction", _edit(good, ["meta", "version"], 1.5), "corrupt"],
-		["version_newer", _edit(good, ["meta", "version"], 3), "version"],
+		["version_newer", _edit(good, ["meta", "version"], 4), "version"],
 		["version_far_future", _edit(good, ["meta", "version"], 99), "version"],
 	]
 	var failures: Array[String] = []
@@ -960,7 +960,7 @@ func _test_validation() -> void:
 	# validate_payload is pure: it does not touch the game and returns a migrated, int-coerced copy
 	_set_state(42, 3)
 	var verdict: Dictionary = sm.validate_payload(good)
-	t.check("validate_payload_is_pure", verdict["ok"] and eco.gold == 42 and gm.day == 3 and typeof(verdict["payload"]["economy"]["gold"]) == TYPE_INT and verdict["payload"]["meta"]["version"] == 2,
+	t.check("validate_payload_is_pure", verdict["ok"] and eco.gold == 42 and gm.day == 3 and typeof(verdict["payload"]["economy"]["gold"]) == TYPE_INT and verdict["payload"]["meta"]["version"] == 3,
 		"gold %d day %d untouched" % [eco.gold, gm.day])
 	t.check("validate_rejects_non_dictionary", not sm.validate_payload([1, 2])["ok"] and not sm.validate_payload("x")["ok"] and not sm.validate_payload(null)["ok"] and sm.validate_payload(5)["code"] == "corrupt", "")
 	_clear_fakes()
@@ -2261,7 +2261,7 @@ func _test_v1_migration() -> void:
 	husb.data = {"stale": true}
 	_put(0, _v1_payload())
 	var verdict: Dictionary = sm.validate_payload(_read_json(sm.slot_path(0)))
-	t.check("v1_validates_and_migrates", verdict["ok"] and verdict["payload"]["meta"]["version"] == 2 and verdict["payload"]["meta"].get("migrated_from") == 1 and not verdict["payload"]["quests"]["flags"].has("def_lost_cat")
+	t.check("v1_validates_and_migrates", verdict["ok"] and verdict["payload"]["meta"]["version"] == 3 and verdict["payload"]["meta"].get("migrated_from") == 1 and not verdict["payload"]["quests"]["flags"].has("def_lost_cat")
 		and verdict["payload"]["quests"]["flags"].get("runtime_flag") == 1 and float(verdict["payload"]["meta"]["saved_at"]) > 1.0e9, "meta.version 1 -> 2, quest definitions dropped, runtime flags kept, saved_at from the time stamp")
 	var migrated_summary: Variant = verdict["payload"]["meta"].get("summary")
 	t.check("v1_migration_writes_the_summary", migrated_summary is Dictionary and (migrated_summary as Dictionary).get("gold") == 1234 and (migrated_summary as Dictionary).get("day") == 9 and (migrated_summary as Dictionary).get("character") == "hobbit",

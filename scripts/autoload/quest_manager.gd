@@ -155,9 +155,9 @@ func _log() -> Dictionary:
 	var q: Dictionary = state().quests
 	if not q.has("active"):
 		q["active"] = {}
-		q["completed"] = [] as Array[StringName]
-		q["failed"] = [] as Array[StringName]
-		q["offered"] = [] as Array[StringName]
+		q["completed"] = []
+		q["failed"] = []
+		q["offered"] = []
 		q["flags"] = {}
 		q["completed_days"] = {}
 		q["pending_rewards"] = {}
@@ -169,17 +169,17 @@ var active_quests: Dictionary:
 	set(value): _log()["active"] = value
 
 
-var completed_quests: Array[StringName]:
+var completed_quests: Array:
 	get: return _log()["completed"]
 	set(value): _log()["completed"] = value
 
 
-var failed_quests: Array[StringName]:
+var failed_quests: Array:
 	get: return _log()["failed"]
 	set(value): _log()["failed"] = value
 
 
-var offered_quests: Array[StringName]:
+var offered_quests: Array:
 	get: return _log()["offered"]
 	set(value): _log()["offered"] = value
 

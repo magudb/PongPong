@@ -50,7 +50,7 @@ class Spy extends RefCounted:
 	func on_event(event_name: StringName, payload: Dictionary) -> void:
 		events.append([String(event_name), payload])
 
-	func on_friend(npc: StringName, hearts: int) -> void:
+	func on_friend(_player_id: StringName, npc: StringName, hearts: int) -> void:
 		friends.append([String(npc), hearts])
 
 	func on_toast(title: String, message: String, icon: String) -> void:

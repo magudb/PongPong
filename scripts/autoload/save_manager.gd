@@ -19,14 +19,14 @@ extends Node
 ## save is DEFERRED to the end of the frame: day_ended is emitted before the calendar steps and before the other
 ## day_started listeners (crops, shop stock, animals) have run, so the deferred save sees the finished new day.
 ##
-## PAYLOAD v2 (meta.version = PAYLOAD_VERSION; GameManager.SAVE_VERSION is only the version of the "game" dict):
+## PAYLOAD v3 (meta.version = PAYLOAD_VERSION; GameManager.SAVE_VERSION is only the version of the "game" dict):
 ##   meta{version, timestamp, saved_at, run_id, summary}  game  time  economy  quests  husbandry  shops  <registered sections>  world
 ## game/time/economy/quests are REQUIRED, husbandry/shops/registered sections are optional (a section missing from a
 ## save has its reset() called, it is never left stale), world is an OPAQUE Dictionary (WorldRoot2D.to_dict: area,
 ## player_pos, farm, hotbar, placed items, area flags). Apply order (ascending `order`, then registration): game -60,
 ## time -50 (TimeManager.from_dict reads GameManager.total_day(), so the calendar goes first), economy -40, quests -30,
-## husbandry -20, shops -10, then the feature sections: home 10, furniture 20, wardrobe 30, loot 40, collection 50,
-## everything else 100.
+## husbandry -20, shops -10, then the feature sections: home 10, players 15, furniture 20, wardrobe 30, loot 40,
+## collection 50, everything else 100. v3 adds `players` (RM5): one row per player slot.
 ##
 ## SECTION REGISTRY (addendum 3.2). A feature manager calls register_section("home", self, 10) in _ready and offers
 ## to_dict() -> Dictionary, from_dict(d) (may return false to reject the data) and reset(); each section carries its own
@@ -82,7 +82,7 @@ const QUARANTINE_FILE := "save_auto.damaged-%d.json"
 ## The run id of a save written before run ids existed starts with this (see _run_id_of).
 const LEGACY_RUN_PREFIX := "legacy:"
 const QUARANTINE_KEEP := 3
-const PAYLOAD_VERSION := 2
+const PAYLOAD_VERSION := 3
 const MANUAL_SLOTS := 6
 const AUTO_SLOT := 6
 ## The autosave of the run played before this one (read only: it is loaded, never written by save_game).
@@ -877,6 +877,8 @@ func _migrate(payload: Dictionary, from_version: int) -> Dictionary:
 		match version:
 			1:
 				payload = _migrate_1_to_2(payload)
+			2:
+				payload = _migrate_2_to_3(payload)
 			_:
 				break
 		version += 1
@@ -897,6 +899,43 @@ func _migrate_1_to_2(payload: Dictionary) -> Dictionary:
 		meta["saved_at"] = _unix_of_local_stamp(str(meta.get("timestamp", "")))
 	payload["meta"] = meta
 	meta["summary"] = _summarize(payload)
+	return payload
+
+
+## v2 -> v3 (RM5): the single implicit player becomes players.rows.p0. gold / inventory / equipment come from
+## economy, the quest log from quests, the wardrobe from wardrobe, travel from world. The old sections stay.
+func _migrate_2_to_3(payload: Dictionary) -> Dictionary:
+	if payload.has("players"):
+		return payload
+	var game: Dictionary = _dict_of(payload.get("game"))
+	var economy: Dictionary = _dict_of(payload.get("economy"))
+	var quests: Dictionary = _dict_of(payload.get("quests"))
+	var wardrobe: Dictionary = _dict_of(payload.get("wardrobe"))
+	var world: Dictionary = _dict_of(payload.get("world"))
+	var row := {
+		"id": "p0",
+		"peer_ordinal": 1,
+		"name": str(game.get("player_name", "")),
+		"character_type": int(game.get("character_type", 0)),
+		"character_skin": str(game.get("character_skin", "")),
+		"gold": int(economy.get("gold", 0)),
+		"inventory": economy.get("inventory", []) if economy.get("inventory") is Array else [],
+		"equipment": economy.get("equipment", {}) if economy.get("equipment") is Dictionary else {},
+		"arsenal": economy.get("arsenal", {}) if economy.get("arsenal") is Dictionary else {},
+		"quests": quests.duplicate(true) if not quests.is_empty() else {},
+		"wardrobe": wardrobe.duplicate(true) if not wardrobe.is_empty() else {},
+		"hotbar": world.get("hotbar", []) if world.get("hotbar") is Array else [],
+		"area": str(world.get("area", "")),
+		"player_pos": world.get("player_pos", [0.0, 0.0]) if world.get("player_pos") is Array else [0.0, 0.0],
+		"half_hearts": 10,
+		"stamina": 100.0,
+		"oil": 150.0,
+	}
+	payload["players"] = {"v": 1, "rows": {"p0": row}}
+	var meta: Dictionary = _dict_of(payload.get("meta"))
+	if not meta.has("migrated_from"):
+		meta["migrated_from"] = 2
+	payload["meta"] = meta
 	return payload
 
 

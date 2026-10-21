@@ -4,6 +4,9 @@ extends Node
 ##
 ## Single-player: one row (`p0`) that the EconomyManager / QuestManager / WardrobeManager facades
 ## read. Shared world state (farm, shops, calendar, home) stays on those managers.
+## Save section `players` (RM5, order 15): one JSON row per player slot.
+
+const SECTION := "players"
 
 ## player_id -> PlayerState
 var rows: Dictionary = {}
@@ -11,6 +14,11 @@ var rows: Dictionary = {}
 
 func _ready() -> void:
 	name = "PlayerRoster"
+	var sm: Node = GameData.autoload("SaveManager")
+	if sm != null and sm.has_method("register_section"):
+		# Before economy/quests/wardrobe (-40..30): the row is the base, then those facades
+		# refine it (stale-item adopt, orphans, routing).
+		sm.call("register_section", SECTION, self, -70)
 
 
 ## The row for `player_id`, created on first use.
