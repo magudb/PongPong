@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cntoa63yjxpey"
-path="res://.godot/imported/lantern_post_rose_glow.png-952601a7235e3b6f57caea185a8fae8f.ctex"
+path.s3tc="res://.godot/imported/lantern_post_rose_glow.png-952601a7235e3b6f57caea185a8fae8f.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/lantern_post_rose_glow.png"
-dest_files=["res://.godot/imported/lantern_post_rose_glow.png-952601a7235e3b6f57caea185a8fae8f.ctex"]
+dest_files=["res://.godot/imported/lantern_post_rose_glow.png-952601a7235e3b6f57caea185a8fae8f.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

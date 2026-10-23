@@ -10,6 +10,18 @@ const SETTINGS_PATH := SettingsStore.PATH
 ## The buses whose volume settings.cfg [audio] keeps (keys: the lower-case bus name). SettingsUI shows four of them.
 const VOLUME_BUSES: Array[String] = ["Master","SFX","Music","Voice","Ambient"]
 const DEFAULT_VOLUME := 0.8
+## Fades never change a PLAYING player's volume_db. Setting it makes AudioServer swap the playback's bus details, and Godot 4.7.2
+## frees the old copy at the end of the next frame while the mixer thread may still be copying it (AudioServer::_mix_step): a
+## use-after-free that crashed a headless gate run in the audio thread (an uncapped headless frame lasts well under a millisecond,
+## and a tween swapped every frame). Every fade moves the volume of a fader bus instead, a plain float the mixer reads; a player's
+## own volume_db is only set while it is stopped (assigning `stream` stops it first).
+const MUSIC_FADER := "MusicFade"
+const AMBIENT_FADERS: Array[String] = ["AmbientFadeA","AmbientFadeB"]
+## The music fades from and to this level (absolute dB, as the player's volume plus its fader).
+const MUSIC_FADE_FLOOR_DB := -40.0
+## An ambient loop plays at this volume; its fader adds the duck (0 at full level) or AMBIENT_SILENT_DB - AMBIENT_LEVEL_DB.
+const AMBIENT_LEVEL_DB := -16.0
+const AMBIENT_SILENT_DB := -60.0
 
 var _sfx_pool: Array[AudioStreamPlayer] = []
 var _sfx_rr: int = 0                    # round-robin cursor: the slot stolen next when the pool is full (the "oldest" in FIFO order)
@@ -23,6 +35,9 @@ var _ambient_id := ""
 var _ambient_slot := 0
 var _ambient_duck := 0.0
 var _rain_player: AudioStreamPlayer
+var _music_fader := MUSIC_FADER         # fader bus names: the autoload owns the shared ones, any other instance (a test probe) its own
+var _ambient_faders: Array[String] = []
+var _own_faders := false                # true when this instance created per-instance faders and removes them on exit
 var _rain_id := ""
 var _cues: Array[Dictionary] = []
 var _shutting_down := false
@@ -42,19 +57,24 @@ func _ready() -> void:
 		add_child(p)
 		_sfx_pool.append(p)
 
+	_setup_buses()
+	_music_fader = _add_fader(MUSIC_FADER,"Music")
 	_music_player = AudioStreamPlayer.new()
-	_music_player.bus = "Music"
+	_music_player.bus = _music_fader
+	_music_player.volume_db = music_volume_db
 	add_child(_music_player)
 
 	_voice_player = AudioStreamPlayer.new()
 	_voice_player.bus = "Voice"
 	add_child(_voice_player)
 
-	_setup_buses()
-	for _index in 2:
+	for index in 2:
+		var fader := _add_fader(AMBIENT_FADERS[index],"Ambient")
+		_set_fader_db(AMBIENT_SILENT_DB-AMBIENT_LEVEL_DB,fader)
+		_ambient_faders.append(fader)
 		var ambient := AudioStreamPlayer.new()
-		ambient.bus = "Ambient"
-		ambient.volume_db = -60
+		ambient.bus = fader
+		ambient.volume_db = AMBIENT_LEVEL_DB
 		add_child(ambient)
 		_ambient_players.append(ambient)
 		_ambient_tweens.append(null)
@@ -76,6 +96,34 @@ func _setup_buses() -> void:
 			AudioServer.add_bus(idx)
 			AudioServer.set_bus_name(idx, bus_name)
 			AudioServer.set_bus_send(idx, "Master")
+
+## A fader bus that sends to `send`. The autoload uses the shared name; another instance (codex_review's probe) gets its own bus,
+## so its fades never move the game's music, and removes it again on exit.
+func _add_fader(base: String,send: String) -> String:
+	var shared := is_inside_tree() and get_parent() == get_tree().root and name == &"AudioManager"
+	var bus := base if shared else "%s_%d" % [base,get_instance_id()]
+	_own_faders = _own_faders or not shared
+	var index := AudioServer.get_bus_index(bus)
+	if index == -1:
+		index = AudioServer.get_bus_count()
+		AudioServer.add_bus(index)
+		AudioServer.set_bus_name(index,bus)
+	AudioServer.set_bus_send(index,send)
+	return bus
+
+func _fader_db(bus: String) -> float:
+	var index := AudioServer.get_bus_index(bus)
+	return AudioServer.get_bus_volume_db(index) if index>=0 else 0.0
+
+## Tween target (tween_method passes the value first, the bound bus name second).
+func _set_fader_db(db: float,bus: String) -> void:
+	var index := AudioServer.get_bus_index(bus)
+	if index>=0:AudioServer.set_bus_volume_db(index,db)
+
+func _fade_music(target_db: float,seconds: float) -> Tween:
+	var tween := create_tween()
+	tween.tween_method(_set_fader_db.bind(_music_fader),_fader_db(_music_fader),target_db-music_volume_db,seconds)
+	return tween
 
 
 func play_sfx(sfx_id: String, volume_db: float = NAN, pitch: float = 1.0) -> void:
@@ -116,11 +164,10 @@ func play_music(track_id: String, fade_seconds: float = 1.0) -> void:
 	_cancel_music_transition()
 	var request := _music_request
 	if _music_player.playing and _music_player.stream == stream:
-		_music_player.volume_db = music_volume_db
+		_set_fader_db(0.0,_music_fader)
 		return
 	if _music_player.playing and fade_seconds > 0:
-		_music_tween = create_tween()
-		_music_tween.tween_property(_music_player, "volume_db", -40.0, fade_seconds * 0.5)
+		_music_tween = _fade_music(MUSIC_FADE_FLOOR_DB, fade_seconds * 0.5)
 		_music_tween.tween_callback(_start_music.bind(stream, fade_seconds, request))
 	else:
 		_start_music(stream, fade_seconds, request)
@@ -129,12 +176,12 @@ func play_music(track_id: String, fade_seconds: float = 1.0) -> void:
 func _start_music(stream: AudioStream, fade_seconds: float, request: int) -> void:
 	if request != _music_request:
 		return
-	_music_player.stream = stream
-	_music_player.volume_db = -40.0 if fade_seconds > 0.0 else music_volume_db
+	_music_player.stream = stream    # stops the old playback: the volume below is set on a stopped player
+	_music_player.volume_db = music_volume_db
+	_set_fader_db(MUSIC_FADE_FLOOR_DB-music_volume_db if fade_seconds > 0.0 else 0.0,_music_fader)
 	_music_player.play()
 	if fade_seconds > 0:
-		_music_tween = create_tween()
-		_music_tween.tween_property(_music_player, "volume_db", music_volume_db, fade_seconds)
+		_music_tween = _fade_music(music_volume_db, fade_seconds)
 
 
 func stop_music(fade_seconds: float = 1.0) -> void:
@@ -145,8 +192,7 @@ func stop_music(fade_seconds: float = 1.0) -> void:
 	if fade_seconds <= 0:
 		_music_player.stop()
 		return
-	_music_tween = create_tween()
-	_music_tween.tween_property(_music_player, "volume_db", -40.0, fade_seconds)
+	_music_tween = _fade_music(MUSIC_FADE_FLOOR_DB, fade_seconds)
 	_music_tween.tween_callback(func() -> void:
 		if request == _music_request:
 			_music_player.stop())
@@ -228,14 +274,15 @@ func set_bus_volume(bus: String,linear: float,persist := true) -> void:
 
 func _fade_ambient(index: int,target: float,seconds: float,stop := false) -> void:
 	var player := _ambient_players[index]
+	var fader := _ambient_faders[index]
 	if _ambient_tweens[index]!=null and _ambient_tweens[index].is_valid():_ambient_tweens[index].kill()
 	if seconds<=0:
-		player.volume_db = target
+		_set_fader_db(target-AMBIENT_LEVEL_DB,fader)
 		if stop:player.stop()
 		return
 	var tween := create_tween()
 	_ambient_tweens[index] = tween
-	tween.tween_property(player,"volume_db",target,seconds)
+	tween.tween_method(_set_fader_db.bind(fader),_fader_db(fader),target-AMBIENT_LEVEL_DB,seconds)
 	if stop:tween.tween_callback(player.stop)
 
 func play_ambience(id: String,fade_seconds := 1.5) -> void:
@@ -247,22 +294,22 @@ func play_ambience(id: String,fade_seconds := 1.5) -> void:
 	_record("amb",id,stream!=null)
 	if id==_ambient_id:return
 	if stream==null and id!="":return
-	_fade_ambient(_ambient_slot,-60,fade_seconds,true)
+	_fade_ambient(_ambient_slot,AMBIENT_SILENT_DB,fade_seconds,true)
 	_ambient_id = id
 	if stream==null:return
 	_ambient_slot = 1-_ambient_slot
 	var player := _ambient_players[_ambient_slot]
 	if stream is AudioStreamOggVorbis:stream.loop = true
 	player.stream = stream
-	player.volume_db = -60
+	_fade_ambient(_ambient_slot,AMBIENT_SILENT_DB,0.0)
 	player.play()
-	_fade_ambient(_ambient_slot,-16+_ambient_duck,fade_seconds)
+	_fade_ambient(_ambient_slot,AMBIENT_LEVEL_DB+_ambient_duck,fade_seconds)
 
 func duck_ambience(db: float) -> void:
 	var next := clampf(db,-24,0)
 	if next==_ambient_duck:return
 	_ambient_duck = next
-	if _ambient_id!="":_fade_ambient(_ambient_slot,-16+_ambient_duck,0.5)
+	if _ambient_id!="":_fade_ambient(_ambient_slot,AMBIENT_LEVEL_DB+_ambient_duck,0.5)
 
 func play_rain(on: bool) -> void:
 	if _shutting_down:
@@ -307,6 +354,10 @@ func prepare_shutdown() -> void:
 func _exit_tree() -> void:
 	_shutting_down = true
 	_silence_all()
+	if _own_faders:
+		for bus in [_music_fader]+_ambient_faders:
+			var index := AudioServer.get_bus_index(bus)
+			if index>=0:AudioServer.remove_bus(index)
 
 
 func _find_stream(base_dir: String, id: String) -> String:

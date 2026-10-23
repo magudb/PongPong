@@ -49,7 +49,7 @@ func _run() -> void:
 	var shader := Shader.new()
 	shader.code = FileAccess.get_file_as_string("res://tools/art/storybook/illustrate.gdshader")
 	material.shader = shader
-	material.set_shader_parameter("paper", ImageTexture.create_from_image(Image.load_from_file(ProjectSettings.globalize_path("res://assets/art/watercolor_paper.png"))))
+	material.set_shader_parameter("paper", ImageTexture.create_from_image(Image.load_from_file(ProjectSettings.globalize_path("res://tools/art/storybook/watercolor_paper.png"))))
 	picture.material = material
 	var files: Array[String] = []
 	_collect(source_dir, "", files)

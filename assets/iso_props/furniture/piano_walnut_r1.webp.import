@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d33fiwnostpom"
-path="res://.godot/imported/piano_walnut_r1.webp-4813593520b6f00eb0eb7dcea09494af.ctex"
+path.s3tc="res://.godot/imported/piano_walnut_r1.webp-4813593520b6f00eb0eb7dcea09494af.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/piano_walnut_r1.webp"
-dest_files=["res://.godot/imported/piano_walnut_r1.webp-4813593520b6f00eb0eb7dcea09494af.ctex"]
+dest_files=["res://.godot/imported/piano_walnut_r1.webp-4813593520b6f00eb0eb7dcea09494af.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

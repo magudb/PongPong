@@ -1,0 +1,2 @@
+# selftest: skipper may skip one check, it skips two
+skipper	1	selftest fixture

@@ -134,11 +134,16 @@ class PublishTests(unittest.TestCase):
         self.assertIn("verify-publish", workflow)
 
 
+def ci_sections():
+    spec = importlib.util.spec_from_file_location("ci_sections", ROOT / "tools/ci/sections.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 class CoverageTests(unittest.TestCase):
     def test_ci_shards_run_every_section_exactly_once(self):
-        spec = importlib.util.spec_from_file_location("ci_sections", ROOT / "tools/ci/sections.py")
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
+        module = ci_sections()
         expected = {p.stem for p in (ROOT / "tests/sections").glob("*.gd") if not p.name.startswith("_")}
         groups = module.partitions(4)
         all_sections = [name for group in groups for name in group]
@@ -151,6 +156,30 @@ class CoverageTests(unittest.TestCase):
         for invalid in (0, -1, len(expected) + 1):
             with self.assertRaises(ValueError):
                 module.partitions(invalid)
+        # CI: the hero shards plus the once-only neutral job hold every section exactly once
+        hero = [name for pace in ("normal", "simulation") for group in module.partitions(4, pace, hero=True) for name in group]
+        self.assertEqual(sorted(hero + sorted(module.NEUTRAL)), sorted(expected))
+        self.assertFalse(module.NEUTRAL & module.SIMULATIONS)
+        windowed = [name for group in module.windowed_partitions(4) for name in group]
+        self.assertEqual(sorted(windowed), module.windowed_names())
+        self.assertTrue(set(windowed) <= expected)
+
+    def test_ci_shards_are_balanced_by_time(self):
+        module = ci_sections()
+        # largest first, each to the lightest shard; a section without a time costs the median (5.5 here)
+        groups = module.balance(["a", "b", "c", "d", "e"], 2, {"a": 10.0, "b": 6.0, "c": 5.0, "d": 1.0})
+        self.assertEqual(groups, [["a", "c"], ["b", "d", "e"]])
+        self.assertEqual(module.balance(["x", "y"], 3, {}), [["x"], ["y"], []])
+
+    def test_neutral_sections_do_not_use_the_hero(self):
+        module = ci_sections()
+        for call in ("await t.start_world()", "t.character", "t.new_game()", "Fresh.new_game(t)", 'Fresh.new_game(t, "")',
+                     'UiAudit.audit_screen(t, "x")', "t.tree.current_scene"):
+            self.assertRegex(call, module.HERO_API)
+        for call in ('t.check("x", true)', 'Fresh.new_game(t, "animal", "Tester")', "t.run_tool(python, args)"):
+            self.assertNotRegex(call, module.HERO_API)
+        with mock.patch("builtins.print"):
+            self.assertEqual(module.check(), 0)
 
 
 class ToolchainTests(unittest.TestCase):

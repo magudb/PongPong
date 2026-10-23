@@ -80,14 +80,10 @@ func _run(t,native: bool) -> void:
 	t.check("ability_slots_draw_four_pictures",not ability_art.has("") and ability_art.size() == 4 and hud.drink_count.has_theme_stylebox_override("normal"),str(ability_art.keys()))
 	t.check("equipped_item_indicator_preserved",hud.current_item_badge != null and hud.current_item_badge.is_visible_in_tree())
 	if native:
-		var started := Time.get_ticks_usec()
-		for i in 1000: hud._process(1.0/60)
-		var frame_ms := (Time.get_ticks_usec()-started)/1000000.0
-		started = Time.get_ticks_usec()
-		for i in 100: hud.minimap.update_map()
-		var map_ms := (Time.get_ticks_usec()-started)/100000.0
+		var frame_ms: float = t.median_usec(func() -> void: hud._process(1.0/60),20,50)/1000.0
+		var map_ms: float = t.median_usec(func() -> void: hud.minimap.update_map(),10,10)/1000.0
 		var amortized_ms := frame_ms+map_ms/6
-		t.check("hud_update_budget_under_point_four_ms",amortized_ms < .4,"HUD %.4f ms + minimap %.4f ms at 10 Hz = %.4f ms/frame" % [frame_ms,map_ms,amortized_ms])
+		t.check("hud_update_budget_under_point_four_ms",t.perf_ok("hud_update_budget_under_point_four_ms",amortized_ms,.4),"HUD %.4f ms + minimap %.4f ms at 10 Hz = %.4f ms/frame (medians of batches; native reference 0.4)" % [frame_ms,map_ms,amortized_ms])
 		EventBus.player_health_changed.emit(PlayerRegistry.local_id(), 10,10)
 		EventBus.player_oil_changed.emit(PlayerRegistry.local_id(), 150,150)
 		hud.toasts.clear()

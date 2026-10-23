@@ -55,7 +55,7 @@ case "$cmd" in
     fi
     link_and_warm "$wt" import
     echo "worktree ready: $wt  (branch $name, from $base)"
-    echo "  tests:   (cd '$wt' && tests/run_playtest.sh --strict)"
+    echo "  tests:   (cd '$wt' && tests/run_playtest.sh --strict --no-boot --only=<section>)   gate: tools/dev/ci_local.sh"
     echo "  editor:  open $wt in Godot (only one Godot per worktree at a time)"
     ;;
   list)

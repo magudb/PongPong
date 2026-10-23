@@ -8,9 +8,10 @@ func run(t) -> void:
 		var path := "res://assets/iso_props/farm_dress/"+str(spec.id)+".webp"
 		var texture := load(path) as Texture2D
 		var image := texture.get_image() if texture!=null else null
-		t.check(str(spec.id)+"_native_dimensions",image!=null and image.get_width()==int(spec.size[0]) and image.get_height()==int(spec.size[1]))
+		if image!=null and image.is_compressed():image.decompress()   # world props import S3TC (tools/import/write_import_stubs.py POLICY)
+		t.check(str(spec.id)+"_native_dimensions",image!=null and texture.get_width()==int(spec.size[0]) and texture.get_height()==int(spec.size[1]))   # an S3TC image is stored at 4 px multiples
 		if image==null:continue
-		bytes += image.get_width()*image.get_height()*4
+		bytes += texture.get_width()*texture.get_height()*4
 		t.check(str(spec.id)+"_transparent_gutter",image.get_pixel(0,0).a<0.01 and image.get_pixel(image.get_width()-1,image.get_height()-1).a<0.01)
 		t.check(str(spec.id)+"_source_retained",FileAccess.file_exists("res://"+str(spec.source)))
 		if str(spec.type)!="particle":t.check(str(spec.id)+"_catalogued",ArtCatalog.has_real_prop(StringName(str(spec.get("catalog_id",spec.id)))) and ArtCatalog.prop(StringName(str(spec.get("catalog_id",spec.id)))).texture==texture)

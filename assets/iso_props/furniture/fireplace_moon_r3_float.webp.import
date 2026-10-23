@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://pcwcoyls7dpg"
-path="res://.godot/imported/fireplace_moon_r3_float.webp-48521e46e1b1102661e6009f946b8354.ctex"
+path.s3tc="res://.godot/imported/fireplace_moon_r3_float.webp-48521e46e1b1102661e6009f946b8354.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/fireplace_moon_r3_float.webp"
-dest_files=["res://.godot/imported/fireplace_moon_r3_float.webp-48521e46e1b1102661e6009f946b8354.ctex"]
+dest_files=["res://.godot/imported/fireplace_moon_r3_float.webp-48521e46e1b1102661e6009f946b8354.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

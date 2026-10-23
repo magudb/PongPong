@@ -336,7 +336,7 @@ func _rates() -> void:
 		t.expect(keepsakes == 0, "%s/%s: 40 000 openings gave %d rolls and not one unique / legendary item" % [zone, cid, found])
 	var ms := Time.get_ticks_msec() - t0
 	t.check("rates_match_odds", worst < 3.0, "40 000 seeded openings per container (trae, jern, fe, konge, dig): %d z-tests (find_chance, rarity odds, kind shares after the empty-pool re-draw, roll counts), worst |z| = %.2f (%s), %d ms" % [total_checks, worst, worst_what, ms])
-	t.expect(ms < 15000, "the statistics finish in %d ms (budget 20 s for the section)" % ms)
+	t.check("rates_statistics_time", t.perf_ok("rates_statistics_time", ms, 15000), "the statistics finish in %d ms (native reference 15 s)" % ms)
 	# an EMPTY pool re-draws the kind: a zone whose only material pool is empty at `rare` never hands out a material at rare, and the other kinds absorb the roll
 	var tiny := _pool_cfg(["wood"], 1, "material", "normal")
 	(tiny["zones"]["zz"]["pools"] as Dictionary)["furniture"] = {"rare": [{"item": "bed_walnut", "w": 10}]}

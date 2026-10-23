@@ -2,6 +2,7 @@ extends RefCounted
 const SECTION := "social_events"
 const TIMEOUT_S := 180.0
 const NPC := "gardener_hoppe"
+const FINISH_GAME_S := 10.0
 var runner: SocialEventRunner
 var ui: Node
 var director: SocialEventDirector
@@ -183,12 +184,8 @@ func _confirm_pauses_scene(t) -> void:
 	if not confirms.is_empty(): confirms[0]._finish(false)
 	await t.until(func():return ui.is_open(),3.0)
 	var shown: bool = ui.is_open()
-	for i in 400:
-		await t.frames(1)
-		if ui.is_open() and GameManager.top_modal() == &"dialogue":
-			if ui._wants_focus(): ui._pick(ui._choices[1])
-			else: ui._advance()
-		if runner.active == "": break
+	await t.frames(1)
+	await t.until_game(func():return runner.active == "",FINISH_GAME_S,func():_page(1))
 	t.check("continue_after_confirm_shows_the_pages",shown and SocialManager.event_seen(id) and GameManager.get_flag(&"event_pause_second",false) and not GameManager.get_flag(&"event_pause_first",false))
 	if runner.active != "": runner.cancel()
 
@@ -216,14 +213,16 @@ func _freed_actor_releases_scene(t) -> void:
 	director.reset()
 	t.check("director_reset_clears_the_start_latch",not director._starting)
 
+## Bounded by game time, never by a frame count: the scenes' walks, camera moves and waits run on the game's delta (TEST-03).
 func _finish_dialogue(t) -> void:
-	for i in 400:
-		await t.frames(1)
-		if ui.is_open() and GameManager.top_modal() == &"dialogue":
-			if ui._wants_focus(): ui._pick(ui._choices[0])
-			else: ui._advance()
-		if runner.active == "" and director.queue.is_empty(): return
-	t.fail("event did not release after its dialogue")
+	await t.frames(1)
+	if not await t.until_game(func():return runner.active == "" and director.queue.is_empty(),FINISH_GAME_S,func():_page(0)):
+		t.fail("event did not release after its dialogue within %s game seconds (active '%s', top modal '%s')" % [FINISH_GAME_S,runner.active,GameManager.top_modal()])
+
+func _page(choice: int) -> void:
+	if ui.is_open() and GameManager.top_modal() == &"dialogue":
+		if ui._wants_focus(): ui._pick(ui._choices[choice])
+		else: ui._advance()
 
 func _confirms(node: Node) -> Array:
 	var out: Array = []

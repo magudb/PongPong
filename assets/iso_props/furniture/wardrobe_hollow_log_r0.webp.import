@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bwu2bmml5g8y3"
-path="res://.godot/imported/wardrobe_hollow_log_r0.webp-fb7f48c418ac2552648e53a23eacd66b.ctex"
+path.s3tc="res://.godot/imported/wardrobe_hollow_log_r0.webp-fb7f48c418ac2552648e53a23eacd66b.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/wardrobe_hollow_log_r0.webp"
-dest_files=["res://.godot/imported/wardrobe_hollow_log_r0.webp-fb7f48c418ac2552648e53a23eacd66b.ctex"]
+dest_files=["res://.godot/imported/wardrobe_hollow_log_r0.webp-fb7f48c418ac2552648e53a23eacd66b.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

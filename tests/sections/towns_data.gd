@@ -685,7 +685,7 @@ func _copy_lint(rows: Dictionary) -> void:
 	var i1_ran: bool = false
 	var i1_ok: bool = true
 	if FileAccess.file_exists(lint_py):
-		var res: Dictionary = t.run_tool("/usr/bin/env", PackedStringArray(["python3", "-I", lint_py, "--files", ProjectSettings.globalize_path(CSV_PATH)]))
+		var res: Dictionary = t.run_tool(t.python(), PackedStringArray(["-I", lint_py, "--files", ProjectSettings.globalize_path(CSV_PATH)]))
 		i1_ran = true
 		i1_ok = int(res["code"]) == 0
 		if not i1_ok:

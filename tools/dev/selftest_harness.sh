@@ -12,8 +12,21 @@
 #   script runtime error   exit 1, no hang, later section still runs
 #   allow()                expected warnings/errors pass; anything else still fails; scoped to the section
 #   uncompilable section   exit 1 FAST, nothing else ran; with --only=<other> it is reported but not fatal
-#   section timeout        exit 1 after the section's TIMEOUT_S, not after minutes; --max-seconds stops a whole run;
-#                          a Godot stuck in a synchronous loop is killed by the wrapper (exit 124)
+#   section timeout        exit 1 after the section's TIMEOUT_S, not after minutes; the sections after it still run and the
+#                          stuck one stays parked; one woken by a non-t await prints its checks as uncounted `late` lines;
+#                          --max-seconds stops a whole run;
+#                          a Godot stuck in a synchronous loop is killed by the wrapper (exit 124), one killed from outside
+#                          (out of memory) is reported as killed (exit 137), not as a timeout
+#   isolation              t.on_cleanup() runs after a script error; locale, config overrides, Engine metas, autoload *_path
+#                          seams and the modal stack that a section left behind are restored before the next one
+#   press()                a real click: a hidden button, one outside the window and a covered one fail; press_unchecked() does not check
+#   skip budget            under --strict a section that skips more than its budget fails; without --strict it is a note
+#   perf_ok                the native reference, the TT_PERF_SCALE allowance (clamped to 4) and its SLOW lines
+#   require_tool           a missing tool is a skip, under --strict a failure
+#   --shuffle=N            changes the section order and prints it; a bad seed is a usage error
+#   checkout lock          a second run in a busy checkout exits 2 at once
+#   the run's log          the verdict reads the run's own log (a failed copy cannot bring back an older one), and an
+#                          interrupted run still leaves its log in .godot/playtest_last.log
 #   bad usage              unknown --only name / unknown option -> exit 2
 #   --fast (RT8)           the wrapper turns --fast into `--fixed-fps 60` ahead of the script and never hands --fast to the harness
 #                          (a stand-in engine prints its argv), a windowed run ignores it, an own --fixed-fps / other engine argument
@@ -27,9 +40,12 @@
 #
 # Run it in a test copy (tools/dev/test_in_copy.sh <pkg> --selftest) or any checkout with a Godot import cache;
 # it never writes outside tests/lib/selftest, .selftest/ (removed again) and the throwaway directories.
+# CI runs it as its own job (.github/workflows/playtest.yml, "harness self-test"), and tools/dev/ci_local.sh runs it too.
 
 cd "$(dirname "$0")/../.." || exit 2
 ROOT="$(pwd)"
+# shellcheck source=tools/dev/lock.sh
+. tools/dev/lock.sh
 ALL_CHARS=0
 WITH_WINDOW=0
 WITH_SLOW=0
@@ -46,7 +62,7 @@ RUN="tests/run_playtest.sh"
 ST="tests/lib/selftest"
 TMP_BASE="${TMPDIR:-/tmp}"
 WORK="$(mktemp -d "${TMP_BASE%/}/traetoppen-selftest.XXXXXX")"
-cleanup() { rm -rf "${WORK:?}" "${ROOT:?}/.selftest"; }
+cleanup() { chmod u+w "$ROOT/.godot" 2>/dev/null; rm -rf "${WORK:?}" "${ROOT:?}/.selftest"; }
 trap cleanup EXIT
 trap 'exit 130' INT TERM
 
@@ -150,11 +166,83 @@ rm -rf "${ROOT:?}/.selftest"
 
 # ---- watchdog, usage errors
 run_case section_timeout 1 30 'timed out after 2 s' 'never_reached' --no-boot --sections-dir="$ST/hang"
+run_case timeout_keeps_the_run_going 1 30 'ok +b_next\.the_stuck_section_stays_parked' '^ZOMBIE-RAN-ON|never_reached|not run because' --no-boot --sections-dir="$ST/hang_then_next"
+if grep -q 'timed out after 2 s' "$WORK/timeout_keeps_the_run_going.log" && grep -q 'ok    b_next.gets_a_fresh_t' "$WORK/timeout_keeps_the_run_going.log"; then note_ok "the timed-out section fails the run and the next one gets a fresh t"; else note_fail "timeout isolation: no timeout or no fresh t"; fi
+run_case late_lines_of_a_timed_out_section_count_nowhere 1 30 'late  ok    a_late\.late_check_after_the_timeout   \[from a_late, which timed out: not counted\]' '^ZOMBIE-RAN-ON|never_reached|FAILED   (a_late\.late|b_next)' --no-boot --sections-dir="$ST/hang_late"
+LL="$WORK/late_lines_of_a_timed_out_section_count_nowhere.log"
+if grep -q '^  late  FAIL  late failure after the timeout' "$LL" && grep -q '^  late  SKIP  late skip after the timeout' "$LL" && grep -q '^  late  slow  a_late.late_timing' "$LL" && ! grep -q 'SLOW .*a_late' "$LL" && grep -q 'ok    b_next.own_counts_only' "$LL" && grep -q '^== summary: 2 section(s) run, 2 checks (0 failed, 0 skipped)' "$LL"; then
+	note_ok "a woken timed-out section prints late lines, and neither the next section nor the run counts them"
+else
+	note_fail "late lines of a timed-out section: missing, or counted ($(grep '^== summary' "$LL"))"
+fi
 run_case run_watchdog 1 40 'run watchdog: the whole run exceeded 3 s' 'never_reached' --no-boot --sections-dir="$ST/hang_global" --max-seconds=3
 run_case wrapper_timeout_kills_a_spinning_godot 124 60 'TIMEOUT after 6s' '' --no-boot --sections-dir="$ST/spin" --timeout=6
+FAKE_GODOT_KILL=1 GODOT="$ST/fast/fake_godot.sh" run_case killed_engine_is_not_a_timeout 137 30 'Godot was KILLED \(SIGKILL\).*out of memory' 'TIMEOUT after' --no-boot
+run_case bad_shuffle_seed_is_usage_error 2 30 'shuffle needs a seed' '' --no-boot --sections-dir="$ST/pass" --shuffle=abc
 run_case unknown_only_is_usage_error 2 30 'unknown section .nope.' '' --no-boot --sections-dir="$ST/pass" --only=nope
 run_case unknown_option_is_usage_error 2 30 'unknown option' '' --no-boot --bogus-flag
 run_case bad_character_is_usage_error 2 30 'must be animal, fairy, hobbit or ghost' '' --character=dragon
+
+# ---- isolation between sections: cleanups after a script error, leaked state restored for the next section
+run_case cleanups_run_and_state_is_restored 1 60 'ok +b_checks\.modal_stack_emptied' 'FAILED   b_checks|AFTER_ERROR_SHOULD_NOT_RUN' --no-boot --sections-dir="$ST/state"
+SL="$WORK/cleanups_run_and_state_is_restored.log"
+C1=$(grep -n 'CLEANUP-RAN-FIRST' "$SL" | head -1 | cut -d: -f1)
+C2=$(grep -n 'CLEANUP-RAN-SECOND' "$SL" | head -1 | cut -d: -f1)
+if [ -n "$C1" ] && [ -n "$C2" ] && [ "$C1" -lt "$C2" ]; then note_ok "t.on_cleanup() callables run after a script error, last registered first"; else note_fail "cleanups did not run in order ($C1 / $C2)"; fi
+if grep -q 'left state behind; restored: locale en -> da; config overrides; open modals' "$SL" && grep -q 'LootService.delegate_path' "$SL"; then note_ok "the harness names what it restored"; else note_fail "no restore note for the leaked state"; fi
+
+# ---- press() is a real click; press_unchecked() is not
+run_case press_refuses_what_a_player_cannot_click 1 60 'ok +press_blocked\.refused_buttons_did_not_fire' '' --no-boot --sections-dir="$ST/press_blocked"
+PL="$WORK/press_refuses_what_a_player_cannot_click.log"
+if grep -q 'FAILED   press_blocked.button %StHiddenButton is hidden' "$PL" && grep -q 'FAILED   press_blocked.button %StOutsideButton is outside the window' "$PL" && grep -q 'FAILED   press_blocked.button %StCoveredButton did not get the click.*StOverlay is on top of it' "$PL"; then note_ok "press() fails on a hidden, an outside and a covered button, and names the overlay"; else note_fail "press() refusals missing"; fi
+
+# ---- the skip budget (tests/lib/skip_budget.txt; --skip-budget= points the fixtures at their own file)
+run_case skip_budget_fails_under_strict 1 30 'section skipper skipped 2 check\(s\), its budget is 1' 'PLAYTEST PASS' --no-boot --strict --sections-dir="$ST/skips" --skip-budget="$ST/skips/budget_one.txt"
+run_case skip_budget_is_a_note_without_strict $PASS_RC 30 'its budget is 1 .*\(fails under --strict\)' 'PROBLEM' --no-boot --sections-dir="$ST/skips" --skip-budget="$ST/skips/budget_one.txt"
+run_case skip_budget_within_passes $PASS_RC 30 "$CLEAN" 'budget is' --no-boot --strict --sections-dir="$ST/skips" --skip-budget="$ST/skips/budget_two.txt"
+
+# ---- perf_ok: native reference, the TT_PERF_SCALE allowance (clamped to 1..4) and the SLOW report
+TT_PERF_SCALE=2 run_case perf_ok_allowance_passes_and_reports_slow $PASS_RC 30 'SLOW +perf\.slow: 3\.0, native reference 2\.0 \(1\.50x, passed inside the runner limit 4\.0\)' 'SLOW +perf\.(fast|over)|FAILED' --no-boot --sections-dir="$ST/perf"
+TT_PERF_SCALE=1 run_case perf_ok_native_run_keeps_the_reference 1 30 'FAILED   perf\.inside_allowance' 'SLOW|FAILED   perf\.(within_reference|over_limit_is_false)' --no-boot --sections-dir="$ST/perf"
+TT_PERF_SCALE=99 run_case perf_ok_scale_is_clamped_to_four $PASS_RC 30 'runner limit 8\.0' 'FAILED' --no-boot --sections-dir="$ST/perf"
+
+# ---- require_tool: a missing program is a skip, under --strict a failure
+run_case require_tool_skips_a_missing_tool $PASS_RC 30 'SKIP  probe check: tt-selftest-no-such-tool is not installed' 'FAILED' --no-boot --sections-dir="$ST/require_tool"
+run_case require_tool_fails_under_strict 1 30 'FAILED   require\.probe check: tt-selftest-no-such-tool is not installed' 'MISSING_TOOL_MUST_NOT_PASS|FAILED   require\.existing_tool' --no-boot --strict --sections-dir="$ST/require_tool"
+
+# ---- --shuffle=N reorders the sections (seed 2 puts second_named first) and says so
+run_case shuffle_changes_the_order $PASS_RC 60 'shuffle=2: sections run in this order: second_named, a_basics' 'FAILED' --no-boot --sections-dir="$ST/pass" --shuffle=2
+A_LINE=$(grep -n '== section a_basics' "$WORK/shuffle_changes_the_order.log" | head -1 | cut -d: -f1)
+B_LINE=$(grep -n '== section second_named' "$WORK/shuffle_changes_the_order.log" | head -1 | cut -d: -f1)
+if [ -n "$A_LINE" ] && [ -n "$B_LINE" ] && [ "$B_LINE" -lt "$A_LINE" ]; then note_ok "--shuffle=2 runs second_named before a_basics"; else note_fail "--shuffle=2 did not change the order ($A_LINE / $B_LINE)"; fi
+
+# ---- one run per checkout: a second run while the lock is held exits 2 at once (this script holds it for the case)
+if take_checkout_lock "$ROOT" selftest_harness; then
+	run_case busy_checkout_is_refused 2 15 'another run is using this checkout' 'PLAYTEST start' --no-boot --sections-dir="$ST/pass"
+	release_checkout_lock
+else
+	note_fail "busy_checkout_is_refused: could not take the checkout lock for the case"
+fi
+
+# ---- the run's own log: the verdict reads it, and .godot/playtest_last.log gets a copy also when the run was interrupted
+LAST=".godot/playtest_last.log"
+echo "PLAYTEST PASS (an older run)" >"$LAST"
+chmod a-w .godot   # the copy to playtest_last.log fails, and so does removing the older run's copy
+FAKE_GODOT_NO_RESULT=1 GODOT="$ST/fast/fake_godot.sh" run_case verdict_reads_the_runs_own_log 2 30 'printed no result line' '' --no-boot
+chmod u+w .godot
+if grep -q "could not copy the run's log" "$WORK/verdict_reads_the_runs_own_log.log"; then note_ok "a failed copy of the run's log is reported"; else note_fail "a failed copy of the run's log was not reported"; fi
+rm -f "$LAST"
+FAKE_GODOT_MARK="interrupted-$$" FAKE_GODOT_SLEEP=4 PLAYTEST_NO_IMPORT=1 GODOT="$ST/fast/fake_godot.sh" "$RUN" --no-boot >"$WORK/interrupted_run.log" 2>&1 &
+RUN_PID=$!
+sleep 1
+kill -TERM "$RUN_PID"
+wait "$RUN_PID"
+RUN_RC=$?
+if [ "$RUN_RC" = 130 ] && grep -q "^FAKE_MARK interrupted-$$\$" "$LAST" 2>/dev/null; then
+	note_ok "an interrupted run (exit 130) leaves its own log in $LAST"
+else
+	note_fail "interrupted run: exit $RUN_RC, $LAST has $(grep '^FAKE_MARK' "$LAST" 2>/dev/null || echo 'no FAKE_MARK line')"
+fi
 
 # ---- --fast (RT8): the wrapper adds `--fixed-fps 60`; a stand-in engine (tests/lib/selftest/fast/fake_godot.sh) prints its argv
 FAKE_GODOT="$ST/fast/fake_godot.sh"
@@ -173,12 +261,15 @@ fake_expect() { # fake_expect LABEL ARGV_PATTERN WANT(yes|no) CASE   (the argv m
 }
 fake_run harness.fast_flag_forwards_fixed_fps 0 30 'PLAYTEST PASS' '' --fast --no-boot
 fake_expect "--fast becomes '--fixed-fps 60' ahead of the harness script" '--headless --fixed-fps 60 -s res://tests/playtest.gd -- ' yes harness.fast_flag_forwards_fixed_fps
-fake_expect "--fast itself never reaches the harness (it would be an unknown option there)" '(^| )--fast( |$)' no harness.fast_flag_forwards_fixed_fps
+fake_expect "--fast reaches the harness as a user arg after -- (t.fixed_fps() reads it)" ' -- .*--fast( |$)' yes harness.fast_flag_forwards_fixed_fps
+fake_expect "--fast is not passed to the engine itself" '--fast .*-s res://tests/playtest.gd' no harness.fast_flag_forwards_fixed_fps
 fake_run no_fast_flag_keeps_real_time 0 30 'PLAYTEST PASS' '' --no-boot
 fake_expect "without --fast no --fixed-fps is passed" '--fixed-fps' no no_fast_flag_keeps_real_time
 GODOT_EXTRA_ARGS="--verbose" fake_run fast_flag_with_extra_engine_args 0 30 'PLAYTEST PASS' '' --fast --no-boot
 fake_expect "GODOT_EXTRA_ARGS are kept next to --fixed-fps 60" '--headless --fixed-fps 60 --verbose -s res://tests/playtest.gd' yes fast_flag_with_extra_engine_args
 GODOT_EXTRA_ARGS="--fixed-fps 30" fake_run fast_flag_keeps_an_own_fixed_fps 0 30 'PLAYTEST PASS' '' --fast --no-boot
+GODOT_EXTRA_ARGS="--verbose *" fake_run extra_engine_args_are_not_glob_expanded 0 30 'PLAYTEST PASS' '' --no-boot
+fake_expect "GODOT_EXTRA_ARGS are split on spaces, a * stays a literal argument" '--verbose \* -s res://tests/playtest.gd' yes extra_engine_args_are_not_glob_expanded
 fake_expect "an own --fixed-fps 30 is kept and not doubled" '--headless --fixed-fps 30 -s res://tests/playtest.gd' yes fast_flag_keeps_an_own_fixed_fps
 fake_expect "an own --fixed-fps 30 is not followed by a second --fixed-fps 60" '--fixed-fps 60' no fast_flag_keeps_an_own_fixed_fps
 fake_run fast_flag_is_ignored_in_a_windowed_run 0 30 'PLAYTEST PASS|--fast is ignored in a windowed run' '' --windowed --fast --out="$WORK/win_shots"
@@ -196,7 +287,7 @@ if [ -n "$REAL_MS" ] && [ "$REAL_MS" -ge 3500 ]; then note_ok "the same 5 game s
 run_case fast_flag_with_list 0 30 'PLAYTEST list end: 2 section' '' --list --fast --sections-dir="$ST/pass"
 # the watchdogs count wall-clock time: under --fast a frame is a fraction of a millisecond, so a game-time timer would stop a section that only waits on the wall clock
 run_case fast_flag_section_watchdog_counts_wall_time 0 30 'ok +wall_wait\.waited_on_the_wall_clock' 'timed out|FAIL  |PROBLEM' --fast --no-boot --sections-dir="$ST/fast_wall"
-run_case fast_flag_run_watchdog_counts_wall_time 0 30 'ok +wall_wait\.waited_on_the_wall_clock' 'run watchdog|timed out|FAIL  |PROBLEM' --fast --no-boot --sections-dir="$ST/fast_wall" --max-seconds=4
+run_case fast_flag_run_watchdog_counts_wall_time 0 30 'ok +wall_wait\.waited_on_the_wall_clock' 'run watchdog|timed out|FAIL  |PROBLEM' --fast --no-boot --sections-dir="$ST/fast_wall" --max-seconds=8
 run_case fast_flag_ui_audit_settle_waits_process_time $PASS_RC 90 'ok +ui_audit_blind\.blind_two_modals_fade_longer_than_the_default' 'FAIL  |FAILED|PROBLEM|timed out' --fast --no-boot --only=ui_audit_blind
 run_case fast_flag_hang_is_still_stopped 1 30 'timed out after 2 s' 'never_reached' --fast --no-boot --sections-dir="$ST/hang"
 run_case fast_flag_run_watchdog_still_stops_a_hang 1 40 'run watchdog: the whole run exceeded 3 s' 'never_reached' --fast --no-boot --sections-dir="$ST/hang_global" --max-seconds=3

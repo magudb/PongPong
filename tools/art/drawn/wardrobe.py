@@ -12,14 +12,13 @@ import io
 import numpy as np
 from PIL import Image, ImageDraw
 from scipy import ndimage
-from pack import fitted, puppet
+from pack import fitted, puppet, ensure_policy
 from held_equipment import GRIPS, track
 
 ROOT = Path(__file__).resolve().parents[3]
 SOURCE = ROOT/'tools/art/drawn/sources/wardrobe'
 OUT = ROOT/'assets/wardrobe'
 DOC = ROOT/'docs/art/wardrobe'
-PRESET = '[remap]\nimporter="texture"\ntype="CompressedTexture2D"\n\n[params]\ncompress/mode=2\nmipmaps/generate=true\nprocess/fix_alpha_border=true\n'
 # Individual body proportions, never a shared stretched character rig.
 # shirt=(x,y,w,h), hips=(x,y,w,h), feet=(x,y,w,h), head=(x,y,w,h).
 FITS = {
@@ -105,8 +104,7 @@ def save(image,path):
     path.parent.mkdir(parents=True,exist_ok=True)
     encoded=io.BytesIO();image.save(encoded,format='WEBP',lossless=True,method=2,exact=True)
     if not path.exists() or path.read_bytes()!=encoded.getvalue():path.write_bytes(encoded.getvalue())
-    imp=Path(str(path)+'.import')
-    if not imp.exists():imp.write_text(PRESET)
+    ensure_policy(path)
 
 def rect(body, family, direction):
     fit=FITS[body]

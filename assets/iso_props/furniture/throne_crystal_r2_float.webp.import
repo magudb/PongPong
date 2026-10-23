@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cfnve60h27gdk"
-path="res://.godot/imported/throne_crystal_r2_float.webp-2012f79163559e701074a42b5b925b22.ctex"
+path.s3tc="res://.godot/imported/throne_crystal_r2_float.webp-2012f79163559e701074a42b5b925b22.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/throne_crystal_r2_float.webp"
-dest_files=["res://.godot/imported/throne_crystal_r2_float.webp-2012f79163559e701074a42b5b925b22.ctex"]
+dest_files=["res://.godot/imported/throne_crystal_r2_float.webp-2012f79163559e701074a42b5b925b22.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

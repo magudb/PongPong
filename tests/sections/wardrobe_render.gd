@@ -167,7 +167,7 @@ func _turnarounds(t, ui: Node) -> void:
 		samples.append((Time.get_ticks_usec()-started)/1000.0)
 	samples.sort()
 	var p95 := samples[floori(samples.size()*0.95)]
-	t.check("tailored_pose_update_under_equipment_budget", p95 <= 0.3, "%s p95 %.4f ms across 240 changing directions (limit 0.3 ms)" % [clock.resolved_id, p95])
+	t.check("tailored_pose_update_under_equipment_budget", t.perf_ok("tailored_pose_update_under_equipment_budget", p95, 0.3), "%s p95 %.4f ms across 240 changing directions (native reference 0.3 ms)" % [clock.resolved_id, p95])
 	t.check("tailoring_adds_no_extra_canvas_items", ui.preview_layers.root.get_child_count() == outfits[0].size()+1)
 
 	ui.preview_layers.set_outfit(outfits[-1])

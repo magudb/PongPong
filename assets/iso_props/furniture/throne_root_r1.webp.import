@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://5kvj1fg24vj8"
-path="res://.godot/imported/throne_root_r1.webp-a1b77cde1dcd8b3279ce983bb0b10fe3.ctex"
+path.s3tc="res://.godot/imported/throne_root_r1.webp-a1b77cde1dcd8b3279ce983bb0b10fe3.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/throne_root_r1.webp"
-dest_files=["res://.godot/imported/throne_root_r1.webp-a1b77cde1dcd8b3279ce983bb0b10fe3.ctex"]
+dest_files=["res://.godot/imported/throne_root_r1.webp-a1b77cde1dcd8b3279ce983bb0b10fe3.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

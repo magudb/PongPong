@@ -27,11 +27,8 @@ func run(t) -> void:
 	var seen: Array = []
 	var stats := func(_player_id: StringName, values: Dictionary) -> void: seen.append(values.duplicate())
 	bus.player_stats_changed.connect(stats)
-	var idle_started := Time.get_ticks_usec()
-	for frame in 100:
-		p._physics_process(1.0 / 60.0)
-	var idle_us := float(Time.get_ticks_usec() - idle_started) / 100.0
-	t.check("idle_controller_budget", idle_us < 300.0, "%.2f microseconds per tick" % idle_us)
+	var idle_us: float = t.median_usec(func() -> void: p._physics_process(1.0 / 60.0), 10, 10)
+	t.check("idle_controller_budget", t.perf_ok("idle_controller_budget", idle_us, 300.0), "%.2f microseconds per tick, median of 10 batches of 10 (native reference 300, runner limit %.0f)" % [idle_us, t.perf_limit(300.0)])
 	t.check("idle_stats_are_quiet", seen.is_empty(), str(seen.size()))
 	p.stamina = 20
 	p.restore_stamina(10)

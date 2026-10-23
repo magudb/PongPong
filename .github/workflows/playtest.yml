@@ -1,17 +1,38 @@
 name: playtest
 
-# Headless gate for every push and PR. `main` is expected to stay green
+# Gate for every push and PR. `main` is expected to stay green
 # (docs/DEVELOPMENT.md); this workflow is what enforces that on GitHub.
 #
 # tests/run_playtest.sh already has a CI-ready contract:
 #   exit 0 = PASS, 1 = failed checks / engine errors or warnings,
 #   2 = usage or infrastructure, 124 = timeout.
 # --strict ignores tests/lib/known_issues.txt so tolerated warnings cannot pile up here.
+#
+# Jobs (tools/ci/sections.py partitions the sections):
+#   project   once: tooling tests, the fresh-checkout import contract (two imports; the second one and a
+#             boot print no engine error or warning), the check_project.gd mutants, and the sections that
+#             do not depend on the hero (sections.py --neutral). Saves the import cache.
+#   playtest  4 heroes x 4 shards of the other sections, balanced by tools/ci/section_seconds.json.
+#   windowed  the run_windowed(t) sections in a real 1280x720 window (Xvfb + Mesa software GL), advisory.
+#   selftest  the harness's own negative tests (tools/dev/selftest_harness.sh).
+# tools/dev/ci_local.sh runs the same split on a developer machine (every section per hero, the neutral ones included).
+#
+# The import cache holds only .godot/imported (about 0.4 GB compressed). A job without an exact match
+# restores the newest older entry and Godot re-imports only what changed (it compares hashes); the cold
+# import of `project` keeps checking the fresh-checkout path on every run.
+#
+# Timeouts: each harness step has a wrapper timeout (--timeout) and a slightly longer step
+# timeout, and the harness steps plus setup fit inside the job timeout, so a hang is
+# reported by the wrapper (exit 124, with its log) instead of the runner cancelling the job.
+# The nightly run shuffles the section order (--shuffle=<run id>) to expose sections that
+# depend on state an earlier section left behind.
 
 on:
   push:
     branches: [main]
   pull_request:
+  schedule:
+    - cron: "17 2 * * *"
   workflow_dispatch:
   workflow_call:
 
@@ -19,25 +40,138 @@ permissions:
   contents: read
 
 concurrency:
-  group: playtest-${{ github.workflow }}-${{ github.ref }}
+  group: playtest-${{ github.workflow }}-${{ github.ref }}-${{ github.event_name == 'schedule' && 'nightly' || 'push' }}
   cancel-in-progress: true
 
+env:
+  PYTHONUNBUFFERED: "1"
+  TT_PERF_SCALE: "4"
+  LIBGL_ALWAYS_SOFTWARE: "1"
+  VTK_DEFAULT_OPENGL_WINDOW: vtkXOpenGLRenderWindow
+
 jobs:
+  project:
+    name: project contract, tooling and hero-neutral sections
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # Media under docs/ and tools/art/ goes into Git LFS from now on (docs/DEVELOPMENT.md, "Repository size"), and
+      # some art sections read review sheets and source paintings there. QA screenshots (docs/qa, docs/review) are
+      # never read by a test and are not downloaded. The rest comes from a cache keyed by the object ids, so 16 jobs
+      # do not each spend LFS bandwidth; with no such LFS file in the tree both steps are skipped.
+      - name: List Git LFS objects
+        id: lfs
+        env:
+          LFS_EXCLUDE: docs/qa/**,docs/review/**
+        run: |
+          set -euo pipefail
+          git lfs ls-files --long --exclude="$LFS_EXCLUDE" | cut -d ' ' -f1 | sort > "$RUNNER_TEMP/lfs-objects.txt"
+          echo "count=$(wc -l < "$RUNNER_TEMP/lfs-objects.txt" | tr -d ' ')" >> "$GITHUB_OUTPUT"
+          echo "key=lfs-$(sha256sum "$RUNNER_TEMP/lfs-objects.txt" | cut -c1-32)" >> "$GITHUB_OUTPUT"
+          echo "exclude=$LFS_EXCLUDE" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Git LFS objects
+        if: steps.lfs.outputs.count != '0'
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .git/lfs/objects
+          key: ${{ steps.lfs.outputs.key }}
+          restore-keys: lfs-
+
+      - name: Check out Git LFS files
+        if: steps.lfs.outputs.count != '0'
+        run: git lfs install --local && git lfs pull --exclude="${{ steps.lfs.outputs.exclude }}"
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tools/art/core/requirements.txt
+
+      - name: Install Lua 5.4 for independent data checks
+        run: sudo apt-get update -qq && sudo apt-get install --no-install-recommends -y lua5.4 xvfb libgl1-mesa-dri
+
+      - name: Install pinned test and art tooling
+        run: tools/art/setup_env.sh
+
+      - name: Check the section partition and the hero-neutral list
+        run: python tools/ci/sections.py --check
+
+      - name: Boot gate self-test
+        run: python tests/tools/boot_check.py --selftest
+
+      - name: Verify portable image comparisons
+        run: tools/art/.venv/bin/python tools/ui/test_crop_guide_refs.py
+
+      - name: Release and updater tooling tests
+        run: python -m unittest discover -s tools/release/tests -v
+
+      - name: Validate localization
+        run: python tools/loc/csv_lint.py --strict --quiet
+
+      - name: Import cache key
+        id: import-key
+        # From the committed inputs, before anything is imported (the playtest and windowed jobs restore with the same expression).
+        run: echo "key=godot-import-${{ runner.os }}-${{ hashFiles('tools/ci/godot.json') }}-${{ hashFiles('project.godot', '**/*.import', 'assets/**', 'localization/**') }}" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Godot binary
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/.godot-bin
+          key: godot-linux-${{ hashFiles('tools/ci/godot.json') }}
+
+      - name: Install checksum-pinned Godot
+        run: python tools/ci/install_godot.py
+
+      - name: Import a fresh checkout without engine errors or warnings
+        # docs/DEVELOPMENT.md: main imports with zero errors/warnings. The first import may print the
+        # one-time font errors; the second import and a 30-frame boot must print no engine message at all.
+        run: python tests/tools/boot_check.py --project . --fresh --in-place --strict
+
+      - name: Save import cache
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/.godot/imported
+          key: ${{ steps.import-key.outputs.key }}
+
+      - name: Project contract mutants (check_project.gd must catch each one)
+        run: python tests/tools/mutation_check.py --project . --jobs 4 --workdir "$RUNNER_TEMP/mutants"
+
+      - name: Run hero-neutral sections (strict)
+        if: ${{ !cancelled() }}
+        timeout-minutes: 50
+        run: |
+          set -euo pipefail
+          sections="$(python tools/ci/sections.py --neutral)"
+          xvfb-run -a tests/run_playtest.sh --strict --timeout=2700 --only="$sections" --character=animal ${SHUFFLE:+"$SHUFFLE"} --report=/tmp/playtest-neutral.json
+        env:
+          SHUFFLE: ${{ github.event_name == 'schedule' && format('--shuffle={0}', github.run_id) || '' }}
+
+      - name: Summary
+        if: always()
+        run: python tools/ci/report_summary.py /tmp/playtest-neutral.json >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playtest-report-neutral
+          path: /tmp/playtest-neutral.json
+          if-no-files-found: ignore
+
   playtest:
     name: headless harness (${{ matrix.character }}, part ${{ matrix.shard }})
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 100
     strategy:
       fail-fast: false
       matrix:
         character: [animal, fairy, hobbit, ghost]
         shard: [0, 1, 2, 3]
-
-    env:
-      PYTHONUNBUFFERED: "1"
-      TT_PERF_SCALE: "4"
-      LIBGL_ALWAYS_SOFTWARE: "1"
-      VTK_DEFAULT_OPENGL_WINDOW: vtkXOpenGLRenderWindow
 
     steps:
       - name: Checkout
@@ -55,17 +189,14 @@ jobs:
       - name: Install pinned test and art tooling
         run: tools/art/setup_env.sh
 
-      - name: Verify portable image comparisons
-        run: tools/art/.venv/bin/python tools/ui/test_crop_guide_refs.py
-
-      - name: Release and updater tooling tests
-        run: python -m unittest discover -s tools/release/tests -v
-
-      - name: Validate localization
-        run: python tools/loc/csv_lint.py --strict --quiet
+      - name: Restore import cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/.godot/imported
+          key: godot-import-${{ runner.os }}-${{ hashFiles('tools/ci/godot.json') }}-${{ hashFiles('project.godot', '**/*.import', 'assets/**', 'localization/**') }}
+          restore-keys: godot-import-${{ runner.os }}-${{ hashFiles('tools/ci/godot.json') }}-
 
       - name: Cache Godot binary
-        id: cache-godot
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ${{ github.workspace }}/.godot-bin
@@ -75,27 +206,35 @@ jobs:
         run: python tools/ci/install_godot.py
 
       - name: Import project
-        # Fresh runners have no .godot cache; the harness would import anyway, but doing it
-        # here surfaces import errors as their own step and warms the cache for the run.
+        # Warm with a restored cache, cold without one. The harness would import anyway; doing it here
+        # keeps the import out of the harness watchdog.
         run: |
           set -euo pipefail
           "$GODOT" --headless --path . --import
           "$GODOT" --headless --path . --import
 
       - name: Run playtest (strict)
+        timeout-minutes: 50
         run: |
           set -euo pipefail
-          sections="$(python tools/ci/sections.py --shard ${{ matrix.shard }} --count 4 --pace normal)"
-          xvfb-run -a tests/run_playtest.sh --strict --timeout=2700 --only="$sections" --character=${{ matrix.character }} --report=/tmp/playtest-${{ matrix.character }}-${{ matrix.shard }}.json
+          sections="$(python tools/ci/sections.py --hero --shard ${{ matrix.shard }} --count 4 --pace normal)"
+          xvfb-run -a tests/run_playtest.sh --strict --timeout=2700 --only="$sections" --character=${{ matrix.character }} ${SHUFFLE:+"$SHUFFLE"} --report=/tmp/playtest-${{ matrix.character }}-${{ matrix.shard }}.json
+        env:
+          SHUFFLE: ${{ github.event_name == 'schedule' && format('--shuffle={0}', github.run_id) || '' }}
 
       - name: Run seeded combat simulations at fixed physics steps
         if: ${{ !cancelled() }}
+        timeout-minutes: 35
         run: |
           set -euo pipefail
-          sections="$(python tools/ci/sections.py --shard ${{ matrix.shard }} --count 4 --pace simulation)"
+          sections="$(python tools/ci/sections.py --hero --shard ${{ matrix.shard }} --count 4 --pace simulation)"
           if [[ -n "$sections" ]]; then
             xvfb-run -a tests/run_playtest.sh --strict --fast --timeout=1800 --only="$sections" --character=${{ matrix.character }} --report=/tmp/playtest-${{ matrix.character }}-${{ matrix.shard }}-simulation.json
           fi
+
+      - name: Summary
+        if: always()
+        run: python tools/ci/report_summary.py /tmp/playtest-${{ matrix.character }}-${{ matrix.shard }}*.json >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload report
         if: always()
@@ -104,3 +243,128 @@ jobs:
           name: playtest-report-${{ matrix.character }}-${{ matrix.shard }}
           path: /tmp/playtest-${{ matrix.character }}-${{ matrix.shard }}*.json
           if-no-files-found: ignore
+
+  windowed:
+    name: windowed harness (part ${{ matrix.shard }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    # Advisory until its first green run: the pixel checks and the reviewed baselines were measured on
+    # macOS, and Mesa's software renderer has not run them yet. Delete this line to make it a gate.
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    env:
+      # No sound card on the runner: without the dummy driver Godot warns that every audio driver failed.
+      GODOT_EXTRA_ARGS: --audio-driver Dummy
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tools/art/core/requirements.txt
+
+      - name: Install Lua 5.4, Xvfb and Mesa software OpenGL
+        run: >-
+          sudo apt-get update -qq && sudo apt-get install --no-install-recommends -y lua5.4 xvfb xauth
+          libgl1 libglx-mesa0 libgl1-mesa-dri libegl1 libxcursor1 libxinerama1 libxrandr2 libxi6 libxkbcommon0
+
+      - name: Install pinned test and art tooling
+        run: tools/art/setup_env.sh
+
+      - name: Restore import cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/.godot/imported
+          key: godot-import-${{ runner.os }}-${{ hashFiles('tools/ci/godot.json') }}-${{ hashFiles('project.godot', '**/*.import', 'assets/**', 'localization/**') }}
+          restore-keys: godot-import-${{ runner.os }}-${{ hashFiles('tools/ci/godot.json') }}-
+
+      - name: Cache Godot binary
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/.godot-bin
+          key: godot-linux-${{ hashFiles('tools/ci/godot.json') }}
+
+      - name: Install checksum-pinned Godot
+        run: python tools/ci/install_godot.py
+
+      - name: Import project
+        run: |
+          set -euo pipefail
+          "$GODOT" --headless --path . --import
+          "$GODOT" --headless --path . --import
+
+      - name: Run windowed sections (strict)
+        timeout-minutes: 55
+        run: |
+          set -euo pipefail
+          sections="$(python tools/ci/sections.py --windowed --shard ${{ matrix.shard }} --count 4)"
+          xvfb-run -a -s "-screen 0 1920x1080x24" tests/run_playtest.sh --windowed --strict --timeout=3000 --only="$sections" \
+            --out="$RUNNER_TEMP/windowed-shots" --report=/tmp/playtest-windowed-${{ matrix.shard }}.json
+
+      - name: Summary
+        if: always()
+        run: python tools/ci/report_summary.py /tmp/playtest-windowed-${{ matrix.shard }}.json >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playtest-report-windowed-${{ matrix.shard }}
+          path: /tmp/playtest-windowed-${{ matrix.shard }}.json
+          if-no-files-found: ignore
+
+      - name: Upload the screenshots of a failed run
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: windowed-shots-${{ matrix.shard }}
+          path: ${{ runner.temp }}/windowed-shots
+          retention-days: 7
+          if-no-files-found: ignore
+
+  selftest:
+    name: harness self-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Restore import cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/.godot/imported
+          key: godot-import-${{ runner.os }}-${{ hashFiles('tools/ci/godot.json') }}-${{ hashFiles('project.godot', '**/*.import', 'assets/**', 'localization/**') }}
+          restore-keys: godot-import-${{ runner.os }}-${{ hashFiles('tools/ci/godot.json') }}-
+
+      - name: Cache Godot binary
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/.godot-bin
+          key: godot-linux-${{ hashFiles('tools/ci/godot.json') }}
+
+      - name: Install checksum-pinned Godot
+        run: python tools/ci/install_godot.py
+
+      - name: Import project
+        run: |
+          set -euo pipefail
+          "$GODOT" --headless --path . --import
+          "$GODOT" --headless --path . --import
+
+      - name: Run the harness's negative tests
+        # The harness's own test: an injected error, a warning, a failed check, an uncompilable section,
+        # hangs, the skip budget, perf_ok and --fast must all fail or pass exactly as documented.
+        timeout-minutes: 20
+        run: tools/dev/selftest_harness.sh

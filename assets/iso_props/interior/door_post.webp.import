@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c56ocwrsr5lti"
-path="res://.godot/imported/door_post.webp-e35411b4cd12641d451137b261dcc1eb.ctex"
+path.s3tc="res://.godot/imported/door_post.webp-e35411b4cd12641d451137b261dcc1eb.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/interior/door_post.webp"
-dest_files=["res://.godot/imported/door_post.webp-e35411b4cd12641d451137b261dcc1eb.ctex"]
+dest_files=["res://.godot/imported/door_post.webp-e35411b4cd12641d451137b261dcc1eb.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

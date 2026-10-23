@@ -433,11 +433,6 @@ func _meta_parse(t) -> void:
 
 # ---------------------------------------------------------------- import stubs
 
-func _python() -> String:
-	var venv := ProjectSettings.globalize_path("res://tools/art/.venv/bin/python")
-	return venv if FileAccess.file_exists(venv) else "python3"
-
-
 func _write_text(abs_path: String, text: String) -> void:
 	DirAccess.make_dir_recursive_absolute(abs_path.get_base_dir())
 	var f := FileAccess.open(abs_path, FileAccess.WRITE)
@@ -460,7 +455,7 @@ func _rm_rf(abs_dir: String) -> void:
 
 func _import_stubs(t) -> void:
 	var tool := ProjectSettings.globalize_path("res://tools/import/write_import_stubs.py")
-	var py := _python()
+	var py: String = t.python()
 	t.check("stub_tool_exists", FileAccess.file_exists(tool), tool)
 	# the real project: every sheet carries the S3TC preset (the harness runs this tool on every assets/ change as well)
 	var res: Dictionary = t.run_tool(py, PackedStringArray([tool, "--check"]))
@@ -586,7 +581,8 @@ func _warm_clips(t) -> void:
 	for c in clips:
 		cached = cached and ResourceLoader.has_cached(DIR + "capybara/" + str(c) + ".webp")
 	t.check("warm_clips_one_sheet_per_frame", bool(state["done"]) and _max_step(counts)<=1 and frame_ms.size()>=clips.size() and counts.back()==counts[0]+clips.size(),"genuinely cold clips per frame: %s" % [counts])
-	t.check("warm_clips_finishes_cheap", bool(state["done"]) and mean < 8.0 and worst < 40.0 and _max_step(counts) <= 1 and counts[counts.size() - 1] == counts[0] + clips.size(), "5 cold clips finished over %d frames, mean frame %.2f ms, worst %.1f ms, at most %d sheet(s) per frame (SCRIPT cost only: headless = dummy renderer where a GPU upload is free; the real-renderer budget is checked windowed by characters.warm_clips_worst_frame_real_renderer and tests/perf_world.tscn)" % [frame_ms.size(), mean, worst, _max_step(counts)])
+	t.check("warm_clips_worst_frame", t.perf_ok("warm_clips_worst_frame", worst, 40.0), "worst frame %.1f ms while 5 cold clips load (native reference 40)" % worst)
+	t.check("warm_clips_finishes_cheap", t.perf_ok("warm_clips_finishes_cheap", mean, 8.0), "5 cold clips finished over %d frames, mean frame %.2f ms, worst %.1f ms, at most %d sheet(s) per frame (SCRIPT cost only: headless = dummy renderer where a GPU upload is free; the real-renderer budget is checked windowed by characters.warm_clips_worst_frame_real_renderer and tests/perf_world.tscn)" % [frame_ms.size(), mean, worst, _max_step(counts)])
 	t.check("warm_clips_leaves_sheets_cached", cached)
 	probe.play_loop(&"walk")
 	t.check("warmed_clip_is_used_immediately", str(probe.sprite.texture.resource_path).ends_with("capybara/walk.webp"))

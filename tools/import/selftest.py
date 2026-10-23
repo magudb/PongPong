@@ -186,7 +186,74 @@ def main() -> int:
         run(r)
         check("write_never_stubs_layers", not (lay / "shirt.loco.webp.import").exists())
 
-        # 7. an empty project is fine, a bad root is a usage error
+        # 7. the import policy of every other texture (review REND-03)
+        r = base / "t8"
+        prop = r / "assets" / "iso_props" / "city" / "hut.webp"
+        icon = r / "assets" / "icons" / "items" / "apple.webp"
+        sky = r / "assets" / "backdrops" / "farm_far.webp"
+        held = r / "assets" / "held_equipment" / "tools.webp"
+        kernel = r / "assets" / "iso_props" / "lantern_light.png"
+        for f in (prop, icon, sky, held, kernel):
+            f.parent.mkdir(parents=True, exist_ok=True)
+            f.write_bytes(b"RIFF0000WEBPVP8 ")
+        code, out = run(r, "--check")
+        check("policy_fails_on_prop_without_stub", code == 1 and "iso_props/city/hut.webp" in out and "no hut.webp.import" in out)
+        check("policy_default_covers_lossless_without_import", "apple.webp" not in out and "lantern_light.png" not in out)
+        code, out = run(r, "--only", "policy")
+        check("policy_writes_the_presets", code == 0 and "compress/mode=2" in (prop.with_name("hut.webp.import")).read_text()
+              and "mipmaps/generate=false" in (held.with_name("tools.webp.import")).read_text()
+              and not icon.with_name("apple.webp.import").exists() and not kernel.with_name("lantern_light.png.import").exists())
+        code, out = run(r, "--check")
+        check("policy_check_passes_after_write", code == 0, out.strip().splitlines()[-1] if out.strip() else "")
+        prop.with_name("hut.webp.import").write_text(godot_complete(0))
+        code, out = run(r, "--check")
+        check("policy_fails_on_lossless_prop", code == 1 and "hut.webp" in out and "compress/mode=0" in out and "policy preset vram" in out)
+        code, out = run(r, "--only", "policy")
+        body = prop.with_name("hut.webp.import").read_text()
+        check("policy_patches_stale_import_keeping_uid", code == 0 and "replaced" in out and "compress/mode=2" in body and "uid://abc123" in body
+              and "compress/lossy_quality=0.7" in body and "compress/mode=0" not in body)
+        icon.with_name("apple.webp.import").write_text(godot_complete(2))
+        code, out = run(r, "--check")
+        check("policy_fails_on_vram_icon", code == 1 and "apple.webp" in out and "policy preset lossless" in out)
+        icon.with_name("apple.webp.import").write_text(godot_complete(0, mips="false"))
+        sky.with_name("farm_far.webp.import").write_text(godot_complete(2, mips="false"))
+        code, out = run(r, "--check")
+        check("policy_mipmaps_free_for_backdrops_and_ui", code == 0, out.strip().splitlines()[-1] if out.strip() else "")
+        held.with_name("tools.webp.import").write_text(godot_complete(0, mips="true"))
+        code, out = run(r, "--check")
+        check("policy_fails_on_mipmapped_packed_frames", code == 1 and "tools.webp" in out and "mipmaps/generate" in out)
+        held.with_name("tools.webp.import").write_text(godot_complete(0, mips="false"))
+        stray = r / "assets" / "stray" / "x.png"
+        stray.parent.mkdir(parents=True)
+        stray.write_bytes(b"\x89PNG")
+        code, out = run(r, "--check")
+        check("policy_fails_on_texture_without_rule", code == 1 and "assets/stray/x.png: no import policy rule" in out)
+        stray.unlink()
+        (stray.parent / ".gdignore").write_text("")
+        stray.write_bytes(b"\x89PNG")
+        code, out = run(r, "--check")
+        check("policy_skips_gdignored_folders", code == 0, out.strip().splitlines()[-1] if out.strip() else "")
+        sys.path.insert(0, str(HERE))
+        import write_import_stubs as tool
+        check("policy_api_for_bakers", "compress/mode=2" in tool.stub_for(prop, r) and tool.stub_for(icon, r) == ""
+              and tool.policy_problems(prop, r) == [] and tool.preset_of("assets/iso_tiles/grass.png") == "atlas"
+              and tool.preset_of("assets/isometric_characters/fox/portrait.webp") == "lossless"
+              and tool.preset_of("assets/isometric_characters/fox/walk.webp") == "vram")
+        # the exported-texture budget (review REPO-02): DXT5 arithmetic for a VRAM texture, the file size for a lossless one
+        png = r / "assets" / "iso_props" / "city" / "big.png"
+        png.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\0\0\0\rIHDR" + (1024).to_bytes(4, "big") + (512).to_bytes(4, "big") + b"\0" * 16)
+        tool.ensure_policy(png, r)
+        payload = tool.texture_payload(r)
+        check("budget_counts_dxt5_with_mips", payload.get("vram", 0) >= tool.dxt5_bytes(1024, 512, True) > 1024 * 512 and tool.dxt5_bytes(8, 8, True) == 112 and tool.dxt5_bytes(4, 4, False) == 16, str(payload))
+        import contextlib, io
+        budget, tool.PCK_TEXTURE_BUDGET_MB = tool.PCK_TEXTURE_BUDGET_MB, 0.5
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            code = tool.check(r, True)
+        tool.PCK_TEXTURE_BUDGET_MB = budget
+        check("budget_fails_when_exceeded", code == 1 and "above the 0.5 MB budget" in buf.getvalue(), buf.getvalue().strip().splitlines()[-1])
+
+        # 8. an empty project is fine, a bad root is a usage error
         r = base / "t7"
         r.mkdir()
         code, out = run(r, "--check")

@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://km6wstln34xn"
-path="res://.godot/imported/fireplace_chalk_r2.webp-9e2692be3106b94993a12a8929ded1ef.ctex"
+path.s3tc="res://.godot/imported/fireplace_chalk_r2.webp-9e2692be3106b94993a12a8929ded1ef.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/fireplace_chalk_r2.webp"
-dest_files=["res://.godot/imported/fireplace_chalk_r2.webp-9e2692be3106b94993a12a8929ded1ef.ctex"]
+dest_files=["res://.godot/imported/fireplace_chalk_r2.webp-9e2692be3106b94993a12a8929ded1ef.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

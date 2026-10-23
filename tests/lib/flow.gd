@@ -27,6 +27,7 @@ const UI_RACE := {"animal": "%AnimalButton", "fairy": "%FairyButton", "hobbit": 
 const UI_NEXT := "%NextButton"          # optional: page 1 -> page 2 of the two-page Vaelg figur screen
 const UI_CONFIRM := "%ConfirmButton"
 const UI_CONTINUE := "%ContinueButton"
+const UI_CONFIRM_DIALOG := "res://scenes/ui/components/ui_confirm.tscn"   # UiConfirm: the title asks before a new game replaces a save
 
 
 # ---------------------------------------------------------------- scenes
@@ -131,9 +132,10 @@ func days(n: int) -> void:
 
 # ---------------------------------------------------------------- the real boot flow
 
-## main_menu.tscn -> character_select.tscn -> world.tscn by pressing the real buttons, with checks
-## named <section>.main_menu_loaded / character_select_opened / world_loaded / player_present /
-## player_name_stored / farm_name_stored / phase_playing / character_matches.
+## main_menu.tscn -> character_select.tscn -> world.tscn by clicking the real buttons (t.press: visible, inside the window, not
+## covered), with checks named <section>.main_menu_loaded / character_select_opened / world_loaded / player_present /
+## player_name_stored / farm_name_stored / phase_playing / character_matches. When a save exists the title first asks whether a
+## new game may replace it (UiConfirm); boot() answers yes by clicking the dialog's OK button.
 ## Returns false as soon as a step fails (the failing check is already recorded).
 func boot(char_id: String = "") -> bool:
 	if char_id != "":
@@ -151,8 +153,16 @@ func boot(char_id: String = "") -> bool:
 	await frames(3)
 	if not press(UI_NEW_GAME):
 		return false
-	# 2. character select
-	ok = await until(func() -> bool: return scene_path() == SELECT_SCENE, 5.0)
+	# 2. character select (after the "replace the save?" question, when there is a save)
+	ok = await until(func() -> bool: return scene_path() == SELECT_SCENE or _confirm_dialog() != null, 5.0)
+	var dialog := _confirm_dialog()
+	if ok and dialog != null:
+		await frames(2)
+		var yes := dialog.get_node_or_null("%OkButton") as BaseButton
+		if yes == null or not press_button(yes, "the OK button of the new-game question"):
+			check("character_select_opened", false, "the new-game question could not be answered")
+			return false
+		ok = await until(func() -> bool: return scene_path() == SELECT_SCENE, 5.0)
 	check("character_select_opened", ok, "got %s" % scene_name())
 	if not ok:
 		return false
@@ -217,6 +227,17 @@ func clear_scene() -> void:
 		tree.current_scene = null
 		cs.queue_free()
 	await frames(2)
+
+
+## The open UiConfirm dialog of the current scene, or null.
+func _confirm_dialog() -> Node:
+	var cs := tree.current_scene
+	if cs == null:
+		return null
+	for n in cs.find_children("*", "Control", true, false):
+		if n.scene_file_path == UI_CONFIRM_DIALOG and (n as Control).is_visible_in_tree():
+			return n
+	return null
 
 
 func _arg_count(obj: Object, method: String) -> int:

@@ -47,9 +47,9 @@ func run(t) -> void:
 			var d: Dictionary = lr.get_item_def(item)
 			t.expect(d.get("rarity", "normal") == "normal" and int(d.get("sell_price", 999)) <= 20, npc + " offers a cheap normal sample")
 	t.check("citizens_cover_friends", SocialData.citizens().size() == SocialData.friend_ids().size() and int(tiers.A) >= 11 and int(tiers.B) >= 18 and int(tiers.C) >= 5 and partner_count >= 11)
-	var code: Dictionary = t.run_tool("python3", [ProjectSettings.globalize_path("res://tools/copy/copy_lint.py"), "--json"])
+	var code: Dictionary = t.run_tool(t.python(), [ProjectSettings.globalize_path("res://tools/copy/copy_lint.py"), "--json"])
 	t.check("copy_lint_clean_on_the_social_csvs", code.code == 0, code.output)
-	t.expect_tool_ids(t.run_tool("python3", [ProjectSettings.globalize_path("res://tools/voice/build_index.py"), "--check"]), "Social voice index")
+	t.expect_tool_ids(t.run_tool(t.python(), [ProjectSettings.globalize_path("res://tools/voice/build_index.py"), "--check"]), "Social voice index")
 	# Data-only extension uses the real Lua loader, social defaults and universal taste rules.
 	var fixture := "user://social_new_citizen.lua"
 	var f := FileAccess.open(fixture, FileAccess.WRITE)

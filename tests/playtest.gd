@@ -20,9 +20,15 @@ extends SceneTree
 ##   --max-seconds=N                   watchdog for the whole run (default 1200)
 ##   --report=FILE                     also write a JSON result file
 ##   --seed=N                          seed of t.rng (default 424242)
-##   --strict                          ignore tests/lib/known_issues.txt: every engine message fails the run
+##   --shuffle=N                       run the selected sections in an order shuffled with seed N (finds sections that depend on what
+##                                     an earlier one left behind; the nightly CI run uses it); the order is printed
+##   --strict                          ignore tests/lib/known_issues.txt: every engine message fails the run, a section may not skip
+##                                     more checks than tests/lib/skip_budget.txt allows, and t.require_tool() fails instead of skipping
 ##   --known-issues=PATH               one more known-issues file besides res://tests/lib/known_issues.txt (repeatable)
+##   --skip-budget=PATH                the skip budget file instead of res://tests/lib/skip_budget.txt (also for --sections-dir runs)
 ##   --verbose                         print every ok line (default: at most 400 per section)
+##   --not-judged-exit=N               exit code of a passing run with timings NOT JUDGED on an overloaded machine (default 0; e.g. 3,
+##                                     the INCONCLUSIVE code of tests/perf_world.gd, so a gate script can show it as amber)
 ## The wrapper (tests/run_playtest.sh) has options of its own that this script never sees: --fast (headless: `--fixed-fps 60`, frames run ahead of the
 ## wall clock), --no-import, --timeout=SECS, --keep-home. The watchdogs of this script (--section-timeout, TIMEOUT_S, --max-seconds) count WALL-CLOCK seconds.
 ##
@@ -38,6 +44,15 @@ extends SceneTree
 ## all make the run exit 1. Usage errors exit 2. A section that does not compile fails the run at once, before
 ## anything else runs (with --only, an uncompilable file that was not selected is reported but not fatal).
 ##
+## Isolation between sections (they share one process): after every section the harness runs its t.on_cleanup() callables,
+## releases held input, resets Engine.time_scale and the pause, and puts back what the section changed and did not restore
+## itself (a note names each): the locale, GameManager config overrides, Svc fakes, the modal stack, Engine metadata (the
+## sections' probe channel) and the String *_path / *_dir seams of the autoloads. A section that times out fails the run, but the next sections
+## still run: its `t` is detached, the world is replaced and the rest of the run gets a fresh `t`. The stuck coroutine is parked
+## for good when it next reaches a wait helper of its `t`; code it runs before that (after an await on a game timer or a signal)
+## still runs, its checks print as `late` lines and count nowhere (see tests/lib/drive.gd). Only the boot stage and --max-seconds
+## stop a run early.
+##
 ## This script compiles BEFORE the autoloads exist: it never names an autoload (tests/lib reaches them with
 ## root.get_node) and loads its libraries with load().
 
@@ -45,6 +60,7 @@ const LIB := "res://tests/lib/"
 const DEFAULT_SECTIONS_DIR := "res://tests/sections"
 const WINDOW_SIZE := Vector2i(1280, 720)
 const SLOW_SECTION_S := 30.0
+const SKIP_BUDGET := "res://tests/lib/skip_budget.txt"
 
 var _t                                   # tests/lib/t.gd (untyped on purpose: it is duck-typed, loaded at runtime)
 var _catcher                             # tests/lib/error_catcher.gd (a Logger)
@@ -63,8 +79,13 @@ var _report := ""
 var _seed := 424242
 var _verbose := false
 var _strict := false
+var _not_judged_exit := 0
 var _fast := false
 var _known_paths: Array[String] = ["res://tests/lib/known_issues.txt"]
+var _shuffle := -1                       # --shuffle=N seed; -1 = alphabetical order
+var _skip_budget: Dictionary = {}        # section -> skips allowed under --strict (tests/lib/skip_budget.txt)
+var _skip_budget_on := false
+var _skip_budget_path := SKIP_BUDGET     # --skip-budget=PATH (the harness self-test's fixtures)
 
 var _t0 := 0
 var _problems: Array[String] = []        # run-level failures that are not checks (compile errors, timeouts, ...)
@@ -74,7 +95,6 @@ var _aborted := false                    # a timeout stopped the run
 var _finished := false
 var _usage_error := false
 var _help := false
-var _guard_done := false
 
 
 func _initialize() -> void:
@@ -98,18 +118,10 @@ func _initialize() -> void:
 		return
 	_catcher = (catcher_script as GDScript).new()
 	OS.add_logger(_catcher)
-	_t = (t_script as GDScript).new()
-	_t.bind(self)
-	_t.catcher = _catcher
-	_t.character = _character
-	_t.windowed = _windowed
-	_t.out_dir = _out
-	_t.verbose = _verbose
-	_t.fast = _fast
-	_t.user_dir = OS.get_user_data_dir()
-	_t.rng.seed = _seed
+	_t = _make_t(t_script as GDScript)
 	seed(_seed)
 	_load_known_issues()
+	_load_skip_budget()
 	# The pause menu opens on a window focus loss (UX-07): a windowed run's window loses focus to the machine, not to the sections.
 	var pause_script: Variant = load("res://scripts/ui/pause_menu.gd")
 	if pause_script is GDScript:
@@ -119,6 +131,42 @@ func _initialize() -> void:
 	print("  info  user dir %s (%s)" % [_t.user_dir, "throwaway" if isolated else "REAL user dir: run tests/run_playtest.sh for an isolated one"])
 	process_frame.connect(_check_run_watchdog)
 	_run.call_deferred()
+
+
+## A `t` configured for this run (the run's first one, and the fresh one after a section timed out).
+func _make_t(t_script: GDScript) -> Object:
+	var t: Object = t_script.new()
+	t.bind(self)
+	t.catcher = _catcher
+	t.character = _character
+	t.windowed = _windowed
+	t.out_dir = _out
+	t.verbose = _verbose
+	t.strict = _strict
+	t.fast = _fast
+	t.user_dir = OS.get_user_data_dir()
+	t.rng.seed = _seed
+	return t
+
+
+## tests/lib/skip_budget.txt: "<section><TAB><max skips><TAB><why>" per line (# comments). Applies to strict headless runs of the
+## real sections: a section that skips more checks than its budget (0 when it has no line) fails the run, so a skip that
+## spreads (a missing tool, a fixture that went missing) cannot hide a gate. Other runs only print a note.
+func _load_skip_budget() -> void:
+	_skip_budget_on = not _windowed and (_sections_dir == DEFAULT_SECTIONS_DIR or _skip_budget_path != SKIP_BUDGET)
+	if not _skip_budget_on or not FileAccess.file_exists(_skip_budget_path):
+		return
+	var f := FileAccess.open(_skip_budget_path, FileAccess.READ)
+	if f == null:
+		return
+	while not f.eof_reached():
+		var line := f.get_line().strip_edges()
+		if line == "" or line.begins_with("#"):
+			continue
+		var parts := line.split("\t", false)
+		if parts.size() >= 2 and parts[1].strip_edges().is_valid_int():
+			_skip_budget[parts[0].strip_edges()] = int(parts[1].strip_edges())
+	f.close()
 
 
 ## tests/lib/known_issues.txt: "<substring><TAB><reason>" per line (# comments). A message containing the substring
@@ -238,38 +286,46 @@ func _run_section(s: Dictionary) -> void:
 	var obj: Object = (s["script"] as GDScript).new()
 	var mark: int = _catcher.mark()
 	var limit := float(s["timeout"])
+	var before := _snapshot_state()
+	var t: Object = _t
 	var done: bool = await _guarded(limit, func() -> void:
 		if _windowed:
-			await obj.run_windowed(_t)
+			await obj.run_windowed(t)
 		else:
-			await obj.run(_t))
+			await obj.run(t))
 	var script_err: String = _catcher.script_error_since(mark)
 	if done and script_err != "":
 		print("  note  the script error above ended this section early: the checks after it did not run")
+	if not await _guarded(10.0, func() -> void: await t.run_cleanups()):
+		print("  FAIL  the t.on_cleanup() callables of %s did not finish within 10 s" % name_)
+		_problems.append("the cleanups of section %s did not finish within 10 s" % name_)
+	_check_skip_budget(name_)
 	_end_section(mark)
 	_ran.append(name_)
 	if not done:
-		_timeout_abort(name_, limit)
+		await _isolate_timeout(name_, limit)
 	elif float(_t.stats[name_]["ms"]) / 1000.0 > SLOW_SECTION_S:
 		print("  note  section %s took %.1f s (> %d s): consider splitting it" % [name_, float(_t.stats[name_]["ms"]) / 1000.0, int(SLOW_SECTION_S)])
-	if obj is Node:
+	_restore_state(before, name_)
+	if obj is Node and done:
 		(obj as Node).queue_free()
 
 
 ## Runs `work` (a coroutine Callable) and waits for it, but at most `limit` WALL-CLOCK seconds (see _check_run_watchdog). Returns false on timeout.
-## A coroutine that is stuck forever cannot be cancelled in GDScript, so a timeout aborts the whole run.
+## A coroutine that is stuck cannot be cancelled in GDScript: each call has its own done flag, so a stuck one that finishes
+## later cannot end the wait of a later section (see _isolate_timeout).
 func _guarded(limit: float, work: Callable) -> bool:
-	_guard_done = false
+	var box := {"done": false}
 	var started := Time.get_ticks_msec()
-	_guard_run(work)
-	while not _guard_done and float(Time.get_ticks_msec() - started) / 1000.0 < limit:
+	_guard_run(work, box)
+	while not box["done"] and float(Time.get_ticks_msec() - started) / 1000.0 < limit:
 		await process_frame
-	return _guard_done
+	return box["done"]
 
 
-func _guard_run(work: Callable) -> void:
+func _guard_run(work: Callable, box: Dictionary) -> void:
 	await work.call()
-	_guard_done = true
+	box["done"] = true
 
 
 func _timeout_abort(what: String, limit: float) -> void:
@@ -283,6 +339,154 @@ func _timeout_abort(what: String, limit: float) -> void:
 	if not pending.is_empty():
 		print("  note  not run because of the timeout: ", ", ".join(pending))
 	_aborted = true
+
+
+## A section timed out: it fails the run, and the run goes on with the next section. The stuck coroutine keeps the old `t`,
+## which is detached (its frames / physics / seconds / until park the coroutine for good when it reaches one; its checks before
+## that print as `late` lines and are not counted), the world it
+## left is replaced by a fresh one (what the boot stage gives the sections; a windowed run gets an empty scene), and the next
+## sections get a fresh `t` that carries the run's counts on.
+func _isolate_timeout(what: String, limit: float) -> void:
+	var msg := "section %s timed out after %d s (a coroutine is still waiting; look for an await on something that never happens)" % [what, int(limit)]
+	_problems.append(msg)
+	print("  FAIL  ", msg)
+	var old: Object = _t
+	old.detached = true
+	old.release_all()
+	var fresh: Object = _make_t(old.get_script() as GDScript)
+	fresh.checks = old.checks
+	fresh.failed = old.failed
+	fresh.skipped = old.skipped
+	fresh.failures = old.failures
+	fresh.slow = old.slow
+	fresh.stats = old.stats
+	_t = fresh
+	if _windowed:
+		await _t.clear_scene()
+	elif not await _guarded(60.0, func() -> void: await _t.start_world(_character)):
+		_problems.append("no fresh world after the timeout of section %s" % what)
+	print("  note  the next sections still run with a fresh t and a fresh world; the stuck section is parked at its next wait (late lines of it are not counted)")
+
+
+## What a section may change for its own checks and must leave as it found it (see the header). Taken before every section.
+func _snapshot_state() -> Dictionary:
+	var gm := root.get_node_or_null("GameManager")
+	var loc := root.get_node_or_null("LocalizationManager")
+	var overrides: Variant = gm.get("_config_overrides") if gm != null else null
+	var svc_fakes: Variant = _svc_script().get("_overrides") if _svc_script() != null else null
+	return {
+		"locale": str(loc.get("current_locale")) if loc != null else TranslationServer.get_locale(),
+		"overrides": (overrides as Dictionary).duplicate() if overrides is Dictionary else {},
+		"svc": (svc_fakes as Dictionary).duplicate() if svc_fakes is Dictionary else {},
+		"modals": gm.call("modal_stack") if gm != null and gm.has_method("modal_stack") else [],
+		"engine_meta": _metas(Engine),
+		"seams": _seams(),
+	}
+
+
+## Puts back what the section changed and did not restore itself; prints a note for each kind (a section should use t.on_cleanup()).
+func _restore_state(before: Dictionary, section_name: String) -> void:
+	var fixed: Array[String] = []
+	var gm := root.get_node_or_null("GameManager")
+	var loc := root.get_node_or_null("LocalizationManager")
+	if loc != null and str(loc.get("current_locale")) != str(before["locale"]):
+		fixed.append("locale %s -> %s" % [loc.get("current_locale"), before["locale"]])
+		loc.call("set_locale", str(before["locale"]), false)
+	if gm != null and gm.get("_config_overrides") is Dictionary and gm.get("_config_overrides") != before["overrides"]:
+		fixed.append("config overrides")
+		gm.call("clear_config_overrides")
+		for path in (before["overrides"] as Dictionary):
+			gm.call("set_config_override", path, before["overrides"][path])
+	var svc := _svc_script()
+	if svc != null and svc.get("_overrides") is Dictionary and svc.get("_overrides") != before["svc"]:
+		fixed.append("Svc fakes")
+		svc.call("clear_overrides")
+		for key in (before["svc"] as Dictionary):
+			if is_instance_valid(before["svc"][key]):
+				svc.call("override", key, before["svc"][key])
+	# only the modals the section opened: one that was open before it (left by the world start) is not its doing. pop_modal
+	# re-applies the pause of what stays open, and a TTScreen whose modal is popped closes itself (TTScreen._on_modal_changed).
+	if gm != null and gm.has_method("modal_stack"):
+		var opened: Array[StringName] = []
+		for modal_name in gm.call("modal_stack"):
+			if not (modal_name in before["modals"]):
+				opened.append(modal_name)
+		if not opened.is_empty():
+			fixed.append("open modals %s" % str(opened))
+			opened.reverse()
+			for modal_name in opened:
+				gm.call("pop_modal", modal_name)
+	var metas := _restore_metas(Engine, before["engine_meta"])
+	if not metas.is_empty():
+		fixed.append("Engine meta %s" % ", ".join(metas))
+	var seams: Dictionary = before["seams"]
+	for key in seams:
+		var parts := str(key).split(".")
+		var node := root.get_node_or_null(parts[0])
+		if node != null and node.get(parts[1]) != seams[key]:
+			fixed.append("%s = %s" % [key, seams[key]])
+			node.set(parts[1], seams[key])
+	if not fixed.is_empty():
+		print("  note  section %s left state behind; restored: %s (use t.on_cleanup)" % [section_name, "; ".join(fixed)])
+
+
+func _svc_script() -> Script:
+	var svc: Variant = load("res://scripts/data/svc.gd") if ResourceLoader.exists("res://scripts/data/svc.gd") else null
+	return svc as Script
+
+
+func _metas(o: Object) -> Dictionary:
+	var out := {}
+	for m in o.get_meta_list():
+		out[m] = o.get_meta(m)
+	return out
+
+
+## Removes metadata the section added and puts back values it changed; returns the names.
+func _restore_metas(o: Object, before: Dictionary) -> Array[String]:
+	var changed: Array[String] = []
+	for m in o.get_meta_list():
+		if not before.has(m):
+			o.remove_meta(m)
+			changed.append(str(m))
+		elif typeof(o.get_meta(m)) != typeof(before[m]) or o.get_meta(m) != before[m]:
+			o.set_meta(m, before[m])
+			changed.append(str(m))
+	for m in before:
+		if not o.has_meta(m):
+			o.set_meta(m, before[m])
+			changed.append(str(m))
+	return changed
+
+
+## "Autoload.property" -> value of every String script variable named *_path or *_dir of the autoloads (fixture seams such as
+## LootService.delegate_path or SaveManager.save_dir).
+func _seams() -> Dictionary:
+	var out := {}
+	for n in root.get_children():
+		if n == current_scene or n.get_script() == null:
+			continue
+		for p in n.get_property_list():
+			var pname := str(p["name"])
+			if int(p["usage"]) & PROPERTY_USAGE_SCRIPT_VARIABLE and int(p["type"]) == TYPE_STRING and (pname.ends_with("_path") or pname.ends_with("_dir")):
+				out["%s.%s" % [n.name, pname]] = n.get(pname)
+	return out
+
+
+## Under --strict (headless, real sections) a section may skip at most its budget of tests/lib/skip_budget.txt.
+func _check_skip_budget(name_: String) -> void:
+	if not _skip_budget_on:
+		return
+	var n := int(_t.stats.get(name_, {}).get("skipped", 0))
+	var budget := int(_skip_budget.get(name_, 0))
+	if n <= budget:
+		return
+	var msg := "section %s skipped %d check(s), its budget is %d (%s): a skip that spreads hides a gate" % [name_, n, budget, _skip_budget_path.trim_prefix("res://")]
+	if _strict:
+		_problems.append(msg)
+		print("  FAIL  ", msg)
+	else:
+		print("  note  ", msg, " (fails under --strict)")
 
 
 func _begin_section(name_: String) -> void:
@@ -371,6 +575,19 @@ func _discover() -> void:
 			seen_names[entry["name"]] = path
 		_sections.append(entry)
 	_sections.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a["base"] < b["base"])
+	if _shuffle >= 0:
+		var order := RandomNumberGenerator.new()
+		order.seed = _shuffle
+		for i in range(_sections.size() - 1, 0, -1):
+			var j := order.randi_range(0, i)
+			var tmp: Dictionary = _sections[i]
+			_sections[i] = _sections[j]
+			_sections[j] = tmp
+		var names: Array[String] = []
+		for s in _sections:
+			if s["selected"]:
+				names.append(s["name"])
+		print("  info  --shuffle=%d: sections run in this order: %s" % [_shuffle, ", ".join(names)])
 	# --only must name real sections (a typo must not turn into a green run that checked nothing)
 	for want in _only:
 		var matched := false
@@ -431,6 +648,10 @@ func _finish() -> void:
 		print("  FAILED   ", f)
 	var on_actions := OS.get_environment("GITHUB_ACTIONS") == "true"
 	for s in _t.slow:
+		if not bool(s.get("judged", true)):
+			# never on a CI job (t.not_judged() judges every timing there), so there is no GitHub annotation for it
+			print("  SLOW     %s: %s, native reference %s (%.2fx, past the runner limit %s while the machine was overloaded, %s: NOT JUDGED)" % [s.check, s.measured, s.reference, s.ratio, s.limit, s.load])
+			continue
 		print("  SLOW     %s: %s, native reference %s (%.2fx, passed inside the runner limit %s)" % [s.check, s.measured, s.reference, s.ratio, s.limit])
 		if on_actions:
 			print("::notice title=Slow timing (%s)::%s took %s against a native reference of %s (%.2fx); the runner limit is %s" % [_character, s.check, s.measured, s.reference, s.ratio, s.limit])
@@ -451,11 +672,12 @@ func _finish() -> void:
 		shown += 1
 	if _report != "":
 		_write_report(bad == 0, elapsed)
+	var not_judged: int = _t.not_judged_count()
 	if bad == 0:
-		print("PLAYTEST PASS (%d checks in %d sections, %d allowed engine messages, %d known-issue messages)" % [_t.checks, _ran.size(), _catcher.allowed_entries.size(), _catcher.known_entries.size()])
+		print("PLAYTEST PASS (%d checks in %d sections, %d allowed engine messages, %d known-issue messages%s)" % [_t.checks, _ran.size(), _catcher.allowed_entries.size(), _catcher.known_entries.size(), (", %d timing(s) NOT JUDGED" % not_judged) if not_judged > 0 else ""])
 	else:
 		print("PLAYTEST FAIL: %d check failures, %d engine errors, %d engine warnings, %d problems" % [_t.failed, errors, warnings, _problems.size()])
-	quit(0 if bad == 0 else 1)
+	quit(1 if bad != 0 else (_not_judged_exit if not_judged > 0 else 0))
 
 
 func _write_report(passed: bool, elapsed: float) -> void:
@@ -473,6 +695,7 @@ func _write_report(passed: bool, elapsed: float) -> void:
 		"sections": _t.stats,
 		"failures": _t.failures,
 		"slow": _t.slow,
+		"not_judged": _t.not_judged_count(),
 		"problems": _problems,
 		"engine": engine,
 		"allowed": _catcher.allowed_entries,
@@ -524,10 +747,19 @@ func _parse_args(args: PackedStringArray) -> String:
 			_report = _absolute(a.get_slice("=", 1))
 		elif a.begins_with("--seed="):
 			_seed = int(a.get_slice("=", 1))
+		elif a.begins_with("--shuffle="):
+			if not a.get_slice("=", 1).is_valid_int() or int(a.get_slice("=", 1)) < 0:
+				return "--shuffle needs a seed >= 0 (got '%s')" % a.get_slice("=", 1)
+			_shuffle = int(a.get_slice("=", 1))
 		elif a == "--verbose":
 			_verbose = true
 		elif a == "--strict":
 			_strict = true
+		elif a.begins_with("--not-judged-exit="):
+			_not_judged_exit = int(a.get_slice("=", 1))
+		elif a.begins_with("--skip-budget="):
+			var sb := a.get_slice("=", 1)
+			_skip_budget_path = sb if sb.begins_with("res://") or sb.begins_with("user://") else "res://" + sb
 		elif a == "--fast":
 			_fast = true
 		elif a.begins_with("--known-issues="):
@@ -548,5 +780,6 @@ func _absolute(path: String) -> String:
 
 func _print_usage() -> void:
 	print("usage: tests/run_playtest.sh [--character=animal|fairy|hobbit|ghost] [--only=a,b] [--list] [--windowed] [--out=DIR]")
-	print("       [--no-boot] [--play-seconds=N] [--section-timeout=N] [--max-seconds=N] [--report=FILE] [--seed=N] [--verbose] [--strict] [--fast]")
+	print("       [--no-boot] [--play-seconds=N] [--section-timeout=N] [--max-seconds=N] [--report=FILE] [--seed=N] [--shuffle=N] [--verbose] [--strict] [--fast]")
+	print("       [--skip-budget=PATH] [--not-judged-exit=N]")
 	print("       wrapper only (tests/run_playtest.sh): [--fast] [--no-import] [--timeout=SECS] [--keep-home]")

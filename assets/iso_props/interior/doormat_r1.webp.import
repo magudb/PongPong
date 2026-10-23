@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d1c03061a0t0v"
-path="res://.godot/imported/doormat_r1.webp-7aa7fe12b4724bcad534aa7c943eab12.ctex"
+path.s3tc="res://.godot/imported/doormat_r1.webp-7aa7fe12b4724bcad534aa7c943eab12.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/interior/doormat_r1.webp"
-dest_files=["res://.godot/imported/doormat_r1.webp-7aa7fe12b4724bcad534aa7c943eab12.ctex"]
+dest_files=["res://.godot/imported/doormat_r1.webp-7aa7fe12b4724bcad534aa7c943eab12.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -87,11 +87,7 @@ func run(t) -> void:
 	var signpost: Rejsestolpe2D = signs[0]
 	signpost.interact(t.player())
 	var dialogue: Control = t.tree.get_first_node_in_group("dialogue_ui")
-	for i in 20:
-		if dialogue._wants_focus():
-			break
-		t.tap(&"interact")
-		await t.frames(2)
+	await t.page_to_choices(dialogue)
 	t.check("fast_travel_lists_discovered_stops", dialogue._buttons.size() == 4)
 	dialogue._buttons[0].pressed.emit()
 	await t.until(func(): return not t.world().traveling, 8)

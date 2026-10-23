@@ -17,7 +17,31 @@ extends "res://tests/lib/flow.gd"
 ## Engine errors AND warnings fail the run. Declare expected ones with t.allow("substring") (scoped to the
 ## section that calls it; the message still has to match, anything else still fails).
 
-# ---------------------------------------------------------------- expected engine messages
+# ---------------------------------------------------------------- timing budgets
+##
+## Timing policy (TEST-02, PERF-03; docs/DEVELOPMENT.md "Timing budgets"), enforced by tests/tools/timing_lint.py (section timing_lint):
+##   * a wall-clock budget is a check of its own, t.check(name, t.perf_ok(name, measured, reference), detail), never AND-ed with
+##     functional conditions (those are checks of their own, so a failure names what broke);
+##   * `measured` survives a preemption: median_usec() of batches for a per-call or per-frame cost, the best (minimum) of a repeated
+##     build or reload (disk and caches only add time), a single sample only for a one-off cold cost; a percentile only where the spec
+##     sets one (save_game p95 <= 25 ms: the occasional slow save is what the player feels);
+##   * `reference` is the native budget, about 1.5-2x what a quiet machine measures; TT_PERF_SCALE (CI and the local gate: 4)
+##     allows up to 4x it, and anything over the reference is listed as SLOW, so drift is reported and only a regression fails;
+##   * whatever the game animates by its delta is waited for in game time (until_game, seconds, physics), never a frame count;
+##   * a timing past the runner limit on an OVERLOADED local machine (1-minute load average above OVERLOAD_PER_CORE x its cores: more
+##     than the allowance is sized for) is not a verdict, the rule of tests/perf_world.gd (BUSY, exit code 3 there): it passes, listed
+##     as NOT JUDGED with the load (summary line `PLAYTEST PASS (..., n timing(s) NOT JUDGED)`, JSON `not_judged`; with
+##     --not-judged-exit=N the run exits N instead of 0). Only when TT_PERF_SCALE allows more than 1x and the run is no CI job
+##     (GITHUB_ACTIONS / CI unset), and only up to OVERLOAD_CEILING x the runner limit: a native or windowed reference run, a CI
+##     runner, and a timing past the ceiling (8x the reference at TT_PERF_SCALE=4) still fail.
+
+const PerfWorld := preload("res://tests/perf_world.gd")
+## Four local gate shards next to other jobs measured load averages of 17-21 on 8 cores, where cold builds and disk-bound saves ran
+## 6-10x their quiet time (TT_PERF_SCALE allows 4x); a GitHub runner with its single job stays far below 1.5 per core.
+const OVERLOAD_PER_CORE := 1.5
+## Load only adds time, but not without bound: past this multiple of the runner limit a timing fails under any load (a 2x regression of
+## something already at the limit, or a 10x one of anything).
+const OVERLOAD_CEILING := 2.0
 
 ## Shared CI CPUs (TT_PERF_SCALE > 1, at most 4) get a bounded allowance for computation timings.
 ## Native reference runs keep the authored limits; game-time assertions never use this.
@@ -29,16 +53,73 @@ func perf_limit(reference: float) -> float:
 
 ## Timing assertion: `measured` must stay within perf_limit(reference). A timing over its native
 ## reference but inside the allowance passes and is recorded as slow (summary, report, CI notice),
-## so a shared runner reports drift and only fails a real regression.
+## so a shared runner reports drift and only fails a real regression. Past the limit it fails, unless
+## not_judged() says the machine cannot judge it: then it is recorded with judged = false and passes.
 func perf_ok(check_name: String, measured: float, reference: float) -> bool:
 	var limit := perf_limit(reference)
 	var ok := measured <= limit
-	if ok and measured > reference:
-		var entry := {"check": "%s.%s" % [section, check_name], "measured": measured, "reference": reference, "limit": limit, "ratio": snappedf(measured / reference, 0.01)}
+	if measured <= reference:
+		return true
+	if detached:
+		# a timed-out section that woke up: its timing is no SLOW row of the run (see `detached` in tests/lib/asserts.gd)
+		_late("slow  %s.%s: %s over its native reference %s (runner limit %s)" % [section, check_name, measured, reference, limit])
+		return ok
+	var entry := {"check": "%s.%s" % [section, check_name], "measured": measured, "reference": reference, "limit": limit, "ratio": snappedf(measured / reference, 0.01), "judged": true}
+	if ok:
 		slow.append(entry)
 		print("  slow  %s: %s over its native reference %s (%.2fx, runner limit %s)" % [entry.check, measured, reference, entry.ratio, limit])
-	return ok
+		return true
+	var load := machine_overloaded()
+	if not_judged(measured, limit, perf_scaled(), on_ci(), bool(load.overloaded)):
+		entry["judged"] = false
+		entry["load"] = load.text
+		slow.append(entry)
+		print("  busy  %s: %s over the runner limit %s (%.2fx its native reference %s) while the machine is overloaded (%s): NOT JUDGED, rerun when quiet" % [entry.check, measured, limit, entry.ratio, reference, load.text])
+		return true
+	return false
 
+
+## Whether a timing past its runner `limit` is NOT JUDGED instead of failed: only a scaled local run (TT_PERF_SCALE > 1, no CI job) on an
+## overloaded machine, and only up to OVERLOAD_CEILING x the limit. A native or windowed reference run, a CI runner and a quiet machine judge.
+static func not_judged(measured: float, limit: float, scaled: bool, ci: bool, overloaded: bool) -> bool:
+	return scaled and not ci and overloaded and measured <= limit * OVERLOAD_CEILING
+
+
+## Whether TT_PERF_SCALE allows more than the authored limits (perf_limit(1) > 1).
+func perf_scaled() -> bool:
+	return perf_limit(1.0) > 1.0
+
+
+## Whether this run is a CI job (GitHub Actions sets both; other CI systems set CI).
+static func on_ci() -> bool:
+	return OS.get_environment("GITHUB_ACTIONS") == "true" or OS.get_environment("CI") not in ["", "0", "false"]
+
+
+## The timings recorded as NOT JUDGED so far.
+func not_judged_count() -> int:
+	return slow.filter(func(row: Dictionary) -> bool: return not bool(row.get("judged", true))).size()
+
+
+## {overloaded, text}: whether the 1-minute load average is above OVERLOAD_PER_CORE x the cores (tests/perf_world.gd reads `uptime`).
+func machine_overloaded() -> Dictionary:
+	var load: Dictionary = PerfWorld.machine_load()
+	return {"overloaded": float(load.load1) > float(load.cores) * OVERLOAD_PER_CORE, "text": str(load.text)}
+
+
+## Median cost in microseconds of one call of `work`, timed in `batches` batches of `per_batch` calls: a batch that the
+## scheduler preempted moves one sample, not the result. For per-call and per-frame budgets (a director tick, a HUD update).
+func median_usec(work: Callable, batches: int = 10, per_batch: int = 50) -> float:
+	var means: Array[float] = []
+	for b in batches:
+		var started := Time.get_ticks_usec()
+		for i in per_batch:
+			work.call()
+		means.append(float(Time.get_ticks_usec() - started) / float(per_batch))
+	means.sort()
+	return means[means.size() / 2]
+
+
+# ---------------------------------------------------------------- expected engine messages
 
 ## Declares a warning / error whose text contains `substring` as expected for the rest of this section.
 func allow(substring: String) -> void:

@@ -8,6 +8,7 @@ Destinations (everything else is refused):
   assets/backdrops/farm_far.webp, farm_canopy.webp         NEVER farm_sky.* (Codex's painted farm_sky.png is the farm sky; a .webp here would shadow it - lead amendment M1a)
   assets/iso_tiles/field_grass.png, tiles_farm.json        (ArtCatalog reads every tiles_*.json next to tiles.json)
 Codex guardrail: a destination that is not on the list is never written, and nothing is ever deleted; an existing file of the list is overwritten only when its bytes differ.
+A file a later art pack supersedes (tools/art/drawn/fixture_recipes.json, review REND-10) is not installed: the painted pack draws that id.
 Godot's `.import` files are written by write_farm_imports.py (stubs) and pulled back from a clone after the first import (impl/tools/pull_meta.sh).
 """
 from __future__ import annotations
@@ -18,6 +19,8 @@ import sys
 from pathlib import Path
 
 import farm_common as fc                       # noqa: E402
+sys.path.insert(0, str(fc.ART / 'drawn'))
+import drawn_art                               # noqa: E402
 
 
 def plan(stage: Path, repo: Path) -> list:
@@ -30,7 +33,7 @@ def plan(stage: Path, repo: Path) -> list:
         pairs.append((m['backdrops'] / f, repo / 'assets/backdrops' / f))
     for f in fc.TILE_FILES:
         pairs.append((m['tiles'] / f, repo / 'assets/iso_tiles' / f))
-    return pairs
+    return [(src, dst) for src, dst in pairs if not drawn_art.superseded(dst.resolve(), repo)]
 
 
 def check_allowed(dst: Path, repo: Path) -> None:

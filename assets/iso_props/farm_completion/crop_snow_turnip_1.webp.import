@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://t7agjh44rgxu"
-path="res://.godot/imported/crop_snow_turnip_1.webp-4b9f3c56650a37db6ad95e5d29082728.ctex"
+path.s3tc="res://.godot/imported/crop_snow_turnip_1.webp-4b9f3c56650a37db6ad95e5d29082728.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/farm_completion/crop_snow_turnip_1.webp"
-dest_files=["res://.godot/imported/crop_snow_turnip_1.webp-4b9f3c56650a37db6ad95e5d29082728.ctex"]
+dest_files=["res://.godot/imported/crop_snow_turnip_1.webp-4b9f3c56650a37db6ad95e5d29082728.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

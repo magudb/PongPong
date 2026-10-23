@@ -108,7 +108,7 @@ func _run(t,native: bool) -> void:
 		var render := {"pairs":pairs,"median_render_cpu_delta_ms_per_enemy":_median(deltas),"cap_ms":0.018,"method":"median of three paired one-second RenderingServer CPU render-time deltas at the live default area zoom, 24 animated visible actors versus hidden/disabled; fixed positions, no FSM callbacks, vsync and FPS caps disabled; whole-frame deltas retained separately; GPU timing unavailable when reported as zero"}
 		report["render"] = render
 		t.check("render_timing_is_available",pairs.all(func(pair):return pair.baseline.cpu_render_ms>0 and pair.enabled.cpu_render_ms>0))
-		t.check("animated_render_budget",render.median_render_cpu_delta_ms_per_enemy<=0.018,str(render.median_render_cpu_delta_ms_per_enemy)+" ms CPU render per enemy <=0.018")
+		t.check("animated_render_budget",t.perf_ok("animated_render_budget",render.median_render_cpu_delta_ms_per_enemy,0.018),str(render.median_render_cpu_delta_ms_per_enemy)+" ms CPU render per enemy <=0.018")
 		await t.capture("enemy_population_24")
 	var out := ProjectSettings.globalize_path("res://docs/qa/mechanics/combat/enemy-performance-"+("native" if native else "headless")+".json")
 	DirAccess.make_dir_recursive_absolute(out.get_base_dir())

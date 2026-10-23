@@ -16,13 +16,12 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageOps
 from fixtures import geometry_source
 
-from pack import ROOT, HERE, extract, window_light, project_building, building_footprint
+from pack import ROOT, HERE, extract, window_light, project_building, building_footprint, ensure_policy
 from world import material, swatch
 
 SRC = HERE / "sources/style_audit"
 OUT = ROOT / "assets/iso_props/zz_painted_consistency"
 DOC = ROOT / "docs/art/style-audit"
-PRESET = '[remap]\nimporter="texture"\ntype="CompressedTexture2D"\n\n[params]\ncompress/mode=2\ncompress/high_quality=false\nmipmaps/generate=true\nprocess/fix_alpha_border=true\n'
 FAMILIES = {
     "a_fixed": ["bed", "table", "chair", "sofa"],
     "b": ["wardrobe", "bookshelf", "chest", "fireplace"],
@@ -73,9 +72,7 @@ def matte(image: Image.Image) -> Image.Image:
 def save(image: Image.Image, path: Path, quality: int = 87) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     image.save(path, quality=quality, method=6, exact=True)
-    stub = path.with_name(path.name + ".import")
-    if not stub.exists():
-        stub.write_text(PRESET)
+    ensure_policy(path)
 
 
 def pigment(image: Image.Image, style: dict, template: str) -> Image.Image:
@@ -418,7 +415,8 @@ def backdrop(manifest: dict) -> None:
     save(Image.fromarray(pixels), OUT / "backdrop_farm_far.webp", 89)
     manifest["backdrop_farm_far"] = {"file": "backdrop_farm_far.webp", "size": [2048, 1024], "pivot": [0, 0], "footprint": [0, 0], "kind": "backdrop", "illustration": "tools/art/drawn/sources/nature.png"}
     for theme, index, tint in [("forest", 2, [42, 62, 67]), ("hyggebyen", 1, [168, 151, 169])]:
-        old = Image.open(ROOT / "assets/backdrops" / (theme + "_far.webp"))
+        # The old far layer only lends its canvas; its file is superseded (REND-10).
+        old = geometry_source(ROOT / "assets/backdrops" / (theme + "_far.webp"))
         w, h = old.size
         image = Image.new("RGBA", old.size)
         tree = matte(atlas("nature", 3, 3)[index])
@@ -443,8 +441,7 @@ def backdrop(manifest: dict) -> None:
     sky = sky.resize((384, 216), Image.Resampling.LANCZOS)
     path = ROOT / "assets/backdrops/treetop_sky.png"
     sky.save(path, optimize=True)
-    stub = path.with_name(path.name + ".import")
-    if not stub.exists(): stub.write_text(PRESET)
+    ensure_policy(path)
 
 
 def main() -> None:

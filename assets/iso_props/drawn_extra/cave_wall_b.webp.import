@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cro65efaah82k"
-path="res://.godot/imported/cave_wall_b.webp-dc40f273963bb7f951b8817f388513ca.ctex"
+path.s3tc="res://.godot/imported/cave_wall_b.webp-dc40f273963bb7f951b8817f388513ca.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/drawn_extra/cave_wall_b.webp"
-dest_files=["res://.godot/imported/cave_wall_b.webp-dc40f273963bb7f951b8817f388513ca.ctex"]
+dest_files=["res://.godot/imported/cave_wall_b.webp-dc40f273963bb7f951b8817f388513ca.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -10,6 +10,8 @@ extends RefCounted
 ##   contracts.husbandry_loaded_from_lua             the live tables are the Lua ones (product_interval mapped to the enum)
 ##   contracts.starter_tools_match_lua               lua/data/starter_kit.lua starter_kit.tools == EconomyManager.STARTER_KIT
 ##   contracts.starter_tools_come_from_lua           reset() hands out the Lua tools
+##   contracts.shipped_code_reads_no_dev_folders     no exported .gd/.tscn/.tres/.lua names res://docs|tests|tools|legacy/ (the export drops them,
+##                                                   so such a read only fails in a shipped build; review REPO-10); a planted literal is seen failing
 const SECTION := "contracts"
 const TIMEOUT_S := 60.0
 
@@ -21,6 +23,7 @@ func run(t) -> void:
 	_manifest(t)
 	_husbandry(t, ah, lr)
 	_starter(t, eco, lr)
+	_dev_folders(t)
 
 
 func _manifest(t) -> void:
@@ -128,6 +131,44 @@ func _starter(t, eco, lr) -> void:
 	t.check("starter_tools_come_from_lua", kit_ok,
 		"reset() hands out every Lua tool: have %s want %s" % [str(got.keys()), str(tools.keys())])
 	eco.gold = gold_keep
+
+
+## Folders the export presets leave out (export_presets.cfg exclude_filter): a shipped file must not read from them.
+const DEV_FOLDER := "res://(docs|tests|tools|legacy)/"
+const SHIPPED_CODE := ["gd", "tscn", "tres", "lua"]
+
+
+func _dev_folders(t) -> void:
+	var excluded: PackedStringArray = []
+	var presets := ConfigFile.new()
+	if presets.load("res://export_presets.cfg") == OK:
+		for f in str(presets.get_value("preset.0", "exclude_filter", "")).split(",", false):
+			excluded.append(f.strip_edges())
+	var re := RegEx.create_from_string(DEV_FOLDER + "[^\"']*")
+	var hits: Array[String] = []
+	var files: Array[String] = []
+	for top in ["res://scripts", "res://scenes", "res://shaders", "res://lua", "res://data", "res://assets"]:
+		_code_files(top, files)
+	var scanned := 0
+	for path in files:
+		var rel := path.trim_prefix("res://")
+		if Array(excluded).any(func(f: String) -> bool: return rel.match(f)):
+			continue
+		scanned += 1
+		for m in re.search_all(FileAccess.get_file_as_string(path)):
+			hits.append("%s: %s" % [rel, m.get_string()])
+	var planted := re.search("var x := load(\"res://docs/art/a.json\")") != null and re.search("load(\"res://data/a.json\")") == null
+	t.check("shipped_code_reads_no_dev_folders", hits.is_empty() and scanned > 500 and planted,
+		"%d exported code files name no %s path (a planted docs/ read is seen, data/ is not: %s); %s" % [scanned, DEV_FOLDER, planted, str(hits.slice(0, 4))])
+
+
+func _code_files(dir: String, out: Array[String]) -> void:
+	for f in DirAccess.get_files_at(dir):
+		if f.get_extension() in SHIPPED_CODE:
+			out.append(dir.path_join(f))
+	for d in DirAccess.get_directories_at(dir):
+		if not FileAccess.file_exists(dir.path_join(d).path_join(".gdignore")):
+			_code_files(dir.path_join(d), out)
 
 
 func _species_equal(src: Dictionary, fallback: Dictionary, ah) -> bool:

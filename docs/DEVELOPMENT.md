@@ -14,8 +14,8 @@ There is **one project**: this folder (`PongPong/`, git branch `main`). Everythi
 tools/dev/worktree.sh new wave-4           # branch + worktree from main, venv linked, import cache cloned, warm import done
 tools/dev/worktree.sh list                 # every worktree: clean/dirty, branch, path
 cd ../PongPong-worktrees/wave-4            # work, commit, run the tests here
-tests/run_playtest.sh --strict             # headless harness (all sections), exit code 0 = green
-tests/run_playtest.sh --fast --only=area   # the same, with physics and frames running ahead of the wall clock (see Tests)
+tests/run_playtest.sh --strict --no-boot --only=area   # the inner loop: one section, seconds (add --character=fairy etc.)
+tools/dev/ci_local.sh                      # the gate: exactly what CI runs (4 heroes x 4 shards, strict), about an hour; exit 0 = green
 tools/dev/run_windowed.sh --only=area      # real 1280x720 window sections (one window at a time)
 # when the branch is done and green, from THIS folder (main):
 git merge --no-ff wave-4 && tools/dev/worktree.sh remove wave-4 --delete-branch
@@ -39,6 +39,25 @@ world is a test platform (title -> New game -> pick a hero -> a floating farm is
 (`run_windowed(t)` in a section) are run with `tools/dev/run_windowed.sh`; they open a real window for a few seconds.
 `tools/dev/test_in_copy.sh NAME` runs the harness in an APFS clone, so a half-edited tree is never imported.
 
+**The gate** is the CI split, not one plain run: `.github/workflows/playtest.yml` runs every hero in 4 shards
+(`tools/ci/sections.py`), the ordinary sections at normal pace and the two seeded simulations with `--fast`, all `--strict`
+with `TT_PERF_SCALE=4`, plus the harness self-test. `tools/dev/ci_local.sh` runs that on a Mac (one APFS clone per
+shard, 4 at a time; `--races=`, `--shards=`, `--parallel=`, `--out=`; its shards also hold the hero-neutral sections that CI runs
+once) and writes a summary; a plain
+`tests/run_playtest.sh --strict` of every section in one process takes well over an hour for one hero and is not needed.
+While working on a section use the inner loop, `tests/run_playtest.sh --strict --no-boot --only=<section>`.
+
+One Godot per checkout: `run_playtest.sh` and `play.sh` refuse to start while another run uses the same folder (clone it
+instead). Sections share one process; after every section the harness runs the section's `t.on_cleanup(func)` callables and
+puts back the locale, config overrides, Svc fakes, the modal stack, Engine metadata and the autoloads' `*_path` seams it left
+behind (a note names them: register a cleanup instead). A section that times out fails the run, but the next ones still run,
+with a fresh `t` and a fresh world. The stuck coroutine cannot be cancelled: it is parked when it next reaches a wait helper of
+its `t`; until then it runs on (its checks print as `late` lines and count nowhere, other side effects land in a later section).
+`--shuffle=N` runs the sections in a seeded random order (the nightly CI run does). `t.press()` is a real click (it fails on a
+hidden, covered or off-screen button); `t.python()` is the one Python for tools (the art venv, else `python3`) and
+`t.require_tool()` guards a check that needs a program (a skip locally, a failure under `--strict`). Under `--strict` a section
+may not skip more checks than `tests/lib/skip_budget.txt` allows.
+
 **`--fast`** makes a headless run cheap in wall time: the wrapper passes `--fixed-fps 60` to Godot (it is the same as
 `GODOT_EXTRA_ARGS="--fixed-fps 60"`, which the wrapper forwards to the engine in any case). Without it the engine paces every
 physics tick and frame by the wall clock, so a test that walks for 5.3 game seconds with real key events costs 3-5 s; with it the
@@ -54,7 +73,39 @@ same walk costs about 0.05 s, because the frames run back to back and every fram
   with it (most of its time is child processes and imports), and a section that times an animation with the wall clock fails under it
   (measured when the flag was added: `city_levels.monkey_climbs_faster` and `city_levels.lift_requests_area_change` read 0.01 s for 1.1 s).
 
-`tools/dev/selftest_harness.sh` is the harness's own test (negative tests: an injected error, an uncompilable section, a hang, `--fast`).
+**Timing budgets** (the policy in the header of `tests/lib/t.gd`; the `timing_lint` section runs `tests/tools/timing_lint.py`, which
+fails on a raw wall-clock comparison and on a frame-count wait that ends in `t.fail()` or leaves early and is then checked):
+
+* a wall-clock budget is a check of its own, `t.check(name, t.perf_ok(name, measured, reference), detail)`; the functional conditions
+  around it are separate checks, so a failure names what broke;
+* `measured` must survive a preemption: `t.median_usec(work, batches, per_batch)` for a per-call or per-frame cost, the best (minimum)
+  of a repeated build, visit or reload, a single sample only for a one-off cold cost, a percentile only where the spec sets one
+  (`town_loop.l13_save_cost`: the p95 of 20 saves, `save_game p95 <= 25 ms`);
+* `reference` is the native budget, about 1.5-2x what a quiet machine measures. `TT_PERF_SCALE` (CI and the local gate set 4) lets a
+  timing pass up to that multiple and lists everything over the reference as SLOW (summary, JSON report, GitHub notice): drift is
+  reported, only a regression fails. A section whose own wall budget grows with it keeps its `TIMEOUT_S` above the scaled budget;
+* past the runner limit on an overloaded local machine (1-minute load average above 1.5x the cores, e.g. four local gate shards next
+  to other jobs: load 17-21 on 8 cores, cold builds and saves at 6-10x) a timing is NOT JUDGED: it passes, is listed with the load
+  in the summary and counted in the result line (`PLAYTEST PASS (..., 2 timing(s) NOT JUDGED)`, JSON `not_judged`), and
+  `--not-judged-exit=3` makes such a run exit 3 (inconclusive, as in `tests/perf_world.gd`) for a gate that shows it as amber.
+  It only applies when `TT_PERF_SCALE` allows more than 1x, outside CI (`GITHUB_ACTIONS` / `CI` unset), and up to 2x the runner
+  limit (8x the reference at scale 4): a native or windowed reference run, a CI runner, a quiet machine and a larger regression fail;
+* a game-time scene (a festival opening, a dialogue that types, a tween) is waited for with `t.until_game(cond, game_seconds, each)`
+  (a dialogue paged to its choices: `t.page_to_choices(dialogue)`), never a frame count: an uncapped headless run draws thousands of frames per second, so 1500 frames took 0.2 s on a Mac, less than
+  one camera move of the scene. A wall-clock comparison that is not a budget carries `# raw-time-ok: <reason>` on its line.
+
+`tools/dev/selftest_harness.sh` is the harness's own test (negative tests: an injected error, an uncompilable section, a hang,
+`--fast`, the isolation between sections, `press()`, the skip budget, `perf_ok`); CI runs it as its own job.
+
+CI (`.github/workflows/playtest.yml`) has four jobs. `project` runs once: the tooling tests, the fresh-checkout import
+(`tests/tools/boot_check.py --fresh --in-place --strict`: the second import and a 30-frame boot print no engine error or warning),
+the `check_project.gd` mutants (`tests/tools/mutation_check.py`) and the sections that do not depend on the hero
+(`tools/ci/sections.py --neutral`). `playtest` runs the other sections for each hero in four shards, balanced by
+`tools/ci/section_seconds.json` (refresh it from the report artifacts with `sections.py --update-timings`). `windowed` runs the
+`run_windowed(t)` sections under Xvfb with Mesa's software renderer; it is advisory until it is green. `selftest` runs
+`tools/dev/selftest_harness.sh`. A section that starts to use
+the hero (`t.start_world`, `t.character`, `UiAudit`, ...) leaves `NEUTRAL` in `tools/ci/sections.py`: `sections.py --check` fails
+until it does. The boot gate on a test copy: `python3 -I tests/tools/boot_check.py --project <COPY> --fresh --strict`.
 
 UI screens: every screen has a row in the UI audit's registry (`tests/lib/ui_screens.json`, plus one file per package in
 `tests/lib/ui_screens.d/*.json` with the same row schema: the audit merges the folder, a screen id may exist only once; see the
@@ -65,7 +116,64 @@ header of `tests/sections/ui_audit.gd`).
 `tools/art/drawn/` packages the painted character, building and outdoor terrain sources into the shipped atlases (see its README).
 The other `tools/art/` bakers still supply floors, furniture, icons and source experiments. The Python environment is `tools/art/.venv`
 (`tools/art/setup_env.sh`, Python 3.12); worktrees link to the main one. Baked output is committed under `assets/`; the
-staging area `tools/art/_stage/` is not.
+staging area `tools/art/_stage/` is not. Every texture's import preset comes from one table, `POLICY` in
+`tools/import/write_import_stubs.py` (S3TC for painted world art, lossless without mipmaps for atlases, lossless for UI):
+run that tool after adding art, before the first import. Its `--check` runs before every playtest and CI job and also holds
+the exported textures to a size budget. An id a later art pack repaints keeps no file of its own in the earlier pack.
+
+## Repository size
+
+The repo is 2.4 GB packed, about 1.6 GB of it QA screenshots, review sheets and source paintings (REPO-01). The
+history stays as it is until the migration below; these rules stop the growth.
+
+* **Size guard.** `tools/ci/size_guard.py` measures every blob a commit adds or changes; CI runs it on each push and pull
+  request (`.github/workflows/repo.yml`, a blobless checkout of a few MB). A plain blob may be at most 1 MiB unless a
+  line of `tools/ci/size_allowlist.txt` gives its path more (shipped `assets/` 8 MiB, UI baselines and the style-audit
+  ledger 4 MiB). Files committed before the guard are only measured once they change. Raise a limit in the same commit
+  that needs it and say why. `tools/dev/install_hooks.sh` installs an optional pre-commit hook with the same check on
+  the staged files (`--remove` takes it out again; `git commit --no-verify` skips it once).
+* **Git LFS for new media.** The root `.gitattributes` stores new images, audio, video and archives under `docs/` and
+  `tools/art/` in Git LFS. Both trees have a `.gdignore`, so Godot never imports a pointer; `assets/` stays plain (the
+  game imports it) and so do `docs/qa/ui_baseline/*.png` (the UI sections read and re-record them). Files that existed
+  before are grandfathered as plain blobs, one line each, in `docs/.gitattributes` and `tools/art/.gitattributes`. A
+  line may only be added for a file whose blob is already committed (a move); the guard rejects any other added line.
+  Run `brew install git-lfs && git lfs install` once before committing media there. A commit made without git-lfs
+  stores a plain blob on an LFS path: while `tools/ci/size_allowlist.txt` says `plain-on-lfs warn` (today: the dev Mac
+  has no git-lfs yet) the guard only warns when it fits the 1 MiB plain limit and rejects it above that. To move one
+  grandfathered file into LFS, delete its line and `git rm --cached <file> && git add <file>`.
+* **Switching LFS on for real** (lead, once): install git-lfs on every machine that commits or runs the gate (the
+  art sections decode `tools/art` review sheets, so a clone without git-lfs would read pointer text once pointers
+  exist), run `python3 tools/ci/size_guard.py --grandfather` to add the plain blobs committed meanwhile to the
+  grandfather lists, and set `plain-on-lfs error` in the same commit. `--grandfather` also regenerates the lists for
+  anything that landed on `main` before this policy did.
+* **Not in git at all:** raw QA screenshot runs and long run logs. Keep them as CI artifacts or locally and commit a
+  summary and a few small crops.
+* **CI.** The playtest jobs pull the LFS files that tests can read (art review sheets, source paintings) from a cache keyed
+  by object id, skipping `docs/qa` and `docs/review`, which no test reads. The export jobs need none: gdignored trees are
+  never exported. With no LFS file in the tree (today) these steps are skipped.
+
+### Planned history migration (lead, separately)
+
+Only a history rewrite shrinks the clone. Do it in one window, with every branch merged or parked:
+
+1. **Paths:** all media under `docs/` except `docs/qa/ui_baseline/` (about 1.2 GB packed: `docs/qa` 0.92 GB,
+   `docs/art` 0.23 GB) and under `tools/art/` (about 0.38 GB, nearly all `tools/art/drawn/sources`); optionally
+   `legacy/` (0.09 GB; or tag it `legacy-archive` and delete it from `main`, which does not shrink the history).
+   `assets/` (about 0.5 GB) stays plain.
+2. **Expected size:** about 1.6 GB moves to LFS storage (check the account's LFS storage and bandwidth quota first);
+   the git pack drops from 2.4 GB to about 0.7 GB, and a playtest checkout to about that plus the cached LFS files.
+3. **Steps,** in a fresh `git clone --mirror` with git-lfs 3.x and git-filter-repo: drop the grandfather lists from all
+   history first (`git filter-repo --invert-paths --path docs/.gitattributes --path tools/art/.gitattributes`; left in,
+   they would mark the converted files plain and checkouts would show pointer text), then
+   `git lfs migrate import --everything --include="docs/**/*.png,...,tools/art/**/*.png,..." --exclude="docs/qa/ui_baseline/**"`
+   with the extensions of the root `.gitattributes`. Verify with `git lfs fsck`, `python3 tools/ci/size_guard.py --audit`
+   and a full strict gate on a clone of the result.
+4. **Consequences:** every commit and tag gets a new SHA, so `main` and the release tags (`v0.1.0`, `v0.2.0`) are force
+   pushed, and their provenance attestations name commits that are no longer on `main` (the released files stay
+   byte-identical). Every clone, worktree and open branch must be re-cloned or re-created; old branches cannot be merged
+   afterwards. GitHub keeps the old objects reachable through pull request refs until support runs a GC. On the push
+   that replaced history the repo workflow checks only the newest commit. Afterwards every clone that touches art or
+   QA media needs git-lfs.
 
 ## Layout notes
 
@@ -73,4 +181,4 @@ staging area `tools/art/_stage/` is not.
   (`legacy/.gdignore`); nothing depends on it; see `legacy/README.md`.
 * `docs/design/` holds the plan the game is built from; `docs/Trætoppen Style Guide Review/` is the UI/look reference.
 * Commits: short imperative subject, a body that says what and why, and the `Co-Authored-By` trailer when an assistant wrote it.
-  Large art is stored as plain git blobs (Git LFS is not enabled).
+  New media under `docs/` and `tools/art/` goes through Git LFS; see Repository size.

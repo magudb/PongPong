@@ -1500,5 +1500,5 @@ func _project_godot(t) -> void:
 	var order_ok: bool = names.find("HomeManager") > names.find("AnimalHusbandry") and names.find("AnimalHusbandry") == 10
 	var res: Dictionary = t.run_godot_script("res://tests/tools/check_project.gd", PackedStringArray(["--text=" + ProjectSettings.globalize_path("res://project.godot")]))
 	var ids: Dictionary = t.parse_tool_ids(res)
-	var idem: Dictionary = t.run_tool("/usr/bin/env", PackedStringArray(["python3", "-I", ProjectSettings.globalize_path("res://tools/features/add_autoload.py"), "--dry-run", "HomeManager"]))
+	var idem: Dictionary = t.run_tool(t.python(), PackedStringArray(["-I", ProjectSettings.globalize_path("res://tools/features/add_autoload.py"), "--dry-run", "HomeManager"]))
 	t.check("project_godot_line_once", hits == ['HomeManager="*res://scripts/home/home_manager.gd"'] and order_ok and (ids["fail"] as Array).is_empty() and "p01.autoloads_base_in_order_features_after" in ids["pass"] and int(idem.get("code", -1)) == 0, "exactly one HomeManager line behind AnimalHusbandry (%s), check_project.gd accepts it (%s), add_autoload.py is a no-op (exit %s)" % [str(hits), str(ids["fail"]), str(idem.get("code"))])

@@ -7,10 +7,10 @@ func run(t) -> void:
 	var snapshot: Dictionary = t.run_tool(OS.get_executable_path(),["--headless","--path",ProjectSettings.globalize_path("res://"),"-s","res://tests/loc_check.gd","--","--strict","--dump="+output])
 	t.check("strict_runtime_localization",snapshot.code==0,str(snapshot.output))
 	for file in ["tools/loc/csv_lint.py","tools/copy/copy_lint.py"]:
-		var result: Dictionary = t.run_tool("python3",[ProjectSettings.globalize_path("res://"+file),"--strict"])
+		var result: Dictionary = t.run_tool(t.python(), [ProjectSettings.globalize_path("res://"+file),"--strict"])
 		t.check(file.get_file()+"_strict",result.code==0,str(result.output))
 	await _fixture_boundaries(t)
-	var voices: Dictionary = t.run_tool("python3",[ProjectSettings.globalize_path("res://tools/voice/generate_voice.py"),"--check"])
+	var voices: Dictionary = t.run_tool(t.python(), [ProjectSettings.globalize_path("res://tools/voice/generate_voice.py"),"--check"])
 	t.check("all_reviewed_voice_assets_match",voices.code==0,str(voices.output))
 
 func _fixture_boundaries(t) -> void:

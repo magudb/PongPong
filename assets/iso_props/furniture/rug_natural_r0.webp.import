@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b1hyc073gswxh"
-path="res://.godot/imported/rug_natural_r0.webp-d50eb79cb6b0aaa66ee2b71577b77646.ctex"
+path.s3tc="res://.godot/imported/rug_natural_r0.webp-d50eb79cb6b0aaa66ee2b71577b77646.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/rug_natural_r0.webp"
-dest_files=["res://.godot/imported/rug_natural_r0.webp-d50eb79cb6b0aaa66ee2b71577b77646.ctex"]
+dest_files=["res://.godot/imported/rug_natural_r0.webp-d50eb79cb6b0aaa66ee2b71577b77646.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

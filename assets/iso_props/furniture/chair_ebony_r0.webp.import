@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c6dljkpwaus6l"
-path="res://.godot/imported/chair_ebony_r0.webp-3ff806312381798f9b041e9853e25148.ctex"
+path.s3tc="res://.godot/imported/chair_ebony_r0.webp-3ff806312381798f9b041e9853e25148.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/chair_ebony_r0.webp"
-dest_files=["res://.godot/imported/chair_ebony_r0.webp-3ff806312381798f9b041e9853e25148.ctex"]
+dest_files=["res://.godot/imported/chair_ebony_r0.webp-3ff806312381798f9b041e9853e25148.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

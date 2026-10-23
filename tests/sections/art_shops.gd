@@ -85,7 +85,7 @@ func run(t) -> void:
 	t.check("complete_exports", count == 51 and night_count == 5, "51 authored views plus 15 badges and five front-only fire masks")
 	t.check("vram_budget", total_bytes <= 8.8e6 and sprite_bytes / 66.0 <= 150000, "RGBA8 + complete mip chains: %.3f MB / 8.8 MB; mean %.1f KB / 150 KB" % [total_bytes / 1e6, sprite_bytes / 66000.0])
 	t.check("disk_budget", disk <= 800000, "%.3f MB / 0.8 MB for all exported artwork" % (disk / 1e6))
-	var rooms := PaintedShopArt.rooms()
+	var rooms := View.rooms()
 	t.check("core_rooms", rooms.size() == 14, "all 14 core layouts captured from the towns generator")
 	for id in rooms:
 		var missing: Array[String] = []
@@ -132,7 +132,7 @@ func run_windowed(t) -> void:
 	for id in badges:
 		entries.append({"label": id, "path": PaintedShopArt.PACK + str(badges[id]["file"])})
 	await _pages(t, "emblems", entries)
-	for id in PaintedShopArt.rooms():
+	for id in View.rooms():
 		var comparison: bool = id in ["bageriet", "smedjen", "badehuset"]
 		for mode in (["stand_in", "day", "night"] if comparison else ["day"]):
 			var view := View.new()

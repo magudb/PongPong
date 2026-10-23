@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://deq0w2wsa1lqt"
-path="res://.godot/imported/wardrobe_oak_r0.webp-ad68556fe696adf7a8d347a89c68c9e3.ctex"
+path.s3tc="res://.godot/imported/wardrobe_oak_r0.webp-ad68556fe696adf7a8d347a89c68c9e3.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/wardrobe_oak_r0.webp"
-dest_files=["res://.godot/imported/wardrobe_oak_r0.webp-ad68556fe696adf7a8d347a89c68c9e3.ctex"]
+dest_files=["res://.godot/imported/wardrobe_oak_r0.webp-ad68556fe696adf7a8d347a89c68c9e3.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

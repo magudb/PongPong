@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cvyg86dc8ryw7"
-path="res://.godot/imported/piano_pine_r2.webp-48ce549a22c216bdac88df9a07c90f25.ctex"
+path.s3tc="res://.godot/imported/piano_pine_r2.webp-48ce549a22c216bdac88df9a07c90f25.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/furniture/piano_pine_r2.webp"
-dest_files=["res://.godot/imported/piano_pine_r2.webp-48ce549a22c216bdac88df9a07c90f25.ctex"]
+dest_files=["res://.godot/imported/piano_pine_r2.webp-48ce549a22c216bdac88df9a07c90f25.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

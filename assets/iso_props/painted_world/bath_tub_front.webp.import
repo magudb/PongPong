@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c804mutqappfj"
-path="res://.godot/imported/bath_tub_front.webp-8f48680e047009f117d8fd812da415d4.ctex"
+path.s3tc="res://.godot/imported/bath_tub_front.webp-8f48680e047009f117d8fd812da415d4.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/iso_props/painted_world/bath_tub_front.webp"
-dest_files=["res://.godot/imported/bath_tub_front.webp-8f48680e047009f117d8fd812da415d4.ctex"]
+dest_files=["res://.godot/imported/bath_tub_front.webp-8f48680e047009f117d8fd812da415d4.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

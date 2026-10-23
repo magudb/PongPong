@@ -257,11 +257,8 @@ func _scenery(t) -> void:
 	t.check("falling_leaves_follow_night_colour", fx.leaves.modulate == leaf_tint and (fx.leaves.material != null or fx.leaves.modulate != Color.WHITE),
 		"the LeafFx layer (CanvasLayer 4) copies the night colour %s (fireflies, additive light, stay white): %s" % [world.day_night.color, fx.leaves.modulate])
 	world.day_night.override_hour = -1
-	var started := Time.get_ticks_usec()
-	for i in 10000:
-		fx._process(1.0 / 60)
-	var ms := float(Time.get_ticks_usec() - started) / 10000.0 / 1000.0
-	t.check("handler_frame_budget", ms < 0.3, "%s ms per ambient update" % ms)
+	var ms: float = t.median_usec(func() -> void: fx._process(1.0 / 60), 20, 500) / 1000.0
+	t.check("handler_frame_budget", t.perf_ok("handler_frame_budget", ms, 0.3), "%s ms per ambient update, median of 20 batches of 500 (native reference 0.3)" % ms)
 
 func _save(t) -> void:
 	var eco: Node = t.autoload("EconomyManager")
