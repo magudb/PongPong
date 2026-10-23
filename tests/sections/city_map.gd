@@ -16,7 +16,9 @@ extends RefCounted
 ## overview_shows_the_top_platforms, vram_city_increment_within_budget, hints_visible_at_the_ladder_foot.
 ## Every check that needs a package of the next milestone SKIPs with a visible line `capability missing: <package>`.
 const SECTION := "city_map"
-const TIMEOUT_S := 170.0
+# The complete physical tour runs in real time, including narrow turns and
+# arrival beyond every bridge mouth, on software-rendered CI frames.
+const TIMEOUT_S := 240.0
 const SELF_PATH := "res://tests/sections/city_map.gd"
 const EXTRACT_PATH := "res://scripts/world2d/levels/source/v2_city_extract.json"
 const LUA_PATH := "res://lua/config/traetoppen.lua"
@@ -1687,7 +1689,17 @@ func _tour(t, on_visit: Callable = Callable()) -> Dictionary:
 					break
 				res = await _steer(t, approach)
 				if res["ok"]:
-					res = await _steer(t, bp, func() -> bool: return ActorLevel.level_id(p) == to_id and p.global_position.distance_to(bp[bp.size() - 1]) < 220.0)
+					# The center can briefly select the destination while the body
+					# still straddles the bridge. Clear its full footprint first.
+					var on_deck := func() -> bool:
+						if ActorLevel.level_id(p) != to_id or b.contains(p.global_position):
+							return false
+						for offset in Planner.CLEAR:
+							if b.contains(p.global_position + offset):
+								return false
+						return true
+					res = await _steer(t, bp, on_deck)
+					await t.physics(2)
 				levels_seen[b.id] = true
 				levels_seen[to_id] = true
 				label = "cross %s %s -> %s" % [b.id, from_id, to_id]
