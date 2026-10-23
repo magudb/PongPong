@@ -5,7 +5,7 @@ extends RefCounted
 ## Headless (tests/run_playtest.sh --only=art_ghost --no-boot; needs the project imported: the sheets are S3TC textures; the Python checks need tools/art/.venv):
 ##   builders_resolve  hook_leaves_other_characters_byte_identical  animations_json_is_the_ghost_family  sheets_valid  import_stubs_s3tc  vram_budget
 ##   heights_and_pivot  hover_baked_feet_window  palette_within_de  silhouette_shared_outside_the_face_band  portraits_are_busts  manifest_rows
-##   game_loads_both_heroes  measure_ghost_agrees  review_sheets_exist_and_readme_names_them  readme_verdict_and_honest_notes  no_old_town_name  docs_match_the_code
+##   game_loads_both_heroes  measure_ghost_agrees  review_sheets_exist_and_readme_names_them  readme_verdict_and_honest_notes  no_old_town_name  eye_probe_excludes_ground  docs_match_the_code
 ## Windowed (tests/run_playtest.sh --windowed --only=art_ghost, through tools/dev/run_windowed.sh):
 ##   windowed_cast_shot
 ## What each one holds the art to:
@@ -34,6 +34,7 @@ extends RefCounted
 ##  * readme_verdict_and_honest_notes: the README carries the honest notes (soft CG render, dark eyes without sclera, the glide, the egg + wisp back rows, ONE silhouette, the rejected translucent hem, no baked glow,
 ##    the hover), the verdict log row and the Codex note.
 ##  * no_old_town_name: the fairy town is Hyggebyen: no file of this package uses the old name, and every file the section reads exists.
+##  * eye_probe_excludes_ground: a lossless crop of the Linux/Mesa cast keeps both complete eyes inside the face probe and excludes the dark grass above the head.
 ##  * docs_match_the_code: this header lists every check of the file by its full name and describes it.
 ##  * windowed_cast_shot: the cast (fox, hobbit_pip, fairy, ghost_bu, ghost_hviske on the iso fixture ground; zoom 0.4, 0.9 and night 23:00) is written for the human (art_ghost_cast_*.png), the rendered
 ##    height of the ghost is within 10 % of the fox's, two dark eyes are drawn in the zoom 0.9 face and the white / pink figures stay clearly different from the ground at night (the night grade tints them blue-violet).
@@ -116,6 +117,7 @@ func run(t) -> void:
 	_manifest(t)
 	await _game_loads(t)
 	_measure_agrees(t)
+	_eye_probe_regression(t)
 	_docs(t)
 
 
@@ -1210,6 +1212,24 @@ func _set_hour(world, hour: float) -> void:
 	world.area.set_night_factor(world.day_night.glow_factor)
 
 
+## Central white face, 60..125 sprite pixels above the feet: excludes grass above the head and includes the complete eyes.
+func _eye_region(feet: Vector2, zoom: float) -> Rect2i:
+	return Rect2i(int(feet.x - 45.0 * zoom), int(feet.y - 125.0 * zoom), int(90.0 * zoom), int(65.0 * zoom))
+
+
+func _eye_probe_regression(t) -> void:
+	# Crop (475, 288, 99, 81) from the failing Linux x86 Mesa cast_noon_zoom09.
+	# The old head box contained grass and clipped the bottoms of the eyes.
+	var img := Image.new()
+	img.load_png_from_buffer(FileAccess.get_file_as_bytes("res://tests/fixtures/ghost_face_linux.png"))
+	var eyes := _dark_blobs(img, _eye_region(Vector2(49.8, 135.0), 0.9), 12)
+	var old_blobs := _dark_blobs(img, Rect2i(0, 0, 99, 63), 12)
+	eyes.sort_custom(func(p: Rect2i, q: Rect2i) -> bool: return p.position.x < q.position.x)
+	t.check("eye_probe_excludes_ground", old_blobs.size() == 3 and eyes.size() == 2
+		and absi(eyes[0].position.y - eyes[1].position.y) <= 14 and eyes[1].position.x - eyes[0].end.x >= 2,
+		"Linux/Mesa face: %s; original head box also included grass: %s" % [str(eyes), str(old_blobs)])
+
+
 ## Dark connected blobs (luma < 0.27) of at least `min_px` pixels inside `rect`: the eyes of the zoom 0.9 face.
 func _dark_blobs(img: Image, rect: Rect2i, min_px: int) -> Array[Rect2i]:
 	var r := rect.intersection(Rect2i(Vector2i.ZERO, img.get_size()))
@@ -1273,11 +1293,11 @@ func _cast_shots(t) -> void:
 	await t.seconds(0.8)
 	var img09: Image = await t.capture("cast_noon_zoom09")
 	var k := float(img09.get_width()) / float(ProjectSettings.get_setting("display/window/size/viewport_width")) if img09 != null else 1.0
-	# the two dark eyes of Bu in the zoom 0.9 face: two dark blobs of the head box (the figure is ~160 px tall at scale 1: the eyes are at 0.65..0.80 of it)
+	# The two dark eyes of Bu in the central white face, away from the grass above his head.
 	var bu_screen: Vector2 = ghost_node.get_global_transform_with_canvas().origin * k
 	var eyes: Array[Rect2i] = []
 	if img09 != null:
-		eyes = _dark_blobs(img09, Rect2i(int(bu_screen.x - 55.0 * 0.9 * k), int(bu_screen.y - 150.0 * 0.9 * k), int(110.0 * 0.9 * k), int(70.0 * 0.9 * k)), 12)
+		eyes = _dark_blobs(img09, _eye_region(bu_screen, 0.9 * k), 12)
 	cam.zoom = Vector2(0.4, 0.4)
 	world.player.global_position = centre
 	cam.reset_smoothing()

@@ -23,6 +23,14 @@ func _ready() -> void:
 	%CloseButton.focus_entered.connect(_refresh_hints)
 	_refresh_hints()
 
+func _process(delta: float) -> void:
+	super._process(delta)
+	# The previous-game autosave adds an odd-height row. Keep the centered
+	# panel on whole pixels so its ink border and slot focus rings stay sharp.
+	var panel := get_node_or_null("Panel") as Control
+	if panel != null and panel.position != panel.position.round():
+		panel.position = panel.position.round()
+
 func open_mode(value: int, opener: Control = null) -> void:
 	mode = value
 	pauses_tree = get_tree().get_first_node_in_group("world_2d") != null

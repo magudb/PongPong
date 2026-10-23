@@ -2815,9 +2815,12 @@ func _cleanup(t) -> void:
 func _freeze_pixel_enemies(t, area: IsoArea) -> void:
 	# These captures judge geometry. Hidden enemies must not attack the figure,
 	# flash its sprite, or change the scene while the paired images are sampled.
+	var roster := area.get_node_or_null("EnemyRoster")
+	if roster != null:
+		roster.set_process(false)
 	for enemy in t.tree.get_nodes_in_group("enemy"):
 		if area.is_ancestor_of(enemy):
-			enemy.process_mode = Node.PROCESS_MODE_DISABLED
+			enemy.set_awake(false)
 
 func run_windowed(t) -> void:
 	if not await t.start_world():

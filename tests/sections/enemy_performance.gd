@@ -40,6 +40,7 @@ func _run(t,native: bool) -> void:
 	var clocks := actors.map(func(actor):return actor.clock)
 	await t.physics(120)
 	t.check("sleeping_callbacks_zero",actors.all(func(actor):return actor.process_mode==Node.PROCESS_MODE_DISABLED and is_equal_approx(actor.clock,clocks[actors.find(actor)])))
+	t.check("sleeping_bodies_keep_their_physics_space",actors.all(func(actor):return PhysicsServer2D.body_get_space(actor.get_rid()).is_valid()))
 	# Actual FSM, terrain physics and visual-motion callback cost, measured in
 	# batches to amortize the clock read; all seven behaviors are represented.
 	roster.refresh()

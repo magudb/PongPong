@@ -9,9 +9,9 @@ extends RefCounted
 const ACTIONS := {"left": &"move_left", "right": &"move_right", "up": &"move_forward", "down": &"move_back"}
 
 
-static func _steer(t, d: Vector2) -> void:
+static func _steer(t, d: Vector2, strength: float = 1.0) -> void:
 	var g: Vector2 = Iso.to_ground(d)
-	var v := g.normalized() if g.length() > 0.001 else Vector2.ZERO
+	var v := g.normalized() * strength if g.length() > 0.001 else Vector2.ZERO
 	t.hold(ACTIONS["right"], maxf(v.x, 0.0)) if v.x > 0.02 else t.release(ACTIONS["right"])
 	t.hold(ACTIONS["left"], maxf(-v.x, 0.0)) if v.x < -0.02 else t.release(ACTIONS["left"])
 	t.hold(ACTIONS["down"], maxf(v.y, 0.0)) if v.y > 0.02 else t.release(ACTIONS["down"])
@@ -157,6 +157,8 @@ static func walk_to(t, target: Vector2, tol: float = 30.0, timeout_game_s: float
 			# A route's ladder edge is a real E interaction, not a walk through
 			# the deck wall. The production lane owns its tween, mask and lock.
 			t.release_all()
+			await t.physics(2) # Stop the approach before pressing E.
+			ticks += 2
 			var host: Node = p.nearest_interactable()
 			if not host is ClimbLane:
 				lane_failed = true
@@ -170,22 +172,28 @@ static func walk_to(t, target: Vector2, tol: float = 30.0, timeout_game_s: float
 				await t.physics(1)
 				waited += 1
 				ticks += 1
-			transit.done = str(ActorLevel.level_id(p)) == str(transit.to)
+			transit.done = str(ActorLevel.level_id(p)) == str(transit.to) and p.global_position.distance_to(transit.finish) <= 2.0 and not host.climbing
 			lane_failed = not transit.done
+			if lane_failed:
+				t.info("Ladder %s did not reach %s: position=%s entry=%s finish=%s level=%s" % [host.name, transit.to, p.global_position, transit.start, transit.finish, ActorLevel.level_id(p)])
 		if lane_failed:
 			stuck = 3
 			break
 		var d: Vector2 = wp - p.global_position
 		var is_last: bool = i == pts.size() - 1
+		var ladder_entry: bool = transits.any(func(transit: Dictionary) -> bool: return not transit.done and int(transit.index) == i + 1)
+		var distance := Iso.to_ground(d).length()
 		# City paths use a 32-ground-pixel grid. The old prototype's 36-screen-
 		# pixel tolerance skipped several bends and cut into rails/keepouts.
-		if Iso.to_ground(d).length() <= (tol if is_last else 8.0):
+		if distance <= (tol if is_last else 1.0 if ladder_entry else 8.0):
 			if is_last:
 				arrived = true
 				break
 			i += 1
 			continue
-		_steer(t, d)
+		# ClimbLane's collision-aware approach needs the actual entry point.
+		# Slow down there rather than coasting across an eight-pixel waypoint.
+		_steer(t, d, clampf(distance / 48.0, 0.25, 1.0) if ladder_entry else 1.0)
 		await t.physics(1)
 		ticks += 1
 		if ticks % 30 == 0:

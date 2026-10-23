@@ -1260,8 +1260,8 @@ func run_windowed(t) -> void:
 	var house: Node2D = Standins.place_home(a, 1, _door, true, false)
 	# draw calls of the farm in a real window (the y-sorted Ground layer is ~390 of them; the field look costs +36), noon and night (lights + halos)
 	var budgets := {0.4: 560, 0.3: 640, 0.2: 780}
-	# These map-prototype draw budgets predate the shared HUD. The I2 budget
-	# section records both area and full-screen costs with the current HUD.
+	# These prototype budgets predate the HUD and equipment. Measure the map
+	# against those limits and gate equipment's approved <=16 extra draws.
 	var hud_visible: bool = _world.game_ui.visible
 	_world.game_ui.hide()
 	for z in [0.4, 0.3, 0.2]:
@@ -1278,7 +1278,9 @@ func run_windowed(t) -> void:
 			for i in 40:
 				await t.frames(1)
 				mx = maxi(mx, int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)))
-			per_hour.append(mx)
+			var bare := int(await TownProbe.area_draw_calls(t))
+			per_hour.append(bare)
+			t.check("equipment_draw_increment_%d_%d" % [int(float(z) * 100.0), int(hour)], mx - bare <= 16, "%d additional draws <=16; full area %d, prototype area %d" % [mx - bare, mx, bare])
 			if hour == 11.0:
 				await t.capture("farm_zoom_%d" % int(float(z) * 100.0))
 		t.check("windowed_draw_calls_zoom_%d" % int(float(z) * 100.0), int(per_hour[0]) <= int(budgets[z]) and int(per_hour[1]) <= int(budgets[z]), "%d draw calls at noon and %d at night at zoom %.1f (budget %d; the prototype measured 502-524 / 597 / 723 with the real art; process time is measured by tools/farm/farm_shot.tscn --part=perf, not here)" % [int(per_hour[0]), int(per_hour[1]), z, int(budgets[z])])

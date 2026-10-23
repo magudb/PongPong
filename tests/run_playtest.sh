@@ -183,9 +183,7 @@ rm -f "$LOG"                              # never let an older run's log stand i
 HARNESS_MAX=$((TIMEOUT_S > 40 ? TIMEOUT_S - 15 : TIMEOUT_S))
 GODOT_ARGS=(--path .)
 if [ "$WINDOWED" = 1 ] && [ "$LIST" = 0 ]; then
-	# Xvfb/Mesa cannot enable V-Sync. Disable it before creating the window,
-	# rather than emitting an engine warning before the harness can start.
-	GODOT_ARGS+=(--resolution 1280x720 --disable-vsync)
+	GODOT_ARGS+=(--resolution 1280x720)
 	if [ "$HAS_OUT" = 0 ]; then
 		OUT_DIR="$TMP_BASE/traetoppen-shots/$(date +%Y%m%d-%H%M%S)"
 		ARGS+=("--out=$OUT_DIR")

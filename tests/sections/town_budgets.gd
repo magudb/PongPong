@@ -457,14 +457,7 @@ func _zoom(t, value: float) -> void:
 	t.player()._apply_camera_limits()
 
 func _area_calls(t) -> float:
-	# The plan's room/farm draw counts came from standalone area prototypes.
-	# Record the presented screen separately; its frame budget includes the HUD.
-	t.world().game_ui.hide()
-	await t.frames(3)
-	var calls := Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
-	t.world().game_ui.show()
-	await t.frames(3)
-	return calls
+	return await TownProbe.area_draw_calls(t)
 
 func _cold_crowd_travel(t) -> void:
 	await t.start_world()

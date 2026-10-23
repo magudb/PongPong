@@ -1352,6 +1352,9 @@ class Spy extends RefCounted:
 	func frames(n: int) -> void:
 		await real.frames(n)
 
+	func move_mouse(position: Vector2) -> void:
+		real.move_mouse(position)
+
 	func has_window() -> bool:
 		return real.has_window()
 
