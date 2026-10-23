@@ -104,7 +104,7 @@ func _malformed_primary() -> void:
 	_fresh()
 	t.check("malformed_backup_created", sm.save_game(0) and sm.save_game(0), "")
 	var payload: Dictionary = sm.gather_payload()
-	payload["quests"]["active"] = {"bad": {"id": "bad", "objectives": []}}
+	payload["players"]["rows"]["p0"]["quests"]["active"] = {"bad": {"id": "bad", "objectives": []}}
 	_write(sm.slot_path(0), JSON.stringify(payload))
 	var inspected: Dictionary = sm.inspect_slot(0)
 	var loaded: bool = sm.load_game(0)
@@ -155,7 +155,7 @@ func _roof_charges_twice() -> void:
 	var area := IsoArea.new()
 	var marker := {"quest": "fix_roof", "objective": "repair_roof", "needs": "wood:8,moss:4", "consume": "1"}
 	var snapshots: Array = []
-	var on_change := func(_inventory: Dictionary) -> void:
+	var on_change := func(_player_id: StringName, _inventory: Dictionary) -> void:
 		snapshots.append(sm.gather_payload())
 		area.call("_on_quest_spot", null, marker)
 	bus.player_inventory_changed.connect(on_change)
@@ -163,7 +163,7 @@ func _roof_charges_twice() -> void:
 	bus.player_inventory_changed.disconnect(on_change)
 	var after_first: int = eco.count_item(&"wood")
 	t.check("roof_cost_and_progress_commit_together", after_first == 8 and eco.count_item(&"moss") == 4 and snapshots.size() == 1
-		and snapshots[0]["quests"]["active"]["fix_roof"]["objectives"]["repair_roof"]["done"], "inventory callback sees the complete transaction and cannot reenter it")
+		and snapshots[0]["players"]["rows"]["p0"]["quests"]["active"]["fix_roof"]["objectives"]["repair_roof"]["done"], "inventory callback sees the complete transaction and cannot reenter it")
 	area.call("_on_quest_spot", null, marker)
 	t.check("completed_roof_objective_does_not_charge_again", eco.count_item(&"wood") == after_first,
 		"wood after first=%s, after second=%s; quest remains active=%s" % [after_first, eco.count_item(&"wood"), qm.is_active(&"fix_roof")])
@@ -185,7 +185,7 @@ func _housing_required() -> void:
 	t.check("unfinished_coop_refuses_adoption", not ah.adopt_animal(&"baby_chick") and eco.count_item(&"baby_chick") == 1, "")
 	ah.buildings[&"coop_1"].is_built = true
 	var snapshots: Array = []
-	var on_change := func(_inventory: Dictionary) -> void: snapshots.append(sm.gather_payload())
+	var on_change := func(_player_id: StringName, _inventory: Dictionary) -> void: snapshots.append(sm.gather_payload())
 	bus.player_inventory_changed.connect(on_change)
 	adopted = ah.adopt_animal(&"baby_chick")
 	bus.player_inventory_changed.disconnect(on_change)
@@ -206,7 +206,7 @@ func _product_snapshot() -> void:
 		"age_days": 10, "happiness": 60.0, "hunger": 100.0, "products_ready": 2}}, "buildings": {}})
 	var saved: Array = []
 	var reentrant: Array = []
-	var on_gain := func(id: StringName, _amount: int) -> void:
+	var on_gain := func(_player_id: StringName, id: StringName, _amount: int) -> void:
 		if id == &"egg":
 			saved.append(sm.gather_payload())
 			reentrant.append(ah.collect_product(&"animal_1"))

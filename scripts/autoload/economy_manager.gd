@@ -66,7 +66,9 @@ const ACCESSORY_SLOT := "accessory"
 ## Backpack slots a load could not fit any more (content drift: a smaller max_stack since the save made more slots than there are):
 ## [{id, amount, meta}], saved as "owed" and handed back by deliver_owed() every morning and when the player of a loaded world spawns,
 ## as far as there is room.
-var owed: Array[Dictionary] = []
+var owed: Array:
+	get: return state().owed
+	set(value): state().owed = value
 
 ## Per-player rows (MP3). The gold / inventory / equipment of the acting player live on PlayerState;
 ## single-player has one row and this facade is unchanged from the outside.
@@ -180,7 +182,7 @@ const PLAYER_SCOPED_EVENTS: Array[StringName] = [
 
 func _publish(event_name: StringName, args: Array) -> void:
 	if event_name in PLAYER_SCOPED_EVENTS:
-		args = [PlayerRegistry.local_id()] + args
+		args = [PlayerRegistry.acting_id()] + args
 	after_transaction(func() -> void: EventBus.emit_signal.callv([event_name] + args))
 
 

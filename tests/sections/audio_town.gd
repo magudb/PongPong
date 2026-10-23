@@ -69,7 +69,7 @@ func run(t) -> void:
 	AudioManager.play_ambience("farm_day",0.05)
 	AudioManager.play_ambience("town_night",0.05)
 	AudioManager.play_ambience("forest",0.05)
-	await t.seconds(0.1)
+	await t.until_game(func() -> bool: return AudioManager._ambient_players.filter(func(player): return player.playing).size() == 1, 1.0)
 	var playing_loops: Array = AudioManager._ambient_players.filter(func(player):return player.playing).map(func(player):return player.stream.resource_path if player.stream!=null else "")
 	t.check("rapid_fades_keep_one_final_stream",playing_loops.size()==1 and AudioManager._ambient_players[AudioManager._ambient_slot].stream==AudioManager._load_stream(AudioManager.AMBIENT_DIR,"forest"),"playing %s, ambient id %s" % [playing_loops,AudioManager._ambient_id])
 	if not clock_was_paused:TimeManager.resume_time()

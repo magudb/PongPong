@@ -153,14 +153,10 @@ func state(player_id: StringName = &"") -> PlayerState:
 
 func _log() -> Dictionary:
 	var q: Dictionary = state().quests
-	if not q.has("active"):
-		q["active"] = {}
-		q["completed"] = []
-		q["failed"] = []
-		q["offered"] = []
-		q["flags"] = {}
-		q["completed_days"] = {}
-		q["pending_rewards"] = {}
+	for key in ["active", "flags", "completed_days", "pending_rewards"]:
+		if not q.has(key): q[key] = {}
+	for key in ["completed", "failed", "offered"]:
+		if not q.has(key): q[key] = []
 	return q
 
 
@@ -437,7 +433,7 @@ func offer_quest(quest_id: StringName) -> void:
 	if get_quest_def(quest_id).is_empty() or not _can_start(quest_id) or not _requirements_met(quest_id) or quest_id in offered_quests:
 		return
 	offered_quests.append(quest_id)
-	EventBus.quest_offered.emit(PlayerRegistry.local_id(), quest_id)
+	EventBus.quest_offered.emit(PlayerRegistry.acting_id(), quest_id)
 
 
 ## The quests `npc_id` can give RIGHT NOW, in the order of lua/config/npcs.lua `quests_offered` (quests that only name the giver in their own
@@ -555,7 +551,7 @@ func _activate(quest_id: StringName, def: Dictionary) -> void:
 
 	active_quests[quest_id] = rt
 	offered_quests.erase(quest_id)
-	EventBus.quest_accepted.emit(PlayerRegistry.local_id(), quest_id)
+	EventBus.quest_accepted.emit(PlayerRegistry.acting_id(), quest_id)
 	EventBus.notification_posted.emit(
 		tr("NOTIF_QUEST_ACCEPTED_TITLE"),
 		get_title(quest_id),
@@ -611,7 +607,7 @@ func update_objective(quest_id: StringName, objective_id: StringName, amount: in
 	obj["current"] = mini(obj["current"] + amount, obj["target"])
 	if obj["current"] >= obj["target"]:
 		obj["done"] = true
-	EventBus.quest_objective_updated.emit(PlayerRegistry.local_id(), quest_id, objective_id, obj["current"], obj["target"])
+	EventBus.quest_objective_updated.emit(PlayerRegistry.acting_id(), quest_id, objective_id, obj["current"], obj["target"])
 	_check_completion(quest_id)
 
 
@@ -631,7 +627,7 @@ func _set_progress(quest_id: StringName, objective_id: Variant, value: int) -> v
 	obj["current"] = current
 	if current >= int(obj["target"]):
 		obj["done"] = true
-	EventBus.quest_objective_updated.emit(PlayerRegistry.local_id(), quest_id, StringName(str(objective_id)), current, obj["target"])
+	EventBus.quest_objective_updated.emit(PlayerRegistry.acting_id(), quest_id, StringName(str(objective_id)), current, obj["target"])
 	_check_completion(quest_id)
 
 
@@ -681,7 +677,7 @@ func complete_quest(quest_id: StringName) -> void:
 		EconomyManager.add_gold(_Data.int_of(rewards["gold"]))
 	_grant_friendship(_Data.int_map(rewards.get("friendship", {})))
 	claim_rewards()
-	EventBus.quest_completed.emit(PlayerRegistry.local_id(), quest_id)
+	EventBus.quest_completed.emit(PlayerRegistry.acting_id(), quest_id)
 	EventBus.notification_posted.emit(
 		tr("NOTIF_QUEST_COMPLETED_TITLE"),
 		get_title(quest_id),
@@ -707,7 +703,7 @@ func _grant_friendship(hearts_by_npc: Dictionary) -> void:
 		if after == before:
 			continue
 		GameManager.set_flag(flag, after)
-		EventBus.friend_changed.emit(PlayerRegistry.local_id(), StringName(str(npc)), after)
+		EventBus.friend_changed.emit(PlayerRegistry.acting_id(), StringName(str(npc)), after)
 
 
 ## Delivers what fits, retaining the rest in the save. Called again after inventory changes and successful loads. A backpack stack
@@ -796,7 +792,7 @@ func fail_quest(quest_id: StringName) -> void:
 		return
 	active_quests.erase(quest_id)
 	failed_quests.append(quest_id)
-	EventBus.quest_failed.emit(PlayerRegistry.local_id(), quest_id)
+	EventBus.quest_failed.emit(PlayerRegistry.acting_id(), quest_id)
 	_lua_notify("quest_failed", quest_id)
 
 

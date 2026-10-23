@@ -100,7 +100,7 @@ class Rec extends RefCounted:
 	func _on_toast(title: String, message: String, icon: String) -> void:
 		toasts.append([title, message, icon])
 
-	func _on_gained(item_id: StringName, amount: int) -> void:
+	func _on_gained(_player_id: StringName, item_id: StringName, amount: int) -> void:
 		gained.append([str(item_id), amount])
 
 
@@ -269,7 +269,7 @@ func _atomic_transfers(t) -> void:
 	_eco.reset()
 	_eco.add_item(&"wood", 12, true)
 	var totals: Array = []
-	var record := func(_inventory: Dictionary) -> void:
+	var record := func(_player_id: StringName, _inventory: Dictionary) -> void:
 		totals.append(_eco.count_item(&"wood") + _hm.chest_count(&"wood"))
 	_bus.player_inventory_changed.connect(record)
 	var deposited: int = _hm.deposit(&"wood", 7)
@@ -294,8 +294,8 @@ func _atomic_transfers(t) -> void:
 		for id in materials:
 			valid = valid and _hm.count_material(id) == int(before[id]) - int(materials[id])
 		samples.append(valid)
-	var gold_record := func(_gold: int, _delta: int) -> void: snapshot.call()
-	var inventory_record := func(_inventory: Dictionary) -> void: snapshot.call()
+	var gold_record := func(_player_id: StringName, _gold: int, _delta: int) -> void: snapshot.call()
+	var inventory_record := func(_player_id: StringName, _inventory: Dictionary) -> void: snapshot.call()
 	_bus.gold_changed.connect(gold_record)
 	_bus.player_inventory_changed.connect(inventory_record)
 	_hm.chest_changed.connect(snapshot)
@@ -311,7 +311,7 @@ func _atomic_transfers(t) -> void:
 	var chests_before: int = _eco.count_item(&"chest_pine")
 	_hm._pending_gifts = ["chair_pine", "chest_pine"] as Array[String]
 	var gift_snapshots: Array = []
-	var on_gift := func(item: StringName, _amount: int) -> void:
+	var on_gift := func(_player_id: StringName, item: StringName, _amount: int) -> void:
 		gift_snapshots.append(not str(item) in _hm.pending_gifts())
 		_hm._retry_pending_gifts()
 	_bus.item_gained.connect(on_gift)

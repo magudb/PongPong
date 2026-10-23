@@ -17,11 +17,8 @@ func state(player_id: StringName = &"") -> PlayerState:
 
 func _w() -> Dictionary:
 	var w: Dictionary = state().wardrobe
-	if not w.has("owned"):
-		w["owned"] = {}
-		w["equipped"] = {}
-		w["presets"] = {}
-		w["orphans"] = {}
+	for key in ["owned", "equipped", "presets", "orphans"]:
+		if not w.has(key): w[key] = {}
 	return w
 
 
@@ -118,7 +115,7 @@ func equip(id: Variant) -> bool:
 		return true
 	equipped = next
 	_publish()
-	EventBus.garment_equipped.emit(PlayerRegistry.local_id(), StringName(str(id)), StringName(slot))
+	EventBus.garment_equipped.emit(PlayerRegistry.acting_id(), StringName(str(id)), StringName(slot))
 	EventBus.game_event.emit(&"garment_equipped", {"slot": slot, "item": str(id), "rarity": str(ItemKinds.rarity_of(id))})
 	return true
 
@@ -242,7 +239,7 @@ func _valid_outfit(raw: Dictionary, require_owned: bool) -> Dictionary:
 	return next
 
 func _publish() -> void:
-	EventBus.outfit_changed.emit(PlayerRegistry.local_id(), outfit())
+	EventBus.outfit_changed.emit(PlayerRegistry.acting_id(), outfit())
 
 func _check_sets() -> void:
 	if _checking_sets:

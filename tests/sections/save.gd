@@ -298,8 +298,8 @@ func _read_json(path: String) -> Variant:
 ## economy.gold of a save file, -1 when the file is missing, damaged or has no economy section.
 func _gold_in(path: String) -> int:
 	var doc: Variant = _read_json(path)
-	if doc is Dictionary and (doc as Dictionary).get("economy") is Dictionary:
-		return int(((doc as Dictionary)["economy"] as Dictionary).get("gold", -1))
+	if doc is Dictionary and doc.get("players") is Dictionary:
+		return int(doc.players.rows.p0.get("gold", -1))
 	return -1
 
 
@@ -672,7 +672,7 @@ func _test_registry_inner() -> void:
 	var registered: Array[String] = sm.registered_section_names()
 	t.check("registry_names_in_apply_order", registered == expected, "%s" % [registered])
 	var all_names: Array[String] = sm.section_names()
-	t.check("registry_core_order", _is_subsequence(["game", "time", "economy", "quests", "husbandry", "shops"], all_names) and all_names.find("quests") < all_names.find("tie_a"),
+	t.check("registry_core_order", _is_subsequence(["game", "time", "husbandry", "shops"], all_names) and all_names.find("shops") < all_names.find("tie_a"),
 		"game, time, economy, quests, husbandry, shops, then the features: %s" % [all_names])
 	# data of every section distinct so a mix-up is visible
 	for f in _fakes:
@@ -694,9 +694,9 @@ func _test_registry_inner() -> void:
 		f.data = {"v": 1, "n": 2, "tag": f.tag, "when": "changed"}
 	_log.clear()
 	var ok: bool = sm.load_game(1)
-	var want_log := ["apply:p_game:day=7", "apply:p_time:regn,gold=999", "apply:p_eco:gold=321", "apply:tie_a", "apply:home", "apply:furniture", "apply:wardrobe", "apply:late"]
+	var want_log := ["apply:p_game:day=7", "apply:p_time:regn,gold=999", "apply:p_eco:gold=999", "apply:tie_a", "apply:home", "apply:furniture", "apply:wardrobe", "apply:late"]
 	t.check("section_registry_order_and_reset", ok and _log == want_log, "apply order %s (want %s)" % [_log, want_log])
-	t.check("registry_core_applied_between_features", _log.size() >= 3 and _log[0] == "apply:p_game:day=7" and _log[1] == "apply:p_time:regn,gold=999" and _log[2] == "apply:p_eco:gold=321",
+	t.check("registry_core_applied_between_features", _log.size() >= 3 and _log[0] == "apply:p_game:day=7" and _log[1] == "apply:p_time:regn,gold=999" and _log[2] == "apply:p_eco:gold=999",
 		"game before time before economy, each in front of the sections that sit between them")
 	t.check("registry_data_arrives", home.data.get("when") == "saved" and wardrobe.data.get("when") == "saved" and typeof(home.data["n"]) == TYPE_INT, "from_dict got the saved dictionary, numbers as ints")
 	# a section missing from the save is reset, never left stale
@@ -738,11 +738,11 @@ func _test_registry_inner() -> void:
 	_clear_fakes()
 	# the feature sections of the addendum keep their documented order whatever the autoload order is
 	var o: Dictionary = sm.FEATURE_ORDERS
-	t.check("feature_orders_constants", o == {"home": 10, "furniture": 20, "wardrobe": 30, "loot": 40, "collection": 50}, "home 10, furniture 20, wardrobe 30, loot 40, collection 50")
+	t.check("feature_orders_constants", o == {"players": 15, "home": 10, "furniture": 20, "wardrobe": 30, "loot": 40, "collection": 50}, "home 10, furniture 20, wardrobe 30, loot 40, collection 50")
 	for name in ["collection", "loot", "wardrobe", "home", "furniture"]:
 		_fake(name, o[name])
 	var names: Array[String] = sm.registered_section_names()
-	t.check("feature_orders_apply_order", names == ["home", "furniture", "wardrobe", "loot", "collection"] and sm.section_names().find("quests") < sm.section_names().find("home"), "%s" % [names])
+	t.check("feature_orders_apply_order", names == ["home", "furniture", "wardrobe", "loot", "collection"] and sm.section_names().find("shops") < sm.section_names().find("home"), "%s" % [names])
 	_clear_fakes()
 	# equal orders keep the registration order however many there are (a sort that is not stable would scramble 40 of them)
 	var scrambled: Array[String] = []
@@ -754,9 +754,9 @@ func _test_registry_inner() -> void:
 	_clear_fakes()
 	# a registered section with the order of a built-in one comes AFTER it
 	_fake("beside_game", -60)
-	_fake("beside_quests", -30)
+	_fake("beside_shops", -10)
 	var with_ties: Array[String] = sm.section_names()
-	t.check("registry_built_in_sections_win_ties", with_ties.find("game") < with_ties.find("beside_game") and with_ties.find("quests") < with_ties.find("beside_quests") and with_ties.find("beside_game") < with_ties.find("time"),
+	t.check("registry_built_in_sections_win_ties", with_ties.find("game") < with_ties.find("beside_game") and with_ties.find("shops") < with_ties.find("beside_shops") and with_ties.find("beside_game") < with_ties.find("time"),
 		"game, beside_game, time, ... quests, beside_quests: %s" % [with_ties])
 	_clear_fakes()
 
@@ -820,7 +820,7 @@ func _test_json_rules() -> void:
 	sm.register_section("bad_dict", bad)
 	t.allow("did not return a Dictionary")
 	var payload_bad: Dictionary = sm.gather_payload()
-	t.check("section_with_bad_to_dict_is_left_out", not payload_bad.has("bad_dict") and payload_bad.has("economy") and payload_bad.has("meta"), "gather skips it and keeps the other sections")
+	t.check("section_with_bad_to_dict_is_left_out", not payload_bad.has("bad_dict") and payload_bad.has("players") and payload_bad.has("meta"), "gather skips it and keeps the other sections")
 	t.expect_allowed("did not return a Dictionary", 1, "the bad to_dict() is reported once")
 	# ... and save_game refuses such a payload (SAVE-11; it used to write it, and the next load reset the missing section to new-game
 	# state): false, last_error "gather", the slot's file and .bak stay byte for byte, a manual save says so, an autosave writes nothing
@@ -894,6 +894,10 @@ func _try_load(payload: Variant, slot: int = 0) -> Dictionary:
 
 
 func _edit(doc: Dictionary, path: Array, value: Variant) -> Dictionary:
+	if path[0] == "economy":
+		path = ["players"] if path.size() == 1 else ["players", "rows", "p0"] + path.slice(1)
+	elif path[0] == "quests":
+		path = ["players", "rows", "p0", "quests"] + path.slice(1)
 	var copy: Dictionary = doc.duplicate(true)
 	var at: Variant = copy
 	for i in range(path.size() - 1):
@@ -960,7 +964,7 @@ func _test_validation() -> void:
 	# validate_payload is pure: it does not touch the game and returns a migrated, int-coerced copy
 	_set_state(42, 3)
 	var verdict: Dictionary = sm.validate_payload(good)
-	t.check("validate_payload_is_pure", verdict["ok"] and eco.gold == 42 and gm.day == 3 and typeof(verdict["payload"]["economy"]["gold"]) == TYPE_INT and verdict["payload"]["meta"]["version"] == 3,
+	t.check("validate_payload_is_pure", verdict["ok"] and eco.gold == 42 and gm.day == 3 and typeof(verdict["payload"]["players"]["rows"]["p0"]["gold"]) == TYPE_INT and verdict["payload"]["meta"]["version"] == 3,
 		"gold %d day %d untouched" % [eco.gold, gm.day])
 	t.check("validate_rejects_non_dictionary", not sm.validate_payload([1, 2])["ok"] and not sm.validate_payload("x")["ok"] and not sm.validate_payload(null)["ok"] and sm.validate_payload(5)["code"] == "corrupt", "")
 	_clear_fakes()
@@ -1138,7 +1142,7 @@ func _test_sections_without_methods() -> void:
 	svc.override("ShopSystem", bare)
 	_set_state(321, 4)
 	var gathered: Dictionary = sm.gather_payload()
-	t.check("section_without_to_dict_is_left_out", not gathered.has("shops") and gathered.has("game") and gathered.has("economy"), "no 'shops' section for a stand-in without to_dict(); the others are saved")
+	t.check("section_without_to_dict_is_left_out", not gathered.has("shops") and gathered.has("game") and gathered.has("players"), "no 'shops' section for a stand-in without to_dict(); the others are saved")
 	var doc := _payload()
 	doc["shops"] = {"stock": {"x": 1}}
 	_put(0, doc)
@@ -1215,7 +1219,7 @@ func _test_slots_and_backup() -> void:
 		"gold %d, one NOTIF_LOAD_BACKUP toast" % eco.gold)
 	# a structurally invalid primary falls back as well; a newer-version primary does not
 	var broken := _payload()
-	broken.erase("economy")
+	broken.erase("players")
 	_put(3, broken)
 	_set_state(1, 1)
 	t.check("bak_recovery_from_invalid_primary", sm.load_game(3) and eco.gold == 100, "primary without 'economy' -> .bak")
@@ -1515,10 +1519,10 @@ func _test_auto_runs() -> void:
 	# two runs of before run ids with the same names and hero (siblings on one machine): loading one never overwrites the other's autosave
 	var sibling: Dictionary = _read_json(sm.slot_path(sm.AUTO_SLOT))
 	(sibling["meta"] as Dictionary).erase("run_id")
-	(sibling["economy"] as Dictionary)["gold"] = 444
+	(sibling["players"]["rows"]["p0"] as Dictionary)["gold"] = 444
 	_put(sm.AUTO_SLOT, sibling)
 	var own: Dictionary = sibling.duplicate(true)
-	(own["economy"] as Dictionary)["gold"] = 555
+	(own["players"]["rows"]["p0"] as Dictionary)["gold"] = 555
 	_put(1, own)
 	sm.load_game(1)
 	sm.autosave()
@@ -1536,14 +1540,14 @@ func _test_auto_runs() -> void:
 	t.check("auto_damaged_file_player_told", _notes.size() == 1 and str(_notes[0][0]) == sm.tr("NOTIF_AUTO_SET_ASIDE_TITLE") and kept.size() == 1 and str(_notes[0][1]).contains(str(kept[0])),
 		"one toast that names the file it was kept as: %s" % [_notes])
 	var drifted: Dictionary = _read_json(sm.slot_path(sm.AUTO_SLOT))
-	(drifted["economy"] as Dictionary).erase("gold")          # stands in for content the current build no longer accepts
+	(drifted["players"]["rows"]["p0"] as Dictionary).erase("gold")          # stands in for content the current build no longer accepts
 	for i in 3:
 		_put(sm.AUTO_SLOT, drifted if i == 0 else {"meta": {"version": 99}})
 		sm.clock_override = 5001.0 + i
 		sm.autosave()
 	kept = _quarantined()
 	kept.sort()
-	t.check("auto_quarantine_keeps_newest", kept == ["save_auto.damaged-5001.json", "save_auto.damaged-5002.json", "save_auto.damaged-5003.json"] and _read_json(_scratch.path_join(kept[0]))["economy"].has("inventory"),
+	t.check("auto_quarantine_keeps_newest", kept == ["save_auto.damaged-5001.json", "save_auto.damaged-5002.json", "save_auto.damaged-5003.json"] and _read_json(_scratch.path_join(kept[0]))["players"]["rows"]["p0"].has("inventory"),
 		"an invalid and two newer-build auto files were quarantined too; only the newest %d are kept: %s" % [sm.QUARANTINE_KEEP, kept])
 	sm.clock_override = -1.0
 
@@ -1694,7 +1698,7 @@ func _test_section_versions() -> void:
 		t.check("dungeon_section_newer_version_is_newer_slot", today_state == &"ok" and sm.inspect_slot(2)["state"] == &"newer",
 			"a dungeon section of version 99 inspects as newer, not damaged (today's own version inspects as %s)" % today_state)
 	var quests_doc := _payload()
-	(quests_doc["quests"] as Dictionary)["v"] = 99
+	(quests_doc["players"]["rows"]["p0"]["quests"] as Dictionary)["v"] = 99
 	_put(2, quests_doc)
 	t.check("quests_section_newer_version_is_newer_slot", sm.inspect_slot(2)["state"] == &"newer", "a quests section of version 99")
 	# a file that passes every check but that a section refuses: its .bak is applied instead
@@ -1746,13 +1750,13 @@ func _test_inspect_cache() -> void:
 	t.check("inspect_cache_reuses_unchanged_files", first >= 3 and probe.reads == 0 and sm.latest_slot_of(rows) == probe.get_latest_slot(), "the first listing parsed %d files, 25 more queries of unchanged files parsed %d" % [first, probe.reads])
 	# the same size and the same second: the cache key is the content, not the time stamp
 	var doc: Dictionary = _read_json(probe.slot_path(2))
-	doc["economy"]["gold"] = 777
+	doc["players"]["rows"]["p0"]["gold"] = 777
 	doc["meta"]["summary"]["gold"] = 777
 	_put(2, doc)
 	t.check("inspect_cache_sees_new_content", int(probe.get_save_summary(2).get("gold", -1)) == 777 and probe.reads >= 1, "a rewritten save_2.json is read again (gold %s)" % probe.get_save_summary(2).get("gold", -1))
 	var info: Dictionary = probe.inspect_slot(2)
-	info["payload"]["economy"]["gold"] = 1
-	t.check("inspect_cache_hands_out_copies", int(probe.inspect_slot(2)["payload"]["economy"]["gold"]) == 777, "changing a returned payload does not change the memo")
+	info["payload"]["players"]["rows"]["p0"]["gold"] = 1
+	t.check("inspect_cache_hands_out_copies", int(probe.inspect_slot(2)["payload"]["players"]["rows"]["p0"]["gold"]) == 777, "changing a returned payload does not change the memo")
 	probe.delete_save(2)
 	t.check("inspect_cache_follows_delete", probe.inspect_slot(2)["state"] == &"empty", "")
 	var fake := FakeSection.new()
@@ -1802,8 +1806,8 @@ func _test_autosave() -> void:
 	gm.change_phase(PH.PLAYING)
 	await t.seconds(0.6)
 	var auto_doc: Variant = _read_json(sm.slot_path(sm.AUTO_SLOT))
-	t.check("autosave_timer_writes_auto_slot", sm.has_save(sm.AUTO_SLOT) and auto_doc != null and auto_doc["economy"]["gold"] == 9999 and sm.current_slot == 2 and _saved_slots.has(6) and not _saved_slots.any(func(s) -> bool: return s != 6),
-		"while PLAYING the timer wrote save_auto.json (gold %s); save_completed %s; current_slot %d" % [auto_doc["economy"]["gold"] if auto_doc != null else "-", _saved_slots, sm.current_slot])
+	t.check("autosave_timer_writes_auto_slot", sm.has_save(sm.AUTO_SLOT) and auto_doc != null and auto_doc["players"]["rows"]["p0"]["gold"] == 9999 and sm.current_slot == 2 and _saved_slots.has(6) and not _saved_slots.any(func(s) -> bool: return s != 6),
+		"while PLAYING the timer wrote save_auto.json (gold %s); save_completed %s; current_slot %d" % [auto_doc["players"]["rows"]["p0"]["gold"] if auto_doc != null else "-", _saved_slots, sm.current_slot])
 	t.check("autosave_timer_leaves_manual_slots_alone", unchanged.call(), "six manual files and six .bak files are byte for byte what they were")
 	# (b) switched off
 	sm.autosave_enabled = false
@@ -2007,7 +2011,7 @@ func _test_summary_types() -> void:
 	eco.gold = 1250
 	var good := _payload()
 	var truth: Dictionary = (good["meta"]["summary"] as Dictionary).duplicate()
-	t.check("summary_types_control", _put_and_summarize(good, 0).get("gold") == 1250 and truth.size() == SUMMARY_KINDS.size(), "an unedited save keeps its own summary (%d keys)" % truth.size())
+	t.check("summary_types_control", _put_and_summarize(good, 0).get("gold") == 1250 and truth.size() == SUMMARY_KINDS.size() + 1 and truth.players.size() == 1, "an unedited save keeps its own summary (%d keys)" % truth.size())
 	var bad_text: Array = [5, 1.5, true, null, [], {}, ["x"]]
 	var bad_whole: Array = ["12", "", 1.5, true, null, [], {}, [3]]      # 1.5: a fractional day or gold is not a whole number
 	var bad_number: Array = ["x", "3725.5", true, null, [], {}]
@@ -2261,8 +2265,8 @@ func _test_v1_migration() -> void:
 	husb.data = {"stale": true}
 	_put(0, _v1_payload())
 	var verdict: Dictionary = sm.validate_payload(_read_json(sm.slot_path(0)))
-	t.check("v1_validates_and_migrates", verdict["ok"] and verdict["payload"]["meta"]["version"] == 3 and verdict["payload"]["meta"].get("migrated_from") == 1 and not verdict["payload"]["quests"]["flags"].has("def_lost_cat")
-		and verdict["payload"]["quests"]["flags"].get("runtime_flag") == 1 and float(verdict["payload"]["meta"]["saved_at"]) > 1.0e9, "meta.version 1 -> 2, quest definitions dropped, runtime flags kept, saved_at from the time stamp")
+	t.check("v1_validates_and_migrates", verdict["ok"] and verdict["payload"]["meta"]["version"] == 3 and verdict["payload"]["meta"].get("migrated_from") == 1 and not verdict["payload"]["players"]["rows"]["p0"]["quests"]["flags"].has("def_lost_cat")
+		and verdict["payload"]["players"]["rows"]["p0"]["quests"]["flags"].get("runtime_flag") == 1 and float(verdict["payload"]["meta"]["saved_at"]) > 1.0e9, "meta.version 1 -> 2, quest definitions dropped, runtime flags kept, saved_at from the time stamp")
 	var migrated_summary: Variant = verdict["payload"]["meta"].get("summary")
 	t.check("v1_migration_writes_the_summary", migrated_summary is Dictionary and (migrated_summary as Dictionary).get("gold") == 1234 and (migrated_summary as Dictionary).get("day") == 9 and (migrated_summary as Dictionary).get("character") == "hobbit",
 		"the migrated payload carries meta.summary like a v2 save: %s" % [migrated_summary])
@@ -2279,12 +2283,12 @@ func _test_v1_migration() -> void:
 	t.check("quest_defs_survive_load", _quest_defined(&"lost_cat") and qm.accept_quest(&"fix_roof"), "loading a save does not wipe the Lua definitions")
 	# a v2 save without quest 'flags' at all must not wipe them either
 	var doc := _payload()
-	doc["quests"].erase("flags")
+	doc["players"]["rows"]["p0"]["quests"].erase("flags")
 	_put(1, doc)
 	t.check("quest_defs_survive_save_without_flags", sm.load_game(1) and _quest_defined(&"lost_cat"), "audit T1")
 	# and a save never contains them
 	var fresh_doc := _payload()
-	var def_keys: Array = fresh_doc["quests"].get("flags", {}).keys().filter(func(k) -> bool: return str(k).begins_with("def_"))
+	var def_keys: Array = fresh_doc["players"]["rows"]["p0"]["quests"].get("flags", {}).keys().filter(func(k) -> bool: return str(k).begins_with("def_"))
 	t.check("save_has_no_quest_defs", def_keys.is_empty(), "no def_ entries in quests.flags (%d)" % def_keys.size())
 	svc.clear_overrides()
 	_clear_fakes()
@@ -2733,8 +2737,8 @@ func _test_backup_cache() -> void:
 	_write_json(sm.slot_path(1),payload)
 	sm.save_game(1)
 	t.check("backup_cache_rechecks_changed_version",_read_text(sm.backup_path(1))==good_backup)
-	payload.meta.version=2
-	payload.economy.gold="invalid gold"
+	payload.meta.version=3
+	payload.players.rows.p0.gold="invalid gold"
 	_write_json(sm.slot_path(1),payload)
 	sm.save_game(1)
 	t.check("backup_cache_rechecks_changed_state",_read_text(sm.backup_path(1))==good_backup)

@@ -541,7 +541,7 @@ func _hearts() -> void:
 	m2.debug_set_hearts("baker_maja", 5)
 	ok = ok and gm.flag_int(&"friend_baker_maja", -1) == 5
 	var d: Dictionary = m2.to_dict()
-	gm.world_flags.erase(&"friend_baker_maja")
+	PlayerRegistry.state().flags.erase(&"friend_baker_maja")
 	m2.from_dict(d)
 	ok = ok and gm.flag_int(&"friend_baker_maja", -1) == 5
 	gm.set_flag(&"friend_baker_maja", 1)                      # somebody scribbles on the mirror: the next write puts it right
@@ -553,7 +553,7 @@ func _hearts() -> void:
 	t.check("zero_point_ledger_repairs_existing_mirror", gm.flag_int(&"friend_baker_maja", -1) == 0 and m2.met("baker_maja"))
 	gm.clear_flag(&"friend_baker_maja")
 	m2.from_dict(knowledge_only)
-	t.check("zero_point_ledger_load_preserves_absent_flag", not gm.world_flags.has(&"friend_baker_maja") and m2.met("baker_maja") and m2.points("baker_maja") == 0)
+	t.check("zero_point_ledger_load_preserves_absent_flag", not PlayerRegistry.state().flags.has(&"friend_baker_maja") and m2.met("baker_maja") and m2.points("baker_maja") == 0)
 	_done()
 
 
@@ -1357,8 +1357,8 @@ func _save() -> void:
 	t.expect(sv.has_section("social") and "social" in sv.registered_section_names(), "section `social` is registered")
 	var saved: bool = sv.save_game(3)
 	m4.reset()
-	gm.world_flags.erase(&"friend_mayor_lyra")
-	gm.world_flags.erase(&"friend_baker_maja")
+	PlayerRegistry.state().flags.erase(&"friend_mayor_lyra")
+	PlayerRegistry.state().flags.erase(&"friend_baker_maja")
 	var loaded: bool = sv.load_game(3)
 	t.check("save_manager_roundtrip", saved and loaded and m4.points("mayor_lyra") == 400 and m4.points("baker_maja") == 100 and m4.world_seed == 4242 and gm.flag_int(&"friend_mayor_lyra") == 4 and not m4.chat_available("baker_maja"),
 		"SaveManager.save_game / load_game with the section registered: 400 and 100 points, the seed 4242, the weekly chat of Maja still taken, the mirror flags rewritten (%s %s)" % [str(saved), str(loaded)])
@@ -1694,7 +1694,7 @@ func _wrappers() -> void:
 	m.set_seed(555)
 	var nodes_ok := "SocialManager" in Fresh.FEATURE_NODES and Fresh.FEATURE_NODES.size() == 6
 	Fresh.new_game(t)
-	var cleared = m.points("mayor_lyra") == 0 and not gm.world_flags.has(&"friend_mayor_lyra") and m.world_seed == Fresh.DEFAULT_SEED and m.to_dict()["npcs"].is_empty()
+	var cleared = m.points("mayor_lyra") == 0 and not PlayerRegistry.state().flags.has(&"friend_mayor_lyra") and m.world_seed == Fresh.DEFAULT_SEED and m.to_dict()["npcs"].is_empty()
 	Fresh.seed_features(2024)
 	var seeded: bool = m.world_seed == 2024
 	var did: Array[String] = Fresh.reset_features()

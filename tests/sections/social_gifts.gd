@@ -77,7 +77,7 @@ func run(t) -> void:
 			events.append(payload.duplicate())
 	bus.game_event.connect(observer)
 	var snapshots: Array = []
-	var on_inventory := func(_inventory: Dictionary) -> void:
+	var on_inventory := func(_player_id: StringName, _inventory: Dictionary) -> void:
 		snapshots.append({"items": eco.count_item(&"carrot"), "day_left": sm.gift_limits(npc).left_today, "points": sm.points(npc), "reentry": sm.give_gift(npc, "carrot")})
 	bus.player_inventory_changed.connect(on_inventory)
 	var gift: Dictionary = sm.give_gift(npc, "carrot")

@@ -45,7 +45,7 @@ func run(t) -> void:
 	t.check("l13_social_section_order",order==60)
 	var payload: Dictionary = t.autoload("SaveManager").gather_payload()
 	var digest := LoopDigest.of_payload(payload)
-	payload.economy.gold+=1
+	payload.players.rows.p0.gold+=1
 	t.check("digest_has_teeth_gold",LoopDigest.of_payload(payload)!=digest)
 	await t.world().travel(&"hyggebyen",&"default")
 	var citizens: Array[WeakRef] = []

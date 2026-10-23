@@ -197,6 +197,21 @@ husbandry, shops, home, furniture, loot, dungeon, social(campaign)   # unchanged
 * Remove built-in required section `quests` as the single-player log; quest state moves to each player row. Shared/campaign quest state that is world-owned (e.g. `world_flags` quest mirrors) stays in `game.world_flags`.
 * New registered section `players` (order 15), owned by the new `PlayerRoster` node.
 
+The implemented v3 section is `{v: 1, rows: {p0: profile, ...}}`, with one to four
+profiles and `p0` required. `PlayerRoster` registers at order 15. A staging node under
+`SaveManager` handles inspection and loading before a world exists; the roster child
+of `WorldRoot2D` views the same session rows. Entering or freeing a world therefore
+preserves all loaded profiles. `meta.summary.players` lists profile identity and gold
+in slot order. The existing summary fields remain available to the current save UI.
+
+RM8 stores friendship mirrors at `players.rows.<id>.flags.friend_<npc>` and
+`friend_last_<npc>`. The `GameManager` flag accessors route these names through the
+acting profile; they are absent from `game.world_flags`. Host operations can use
+`SocialManager.for_player(id, callable)` for synchronous friendship, gift and chat
+work. Friendship signals carry that actor id. Social NPC rows and content-drift
+orphans retain their player owner, while seed, festivals and household partner
+remain shared.
+
 ### 4.4 Autoloads
 
 **No new autoload in CORE.** `PlayerRoster` lives as a child of `WorldRoot2D` (like `FarmGrid`) so it is spawnable per session and testable without a global. A `MultiplayerSession` node is created under `WorldRoot2D` by MP4, not as an autoload — session lifetime is world lifetime.

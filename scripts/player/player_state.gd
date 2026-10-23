@@ -19,7 +19,7 @@ var character_skin: StringName = &""
 ## World position / hotbar are travel state; they ride along so one row is the full profile.
 var area: StringName = &""
 var player_pos: Vector2 = Vector2.ZERO
-var hotbar: Array = []
+var hotbar: Variant = {}
 ## Vitals are not in the v2 save; they are restored full on sleep/load.
 var half_hearts: int = 10
 var max_half_hearts: int = 10
@@ -32,8 +32,12 @@ var gold: int = DEFAULT_STARTING_GOLD
 var inventory: Array[Dictionary] = []
 var equipment: Dictionary = {}
 var arsenal: Dictionary = {}
+var arsenal_orphans: Dictionary = {}
 ## Quest log (was QuestManager's single log).
 var quests: Dictionary = {}
+## Derived friend_<npc> and friend_last_<npc> mirrors belong to this hero.
+var flags: Dictionary = {}
+var owed: Array = []
 ## Wardrobe (was WardrobeManager's single owned/equipped/presets).
 var wardrobe: Dictionary = {}
 
@@ -55,16 +59,33 @@ func to_dict() -> Dictionary:
 		"inventory": inventory.map(func(slot: Dictionary) -> Dictionary:
 			return {"id": str(slot.get("id", "")), "amount": int(slot.get("amount", 0)), "meta": (slot.get("meta") as Dictionary).duplicate(true) if typeof(slot.get("meta")) == TYPE_DICTIONARY else {}}),
 		"equipment": equipment.duplicate(true),
-		"arsenal": arsenal.duplicate(true),
+		"arsenal": _arsenal_dict(),
 		"hotbar": hotbar.duplicate(true),
 		"half_hearts": half_hearts,
 		"stamina": stamina,
 		"oil": oil,
 		"area": str(area),
 		"player_pos": [player_pos.x, player_pos.y],
-		"quests": quests.duplicate(true),
+		"quests": _quest_dict(),
+		"flags": flags.duplicate(true),
+		"owed": owed.duplicate(true),
 		"wardrobe": wardrobe.duplicate(true),
 	}
+
+
+func _arsenal_dict() -> Dictionary:
+	var out := arsenal.duplicate(true)
+	if not arsenal_orphans.is_empty(): out["_orphans"] = arsenal_orphans.duplicate(true)
+	return out
+
+
+func _quest_dict() -> Dictionary:
+	var out := quests.duplicate(true)
+	var active: Dictionary = out.get("active", {})
+	for id in active:
+		if active[id] is Object and active[id].has_method("to_dict"):
+			active[id] = active[id].to_dict()
+	return out
 
 
 ## Rebuild from a save row. Unknown / unsafe values are dropped; returns false only on a missing id.
@@ -95,8 +116,10 @@ func from_dict(d: Dictionary) -> bool:
 			equipment[StringName(str(k))] = StringName(str((eq as Dictionary)[k]))
 	var ar: Variant = d.get("arsenal")
 	arsenal = (ar as Dictionary).duplicate(true) if ar is Dictionary else {}
+	arsenal_orphans = LuaData.dict(arsenal.get("_orphans", {})).duplicate(true)
+	arsenal.erase("_orphans")
 	var hb: Variant = d.get("hotbar")
-	hotbar = (hb as Array).duplicate(true) if hb is Array else []
+	hotbar = hb.duplicate(true) if hb is Array or hb is Dictionary else {}
 	half_hearts = int(d.get("half_hearts", 10))
 	stamina = float(d.get("stamina", 100.0))
 	oil = float(d.get("oil", 150.0))
@@ -106,6 +129,8 @@ func from_dict(d: Dictionary) -> bool:
 		player_pos = Vector2(float((pp as Array)[0]), float((pp as Array)[1]))
 	else:
 		player_pos = Vector2.ZERO
+	flags = LuaData.dict(d.get("flags", {})).duplicate(true)
+	owed = LuaData.arr(d.get("owed", [])).duplicate(true)
 	var q: Variant = d.get("quests")
 	quests = (q as Dictionary).duplicate(true) if q is Dictionary else {}
 	var w: Variant = d.get("wardrobe")
@@ -122,8 +147,11 @@ func reset_profile(p_name: String = "", p_type: int = 0, p_skin: StringName = &"
 	inventory.clear()
 	equipment.clear()
 	arsenal = {}
-	hotbar = []
+	arsenal_orphans = {}
+	hotbar = {}
 	quests = {}
+	flags = {}
+	owed = []
 	wardrobe = {}
 	half_hearts = 10
 	stamina = 100.0
