@@ -163,12 +163,16 @@ static func walk_to(t, target: Vector2, tol: float = 30.0, timeout_game_s: float
 			if not host is ClimbLane:
 				lane_failed = true
 				break
+			var climbs_before: int = host.climbs
+			var interaction_tick := Engine.get_physics_frames()
 			t.tap(&"interact")
 			interactions += 1
-			await t.physics(2)
-			ticks += 2
+			# A software-rendered frame can contain several physics ticks.
+			# Wait for E to be dispatched before checking the ladder's lock.
+			var started: bool = await t.until_game(func() -> bool: return host.climbs > climbs_before, 2.0)
+			ticks += Engine.get_physics_frames() - interaction_tick
 			var waited := 0
-			while ActorLevel.is_locked(p) and waited < 300 and ticks < max_ticks:
+			while started and host.climbing and waited < 300 and ticks < max_ticks:
 				await t.physics(1)
 				waited += 1
 				ticks += 1

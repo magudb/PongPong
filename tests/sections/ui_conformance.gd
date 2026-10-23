@@ -10,7 +10,7 @@ extends RefCounted
 ##
 ## Named checks: theme_no_gold_hover, theme_no_red, theme_ink_outline, theme_font_scale, theme_focus_styles, theme_calcell_variations, theme_label_variations_and_proxy,
 ## pill_heights, sliders_are_ttslider, guide_crops_pinned, fixtures_guide_focus_released, fixtures_guide_extras_hidden, fixtures_all_registry_fixtures_resolve,
-## live_screens_sweep (+ one check per live row and check), no_legacy_screens_left, mutant_*, windowed_rings, windowed_panels, windowed_buttons.
+## live_screens_sweep (+ one check per live row and check), no_legacy_screens_left, mutant_*, windowed_rings, windowed_panels, windowed_buttons, saveload_adjacent_autosave_rings.
 const SECTION := "ui_conformance"
 const TIMEOUT_S := 600.0
 
@@ -676,8 +676,34 @@ func _legacy_gate(t) -> void:
 
 # ---------------------------------------------------------------------------------------------------- windowed pixels
 
+func _saveload_autosave_rings(t) -> void:
+	var saves: Node = t.autoload("SaveManager")
+	var previous_dir: String = saves.save_dir
+	saves.save_dir = "user://conformance-autosave-rings"
+	t.on_cleanup(func() -> void: saves.save_dir = previous_dir)
+	if not await t.start_world():
+		return
+	var saved: bool = saves.save_game(saves.AUTO_SLOT, true)
+	if saved:
+		var previous := FileAccess.open(saves.slot_path(saves.PREV_AUTO_SLOT), FileAccess.WRITE)
+		previous.store_string(FileAccess.get_file_as_string(saves.slot_path(saves.AUTO_SLOT)))
+		previous.close()
+	await t.clear_scene()
+	var screen: Node = await UiAudit.open_screen(t, "saveload")
+	var reports: Array[Dictionary] = []
+	if screen != null:
+		for slot in [saves.AUTO_SLOT, saves.PREV_AUTO_SLOT]:
+			var button := screen.get_node_or_null("%%Slot%d" % slot) as Control
+			reports.append(await UiAudit.ring_pixels(t, button, {"shot": "autosave_ring_%d" % slot}))
+		await UiAudit.close_screen(t, "saveload")
+	t.check("saveload_adjacent_autosave_rings", saved and reports.size() == 2 and reports.all(func(report: Dictionary) -> bool: return report.ok),
+		"current and previous autosave rows retain every gold and ink edge: %s" % str(reports.map(func(report: Dictionary) -> String: return UiAudit.summary(report))))
+	saves.save_dir = previous_dir
+
+
 func run_windowed(t) -> void:
 	await t.clear_scene()
+	await _saveload_autosave_rings(t)
 	TranslationServer.set_locale("da")
 	var ring_reports: Array[Dictionary] = []
 	var ring_notes: Array[String] = []
