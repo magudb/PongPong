@@ -103,6 +103,12 @@ func run(t,owner) -> void:
 		await world.travel(&"farm",&"default")
 		HomeManager.set_tier(8)
 		var weekdays := HomeData.visit_weekdays(HomeManager.guest_visits_per_week())
+		# This scenario requires a delivered gift. Three ordinary loot rolls
+		# may all be empty; seed this fixture without changing the game's odds.
+		var loot: Node = t.autoload("LootService")
+		var seed_before: int = loot.rng.seed
+		var state_before: int = loot.rng.state
+		loot.set_seed(424242)
 		date((SocialManager.week()+1)*7+int(weekdays[0])+1,21)
 		HomeManager._roll_weekly_visit()
 		var visit := HomeManager.visit_today()
@@ -113,7 +119,10 @@ func run(t,owner) -> void:
 			var room: HomeRoom = world.area.get_node("HomeRoom")
 			var visits: FarmVisits = room.get_node("FarmVisits")
 			await t.until(func():return visits.actors.has("gardener_hoppe"),5)
-			check(t,"x06_farm_visit_scene","x06_farm_visit_named_actor_and_saved_gift",str(visit.get("npc",""))=="gardener_hoppe" and visits.actors.has("gardener_hoppe") and SocialManager.event_stamp("home_visit:gardener_hoppe")==SocialManager.week()+1)
+			check(t,"x06_farm_visit_scene","x06_farm_visit_named_actor_and_saved_gift",str(visit.get("npc",""))=="gardener_hoppe" and visits.actors.has("gardener_hoppe") and SocialManager.event_stamp("home_visit:gardener_hoppe")==SocialManager.week()+1,
+				"visit=%s, actors=%s, gift=%s, stamp=%d, week=%d, free slots=%d" % [visit,visits.actors.keys(),HomeManager.last_visit,SocialManager.event_stamp("home_visit:gardener_hoppe"),SocialManager.week(),EconomyManager.free_slots()])
+		loot.rng.seed = seed_before
+		loot.rng.state = state_before
 	if suite._leg(t,"x07_seasonal_decor",["seasonal"]):
 		date(CalendarUtil.total_day(2,&"vinter",GameManager.year+1))
 		TimeManager.set_weather(&"sne")
