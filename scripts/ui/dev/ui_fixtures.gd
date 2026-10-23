@@ -189,7 +189,7 @@ static func _default_setup(name: String, node: Node, host: Node) -> void:
 			if bus != null:
 				bus.notification_posted.emit("NOTIF_QUEST_ACCEPTED_TITLE", "QUEST_LOST_CAT_TITLE", "quest")
 				bus.notification_posted.emit("NOTIF_NO_GOLD_TITLE", "NOTIF_NO_GOLD_MSG", "gold")
-				bus.item_gained.emit(&"moonstone", 2)                       # EconomyManager emits item_gained right before the "item" toast: the toast carries the item and its rarity tile
+				bus.item_gained.emit(PlayerRegistry.local_id(), &"moonstone", 2)                       # EconomyManager emits item_gained right before the "item" toast: the toast carries the item and its rarity tile
 				bus.notification_posted.emit("NOTIF_ITEM_GAINED_TITLE", "ITEM_MOONSTONE x2", "item")
 				await tree.process_frame
 		"area_banner":
@@ -200,7 +200,7 @@ static func _default_setup(name: String, node: Node, host: Node) -> void:
 		"prompt":
 			var bus2 := Svc.node("EventBus")
 			if bus2 != null:
-				bus2.interaction_prompt_changed.emit("UI_SLEEP")
+				bus2.interaction_prompt_changed.emit(PlayerRegistry.local_id(), "UI_SLEEP")
 				await tree.process_frame
 
 
