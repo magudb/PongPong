@@ -321,7 +321,7 @@ func run_windowed(t) -> void:
 			# Retain both full-screen and standalone-area measurements. The
 			# actual painted 44x44 town must meet the original 4ms frame limit
 			# including the HUD; area-only results are additional diagnostics.
-			t.check("hyggebyen_presented_frame_windowed",t.perf_ok("hyggebyen_presented_frame_windowed",frames.ms,4),str(frames))
+			t.render_budget("hyggebyen_presented_frame_windowed", frames.ms, 4, str(frames))
 			t.world().game_ui.hide()
 			await t.frames(8)
 			var area_windows: Array[Dictionary] = []
@@ -333,10 +333,10 @@ func run_windowed(t) -> void:
 				if sample.ms<area_best.ms:area_best=sample
 			t.world().game_ui.show()
 			await t.frames(3)
-			t.check("hyggebyen_area_frame_windowed",t.perf_ok("hyggebyen_area_frame_windowed",area_best.ms,4),str(area_best))
+			t.render_budget("hyggebyen_area_frame_windowed", area_best.ms, 4, str(area_best))
 			measurements.hyggebyen_area={"frame":area_best,"windows":area_windows,"budget_ms":4}
 		else:
-			t.check(row[0]+"_frame_windowed",t.perf_ok(row[0]+"_frame_windowed",frames.ms,row[1]),str(frames))
+			t.render_budget(row[0]+"_frame_windowed", frames.ms, row[1], str(frames))
 		if int(row[2])>0:
 			var area_calls := await _area_calls(t) if row[0] in ["int_froebutikken","farm"] else calls
 			t.check(row[0]+"_draw_calls",area_calls<=int(row[2]),"%.0f area / %.0f including HUD" % [area_calls,calls])

@@ -67,7 +67,7 @@ func run_windowed(t) -> void:
 	for sample in samples:cpu.append(sample.cpu_render_ms)
 	cpu.sort()
 	t.check("busy_floor_cpu_render_measured",float(cpu[1])>0,str(cpu))
-	t.check("busy_floor_cpu_render_budget",t.perf_ok("busy_floor_cpu_render_budget",float(cpu[1]),12),str(samples))
+	t.render_budget("busy_floor_cpu_render_budget", float(cpu[1]), 12, str(samples))
 	var hud: Control = world.game_ui.get_screen(&"forest_hud")
 	var hud_ms: float = t.median_usec(func() -> void: hud._process(1.0/60),9,20)/1000.0
 	t.check("forest_hud_logic_budget",t.perf_ok("forest_hud_logic_budget",hud_ms,.4),"%.5f ms, median of 9 batches of 20 (native reference 0.4)" % hud_ms)

@@ -236,12 +236,14 @@ func run_windowed(t) -> void:
 				changed += 1
 	t.check("sprite_visible_pixels", changed > 100, "%d changed pixel samples" % changed)
 	var crop_ids: Array = world.farm.crop_defs.keys()
+	# Include winter crops as well as the original eight. Use distinct legal
+	# plots so a field expansion or dressing change cannot overwrite a row.
+	var crop_cells: Array = cells.filter(func(cell: Vector2i) -> bool: return world.farm.can_till(cell))
+	var crop_start := maxi(0, (crop_cells.size() - crop_ids.size()) / 2)
 	for stage in 4:
 		var rows := {}
 		for index in crop_ids.size():
-			var cell := middle + Vector2i(index % 4 - 1, index / 4 - 1)
-			if not world.farm.can_till(cell):
-				cell = cells[cells.size() / 2 + index]
+			var cell: Vector2i = crop_cells[crop_start + index]
 			var crop: String = crop_ids[index]
 			var def: Dictionary = world.farm.crop_defs[crop]
 			var growth := float(def.stages) * float(def.days_per_stage) * (float(stage) / 3.0 + (0.01 if stage in [1, 2] else 0.0))
@@ -250,12 +252,12 @@ func run_windowed(t) -> void:
 		await t.frames(3)
 		await t.capture("farm_0%d" % (stage + 1))
 		var view: FarmView = world.area.get_node_or_null("FarmView")
-		var painted := view != null and view._crops.size() == 8
+		var painted := view != null and view._crops.size() == crop_ids.size()
 		for cell in world.farm.plots:
 			painted = painted and world.farm.visual_stage(cell) == stage and world.area.cell_kind(cell) == &"soil_watered"
 			var crop: String = world.farm.get_plot(cell).crop_id
 			painted = painted and view._crops[cell].texture == ArtCatalog.prop(StringName("crop_%s_%d" % [crop, stage])).texture
-		t.check("painted_stage_%d" % stage, painted, "Eight approved painted crops, wet soil and matching stage textures")
+		t.check("painted_stage_%d" % stage, painted, "%d approved painted crops, wet soil and matching stage textures" % crop_ids.size())
 	await _light_budget(t, world, p)
 	p.set_physics_process(true)
 

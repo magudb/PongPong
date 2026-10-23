@@ -1317,6 +1317,10 @@ func _cast_shots(t) -> void:
 			pix_ok = pix_ok and int(s["distinct"]) > int(ground["distinct"]) + 6
 	var two_eyes := eyes.size() >= 2
 	if two_eyes:
+		# The smile is a third, smaller dark component. Judge the two eyes,
+		# rather than whichever two components happen to be leftmost.
+		eyes.sort_custom(func(p: Rect2i, q: Rect2i) -> bool: return p.get_area() > q.get_area())
+		eyes.resize(2)
 		eyes.sort_custom(func(p: Rect2i, q: Rect2i) -> bool: return p.position.x < q.position.x)
 		two_eyes = absi(eyes[0].position.y - eyes[1].position.y) <= 14 and eyes[1].position.x - eyes[0].end.x >= 2
 	t.check("windowed_cast_shot", fox_h > 40.0 and absf(ratio_bu - 1.0) <= HEIGHT_TOLERANCE and absf(ratio_hv - 1.0) <= HEIGHT_TOLERANCE and pix_ok and two_eyes and night_ok,

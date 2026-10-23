@@ -1943,8 +1943,7 @@ func _tool() -> void:
 ## The 14 door markers of the REAL hyggebyen.map get their Door2D (T-director's TownMarker will do this by itself): the sign of the seed shop and of the bakery, 12:00 on a Tuesday.
 func _windowed_doors(world: Node, pl: Node2D) -> void:
 	ShopCounter.keeper_resolver = Callable()
-	world.travel(&"hyggebyen", &"default")
-	await t.until(func() -> bool: return not world.traveling, 10.0)
+	await world.travel(&"hyggebyen", &"default")
 	var area: IsoArea = world.area
 	var doors: Dictionary = {}
 	for rec in area.find_markers("door"):
@@ -1973,6 +1972,8 @@ func run_windowed(p_t) -> void:
 	bus = t.autoload("EventBus")
 	_reset()
 	await t.start_world()
+	gm.set_config_override("time.minutes_per_real_second", 0.0)
+	gm.set_config_override("towns.curfew.enabled", false)
 	var world: Node = t.world()
 	var pl: Node2D = world.player
 	InteriorRoom.use_spec_dirs([FIXTURES] as Array[String])
@@ -2000,7 +2001,8 @@ func run_windowed(p_t) -> void:
 		keeper.global_position = area.to_global(InteriorRoom.cell_local(float(keeper_cell.x), float(keeper_cell.y)))
 		var visual_id: String = "fairy_shopkeeper" if r == "int_froebutikken" else ("hedgehog_pip" if r == "int_postkontoret" else "rabbit")
 		keeper.with_visual(visual_id)
-		ShopCounter.keeper_resolver = func(id: String) -> Node: return keeper
+		var keeper_ref: WeakRef = weakref(keeper)
+		ShopCounter.keeper_resolver = func(_id: String) -> Node: return keeper_ref.get_ref()
 		for h in _counters(area):
 			h._refresh()
 		# the player at the counter front: the middle cell, facing the counter
@@ -2018,6 +2020,8 @@ func run_windowed(p_t) -> void:
 	if not shop_panel_exists:
 		t.skip("towns_interiors.windowed_shop_panel_over_room: scenes/ui/shop_ui.tscn (P18-ui-shop-inventory) does not exist yet: the screenshot of the room without the panel would prove nothing; REQUIRED at the G5b gate")
 	else:
+		Ctx.set_clock(gm, 1, 12.0)
+		gm.set_config_override("time.minutes_per_real_second", 0.0)
 		world.call("_enter", &"int_froebutikken", &"default")
 		await t.seconds(0.4)
 		var before: Image = await t.capture()
@@ -2051,8 +2055,7 @@ func _windowed_painted_rooms(world: Node) -> void:
 		WorldRoot2D.register_map(StringName(room_id), AreaMap.parse_text(InteriorRoom.stub_map(room_id, str(spec["building"]), "city")))
 		for hour in [12.0, 22.0]:
 			Ctx.set_clock(gm, 1, hour)
-			world.travel(StringName(room_id), &"default")
-			await t.until(func() -> bool: return not world.traveling, 10.0)
+			await world.travel(StringName(room_id), &"default")
 			await t.seconds(0.25)
 			t.expect(str(world.area.map.id) == room_id, "the inspected room stays loaded at night")
 			var frame: Image = await t.capture("painted_%s_%s" % [room_id, "day" if hour == 12.0 else "night"])

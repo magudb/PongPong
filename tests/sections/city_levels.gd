@@ -1855,7 +1855,7 @@ func run_windowed(t) -> void:
 			break
 	DisplayServer.window_set_vsync_mode(old_vsync as DisplayServer.VSyncMode)
 	t.check("draw_calls_zoom_0_4_windowed", peak_calls <= 250, "peak %d draw calls (<= 250)" % peak_calls)
-	t.check("frame_ms_zoom_0_4_windowed", t.perf_ok("frame_ms_zoom_0_4_windowed", best_avg, 6.0), "levelled city (vector stand-in art) at zoom 0.4, 1280x720, vsync off: best window %.2f ms per frame (budget 6), draw calls average %d, peak %d (the design's budget is 250; the stand-in's Polygon2D / Line2D shapes are not baked sprites, so real art has to be gated again by V4)" % [best_avg, calls_sum / maxi(calls_n, 1), peak_calls])
+	t.render_budget("frame_ms_zoom_0_4_windowed", best_avg, 6.0, "levelled city (vector stand-in art) at zoom 0.4, 1280x720, vsync off: best window %.2f ms per frame (budget 6), draw calls average %d, peak %d (the design's budget is 250; the stand-in's Polygon2D / Line2D shapes are not baked sprites, so real art has to be gated again by V4)" % [best_avg, calls_sum / maxi(calls_n, 1), peak_calls])
 	_world.game_ui.show()
 	# --- leaving the city (fix round): the player in the real start area after the city is the player of before - ground_block in the mask,
 	#     the shadow under the figure at its absolute z -5 (it used to stay at z 78 and draw over everything), no level - and the picture shows it

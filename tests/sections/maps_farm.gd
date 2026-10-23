@@ -1239,6 +1239,8 @@ func _cleanup(t) -> void:
 func run_windowed(t) -> void:
 	if not await t.start_world():
 		return
+	GameManager.set_config_override("time.minutes_per_real_second", 0.0)
+	GameManager.set_config_override("towns.curfew.enabled", false)
 	_t = t
 	_world = t.world()
 	_world.warm_in_headless = true

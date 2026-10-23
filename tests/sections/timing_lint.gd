@@ -4,6 +4,8 @@ extends RefCounted
 const SECTION := "timing_lint"
 
 func run(t) -> void:
+	t.check("software_renderers_do_not_claim_hardware_timings", ["llvmpipe (LLVM 20.1.2, 256 bits)", "softpipe", "lavapipe", "Google SwiftShader"].all(func(adapter: String) -> bool: return t.software_renderer(adapter)))
+	t.check("hardware_renderers_keep_their_budgets", ["Apple M3", "NVIDIA GeForce RTX 4060", "AMD Radeon RX 7600", "Mesa Intel(R) UHD Graphics"].all(func(adapter: String) -> bool: return not t.software_renderer(adapter)))
 	var lint: Dictionary = t.run_tool("python3", ["-I", ProjectSettings.globalize_path("res://tests/tools/timing_lint.py"), ProjectSettings.globalize_path("res://")])
 	t.expect_tool_ids(lint, "Timing lint")
 	if int(lint.code) != 0:

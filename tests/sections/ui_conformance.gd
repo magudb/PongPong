@@ -707,6 +707,8 @@ func run_windowed(t) -> void:
 				ring_notes.append("%s %s unfocused: %s" % [id, sibling.name, UiAudit.summary(nrep)])
 		# panels: every double-edge panel of the screen
 		for n in Rules.nodes(node, []):
+			if not is_instance_valid(n):
+				continue
 			if n is PanelContainer and (n as Control).is_visible_in_tree() and StringName((n as Control).theme_type_variation) in PANEL_VARIATIONS and (n as Control).size.x > 60.0:
 				var prep: Dictionary = await UiAudit.panel_pixels(t, n as Control, {"shot": "panel_%s_%s" % [id, n.name]})
 				panel_reports.append(prep)
@@ -714,6 +716,8 @@ func run_windowed(t) -> void:
 		# buttons: the guide's raised buttons (primary / secondary / tertiary) of the screen
 		var seen_variations := {}
 		for n in Rules.nodes(node, []):
+			if not is_instance_valid(n):
+				continue
 			if n is Button and (n as Control).is_visible_in_tree() and not (n as Button).disabled and not (n as Button).flat:
 				var v := str((n as Control).theme_type_variation)
 				var sb := (n as Control).get_theme_stylebox("normal")
@@ -722,6 +726,8 @@ func run_windowed(t) -> void:
 					if (n as Control).has_focus():
 						(n as Control).release_focus()
 						await t.frames(3)
+					if not is_instance_valid(n):
+						continue
 					if (n as Control).has_focus():
 						button_notes.append("%s %s (%s): skipped, the screen keeps focus on it" % [id, n.name, v])       # UiConfirm's guard: the focused default answer is ring-sampled instead
 						seen_variations.erase(v)
@@ -729,6 +735,9 @@ func run_windowed(t) -> void:
 					var brep: Dictionary = await UiAudit.button_pixels(t, n as Control, {"shot": "button_%s_%s" % [id, n.name]})
 					button_reports.append(brep)
 					button_notes.append("%s %s (%s): %s" % [id, n.name, v, UiAudit.summary(brep)])
+					if not bool(brep.ok):
+						for detail in UiAudit.lines(brep):
+							t.info(detail)
 		await UiAudit.close_screen(t, id)
 	# the fill look of the gold rows (MenuRow / ChoiceRow focused), a ring on a chip / tab / card, and the disabled button's dashed edge on a plain sheet
 	var sheet := await _pixel_sheet(t)

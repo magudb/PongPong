@@ -137,7 +137,7 @@ func run(t, owner) -> void:
 			break
 		harvested = await face_plot(t, cell) and harvested
 		t.tap(&"interact")
-		await t.physics(3)
+		await t.until_game(func() -> bool: return world.farm.state_of(cell) == FarmGrid.State.TILLED and t.player().state == PlayerBody2D.S.FREE, 2.0)
 		harvested = world.farm.state_of(cell) == FarmGrid.State.TILLED and harvested
 	check(t, "L11", "l11_harvest_purchased_seed_crops", harvested and eco.count_item(&"carrot") >= carrot_before + 3)
 	var bin: ShippingBin2D = world.area.find_markers("shipping_bin")[0].node

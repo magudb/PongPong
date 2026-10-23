@@ -2285,7 +2285,7 @@ func run_windowed(t) -> void:
 	DisplayServer.window_set_vsync_mode(old_vsync as DisplayServer.VSyncMode)
 	_world.game_ui.visible = hud_visible
 	t.check("frame_draw_calls", peak_calls <= 250, "peak %d draw calls (<= 250)" % peak_calls)
-	t.check("frame_budget", t.perf_ok("frame_budget", best_avg, 6.0), "the city area with approved painted art and scheduled citizens at zoom 0.4, 1280x720, vsync off: best window %.2f ms per frame (budget 6), draw calls average %d, peak %d (budget 250)" % [best_avg, int(float(calls_sum) / float(maxi(calls_n, 1))), peak_calls])
+	t.render_budget("frame_budget", best_avg, 6.0, "the city area with approved painted art and scheduled citizens at zoom 0.4, 1280x720, vsync off: best window %.2f ms per frame (budget 6), draw calls average %d, peak %d (budget 250)" % [best_avg, int(float(calls_sum) / float(maxi(calls_n, 1))), peak_calls])
 	# --- the prompt overlay in the picture: at the foot of the ladder the player reads "E: Klatre", a sign's whisper and a toast stand above it
 	_world.day_night.override_hour = 11.0
 	_world.day_night.snap()

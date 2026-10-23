@@ -257,7 +257,8 @@ jobs:
         shard: [0, 1, 2, 3]
     env:
       # No sound card on the runner: without the dummy driver Godot warns that every audio driver failed.
-      GODOT_EXTRA_ARGS: --audio-driver Dummy
+      # EGL supports swap intervals under Xvfb; GLX warns before the harness starts.
+      GODOT_EXTRA_ARGS: --audio-driver Dummy --rendering-driver opengl3_es
 
     steps:
       - name: Checkout

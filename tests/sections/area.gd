@@ -2812,12 +2812,20 @@ func _cleanup(t) -> void:
 
 # ================================================================== windowed checks (tests/run_playtest.sh --windowed)
 
+func _freeze_pixel_enemies(t, area: IsoArea) -> void:
+	# These captures judge geometry. Hidden enemies must not attack the figure,
+	# flash its sprite, or change the scene while the paired images are sampled.
+	for enemy in t.tree.get_nodes_in_group("enemy"):
+		if area.is_ancestor_of(enemy):
+			enemy.process_mode = Node.PROCESS_MODE_DISABLED
+
 func run_windowed(t) -> void:
 	if not await t.start_world():
 		return
 	var w: WorldRoot2D = t.world()
 	if w.area.map.id != &"_fixture_iso":
 		w._enter(&"_fixture_iso", &"default")
+	_freeze_pixel_enemies(t, w.area)
 	w.warm_in_headless = true
 	await w.warm_clips()
 	var p: Node2D = w.player
@@ -2847,6 +2855,7 @@ func run_windowed(t) -> void:
 	# --- filter_seams (R.6): no hairline step between neighbouring tiles at zoom 0.3 / 0.4 / 0.7 (on a plain grass platform)
 	WorldRoot2D.register_map(&"_t_open", AreaMap.parse_text(OPEN_MAP))
 	w._enter(&"_t_open", &"default")
+	_freeze_pixel_enemies(t, w.area)
 	a = w.area
 	w.day_night.override_hour = 11.0
 	w.day_night.snap()
@@ -2867,6 +2876,7 @@ func run_windowed(t) -> void:
 	t.check("filter_seams", seams_ok, "no hairline seams between the tiles at zoom 0.3 / 0.4 / 0.7 (Ground texture_filter 2, atlases without mipmaps)")
 	(p.get("camera") as Camera2D).zoom = Vector2.ONE * Iso.DEFAULT_ZOOM
 	w._enter(&"_fixture_iso", &"default")
+	_freeze_pixel_enemies(t, w.area)
 	WorldRoot2D.unregister_map(&"_t_open")
 	a = w.area
 	w.day_night.override_hour = 11.0

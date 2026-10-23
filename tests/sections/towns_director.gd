@@ -274,32 +274,47 @@ func _curfew(t) -> void:
 	t.check("curfew_retries_and_returns_home", t.world().area.map.id == &"farm" and t.player().global_position.distance_to(t.world().area.get_spawn("from_home")) < 5)
 
 func run_windowed(t) -> void:
-	await t.start_world()
 	var gm: Node = t.autoload("GameManager")
-	gm.set_config_override("time.minutes_per_real_second", 0.0)
-	gm.set_config_override("towns.curfew.enabled", false)
-	gm.day = 2
 	for row in [["hyggebyen", 2, 9, 30], ["hyggebyen", 7, 15, 0], ["traetoppen", 2, 12, 0], ["traetoppen", 2, 19, 0], ["farm", 2, 7, 11]]:
+		# A festival may start a scripted conversation. Each schedule sample
+		# gets its own world so that conversation cannot block the next travel.
+		await t.start_world()
+		gm.set_config_override("time.minutes_per_real_second", 0.0)
+		gm.set_config_override("towns.curfew.enabled", false)
 		gm.day = row[1]
 		t.autoload("EventBus").day_started.emit(gm.day, gm.season)
 		await _time(t, row[2], row[3])
 		await t.world().travel(StringName(row[0]), &"default")
 		await t.frames(5)
 		var director := _director(t)
-		if row[0] == "farm":
-			t.player().global_position = director.area.to_global(Iso.to_screen(director.post_ground(&"pip_mailbox"))) + Vector2(100, 70)
-		elif row[0] == "traetoppen":
-			t.player().global_position = director.area.to_global(Iso.to_screen(director.post_ground(&"t_fire_s"))) + Vector2(100, 100)
+		var arrived: bool = director != null and t.world().area.map.id == StringName(row[0])
+		t.check("native_area_" + str(row), arrived, "loaded %s" % t.world().area.map.id)
+		if not arrived:
+			continue
+		director.resync()
+		# A screenshot must use a live position. Older named posts may not exist
+		# on the current painted city, where post_ground returns Vector2.INF.
+		if not director.live.is_empty():
+			t.player().global_position = director.live.values()[0].global_position
 		t.player().camera.reset_smoothing()
 		await t.world().warm_clips()
 		await t.frames(8)
 		await t.capture("%s_%s_%s" % [row[0], row[2], row[3]])
-		t.check("native_population_" + str(row), director != null and director.live.size() == Routines.present_in(str(row[0]), Routines.now_ctx()).size(), "%d scheduled citizens" % director.live.size())
+		var expected: Array = Routines.present_in(str(row[0]), Routines.now_ctx())
+		var expected_ids: Array = expected.map(func(presence: Dictionary): return str(presence.npc))
+		var live_ids: Array = director.live.keys()
+		expected_ids.sort()
+		live_ids.sort()
+		t.check("native_population_" + str(row), live_ids == expected_ids, "live %s; scheduled %s; staging %s" % [live_ids, expected_ids, director._staging.keys()])
 	await _crowd(t, true)
 	gm.clear_config_overrides()
 
 func _crowd(t, capture: bool) -> void:
+	# Keep conversations and arrivals from the schedule tour out of this cap fixture.
+	await t.start_world()
 	var gm: Node = t.autoload("GameManager")
+	gm.set_config_override("time.minutes_per_real_second", 0.0)
+	gm.set_config_override("towns.curfew.enabled", false)
 	gm.hour = 12
 	gm.minute = 0
 	t.autoload("EventBus").time_of_day_changed.emit(gm.hour, gm.minute)

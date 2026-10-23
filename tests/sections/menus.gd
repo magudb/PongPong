@@ -461,6 +461,12 @@ func _quit_saves(t) -> void:
 func run_windowed(t) -> void:
 	const Fixtures := preload("res://scripts/ui/dev/ui_fixtures.gd")
 	await t.clear_scene()
+	# Earlier gameplay sections autosave on exit. Pin the visual fixtures to
+	# an empty save directory rather than showing the preceding section's run.
+	var saves: Node = t.autoload("SaveManager")
+	var previous_dir: String = saves.save_dir
+	saves.save_dir = "user://menus-visual-empty"
+	t.on_cleanup(func() -> void: saves.save_dir = previous_dir)
 	# UX-01: the title's saved window (here the largest preset) never resizes the harness's 1280x720 window; Godot hides
 	# `--resolution` from OS.get_cmdline_args(), so the harness marks the window instead (SettingsUI.KEEP_WINDOW).
 	SettingsStore.store("video", "size", SettingsUI.SIZES.size() - 1)
