@@ -10,7 +10,7 @@ extends RefCounted
 ## chain_checks_skip_without_d2, planter_kinds_skipped_without_p19, town_attach_called, no_board_bath_markers_in_city;
 ## the real marker handlers: npc_markers_use_the_real_handler, handler_made_nodes_are_levelled, when_markers_follow_flags, every_level_reachable_with_the_stub_player,
 ## walk_farm_to_hyggebyen_windowed (the M1a preview citizens and hints were removed once the town director and the HUD landed).
-## planner_keeps_grid_corners and planner_uses_the_current_deck: keep actual turning cells and route across the deck beneath overlapping bridge mouths.
+## planner_keeps_grid_corners, planner_constrains_arrival and planner_uses_the_current_deck: keep actual turning cells, require a goal inside the trigger and route beneath overlapping bridge mouths.
 ## fix round of the review (regressions): canopy_gives_way_when_zoomed_out, camera_headroom_above_the_top_platforms, overview_keeps_the_top_platforms_in_view,
 ## scheduled_citizens_replace_preview_labels, hud_owns_prompts_whispers_and_toasts, and windowed
 ## overview_shows_the_top_platforms, vram_city_increment_within_budget, hints_visible_at_the_ladder_foot.
@@ -1437,7 +1437,7 @@ class Planner:
 
 	## Waypoints (world px) from the cell nearest to `a` to the cell nearest to `b` among the cells the start can REACH (Dijkstra over the whole level
 	## from the start; a crescent that is cut off by a keep-out is simply not an answer); empty when nothing is reachable.
-	func path(level: StringName, a: Vector2, b: Vector2) -> PackedVector2Array:
+	func path(level: StringName, a: Vector2, b: Vector2, accept_goal: Callable = Callable()) -> PackedVector2Array:
 		var g: Dictionary = _grid(level)
 		var cols: int = g["cols"]
 		var rows: int = g["rows"]
@@ -1457,7 +1457,7 @@ class Planner:
 		cost[s] = 0.0
 		_push(heap_f, heap_i, 0.0, s)
 		var closed: Dictionary = {}
-		var goal: int = s
+		var goal: int = -1
 		var goal_d: float = INF
 		while not heap_i.is_empty():
 			var cur: int = _pop(heap_f, heap_i)
@@ -1465,7 +1465,7 @@ class Planner:
 				continue
 			closed[cur] = true
 			var d: float = center(g, cur).distance_squared_to(b)
-			if d < goal_d:
+			if d < goal_d and (not accept_goal.is_valid() or bool(accept_goal.call(center(g, cur)))):
 				goal_d = d
 				goal = cur
 			var cx: int = cur % cols
@@ -1551,6 +1551,8 @@ func _planner_regression(t) -> void:
 	planner.grids[&"elbow"] = {"origin": Vector2.ZERO, "cols": 3, "rows": 3, "ok": PackedByteArray([1, 1, 1, 0, 0, 1, 0, 0, 1])}
 	var route := planner.path(&"elbow", Vector2(6, 6), Vector2(30, 30))
 	t.check("planner_keeps_grid_corners", route == PackedVector2Array([Vector2(6, 6), Vector2(30, 6), Vector2(30, 30)]), "one-cell elbow retains its turning cell: %s" % str(route))
+	route = planner.path(&"elbow", Vector2(6, 6), Vector2(30, 6), func(point: Vector2) -> bool: return point.y >= 24.0)
+	t.check("planner_constrains_arrival", not route.is_empty() and route[-1] == Vector2(30, 30), "the nearest reachable goal must also be inside the trigger: %s" % str(route))
 	var city := LevelRegistry.from_file()
 	planner = Planner.new(city)
 	var bridge_end: Vector2 = city.get_level(&"b4").path[-1]
@@ -1653,7 +1655,10 @@ func _tour(t, on_visit: Callable = Callable()) -> Dictionary:
 					if String(l["id"]) == str(leg[2]):
 						lm = l
 				var target: Vector2 = _landmark_point(lm)
-				var pts: PackedVector2Array = planner.path(StringName(str(leg[1])), p.global_position, target)
+				# A point near a landmark is not necessarily inside its circle.
+				# Choose a reachable body position with room for the steering tolerance.
+				var inside := func(point: Vector2) -> bool: return point.distance_to(lm["centre"]) <= float(lm["r"]) - 8.0
+				var pts: PackedVector2Array = planner.path(StringName(str(leg[1])), p.global_position, target, inside)
 				if pts.is_empty():
 					problems.append("%s: no path" % label)
 					break
@@ -1661,7 +1666,9 @@ func _tour(t, on_visit: Callable = Callable()) -> Dictionary:
 				for tr in _city.landmarks:
 					if String(tr.landmark_id) == str(leg[2]):
 						trigger = tr
-				res = await _steer(t, pts, func() -> bool: return trigger != null and trigger.entered)
+				var entered := func() -> bool: return trigger != null and trigger.entered
+				res = await _steer(t, pts, entered, 2.0)
+				res["ok"] = bool(res["ok"]) and await t.until_game(entered, 1.0)
 				label = "visit %s (%s)" % [leg[2], leg[1]]
 				if on_visit.is_valid():
 					await on_visit.call(str(leg[2]), ActorLevel.level_id(p))
