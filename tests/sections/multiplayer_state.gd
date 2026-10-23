@@ -181,6 +181,14 @@ func _test_save_and_social(t) -> void:
 		and verdict.payload.players.rows.p0.flags.friend_baker_maja == 2 and verdict.payload.players.rows.p0.hotbar == ["hoe_wooden"]
 		and verdict.payload.players.rows.p0.player_pos == [1.25, -9.5] and not verdict.payload.game.world_flags.has("friend_baker_maja")
 		and not legacy.has("players") and legacy.game.world_flags.has("friend_baker_maja"))
+	var large_gold: Dictionary = legacy.duplicate(true)
+	large_gold.economy.gold = 1.0e20
+	var large_verdict: Dictionary = sm.validate_payload(large_gold)
+	t.check("v2_gold_clamps_before_conversion", large_verdict.ok and sm._apply_payload(large_verdict.payload).ok and eco.gold == eco.MAX_GOLD)
+	var future: Dictionary = legacy.duplicate(true)
+	future.economy.v = 99
+	t.check("v2_newer_economy_is_refused", sm.validate_payload(future).get("code") == "version")
+	sm.load_game(0)
 	var four: Dictionary = payload.duplicate(true)
 	for slot in [2, 3]:
 		var extra := PlayerState.new(StringName("p%d" % slot), slot + 1)

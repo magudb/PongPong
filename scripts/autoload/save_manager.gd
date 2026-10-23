@@ -843,6 +843,10 @@ func validate_payload(data: Variant) -> Dictionary:
 			if not section is Dictionary: return _verdict(false, "invalid", "legacy section '%s' is missing or invalid" % entry.name)
 			for key in entry.keys:
 				if not section.has(key) or not _has_type(section[key], entry.keys[key]): return _verdict(false, "invalid", "legacy section '%s' lacks valid '%s'" % [entry.name, key])
+			var declared := _declared_version(SvcLib.node(entry.autoload))
+			var written: Variant = section.get("v", 1)
+			if declared > 0 and _is_number(written) and float(written) > declared:
+				return _verdict(false, "version", "legacy section '%s' is newer than this build" % entry.name)
 	payload = _migrate(payload, version)
 	if not payload.get("players") is Dictionary: return _verdict(false, "invalid", "section 'players' is missing or invalid")
 	# Always validate profiles, including while no WorldRoot2D exists or a test detaches sections.
@@ -956,7 +960,7 @@ func _migrate_2_to_3(payload: Dictionary) -> Dictionary:
 		"name": str(game.get("player_name", "")),
 		"character_type": int(game.get("character_type", 0)),
 		"character_skin": str(game.get("character_skin", "")),
-		"gold": int(economy.get("gold", 0)),
+		"gold": economy.get("gold", 0),
 		"inventory": economy.get("inventory", []),
 		"owed": economy.get("owed", []),
 		"equipment": economy.get("equipment", {}) if economy.get("equipment") is Dictionary else {},
