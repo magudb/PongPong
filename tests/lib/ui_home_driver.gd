@@ -23,6 +23,10 @@ func open(t,_host: Node,ctx: Dictionary) -> Node:
 	var node: Node = t.world().game_ui.get_screen(StringName(id))
 	node.open()
 	await t.frames(3)
+	# Building/adopting the fixture posts notifications over the care buttons.
+	# Start the audit with a clear modal instead of waiting for their TTL.
+	t.world().game_ui.get_screen(&"hud").toasts.clear()
+	await t.frames(2)
 	return node
 func close(t,_node: Node,_host: Node) -> void:
 	await t.clear_scene()

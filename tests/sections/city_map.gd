@@ -11,6 +11,7 @@ extends RefCounted
 ## the real marker handlers: npc_markers_use_the_real_handler, handler_made_nodes_are_levelled, when_markers_follow_flags, every_level_reachable_with_the_stub_player,
 ## walk_farm_to_hyggebyen_windowed (the M1a preview citizens and hints were removed once the town director and the HUD landed).
 ## planner_keeps_grid_corners, planner_constrains_arrival and planner_uses_the_current_deck: keep actual turning cells, require a goal inside the trigger and route beneath overlapping bridge mouths.
+## planner_caches_terrain_not_citizens: moving NPC bodies leave the cached grid open while static counter barriers on the same layer remain blocked.
 ## fix round of the review (regressions): canopy_gives_way_when_zoomed_out, camera_headroom_above_the_top_platforms, overview_keeps_the_top_platforms_in_view,
 ## scheduled_citizens_replace_preview_labels, hud_owns_prompts_whispers_and_toasts, and windowed
 ## overview_shows_the_top_platforms, vram_city_increment_within_budget, hints_visible_at_the_ladder_foot.
@@ -81,6 +82,7 @@ func run(t) -> void:
 	_world = t.world()
 	_start_id = _world.area.map.id if _world.area != null else &""
 	await _enter_city(t)
+	await _planner_obstacle_regression(t)
 	_build_checks(t)
 	_extract_checks(t)
 	await _budgets(t)
@@ -1374,12 +1376,16 @@ class Planner:
 	var space: PhysicsDirectSpaceState2D
 	var query: PhysicsShapeQueryParameters2D
 	var world_mask := 0
+	var tree: SceneTree
+	var player_rid: RID
 	const CLEAR: Array[Vector2] = [Vector2(28, 0), Vector2(-28, 0), Vector2(0, 16), Vector2(0, -16)]
 
 	func _init(r: LevelRegistry, c: float = 12.0, actor: CharacterBody2D = null) -> void:
 		reg = r
 		cell = c
 		if actor != null:
+			tree = actor.get_tree()
+			player_rid = actor.get_rid()
 			space = actor.get_world_2d().direct_space_state
 			query = PhysicsShapeQueryParameters2D.new()
 			for child in actor.get_children():
@@ -1400,6 +1406,13 @@ class Planner:
 		ok.resize(cols * rows)
 		if query != null:
 			query.collision_mask = world_mask | lv.mask_bit()
+			# Cache terrain, not a snapshot of moving citizens. Keep static
+			# counter bars on the NPC layer in the physics query.
+			var ignored: Array[RID] = [player_rid]
+			for npc in tree.get_nodes_in_group("npc"):
+				if npc is CharacterBody2D:
+					ignored.append(npc.get_rid())
+			query.exclude = ignored
 		for iy in rows:
 			for ix in cols:
 				var p: Vector2 = rect.position + Vector2((float(ix) + 0.5) * cell, (float(iy) + 0.5) * cell)
@@ -1561,6 +1574,43 @@ func _planner_regression(t) -> void:
 	route = planner.path(&"torvet", Vector2(3585, 1891), bridge_end)
 	t.check("planner_uses_the_current_deck", route.size() > 2 and route[-1].distance_to(bridge_end) < 50.0,
 		"B5 arrival to B4 beneath bridge mouths: %d waypoints, last %s, bridge end %s" % [route.size(), route[-1] if not route.is_empty() else Vector2.INF, bridge_end])
+
+
+func _planner_obstacle_regression(t) -> void:
+	var planner := Planner.new(_reg, 12.0, _world.player)
+	var grid := planner._grid(&"g")
+	var index: int = (grid.ok as PackedByteArray).find(1)
+	if index < 0:
+		t.check("planner_caches_terrain_not_citizens", false, "no open kitchen-garden cell")
+		return
+	var at := planner.center(grid, index)
+	var citizen := CharacterBody2D.new()
+	citizen.collision_layer = Iso.LAYER_NPC
+	citizen.collision_mask = 0
+	var shape := CircleShape2D.new()
+	shape.radius = 25.0
+	var collision := CollisionShape2D.new()
+	collision.shape = shape
+	citizen.add_child(collision)
+	_area.objects.add_child(citizen)
+	citizen.add_to_group("npc")
+	citizen.global_position = at
+	await t.physics(2)
+	var with_citizen := Planner.new(_reg, 12.0, _world.player)._grid(&"g")
+	var bar := StaticBody2D.new()
+	bar.collision_layer = Iso.LAYER_NPC
+	var bar_shape := CollisionShape2D.new()
+	bar_shape.shape = shape
+	bar.add_child(bar_shape)
+	_area.colliders.add_child(bar)
+	bar.global_position = at
+	await t.physics(2)
+	var with_bar := Planner.new(_reg, 12.0, _world.player)._grid(&"g")
+	t.check("planner_caches_terrain_not_citizens", with_citizen.ok[index] == 1 and with_bar.ok[index] == 0,
+		"moving citizen leaves the cached cell open; a static NPC-layer bar blocks it")
+	citizen.queue_free()
+	bar.queue_free()
+	await t.physics(2)
 
 
 func _press(t, dir: Vector2) -> void:
