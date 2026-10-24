@@ -68,15 +68,13 @@ jobs:
           name: release-macos-v${{ needs.version.outputs.version }}
           path: dist
       - name: Check every package against the digest its build job reported
-        id: verified
         env:
           RELEASE_TAG: ${{ github.ref_name }}
           WINDOWS_DIGESTS: ${{ needs.builds.outputs.windows }}
           MACOS_DIGESTS: ${{ needs.builds.outputs.macos }}
         run: |
           set -euo pipefail
-          files="$(python3 tools/release/release.py verify-publish --tag "$RELEASE_TAG" --dir dist --digests "$WINDOWS_DIGESTS" --digests "$MACOS_DIGESTS")"
-          { echo "files<<EOF"; echo "$files"; echo "EOF"; } >> "$GITHUB_OUTPUT"
+          python3 tools/release/release.py verify-publish --tag "$RELEASE_TAG" --dir dist --digests "$WINDOWS_DIGESTS" --digests "$MACOS_DIGESTS"
       - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
           subject-checksums: dist/SHA256SUMS
@@ -84,27 +82,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.ref_name }}
-          RELEASE_FILES: ${{ steps.verified.outputs.files }}
+          RELEASE_REPOSITORY: ${{ github.repository }}
+          WINDOWS_DIGESTS: ${{ needs.builds.outputs.windows }}
+          MACOS_DIGESTS: ${{ needs.builds.outputs.macos }}
         run: |
           set -euo pipefail
-          cd dist
-          mapfile -t files <<< "$RELEASE_FILES"
-          python3 - <<'PY'
-          import json, os
-          from pathlib import Path
-          mac = json.loads(Path(f'Traetoppen-{os.environ["RELEASE_TAG"]}-macos.dmg.json').read_text())
-          notes = [
-              "Download the installer for your platform from Assets below.",
-              "",
-              "- **Windows x86_64:** run `Traetoppen-" + os.environ["RELEASE_TAG"] + "-windows-setup.exe`. Setup installs for your account, adds a Start menu shortcut and an Apps & Features uninstall entry. A desktop shortcut is optional.",
-              "- **macOS Intel / Apple Silicon:** open `Traetoppen-" + os.environ["RELEASE_TAG"] + "-macos.dmg`, drag Traetoppen.app to Applications, then eject the disk image. For a personal installation, use ~/Applications.",
-              "- **Updates:** Settings → Updates downloads and installs newer releases after confirmation. Saves are preserved.",
-              "",
-              "The ZIP files are update payloads and remain available for existing portable installations.",
-              "",
-          ]
-          if not mac["signed_and_notarized"]:
-              notes += ["The macOS build is ad-hoc signed and **not notarized**. See the [macOS installation guidance](https://docs.godotengine.org/en/stable/tutorials/export/running_on_macos.html) if macOS blocks its first launch.", ""]
-          Path("RELEASE_NOTES.txt").write_text("\n".join(notes), encoding="utf-8")
-          PY
-          gh release create "$RELEASE_TAG" "${files[@]}" --verify-tag --latest --generate-notes --notes-file RELEASE_NOTES.txt --title "Trætoppen $RELEASE_TAG"
+          python3 tools/release/publish_release.py --tag "$RELEASE_TAG" --repository "$RELEASE_REPOSITORY" --dir dist --digests "$WINDOWS_DIGESTS" --digests "$MACOS_DIGESTS"

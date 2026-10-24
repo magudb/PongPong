@@ -165,12 +165,17 @@ def digests(directory, version, platform_name):
     return {name: sha256(directory / name) for name in package_names("v" + version, platform_name)}
 
 
-def verify_publish(directory, tag, expected):
-    """Check downloaded artifacts against the build jobs' digests, write SHA256SUMS and return the files to publish."""
+def verify_publish(directory, tag, expected, *, manifest_exists=False):
+    """Check exact build artifacts; optionally recheck the manifest generated before attestation."""
     packages = [name for platform_name in PACKAGES for name in package_names(tag, platform_name)]
     if sorted(expected) != sorted(packages):
         raise ValueError("Build digests must name exactly the packages of both platforms")
+    manifest = "".join(f"{expected[name]}  {name}\n" for name in sorted(packages))
     allowed = {name + suffix for name in packages for suffix in ("", ".sha256", ".json")}
+    if manifest_exists:
+        if (directory / "SHA256SUMS").read_text() != manifest:
+            raise ValueError("SHA256SUMS does not match the build jobs' digests")
+        allowed.add("SHA256SUMS")
     present = {path.name for path in directory.iterdir()}
     if present != allowed:
         raise ValueError(f"Unexpected release files: missing {sorted(allowed - present)}, extra {sorted(present - allowed)}")
@@ -179,7 +184,7 @@ def verify_publish(directory, tag, expected):
         record = json.loads((directory / (name + ".json")).read_text())
         if sha256(directory / name) != digest or (directory / (name + ".sha256")).read_text() != f"{digest}  {name}\n" or record.get("sha256") != digest or record.get("file") != name:
             raise ValueError(f"{name} does not match the digest its build job reported")
-    (directory / "SHA256SUMS").write_text("".join(f"{expected[name]}  {name}\n" for name in sorted(packages)))
+    (directory / "SHA256SUMS").write_text(manifest)
     # The per-package .sha256 files are folded into SHA256SUMS, as before.
     return sorted(name + suffix for name in packages for suffix in ("", ".json")) + ["SHA256SUMS"]
 
