@@ -207,7 +207,7 @@ func _foundation(t) -> void:
 	var baseline: Dictionary = saves.gather_payload()
 	var digest := LoopDigest.of_payload(baseline)
 	var moved := baseline.duplicate(true)
-	moved.economy.gold += 1
+	moved.players.rows.p0.gold += 1
 	t.check("digest_has_teeth_gold", LoopDigest.of_payload(moved) != digest)
 	moved = baseline.duplicate(true)
 	moved.game.world_flags["loop_digest_probe"] = 1

@@ -18,10 +18,10 @@ func run(t) -> void:
 	var observations: Array = []
 	var observe := func() -> void:
 		observations.append([eco.gold, eco.count_item(id), _row(shop, id).stock, shop.buy_item(&"seed_shop", id, 1), shop.sell_item(&"seed_shop", id, 1)])
-	var gold := func(_amount, _delta): observe.call()
-	var inventory := func(_inventory): observe.call()
-	var gained := func(_id, _amount): observe.call()
-	var purchased := func(_id, _amount, _cost): observe.call()
+	var gold := func(_player_id: StringName, _amount, _delta): observe.call()
+	var inventory := func(_player_id: StringName, _inventory): observe.call()
+	var gained := func(_player_id: StringName, _id, _amount): observe.call()
+	var purchased := func(_player_id: StringName, _id, _amount, _cost): observe.call()
 	var transacted := func(_shop, _id, _amount, _buy): observe.call()
 	bus.gold_changed.connect(gold)
 	bus.player_inventory_changed.connect(inventory)
@@ -33,7 +33,7 @@ func run(t) -> void:
 	t.check("purchase_reentry_does_not_replace_outer_result", shop.last_refusal == &"" and eco.count_item(id) == owned + 1)
 	bus.item_gained.disconnect(gained)
 	bus.item_purchased.disconnect(purchased)
-	var sold := func(_id, _amount, _price): observe.call()
+	var sold := func(_player_id: StringName, _id, _amount, _price): observe.call()
 	bus.item_sold.connect(sold)
 	observations.clear()
 	var sell_price: int = shop.get_sell_price(&"seed_shop", id)
@@ -71,8 +71,8 @@ func _craft(t) -> void:
 	var observations: Array = []
 	var observe := func() -> void:
 		observations.append([eco.count_item(&"copper_ore"), eco.count_item(&"wood"), eco.count_item(&"pickaxe_copper"), CraftingSystem.craft("pickaxe_copper")])
-	var inventory := func(_inventory): observe.call()
-	var gained := func(_id, _amount): observe.call()
+	var inventory := func(_player_id: StringName, _inventory): observe.call()
+	var gained := func(_player_id: StringName, _id, _amount): observe.call()
 	var crafted := func(_id, _amount): observe.call()
 	bus.player_inventory_changed.connect(inventory)
 	bus.item_gained.connect(gained)

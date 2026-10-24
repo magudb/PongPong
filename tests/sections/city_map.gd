@@ -10,12 +10,15 @@ extends RefCounted
 ## chain_checks_skip_without_d2, planter_kinds_skipped_without_p19, town_attach_called, no_board_bath_markers_in_city;
 ## the real marker handlers: npc_markers_use_the_real_handler, handler_made_nodes_are_levelled, when_markers_follow_flags, every_level_reachable_with_the_stub_player,
 ## walk_farm_to_hyggebyen_windowed (the M1a preview citizens and hints were removed once the town director and the HUD landed).
+## planner_keeps_grid_corners, planner_constrains_arrival and planner_uses_the_current_deck: keep actual turning cells, require a goal inside the trigger and route beneath overlapping bridge mouths.
 ## fix round of the review (regressions): canopy_gives_way_when_zoomed_out, camera_headroom_above_the_top_platforms, overview_keeps_the_top_platforms_in_view,
 ## scheduled_citizens_replace_preview_labels, hud_owns_prompts_whispers_and_toasts, and windowed
 ## overview_shows_the_top_platforms, vram_city_increment_within_budget, hints_visible_at_the_ladder_foot.
 ## Every check that needs a package of the next milestone SKIPs with a visible line `capability missing: <package>`.
 const SECTION := "city_map"
-const TIMEOUT_S := 170.0
+# The complete physical tour runs in real time, including narrow turns and
+# arrival beyond every bridge mouth, on software-rendered CI frames.
+const TIMEOUT_S := 240.0
 const SELF_PATH := "res://tests/sections/city_map.gd"
 const EXTRACT_PATH := "res://scripts/world2d/levels/source/v2_city_extract.json"
 const LUA_PATH := "res://lua/config/traetoppen.lua"
@@ -62,6 +65,7 @@ var _enter_errors: Array[String] = []
 
 func run(t) -> void:
 	_t = t
+	_planner_regression(t)
 	_data = CityData.load_data()
 	t.check("data_loads", not _data.is_empty() and LevelRegistry.last_error == "", "data/traetoppen/traetoppen.json: %s" % LevelRegistry.last_error)
 	if _data.is_empty():
@@ -1017,9 +1021,9 @@ func _hint_checks(t) -> void:
 	var prompt: PromptPill = hud.get_node("PromptPill")
 	var whisper: WhisperLine = hud.get_node("WhisperLine")
 	var climb := prompt.tr("LEVEL_PROMPT_CLIMB")
-	EventBus.interaction_prompt_changed.emit(climb)
+	EventBus.interaction_prompt_changed.emit(PlayerRegistry.local_id(), climb)
 	var prompt_ok: bool = prompt.shown().visible and prompt.shown().cap!="" and prompt.shown().verb==climb
-	EventBus.interaction_prompt_changed.emit("")
+	EventBus.interaction_prompt_changed.emit(PlayerRegistry.local_id(), "")
 	prompt_ok=prompt_ok and not prompt.shown().visible
 	_city.signs[0].interact(_world.player)
 	var whisper_ok := whisper.is_showing() and whisper.shown_text()==whisper.tr("TRAE_SIGN_FARM")
@@ -1359,18 +1363,31 @@ func _landmarks(t) -> void:
 # ================================================================== the walk: a grid planner per level, the real player steered by input
 
 ## Plans inside ONE level: a grid of 12 px cells over the level's own bounds (built when the level is first asked for) whose centre and four clearance
-## samples (the body's half extents plus a margin) all lie on that level; 8-neighbour A* with no corner cutting. 12 px is what the Upper deck's
+## samples (the body's half extents plus a margin) all lie on that level; runtime tours also query the real body against its physics mask.
+## 8-neighbour A* with no corner cutting. 12 px is what the Upper deck's
 ## 36 px crescent in front of the trunk needs. Level changes are NOT planned here: they are the explicit crossings of the tour (a bridge's centre
 ## line, the ladder).
 class Planner:
 	var reg: LevelRegistry
 	var cell: float = 12.0
 	var grids: Dictionary = {}
+	var space: PhysicsDirectSpaceState2D
+	var query: PhysicsShapeQueryParameters2D
+	var world_mask := 0
 	const CLEAR: Array[Vector2] = [Vector2(28, 0), Vector2(-28, 0), Vector2(0, 16), Vector2(0, -16)]
 
-	func _init(r: LevelRegistry, c: float = 12.0) -> void:
+	func _init(r: LevelRegistry, c: float = 12.0, actor: CharacterBody2D = null) -> void:
 		reg = r
 		cell = c
+		if actor != null:
+			space = actor.get_world_2d().direct_space_state
+			query = PhysicsShapeQueryParameters2D.new()
+			for child in actor.get_children():
+				if child is CollisionShape2D:
+					query.shape = child.shape
+					break
+			query.exclude = [actor.get_rid()]
+			world_mask = actor.collision_mask & ActorLevel.KEEP_MASK
 
 	func _grid(level: StringName) -> Dictionary:
 		if grids.has(level):
@@ -1381,16 +1398,23 @@ class Planner:
 		var rows: int = int(ceil(rect.size.y / cell))
 		var ok: PackedByteArray = PackedByteArray()
 		ok.resize(cols * rows)
+		if query != null:
+			query.collision_mask = world_mask | lv.mask_bit()
 		for iy in rows:
 			for ix in cols:
 				var p: Vector2 = rect.position + Vector2((float(ix) + 0.5) * cell, (float(iy) + 0.5) * cell)
-				if reg.level_id_at(p) != level:
+				# A bridge mouth wins the registry's point lookup, but the deck
+				# underneath remains walkable. Excluding it makes false islands.
+				if not lv.contains(p):
 					continue
 				var good: bool = true
 				for off in CLEAR:
-					if reg.level_id_at(p + off) != level:
+					if not lv.contains(p + off):
 						good = false
 						break
+				if good and query != null:
+					query.transform = Transform2D(0.0, p)
+					good = space.intersect_shape(query, 1).is_empty()
 				if good:
 					ok[iy * cols + ix] = 1
 		var g: Dictionary = {"origin": rect.position, "cols": cols, "rows": rows, "ok": ok}
@@ -1415,7 +1439,7 @@ class Planner:
 
 	## Waypoints (world px) from the cell nearest to `a` to the cell nearest to `b` among the cells the start can REACH (Dijkstra over the whole level
 	## from the start; a crescent that is cut off by a keep-out is simply not an answer); empty when nothing is reachable.
-	func path(level: StringName, a: Vector2, b: Vector2) -> PackedVector2Array:
+	func path(level: StringName, a: Vector2, b: Vector2, accept_goal: Callable = Callable()) -> PackedVector2Array:
 		var g: Dictionary = _grid(level)
 		var cols: int = g["cols"]
 		var rows: int = g["rows"]
@@ -1435,7 +1459,7 @@ class Planner:
 		cost[s] = 0.0
 		_push(heap_f, heap_i, 0.0, s)
 		var closed: Dictionary = {}
-		var goal: int = s
+		var goal: int = -1
 		var goal_d: float = INF
 		while not heap_i.is_empty():
 			var cur: int = _pop(heap_f, heap_i)
@@ -1443,7 +1467,7 @@ class Planner:
 				continue
 			closed[cur] = true
 			var d: float = center(g, cur).distance_squared_to(b)
-			if d < goal_d:
+			if d < goal_d and (not accept_goal.is_valid() or bool(accept_goal.call(center(g, cur)))):
 				goal_d = d
 				goal = cur
 			var cx: int = cur % cols
@@ -1472,13 +1496,11 @@ class Planner:
 			chain.append(n)
 			n = came[n]
 		chain.reverse()
-		# drop the points that lie on a straight run (the same step as the one before)
-		var last_step: Vector2i = Vector2i.ZERO
+		# Keep the cell where direction changes, not the first cell after it.
+		# Skipping the corner cuts through the very keepouts the grid avoided.
 		for i in chain.size():
-			var step: Vector2i = Vector2i(chain[i] % cols - chain[i - 1] % cols, floori(float(chain[i]) / float(cols)) - floori(float(chain[i - 1]) / float(cols))) if i > 0 else Vector2i.ZERO
-			if i == 0 or i == chain.size() - 1 or step != last_step:
+			if i == 0 or i == chain.size() - 1 or center(g, chain[i]) - center(g, chain[i - 1]) != center(g, chain[i + 1]) - center(g, chain[i]):
 				out.append(center(g, chain[i]))
-			last_step = step
 		return out
 
 	func _push(hf: Array[float], hi: Array[int], f: float, i: int) -> void:
@@ -1525,6 +1547,22 @@ class Planner:
 		return top
 
 
+func _planner_regression(t) -> void:
+	var planner := Planner.new(null)
+	# A one-cell-wide elbow: shortcuts between cells collide with its inside corner.
+	planner.grids[&"elbow"] = {"origin": Vector2.ZERO, "cols": 3, "rows": 3, "ok": PackedByteArray([1, 1, 1, 0, 0, 1, 0, 0, 1])}
+	var route := planner.path(&"elbow", Vector2(6, 6), Vector2(30, 30))
+	t.check("planner_keeps_grid_corners", route == PackedVector2Array([Vector2(6, 6), Vector2(30, 6), Vector2(30, 30)]), "one-cell elbow retains its turning cell: %s" % str(route))
+	route = planner.path(&"elbow", Vector2(6, 6), Vector2(30, 6), func(point: Vector2) -> bool: return point.y >= 24.0)
+	t.check("planner_constrains_arrival", not route.is_empty() and route[-1] == Vector2(30, 30), "the nearest reachable goal must also be inside the trigger: %s" % str(route))
+	var city := LevelRegistry.from_file()
+	planner = Planner.new(city)
+	var bridge_end: Vector2 = city.get_level(&"b4").path[-1]
+	route = planner.path(&"torvet", Vector2(3585, 1891), bridge_end)
+	t.check("planner_uses_the_current_deck", route.size() > 2 and route[-1].distance_to(bridge_end) < 50.0,
+		"B5 arrival to B4 beneath bridge mouths: %d waypoints, last %s, bridge end %s" % [route.size(), route[-1] if not route.is_empty() else Vector2.INF, bridge_end])
+
+
 func _press(t, dir: Vector2) -> void:
 	var table: Array = [[&"move_right", maxf(dir.x, 0.0)], [&"move_left", maxf(-dir.x, 0.0)], [&"move_back", maxf(dir.y, 0.0)], [&"move_forward", maxf(-dir.y, 0.0)]]
 	for e in table:
@@ -1556,17 +1594,21 @@ func _steer(t, pts: PackedVector2Array, stop_when: Callable = Callable(), tol: f
 		if stop_when.is_valid() and bool(stop_when.call()):
 			ok = true
 			break
-		while idx < pts.size() and Iso.to_ground(pts[idx] - p.global_position).length() <= tol:
+		# The planner has 12px cells. A 22px tolerance on intermediate bends
+		# skips the turn and clips a rail/keepout; slow down to reach each bend.
+		while idx < pts.size() and Iso.to_ground(pts[idx] - p.global_position).length() <= (tol if idx == pts.size() - 1 else 4.0):
 			idx += 1
 		if idx >= pts.size():
 			ok = true
 			break
-		_press(t, Iso.to_ground(pts[idx] - p.global_position).normalized())
+		var delta := Iso.to_ground(pts[idx] - p.global_position)
+		_press(t, delta.normalized() * clampf(delta.length() / 32.0, 0.25, 1.0))
 		if frames % 40 == 0:
 			if p.global_position.distance_to(last_pos) < 5.0:
 				still += 1
 				if still >= 2:
 					stuck_at = p.global_position
+					t.info("city tour stuck: waypoint %d/%d at %s, route %s" % [idx, pts.size(), pts[idx], str(pts)])
 					break
 			else:
 				still = 0
@@ -1589,8 +1631,8 @@ func _bridge_pts(b: Level, from_id: StringName) -> PackedVector2Array:
 ## One tour: the real player from where it stands over every bridge and the ladder to the end of tree F's stub (the warp to Hyggebyen). `on_visit` is called
 ## after each landmark with (landmark id, level id); returns {ok, legs: [...], problems: [...]}.
 func _tour(t, on_visit: Callable = Callable()) -> Dictionary:
-	var planner := Planner.new(_reg)
 	var p: Node2D = _world.player
+	var planner := Planner.new(_reg, 12.0, p)
 	var problems: Array[String] = []
 	var legs: Array[String] = []
 	var levels_seen: Dictionary = {}
@@ -1615,7 +1657,10 @@ func _tour(t, on_visit: Callable = Callable()) -> Dictionary:
 					if String(l["id"]) == str(leg[2]):
 						lm = l
 				var target: Vector2 = _landmark_point(lm)
-				var pts: PackedVector2Array = planner.path(StringName(str(leg[1])), p.global_position, target)
+				# A point near a landmark is not necessarily inside its circle.
+				# Choose a reachable body position with room for the steering tolerance.
+				var inside := func(point: Vector2) -> bool: return point.distance_to(lm["centre"]) <= float(lm["r"]) - 8.0
+				var pts: PackedVector2Array = planner.path(StringName(str(leg[1])), p.global_position, target, inside)
 				if pts.is_empty():
 					problems.append("%s: no path" % label)
 					break
@@ -1623,7 +1668,9 @@ func _tour(t, on_visit: Callable = Callable()) -> Dictionary:
 				for tr in _city.landmarks:
 					if String(tr.landmark_id) == str(leg[2]):
 						trigger = tr
-				res = await _steer(t, pts, func() -> bool: return trigger != null and trigger.entered)
+				var entered := func() -> bool: return trigger != null and trigger.entered
+				res = await _steer(t, pts, entered, 2.0)
+				res["ok"] = bool(res["ok"]) and await t.until_game(entered, 1.0)
 				label = "visit %s (%s)" % [leg[2], leg[1]]
 				if on_visit.is_valid():
 					await on_visit.call(str(leg[2]), ActorLevel.level_id(p))
@@ -1642,7 +1689,17 @@ func _tour(t, on_visit: Callable = Callable()) -> Dictionary:
 					break
 				res = await _steer(t, approach)
 				if res["ok"]:
-					res = await _steer(t, bp, func() -> bool: return ActorLevel.level_id(p) == to_id and p.global_position.distance_to(bp[bp.size() - 1]) < 220.0)
+					# The center can briefly select the destination while the body
+					# still straddles the bridge. Clear its full footprint first.
+					var on_deck := func() -> bool:
+						if ActorLevel.level_id(p) != to_id or b.contains(p.global_position):
+							return false
+						for offset in Planner.CLEAR:
+							if b.contains(p.global_position + offset):
+								return false
+						return true
+					res = await _steer(t, bp, on_deck)
+					await t.physics(2)
 				levels_seen[b.id] = true
 				levels_seen[to_id] = true
 				label = "cross %s %s -> %s" % [b.id, from_id, to_id]
@@ -2285,7 +2342,7 @@ func run_windowed(t) -> void:
 	DisplayServer.window_set_vsync_mode(old_vsync as DisplayServer.VSyncMode)
 	_world.game_ui.visible = hud_visible
 	t.check("frame_draw_calls", peak_calls <= 250, "peak %d draw calls (<= 250)" % peak_calls)
-	t.check("frame_budget", t.perf_ok("frame_budget", best_avg, 6.0), "the city area with approved painted art and scheduled citizens at zoom 0.4, 1280x720, vsync off: best window %.2f ms per frame (budget 6), draw calls average %d, peak %d (budget 250)" % [best_avg, int(float(calls_sum) / float(maxi(calls_n, 1))), peak_calls])
+	t.render_budget("frame_budget", best_avg, 6.0, "the city area with approved painted art and scheduled citizens at zoom 0.4, 1280x720, vsync off: best window %.2f ms per frame (budget 6), draw calls average %d, peak %d (budget 250)" % [best_avg, int(float(calls_sum) / float(maxi(calls_n, 1))), peak_calls])
 	# --- the prompt overlay in the picture: at the foot of the ladder the player reads "E: Klatre", a sign's whisper and a toast stand above it
 	_world.day_night.override_hour = 11.0
 	_world.day_night.snap()
@@ -2412,7 +2469,7 @@ func _chain_with_d2(t) -> void:
 	if floor_id != &"" and on_floor:
 		_world._enter(floor_id, &"default")
 		await t.physics(3)
-		EventBus.player_defeated.emit()
+		EventBus.player_defeated.emit(PlayerRegistry.local_id())
 		woke = await t.until(func() -> bool: return _world.area != null and _world.area.map.id == &"farm" and not _world.traveling, 10.0)
 		await t.seconds(0.6)
 		woke = woke and _world.player.global_position.distance_to(_world.area.get_spawn("from_home")) < 8.0

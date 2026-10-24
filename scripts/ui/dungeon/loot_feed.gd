@@ -8,7 +8,7 @@ func _ready() -> void:
 	add_theme_constant_override("separation",8)
 	EventBus.item_gained.connect(gain)
 	EventBus.loot_rolled.connect(_rolled)
-func gain(id: StringName, amount: int) -> void:
+func gain(_player_id: StringName, id: StringName, amount: int) -> void:
 	if not is_visible_in_tree(): return
 	var now := Time.get_ticks_msec()
 	for entry in entries:

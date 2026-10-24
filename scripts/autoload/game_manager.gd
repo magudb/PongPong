@@ -252,6 +252,7 @@ func start_new_game(p_name: String, p_type: CharacterType, p_farm: String = "", 
 	year = 1
 	hour = day_start_hour()
 	minute = 0
+	PlayerRegistry.reset_states()
 	var dropped: Array = world_flags.keys()
 	world_flags.clear()
 	set_flag(FLAG_INTRO_PENDING, true)
@@ -264,7 +265,7 @@ func start_new_game(p_name: String, p_type: CharacterType, p_farm: String = "", 
 	_base_phase = GamePhase.PLAYING
 	_drop_modals()
 	# the skin is final here; the reset wave of every other system comes last
-	EventBus.player_character_changed.emit(character_skin)
+	EventBus.player_character_changed.emit(PlayerRegistry.local_id(), character_skin)
 	EventBus.new_game_started.emit()
 
 
@@ -389,19 +390,24 @@ const _UNSET: Variant = null
 
 ## JSON-safe flag store: bool, int, float and String (a StringName is stored as String); null clears the flag.
 ## Anything else (Array, Dictionary, Vector2, Object ...) is refused with an error: it would not survive a save.
+func _flag_store(flag: StringName) -> Dictionary:
+	return PlayerRegistry.state().flags if str(flag).begins_with("friend_") else world_flags
+
+
 func set_flag(flag: StringName, value: Variant) -> void:
+	var store := _flag_store(flag)
 	if value == null:
-		if world_flags.erase(flag):
+		if store.erase(flag):
 			EventBus.flag_changed.emit(flag, false)
 		return
 	var safe: Variant = _json_safe(value)
 	if safe == null:
 		push_error("GameManager.set_flag(%s): %s is not JSON-safe (use bool, int, float or String)" % [flag, type_string(typeof(value))])
 		return
-	var prev: Variant = world_flags.get(flag, _UNSET)
+	var prev: Variant = store.get(flag, _UNSET)
 	if prev != null and typeof(prev) == typeof(safe) and prev == safe:
 		return                                          # writing the same value changes nothing
-	world_flags[flag] = safe
+	store[flag] = safe
 	EventBus.flag_changed.emit(flag, safe)
 
 
@@ -419,31 +425,31 @@ func set_flags(changes: Dictionary) -> bool:
 	for key in next:
 		var value: Variant = next[key]
 		if value == null:
-			if world_flags.erase(key): published.append([key,false])
+			if _flag_store(key).erase(key): published.append([key,false])
 		else:
-			var previous: Variant = world_flags.get(key,_UNSET)
+			var previous: Variant = _flag_store(key).get(key,_UNSET)
 			if typeof(previous) != typeof(value) or previous != value:
-				world_flags[key] = value
+				_flag_store(key)[key] = value
 				published.append([key,value])
 	for pair in published: EventBus.flag_changed.emit(pair[0],pair[1])
 	return true
 
 
 func get_flag(flag: StringName, default_value: Variant = false) -> Variant:
-	return world_flags.get(flag, default_value)
+	return _flag_store(flag).get(flag, default_value)
 
 
 func clear_flag(flag: StringName) -> void:
-	if world_flags.erase(flag):
+	if _flag_store(flag).erase(flag):
 		EventBus.flag_changed.emit(flag, false)
 
 
 ## Integer flag. Saves come back from JSON with every number as float (home_tier 3 loads as 3.0): this coerces it.
 ## Booleans count as 1 / 0, numeric strings are parsed, anything else returns `default_value`.
 func flag_int(flag: StringName, default_value: int = 0) -> int:
-	if not world_flags.has(flag):
+	if not _flag_store(flag).has(flag):
 		return default_value
-	var value: Variant = world_flags[flag]
+	var value: Variant = _flag_store(flag)[flag]
 	match typeof(value):
 		TYPE_INT:
 			return value
@@ -647,6 +653,11 @@ func from_dict(data: Dictionary) -> void:
 	hour = clampi(int(data.get("hour", day_start_hour())), day_roll_restart_hour(), day_end_hour() - 1)
 	minute = clampi(int(data.get("minute", 0)), 0, 59)
 	var new_flags := _sanitized_flags(data.get("world_flags", {}))
+	var personal := PlayerRegistry.state().flags
+	for key in new_flags.keys():
+		if str(key).begins_with("friend_"):
+			personal[key] = new_flags[key]
+			new_flags.erase(key)
 	var old_flags := world_flags
 	world_flags = new_flags                          # assign first: a listener that reads get_flag sees the new state
 	for key in old_flags.keys():
@@ -658,7 +669,7 @@ func from_dict(data: Dictionary) -> void:
 	unlocked_zones.assign(_string_names(data.get("unlocked_zones", _default_zones())))
 	discovered_locations.assign(_string_names(data.get("discovered_locations", [])))
 	play_time_seconds = float(data.get("play_time_seconds", 0.0))
-	EventBus.player_character_changed.emit(character_skin)
+	EventBus.player_character_changed.emit(PlayerRegistry.local_id(), character_skin)
 
 
 func _sanitized_flags(source: Variant) -> Dictionary:

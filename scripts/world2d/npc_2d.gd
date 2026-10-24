@@ -121,9 +121,9 @@ func _ready() -> void:
 	# bound methods are disconnected with the node
 	EventBus.time_of_day_changed.connect(_clock.unbind(2))
 	EventBus.modal_changed.connect(_queue_bubble.unbind(1))
-	EventBus.quest_accepted.connect(_queue_bubble.unbind(1))
-	EventBus.quest_completed.connect(_queue_bubble.unbind(1))
-	EventBus.friend_changed.connect(_queue_bubble.unbind(2))
+	EventBus.quest_accepted.connect(_queue_bubble.unbind(2))
+	EventBus.quest_completed.connect(_queue_bubble.unbind(2))
+	EventBus.friend_changed.connect(_queue_bubble.unbind(3))
 	EventBus.flag_changed.connect(_queue_bubble.unbind(2))
 	_clock()
 	Svc.static_call("res://scripts/ghostfam/hook/ghostfam_hook.gd", &"attach", [self])

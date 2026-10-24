@@ -133,14 +133,14 @@ func _ready() -> void:
 	held_equipment = HeldEquipment2D.new()
 	held_equipment.name = "HeldEquipment"
 	add_child(held_equipment)
-	EventBus.hotbar_assign_requested.connect(hotbar.assign)
+	EventBus.hotbar_assign_requested.connect(func(_player_id: StringName, slot: int, item_id: StringName) -> void: hotbar.assign(slot, item_id))
 	EventBus.player_inventory_changed.connect(_on_inventory_changed)
-	EventBus.outfit_changed.connect(func(_outfit: Dictionary): refresh_stats())
+	EventBus.outfit_changed.connect(func(_player_id: StringName, _outfit: Dictionary): refresh_stats())
 	EventBus.home_upgraded.connect(func(_old: int, _new: int): refresh_stats())
 	EventBus.hygge_changed.connect(func(_score: int, _level: StringName): refresh_stats())
 	EventBus.game_event.connect(_on_game_event)
 	_emit_stats_on_bus()
-	EventBus.player_oil_changed.emit(oil, max_oil)
+	EventBus.player_oil_changed.emit(PlayerRegistry.local_id(), oil, max_oil)
 	var footsteps := PlayerFootsteps.new()
 	footsteps.name = "Footsteps"
 	add_child(footsteps)
@@ -160,8 +160,8 @@ func refresh_stats() -> void:
 	half_hearts = mini(half_hearts, max_half_hearts)
 	_emit_stats_on_bus()
 
-func _on_character_changed(character_id: StringName) -> void:
-	super._on_character_changed(character_id)
+func _on_character_changed(player_id: StringName, character_id: StringName) -> void:
+	super._on_character_changed(player_id, character_id)
 	refresh_stats()
 
 func _on_game_event(event: StringName, _data: Dictionary) -> void:
@@ -732,10 +732,10 @@ func _emit_stats_on_bus() -> void:
 	if values == _last_stats:
 		return
 	if _last_stats.get("half_hearts", -1) != half_hearts or _last_stats.get("max_half_hearts", -1) != max_half_hearts:
-		EventBus.player_health_changed.emit(half_hearts, max_half_hearts)
+		EventBus.player_health_changed.emit(PlayerRegistry.local_id(), half_hearts, max_half_hearts)
 	_last_stats = values.duplicate()
 	stats_changed.emit()
-	EventBus.player_stats_changed.emit(values)
+	EventBus.player_stats_changed.emit(PlayerRegistry.local_id(), values)
 
 ## One readout for the HUD and the fitted item presenter. An action keeps its
 ## actual source item until completion even if the hotbar or equipment changes.
@@ -771,9 +771,9 @@ func _sync_equipment_display() -> void:
 
 func _emit_hotbar() -> void:
 	_sync_equipment_display()
-	EventBus.hotbar_changed.emit(hotbar.entries(), hotbar.selected)
+	EventBus.hotbar_changed.emit(PlayerRegistry.local_id(), hotbar.entries(), hotbar.selected)
 
-func _on_inventory_changed(_items: Dictionary) -> void:
+func _on_inventory_changed(_player_id: StringName, _items: Dictionary) -> void:
 	_emit_hotbar()
 
 func heal_half(amount: int) -> void:
@@ -798,7 +798,7 @@ func add_oil(seconds: float) -> void:
 	_oil_empty_time = 0.0
 	_update_lantern()
 	if oil != before:
-		EventBus.player_oil_changed.emit(oil, max_oil)
+		EventBus.player_oil_changed.emit(PlayerRegistry.local_id(), oil, max_oil)
 
 func restore_oil() -> void:
 	add_oil(max_oil)
@@ -818,7 +818,7 @@ func apply_consumable(health: int, oil_seconds: float, energy: float) -> void:
 	_update_lantern()
 	_emit_stats_on_bus()
 	if before != oil:
-		EventBus.player_oil_changed.emit(oil, max_oil)
+		EventBus.player_oil_changed.emit(PlayerRegistry.local_id(), oil, max_oil)
 
 func restore_after_sleep() -> void:
 	refresh_stats()
@@ -852,7 +852,7 @@ func _update_oil(delta: float) -> void:
 	var context := {"paused": false, "on_floor": oil_draining, "race_mult": float(GameData.perk("oil_use_mult", 1.0)), "gem_mult": float(gem.get("oil_mult", 1.0)), "assist_oil": _assist_oil()}
 	oil = clampf(DungeonOilRules.step(oil, delta, context), 0.0, max_oil)
 	if int(before) != int(oil):
-		EventBus.player_oil_changed.emit(oil, max_oil)
+		EventBus.player_oil_changed.emit(PlayerRegistry.local_id(), oil, max_oil)
 	if oil / max_oil < float(GameData.combat("oil_whisper_ratio", 0.2)) and not _oil_low_said:
 		_oil_low_said = true
 		EventBus.whisper_requested.emit("WHISPER_OIL_LOW")

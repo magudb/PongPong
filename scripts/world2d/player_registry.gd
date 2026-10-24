@@ -9,6 +9,39 @@ const PLAYER_GROUP := &"player"
 const WORLD_GROUP := &"world_2d"
 const MAX_PLAYERS := 4
 
+## Shared `p0` row used while no WorldRoot2D roster exists (autoload boot, unit tests).
+## The managers must see the same row or they diverge.
+static var _fallback_state := PlayerState.new()
+static var _states: Dictionary = {&"p0": _fallback_state}
+static var _acting_id: StringName = &""
+
+
+## Synchronous actor scope for host-side operations; restored even when scopes nest.
+static func for_player(player_id: StringName, work: Callable) -> Variant:
+	var previous := _acting_id
+	_acting_id = player_id
+	var result: Variant = work.call()
+	_acting_id = previous
+	return result
+
+
+static func acting_id() -> StringName:
+	return _acting_id if _acting_id != &"" else local_id()
+
+
+static func reset_states() -> void:
+	_fallback_state = PlayerState.new()
+	_states = {&"p0": _fallback_state}
+
+
+## The acting player's session row, retained while no world scene exists.
+static func state(player_id: StringName = &"", tree: SceneTree = null) -> PlayerState:
+	var id := player_id if player_id != &"" else (_acting_id if _acting_id != &"" else local_id(tree))
+	if not _states.has(id):
+		_states[id] = PlayerState.new(id, int(str(id).trim_prefix("p")) + 1)
+	return _states[id]
+
+
 
 ## The live WorldRoot2D, or null when no world is in the tree.
 static func world(tree: SceneTree = null) -> Node:
@@ -32,6 +65,14 @@ static func local_player(tree: SceneTree = null) -> Node:
 		if p is Node:
 			return p as Node
 	return null
+
+
+## Save id of the local player (`p0` when nothing is up). What player-scoped EventBus signals carry (MP3).
+static func local_id(tree: SceneTree = null) -> StringName:
+	var p := local_player(tree)
+	if p != null and "player_id" in p:
+		return StringName(str(p.get("player_id")))
+	return &"p0"
 
 
 ## Player by stable save id (`p0`..`p3`).

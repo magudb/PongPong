@@ -51,7 +51,7 @@ func _ready() -> void:
 	status = L.label(body,"","Body",true)
 	EventBus.game_event.connect(func(id,_data):
 		if id==&"open_home_amenities" and HomeServices.at_home():open())
-	EventBus.player_inventory_changed.connect(func(_items):
+	EventBus.player_inventory_changed.connect(func(_player_id: StringName, _items):
 		if is_open():_refresh_texts.call_deferred())
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("home_amenities",Callable(get_script(),&"fixture_setup"))
 func open(opener: Control = null) -> void:

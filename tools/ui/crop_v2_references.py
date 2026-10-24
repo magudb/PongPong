@@ -14,7 +14,9 @@ from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / 'docs/Trætoppen Style Guide Review/refs/miljoer_v2_render.png'
 REGIONS = {'date': (107,606,360,678), 'chip': (1374,606,1654,656),
-           'hotbar': (609,1575,1153,1657), 'banner': (785,600,975,652)}
+           # The tray begins at x=608; starting at 609 shifts every 2px
+           # slot outline against the runtime crop by one pixel.
+           'hotbar': (608,1575,1152,1657), 'banner': (785,600,975,652)}
 
 def glyph_bounds(im):
     mask = Image.new('L', im.size)

@@ -1194,7 +1194,7 @@ func _when_grammar(t) -> void:
 		"hour:8-18 re-asked at 10:00 (edge %s), not at 09:30 (%s) or 10:15 (%s), at 11:15 after a skip (%s), at raw 24:00 (%s), 25:00 (%s) and 02:00 (%s); start %s" % [edge, mid_hour, same_hour, skipped_into, at_midnight, at_one, after_roll, start_ok])
 	# a stale answer is fixed by the other triggers: friend_changed (hearts / stage), the game events of the autoload's list, day_started
 	fake.answers["open:bakery"] = false
-	bus.friend_changed.emit(&"pip", 4)
+	bus.friend_changed.emit(PlayerRegistry.local_id(), &"pip", 4)
 	var on_friend: bool = not o_node.visible
 	var every_event: bool = true
 	for ev in FakeSocial.WHEN_REFRESH_EVENTS:
@@ -2413,7 +2413,7 @@ func _sleep_and_passout(t) -> void:
 		_world._enter(&"_fixture_ortho", &"default")
 		_seen.clear()
 		bus.whisper_requested.connect(wcb)
-		bus.player_defeated.emit()
+		bus.player_defeated.emit(PlayerRegistry.local_id(), )
 		var back: bool = await t.until(func() -> bool: return _world.area.map.id == &"farm" and not _world._faint_pending, 8.0)
 		bus.whisper_requested.disconnect(wcb)
 		t.check("faint_returns_to_the_farm", back and _seen.has("WHISPER_FAINT"), "player_defeated -> farm, whisper WHISPER_FAINT")
@@ -2812,12 +2812,23 @@ func _cleanup(t) -> void:
 
 # ================================================================== windowed checks (tests/run_playtest.sh --windowed)
 
+func _freeze_pixel_enemies(t, area: IsoArea) -> void:
+	# These captures judge geometry. Hidden enemies must not attack the figure,
+	# flash its sprite, or change the scene while the paired images are sampled.
+	var roster := area.get_node_or_null("EnemyRoster")
+	if roster != null:
+		roster.set_process(false)
+	for enemy in t.tree.get_nodes_in_group("enemy"):
+		if area.is_ancestor_of(enemy):
+			enemy.set_awake(false)
+
 func run_windowed(t) -> void:
 	if not await t.start_world():
 		return
 	var w: WorldRoot2D = t.world()
 	if w.area.map.id != &"_fixture_iso":
 		w._enter(&"_fixture_iso", &"default")
+	_freeze_pixel_enemies(t, w.area)
 	w.warm_in_headless = true
 	await w.warm_clips()
 	var p: Node2D = w.player
@@ -2847,6 +2858,7 @@ func run_windowed(t) -> void:
 	# --- filter_seams (R.6): no hairline step between neighbouring tiles at zoom 0.3 / 0.4 / 0.7 (on a plain grass platform)
 	WorldRoot2D.register_map(&"_t_open", AreaMap.parse_text(OPEN_MAP))
 	w._enter(&"_t_open", &"default")
+	_freeze_pixel_enemies(t, w.area)
 	a = w.area
 	w.day_night.override_hour = 11.0
 	w.day_night.snap()
@@ -2867,6 +2879,7 @@ func run_windowed(t) -> void:
 	t.check("filter_seams", seams_ok, "no hairline seams between the tiles at zoom 0.3 / 0.4 / 0.7 (Ground texture_filter 2, atlases without mipmaps)")
 	(p.get("camera") as Camera2D).zoom = Vector2.ONE * Iso.DEFAULT_ZOOM
 	w._enter(&"_fixture_iso", &"default")
+	_freeze_pixel_enemies(t, w.area)
 	WorldRoot2D.unregister_map(&"_t_open")
 	a = w.area
 	w.day_night.override_hour = 11.0

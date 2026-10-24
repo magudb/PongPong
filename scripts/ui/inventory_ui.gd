@@ -55,7 +55,7 @@ func _ready() -> void:
 		_picker_buttons.append(button)
 	%PickerCancel.pressed.connect(_close_picker)
 	workshop.navigation_changed.connect(_wire)
-	EventBus.player_inventory_changed.connect(func(_inventory): _schedule_refresh())
+	EventBus.player_inventory_changed.connect(func(_player_id: StringName, _inventory): _schedule_refresh())
 	EventBus.home_upgraded.connect(func(_old, _new): _schedule_refresh())
 	EventBus.flag_changed.connect(func(_flag, _value): _schedule_refresh())
 	%HintBar.on_dark = true
@@ -238,7 +238,7 @@ func _close_picker() -> void:
 func _assign(index: int) -> void:
 	var item := _picker_item if _picking else _selected_id
 	if item != &"" and EconomyManager.has_item(item):
-		EventBus.hotbar_assign_requested.emit(index, item)
+		EventBus.hotbar_assign_requested.emit(PlayerRegistry.local_id(), index, item)
 		EventBus.notification_posted.emit(tr("STORE_ASSIGNED_TITLE"), tr("STORE_ASSIGNED_FMT") % (index + 1), "info")
 	if _picking:
 		_close_picker()

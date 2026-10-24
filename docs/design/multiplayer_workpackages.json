@@ -50,7 +50,7 @@
     ],
     "saveSections": {
       "removedAsCore": ["economy", "quests"],
-      "addedRegistered": "players (order 15, node PlayerRoster, rows 1..4)",
+      "addedRegistered": "players (order 15, node PlayerRoster, {v: 1, rows: {p0: profile, ...}}; 1..4 profiles)",
       "payloadVersion": 3,
       "migration": "v2 -> v3 maps the single implicit player into players[0] (game.player_name/character_type/character_skin, economy.*, quests.*, world.player_pos, world.hotbar, wardrobe.*)",
       "note": "JSON.stringify payload keeps pretty indent + full float precision (tests/sections/save.gd pins it)."
@@ -469,12 +469,13 @@
     },
     {
       "id": "RM5-save-v3",
+      "implementation": "Payload v3 uses players.rows keyed by p0..p3 (1..4 profiles, p0 required). PlayerRoster is registered at order 15, with a SaveManager staging node for title-screen loading; WorldRoot2D.roster views the same session rows. Economy/quests are migration-only inputs. meta.summary.players is an ordered array of id/name/character_type/character_skin/gold. v1/v2 migration preserves the implicit host profile, hotbar, wardrobe, overflow items and friendship flags.",
       "target": "P15-save-system / scripts/autoload/save_manager.gd",
       "wave": "2",
       "size": "L",
       "dependsOn": ["MP3-player-state"],
       "tasks": [
-        "PAYLOAD_VERSION 3; registered section 'players' (order 15); v2->v3 migration; economy/quests stop being required core sections (read as migration input only); meta.summary gains players[] -> verify: save.gd v3_round_trip, save.gd v2_migrates"
+        "PAYLOAD_VERSION 3; registered section 'players' (order 15); v2->v3 migration; economy/quests stop being required core sections (read as migration input only); meta.summary gains players[] -> verify: multiplayer_state.v3_round_trip, multiplayer_state.v2_migrates"
       ]
     },
     {
@@ -499,6 +500,7 @@
     },
     {
       "id": "RM8-social-per-player",
+      "implementation": "SocialManager._rows[player_id][npc_id] owns friendship and gift/chat counters. Friendship mirrors live in players.rows[player_id].flags as friend_<npc> and friend_last_<npc>, never game.world_flags. GameManager flag accessors resolve those names in the acting player's scope; SocialManager.for_player supplies synchronous actor scope and points/hearts accept an explicit player id. Social saves retain compact local npcs plus by_player for other profiles; orphan NPC rows retain their player owner. world_seed, festivals and household partner remain global.",
       "target": "S-core / scripts/social/social_manager.gd",
       "wave": "2",
       "size": "L",

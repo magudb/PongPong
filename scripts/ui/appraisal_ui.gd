@@ -54,8 +54,8 @@ func _ready() -> void:
 	right.add_child(result_scroll)
 	results = L.box(result_scroll,true,6) as VBoxContainer
 	results.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	EventBus.player_inventory_changed.connect(_inventory_changed)
-	EventBus.gold_changed.connect(_gold_changed)
+	EventBus.player_inventory_changed.connect(func(_player_id: StringName, inventory) -> void: _inventory_changed(inventory))
+	EventBus.gold_changed.connect(func(_player_id: StringName, amount, delta) -> void: _gold_changed(amount, delta))
 func open_for_npc(npc: StringName) -> void:
 	npc_id = npc
 	L.clear(results)

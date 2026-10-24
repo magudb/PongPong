@@ -18,7 +18,7 @@ static func can_offer() -> bool:
 static func eligible_owners() -> Array:
 	# can_befriend includes the shared NpcDirector.is_absent / hero-twin rule.
 	return LuaData.arr(Svc.lua_config("ghostfam_quests.lost",[])).filter(func(row):return SocialManager.can_befriend(str(row.owner)))
-func _accepted(id: StringName) -> void:
+func _accepted(_player_id: StringName, id: StringName) -> void:
 	if id!=LOST:return
 	var options := eligible_owners()
 	if options.is_empty():return

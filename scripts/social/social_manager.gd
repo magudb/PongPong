@@ -2,7 +2,7 @@ extends Node
 ## SocialManager (autoload #12+, the sixth feature autoload; save section `social`, order 60) - package S-core of the towns / farm / social addendum
 ## (docs/design/TOWNS_FARM_SOCIAL_ADDENDUM.md sections 5 and 8).
 ##
-## The ONE writer of friendship. Points per NPC live here; the world flags friend_<npc> (WHOLE hearts) and friend_last_<npc> (total_day of the last
+## The ONE writer of friendship. Points per player/NPC live here; player flags friend_<npc> (WHOLE hearts) and friend_last_<npc> (total_day of the last
 ## weekly heart) are a DERIVED MIRROR rewritten after every change and every load, so every reader (quest gates, LootService.check_friend_gifts, dialogue
 ## Lua `friend_x`, the shop discount) keeps working and an old save without the section keeps its hearts (reset() re-seeds points from the flags).
 ## Everything else a player experiences as "social" is a pure function of (this state, the calendar, the Lua data): birthdays, festivals, greetings, the
@@ -51,7 +51,9 @@ const DIRECTOR := "res://scripts/towns/npc_director.gd"             # the static
 const TRAVEL_LEAD_HOURS := 1.0                 # citizens set off one game hour before a festival window, shops close then (keepers leave)
 
 var world_seed: int = 0
-var _rows: Dictionary = {}               # npc id (String) -> {p, wk, gt, gd, gwk, gw, bd, bk, ls, kn, rv, rs, pc}
+## player_id -> {npc id (String) -> {p, wk, gt, gd, gwk, gw, bd, bk, ls, kn, rv, rs, pc}} (RM8).
+## Single-player has one key (`p0`); hearts/friendship are per hero.
+var _rows: Dictionary = {}
 var _seen: Dictionary = {}               # event id -> 1 (heart events: once) or year (festival scenes: once per year)
 var _fest_year: Dictionary = {}          # festival id -> last year attended
 var _last_day: int = 0                   # total_day processed by the daily step
@@ -103,10 +105,11 @@ func _ready() -> void:
 	EventBus.load_completed.connect(_on_load_completed)
 	EventBus.shop_opened.connect(_on_shop_opened)
 	EventBus.shop_closed.connect(_on_shop_closed)
-	EventBus.item_purchased.connect(_on_item_purchased)
+	EventBus.item_purchased.connect(func(player_id: StringName, item_id, amount, cost) -> void:
+		for_player(player_id, func() -> void: _on_item_purchased(item_id, amount, cost)))
 	EventBus.visitor_gift.connect(func(npc,_item):
 		if str(npc)!="":mark_event_seen("home_visit:"+str(npc),week()+1))
-	EventBus.player_inventory_changed.connect(_retry_event_items)
+	EventBus.player_inventory_changed.connect(func(_player_id: StringName, _inv: Dictionary) -> void: _retry_event_items())
 	var sm := Svc.node("SaveManager")
 	if sm != null and sm.has_method("register_section"):
 		sm.call("register_section", SECTION, self, SECTION_ORDER)
@@ -218,12 +221,30 @@ func _unlock_met(unlock: Dictionary) -> bool:
 	return qm != null and qm.has_method("is_completed") and bool(qm.call("is_completed", StringName(quest)))
 
 
+## The acting player's NPC table (RM8). Shared world bits (seed, festivals, partner) stay global.
+func _player_rows(player_id: StringName = &"") -> Dictionary:
+	var pid := player_id if player_id != &"" else PlayerRegistry.acting_id()
+	if not _rows.has(pid):
+		_rows[pid] = {}
+	return _rows[pid]
+
+
 func _row(npc: String, create: bool = true) -> Dictionary:
-	if not _rows.has(npc):
+	return _row_for(PlayerRegistry.acting_id(), npc, create)
+
+
+## Row of a specific player slot (load path, RM8).
+func _row_for(player_id: StringName, npc: String, create: bool = true) -> Dictionary:
+	if not _rows.has(player_id):
 		if not create:
 			return {}
-		_rows[npc] = {"p": 0, "wk": -1, "gt": 0, "gd": 0, "gwk": -1, "gw": 0, "bd": 0, "bk": 0, "ls": [], "kn": {}, "rv": 0, "rs": 0, "pc": 0, "tp": 0}
-	return _rows[npc]
+		_rows[player_id] = {}
+	var rows: Dictionary = _rows[player_id]
+	if not rows.has(npc):
+		if not create:
+			return {}
+		rows[npc] = {"p": 0, "wk": -1, "gt": 0, "gd": 0, "gwk": -1, "gw": 0, "bd": 0, "bk": 0, "ls": [], "kn": {}, "rv": 0, "rs": 0, "pc": 0, "tp": 0}
+	return rows[npc]
 
 
 ## The LIVE state row of an NPC for the sibling packages that own parts of it (S-gifts: gd gwk gw bd ls kn; S-talk: rv; S-marriage: rs): the section is the single store.
@@ -240,14 +261,19 @@ func heart_cap() -> int:
 	return SocialData.heart_scale().y
 
 
-func points(npc: Variant) -> int:
-	return LuaData.int_of(_row(str(npc), false).get("p", 0))
+func for_player(player_id: StringName, work: Callable) -> Variant:
+	return PlayerRegistry.for_player(player_id, work)
+
+
+func points(npc: Variant, player_id: StringName = &"") -> int:
+	var pid := player_id if player_id != &"" else PlayerRegistry.acting_id()
+	return LuaData.int_of(_row_for(pid, str(npc), false).get("p", 0))
 
 
 ## Whole hearts: floor(points / 100), capped at 10.
-func hearts(npc: Variant) -> int:
+func hearts(npc: Variant, player_id: StringName = &"") -> int:
 	var scale := SocialData.heart_scale()
-	return mini(floori(float(points(npc)) / float(scale.x)), scale.y)
+	return mini(floori(float(points(npc, player_id)) / float(scale.x)), scale.y)
 
 
 ## 0..2 x cap: the row of heart glyphs (full = 2, half = 1); a half heart per 50 points.
@@ -282,6 +308,10 @@ func stage(npc: Variant) -> StringName:
 ## toasts: one per conversation). Returns {ok, points, hearts, gained, hearts_before, stage_before, stage_after, source}; a refusal is {ok: false, reason,
 ## gained: 0, points, hearts} with the reasons bad_delta unknown_npc locked absent. At the cap the answer is ok with gained 0 and nothing is emitted.
 func add_points(npc: Variant, delta: int, source: StringName = &"", opts: Dictionary = {}) -> Dictionary:
+	if opts.has("player_id"):
+		var scoped := opts.duplicate()
+		scoped.erase("player_id")
+		return for_player(StringName(str(opts.player_id)), func() -> Dictionary: return add_points(npc, delta, source, scoped))
 	var id := str(npc)
 	if delta <= 0:
 		return {"ok": false, "reason": "bad_delta", "gained": 0, "points": points(id), "hearts": hearts(id)}
@@ -304,9 +334,9 @@ func add_points(npc: Variant, delta: int, source: StringName = &"", opts: Dictio
 	result["points"] = int(row["p"])
 	result["hearts"] = after_hearts
 	result["stage_after"] = after_stage
-	EventBus.game_event.emit(EV_POINTS, {"npc": id, "delta": gained, "points": int(row["p"]), "hearts": after_hearts, "source": String(source)})
+	EventBus.game_event.emit(EV_POINTS, {"player_id": str(PlayerRegistry.acting_id()), "npc": id, "delta": gained, "points": int(row["p"]), "hearts": after_hearts, "source": String(source)})
 	if after_hearts > before_hearts:
-		EventBus.friend_changed.emit(StringName(id), after_hearts)
+		EventBus.friend_changed.emit(PlayerRegistry.acting_id(), StringName(id), after_hearts)
 		var loot := Svc.node("LootService")
 		if loot != null and loot.has_method("check_friend_gifts"):
 			loot.call("check_friend_gifts", StringName(id))
@@ -329,7 +359,7 @@ func debug_set_hearts(npc: Variant, n: int) -> Dictionary:
 	return {"ok": true, "gained": 0, "points": have, "hearts": hearts(npc)}
 
 
-## friend_<npc> = WHOLE hearts: written after every change and every load (only for an NPC that has a row).
+## players.rows.<id>.flags.friend_<npc> = WHOLE hearts: written after every change and every load (only for an NPC that has a row).
 func _mirror(npc: String) -> void:
 	if _row(npc, false).is_empty():
 		return
@@ -1121,7 +1151,7 @@ func claim_event_items() -> void:
 				EconomyManager.add_item(StringName(item),amount)
 			)
 
-func _retry_event_items(_items: Dictionary = {}) -> void:
+func _retry_event_items(_player_id: StringName = &"", _items: Dictionary = {}) -> void:
 	if _event_owed.is_empty() or _retry_owed_pending: return
 	_retry_owed_pending = true
 	call_deferred("_claim_owed_deferred")
@@ -1245,6 +1275,16 @@ func reset() -> void:
 	_shop_now = ""
 	_event_owed.clear()
 	world_seed = 0
+	for pid in PlayerRegistry._states:
+		for_player(pid, _seed_friend_flags)
+	_last_day = today()
+	# the derived flags (birthday_today, festival_now) are brought in line by the flush that follows (a new game's world flags stay exactly its own
+	# at the moment new_game_started fires): _festival_active is cleared so a festival that is running by then is announced like any other state change
+	_festival_active = &""
+	_defer()
+
+
+func _seed_friend_flags() -> void:
 	for id in SocialData.friend_ids():
 		var h := GameManager.flag_int(StringName("friend_" + id), 0)
 		if h > 0:
@@ -1253,32 +1293,42 @@ func reset() -> void:
 			var last := GameManager.flag_int(StringName("friend_last_" + id), 0)
 			if last > 0:
 				row["wk"] = CalendarUtil.week_of(last)
-	_last_day = today()
-	# the derived flags (birthday_today, festival_now) are brought in line by the flush that follows (a new game's world flags stay exactly its own
-	# at the moment new_game_started fires): _festival_active is cleared so a festival that is running by then is announced like any other state change
-	_festival_active = &""
-	_defer()
 
 
 func to_dict() -> Dictionary:
-	var npcs := {}
-	for id in _rows:
-		var r: Dictionary = _rows[id]
-		var o := {}
-		for k in ROW_INT_KEYS:
-			var v := LuaData.int_of(r.get(k, 0))
-			if v != (-1 if k in ROW_NEVER_KEYS else 0):
-				o[k] = v
-		if not LuaData.arr(r.get("ls", [])).is_empty():
-			o["ls"] = LuaData.arr(r["ls"]).duplicate(true)
-		if not LuaData.dict(r.get("kn", {})).is_empty():
-			o["kn"] = LuaData.dict(r["kn"]).duplicate()
-		if not o.is_empty():
-			npcs[id] = o
-	var out := {"v": SAVE_V, "seed": world_seed, "last": _last_day, "npcs": npcs, "seen": _seen.duplicate(), "fest": _fest_year.duplicate(), "partner": _partner.duplicate()}
+	var by_player := {}
+	for pid in _rows:
+		var npcs := {}
+		for id in _rows[pid]:
+			var r: Dictionary = _rows[pid][id]
+			var o := {}
+			for k in ROW_INT_KEYS:
+				var v := LuaData.int_of(r.get(k, 0))
+				if v != (-1 if k in ROW_NEVER_KEYS else 0):
+					o[k] = v
+			if not LuaData.arr(r.get("ls", [])).is_empty():
+				o["ls"] = LuaData.arr(r["ls"]).duplicate(true)
+			if not LuaData.dict(r.get("kn", {})).is_empty():
+				o["kn"] = LuaData.dict(r["kn"]).duplicate()
+			if not o.is_empty():
+				npcs[id] = o
+		if not npcs.is_empty():
+			by_player[str(pid)] = npcs
+	# `npcs` stays the local hero's table so older readers keep working; `by_player` is the
+	# source of truth once a second hero exists (RM8). Omitted when single-player matches `npcs`.
+	var local_id := str(PlayerRegistry.local_id())
+	var local_npcs: Variant = by_player.get(local_id, {})
+	var out := {
+		"v": SAVE_V, "seed": world_seed, "last": _last_day,
+		"npcs": (local_npcs as Dictionary).duplicate(true),
+		"seen": _seen.duplicate(), "fest": _fest_year.duplicate(), "partner": _partner.duplicate(),
+	}
+	if by_player.size() > 1 or (by_player.size() == 1 and not by_player.has(local_id)):
+		out["by_player"] = by_player
 	if not _event_owed.is_empty(): out["owed"] = _event_owed.duplicate()
 	if not _orphans.is_empty():
-		out["orphans"] = _orphans.duplicate(true)
+		out["orphans_by_player"] = _orphans.duplicate(true)
+		out["orphans"] = LuaData.dict(_orphans.get(local_id, {})).duplicate(true)
 	return out
 
 
@@ -1301,31 +1351,39 @@ func from_dict(d: Dictionary) -> bool:
 		var v: Variant = LuaData.dict(d["partner"])[k]
 		_partner[str(k)] = LuaData.int_of(v) if typeof(v) in [TYPE_INT, TYPE_FLOAT] else v
 	var known := SocialData.npcs()
-	var src := LuaData.dict(d.get("npcs", {}))
+	var by_player := LuaData.dict(d.get("by_player", {}))
+	if by_player.is_empty() and not LuaData.dict(d.get("npcs", {})).is_empty():
+		by_player = {str(PlayerRegistry.acting_id()): LuaData.dict(d.get("npcs", {}))}
+	_rows.clear()
 	var old_orphans := LuaData.dict(d.get("orphans", {}))
-	for id in src:
-		if known.has(id):
-			_load_row(str(id), LuaData.dict(src[id]))
-		else:
-			_orphans[str(id)] = LuaData.dict(src[id]).duplicate(true)
-			push_warning("SocialManager.from_dict: unknown NPC '%s' kept in the orphans bucket" % str(id))
-	for id in old_orphans:
-		if known.has(id):
-			_load_row(str(id), LuaData.dict(old_orphans[id]))
-		else:
-			_orphans[str(id)] = LuaData.dict(old_orphans[id]).duplicate(true)
-	for id in _rows:
-		# A conversation or zero-point gift can record knowledge without ever
-		# earning points. Loading that ledger must not create a new default
-		# friend flag. Existing mirrors still repair to the saved point total.
-		if points(id) > 0 or GameManager.world_flags.has(StringName("friend_" + str(id))):
-			_mirror(str(id))
+	for pid in by_player:
+		var table := LuaData.dict(by_player[pid])
+		for id in table:
+			if known.has(id):
+				_load_row(str(id), LuaData.dict(table[id]), StringName(str(pid)))
+			else:
+				if not _orphans.has(str(pid)): _orphans[str(pid)] = {}
+				_orphans[str(pid)][str(id)] = LuaData.dict(table[id]).duplicate(true)
+				push_warning("SocialManager.from_dict: unknown NPC '%s' kept in the orphans bucket" % str(id))
+	var orphan_players := LuaData.dict(d.get("orphans_by_player", {})).duplicate(true)
+	if orphan_players.is_empty() and not old_orphans.is_empty(): orphan_players[str(PlayerRegistry.acting_id())] = old_orphans
+	for pid in orphan_players:
+		for id in LuaData.dict(orphan_players[pid]):
+			if known.has(id):
+				_load_row(str(id), LuaData.dict(orphan_players[pid][id]), StringName(str(pid)))
+			else:
+				if not _orphans.has(str(pid)): _orphans[str(pid)] = {}
+				_orphans[str(pid)][str(id)] = LuaData.dict(orphan_players[pid][id]).duplicate(true)
+	for pid in _rows:
+		for id in _rows[pid]:
+			if points(id, pid) > 0 or PlayerRegistry.state(pid).flags.has(StringName("friend_" + str(id))):
+				PlayerRegistry.state(pid).flags[StringName("friend_" + str(id))] = hearts(id, pid)
 	_restore_state()
 	return true
 
 
-func _load_row(id: String, raw: Dictionary) -> void:
-	var row := _row(id)
+func _load_row(id: String, raw: Dictionary, player_id: StringName = &"") -> void:
+	var row := _row_for(player_id if player_id != &"" else PlayerRegistry.acting_id(), id)
 	for k in ROW_INT_KEYS:
 		if raw.has(k):
 			row[k] = LuaData.int_of(raw[k], -1 if k in ROW_NEVER_KEYS else 0)

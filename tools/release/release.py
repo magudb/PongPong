@@ -138,7 +138,7 @@ def smoke_game(product, work, args):
     profile.mkdir()
     environment = os.environ.copy()
     environment.update(HOME=str(profile), USERPROFILE=str(profile), APPDATA=str(profile / "AppData/Roaming"))
-    result = subprocess.run([str(binary), "--headless", "--", "--release-smoke", "--report=" + str(smoke_report)], env=environment, cwd=product.parent, timeout=120, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    result = subprocess.run([str(binary), "--headless", "--verbose", "--", "--release-smoke", "--report=" + str(smoke_report)], env=environment, cwd=product.parent, timeout=120, capture_output=True, text=True, encoding="utf-8", errors="replace")
     print(result.stdout, flush=True)
     print(result.stderr, flush=True)
     result.check_returncode()

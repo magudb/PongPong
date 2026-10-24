@@ -415,10 +415,10 @@ func _vocabulary_events() -> void:
 	_fresh()
 	# item_gained (event counting), with amount
 	var q := _start("zz_p13_item", [{"id": "o", "target": 5, "on": "item_gained", "item": "wood"}])
-	bus.item_gained.emit(&"wood", 3)
-	bus.item_gained.emit(&"stone", 9)
+	bus.item_gained.emit(PlayerRegistry.local_id(), &"wood", 3)
+	bus.item_gained.emit(PlayerRegistry.local_id(), &"stone", 9)
 	_need(problems, _cur(q, "o") == 3, "item_gained: wood x3 and stone x9 gave %d, want 3" % _cur(q, "o"))
-	bus.item_gained.emit(&"wood", 9)
+	bus.item_gained.emit(PlayerRegistry.local_id(), &"wood", 9)
 	_need(problems, _cur(q, "o") == 5 and _done(q, "o"), "item_gained: capped at the target 5, got %d" % _cur(q, "o"))
 	qm.reset()
 	# crop_planted with a comma list, crop_watered, crop_harvested with amount
@@ -485,14 +485,14 @@ func _vocabulary_events() -> void:
 	_reg("zz_p13_helper_a", [], false, {}, {"category": "help"})
 	_reg("zz_p13_helper_b", [], false, {}, {"category": "learning"})
 	q = _start("zz_p13_help", [{"id": "help", "target": 2, "on": "quest_completed", "category": "help,errand"}])
-	bus.quest_completed.emit(&"zz_p13_helper_b")
+	bus.quest_completed.emit(PlayerRegistry.local_id(), &"zz_p13_helper_b")
 	_need(problems, _cur(q, "help") == 0, "a learning quest counted for category help,errand")
-	bus.quest_completed.emit(&"zz_p13_helper_a")
+	bus.quest_completed.emit(PlayerRegistry.local_id(), &"zz_p13_helper_a")
 	_need(problems, _cur(q, "help") == 1, "a help quest did not count (%d)" % _cur(q, "help"))
 	qm.reset()
 	# manual objectives move only through complete_manual / update_objective, never by an event; `amount` overrides the progress per event
 	q = _start("zz_p13_manual", [{"id": "m", "target": 1, "on": "manual"}, {"id": "amt", "target": 6, "on": "item_gained", "item": "wood", "amount": 2}], false)
-	bus.item_gained.emit(&"wood", 1)
+	bus.item_gained.emit(PlayerRegistry.local_id(), &"wood", 1)
 	bus.game_event.emit(&"anything", {})
 	_need(problems, _cur(q, "m") == 0 and _cur(q, "amt") == 2, "manual %d (want 0), amount=2 per event gave %d (want 2)" % [_cur(q, "m"), _cur(q, "amt")])
 	_need(problems, qm.can_complete_manual(q, &"m") and qm.complete_manual(q, &"m") and _done(q, "m") and not qm.can_complete_manual(q, &"m"), "complete_manual(quest, objective) did not finish the manual objective once")
@@ -620,7 +620,7 @@ func _state_objectives() -> void:
 	home.tier = 5
 	bus.home_upgraded.emit(4, 5)
 	social.hearts_of["mayor_lyra"] = 8
-	bus.friend_changed.emit(&"mayor_lyra", 8)
+	bus.friend_changed.emit(PlayerRegistry.local_id(), &"mayor_lyra", 8)
 	_need(problems, _done(q, "hygge") and _done(q, "tier") and _done(q, "hearts"), "hygge %s tier %s hearts %s after their signals" % [_done(q, "hygge"), _done(q, "tier"), _done(q, "hearts")])
 	furniture.level = 0
 	home.tier = 1
@@ -756,7 +756,7 @@ func _legacy_ids_and_double_counting() -> void:
 	# an objective WITH `on` counts a drop once (item_gained), never again through resource_node_depleted: the old double counting
 	q = _start("zz_p13_double", [{"id": "iron", "target": 4, "on": "item_gained", "item": "iron_ore"}])
 	bus.resource_node_depleted.emit(&"ore_1", [{"id": &"iron_ore", "amount": 2}])
-	bus.item_gained.emit(&"iron_ore", 2)
+	bus.item_gained.emit(PlayerRegistry.local_id(), &"iron_ore", 2)
 	_need(problems, _cur(q, "iron") == 2, "a drop of 2 ore counted %d times (want 2: item_gained only)" % _cur(q, "iron"))
 	qm.reset()
 	t.check("resource_drop_counts_once", problems.is_empty(), "the resource_node_depleted special case only feeds objectives without `on`: %s" % str(problems))
@@ -801,7 +801,7 @@ func _social_sugar_and_friendship() -> void:
 	var plain := PlainNode.new()
 	Svc.override("SocialManager", plain)
 	var changed: Array = []
-	var catch := func(npc: StringName, hearts: int) -> void: changed.append([npc, hearts])
+	var catch := func(_player_id: StringName, npc: StringName, hearts: int) -> void: changed.append([npc, hearts])
 	bus.friend_changed.connect(catch)
 	gm.set_flag(&"friend_mayor_lyra", 9)
 	qm.register_quest_from_lua({"id": "zz_p13_cap", "objectives": [], "rewards": {"friendship": {"mayor_lyra": 2, "baker_maja": 3}}, "meta": {"repeatable": true, "cooldown_days": 0}})
@@ -1255,8 +1255,8 @@ func _drive(qid: String, events_fed: Dictionary) -> Dictionary:
 	var dynamic_hearts := LuaData.int_map(LuaData.dict(qm.get_quest_progress(qn).get("meta",{})).get("friendship_rewards",{}))
 	var completed_signals: Array = []
 	var updates := [0]
-	var on_completed := func(id: StringName) -> void: completed_signals.append(id)
-	var on_update := func(_id: StringName, _o: StringName, _p: int, _tt: int) -> void: updates[0] += 1
+	var on_completed := func(_player_id: StringName, id: StringName) -> void: completed_signals.append(id)
+	var on_update := func(_player_id: StringName, _id: StringName, _o: StringName, _p: int, _tt: int) -> void: updates[0] += 1
 	bus.quest_completed.connect(on_completed)
 	bus.quest_objective_updated.connect(on_update)
 	var gold0: int = eco.gold
@@ -1344,7 +1344,7 @@ func _drive(qid: String, events_fed: Dictionary) -> Dictionary:
 						helper_n += 1
 						var hid := "zz_p13_helper_%d" % helper_n
 						qm.register_quest_from_lua({"id": hid, "objectives": [], "rewards": {}, "meta": {"category": _first(od.get("category", ""), "help")}})
-						bus.quest_completed.emit(StringName(hid))
+						bus.quest_completed.emit(PlayerRegistry.local_id(), StringName(hid))
 				"state":
 					_satisfy_state(od, furniture, home, social)
 				"manual":
@@ -1441,7 +1441,7 @@ func _satisfy_state(od: Dictionary, furniture: FakeFurniture, home: FakeHome, so
 			bus.home_upgraded.emit(1, home.tier)
 		"friend_hearts_at_least":
 			social.hearts_of[str(od.get("npc", ""))] = LuaData.int_of(od.get("hearts", 1), 1)
-			bus.friend_changed.emit(StringName(str(od.get("npc", ""))), LuaData.int_of(od.get("hearts", 1), 1))
+			bus.friend_changed.emit(PlayerRegistry.local_id(), StringName(str(od.get("npc", ""))), LuaData.int_of(od.get("hearts", 1), 1))
 		_:
 			furniture.level = 10
 			bus.furniture_changed.emit(&"placed")

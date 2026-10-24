@@ -63,20 +63,41 @@ const TOOL_SLOTS := {
 const WEAPON_SLOT := "weapon"
 const ACCESSORY_SLOT := "accessory"
 
-var gold: int = DEFAULT_STARTING_GOLD
-## The backpack: [{id: StringName, amount: int, meta: Dictionary}], at most INVENTORY_SLOTS entries, never an amount <= 0.
-var inventory: Array[Dictionary] = []
-## slot -> item id (&"" = nothing): tool_hoe tool_watering tool_pickaxe tool_axe tool_scythe weapon accessory
-var equipment: Dictionary = {}
 ## Backpack slots a load could not fit any more (content drift: a smaller max_stack since the save made more slots than there are):
 ## [{id, amount, meta}], saved as "owed" and handed back by deliver_owed() every morning and when the player of a loaded world spawns,
 ## as far as there is room.
-var owed: Array[Dictionary] = []
+var owed: Array:
+	get: return state().owed
+	set(value): state().owed = value
 
+## Per-player rows (MP3). The gold / inventory / equipment of the acting player live on PlayerState;
+## single-player has one row and this facade is unchanged from the outside.
 var _misrouted: bool = false          # a furniture / clothing item may sit in the backpack (its store did not exist yet)
 var _consuming: bool = false
 var _logged: Dictionary = {}
 var arsenal: Arsenal
+
+
+## The acting player's row (local id). Shared fallback when no world is up (autoload boot, unit tests).
+func state(player_id: StringName = &"") -> PlayerState:
+	return PlayerRegistry.state(player_id)
+
+
+var gold: int:
+	get: return state().gold
+	set(value): state().gold = value
+
+
+## The backpack: [{id: StringName, amount: int, meta: Dictionary}], at most INVENTORY_SLOTS entries, never an amount <= 0.
+var inventory: Array[Dictionary]:
+	get: return state().inventory
+	set(value): state().inventory = value
+
+
+## slot -> item id (&"" = nothing): tool_hoe tool_watering tool_pickaxe tool_axe tool_scythe weapon accessory
+var equipment: Dictionary:
+	get: return state().equipment
+	set(value): state().equipment = value
 
 
 func _ready() -> void:
@@ -152,7 +173,16 @@ func after_transaction(action: Callable) -> void:
 		action.call()
 
 
+## Player-scoped EventBus signals that take player_id as their first argument (MP3 / DT-MP5).
+const PLAYER_SCOPED_EVENTS: Array[StringName] = [
+	&"player_inventory_changed", &"player_oil_changed", &"gold_changed",
+	&"item_gained", &"item_purchased", &"item_sold", &"hotbar_assign_requested",
+]
+
+
 func _publish(event_name: StringName, args: Array) -> void:
+	if event_name in PLAYER_SCOPED_EVENTS:
+		args = [PlayerRegistry.acting_id()] + args
 	after_transaction(func() -> void: EventBus.emit_signal.callv([event_name] + args))
 
 

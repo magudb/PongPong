@@ -19,14 +19,11 @@ extends Node
 ## save is DEFERRED to the end of the frame: day_ended is emitted before the calendar steps and before the other
 ## day_started listeners (crops, shop stock, animals) have run, so the deferred save sees the finished new day.
 ##
-## PAYLOAD v2 (meta.version = PAYLOAD_VERSION; GameManager.SAVE_VERSION is only the version of the "game" dict):
-##   meta{version, timestamp, saved_at, run_id, summary}  game  time  economy  quests  husbandry  shops  <registered sections>  world
-## game/time/economy/quests are REQUIRED, husbandry/shops/registered sections are optional (a section missing from a
-## save has its reset() called, it is never left stale), world is an OPAQUE Dictionary (WorldRoot2D.to_dict: area,
-## player_pos, farm, hotbar, placed items, area flags). Apply order (ascending `order`, then registration): game -60,
-## time -50 (TimeManager.from_dict reads GameManager.total_day(), so the calendar goes first), economy -40, quests -30,
-## husbandry -20, shops -10, then the feature sections: home 10, furniture 20, wardrobe 30, loot 40, collection 50,
-## everything else 100.
+## PAYLOAD v3 (meta.version = PAYLOAD_VERSION; GameManager.SAVE_VERSION is only the version of the "game" dict):
+##   meta{version, timestamp, saved_at, run_id, summary{players}} game time players husbandry shops <registered sections> world
+## game/time/players are REQUIRED. Economy and quests are read only as v1/v2 migration input.
+## Apply order: game -60, time -50, husbandry -20, shops -10, home 10, players 15,
+## furniture 20, wardrobe 30, loot 40, collection 50, social 60, other sections 100.
 ##
 ## SECTION REGISTRY (addendum 3.2). A feature manager calls register_section("home", self, 10) in _ready and offers
 ## to_dict() -> Dictionary, from_dict(d) (may return false to reject the data) and reset(); each section carries its own
@@ -82,7 +79,7 @@ const QUARANTINE_FILE := "save_auto.damaged-%d.json"
 ## The run id of a save written before run ids existed starts with this (see _run_id_of).
 const LEGACY_RUN_PREFIX := "legacy:"
 const QUARANTINE_KEEP := 3
-const PAYLOAD_VERSION := 2
+const PAYLOAD_VERSION := 3
 const MANUAL_SLOTS := 6
 const AUTO_SLOT := 6
 ## The autosave of the run played before this one (read only: it is loaded, never written by save_game).
@@ -96,7 +93,7 @@ const MAX_SAVE_BYTES := 8 * 1024 * 1024
 const DEFAULT_SECTION_ORDER := 100
 ## Apply order of the feature sections (addendum 3.2): register_section("home", self, SaveManager.FEATURE_ORDERS["home"]).
 ## Furniture comes after the home (its room depends on the tier), the wardrobe and the loot after the stores they read.
-const FEATURE_ORDERS := {"home": 10, "furniture": 20, "wardrobe": 30, "loot": 40, "collection": 50}
+const FEATURE_ORDERS := {"home": 10, "players": 15, "furniture": 20, "wardrobe": 30, "loot": 40, "collection": 50}
 
 ## Late-bound autoload lookup (an injected fake wins); a preload, not the class_name, so the autoload compiles before the class cache exists.
 const SvcLib := preload("res://scripts/data/svc.gd")
@@ -106,13 +103,15 @@ const CORE_SECTIONS := [
 	{"name": "game", "autoload": "GameManager", "order": -60, "required": true,
 		"keys": {"player_name": "str", "day": "num", "season": "str", "year": "num", "character_type": "num"}},
 	{"name": "time", "autoload": "TimeManager", "order": -50, "required": true, "keys": {"weather": "str"}},
-	{"name": "economy", "autoload": "EconomyManager", "order": -40, "required": true, "keys": {"gold": "num", "inventory": "list"}},
-	{"name": "quests", "autoload": "QuestManager", "order": -30, "required": true, "keys": {"active": "dict", "completed": "arr"}},
 	{"name": "husbandry", "autoload": "AnimalHusbandry", "order": -20, "required": false, "keys": {}},
 	{"name": "shops", "autoload": "ShopSystem", "order": -10, "required": false, "keys": {}},
 ]
 ## Names a registered section may not take: they are the payload's own keys.
-const RESERVED_SECTION_NAMES: Array[String] = ["meta", "world"]
+const RESERVED_SECTION_NAMES: Array[String] = ["meta", "world", "economy", "quests"]
+const LEGACY_PLAYER_SECTIONS := [
+	{"name": "economy", "autoload": "EconomyManager", "order": -40, "required": true, "keys": {"gold": "num", "inventory": "list"}},
+	{"name": "quests", "autoload": "QuestManager", "order": -30, "required": true, "keys": {"active": "dict", "completed": "arr"}},
+]
 
 ## Base directory of the save files (a test points it at a scratch directory; the game never changes it).
 var save_dir: String = SAVE_DIR
@@ -140,6 +139,7 @@ var world_scene: String = WORLD_SCENE
 
 var _auto_save_timer: float = 0.0
 var _autosave_queued: bool = false
+var _staging_roster: PlayerRoster
 var _sections: Array[Dictionary] = []     # registered sections: {name, node, order, seq}
 ## Backup validation is pure over the payload. Cache the exact file hash and
 ## a content fingerprint that excludes only the two unvalidated wall clocks.
@@ -187,6 +187,10 @@ func _ready() -> void:
 	_recover_interrupted_writes()
 	EventBus.new_game_started.connect(reset)
 	EventBus.day_ended.connect(_on_day_ended)
+	# Present before a world exists: Continue can validate/apply every profile at the title.
+	_staging_roster = PlayerRoster.new()
+	add_child(_staging_roster)
+	register_section("players", _staging_roster, 15)
 
 
 func _process(delta: float) -> void:
@@ -727,11 +731,21 @@ func gather_payload() -> Dictionary:
 			_gather_failures.append(str(entry["name"]))
 			continue
 		payload[entry["name"]] = _json_safe(data, str(entry["name"]))
+	if not payload.has("players"): payload["players"] = _json_safe(_staging_roster.to_dict(), "players")
 	_strip_quest_defs(payload)
 	for key in _carried_sections:
 		if not payload.has(key):
 			payload[key] = (_carried_sections[key] as Variant)
 	payload["world"] = _json_safe(_gather_world(), "world")
+	if payload.get("players") is Dictionary:
+		var rows: Dictionary = payload.players.get("rows", {})
+		var local: Dictionary = rows.get(str(PlayerRegistry.local_id()), {})
+		for key in ["area", "player_pos", "hotbar"]:
+			if payload.world.has(key): local[key] = payload.world[key]
+		var body := PlayerRegistry.local_player()
+		if body != null:
+			for key in ["half_hearts", "stamina", "oil"]:
+				if key in body: local[key] = body.get(key)
 	var stamp := clock_override if clock_override >= 0.0 else Time.get_unix_time_from_system()
 	payload["meta"] = {
 		"version": PAYLOAD_VERSION,
@@ -757,11 +771,14 @@ func _gather_world() -> Dictionary:
 
 ## Quest definitions are Lua, never saved. QuestManager of the first waves kept them in quest_flags as "def_<id>".
 func _strip_quest_defs(payload: Dictionary) -> void:
-	var quests: Dictionary = _dict_of(payload.get("quests"))
-	var flags: Dictionary = _dict_of(quests.get("flags"))
-	for key in flags.keys():
-		if str(key).begins_with("def_"):
-			flags.erase(key)
+	var logs: Array = [_dict_of(payload.get("quests"))]
+	for row in _dict_of(_dict_of(payload.get("players")).get("rows")).values():
+		if row is Dictionary: logs.append(_dict_of(row.get("quests")))
+	for log in logs:
+		var flags: Dictionary = _dict_of(log.get("flags"))
+		for key in flags.keys():
+			if str(key).begins_with("def_"):
+				flags.erase(key)
 
 
 ## Makes a to_dict() result JSON-safe and plain: String keys, StringName -> String, vectors / colors / rects -> arrays,
@@ -820,7 +837,32 @@ func validate_payload(data: Variant) -> Dictionary:
 	if version > PAYLOAD_VERSION:
 		return _verdict(false, "version", "the save has version %d, this build reads up to %d" % [version, PAYLOAD_VERSION])
 	var payload: Dictionary = _coerce_numbers(data)
+	if version < 3:
+		for entry in LEGACY_PLAYER_SECTIONS:
+			var section: Variant = payload.get(entry.name)
+			if not section is Dictionary: return _verdict(false, "invalid", "legacy section '%s' is missing or invalid" % entry.name)
+			for key in entry.keys:
+				if not section.has(key) or not _has_type(section[key], entry.keys[key]): return _verdict(false, "invalid", "legacy section '%s' lacks valid '%s'" % [entry.name, key])
+			var declared := _declared_version(SvcLib.node(entry.autoload))
+			var written: Variant = section.get("v", 1)
+			if declared > 0 and _is_number(written) and float(written) > declared:
+				return _verdict(false, "version", "legacy section '%s' is newer than this build" % entry.name)
 	payload = _migrate(payload, version)
+	if not payload.get("players") is Dictionary: return _verdict(false, "invalid", "section 'players' is missing or invalid")
+	# Always validate profiles, including while no WorldRoot2D exists or a test detaches sections.
+	var profiles := PlayerRoster.new()
+	var profiles_valid := profiles.validate_dict(payload.players)
+	profiles.free()
+	for row in _dict_of(payload.players.get("rows")).values():
+		if not row is Dictionary: continue
+		for field in ["quests", "wardrobe"]:
+			var manager := SvcLib.node("QuestManager" if field == "quests" else "WardrobeManager")
+			var declared := _declared_version(manager)
+			var written: Variant = _dict_of(row.get(field)).get("v", 1)
+			if declared > 0 and _is_number(written) and float(written) > declared:
+				return _verdict(false, "version", "player %s section is newer than this build" % field)
+	if not profiles_valid: return _verdict(false, "invalid", "section 'players' contains invalid records")
+	if _is_number(payload.players.get("v", 1)) and float(payload.players.get("v", 1)) > 1: return _verdict(false, "version", "players section is newer than this build")
 	for entry in _ordered_entries():
 		var section_name: String = entry["name"]
 		if payload.has(section_name):
@@ -877,6 +919,8 @@ func _migrate(payload: Dictionary, from_version: int) -> Dictionary:
 		match version:
 			1:
 				payload = _migrate_1_to_2(payload)
+			2:
+				payload = _migrate_2_to_3(payload)
 			_:
 				break
 		version += 1
@@ -897,6 +941,56 @@ func _migrate_1_to_2(payload: Dictionary) -> Dictionary:
 		meta["saved_at"] = _unix_of_local_stamp(str(meta.get("timestamp", "")))
 	payload["meta"] = meta
 	meta["summary"] = _summarize(payload)
+	return payload
+
+
+## v2 -> v3 (RM5): the single implicit player becomes players.rows.p0. gold / inventory / equipment come from
+## economy, the quest log from quests, the wardrobe from wardrobe, travel from world. The old sections stay.
+func _migrate_2_to_3(payload: Dictionary) -> Dictionary:
+	if payload.has("players"):
+		return payload
+	var game: Dictionary = _dict_of(payload.get("game"))
+	var economy: Dictionary = _dict_of(payload.get("economy"))
+	var quests: Dictionary = _dict_of(payload.get("quests"))
+	var wardrobe: Dictionary = _dict_of(payload.get("wardrobe"))
+	var world: Dictionary = _dict_of(payload.get("world"))
+	var row := {
+		"id": "p0",
+		"peer_ordinal": 1,
+		"name": str(game.get("player_name", "")),
+		"character_type": int(game.get("character_type", 0)),
+		"character_skin": str(game.get("character_skin", "")),
+		"gold": economy.get("gold", 0),
+		"inventory": economy.get("inventory", []),
+		"owed": economy.get("owed", []),
+		"equipment": economy.get("equipment", {}) if economy.get("equipment") is Dictionary else {},
+		"arsenal": economy.get("arsenal", {}) if economy.get("arsenal") is Dictionary else {},
+		"quests": quests.duplicate(true) if not quests.is_empty() else {},
+		"wardrobe": wardrobe.duplicate(true) if not wardrobe.is_empty() else {},
+		"hotbar": world.get("hotbar", {}) if world.get("hotbar") is Array or world.get("hotbar") is Dictionary else {},
+		"area": str(world.get("area", "")),
+		"player_pos": world.get("player_pos", [0.0, 0.0]) if world.get("player_pos") is Array else [0.0, 0.0],
+		"half_hearts": 10,
+		"stamina": 100.0,
+		"oil": 150.0,
+	}
+	# v2 also allowed id -> count backpacks.
+	if row.inventory is Dictionary:
+		var slots := []
+		for id in row.inventory: slots.append({"id": str(id), "amount": row.inventory[id], "meta": {}})
+		row.inventory = slots
+	row["flags"] = {}
+	var flags: Dictionary = _dict_of(game.get("world_flags"))
+	for key in flags.keys():
+		if str(key).begins_with("friend_"):
+			row.flags[str(key)] = flags[key]
+			flags.erase(key)
+	payload["players"] = {"v": 1, "rows": {"p0": row}}
+	var meta: Dictionary = _dict_of(payload.get("meta"))
+	if not meta.has("migrated_from"):
+		meta["migrated_from"] = 2
+	meta["summary"] = _summarize(payload)
+	payload["meta"] = meta
 	return payload
 
 
@@ -999,6 +1093,7 @@ const SUMMARY_TYPES := {
 
 ## True when meta.summary has every key of SUMMARY_TYPES with a value of the listed type and `character` is a known hero.
 func _summary_valid(summary: Dictionary) -> bool:
+	if not summary.get("players") is Array or summary.players.is_empty(): return false
 	for key in SUMMARY_TYPES:
 		if not summary.has(key):
 			return false
@@ -1021,21 +1116,29 @@ func _summarize(payload: Dictionary) -> Dictionary:
 	var game: Dictionary = _dict_of(payload.get("game"))
 	var economy: Dictionary = _dict_of(payload.get("economy"))
 	var world: Dictionary = _dict_of(payload.get("world"))
+	var player_rows: Dictionary = _dict_of(_dict_of(payload.get("players")).get("rows"))
+	var primary: Dictionary = _dict_of(player_rows.get("p0"))
+	var players := []
+	for id in ["p0", "p1", "p2", "p3"]:
+		if not player_rows.has(id): continue
+		var row: Dictionary = player_rows[id]
+		players.append({"id": id, "name": str(row.get("name", "")), "character_type": _int_of(row.get("character_type")), "character_skin": str(row.get("character_skin", "")), "gold": _int_of(row.get("gold"))})
 	var type_keys: Array = GameManager.CharacterType.keys()
-	var character_type := clampi(_int_of(game.get("character_type", 0)), 0, type_keys.size() - 1)
+	var character_type := clampi(_int_of(primary.get("character_type", game.get("character_type", 0))), 0, type_keys.size() - 1)
 	var season := StringName(str(game.get("season", "")))
 	var day := _int_of(game.get("day", 1), 1)
 	var year := _int_of(game.get("year", 1), 1)
 	return {
-		"player_name": str(game.get("player_name", "")),
+		"players": players,
+		"player_name": str(primary.get("name", game.get("player_name", ""))),
 		"farm_name": str(game.get("farm_name", "")),
 		"character": str(type_keys[character_type]).to_lower(),
-		"character_skin": str(game.get("character_skin", "")),
+		"character_skin": str(primary.get("character_skin", game.get("character_skin", ""))),
 		"day": day,
 		"season": str(season),
 		"year": year,
 		"total_day": _int_of(game.get("total_day", GameManager.total_day_for(day, season, year)), 1),
-		"gold": _int_of(economy.get("gold", 0)),
+		"gold": _int_of(primary.get("gold", economy.get("gold", 0))),
 		"play_time_seconds": float(game.get("play_time_seconds", 0.0)) if _is_number(game.get("play_time_seconds", 0.0)) else 0.0,
 		"hour": _int_of(game.get("hour", 0)),
 		"minute": _int_of(game.get("minute", 0)),
@@ -1047,7 +1150,13 @@ func _summarize(payload: Dictionary) -> Dictionary:
 
 ## Applies a validated payload to the sections, all or nothing. {ok, detail}. See the header (LOADING).
 func _apply_payload(payload: Dictionary) -> Dictionary:
+	if not payload.has("wardrobe") and payload.get("players") is Dictionary:
+		payload = payload.duplicate(true)
+		payload["wardrobe"] = payload.players.rows.p0.get("wardrobe", {})
 	var entries := _ordered_entries()
+	if not has_section("players") and is_instance_valid(_staging_roster):
+		entries.append({"name": "players", "node": _staging_roster, "order": 15, "seq": -1})
+		entries.sort_custom(_entry_before)
 	var snapshot: Dictionary = {}
 	for entry in entries:
 		var node := _node_of(entry)

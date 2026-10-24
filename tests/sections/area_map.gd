@@ -8,6 +8,7 @@ func run(t) -> void:
 	t.check("project_input_contract", project.code == 0, project.output if project.code != 0 else "M extends the input contract without a binding collision")
 	t.autoload("EventBus").new_game_started.connect(func(): t.autoload("GameManager").set_flag(GameManager.FLAG_INTRO_PENDING, false), CONNECT_ONE_SHOT)
 	await t.start_world()
+	t.autoload("GameManager").set_config_override("time.minutes_per_real_second", 0.0)
 	t.autoload("GameManager").hour = 12
 	var world: WorldRoot2D = t.world()
 	var map: TTScreen = world.game_ui.get_screen(&"map_ui")
@@ -83,7 +84,9 @@ func _fog(t, world: WorldRoot2D) -> void:
 	# The enlarged dungeon map must obey the same exploration state as the minimap.
 	var fog := Minimap2D.new()
 	t.root.add_child(fog)
-	fog.area = world.area
+	fog.hide()
+	fog.set_area(world.area)
+	fog.fog.clear()
 	var hidden := Snapshot.capture(world.area, world.player, fog)
 	t.check("unexplored_ground_hidden", hidden.surfaces.is_empty() and hidden.places.is_empty())
 	fog.fully_revealed = true

@@ -359,7 +359,7 @@ func _restore_run(player: Node) -> void:
 		player.set("stamina", clampf(float(run.get("stamina", player.get("max_stamina"))), 0.0, float(player.get("max_stamina"))))
 	if "oil" in player and "max_oil" in player and float(run.get("oil", -1.0)) >= 0.0:
 		player.set("oil", clampf(float(run.oil), 0.0, float(player.get("max_oil"))))
-		EventBus.player_oil_changed.emit(float(player.get("oil")), float(player.get("max_oil")))
+		EventBus.player_oil_changed.emit(PlayerRegistry.local_id(), float(player.get("oil")), float(player.get("max_oil")))
 	if player.has_method("heal_half"): player.call("heal_half", 0)          # publishes the stats (hearts, stamina) to the HUD
 	var watch := _watch()
 	if watch != null and run.get("watch") is Dictionary: watch.restore(run.watch)

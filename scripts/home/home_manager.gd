@@ -547,7 +547,7 @@ func _retry_owed_visit() -> void:
 		_visits_owed.remove_at(0)
 
 
-func _on_inventory_changed(_inventory: Dictionary) -> void:
+func _on_inventory_changed(_player_id: StringName, _inventory: Dictionary) -> void:
 	if _visits_owed.is_empty() or _owed_retry_queued:
 		return
 	_owed_retry_queued = true

@@ -37,8 +37,8 @@ func run(t) -> void:
 	EventBus.game_event.emit(&"shop_open_changed",{"shop":"seed_shop","open":false})
 	t.check("closed_door_knock_and_closing_bell_hooks",AudioManager.cue_log().filter(func(row):return row.id=="door_locked_knock").size()==3 and _has("sfx","closing_bell"))
 	AudioManager.clear_cue_log()
-	EventBus.item_purchased.emit(&"cookie",1,12)
-	EventBus.friend_changed.emit(&"baker_maja",1)
+	EventBus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie",1,12)
+	EventBus.friend_changed.emit(PlayerRegistry.local_id(), &"baker_maja",1)
 	for event in ["gift_given","post_read","bath_taken","bin_payout","relationship_changed"]:EventBus.game_event.emit(StringName(event),{})
 	t.check("social_cues_logged",["coin_clink","heart_up","gift_sparkle","letter_rustle","bath_splash","bin_bell","stage_up"].all(func(id):return _has("sfx",id)))
 	EconomyManager.equip(&"weapon",&"")
@@ -69,7 +69,7 @@ func run(t) -> void:
 	AudioManager.play_ambience("farm_day",0.05)
 	AudioManager.play_ambience("town_night",0.05)
 	AudioManager.play_ambience("forest",0.05)
-	await t.seconds(0.1)
+	await t.until_game(func() -> bool: return AudioManager._ambient_players.filter(func(player): return player.playing).size() == 1, 1.0)
 	var playing_loops: Array = AudioManager._ambient_players.filter(func(player):return player.playing).map(func(player):return player.stream.resource_path if player.stream!=null else "")
 	t.check("rapid_fades_keep_one_final_stream",playing_loops.size()==1 and AudioManager._ambient_players[AudioManager._ambient_slot].stream==AudioManager._load_stream(AudioManager.AMBIENT_DIR,"forest"),"playing %s, ambient id %s" % [playing_loops,AudioManager._ambient_id])
 	if not clock_was_paused:TimeManager.resume_time()
@@ -82,6 +82,7 @@ func run(t) -> void:
 	await t.go_menu()
 	await t.seconds(0.4)
 	t.check("menu_stops_world_audio",not AudioManager._music_player.playing and not AudioManager._rain_player.playing and AudioManager._ambient_players.all(func(player):return not player.playing))
+	await _shutdown_releases_playbacks(t)
 func _surfaces(t,world: WorldRoot2D) -> void:
 	var area := IsoArea.new()
 	t.root.add_child(area)
@@ -164,3 +165,27 @@ func _fades_leave_playing_players_alone(t) -> void:
 	t.check("fades_leave_playing_players_alone",changed.is_empty() and moved.size()>=2 and sources.is_empty(),
 		"playing players whose volume_db moved during the fades: %s; fader buses that moved: %s of %s; scripts tweening \"volume_db\": %s" % [changed,moved,faders,sources])
 
+
+## Retirement can take longer than the old 80 ms delay. Hold a replaced Ogg playback
+## briefly, as the mixer does, and require shutdown to wait for the actual release.
+func _shutdown_releases_playbacks(t) -> void:
+	var probe: Node = load("res://scripts/autoload/audio_manager.gd").new()
+	t.root.add_child(probe)
+	probe.play_music("farm_theme",0.0)
+	var retired: WeakRef = weakref(probe._music_player.get_stream_playback())
+	var held := {"playback": retired.get_ref()}
+	probe.play_music("city_theme",0.0)
+	probe.play_ambience("town_day",0.0)
+	probe.play_ambience("shop_interior",0.0)
+	probe.play_sfx("door_open_wood")
+	var playbacks: Array = [retired]
+	for player in probe.get_children():
+		if player is AudioStreamPlayer and player.has_stream_playback():
+			playbacks.append(weakref(player.get_stream_playback()))
+	t.tree.create_timer(0.2,true,false,true).timeout.connect(func() -> void: held.clear(),CONNECT_ONE_SHOT)
+	await probe.prepare_shutdown()
+	t.check("shutdown_waits_for_retired_playbacks", playbacks.all(func(reference: WeakRef) -> bool: return reference.get_ref() == null)
+		and held.is_empty(),"every active or replaced Ogg playback was released")
+	probe.play_music("farm_theme",0.0)
+	t.check("shutdown_prevents_new_playback",not probe._music_player.playing and probe._music_player.stream == null)
+	probe.free()

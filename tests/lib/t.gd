@@ -51,6 +51,21 @@ func perf_limit(reference: float) -> float:
 	return reference * scale
 
 
+## Software rasterizers execute GPU work on the CPU. Their render timings cannot
+## judge a hardware GPU budget; logic timings and draw/memory limits still apply.
+static func software_renderer(adapter: String) -> bool:
+	var name := adapter.to_lower()
+	return ["llvmpipe", "softpipe", "lavapipe", "swiftshader"].any(func(driver: String) -> bool: return name.contains(driver))
+
+
+func render_budget(check_name: String, measured: float, reference: float, detail: String = "") -> void:
+	var adapter := RenderingServer.get_video_adapter_name()
+	if software_renderer(adapter):
+		skip("%s: hardware render budget unavailable on %s; measured %.3f ms, native reference %.3f ms; %s" % [check_name, adapter, measured, reference, detail])
+		return
+	check(check_name, perf_ok(check_name, measured, reference), detail)
+
+
 ## Timing assertion: `measured` must stay within perf_limit(reference). A timing over its native
 ## reference but inside the allowance passes and is recorded as slow (summary, report, CI notice),
 ## so a shared runner reports drift and only fails a real regression. Past the limit it fails, unless

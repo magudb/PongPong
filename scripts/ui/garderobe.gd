@@ -163,9 +163,9 @@ func _ready() -> void:
 	hints.set_hints([{"pair":[&"ui_page_up",&"ui_page_down"],"key":"GARDEROBE_SWITCH_TABS"},{"action":&"ui_accept","key":"HINT_OK"},{"action":&"ui_cancel","key":"HINT_BACK"}])
 	WardrobeManager.owned_changed.connect(_schedule_refresh)
 	WardrobeManager.presets_changed.connect(_schedule_refresh)
-	EventBus.outfit_changed.connect(func(_outfit): _schedule_refresh())
-	EventBus.player_inventory_changed.connect(func(_items): _schedule_refresh())
-	EventBus.hotbar_changed.connect(func(_entries,_selected): _schedule_refresh())
+	EventBus.outfit_changed.connect(func(_player_id: StringName, _outfit): _schedule_refresh())
+	EventBus.player_inventory_changed.connect(func(_player_id: StringName, _items): _schedule_refresh())
+	EventBus.hotbar_changed.connect(func(_player_id: StringName, _entries,_selected): _schedule_refresh())
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("garderobe",Callable(get_script(),&"fixture_setup"))
 
 func _player() -> Player2D:
@@ -536,7 +536,7 @@ func _hotbar(index: int) -> void:
 		return
 	if _assigning != "":
 		if EconomyManager.has_item(StringName(_assigning)):
-			EventBus.hotbar_assign_requested.emit(index,StringName(_assigning))
+			EventBus.hotbar_assign_requested.emit(PlayerRegistry.local_id(), index,StringName(_assigning))
 		_assigning = ""
 		assign_button.grab_focus()
 	else:
@@ -545,7 +545,7 @@ func _hotbar(index: int) -> void:
 
 func _clear_hotbar() -> void:
 	if _player() != null:
-		EventBus.hotbar_assign_requested.emit(_player().hotbar.selected,&"")
+		EventBus.hotbar_assign_requested.emit(PlayerRegistry.local_id(), _player().hotbar.selected,&"")
 
 func _choose_preset(key: String) -> void:
 	preset = key

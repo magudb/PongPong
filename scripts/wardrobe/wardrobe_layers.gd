@@ -31,7 +31,7 @@ func _ready() -> void:
 	root.name = "WornClothing"
 	clock.sprite.add_child(root)
 	if world_outfit:
-		EventBus.outfit_changed.connect(set_outfit)
+		EventBus.outfit_changed.connect(func(_player_id: StringName, equipped: Dictionary) -> void: set_outfit(equipped))
 		EventBus.player_character_changed.connect(_character_changed)
 		set_outfit(WardrobeManager.outfit())
 	else:
@@ -129,7 +129,7 @@ func _body_mat(base: Texture2D, mask: bool) -> ShaderMaterial:
 func _order(entry: Dictionary) -> int:
 	return int(Svc.lua_config("wardrobe.layer_z."+str(entry.record.family),WardrobeManager.slots().get(entry.slot, {}).get("z",0)))
 
-func _character_changed(_id: StringName) -> void:
+func _character_changed(_player_id: StringName, _id: StringName) -> void:
 	# PlayerBody2D connected first and has already installed the new stock body.
 	set_outfit(WardrobeManager.outfit())
 

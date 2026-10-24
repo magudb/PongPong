@@ -121,7 +121,7 @@ func _bin(t) -> void:
 	player.hotbar.select(0)
 	var count: int = eco.count_item(item)
 	var observed: Array = []
-	var inspect := func(_inventory):
+	var inspect := func(_player_id: StringName, _inventory):
 		observed.append(eco.count_item(item) == 0 and int(world.get_area_flag(&"farm", "bin_carrot", 0)) == count)
 		bin.interact(player)
 	bus.player_inventory_changed.connect(inspect)

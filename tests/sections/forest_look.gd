@@ -143,7 +143,7 @@ func _run(t,native: bool) -> void:
 	var skin: StringName = gm.character_skin
 	var alternate: String = {"animal":"animal_monkey","fairy":"fairy_birk","hobbit":"hobbit_bodil","ghost":"ghost_hviske"}[t.character]
 	gm.character_skin = StringName(alternate)
-	EventBus.player_character_changed.emit(gm.character_skin)
+	EventBus.player_character_changed.emit(PlayerRegistry.local_id(), gm.character_skin)
 	await t.frames(3)
 	world.player.get_node("ForestActorLight").refresh()
 	var layers: WardrobeLayers = world.player.outfit_layers
@@ -151,7 +151,7 @@ func _run(t,native: bool) -> void:
 	for picture in layers.layers.values(): shade_ok = shade_ok and "unshaded" in picture.material.shader.code
 	t.check("alternate_hero_clothing_keeps_shaders",shade_ok and not layers.layers.is_empty() and layers.occluder.material == layers.mask_material)
 	gm.character_skin = skin
-	EventBus.player_character_changed.emit(skin)
+	EventBus.player_character_changed.emit(PlayerRegistry.local_id(), skin)
 	if native:
 		DungeonFloors.inst().enter(2)
 		await t.until(func(): return world.area.map.id == &"moerkeskoven_f2" and not world.traveling,10)
@@ -213,7 +213,7 @@ func _visual(t,world: WorldRoot2D,look: ForestDress) -> void:
 	var best: Dictionary = windows[0]
 	for window in windows:
 		if window.ms < best.ms: best = window
-	t.check("frame_budget",t.perf_ok("frame_budget",best.ms,6),str(windows))
+	t.render_budget("frame_budget", best.ms, 6, str(windows))
 	var calls := Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
 	t.check("draw_call_budget",calls <= 450,str(calls))
 	var average: float = t.median_usec(func() -> void: look._process(1.0/60),20,50)/1000.0

@@ -2316,10 +2316,25 @@ static func button_pixels(t, button: Control, options: Dictionary = {}) -> Dicti
 		_note(r, "button_pixels needs a window")
 		return r
 	r["skipped"] = false
+	# This probe judges the normal style. A single-button screen's focus guard
+	# otherwise restores its ring before capture and covers the hard underside.
+	var guards: Array[TTScreen] = []
+	var ancestor: Node = button
+	while ancestor != null:
+		if ancestor is TTScreen and ancestor.focus_guard:
+			guards.append(ancestor)
+			ancestor.focus_guard = false
+		ancestor = ancestor.get_parent()
+	var focused := button.has_focus()
+	t.move_mouse(Vector2(1, 1))
 	if button.has_focus():
 		button.release_focus()
 	await t.frames(3)
 	var img: Image = await t.capture(str(options.get("shot", "")))
+	for screen in guards:
+		screen.focus_guard = true
+	if focused:
+		button.grab_focus()
 	if img == null:
 		_defect(r, "button_profile_wrong", button.name, "no frame could be grabbed")
 		return r
@@ -2336,7 +2351,8 @@ static func button_pixels(t, button: Control, options: Dictionary = {}) -> Dicti
 	var fill: Color = sb.get("fill")
 	var x := int(body.position.x + 14.0)
 	var rows: Array[Dictionary] = [
-		{"role": "ink_top", "y": int(body.position.y), "want": Rules.C.INK},
+		# Sample inside the stroke, away from its antialiased outer edge.
+		{"role": "ink_top", "y": int(body.position.y + bw * 0.5), "want": Rules.C.INK},
 		{"role": "face", "y": int(body.position.y + bw + 3.0), "want": fill}]
 	var band_color: Color = sb.get("band_color")
 	if int(sb.get("band_side")) == 1 and band_color.a > 0.0:         # BandSide.BOTTOM

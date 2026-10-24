@@ -30,12 +30,12 @@ func refresh_data() -> void:
 func _active() -> bool:
 	return QuestManager.is_active(&"forste_dage") and not bool(GameManager.get_flag(&"tut_done", false))
 
-func _completed(id: StringName) -> void:
+func _completed(_player_id: StringName, id: StringName) -> void:
 	if id == &"forste_dage":
 		GameManager.set_flag(&"tut_done", 1)
 		queued.clear()
 
-func _stats(stats: Dictionary) -> void:
+func _stats(_player_id: StringName, stats: Dictionary) -> void:
 	if float(stats.get("stamina", 100)) <= float(stats.get("max_stamina", 100)) * 0.2:
 		_trigger("energy_low")
 

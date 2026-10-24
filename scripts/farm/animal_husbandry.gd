@@ -304,7 +304,7 @@ func _ready() -> void:
 
 ## Bought baby animals move in one by one while a building has a free place; the rest wait in the backpack (adopted later with "Brug") and
 ## adopt_animal's no-space toast says so (GAP4-05).
-func _on_item_purchased(item_id: StringName, amount: int, _total: int) -> void:
+func _on_item_purchased(_player_id: StringName, item_id: StringName, amount: int, _total: int) -> void:
 	if _item_to_species(item_id) == &"":
 		return
 	for i in amount:

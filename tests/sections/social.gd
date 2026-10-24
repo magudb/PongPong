@@ -50,7 +50,7 @@ class Spy extends RefCounted:
 	func on_event(event_name: StringName, payload: Dictionary) -> void:
 		events.append([String(event_name), payload])
 
-	func on_friend(npc: StringName, hearts: int) -> void:
+	func on_friend(_player_id: StringName, npc: StringName, hearts: int) -> void:
 		friends.append([String(npc), hearts])
 
 	func on_toast(title: String, message: String, icon: String) -> void:
@@ -541,7 +541,7 @@ func _hearts() -> void:
 	m2.debug_set_hearts("baker_maja", 5)
 	ok = ok and gm.flag_int(&"friend_baker_maja", -1) == 5
 	var d: Dictionary = m2.to_dict()
-	gm.world_flags.erase(&"friend_baker_maja")
+	PlayerRegistry.state().flags.erase(&"friend_baker_maja")
 	m2.from_dict(d)
 	ok = ok and gm.flag_int(&"friend_baker_maja", -1) == 5
 	gm.set_flag(&"friend_baker_maja", 1)                      # somebody scribbles on the mirror: the next write puts it right
@@ -553,7 +553,7 @@ func _hearts() -> void:
 	t.check("zero_point_ledger_repairs_existing_mirror", gm.flag_int(&"friend_baker_maja", -1) == 0 and m2.met("baker_maja"))
 	gm.clear_flag(&"friend_baker_maja")
 	m2.from_dict(knowledge_only)
-	t.check("zero_point_ledger_load_preserves_absent_flag", not gm.world_flags.has(&"friend_baker_maja") and m2.met("baker_maja") and m2.points("baker_maja") == 0)
+	t.check("zero_point_ledger_load_preserves_absent_flag", not PlayerRegistry.state().flags.has(&"friend_baker_maja") and m2.met("baker_maja") and m2.points("baker_maja") == 0)
 	_done()
 
 
@@ -1174,24 +1174,24 @@ func _shop() -> void:
 	var m := _fresh(8)                                         # a Monday
 	var bus: Node = t.autoload("EventBus")
 	bus.shop_opened.emit(&"bakery")
-	bus.item_purchased.emit(&"cookie", 1, 250)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie", 1, 250)
 	t.expect(m.points("baker_maja") == 2 and m.row_of("baker_maja")["pc"] % 1000 == 50, "250 gold in the bakery = 2 points and 50 gold carried (the keeper is Maja)")
-	bus.item_purchased.emit(&"cookie", 1, 60)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie", 1, 60)
 	t.expect(m.points("baker_maja") == 3, "the carried gold counts: 50 + 60 = 1 more point")
-	bus.item_purchased.emit(&"cookie", 1, 5000)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie", 1, 5000)
 	var capped_week = m.points("baker_maja")
-	bus.item_purchased.emit(&"cookie", 1, 5000)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie", 1, 5000)
 	var in_week = m.points("baker_maja")
 	# another keeper has his own cap; no shop open = nothing; a shop without a keeper = nothing
 	bus.shop_closed.emit(&"bakery")
-	bus.item_purchased.emit(&"cookie", 1, 5000)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie", 1, 5000)
 	var closed_nothing = m.points("baker_maja") == in_week
 	bus.shop_opened.emit(&"seed_shop")
-	bus.item_purchased.emit(&"carrot_seed", 1, 700)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"carrot_seed", 1, 700)
 	var pip = m.points("merchant_pip")
 	bus.shop_closed.emit(&"seed_shop")
 	bus.shop_opened.emit(&"a_festival_stall_without_a_keeper")
-	bus.item_purchased.emit(&"cookie", 1, 5000)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie", 1, 5000)
 	var stall := true
 	for id in SocialData.friend_ids():
 		if id not in ["baker_maja", "merchant_pip"] and m.points(id) != 0:
@@ -1199,7 +1199,7 @@ func _shop() -> void:
 	bus.shop_closed.emit(&"a_festival_stall_without_a_keeper")
 	SocialFixture.jump(15)
 	bus.shop_opened.emit(&"bakery")
-	bus.item_purchased.emit(&"cookie", 1, 5000)
+	bus.item_purchased.emit(PlayerRegistry.local_id(), &"cookie", 1, 5000)
 	var next_week = m.points("baker_maja")
 	bus.shop_closed.emit(&"bakery")
 	t.check("purchase_points_capped", capped_week == 10 and in_week == 10 and closed_nothing and pip == 7 and stall and next_week == 20 and m.hearts("baker_maja") == 0,
@@ -1357,8 +1357,8 @@ func _save() -> void:
 	t.expect(sv.has_section("social") and "social" in sv.registered_section_names(), "section `social` is registered")
 	var saved: bool = sv.save_game(3)
 	m4.reset()
-	gm.world_flags.erase(&"friend_mayor_lyra")
-	gm.world_flags.erase(&"friend_baker_maja")
+	PlayerRegistry.state().flags.erase(&"friend_mayor_lyra")
+	PlayerRegistry.state().flags.erase(&"friend_baker_maja")
 	var loaded: bool = sv.load_game(3)
 	t.check("save_manager_roundtrip", saved and loaded and m4.points("mayor_lyra") == 400 and m4.points("baker_maja") == 100 and m4.world_seed == 4242 and gm.flag_int(&"friend_mayor_lyra") == 4 and not m4.chat_available("baker_maja"),
 		"SaveManager.save_game / load_game with the section registered: 400 and 100 points, the seed 4242, the weekly chat of Maja still taken, the mirror flags rewritten (%s %s)" % [str(saved), str(loaded)])
@@ -1694,7 +1694,7 @@ func _wrappers() -> void:
 	m.set_seed(555)
 	var nodes_ok := "SocialManager" in Fresh.FEATURE_NODES and Fresh.FEATURE_NODES.size() == 6
 	Fresh.new_game(t)
-	var cleared = m.points("mayor_lyra") == 0 and not gm.world_flags.has(&"friend_mayor_lyra") and m.world_seed == Fresh.DEFAULT_SEED and m.to_dict()["npcs"].is_empty()
+	var cleared = m.points("mayor_lyra") == 0 and not PlayerRegistry.state().flags.has(&"friend_mayor_lyra") and m.world_seed == Fresh.DEFAULT_SEED and m.to_dict()["npcs"].is_empty()
 	Fresh.seed_features(2024)
 	var seeded: bool = m.world_seed == 2024
 	var did: Array[String] = Fresh.reset_features()

@@ -19,10 +19,10 @@ func _ready() -> void:
 	EventBus.quest_objective_updated.connect(_objective)
 	EventBus.game_event.connect(_event)
 	EventBus.load_completed.connect(_loaded)
-func _quest(_id: StringName) -> void:
+func _quest(_player_id: StringName, _id: StringName) -> void:
 	MotherStory.sync()
 	_refresh()
-func _objective(_quest_id: StringName,_id: StringName,_current: int,_target: int) -> void:
+func _objective(_player_id: StringName, _quest_id: StringName,_id: StringName,_current: int,_target: int) -> void:
 	if _quest_id == SecretGardenStory.QUEST:
 		MotherStory.sync()
 		_refresh()

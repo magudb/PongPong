@@ -6,13 +6,42 @@ signal presets_changed
 const PRESETS := ["work", "forest", "festival"]
 ## Version of the "wardrobe" save section (SaveManager refuses a newer one at inspection, see SECTION VERSIONS there).
 const SECTION_VERSION := 1
-var owned: Dictionary = {}
-var equipped: Dictionary = {}
-var presets: Dictionary = {}
+## Per-player rows (MP3). owned/equipped/presets live on PlayerState.wardrobe;
+## single-player has one row and this facade is unchanged from the outside.
+var _checking_sets := false
+
+## The acting player's row (MP3). Shared fallback when no world is up.
+func state(player_id: StringName = &"") -> PlayerState:
+	return PlayerRegistry.state(player_id)
+
+
+func _w() -> Dictionary:
+	var w: Dictionary = state().wardrobe
+	for key in ["owned", "equipped", "presets", "orphans"]:
+		if not w.has(key): w[key] = {}
+	return w
+
+
+var owned: Dictionary:
+	get: return _w()["owned"]
+	set(value): _w()["owned"] = value
+
+
+var equipped: Dictionary:
+	get: return _w()["equipped"]
+	set(value): _w()["equipped"] = value
+
+
+var presets: Dictionary:
+	get: return _w()["presets"]
+	set(value): _w()["presets"] = value
+
+
 ## Clothing of a save that this build has no slot for (content drift: renamed, removed, moved to another slot): {id: 1}. Saved as it
 ## was and owned again by the load whose catalogue knows it.
-var orphans: Dictionary = {}
-var _checking_sets := false
+var orphans: Dictionary:
+	get: return _w()["orphans"]
+	set(value): _w()["orphans"] = value
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -86,7 +115,7 @@ func equip(id: Variant) -> bool:
 		return true
 	equipped = next
 	_publish()
-	EventBus.garment_equipped.emit(StringName(str(id)), StringName(slot))
+	EventBus.garment_equipped.emit(PlayerRegistry.acting_id(), StringName(str(id)), StringName(slot))
 	EventBus.game_event.emit(&"garment_equipped", {"slot": slot, "item": str(id), "rarity": str(ItemKinds.rarity_of(id))})
 	return true
 
@@ -210,7 +239,7 @@ func _valid_outfit(raw: Dictionary, require_owned: bool) -> Dictionary:
 	return next
 
 func _publish() -> void:
-	EventBus.outfit_changed.emit(outfit())
+	EventBus.outfit_changed.emit(PlayerRegistry.acting_id(), outfit())
 
 func _check_sets() -> void:
 	if _checking_sets:

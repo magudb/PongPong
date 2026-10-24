@@ -98,17 +98,10 @@ const STATE_QUERIES := {
 	"friend_hearts_at_least": {"fields": ["npc", "hearts"], "threshold": true},
 }
 
-var active_quests: Dictionary = {}   # quest_id -> QuestRuntime
-var completed_quests: Array[StringName] = []     # oldest completion first; a repeated completion moves the id to the end
-var failed_quests: Array[StringName] = []
-var offered_quests: Array[StringName] = []
-var quest_flags: Dictionary = {}
 ## Lua quest definitions by id (registered at LuaRuntime load, never saved, survive reset()/from_dict()).
 var quest_defs: Dictionary = {}
-## Absolute completion day per quest; completed_quests remains the history used by dialogue and map conditions.
-var completed_days: Dictionary = {}
-## quest id -> {item id: amount} still owed. Successful deliveries are removed before another claim can run.
-var pending_rewards: Dictionary = {}
+## Per-player quest rows (MP3). active/completed/failed/offered/flags/days/rewards live on PlayerState.quests;
+## single-player has one row and this facade is unchanged from the outside. quest_defs stays global.
 
 var _claiming_rewards: bool = false
 var _claim_again: bool = false           # a claim was asked for while one ran (a reward completed another quest): run another pass
@@ -151,6 +144,57 @@ class QuestRuntime:
 		q.order = int(d.get("order", -1))
 		q.meta = d.get("meta", {}).duplicate()
 		return q
+
+
+## The acting player's quest row (MP3). Shared fallback when no world is up.
+func state(player_id: StringName = &"") -> PlayerState:
+	return PlayerRegistry.state(player_id)
+
+
+func _log() -> Dictionary:
+	var q: Dictionary = state().quests
+	for key in ["active", "flags", "completed_days", "pending_rewards"]:
+		if not q.has(key): q[key] = {}
+	for key in ["completed", "failed", "offered"]:
+		if not q.has(key): q[key] = []
+	return q
+
+
+var active_quests: Dictionary:
+	get: return _log()["active"]
+	set(value): _log()["active"] = value
+
+
+var completed_quests: Array:
+	get: return _log()["completed"]
+	set(value): _log()["completed"] = value
+
+
+var failed_quests: Array:
+	get: return _log()["failed"]
+	set(value): _log()["failed"] = value
+
+
+var offered_quests: Array:
+	get: return _log()["offered"]
+	set(value): _log()["offered"] = value
+
+
+var quest_flags: Dictionary:
+	get: return _log()["flags"]
+	set(value): _log()["flags"] = value
+
+
+## Absolute completion day per quest; completed_quests remains the history used by dialogue and map conditions.
+var completed_days: Dictionary:
+	get: return _log()["completed_days"]
+	set(value): _log()["completed_days"] = value
+
+
+## quest id -> {item id: amount} still owed. Successful deliveries are removed before another claim can run.
+var pending_rewards: Dictionary:
+	get: return _log()["pending_rewards"]
+	set(value): _log()["pending_rewards"] = value
 
 
 func _ready() -> void:
@@ -389,7 +433,7 @@ func offer_quest(quest_id: StringName) -> void:
 	if get_quest_def(quest_id).is_empty() or not _can_start(quest_id) or not _requirements_met(quest_id) or quest_id in offered_quests:
 		return
 	offered_quests.append(quest_id)
-	EventBus.quest_offered.emit(quest_id)
+	EventBus.quest_offered.emit(PlayerRegistry.acting_id(), quest_id)
 
 
 ## The quests `npc_id` can give RIGHT NOW, in the order of lua/config/npcs.lua `quests_offered` (quests that only name the giver in their own
@@ -507,7 +551,7 @@ func _activate(quest_id: StringName, def: Dictionary) -> void:
 
 	active_quests[quest_id] = rt
 	offered_quests.erase(quest_id)
-	EventBus.quest_accepted.emit(quest_id)
+	EventBus.quest_accepted.emit(PlayerRegistry.acting_id(), quest_id)
 	EventBus.notification_posted.emit(
 		tr("NOTIF_QUEST_ACCEPTED_TITLE"),
 		get_title(quest_id),
@@ -563,7 +607,7 @@ func update_objective(quest_id: StringName, objective_id: StringName, amount: in
 	obj["current"] = mini(obj["current"] + amount, obj["target"])
 	if obj["current"] >= obj["target"]:
 		obj["done"] = true
-	EventBus.quest_objective_updated.emit(quest_id, objective_id, obj["current"], obj["target"])
+	EventBus.quest_objective_updated.emit(PlayerRegistry.acting_id(), quest_id, objective_id, obj["current"], obj["target"])
 	_check_completion(quest_id)
 
 
@@ -583,7 +627,7 @@ func _set_progress(quest_id: StringName, objective_id: Variant, value: int) -> v
 	obj["current"] = current
 	if current >= int(obj["target"]):
 		obj["done"] = true
-	EventBus.quest_objective_updated.emit(quest_id, StringName(str(objective_id)), current, obj["target"])
+	EventBus.quest_objective_updated.emit(PlayerRegistry.acting_id(), quest_id, StringName(str(objective_id)), current, obj["target"])
 	_check_completion(quest_id)
 
 
@@ -633,7 +677,7 @@ func complete_quest(quest_id: StringName) -> void:
 		EconomyManager.add_gold(_Data.int_of(rewards["gold"]))
 	_grant_friendship(_Data.int_map(rewards.get("friendship", {})))
 	claim_rewards()
-	EventBus.quest_completed.emit(quest_id)
+	EventBus.quest_completed.emit(PlayerRegistry.acting_id(), quest_id)
 	EventBus.notification_posted.emit(
 		tr("NOTIF_QUEST_COMPLETED_TITLE"),
 		get_title(quest_id),
@@ -659,7 +703,7 @@ func _grant_friendship(hearts_by_npc: Dictionary) -> void:
 		if after == before:
 			continue
 		GameManager.set_flag(flag, after)
-		EventBus.friend_changed.emit(StringName(str(npc)), after)
+		EventBus.friend_changed.emit(PlayerRegistry.acting_id(), StringName(str(npc)), after)
 
 
 ## Delivers what fits, retaining the rest in the save. Called again after inventory changes and successful loads. A backpack stack
@@ -718,7 +762,7 @@ func _deliver_reward(item_id: StringName, amount: int) -> bool:
 	return EconomyManager.add_item(item_id, amount)
 
 
-func _on_inventory_changed(_inventory: Dictionary) -> void:
+func _on_inventory_changed(_player_id: StringName, _inventory: Dictionary) -> void:
 	_queue_reward_claim()
 	_queue_refresh()
 
@@ -748,7 +792,7 @@ func fail_quest(quest_id: StringName) -> void:
 		return
 	active_quests.erase(quest_id)
 	failed_quests.append(quest_id)
-	EventBus.quest_failed.emit(quest_id)
+	EventBus.quest_failed.emit(PlayerRegistry.acting_id(), quest_id)
 	_lua_notify("quest_failed", quest_id)
 
 
@@ -808,7 +852,7 @@ func _on_day_started(_day: int, _season: StringName) -> void:
 
 # =============================================================================================== event bindings
 
-func _on_item_gained(item_id: StringName, amount: int) -> void:
+func _on_item_gained(_player_id: StringName, item_id: StringName, amount: int) -> void:
 	_dispatch(&"item_gained", {"item": str(item_id), "amount": amount})
 	_queue_refresh()
 
@@ -864,7 +908,7 @@ func _on_recipe_crafted(recipe_id: StringName, amount: int) -> void:
 
 
 ## Another quest was completed (this node emits the signal itself): the finished quest is no longer active, so it never counts for itself.
-func _on_quest_completed_signal(quest_id: StringName) -> void:
+func _on_quest_completed_signal(_player_id: StringName, quest_id: StringName) -> void:
 	var meta := _Data.dict(get_quest_def(quest_id).get("meta", {}))
 	_dispatch(&"quest_completed", {"quest": str(quest_id), "category": str(meta.get("category", ""))})
 
@@ -893,7 +937,7 @@ func _on_home_upgraded(_old_tier: int, _new_tier: int) -> void:
 	refresh_objectives()
 
 
-func _on_friend_changed(_npc_id: StringName, _hearts: int) -> void:
+func _on_friend_changed(_player_id: StringName, _npc_id: StringName, _hearts: int) -> void:
 	refresh_objectives()
 
 
@@ -1391,9 +1435,9 @@ func from_dict(data: Dictionary) -> bool:
 			next_order += 1
 	_accept_counter = next_order
 	active_quests = restored
-	completed_quests.assign(data.get("completed", []))
-	failed_quests.assign(data.get("failed", []))
-	offered_quests.assign(data.get("offered", []))
+	completed_quests = SaveCodec.names_from_json(data.get("completed", []))
+	failed_quests = SaveCodec.names_from_json(data.get("failed", []))
+	offered_quests = SaveCodec.names_from_json(data.get("offered", []))
 	quest_flags.clear()
 	for key in data.get("flags", {}):
 		if not str(key).begins_with("def_"):   # v1 saves carried quest defs as flags; defs are never loaded

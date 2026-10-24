@@ -47,7 +47,9 @@ func run_windowed(t) -> void:
 			await t.frames(2)
 			var control: Image = await t.capture("control_"+name)
 			var delta: float = t.mean_abs_diff(fixed.get_region(face),control.get_region(face))
-			t.check("face_clear_"+name, delta < 0.015, "face difference with decks hidden: %.5f" % delta)
+			# mean_abs_diff is in 8-bit channel units. Allow one quantization
+			# level across render backends; an occluding deck changes many levels.
+			t.check("face_clear_"+name, delta <= 1.0, "face difference with decks hidden: %.5f / 255" % delta)
 			stage.floors.visible = true
 			ActorLevel.set_draw_rank(p,level.rank)
 			await t.frames(2)
