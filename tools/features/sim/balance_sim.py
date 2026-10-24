@@ -16,6 +16,7 @@ import argparse
 import json
 import math
 import os
+import random
 import sys
 from collections import OrderedDict, defaultdict
 from pathlib import Path
@@ -59,7 +60,6 @@ NODE_YIELD = {
 }
 NODE_RESPAWN = 3
 BOSS_REPEAT_DAYS = 7
-SELF_CRAFT_DISCOUNT = {'plank_pine': 0.6, 'timber_beam': 0.6, 'stone_block': 0.6, 'lime': 0.6, 'rope': 0.6}   # part of these comes from the player's own wood/stone/moss
 QUEST_ONESHOT_EXTRA = 0.0   # gold of one-shot quests is added via the quest table below
 ZONE_ORDER = ['skovkant', 'dybe_bregner', 'svampelunden', 'krystalgrotten']
 PRICES_ASSUMED = {'copper_ore': (35, 14), 'moonstone': (440, 220), 'wool': (30, 12)}   # PLAN items not yet in the repo
@@ -96,6 +96,10 @@ class World:
         self.home = mine['lua/data/home_tiers.lua']['config']['home']
         self.loot = mine['lua/data/loot_tables.lua']['config']['loot']
         self.shops = mine['lua/shops/home_shops.lua']['shops']
+        self.buildings = {key: row for g in repo.values() if g.get('registry') == 'buildings'
+                          for key, row in (g.get('buildings') or {}).items()}
+        self.festivals = {key: row for g in repo.values() if g.get('registry') == 'festivals'
+                          for key, row in (g.get('festivals') or {}).items()}
         self.recipes = {**mine['lua/recipes/furniture.lua']['recipes'], **mine['lua/recipes/materials.lua']['recipes']}
         self.rarity = mine['lua/config/rarity.lua']['config']
         self.sets = mine['lua/data/sets.lua']['config']
@@ -150,7 +154,12 @@ def plots(prof, day):
 # ====================================================================================================================================
 def pool_value(world, zone, kind, rar):
     """expected sell value of one draw from pools[kind][rar] and expected material counts"""
-    pool = world.loot['zones'][zone]['pools'][kind][rar]
+    pools = world.loot['zones'][zone]['pools']
+    if kind not in pools:
+        # Dynamic dungeon gem/weapon draws are outside this legacy EV model.
+        # Keep their draw weight but grant no speculative income/materials.
+        return 0.0, {}
+    pool = pools[kind][rar]
     tw = sum(e['w'] for e in pool)
     if tw == 0:
         return None
@@ -211,6 +220,103 @@ def pity_expect(p, k):
 # ====================================================================================================================================
 # simulation
 # ====================================================================================================================================
+class BuilderStock:
+    """Finite builder shelves, owned by ONE simulation (never shared by profiles)."""
+
+    def __init__(self, world):
+        self.world = world
+        self.shop = world.shops['builder_yard']
+        self.fixed = self.shop.get('stock') or {}
+        self.left = {item: row['stock'] for item, row in self.fixed.items()}
+        self.day = 1
+        self.bought = defaultdict(int)  # (slot, epoch, item), NOT reset at dawn
+        self._offers = None
+
+    def dawn(self, day):
+        elapsed = day - self.day
+        for item, row in self.fixed.items():
+            self.left[item] = min(row['stock'], self.left[item] + elapsed * row.get('restock', row['stock']))
+        self.day = day
+        self._offers = None
+
+    def offers(self):
+        if self._offers is not None:
+            return self._offers
+        offers = {}
+        # Same cadence/filter/weighted-without-replacement rule as ShopRotation.
+        # Python's stream is a deterministic scenario, not Godot PCG seed parity.
+        # Builder pools offer ALL candidates, so their actual membership is exact.
+        for slot in sorted(self.shop.get('rotation', []), key=lambda row: -row['period']):
+            epoch = (self.day - 1) // slot['period']
+            season = SEASONS[((epoch * slot['period']) // 28) % 4]
+            pool = sorted({item for item in slot['pool'] if item not in self.fixed and item not in offers
+                           and item in self.world.items and self.world.buy(item) > 0
+                           and not self.world.items[item].get('protected')
+                           and self.world.items[item].get('rarity') not in ('unique', 'legendary')})
+            rng = random.Random(f"{getattr(self.world, 'shop_seed', 0)}|builder_yard|{slot['id']}|{epoch}")
+            for _ in range(min(slot['pick'], len(pool))):
+                weights = [slot.get('season_boost', 1.0) if season in self.world.items[item].get('seasons', []) else 1.0 for item in pool]
+                item = rng.choices(pool, weights=weights, k=1)[0]
+                pool.remove(item)
+                offers[item] = dict(slot=slot['id'], epoch=epoch, qty=slot['qty'], price_mult=slot.get('price_mult', 1.0))
+        self._offers = offers
+        return offers
+
+    def sells(self, item):
+        return item in self.fixed or any(item in slot['pool'] for slot in self.shop.get('rotation', []))
+
+    def price(self, item):
+        base = self.fixed.get(item, {}).get('price', self.world.buy(item))
+        mult = self.offers().get(item, {}).get('price_mult', 1.0)
+        return max(1, math.floor(base * self.shop.get('buy_multiplier', 1.0) * mult + 0.5))
+
+    def available(self, item):
+        if not self.is_open():
+            return 0
+        if item in self.fixed:
+            return self.left[item]
+        offer = self.offers().get(item)
+        if not offer:
+            return 0
+        return max(0, offer['qty'] - self.bought[(offer['slot'], offer['epoch'], item)])
+
+    def is_open(self):
+        """One shopping visit at noon; building hours override shop weekdays."""
+        weekday = (self.day - 1) % 7
+        season = SEASONS[((self.day - 1) // 28) % 4]
+        for festival in self.world.festivals.values():
+            meta = festival.get('meta', {})
+            if meta.get('season') == season and meta.get('day') == (self.day - 1) % 28 + 1:
+                # SocialManager: closure starts an hour before the festival.
+                if meta.get('closes', 'all') != 'none' and 'builder_yard' not in meta.get('stays_open', []):
+                    if meta['from'] - 1 <= 12 < meta['to']:
+                        return False
+        buildings = [row for row in self.world.buildings.values() if row.get('shop') == 'builder_yard' and row.get('hours')]
+        if not buildings:
+            return not self.shop.get('open_weekdays') or weekday in self.shop['open_weekdays']
+        for building in buildings:
+            hours = building['hours']
+            if weekday in hours.get('closed', []):
+                continue
+            opening, closing = hours.get('open', 6), hours.get('close', 26)
+            for override in hours.get('overrides', []):
+                if weekday in override['weekday']:
+                    opening, closing = override.get('open', opening), override.get('close', closing)
+                    break
+            if opening <= 12 < closing:
+                return True
+        return False
+
+    def take(self, item, amount):
+        if amount <= 0 or amount > self.available(item):
+            raise ValueError('purchase exceeds the available shelf')
+        if item in self.fixed:
+            self.left[item] -= amount
+        else:
+            offer = self.offers()[item]
+            self.bought[(offer['slot'], offer['epoch'], item)] += amount
+
+
 def quests_gold(world, prof, day):
     """repeatable repo quests: gold per day = participation x net share x gold / (cooldown + 3 days to do it); dark-forest quests only once the forest is open"""
     if day < QUEST_START_DAY:
@@ -260,7 +366,11 @@ def simulate(world, pname, prof, verbose=False, purchases=True):
     boss_kills = 0
     wealth = [0.0]
     money_ready, gate_ready, find_wait = {}, {}, {}
+    shelves = BuilderStock(world)
+    stock_wait, purchase_log = {}, []
+    material_spend = defaultdict(float)
     for day in range(1, SIM_DAYS + 1):
+        shelves.dawn(day)
         season = SEASONS[((day - 1) // 28) % 4]
         # ---------------- income
         crop, ppd = best_crop(world, prof, season)
@@ -369,15 +479,16 @@ def simulate(world, pname, prof, verbose=False, purchases=True):
         ledger[interval]['quests'] += quests
         cum_net += gross
         # ---------------- spending: fixed purchases, lifestyle, home
-        for d, g in invests:
-            if day == d:
-                gold -= g
         life = gross * prof['lifestyle']
         if FREE_FURN_REPLACES: free_furniture_stock += find_value*FREE_FURN_RATE
         replacement = min(max(life,0)*FURNITURE_SHARE,free_furniture_stock) if FREE_FURN_REPLACES else 0.0
         free_furniture_stock -= replacement
         stats['free_furniture_substitution'] += replacement
         gold += gross - life + replacement
+        # Named investment schedule is an earliest date, not free credit.
+        # Keep unpaid purchases queued; never drop their eventual gold cost.
+        while invests and day >= invests[0][0] and gold >= invests[0][1]:
+            gold -= invests.pop(0)[1]
         furn_spend += life * FURNITURE_SHARE
         wealth.append(gold)
         # hygge level from furniture spend (decor points), capped by what the home can hold
@@ -418,11 +529,9 @@ def simulate(world, pname, prof, verbose=False, purchases=True):
             for m, n in cost.get('materials', {}).items():
                 lack = max(0.0, n - inv[m])
                 if lack > 0:
-                    shop = [s for s in world.items[m].get('sources', []) if s['kind'] == 'shop' and s['shop'] == 'builder_yard']
-                    if shop:
-                        unit = world.buy(m) * SELF_CRAFT_DISCOUNT.get(m, 1.0)
-                        wait = {'fixed': 0, 'daily': 1, 'weekly': 4}.get(shop[0]['slot'], 0)
-                        mat_cost += lack * unit
+                    if shelves.sells(m):
+                        lack = math.ceil(lack)
+                        mat_cost += lack * shelves.price(m)
                         shortfall[m] = (lack, 'buy')
                     else:
                         shortfall[m] = (lack, 'find')
@@ -432,21 +541,38 @@ def simulate(world, pname, prof, verbose=False, purchases=True):
                 money_ready[nxt] = day
             if any(v[1] == 'find' for v in shortfall.values()) and gold >= need_gold + mat_cost:
                 find_wait[nxt] = find_wait.get(nxt, 0) + 1
-            if ok and not any(v[1] == 'find' for v in shortfall.values()) and gold >= need_gold + mat_cost:
-                gold -= need_gold + mat_cost
-                spent_home += need_gold + mat_cost
+            if ok and gold >= need_gold + mat_cost:
+                # Accumulate paid materials across visits. Affording the order is
+                # NOT the same as possessing it: never buy beyond today's shelf.
+                for m, (lack, how) in shortfall.items():
+                    if how != 'buy':
+                        continue
+                    amount = min(lack, shelves.available(m))
+                    if amount:
+                        paid = amount * shelves.price(m)
+                        purchase_log.append(dict(day=day, tier=nxt, item=m, amount=amount, gold=paid, gold_before=gold, available=shelves.available(m)))
+                        shelves.take(m, amount)
+                        inv[m] += amount
+                        gold -= paid
+                        spent_home += paid
+                        material_spend[nxt] += paid
+                if any(how == 'buy' and inv[m] < cost['materials'][m] for m, (_, how) in shortfall.items()):
+                    stock_wait[nxt] = stock_wait.get(nxt, 0) + 1
+            if ok and gold >= need_gold and all(inv[m] >= n for m, n in cost.get('materials', {}).items()):
+                gold -= need_gold
+                spent_home += need_gold
                 for m, n in cost.get('materials', {}).items():
                     inv[m] = max(0.0, inv[m] - n)
                 building = (nxt, day + cost['days'])
                 start_day[nxt] = day
-                log.append((day, nxt, need_gold, round(mat_cost), gold))
+                log.append((day, nxt, need_gold, round(material_spend[nxt]), gold))
             elif verbose and day % 60 == 0:
                 pass
         if purchases and built == 10 and not building:
             if 10 not in done_day:
                 done_day[10] = day
             break
-    return dict(start=start_day, done=done_day, ledger={k: dict(v) for k, v in ledger.items()}, log=log, stats=dict(stats), cum=cum_net, spent_home=spent_home, inv=dict(inv), wealth=wealth, money_ready=money_ready, gate_ready=gate_ready, find_wait=find_wait, hygge=hlevel)
+    return dict(start=start_day, done=done_day, ledger={k: dict(v) for k, v in ledger.items()}, log=log, stats=dict(stats), cum=cum_net, spent_home=spent_home, inv=dict(inv), wealth=wealth, money_ready=money_ready, gate_ready=gate_ready, find_wait=find_wait, stock_wait=stock_wait, purchases=purchase_log, gold=gold, investments_pending=invests, hygge=hlevel)
 
 
 # ====================================================================================================================================
@@ -465,10 +591,10 @@ def round_nice(x):
 
 def material_gold(world, t):
     tot = 0.0
+    shelves = BuilderStock(world)
     for m, n in t['cost']['materials'].items():
-        it = world.items[m]
-        if any(s['kind'] == 'shop' and s['shop'] == 'builder_yard' for s in it.get('sources', [])):
-            tot += n * it['buy_price'] * SELF_CRAFT_DISCOUNT.get(m, 1.0)
+        if shelves.sells(m):
+            tot += n * shelves.price(m)
     return tot
 
 
@@ -526,11 +652,14 @@ def main():
     P('BALANCE SIMULATION  (expected values, deterministic).  1 game day = 10 real minutes -> 6.00 days per real hour.')
     P('=' * 118)
     P('ASSUMPTIONS')
-    P('  start gold 500; crops: PLAN 3.10 table (primary) and the CURRENT repo crops.lua/game_balance.lua (sensitivity); winter has no crops (no crop lists vinter)')
+    P('  start gold 500; crops: PLAN 3.10 table and CURRENT repo crops.lua/game_balance.lua; named profiles choose their listed crops only (no winter crops in those choices)')
     P('  plots(day) = cap * (1 - exp(-day/tau)), plot profit/day = (sell - seed) / (grow/eff + 1) * usable-share-of-season;  forest runs/day, areas unlocked per profile')
-    P('  fixed purchases (day, gold) scaled by profile: ' + ', '.join(f'd{d}:{g}' for d, g in INVEST) + ';  lifestyle share spent on furniture/clothes/gifts (not on the home)')
+    P('  fixed purchases (earliest day, gold) scaled by profile, queued until affordable without credit: ' + ', '.join(f'd{d}:{g}' for d, g in INVEST) + '; lifestyle share spent on furniture/clothes/gifts')
     P('  forest run value = node yields of the area (respawn 3 days) + expected finds of its chests/digs/creatures from lua/data/loot_tables.lua (furniture/clothing sold at sell price,')
-    P('  materials kept for the home); materials missing at upgrade time are bought at builder_yard prices (x0.6 for self-craftable planks/stone/lime/rope), gems/moonstone must be found')
+    P('  materials kept for the home); missing materials are accumulated at full builder_yard prices against finite fixed/rotation shelves; no assumed self-crafting discount; gems/moonstone must be found')
+    P('  one builder visit at noon per day, building weekdays + festival closures enforced; fixed shelves replenish at dawn, rotation purchases persist until their slot epoch changes')
+    P('  subset rotation draws use a deterministic Python scenario (not Godot PCG seed parity); current builder picks every pool entry, so builder membership is exact')
+    P('  legacy forest EV omits dynamic gem/weapon pool income (keeps their draw weight, grants zero); node yields/run frequency are named assumptions, not dungeon telemetry')
     P('  hygge level = decor of furniture bought (0.015 per gold spent on furniture, 55 percent of the lifestyle budget), capped by 9 per placed piece of the home capacity')
     for mode in (['plan', 'repo'] if args.crops == 'both' else [args.crops]):
         world = World(mine, repo, mode, args.home_cost_scale)
@@ -556,11 +685,11 @@ def main():
                 if n in r['done']:
                     row.append(f"{r['start'][n]:4d} / {r['done'][n]:4d} / {hours(r['done'][n]):5.1f}")
                 else:
-                    row.append('not reached in 900 days')
+                    row.append(f'not reached in {SIM_DAYS} days')
             rows.append(row)
         P(fmt_table(rows, header))
         P('')
-        P(f'A2. WHAT BINDS EACH TIER (typical profile) [{mode} crops]: day the gold+materials are there / day every gate is open / day the build starts / days spent waiting for found gems')
+        P(f'A2. WHAT BINDS EACH TIER (typical profile) [{mode} crops]: affordability is separate from actual shelves; waits count affordable days with missing gems or stock/closed shops')
         rows = []
         r = res['typical']
         for t in tiers[1:]:
@@ -568,8 +697,10 @@ def main():
             rq = t.get('requires', {})
             gates = ', '.join(rq.get('quests', []) + [f'{k} {v} hearts' for k, v in rq.get('friendship', {}).items()] + ([f"hygge {rq['hygge']}"] if rq.get('hygge') else [])) or '-'
             binding = 'money' if r['money_ready'].get(n, 0) >= r['gate_ready'].get(n, 0) else 'gates'
-            rows.append([n, t['id'], r['money_ready'].get(n, '-'), r['gate_ready'].get(n, '-'), r['start'].get(n, '-'), r['find_wait'].get(n, 0), binding, gates])
-        P(fmt_table(rows, ['tier', 'name', 'money ready d', 'gates open d', 'start d', 'wait for gems d', 'binds', 'gates']))
+            if r['stock_wait'].get(n) and r['start'].get(n, SIM_DAYS + 1) > max(r['money_ready'].get(n, 0), r['gate_ready'].get(n, 0)):
+                binding = 'stock/closed'
+            rows.append([n, t['id'], r['money_ready'].get(n, '-'), r['gate_ready'].get(n, '-'), r['start'].get(n, '-'), r['find_wait'].get(n, 0), r['stock_wait'].get(n, 0), binding, gates])
+        P(fmt_table(rows, ['tier', 'name', 'money ready d', 'gates open d', 'start d', 'wait for gems d', 'wait stock/closed d', 'binds', 'gates']))
         # ---- B: income per stage
         P('')
         P(f'B. EXPECTED GROSS INCOME PER REAL HOUR AT EACH STAGE (home tier held)  [{mode} crops]   (averages over the whole interval: winters have no crops, so intervals with a winter look poorer)')
@@ -779,7 +910,8 @@ def main():
     if args.out:
         Path(args.out).write_text(text + '\n', encoding='utf-8')
     if args.json:
-        slim = {m: {p: dict(done=r['done'], start=r['start'], hours10=r['hours10'], cum=r['cum'], spent_home=r['spent_home']) for p, r in v.items()} for m, v in summary.items()}
+        fields = ('done', 'start', 'hours10', 'cum', 'spent_home', 'gold', 'investments_pending', 'money_ready', 'gate_ready', 'find_wait', 'stock_wait', 'purchases')
+        slim = {m: {p: {key: r[key] for key in fields} for p, r in v.items()} for m, v in summary.items()}
         Path(args.json).write_text(json.dumps(slim, indent=1))
 
 
