@@ -67,6 +67,19 @@ static func build(npc: String, module: String, ctx: Dictionary, guest := false) 
 		page["choices"] = [{"text_key": "REL_TALK_GOODBYE", "action": "close"}]
 	return page
 
+## Persist ownership of unread current-run content before the meeting event can
+## complete the lottery. Absence preserves genuinely completed legacy saves.
+static func begin(npc: String, page: Dictionary) -> void:
+	if npc == "mayor_lyra" and bool(page.get("mayor_welcome", false)):
+		GameManager.set_flag(&"mayor_welcome_pending", true)
+
+## Record the authored welcome only after it was read. Legacy active mayor-talk
+## progress alone cannot prove this: the old tutorial flag hid that very page.
+static func finish(npc: String, page: Dictionary, result: Dictionary) -> void:
+	if npc == "mayor_lyra" and bool(page.get("mayor_welcome", false)) and bool(result.get("completed", false)) and int(result.get("lines_shown", 0)) >= LuaData.arr(page.get("lines", [])).size():
+		GameManager.set_flag(&"mayor_welcome_seen", true)
+		GameManager.clear_flag(&"mayor_welcome_pending")
+
 ## Called after the dialogue's modal has ended. Returns whether to ask the next quiz question.
 static func action(npc: String, action_id: String, data: Dictionary, guest := false) -> bool:
 	if guest and (action_id.begins_with("quest_") or action_id == "open_shop"):

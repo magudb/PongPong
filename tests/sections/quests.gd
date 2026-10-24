@@ -82,6 +82,9 @@ class FakeSocial extends Node:
 	var hearts_of: Dictionary = {}
 	var calls: Array = []
 
+	func can_befriend(_npc: Variant) -> bool:
+		return false # This payout fixture has no social-dialogue decoration.
+
 	func hearts(npc: Variant) -> int:
 		return int(hearts_of.get(str(npc), 0))
 
@@ -130,6 +133,19 @@ func run(p_t) -> void:
 	_quest_spot_needs_match_lua()
 	_dungeon_and_forest_bindings()
 	_forste_dage()
+	for producer in ["initial", "followup", "consumer"]:
+		await preload("res://tests/progression/mining_deliveries.gd").invalid_owner(t, producer)
+	for producer in ["initial", "followup", "consumer"]:
+		for ambient in [&"", &"p2"]:
+			for quest in [&"dark_forest_mining", &"crystal_cave"]:
+				await preload("res://tests/progression/mining_deliveries.gd").owner_hand_in(t, quest, producer, ambient)
+	await preload("res://tests/progression/mining_deliveries.gd").hand_in(t, &"dark_forest_mining", {"iron_ore": 6, "amethyst": 2})
+	await preload("res://tests/progression/mining_deliveries.gd").hand_in(t, &"crystal_cave", {"crystal_shard": 5}, true)
+	await preload("res://tests/progression/mining_deliveries.gd").proof_items_stay_owned(t)
+	for service in ["board", "post"]:
+		for decision in ["cancel", "decline", "accept"]:
+			await preload("res://tests/progression/mining_deliveries.gd").service_offer(t, &"dark_forest_mining", &"crystal_cave", service, decision)
+			await preload("res://tests/progression/mining_deliveries.gd").service_offer(t, &"crystal_cave", &"dark_forest_mining", service, decision)
 	_cleanup()
 
 
@@ -1233,7 +1249,10 @@ func _feature_quests_and_every_objective() -> void:
 ## Returns {problems, forced, objectives}. `events_fed` collects the game_event names it sent.
 func _drive(qid: String, events_fed: Dictionary) -> Dictionary:
 	Svc.clear_overrides()
-	Fresh.new_game(t)
+	if _objectives(qid).any(func(od): return bool(od.get("requires_meeting", false))):
+		await t.start_world()
+	else:
+		Fresh.new_game(t)
 	var fakes := _fakes()
 	var furniture: FakeFurniture = fakes["furniture"]
 	var home: FakeHome = fakes["home"]
@@ -1321,7 +1340,15 @@ func _drive(qid: String, events_fed: Dictionary) -> Dictionary:
 					var any_of := LuaData.strings(od.get("any_of", []))
 					for i in target:
 						var npc := any_of[i] if not any_of.is_empty() else str(od.get("npc", ""))
-						bus.dialogue_started.emit(StringName(npc), StringName(npc))
+						if bool(od.get("requires_meeting", false)):
+							var actor := Npc2D.create({"id": npc, "wander": "0"})
+							actor.area = t.world().area
+							t.world().area.objects.add_child(actor)
+							actor.interact(t.player())
+							await preload("res://tests/progression/mining_deliveries.gd")._close(t)
+							actor.queue_free()
+						else:
+							bus.dialogue_started.emit(StringName(npc), StringName(npc))
 				"animal_adopted":
 					for i in target:
 						bus.animal_adopted.emit(&"animal_t", StringName(_first(od.get("species", ""), "chicken")))

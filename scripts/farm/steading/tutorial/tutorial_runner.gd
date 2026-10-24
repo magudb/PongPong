@@ -19,7 +19,7 @@ var trace: Array[String] = []
 static func run(target: Node) -> bool:
 	if not bool(GameManager.config_value("farm_tutorial.first_morning.enabled", true)):
 		return false
-	if bool(GameManager.get_flag(&"intro_done", false)):
+	if bool(GameManager.get_flag(&"first_morning_done", false)):
 		return true
 	var session := TutorialRunner.new()
 	session.world = target
@@ -88,7 +88,7 @@ func play() -> bool:
 				if str(step.kind) == "hint":
 					EventBus.game_event.emit(&"tutorial_hint_request", {"id": str(step.id)})
 		GameManager.set_flag(&"intro_letter_seen", true)
-		GameManager.set_flag(&"intro_done", true)
+		GameManager.set_flag(&"first_morning_done", true)
 		EventBus.game_event.emit(&"tutorial_finished", {"skipped": skipped})
 	for actor in actors.values():
 		if is_instance_valid(actor):

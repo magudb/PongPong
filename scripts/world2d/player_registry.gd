@@ -85,6 +85,22 @@ static func by_id(player_id: StringName, tree: SceneTree = null) -> Node:
 	return null
 
 
+## Resolve a live registered body, never a caller-supplied id or local fallback.
+## Membership is checked before reading identity: an unregistered clone with
+## player_id = p0 cannot borrow the real p0's quest/inventory row.
+static func registered_id(body: Node) -> StringName:
+	if not is_instance_valid(body) or not body.is_inside_tree() or body.is_queued_for_deletion():
+		return &""
+	var w := world(body.get_tree())
+	if w == null or not w.has_method("all_players"):
+		return &""
+	for registered in w.all_players():
+		if registered == body and "player_id" in body:
+			var id := StringName(str(body.get("player_id")))
+			return id if id != &"" and by_id(id, body.get_tree()) == body else &""
+	return &""
+
+
 ## Player by session peer id (1 = host). Null when no body owns that peer.
 static func by_peer(peer_id: int, tree: SceneTree = null) -> Node:
 	var w := world(tree)

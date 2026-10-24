@@ -73,5 +73,7 @@ function on_day_started(context)
 end
 
 function is_available(context)
-  return not api.has_flag("intro_done")
+  -- QuestManager owns one-shot completion. In existing v3 saves intro_done
+  -- also meant "tutorial skipped/finished", not necessarily lottery progress.
+  return true
 end

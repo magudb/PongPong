@@ -9,7 +9,7 @@ func _opening(t, check_glyphs := false) -> void:
 	var gm: Node = t.autoload("GameManager")
 	var end := Time.get_ticks_msec() + 60000
 	var checked := false
-	while not bool(gm.get_flag(&"intro_done", false)) and Time.get_ticks_msec() < end:
+	while not bool(gm.get_flag(&"first_morning_done", false)) and Time.get_ticks_msec() < end:
 		var screen := _screen(t)
 		if screen != null and screen.is_open():
 			if check_glyphs and not checked and screen._line >= 0 and screen._line < screen._lines.size():
@@ -28,7 +28,7 @@ func _opening(t, check_glyphs := false) -> void:
 			await t.frames(2)
 		else:
 			await t.physics(2)
-	t.check("opening_finishes", bool(gm.get_flag(&"intro_done", false)))
+	t.check("opening_finishes", bool(gm.get_flag(&"first_morning_done", false)))
 	await t.frames(4)
 
 func run(t) -> void:
@@ -79,6 +79,10 @@ func run(t) -> void:
 	bus.game_event.disconnect(step)
 	await _hints_and_quest(t)
 	await _continue(t)
+	await preload("res://tests/progression/first_meeting.gd").after_opening(t, "finished")
+	await preload("res://tests/progression/first_meeting.gd").early_meeting(t)
+	await preload("res://tests/progression/first_meeting.gd").interrupted_welcome(t)
+	await preload("res://tests/progression/first_meeting.gd").legacy_saves(t)
 	await _extension_and_fallback(t)
 	await _skip_and_dispose(t)
 	var validation: Dictionary = t.run_tool(t.python(), ["-B", "-I", ProjectSettings.globalize_path("res://tools/farm_tutorial/tutorial_check.py"), "--selftest"])
@@ -173,7 +177,7 @@ func _continue(t) -> void:
 	t.expect(saves.load_and_enter(0), "Continue after first morning")
 	await t.until(func(): return t.world() != null and t.world().get_instance_id() != old_id and t.player() != null, 10)
 	await t.physics(6)
-	t.check("continue_never_replays_opening", not _screen(t).is_open() and bool(t.autoload("GameManager").get_flag(&"intro_done", false)))
+	t.check("continue_never_replays_opening", not _screen(t).is_open() and bool(t.autoload("GameManager").get_flag(&"first_morning_done", false)))
 	t.check("hints_attach_on_continue", t.world().has_node("FarmTutorialHints"))
 	saves.save_dir = directory
 
@@ -183,8 +187,9 @@ func _skip_and_dispose(t) -> void:
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(6)
 	var gm: Node = t.autoload("GameManager")
-	t.check("escape_skips_whole_sequence", bool(gm.get_flag(&"intro_done", false)) and not _screen(t).is_open())
+	t.check("escape_skips_whole_sequence", bool(gm.get_flag(&"first_morning_done", false)) and not _screen(t).is_open())
 	t.check("escape_still_accepts_both_quests", t.autoload("QuestManager").is_active(&"intro_lottery") and t.autoload("QuestManager").is_active(&"forste_dage"))
+	await preload("res://tests/progression/first_meeting.gd").after_opening(t, "skipped")
 	var actor := Npc2D.create({"id": "postman_pip", "wander": "0"})
 	actor.area = t.world().area
 	t.world().area.objects.add_child(actor)
@@ -270,7 +275,7 @@ func run_windowed(t) -> void:
 	gm.set_config_override("time.minutes_per_real_second", 0.0)
 	var captured := {}
 	var deadline := Time.get_ticks_msec() + 60000
-	while not bool(gm.get_flag(&"intro_done", false)) and Time.get_ticks_msec() < deadline:
+	while not bool(gm.get_flag(&"first_morning_done", false)) and Time.get_ticks_msec() < deadline:
 		var screen := _screen(t)
 		if screen != null and screen.is_open():
 			var key := str(screen._lines[0].get("text_key", "")) if not screen._lines.is_empty() else ""
@@ -288,7 +293,8 @@ func run_windowed(t) -> void:
 			await t.frames(2)
 		else:
 			await t.physics(2)
-	t.check("native_complete_opening", bool(gm.get_flag(&"intro_done", false)) and captured.size() >= 4 and not gm.is_modal_open())
+	t.check("native_complete_opening", bool(gm.get_flag(&"first_morning_done", false)) and captured.size() >= 4 and not gm.is_modal_open())
 	await t.frames(5)
 	await t.capture("player_free")
+	await preload("res://tests/progression/first_meeting.gd").after_opening(t, "native_finished")
 	gm.clear_config_overrides()

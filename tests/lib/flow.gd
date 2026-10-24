@@ -252,7 +252,7 @@ func _arg_count(obj: Object, method: String) -> int:
 func consume_opening() -> void:
 	var gm := autoload("GameManager")
 	var full := ResourceLoader.exists("res://scripts/farm/steading/tutorial/tutorial_runner.gd") and bool(gm.config_value("farm_tutorial.first_morning.enabled", true))
-	var flag := &"intro_done" if full else &"intro_letter_seen"
+	var flag := &"first_morning_done" if full else &"intro_letter_seen"
 	var deadline := Time.get_ticks_msec() + 60000
 	while Time.get_ticks_msec() < deadline:
 		if bool(gm.get_flag(flag, false)) and not gm.is_modal_open():

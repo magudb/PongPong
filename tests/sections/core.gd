@@ -93,6 +93,7 @@ const FEATURE_SIGNALS := {
 ## The devin-review fix round: flags are event-driven (IsoArea used to poll them at 4 Hz). The 2026-10-19 review: a Lua reload
 ## (F9) tells the systems that copied Lua data (LUA-03).
 const REVIEW_SIGNALS := {
+	"npc_meeting_started": "actor:Node",
 	"flag_changed": "flag:StringName,value:Nil",
 	"save_failed": "slot:int,code:String",
 	"crop_auto_watered": "plot_id:StringName,source:StringName",
@@ -631,6 +632,7 @@ func _test_new_game() -> void:
 	# dirty every part of the run first
 	gm.set_flag(&"dirty_flag", true)
 	gm.set_flag(gm.FLAG_INTRO_PENDING, false)
+	gm.set_flag(&"mayor_welcome_pending", false)
 	gm.unlock_zone(&"crystal_cave")
 	gm.day = 17
 	gm.season = &"vinter"
@@ -673,7 +675,7 @@ func _test_new_game() -> void:
 			skin_args.append(entry[1][1] if (entry[1] as Array).size() > 1 else entry[1][0])
 	t.check("new_game_skin_announced_final", skin_args == [&"fairy_meadow"] and seen.get("skin") == &"fairy_meadow", "player_character_changed %s" % [skin_args])
 	t.check("new_game_state_reset_before_signal", seen.get("day") == 1 and seen.get("season") == &"foraar" and seen.get("year") == 1 and seen.get("hour") == 6
-		and seen.get("flags") == {&"intro_pending": true, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0} and seen.get("zones") == [&"farm", &"city"] and seen.get("modals") == [] and seen.get("phase") == PH.PLAYING,
+		and seen.get("flags") == {&"mayor_welcome_pending": true, &"intro_pending": true, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0} and seen.get("zones") == [&"farm", &"city"] and seen.get("modals") == [] and seen.get("phase") == PH.PLAYING,
 		"day/season/year/clock, flags %s, zones, modals gone, phase PLAYING" % [seen.get("flags")])
 	t.check("new_game_intro_pending", gm.get_flag(gm.FLAG_INTRO_PENDING, false) == true and not gm.world_flags.has(&"dirty_flag"), "intro_pending=true, the dirty flag is gone")
 	t.check("new_game_resets_own_state", gm.player_name == "Mia" and gm.farm_name == "Farmen" and gm.character_type == gm.CharacterType.FAIRY and gm.discovered_locations.is_empty()

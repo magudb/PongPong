@@ -148,7 +148,7 @@ func _first_morning(t) -> void:
 	var deadline := Time.get_ticks_msec() + 60000
 	var copy_ok := true
 	var checked := {}
-	while not bool(gm.get_flag(&"intro_done", false)) and Time.get_ticks_msec() < deadline:
+	while not bool(gm.get_flag(&"first_morning_done", false)) and Time.get_ticks_msec() < deadline:
 		var screen := TownProbe.dialogue(t)
 		if screen != null and screen.is_open():
 			screen.chars_per_second = 100000
@@ -186,7 +186,7 @@ func _first_morning(t) -> void:
 	await t.until(func(): return TownProbe.dialogue(t).is_open(), 10)
 	t.tap_key(KEY_ESCAPE)
 	await t.frames(4)
-	_check(t, "L00", "l00_first_morning_esc_skips", bool(gm.get_flag(&"intro_done", false)) and t.autoload("QuestManager").is_active(&"intro_lottery") and t.autoload("QuestManager").is_active(&"forste_dage") and not gm.is_modal_open())
+	_check(t, "L00", "l00_first_morning_esc_skips", bool(gm.get_flag(&"first_morning_done", false)) and t.autoload("QuestManager").is_active(&"intro_lottery") and t.autoload("QuestManager").is_active(&"forste_dage") and not gm.is_modal_open())
 	var pos: Vector2 = t.player().global_position
 	t.hold(&"move_right")
 	await t.physics(5)
