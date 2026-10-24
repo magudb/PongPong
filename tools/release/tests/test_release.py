@@ -105,6 +105,15 @@ class PublishTests(unittest.TestCase):
         self.assertFalse(any(name.endswith(".sha256") for name in files))
         self.assertEqual((self.dist / "SHA256SUMS").read_text(), "".join(f"{self.digests[name]}  {name}\n" for name in sorted(self.digests)))
 
+    def test_rechecking_generated_manifest_preserves_exact_inputs(self):
+        files = release.verify_publish(self.dist, "v1.2.3", self.digests)
+        self.assertEqual(release.verify_publish(self.dist, "v1.2.3", self.digests, manifest_exists=True), files)
+        with self.assertRaises(ValueError):
+            release.verify_publish(self.dist, "v1.2.3", self.digests)
+        (self.dist / "SHA256SUMS").write_text("substituted manifest\n")
+        with self.assertRaises(ValueError):
+            release.verify_publish(self.dist, "v1.2.3", self.digests, manifest_exists=True)
+
     def test_substituted_package_with_its_own_checksums_is_refused(self):
         # A replacement that carries a self-consistent .sha256 and .json record must still fail.
         package = self.dist / "Traetoppen-v1.2.3-windows.zip"
