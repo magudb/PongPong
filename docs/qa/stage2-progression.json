@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "stage": 2,
+  "status": "completed",
+  "merged_source": "eb42f27a5d0de84dfd630e495245443f4363adb1",
+  "merged_at": "2026-10-24T17:43:38Z",
+  "pull_requests": [
+    {"number": 10, "merge": "ffcbb667ec6603063ef29d99ac821a12dafb6357", "reviewed_head": "607852d3fc6abf1ef72095de55158ad103206c31", "hosted_checks": 25, "all_successful": true},
+    {"number": 11, "merge": "eb42f27a5d0de84dfd630e495245443f4363adb1", "reviewed_head": "0c6bce31782f170ed48cc384b5d3dd3b8d227b8d", "hosted_checks": 25, "all_successful": true}
+  ],
+  "implemented": [
+    "Bounded builder shelves replenish 40 at dawn; complete bounded rotating material catalogues preserve prices, gates and home costs.",
+    "Stock-aware fresh-start balance simulation pays for actual accumulated purchases and removes unsupported discounts/investment credit.",
+    "Opening/tutorial completion is distinct from mayor introduction. Current-run unread welcome survives board-first completion, cancellation and save/load, while completed legacy records and rewards are preserved.",
+    "Mining/crystal consuming returns require real physical NPC meetings with atomic required-stock deduction; intentional proof/show-item quests remain non-consuming.",
+    "Live registered-body ownership scopes initial/follow-up dialogue, physical consumers, rewards/signals and post-await read/actions without retaining scope across an await.",
+    "Home-only localized decorating entry supports existing keyboard/controller modal navigation.",
+    "Known transient macOS image verification errors retry within fixed bounds; corruption and unknown errors remain fail-closed.",
+    "Loot fixture measures exact reward gains with empty/existing-stack and repeated-delivery coverage; forest fixture uses real approved art and validates declarations without clearing missing-art diagnostics."
+  ],
+  "independent_review": {
+    "supply_and_decorating": "passed",
+    "native_image_retry_and_ci_fixtures": "passed",
+    "quest_paths": 20,
+    "quest_commit": "1203efe861e4e18b2d110299406b926d5f7a2c5c",
+    "quest_cumulative_diff_sha256": "67b1c7f6b0c9e42db48b14c0330cbc81e35375f57c0dd5e63788a4d6398b83c6",
+    "quest_postimages_verified_before_commit": true,
+    "quest_correction_rounds": 2,
+    "final_security_blockers": 0,
+    "final_logic_blockers": 0
+  },
+  "execution": [
+    {"scope": "parent integrated 21-section headless run", "configuration": "documented TT_PERF_SCALE=4", "checks": 4463, "failed": 0, "existing_skips": 5, "intentional_allowed_messages": 42, "unallowed_engine_messages": 0, "unjudged_timings": 1, "timing_approval": "incomplete under host overload"},
+    {"scope": "parent native windowed first morning through mayor plus decorating", "checks": 30, "failed": 0, "skipped": 0, "engine_messages": 0, "screenshots_written": 8, "visually_inspected": ["mayor first welcome", "Danish home pause menu", "English home pause menu"]},
+    {"scope": "parent related quest/registry/save 14-section run before integration", "configuration": "documented TT_PERF_SCALE=4", "checks": 3778, "failed": 0},
+    {"scope": "author final focused four-hero quest runs", "configuration": "documented TT_PERF_SCALE=4", "checks": 5866, "failed": 0, "skipped": 0, "unjudged_timings": 0},
+    {"scope": "author native ten-section quest compatibility run", "checks": 2260, "failed": 1, "functional_failures": 0, "failure": "social_talk.pick_under_20us", "measured_microseconds": 33.81, "native_limit_microseconds": 20, "result": "fail"},
+    {"scope": "parent release-tool suite", "tests": 74, "result": "pass"},
+    {"scope": "parent native forest/garden pair", "checks": 108, "failed": 0},
+    {"scope": "parent loot focused run per hero", "heroes": ["animal", "fairy", "hobbit", "ghost"], "checks_each": 88, "failed_each": 0}
+  ],
+  "overload_sample": {"measurement": "data.svc_static_call_us", "measured": 37.1395, "native_reference": 6, "configured_limit": 24, "host_load": 34, "cores": 8, "judged": false},
+  "static_checks": ["section registry", "strict localization", "tutorial references and five mutants", "import policy", "git diff --check"],
+  "closure": {
+    "finished_worktrees_and_local_branches_removed": ["finish-progression-supply", "finish-progression-quests", "finish-progression"],
+    "verified_preservation_members_each": 377,
+    "backup_directory": "../PongPong-worktrees/.closed-worktree-backups",
+    "preserved": ["QA logs", "editor metadata/folding state", "shared virtualenv symlink without dereferencing"],
+    "guards": ["clean tracked/untracked status", "exact reviewed heads", "ancestry in destination main", "unchanged ignored inventory", "no observed active handles/administrative locks", "verified archive members and file hashes", "normal git worktree remove and merged branch deletion"],
+    "primary_main_synchronized": true
+  },
+  "not_claimed": ["native timing certification or baseline equivalence", "full castle playthrough or final balance signoff", "complete multiplayer session", "human copy/art/audio/licensing acceptance", "controller hardware, low-end, long-session or child playtests", "Living Characters gameplay implementation"],
+  "future_nonblocking_coverage": ["owner departure during dialogue await", "owner departure before deferred follow-up", "remote-owner completed social topic under conflicting ambient scope"]
+}
