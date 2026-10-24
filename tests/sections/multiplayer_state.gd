@@ -16,7 +16,9 @@ func run(t) -> void:
 	_test_roundtrip(t)
 	_test_reset_profile(t)
 	_test_save_shape(t)
+	_test_runtime_save(t)
 	await _test_save_and_social(t)
+	await _test_world_lifetime(t)
 
 
 func _test_defaults(t) -> void:
@@ -219,3 +221,29 @@ func _test_save_and_social(t) -> void:
 	sm.autosave_enabled = previous_auto
 	gm.start_new_game("Tester", gm.CharacterType.ANIMAL, "Test Farm")
 	gm.change_phase(gm.GamePhase.MENU)
+
+
+func _test_runtime_save(t) -> void:
+	var p := PlayerState.new()
+	var quest = preload("res://scripts/autoload/quest_manager.gd").QuestRuntime.new()
+	quest.id = &"profile_probe"
+	p.quests = {"active": {"profile_probe": quest}, "flags": {"def_profile_probe": {"title": "definition"}, "progress": 3}}
+	var payload := {"players": {"rows": {"p0": p.to_dict()}}}
+	t.autoload("SaveManager")._strip_quest_defs(payload)
+	var parsed: Dictionary = JSON.parse_string(JSON.stringify(payload.players.rows.p0))
+	t.check("quest_runtimes_save_as_plain_records", parsed.quests.active.profile_probe is Dictionary
+		and parsed.quests.active.profile_probe.id == "profile_probe" and not parsed.quests.flags.has("def_profile_probe")
+		and parsed.quests.flags.progress == 3 and p.quests.active.profile_probe == quest and p.quests.flags.has("def_profile_probe"))
+
+
+func _test_world_lifetime(t) -> void:
+	if not await t.start_world():
+		return
+	var host := PlayerRegistry.state(&"p0")
+	var guest := PlayerRegistry.state(&"p1")
+	host.gold = 711
+	guest.gold = 99
+	await t.clear_scene()
+	t.check("profile_rows_survive_world_teardown", PlayerRegistry.state(&"p0") == host
+		and PlayerRegistry.state(&"p1") == guest and host != guest
+		and t.autoload("EconomyManager").gold == 711 and guest.gold == 99)

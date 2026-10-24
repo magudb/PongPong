@@ -11,6 +11,8 @@ extends RefCounted
 ## the real marker handlers: npc_markers_use_the_real_handler, handler_made_nodes_are_levelled, when_markers_follow_flags, every_level_reachable_with_the_stub_player,
 ## walk_farm_to_hyggebyen_windowed (the M1a preview citizens and hints were removed once the town director and the HUD landed).
 ## planner_keeps_grid_corners, planner_constrains_arrival and planner_uses_the_current_deck: keep actual turning cells, require a goal inside the trigger and route beneath overlapping bridge mouths.
+## planner_caches_terrain_not_citizens: moving NPC bodies leave the cached grid open while static counter barriers on the same layer remain blocked.
+## city_driver_walks_around_citizens: steer the real player around a solid citizen on the E-to-B5 approach.
 ## fix round of the review (regressions): canopy_gives_way_when_zoomed_out, camera_headroom_above_the_top_platforms, overview_keeps_the_top_platforms_in_view,
 ## scheduled_citizens_replace_preview_labels, hud_owns_prompts_whispers_and_toasts, and windowed
 ## overview_shows_the_top_platforms, vram_city_increment_within_budget, hints_visible_at_the_ladder_foot.
@@ -81,6 +83,8 @@ func run(t) -> void:
 	_world = t.world()
 	_start_id = _world.area.map.id if _world.area != null else &""
 	await _enter_city(t)
+	await _planner_obstacle_regression(t)
+	await _citizen_steering_regression(t)
 	_build_checks(t)
 	_extract_checks(t)
 	await _budgets(t)
@@ -1374,12 +1378,16 @@ class Planner:
 	var space: PhysicsDirectSpaceState2D
 	var query: PhysicsShapeQueryParameters2D
 	var world_mask := 0
+	var tree: SceneTree
+	var player_rid: RID
 	const CLEAR: Array[Vector2] = [Vector2(28, 0), Vector2(-28, 0), Vector2(0, 16), Vector2(0, -16)]
 
 	func _init(r: LevelRegistry, c: float = 12.0, actor: CharacterBody2D = null) -> void:
 		reg = r
 		cell = c
 		if actor != null:
+			tree = actor.get_tree()
+			player_rid = actor.get_rid()
 			space = actor.get_world_2d().direct_space_state
 			query = PhysicsShapeQueryParameters2D.new()
 			for child in actor.get_children():
@@ -1400,6 +1408,13 @@ class Planner:
 		ok.resize(cols * rows)
 		if query != null:
 			query.collision_mask = world_mask | lv.mask_bit()
+			# Cache terrain, not a snapshot of moving citizens. Keep static
+			# counter bars on the NPC layer in the physics query.
+			var ignored: Array[RID] = [player_rid]
+			for npc in tree.get_nodes_in_group("npc"):
+				if npc is CharacterBody2D:
+					ignored.append(npc.get_rid())
+			query.exclude = ignored
 		for iy in rows:
 			for ix in cols:
 				var p: Vector2 = rect.position + Vector2((float(ix) + 0.5) * cell, (float(iy) + 0.5) * cell)
@@ -1563,6 +1578,78 @@ func _planner_regression(t) -> void:
 		"B5 arrival to B4 beneath bridge mouths: %d waypoints, last %s, bridge end %s" % [route.size(), route[-1] if not route.is_empty() else Vector2.INF, bridge_end])
 
 
+func _planner_obstacle_regression(t) -> void:
+	var planner := Planner.new(_reg, 12.0, _world.player)
+	var grid := planner._grid(&"g")
+	var index: int = (grid.ok as PackedByteArray).find(1)
+	if index < 0:
+		t.check("planner_caches_terrain_not_citizens", false, "no open kitchen-garden cell")
+		return
+	var at := planner.center(grid, index)
+	var citizen := CharacterBody2D.new()
+	citizen.collision_layer = Iso.LAYER_NPC
+	citizen.collision_mask = 0
+	var shape := CircleShape2D.new()
+	shape.radius = 25.0
+	var collision := CollisionShape2D.new()
+	collision.shape = shape
+	citizen.add_child(collision)
+	_area.objects.add_child(citizen)
+	citizen.add_to_group("npc")
+	citizen.global_position = at
+	await t.physics(2)
+	var with_citizen := Planner.new(_reg, 12.0, _world.player)._grid(&"g")
+	var bar := StaticBody2D.new()
+	bar.collision_layer = Iso.LAYER_NPC
+	var bar_shape := CollisionShape2D.new()
+	bar_shape.shape = shape
+	bar.add_child(bar_shape)
+	_area.colliders.add_child(bar)
+	bar.global_position = at
+	await t.physics(2)
+	var with_bar := Planner.new(_reg, 12.0, _world.player)._grid(&"g")
+	t.check("planner_caches_terrain_not_citizens", with_citizen.ok[index] == 1 and with_bar.ok[index] == 0,
+		"moving citizen leaves the cached cell open; a static NPC-layer bar blocks it")
+	citizen.queue_free()
+	bar.queue_free()
+	await t.physics(2)
+
+
+func _citizen_steering_regression(t) -> void:
+	var p: CharacterBody2D = _world.player
+	var previous_position := p.global_position
+	var previous_level := ActorLevel.level_id(p)
+	# A citizen across the narrow E-to-B5 approach must be walked around,
+	# without disabling its collision or changing the authored bridge geometry.
+	p.global_position = _sk(1449.646, 556.378)
+	p.velocity = Vector2.ZERO
+	ActorLevel.set_level(p, _reg.get_level(&"e"))
+	var citizen := CharacterBody2D.new()
+	citizen.collision_layer = Iso.LAYER_NPC
+	citizen.collision_mask = 0
+	var shape := CircleShape2D.new()
+	shape.radius = 20.0
+	var body := CollisionShape2D.new()
+	body.shape = shape
+	citizen.add_child(body)
+	_area.objects.add_child(citizen)
+	citizen.add_to_group("npc")
+	citizen.global_position = _sk(1370.0, 575.333)
+	await t.physics(2)
+	var collision := KinematicCollision2D.new()
+	var obstructed := p.test_move(Transform2D(0.0, _sk(1389.646, 556.378)), _sk(-36.0, 36.0), collision)
+	var planner := Planner.new(_reg, 12.0, p)
+	var route := planner.path(&"e", p.global_position, _reg.get_level(&"b5").path[0])
+	var result := await _steer(t, route)
+	t.check("city_driver_walks_around_citizens", obstructed and collision.get_collider() == citizen and result.ok,
+		"the direct approach hits the citizen; real-input steering reaches the bridge mouth: %s" % str(result))
+	citizen.queue_free()
+	p.global_position = previous_position
+	p.velocity = Vector2.ZERO
+	ActorLevel.set_level(p, _reg.get_level(previous_level))
+	await t.physics(2)
+
+
 func _press(t, dir: Vector2) -> void:
 	var table: Array = [[&"move_right", maxf(dir.x, 0.0)], [&"move_left", maxf(-dir.x, 0.0)], [&"move_back", maxf(dir.y, 0.0)], [&"move_forward", maxf(-dir.y, 0.0)]]
 	for e in table:
@@ -1601,13 +1688,22 @@ func _steer(t, pts: PackedVector2Array, stop_when: Callable = Callable(), tol: f
 		if idx >= pts.size():
 			ok = true
 			break
-		var delta := Iso.to_ground(pts[idx] - p.global_position)
+		var motion := pts[idx] - p.global_position
+		var level: Level = _reg.get_level(ActorLevel.level_id(p))
+		# Paths cache static terrain. Use the journey driver's real-physics
+		# avoidance for citizens that move into them; keep bridge centre lines.
+		if level != null and not level.is_bridge():
+			motion = JourneyWalker._around_citizen(t, p, motion)
+		var delta := Iso.to_ground(motion)
 		_press(t, delta.normalized() * clampf(delta.length() / 32.0, 0.25, 1.0))
 		if frames % 40 == 0:
 			if p.global_position.distance_to(last_pos) < 5.0:
 				still += 1
 				if still >= 2:
 					stuck_at = p.global_position
+					var collision := (p as CharacterBody2D).get_last_slide_collision()
+					if collision != null:
+						t.info("city tour collision: %s at %s, normal %s" % [collision.get_collider(), collision.get_position(), collision.get_normal()])
 					t.info("city tour stuck: waypoint %d/%d at %s, route %s" % [idx, pts.size(), pts[idx], str(pts)])
 					break
 			else:

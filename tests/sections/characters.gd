@@ -952,8 +952,8 @@ func run_windowed(t) -> void:
 
 ## The plan 8.6 budgets in the REAL renderer (the headless dummy renderer cannot see a GPU upload), measured with the same
 ## helpers as tests/perf_world.gd, whose budget constants are asserted here (vsync is switched off for the measurement).
-## NOISE RULE (perf_world.gd): every budget is the best of 3 repetitions, because load on a shared machine only adds time while
-## a real regression is in every repetition (this section ran at load averages of 22-30 while it was written).
+## Every budget is the best of 3 repetitions. Use the harness's renderer-aware budget policy:
+## software rasterizers report measurements without judging hardware GPU limits; functional checks still run.
 func _windowed_budgets(t, objects: Node2D) -> void:
 	var old_cap: Dictionary = PerfWorld.uncap()
 	var load_before: Dictionary = PerfWorld.machine_load()
@@ -971,23 +971,15 @@ func _windowed_budgets(t, objects: Node2D) -> void:
 	await t.frames(2)
 	PerfWorld.restore_cap(old_cap)
 	var load_after: Dictionary = PerfWorld.machine_load()
-	var busy: bool = bool(load_before["busy"]) or bool(load_after["busy"])
 	var load_text := "%s before, %s after" % [load_before["text"], load_after["text"]]
+	t.check("warm_clips_complete_with_pacing_windowed", bool(suite["done"]) and int(suite["frames"]) >= PerfWorld.WARM_LIST.size(),
+		"cold sheets finish loading across at least one frame per clip: %s" % str(suite))
 	# warm_clips on characters whose sheets are cold: the worst frame stays inside the 8 ms budget (the pacing guard itself is the headless
 	# characters.warm_clips_one_sheet_per_frame; this is the real-renderer cost of the sheets)
-	_judge(t, "warm_clips_worst_frame_real_renderer", bool(suite["done"]) and int(suite["frames"]) >= PerfWorld.WARM_LIST.size() and float(suite["worst_ms"]) < PerfWorld.BUDGET_WARM_FRAME_MS, busy, "5 cold S3TC sheets finalised over %d frames in %.0f ms, worst frame %.1f ms = best of 3 characters %s (limit %.0f ms; a synchronous load of the five sheets in one frame measured 12.6-23.5 ms); %s" % [int(suite["frames"]), float(suite["wall_ms"]), float(suite["worst_ms"]), str(suite["all_worst_ms"]), PerfWorld.BUDGET_WARM_FRAME_MS, load_text])
+	t.render_budget("warm_clips_worst_frame_real_renderer", float(suite["worst_ms"]), PerfWorld.BUDGET_WARM_FRAME_MS, "5 cold S3TC sheets finalised over %d frames in %.0f ms, worst frame %.1f ms = best of 3 characters %s (limit %.0f ms; a synchronous load of the five sheets in one frame measured 12.6-23.5 ms); %s" % [int(suite["frames"]), float(suite["wall_ms"]), float(suite["worst_ms"]), str(suite["all_worst_ms"]), PerfWorld.BUDGET_WARM_FRAME_MS, load_text])
 	# after warm_clips the first play of a clip is cheap
-	_judge(t, "warmed_first_play_under_budget", float(suite["warmed_worst_ms"]) < PerfWorld.BUDGET_WARMED_MS, busy, "first play of 4 warmed clips, slowest at its best of 3: %.1f ms (limit %.0f ms) %s; %s" % [float(suite["warmed_worst_ms"]), PerfWorld.BUDGET_WARMED_MS, str(suite["warmed_best"]), load_text])
+	t.render_budget("warmed_first_play_under_budget", float(suite["warmed_worst_ms"]), PerfWorld.BUDGET_WARMED_MS, "first play of 4 warmed clips, slowest at its best of 3: %.1f ms (limit %.0f ms) %s; %s" % [float(suite["warmed_worst_ms"]), PerfWorld.BUDGET_WARMED_MS, str(suite["warmed_best"]), load_text])
 	# the first play of a clip nobody loaded yet (no warm_clips): synchronous load + upload inside one frame (plan 8.6: < 40 ms)
-	_judge(t, "unwarmed_first_play_under_budget", float(cold["worst_ms"]) < PerfWorld.BUDGET_UNWARMED_MS, busy, "first play of 5 unloaded clips on 3 fresh characters, slowest clip at its best: %.1f ms (limit %.0f ms); all samples %s; %s" % [float(cold["worst_ms"]), PerfWorld.BUDGET_UNWARMED_MS, str(cold["all"]), load_text])
+	t.render_budget("unwarmed_first_play_under_budget", float(cold["worst_ms"]), PerfWorld.BUDGET_UNWARMED_MS, "first play of 5 unloaded clips on 3 fresh characters, slowest clip at its best: %.1f ms (limit %.0f ms); all samples %s; %s" % [float(cold["worst_ms"]), PerfWorld.BUDGET_UNWARMED_MS, str(cold["all"]), load_text])
 	# 100 animated characters at game zoom: the frame stays inside the 8 ms budget
-	_judge(t, "hundred_characters_frame_budget", float(m["ms"]) < PerfWorld.BUDGET_100_MS, busy, "100 animated characters: mean frame %.2f ms = best of 3 windows %s (%.0f fps, worst frame %.1f ms), limit %.0f ms; %s" % [float(m["ms"]), str(m["all_ms"]), float(m["fps"]), float(m["worst_ms"]), PerfWorld.BUDGET_100_MS, load_text])
-
-
-## A pass is a pass (load only adds time). A miss is a failure on a quiet machine and a visible SKIP, not a verdict, on a busy
-## one: a budget cannot be judged while other jobs eat the cores (the same rule as tests/perf_world.gd, exit code 3 there).
-func _judge(t, check_name: String, within: bool, busy: bool, detail: String) -> void:
-	if within or not busy:
-		t.check(check_name, within, detail)
-	else:
-		t.skip("characters.%s NOT JUDGED: over budget while the machine is busy, rerun when quiet. %s" % [check_name, detail])
+	t.render_budget("hundred_characters_frame_budget", float(m["ms"]), PerfWorld.BUDGET_100_MS, "100 animated characters: mean frame %.2f ms = best of 3 windows %s (%.0f fps, worst frame %.1f ms), limit %.0f ms; %s" % [float(m["ms"]), str(m["all_ms"]), float(m["fps"]), float(m["worst_ms"]), PerfWorld.BUDGET_100_MS, load_text])

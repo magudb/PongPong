@@ -6,6 +6,7 @@ import plistlib
 import shutil
 import subprocess
 import sys
+import time
 
 ROOT = Path(__file__).resolve().parents[2]
 UNINSTALL_KEY = r"Software\Microsoft\Windows\CurrentVersion\Uninstall\Traetoppen"
@@ -44,8 +45,23 @@ def macos(product, output, work):
         "For an installation just for you, copy it to ~/Applications instead.\n\n"
         "Settings > Updates installs new releases after confirmation.\n"
         "Updating needs a writable installation folder; saves stay in your user-data folder.\n", encoding="utf-8")
-    run(["hdiutil", "create", "-volname", "Trætoppen", "-srcfolder", contents,
-         "-format", "UDZO", "-ov", output])
+    command = ["hdiutil", "create", "-volname", "Trætoppen", "-srcfolder", contents,
+               "-format", "UDZO", "-ov", output]
+    # macOS runners can briefly hold the staging folder during image creation.
+    # Retry that specific failure; invalid inputs and other errors still fail immediately.
+    for attempt in range(3):
+        try:
+            result = run(command, stderr=subprocess.PIPE, text=True)
+        except subprocess.CalledProcessError as error:
+            print(error.stderr or "", file=sys.stderr, end="")
+            if "Resource busy" not in (error.stderr or "") or attempt == 2:
+                raise
+            delay = 5 * (attempt + 1)
+            print(f"Disk-image creation is busy; retrying in {delay} seconds", flush=True)
+            time.sleep(delay)
+        else:
+            print(result.stderr or "", file=sys.stderr, end="")
+            break
 
 
 def smoke_macos(image, archive, work, smoke_game):

@@ -10,7 +10,7 @@ extends RefCounted
 ##
 ## Named checks: theme_no_gold_hover, theme_no_red, theme_ink_outline, theme_font_scale, theme_focus_styles, theme_calcell_variations, theme_label_variations_and_proxy,
 ## pill_heights, sliders_are_ttslider, guide_crops_pinned, fixtures_guide_focus_released, fixtures_guide_extras_hidden, fixtures_all_registry_fixtures_resolve,
-## live_screens_sweep (+ one check per live row and check), no_legacy_screens_left, mutant_*, windowed_rings, windowed_panels, windowed_buttons, saveload_adjacent_autosave_rings.
+## live_screens_sweep (+ one check per live row and check), no_legacy_screens_left, mutant_*, windowed_rings, windowed_panels, windowed_buttons, saveload_adjacent_autosave_rings, world_fixture_button_starts_unobscured.
 const SECTION := "ui_conformance"
 const TIMEOUT_S := 600.0
 
@@ -701,9 +701,18 @@ func _saveload_autosave_rings(t) -> void:
 	saves.save_dir = previous_dir
 
 
+func _world_fixture_button(t) -> void:
+	var driver = preload("res://tests/lib/ui_home_driver.gd").new()
+	var screen: Node = await driver.open(t, t.root, {"screen": "animal_care_ui", "tier": 2})
+	var report := await UiAudit.button_pixels(t, screen.get_node("%BrushButton"), {"shot": "animal_care_initial_button"})
+	t.check("world_fixture_button_starts_unobscured", report.ok, str(report.get("profile", [])))
+	await driver.close(t, screen, t.root)
+
+
 func run_windowed(t) -> void:
 	await t.clear_scene()
 	await _saveload_autosave_rings(t)
+	await _world_fixture_button(t)
 	TranslationServer.set_locale("da")
 	var ring_reports: Array[Dictionary] = []
 	var ring_notes: Array[String] = []
