@@ -34,6 +34,27 @@ def windows(product, output, version, repository, compiler=None):
          ROOT / "tools/release/windows.nsi"])
 
 
+def _hdiutil_retry(command):
+    # Only idempotent create (-ov) and read-only verify use this bounded retry.
+    # Attaching/detaching mounts remains one-shot: do not repeat stateful operations blindly.
+    for attempt in range(3):
+        try:
+            result = run(command, stderr=subprocess.PIPE, text=True)
+        except subprocess.CalledProcessError as error:
+            print(error.stderr or "", file=sys.stderr, end="")
+            transient = any(reason in (error.stderr or "")
+                            for reason in ("Resource busy", "Resource temporarily unavailable"))
+            if not transient or attempt == 2:
+                raise
+            delay = 5 * (attempt + 1)
+            operation = "creation" if command[1] == "create" else "verification"
+            print(f"Disk-image {operation} is busy; retrying in {delay} seconds", flush=True)
+            time.sleep(delay)
+        else:
+            print(result.stderr or "", file=sys.stderr, end="")
+            return result
+
+
 def macos(product, output, work):
     contents = work / "disk-image"
     contents.mkdir()
@@ -47,25 +68,11 @@ def macos(product, output, work):
         "Updating needs a writable installation folder; saves stay in your user-data folder.\n", encoding="utf-8")
     command = ["hdiutil", "create", "-volname", "Trætoppen", "-srcfolder", contents,
                "-format", "UDZO", "-ov", output]
-    # macOS runners can briefly hold the staging folder during image creation.
-    # Retry that specific failure; invalid inputs and other errors still fail immediately.
-    for attempt in range(3):
-        try:
-            result = run(command, stderr=subprocess.PIPE, text=True)
-        except subprocess.CalledProcessError as error:
-            print(error.stderr or "", file=sys.stderr, end="")
-            if "Resource busy" not in (error.stderr or "") or attempt == 2:
-                raise
-            delay = 5 * (attempt + 1)
-            print(f"Disk-image creation is busy; retrying in {delay} seconds", flush=True)
-            time.sleep(delay)
-        else:
-            print(result.stderr or "", file=sys.stderr, end="")
-            break
+    _hdiutil_retry(command)
 
 
 def smoke_macos(image, archive, work, smoke_game):
-    run(["hdiutil", "verify", image])
+    _hdiutil_retry(["hdiutil", "verify", image])
     mount = work / "mounted-installer"
     mount.mkdir()
     run(["hdiutil", "attach", "-readonly", "-nobrowse", "-mountpoint", mount, image])
