@@ -104,7 +104,7 @@ func _malformed_primary() -> void:
 	_fresh()
 	t.check("malformed_backup_created", sm.save_game(0) and sm.save_game(0), "")
 	var payload: Dictionary = sm.gather_payload()
-	payload["quests"]["active"] = {"bad": {"id": "bad", "objectives": []}}
+	payload["players"]["rows"]["p0"]["quests"]["active"] = {"bad": {"id": "bad", "objectives": []}}
 	_write(sm.slot_path(0), JSON.stringify(payload))
 	var inspected: Dictionary = sm.inspect_slot(0)
 	var loaded: bool = sm.load_game(0)
@@ -163,7 +163,7 @@ func _roof_charges_twice() -> void:
 	bus.player_inventory_changed.disconnect(on_change)
 	var after_first: int = eco.count_item(&"wood")
 	t.check("roof_cost_and_progress_commit_together", after_first == 8 and eco.count_item(&"moss") == 4 and snapshots.size() == 1
-		and snapshots[0]["quests"]["active"]["fix_roof"]["objectives"]["repair_roof"]["done"], "inventory callback sees the complete transaction and cannot reenter it")
+		and snapshots[0]["players"]["rows"]["p0"]["quests"]["active"]["fix_roof"]["objectives"]["repair_roof"]["done"], "inventory callback sees the complete transaction and cannot reenter it")
 	area.call("_on_quest_spot", null, marker)
 	t.check("completed_roof_objective_does_not_charge_again", eco.count_item(&"wood") == after_first,
 		"wood after first=%s, after second=%s; quest remains active=%s" % [after_first, eco.count_item(&"wood"), qm.is_active(&"fix_roof")])

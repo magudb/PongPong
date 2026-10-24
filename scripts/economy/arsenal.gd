@@ -2,10 +2,14 @@ class_name Arsenal
 extends Node
 ## Weapons stay owned outside the backpack; the equipped copy is never spare stock.
 const CAP := 9
-var owned: Dictionary = {}
+var owned: Dictionary:
+	get: return PlayerRegistry.state().arsenal
+	set(value): PlayerRegistry.state().arsenal = value
 ## Weapons of a save that this build cannot hold (content drift: no longer a weapon, or copies above today's cap): {id: count}.
 ## Saved as they were and owned again by the load that can hold them.
-var orphans: Dictionary = {}
+var orphans: Dictionary:
+	get: return PlayerRegistry.state().arsenal_orphans
+	set(value): PlayerRegistry.state().arsenal_orphans = value
 func count_total(id: Variant) -> int:
 	return int(owned.get(StringName(str(id)),0))
 func count_stock(id: Variant) -> int:

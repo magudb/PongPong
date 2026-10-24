@@ -1423,8 +1423,8 @@ func _floors_hosting() -> void:
 		for c in bus.new_game_started.get_connections():
 			if (c["callable"] as Callable).get_object() == node:
 				wired = true
-	t.check("dungeon_floors_node_hosted_and_section_registered", hosted and node != null and section == node and order == 45 and wired and sm.FEATURE_ORDERS.size() == 5 and not sm.FEATURE_ORDERS.has("dungeon") and ls.floors() == node,
-		"LootService adds the child node 'DungeonFloors' when its script exists and registers it as the section `dungeon` with the explicit order 45 (FEATURE_ORDERS stays 5 entries, reset() wired to new_game_started)")
+	t.check("dungeon_floors_node_hosted_and_section_registered", hosted and node != null and section == node and order == 45 and wired and sm.FEATURE_ORDERS.size() == 6 and sm.FEATURE_ORDERS.get("players") == 15 and not sm.FEATURE_ORDERS.has("dungeon") and ls.floors() == node,
+		"LootService adds the child node 'DungeonFloors' when its script exists and registers it as the section `dungeon` with the explicit order 45 (FEATURE_ORDERS includes players at 15, reset() wired to new_game_started)")
 	var again: bool = ls.host_dungeon_floors()
 	t.expect(again and ls.get_children().filter(func(n: Node) -> bool: return n.name == "DungeonFloors").size() == 1, "hosting twice adds no second node")
 	var payload: Dictionary = sm.gather_payload()

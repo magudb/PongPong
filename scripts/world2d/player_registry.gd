@@ -13,6 +13,20 @@ const MAX_PLAYERS := 4
 ## The managers must see the same row or they diverge.
 static var _fallback_state := PlayerState.new()
 static var _states: Dictionary = {&"p0": _fallback_state}
+static var _acting_id: StringName = &""
+
+
+## Synchronous actor scope for host-side operations; restored even when scopes nest.
+static func for_player(player_id: StringName, work: Callable) -> Variant:
+	var previous := _acting_id
+	_acting_id = player_id
+	var result: Variant = work.call()
+	_acting_id = previous
+	return result
+
+
+static func acting_id() -> StringName:
+	return _acting_id if _acting_id != &"" else local_id()
 
 
 static func reset_states() -> void:
@@ -20,12 +34,13 @@ static func reset_states() -> void:
 	_states = {&"p0": _fallback_state}
 
 
-## Session rows survive the title/world boundary; every facade shares these instances.
+## The acting player's session row, retained while no world scene exists.
 static func state(player_id: StringName = &"", tree: SceneTree = null) -> PlayerState:
-	var id := player_id if player_id != &"" else local_id(tree)
+	var id := player_id if player_id != &"" else (_acting_id if _acting_id != &"" else local_id(tree))
 	if not _states.has(id):
 		_states[id] = PlayerState.new(id, int(str(id).trim_prefix("p")) + 1)
 	return _states[id]
+
 
 
 ## The live WorldRoot2D, or null when no world is in the tree.

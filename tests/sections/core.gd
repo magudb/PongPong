@@ -735,6 +735,8 @@ func _test_from_dict() -> void:
 	gm.play_time_seconds = 321.5
 	var saved: Dictionary = gm.to_dict()
 	var back: Dictionary = JSON.parse_string(JSON.stringify(saved))
+	# Legacy game dictionaries carried friendship mirrors before the v3 player row.
+	back["world_flags"]["friend_x"] = 2
 	gm.start_new_game("Other", gm.CharacterType.ANIMAL, "X")
 	gm.change_phase(PH.MENU)
 	var w := _watch(["player_character_changed", "new_game_started", "day_started"])

@@ -45,7 +45,7 @@ func run(t, suite) -> void:
 		return # Migration/drift stress loads are covered by the headless matrix.
 	var legacy: Dictionary = saves.gather_payload().duplicate(true)
 	legacy.erase("social")
-	legacy.game.world_flags["friend_gardener_hoppe"] = 3
+	legacy.players.rows.p0.flags["friend_gardener_hoppe"] = 3
 	_write(saves.slot_path(4), legacy)
 	loaded = await _load(t, 4)
 	suite._check(t, "L13", "l13_old_save_without_social", loaded and sm.hearts("gardener_hoppe") == 3)
