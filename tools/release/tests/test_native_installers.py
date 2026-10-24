@@ -14,6 +14,64 @@ import native_installers as installers
 
 
 class NativeInstallerTests(unittest.TestCase):
+    def verify_with_results(self, results):
+        class ReachedMount(Exception):
+            pass
+
+        operations = []
+        pending = iter(results)
+
+        def probe(command, **options):
+            operations.append(command[1])
+            if command[:2] == ["hdiutil", "attach"]:
+                raise ReachedMount()
+            self.assertEqual(command[:2], ["hdiutil", "verify"])
+            result = next(pending)
+            if isinstance(result, Exception):
+                raise result
+            return result
+
+        failure = None
+        with tempfile.TemporaryDirectory() as temporary, \
+                mock.patch.object(installers, "run", side_effect=probe), \
+                mock.patch.object(installers.time, "sleep") as sleep:
+            root = Path(temporary)
+            boot = mock.Mock()
+            try:
+                installers.smoke_macos(root / "installer.dmg", root / "update.zip", root, boot)
+            except ReachedMount:
+                pass
+            except subprocess.CalledProcessError as error:
+                failure = error
+            boot.assert_not_called()
+            return failure, operations, sleep.call_args_list
+
+    def test_dmg_verify_recovers_from_temporarily_unavailable(self):
+        busy = subprocess.CalledProcessError(1, "hdiutil", stderr="hdiutil: verify failed - Resource temporarily unavailable\n")
+        success = subprocess.CompletedProcess("hdiutil", 0, stderr="")
+        failure, operations, waits = self.verify_with_results([busy, success])
+        self.assertIsNone(failure, "verification must retry a transient OS resource error before mounting")
+        self.assertEqual(operations, ["verify", "verify", "attach"])
+        self.assertEqual(waits, [mock.call(5)])
+
+    def test_dmg_verify_bounds_both_transient_errors(self):
+        for reason in ("Resource busy", "Resource temporarily unavailable"):
+            with self.subTest(reason=reason):
+                busy = subprocess.CalledProcessError(1, "hdiutil", stderr="hdiutil: verify failed - " + reason)
+                failure, operations, waits = self.verify_with_results([busy, busy, busy])
+                self.assertIs(failure, busy)
+                self.assertEqual(operations, ["verify", "verify", "verify"])
+                self.assertEqual(waits, [mock.call(5), mock.call(10)])
+
+    def test_dmg_verify_does_not_retry_permanent_or_unknown_errors(self):
+        for reason in ("hdiutil: verify failed - image data corrupted", "No space left on device", None):
+            with self.subTest(reason=reason):
+                error = subprocess.CalledProcessError(1, "hdiutil", stderr=reason)
+                failure, operations, waits = self.verify_with_results([error])
+                self.assertIs(failure, error)
+                self.assertEqual(operations, ["verify"])
+                self.assertEqual(waits, [])
+
     def package_with_results(self, root, results):
         product = root / "Traetoppen.app"
         product.mkdir()
@@ -39,6 +97,14 @@ class NativeInstallerTests(unittest.TestCase):
             self.package_with_results(Path(temporary), [busy, busy, busy])
         self.assertEqual(len(self.create_calls), 3)
         self.assertEqual(self.waits, [mock.call(5), mock.call(10)])
+
+    def test_dmg_creation_recovers_from_temporarily_unavailable(self):
+        busy = subprocess.CalledProcessError(1, "hdiutil", stderr="hdiutil: create failed - Resource temporarily unavailable\n")
+        success = subprocess.CompletedProcess("hdiutil", 0, stderr="")
+        with tempfile.TemporaryDirectory() as temporary:
+            self.package_with_results(Path(temporary), [busy, success])
+        self.assertEqual(len(self.create_calls), 2)
+        self.assertEqual(self.waits, [mock.call(5)])
 
     def test_dmg_creation_does_not_retry_other_errors(self):
         failure = subprocess.CalledProcessError(1, "hdiutil", stderr="hdiutil: create failed - No space left on device\n")

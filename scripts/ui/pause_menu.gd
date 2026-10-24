@@ -8,9 +8,9 @@ var _rows: Array[Button] = []
 var _row_specs: Array = []
 var _leaving := false
 ## The world hotkey of a transfer row, shown right-aligned on it (UI_NAVIGATION.md S07, review UX-17). The glyph is read from the
-## live InputMap; a pad has none of these buttons, so its rows show none.
+## live InputMap, including the decorating shortcut available on keyboard and pad.
 const ROW_HOTKEYS := {"InventoryButton": &"inventory", "MapButton": &"map", "JournalButton": &"journal", "PeopleButton": &"people",
-	"BuildButton": &"build_menu", "WardrobeButton": &"wardrobe", "CollectionButton": &"collection"}
+	"BuildButton": &"build_menu", "DecorateButton": &"decorate", "WardrobeButton": &"wardrobe", "CollectionButton": &"collection"}
 
 func _init() -> void:
 	super._init()
@@ -66,10 +66,12 @@ func _screen(id: StringName) -> Node:
 func _specs() -> Array:
 	var rows: Array = [["ResumeButton", "UI_RESUME", close]]
 	var world := get_tree().get_first_node_in_group("world_2d")
-	for spec in [["inventory_ui", "InventoryButton", "INV_TITLE"], ["map_ui", "MapButton", "MAP_TITLE"], ["quest_journal", "JournalButton", "QJ_TITLE"], ["people", "PeopleButton", "PAUSE_PEOPLE"], ["build_menu_ui", "BuildButton", "PAUSE_BUILD"], ["garderobe", "WardrobeButton", "PAUSE_WARDROBE"], ["samlerbog", "CollectionButton", "PAUSE_COLLECTION"]]:
+	for spec in [["inventory_ui", "InventoryButton", "INV_TITLE"], ["map_ui", "MapButton", "MAP_TITLE"], ["quest_journal", "JournalButton", "QJ_TITLE"], ["people", "PeopleButton", "PAUSE_PEOPLE"], ["build_menu_ui", "BuildButton", "PAUSE_BUILD"], ["indretning", "DecorateButton", "INDRET_TITLE"], ["garderobe", "WardrobeButton", "PAUSE_WARDROBE"], ["samlerbog", "CollectionButton", "PAUSE_COLLECTION"]]:
 		if _screen(StringName(spec[0])) == null:
 			continue
 		if spec[0] == "build_menu_ui" and (world == null or world.get("area").map.id != &"farm"):
+			continue
+		if spec[0] == "indretning" and (world == null or world.get("area").map.id != &"home"):
 			continue
 		rows.append([spec[1], spec[2], _transfer.bind(StringName(spec[0]))])
 	if _screen(&"cheat_menu") != null:

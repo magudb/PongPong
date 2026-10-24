@@ -46,6 +46,7 @@ func run(tt) -> void:
 	_discount_contract()
 	_weekdays()
 	_through_shop_system()
+	preload("res://tests/lib/features/builder_supply.gd").run(t)
 	_cleanup()
 
 
@@ -230,7 +231,7 @@ func _row_shapes() -> void:
 	Fresh.jump_to_total_day(5)
 	var spec := {"furniture_shop": [["dagens_nye", 8, 3], ["tre_dages_udvalg", 7, 2], ["ugens_sjaeldenhed", 3, 1], ["ugens_tegning", 1, 1]],
 		"tailor_shop": [["dagens_nye", 6, 3], ["tre_dages_udvalg", 6, 2], ["ugens_sjaeldenhed", 3, 1]],
-		"builder_yard": [["dagens_tomme", 3, 30], ["ugens_fine_varer", 4, 12]],
+		"builder_yard": [["dagens_tomme", 5, 40], ["ugens_fine_varer", 8, 40]],
 		"flea_market": [["weekend_fund", 7, 1], ["weekend_skat", 1, 1]]}
 	var shapes_ok := true
 	var report: Array[String] = []

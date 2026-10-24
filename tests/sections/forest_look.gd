@@ -12,7 +12,7 @@ func _fixture() -> AreaMap:
 	for y in 41:
 		ground.append("#".repeat(40) if y in [0,40] else "#"+"m".repeat(38)+"#")
 		objects.append(".".repeat(40))
-	var text := "@id _forest_look\n@projection ortho\n@ambient forest\n@theme forest\n@zone dark_forest\n@floor 2\n@depth 2\n@zoom 0.4\n@prop S crown_s_a\n@prop M crown_m_a\n@prop L crown_l_a\n@prop G glow_mushroom_cluster\n@prop R rock_grey\n@prop B bush_eyes\n@marker D forest_dress fireflies=14 mist=2 unshaded=1\n@marker K hulen_keeper npc=mapseller_natteblik\n@marker C chest tier=trae\n@marker U runestone id=rune_fixture\n@marker H warp to=moerkeskoven_f1 spawn=default label=LOOK_HULEN_NAME prop=cave_ring r=0\n@ground\n"+"\n".join(ground)+"\n@objects\n"+"\n".join(objects)
+	var text := "@id _forest_look\n@projection ortho\n@ambient forest\n@theme forest\n@zone dark_forest\n@floor 2\n@depth 2\n@zoom 0.4\n@prop S crown_s_a\n@prop M crown_m_a\n@prop L crown_l_a\n@prop G glow_mushroom_cluster\n@prop R rock_grey\n@prop B bush_eyes_a\n@marker D forest_dress fireflies=14 mist=2 unshaded=1\n@marker K hulen_keeper npc=mapseller_natteblik\n@marker C chest tier=trae\n@marker U runestone id=rune_fixture\n@marker H warp to=moerkeskoven_f1 spawn=default label=LOOK_HULEN_NAME prop=cave_ring r=0\n@ground\n"+"\n".join(ground)+"\n@objects\n"+"\n".join(objects)
 	var map := AreaMap.parse_text(text)
 	for x in range(5,35): map.set_ground(Vector2i(x,20),"p")
 	for y in range(6,36): map.set_ground(Vector2i(20,y),"x")
@@ -41,7 +41,12 @@ func _run(t,native: bool) -> void:
 	gm.set_config_override("time.minutes_per_real_second",0.0)
 	var ordinary_material: Material = world.player.visual.sprite.material
 	t.check("farm_stays_ordinary",ForestDress.attach(world.area) == null and (not ordinary_material is ShaderMaterial or not "unshaded" in ordinary_material.shader.code))
-	WorldRoot2D.register_map(&"_forest_look",_fixture())
+	var fixture := _fixture()
+	for character in fixture.props:
+		var id: String = str(fixture.props[character].prop)
+		var art_id := StringName(str(GameData.prop_def(id).get("art",id)))
+		t.check("fixture_prop_%s_is_real" % character,ArtCatalog.has_real_prop(art_id) and bool(ArtCatalog.prop(art_id).get("real",false)),str(art_id))
+	WorldRoot2D.register_map(&"_forest_look",fixture)
 	await world.travel(&"_forest_look",&"default")
 	await t.frames(3)
 	var area := world.area

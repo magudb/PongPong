@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "version": "0.2.4",
+  "tag": "v0.2.4",
+  "source_commit": "c2a1b35c31a766a436b9c0e80fa758ba94c4ce1c",
+  "release_url": "https://github.com/magudb/PongPong/releases/tag/v0.2.4",
+  "release_id": 422753598,
+  "production_run_url": "https://github.com/magudb/PongPong/actions/runs/40097438933",
+  "successful_run_attempt": 2,
+  "publication": {
+    "status": "verified",
+    "latest_api_tag": "v0.2.4",
+    "draft": false,
+    "prerelease": false,
+    "asset_count": 9,
+    "all_public_assets_downloaded": true,
+    "all_downloaded_sizes_and_sha256_match_remote_metadata": true,
+    "all_package_hashes_match_original_build_job_outputs": true,
+    "sha256_manifest_and_package_json_records_match": true,
+    "remote_release_and_latest_reread_after_download": true,
+    "first_attempt": "Stopped safely after creating an empty hidden draft which immediate discovery did not return. Rerun reconciled the existing draft; no tags rewritten or assets clobbered."
+  },
+  "package_sha256": {
+    "Traetoppen-v0.2.4-windows-setup.exe": "0e166348e0f2ba02b772fdf5bf21ca84374d0600ce211c7b2978565ae98e26d6",
+    "Traetoppen-v0.2.4-windows.zip": "d5e5bd3aa0b05c4d05169a4a37a105ec5cecb9787f14fb340f6ce85f6201a78c",
+    "Traetoppen-v0.2.4-macos.dmg": "f662e3b980e9311b3f976c148b5868500fcad9e9d5af8cf1ec8efa1b011eca6b",
+    "Traetoppen-v0.2.4-macos.zip": "a05336cb192394d894160ddad0fa672defc0ee2fbf9959fa770426275404c692"
+  },
+  "provenance": {
+    "verified_downloaded_packages": 4,
+    "command": "gh attestation verify FILE --repo magudb/PongPong --signer-workflow magudb/PongPong/.github/workflows/release.yml --source-ref refs/tags/v0.2.4 --source-digest c2a1b35c31a766a436b9c0e80fa758ba94c4ce1c --deny-self-hosted-runners --format json",
+    "all_commands_exit_zero": true
+  },
+  "runtime_acceptance": {
+    "all_production_gameplay_and_windowed_gates": "passed",
+    "windows_native_ci": [
+      "NSIS install and registered shortcuts/uninstall entry",
+      "ZIP update and preservation of uninstaller",
+      "Reinstall at remembered location",
+      "Installed production executable smoke",
+      "Uninstall preserves non-installer file"
+    ],
+    "macos_public_download_local": [
+      "hdiutil DMG integrity",
+      "Read-only mount and Applications shortcut",
+      "Isolated drag-copy installation",
+      "Intel and Apple Silicon architectures",
+      "Real ZIP update replaces old installation marker",
+      "codesign --verify --deep --strict",
+      "Installed executable release smoke: pass, stable, 0.2.4, zero failures"
+    ],
+    "macos_update_result": {"status": "installed", "reason": ""},
+    "local_release_tool_suite": {"tests": 70, "result": "passed"}
+  },
+  "limits": [
+    "macOS is ad-hoc signed, not Developer ID notarized; strict signature verification is not Gatekeeper approval.",
+    "Windows native installer execution is evidenced by production CI, not by execution on the macOS development host.",
+    "This release acceptance does not claim human copy, listening, licensing, child onboarding, controller hardware or low-end long-session sign-off.",
+    "Later gameplay stages remain pending independently of release delivery."
+  ]
+}
