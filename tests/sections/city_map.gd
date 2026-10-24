@@ -13,6 +13,8 @@ extends RefCounted
 ## planner_keeps_grid_corners, planner_constrains_arrival and planner_uses_the_current_deck: keep actual turning cells, require a goal inside the trigger and route beneath overlapping bridge mouths.
 ## planner_caches_terrain_not_citizens: moving NPC bodies leave the cached grid open while static counter barriers on the same layer remain blocked.
 ## city_driver_walks_around_citizens: steer the real player around a solid citizen on the E-to-B5 approach.
+## city_driver_reaches_stub_around_citizen: a live detour around F's occupied bend still reaches the original Hyggebyen-stub endpoint (headless and windowed).
+## city_driver_checks_swept_citizen_edges: the production NPC footprint must not trap steering between otherwise free grid cells.
 ## fix round of the review (regressions): canopy_gives_way_when_zoomed_out, camera_headroom_above_the_top_platforms, overview_keeps_the_top_platforms_in_view,
 ## scheduled_citizens_replace_preview_labels, hud_owns_prompts_whispers_and_toasts, and windowed
 ## overview_shows_the_top_platforms, vram_city_increment_within_budget, hints_visible_at_the_ladder_foot.
@@ -85,6 +87,7 @@ func run(t) -> void:
 	await _enter_city(t)
 	await _planner_obstacle_regression(t)
 	await _citizen_steering_regression(t)
+	await _stub_steering_regression(t)
 	_build_checks(t)
 	_extract_checks(t)
 	await _budgets(t)
@@ -1380,6 +1383,7 @@ class Planner:
 	var world_mask := 0
 	var tree: SceneTree
 	var player_rid: RID
+	var safe_margin: float = 0.08
 	const CLEAR: Array[Vector2] = [Vector2(28, 0), Vector2(-28, 0), Vector2(0, 16), Vector2(0, -16)]
 
 	func _init(r: LevelRegistry, c: float = 12.0, actor: CharacterBody2D = null) -> void:
@@ -1388,6 +1392,7 @@ class Planner:
 		if actor != null:
 			tree = actor.get_tree()
 			player_rid = actor.get_rid()
+			safe_margin = actor.safe_margin
 			space = actor.get_world_2d().direct_space_state
 			query = PhysicsShapeQueryParameters2D.new()
 			for child in actor.get_children():
@@ -1397,8 +1402,8 @@ class Planner:
 			query.exclude = [actor.get_rid()]
 			world_mask = actor.collision_mask & ActorLevel.KEEP_MASK
 
-	func _grid(level: StringName) -> Dictionary:
-		if grids.has(level):
+	func _grid(level: StringName, avoid_citizens: bool = false) -> Dictionary:
+		if grids.has(level) and not avoid_citizens:
 			return grids[level]
 		var lv: Level = reg.get_level(level)
 		var rect: Rect2 = lv.bounds.grow(60.0)
@@ -1408,12 +1413,16 @@ class Planner:
 		ok.resize(cols * rows)
 		if query != null:
 			query.collision_mask = world_mask | lv.mask_bit()
-			# Cache terrain, not a snapshot of moving citizens. Keep static
-			# counter bars on the NPC layer in the physics query.
+			query.motion = Vector2.ZERO
+			query.margin = safe_margin if avoid_citizens else 0.0
+			# Cache terrain, not a snapshot of moving citizens. A requested
+			# live detour includes their bodies but must never replace the cache.
+			# Static counter bars on the NPC layer always remain in the query.
 			var ignored: Array[RID] = [player_rid]
-			for npc in tree.get_nodes_in_group("npc"):
-				if npc is CharacterBody2D:
-					ignored.append(npc.get_rid())
+			if not avoid_citizens:
+				for npc in tree.get_nodes_in_group("npc"):
+					if npc is CharacterBody2D:
+						ignored.append(npc.get_rid())
 			query.exclude = ignored
 		for iy in rows:
 			for ix in cols:
@@ -1433,7 +1442,8 @@ class Planner:
 				if good:
 					ok[iy * cols + ix] = 1
 		var g: Dictionary = {"origin": rect.position, "cols": cols, "rows": rows, "ok": ok}
-		grids[level] = g
+		if not avoid_citizens:
+			grids[level] = g
 		return g
 
 	func center(g: Dictionary, i: int) -> Vector2:
@@ -1454,8 +1464,8 @@ class Planner:
 
 	## Waypoints (world px) from the cell nearest to `a` to the cell nearest to `b` among the cells the start can REACH (Dijkstra over the whole level
 	## from the start; a crescent that is cut off by a keep-out is simply not an answer); empty when nothing is reachable.
-	func path(level: StringName, a: Vector2, b: Vector2, accept_goal: Callable = Callable()) -> PackedVector2Array:
-		var g: Dictionary = _grid(level)
+	func path(level: StringName, a: Vector2, b: Vector2, accept_goal: Callable = Callable(), avoid_citizens: bool = false) -> PackedVector2Array:
+		var g: Dictionary = _grid(level, avoid_citizens)
 		var cols: int = g["cols"]
 		var rows: int = g["rows"]
 		var ok: PackedByteArray = g["ok"]
@@ -1502,6 +1512,13 @@ class Planner:
 						continue
 					var c2: float = cost[cur] + (1.41421 if dx != 0 and dy != 0 else 1.0)
 					if c2 < cost[ni]:
+						# Free samples can still graze a citizen between cells.
+						# Match the body's swept physics, not just its endpoints.
+						if avoid_citizens and query != null:
+							query.transform = Transform2D(0.0, center(g, cur))
+							query.motion = center(g, ni) - center(g, cur)
+							if space.cast_motion(query)[0] < 1.0:
+								continue
 						cost[ni] = c2
 						came[ni] = cur
 						_push(heap_f, heap_i, c2, ni)
@@ -1598,7 +1615,10 @@ func _planner_obstacle_regression(t) -> void:
 	citizen.add_to_group("npc")
 	citizen.global_position = at
 	await t.physics(2)
-	var with_citizen := Planner.new(_reg, 12.0, _world.player)._grid(&"g")
+	var citizen_planner := Planner.new(_reg, 12.0, _world.player)
+	var with_citizen := citizen_planner._grid(&"g")
+	var live_citizen := citizen_planner._grid(&"g", true)
+	var terrain_after_detour := citizen_planner._grid(&"g")
 	var bar := StaticBody2D.new()
 	bar.collision_layer = Iso.LAYER_NPC
 	var bar_shape := CollisionShape2D.new()
@@ -1608,8 +1628,8 @@ func _planner_obstacle_regression(t) -> void:
 	bar.global_position = at
 	await t.physics(2)
 	var with_bar := Planner.new(_reg, 12.0, _world.player)._grid(&"g")
-	t.check("planner_caches_terrain_not_citizens", with_citizen.ok[index] == 1 and with_bar.ok[index] == 0,
-		"moving citizen leaves the cached cell open; a static NPC-layer bar blocks it")
+	t.check("planner_caches_terrain_not_citizens", with_citizen.ok[index] == 1 and live_citizen.ok[index] == 0 and terrain_after_detour.ok[index] == 1 and with_bar.ok[index] == 0,
+		"moving citizen leaves the terrain cache open, blocks a live detour without poisoning that cache; a static NPC-layer bar blocks it")
 	citizen.queue_free()
 	bar.queue_free()
 	await t.physics(2)
@@ -1639,10 +1659,66 @@ func _citizen_steering_regression(t) -> void:
 	var collision := KinematicCollision2D.new()
 	var obstructed := p.test_move(Transform2D(0.0, _sk(1389.646, 556.378)), _sk(-36.0, 36.0), collision)
 	var planner := Planner.new(_reg, 12.0, p)
-	var route := planner.path(&"e", p.global_position, _reg.get_level(&"b5").path[0])
+	var target: Vector2 = _reg.get_level(&"b5").path[0]
+	var route := planner.path(&"e", p.global_position, target)
 	var result := await _steer(t, route)
-	t.check("city_driver_walks_around_citizens", obstructed and collision.get_collider() == citizen and result.ok,
-		"the direct approach hits the citizen; real-input steering reaches the bridge mouth: %s" % str(result))
+	var arrived := not route.is_empty() and Iso.to_ground(p.global_position - route[-1]).length() <= 22.0
+	t.check("city_driver_walks_around_citizens", obstructed and collision.get_collider() == citizen and route.size() > 2 and route[-1].distance_to(target) < 50.0 and result.ok and arrived,
+		"the direct approach hits the citizen; %d waypoints end at the bridge mouth %s; real-input arrival %s: %s" % [route.size(), target, arrived, str(result)])
+	citizen.queue_free()
+	p.global_position = previous_position
+	p.velocity = Vector2.ZERO
+	ActorLevel.set_level(p, _reg.get_level(previous_level))
+	await t.physics(2)
+
+
+func _stub_steering_regression(t) -> void:
+	var p: CharacterBody2D = _world.player
+	var previous_position := p.global_position
+	var previous_level := ActorLevel.level_id(p)
+	# Minimized from the final F-platform approach in release run 40083422346.
+	# Cover both an occupied bend and a citizen grazing between grid samples.
+	var citizen := CharacterBody2D.new()
+	citizen.collision_layer = Iso.LAYER_NPC
+	citizen.collision_mask = 0
+	var shape := CircleShape2D.new()
+	shape.radius = 20.0
+	var body := CollisionShape2D.new()
+	body.shape = shape
+	citizen.add_child(body)
+	_area.objects.add_child(citizen)
+	citizen.add_to_group("npc")
+	var npc_shape := ConvexPolygonShape2D.new()
+	npc_shape.points = Npc2D._ellipse(Vector2(14, 8))
+	for fixture in [["city_driver_reaches_stub_around_citizen", Vector2(1980, 3200)], ["city_driver_checks_swept_citizen_edges", Vector2(1933.5, 3177.2)]]:
+		body.shape = shape if fixture[0] == "city_driver_reaches_stub_around_citizen" else npc_shape
+		p.global_position = Vector2(2242.042, 3031.678)
+		p.velocity = Vector2.ZERO
+		ActorLevel.set_level(p, _reg.get_level(&"f"))
+		citizen.global_position = fixture[1]
+		await t.physics(2)
+		var planner := Planner.new(_reg, 12.0, p)
+		var target: Vector2 = _reg.get_stub(&"hyggebyen_stub").path[0]
+		var route := planner.path(&"f", p.global_position, target)
+		# Isolate only this fixture in the obstruction probe: a scheduled
+		# citizen may occupy the same point. Steering still uses ALL bodies.
+		var probe := PhysicsShapeQueryParameters2D.new()
+		probe.shape = planner.query.shape
+		probe.collision_mask = Iso.LAYER_NPC
+		var excluded: Array[RID] = [p.get_rid()]
+		for npc in t.tree.get_nodes_in_group("npc"):
+			if npc is CollisionObject2D and npc != citizen:
+				excluded.append(npc.get_rid())
+		probe.exclude = excluded
+		var obstructed := false
+		for i in range(1, route.size()):
+			probe.transform = Transform2D(0.0, route[i - 1])
+			probe.motion = route[i] - route[i - 1]
+			obstructed = obstructed or planner.space.cast_motion(probe)[0] < 1.0
+		var result := await _steer(t, route)
+		var arrived := not route.is_empty() and Iso.to_ground(p.global_position - route[-1]).length() <= 22.0
+		t.check(fixture[0], obstructed and route.size() > 2 and route[-1].distance_to(target) < 12.0 and result.ok and result.detours > 0 and arrived and ActorLevel.level_id(p) == &"f",
+			"solid citizen at %s obstructs the F approach %s; %d waypoints end at the Hyggebyen stub %s; real-input arrival %s on %s at %s: %s" % [citizen.global_position, obstructed, route.size(), target, arrived, ActorLevel.level_id(p), p.global_position, str(result)])
 	citizen.queue_free()
 	p.global_position = previous_position
 	p.velocity = Vector2.ZERO
@@ -1665,15 +1741,17 @@ func _release_moves(t) -> void:
 
 
 ## Walks the REAL player along waypoints (world px) by holding the move actions (screen-relative, as a hand on the keys) until the last one is reached,
-## `stop_when` is true, or no progress is made (stuck). Returns {ok, frames, stuck_at}.
-func _steer(t, pts: PackedVector2Array, stop_when: Callable = Callable(), tol: float = 22.0, max_frames: int = 4000) -> Dictionary:
+## `stop_when` is true, or no progress is made (stuck). Returns {ok, frames, stuck_at, detours}.
+func _steer(t, pts: PackedVector2Array, stop_when: Callable = Callable(), tol: float = 22.0, max_frames: int = 4000, allow_detours: bool = true) -> Dictionary:
 	var p: Node2D = _world.player
 	var idx: int = 0
 	var frames: int = 0
 	var last_pos: Vector2 = p.global_position
 	var still: int = 0
+	var detours: int = 0
 	var ok: bool = false
 	var stuck_at: Vector2 = Vector2.INF
+	var planner := Planner.new(_reg, 12.0, p)
 	t.hold(&"run")
 	while frames < max_frames:
 		await t.tree.physics_frame
@@ -1690,10 +1768,23 @@ func _steer(t, pts: PackedVector2Array, stop_when: Callable = Callable(), tol: f
 			break
 		var motion := pts[idx] - p.global_position
 		var level: Level = _reg.get_level(ActorLevel.level_id(p))
-		# Paths cache static terrain. Use the journey driver's real-physics
-		# avoidance for citizens that move into them; keep bridge centre lines.
-		if level != null and not level.is_bridge():
-			motion = JourneyWalker._around_citizen(t, p, motion)
+		# A local sidestep can leave a tight bend behind a citizen and then
+		# oscillate back towards that occupied bend forever. Plan a physical
+		# detour to the SAME endpoint instead. Never replan explicit crossings.
+		if allow_detours and level != null and not level.is_bridge() and level.contains(pts[-1]):
+			var collision := KinematicCollision2D.new()
+			var lookahead := Iso.to_screen(Iso.to_ground(motion).limit_length(90.0))
+			if p.test_move(p.global_transform, lookahead, collision):
+				var collider := collision.get_collider()
+				if collider != null and collider.is_in_group("npc"):
+					var destination: Vector2 = pts[-1]
+					var same_goal := func(point: Vector2) -> bool: return point.is_equal_approx(destination)
+					var detour := planner.path(level.id, p.global_position, destination, same_goal, true)
+					if not detour.is_empty():
+						detours += 1
+						pts = detour
+						idx = 0
+						motion = pts[0] - p.global_position
 		var delta := Iso.to_ground(motion)
 		_press(t, delta.normalized() * clampf(delta.length() / 32.0, 0.25, 1.0))
 		if frames % 40 == 0:
@@ -1711,7 +1802,7 @@ func _steer(t, pts: PackedVector2Array, stop_when: Callable = Callable(), tol: f
 			last_pos = p.global_position
 	_release_moves(t)
 	await t.tree.physics_frame
-	return {"ok": ok, "frames": frames, "stuck_at": stuck_at}
+	return {"ok": ok, "frames": frames, "stuck_at": stuck_at, "detours": detours}
 
 
 ## The centre line of a bridge as waypoints, oriented from `from_id`, and 70 px past its far end (onto the next platform's floor).
@@ -1794,7 +1885,7 @@ func _tour(t, on_visit: Callable = Callable()) -> Dictionary:
 							if b.contains(p.global_position + offset):
 								return false
 						return true
-					res = await _steer(t, bp, on_deck)
+					res = await _steer(t, bp, on_deck, 22.0, 4000, false)
 					await t.physics(2)
 				levels_seen[b.id] = true
 				levels_seen[to_id] = true
@@ -1837,7 +1928,7 @@ func _tour(t, on_visit: Callable = Callable()) -> Dictionary:
 				if res["ok"]:
 					var stub_pts := PackedVector2Array(sp)
 					stub_pts.append(sp[sp.size() - 1] + (sp[sp.size() - 1] - sp[sp.size() - 2]).normalized() * 200.0)
-					res = await _steer(t, stub_pts, func() -> bool: return _world.area.map.id != &"traetoppen" or _world.traveling)
+					res = await _steer(t, stub_pts, func() -> bool: return _world.area.map.id != &"traetoppen" or _world.traveling, 22.0, 4000, false)
 				label = "stub %s to the warp" % stub["id"]
 		legs.append("%s %s (%d frames, now on %s)" % ["ok" if res["ok"] else "STUCK", label, int(res["frames"]), ActorLevel.level_id(p)])
 		if not res["ok"]:
@@ -1952,7 +2043,7 @@ func _warps_and_zone(t) -> void:
 	var gp: PackedVector2Array = stub_g["path"]
 	var walk_g := PackedVector2Array(gp)
 	walk_g.append(gp[1] + (gp[1] - gp[0]).normalized() * 200.0)
-	var res_g: Dictionary = await _steer(t, walk_g, func() -> bool: return _world.area.map.id != &"traetoppen" or _world.traveling)
+	var res_g: Dictionary = await _steer(t, walk_g, func() -> bool: return _world.area.map.id != &"traetoppen" or _world.traveling, 22.0, 4000, false)
 	var on_farm: bool = await _arrived(t, &"farm")
 	await t.seconds(0.6)
 	var farm_ok: bool = on_farm and p.global_position.distance_to(_world.area.get_spawn("from_traetoppen")) < 6.0
@@ -1985,7 +2076,7 @@ func _warps_and_zone(t) -> void:
 	var fp: PackedVector2Array = stub_f["path"]
 	var walk_f := PackedVector2Array(fp)
 	walk_f.append(fp[1] + (fp[1] - fp[0]).normalized() * 200.0)
-	var res_f: Dictionary = await _steer(t, walk_f, func() -> bool: return _world.area.map.id != &"traetoppen" or _world.traveling)
+	var res_f: Dictionary = await _steer(t, walk_f, func() -> bool: return _world.area.map.id != &"traetoppen" or _world.traveling, 22.0, 4000, false)
 	var on_hyg: bool = await _arrived(t, &"hyggebyen")
 	await t.seconds(0.6)
 	var hyg_ok: bool = on_hyg and p.global_position.distance_to(_world.area.get_spawn("from_traetoppen")) < 6.0
@@ -2519,6 +2610,10 @@ func run_windowed(t) -> void:
 	_world.day_night.override_hour = -1.0
 	_world.day_night.snap()
 	p.visible = true
+	# Keep fixture walking out of the established shots, render sampling and
+	# tour's starting clock. Exercise it in a fresh city after the full tour.
+	await _enter_city(t)
+	await _stub_steering_regression(t)
 
 
 ## Order task 7 with the dungeon present (REQUIRED by DQ's E1 / E2): the Skovlift ride -> the hub (spawn from_traetoppen) -> the Hulen warp -> floor 1 -> its up cave
