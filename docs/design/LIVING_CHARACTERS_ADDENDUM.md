@@ -1,6 +1,6 @@
 # Living Characters — purpose, memory and community
 
-Status: owner-approved direction; implementation queued after stage 2 and before stage 3 (Samlerbog).
+Status: in progress after verified stage-2 merge `eb42f27a`; authoritative roster and integration contracts are being established before the first production slice. No Living Characters gameplay completion is claimed. Samlerbog remains next after this stage.
 
 ## Owner decisions
 

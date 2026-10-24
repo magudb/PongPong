@@ -1,4 +1,11 @@
 {
+  "localization/living_characters.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 245
+  },
   "localization/da.csv": {
     "status": "draft",
     "reviewed_by": "",
