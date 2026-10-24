@@ -162,18 +162,19 @@ func check(automatic := false) -> void:
 	available.clear()
 	_downloading = false
 	_request.timeout = 15
-	_request.body_size_limit = 1048576
+	_request.body_size_limit = 4194304
 	_request.download_file = ""
 	_set_state("checking")
 	var headers := PackedStringArray(["Accept: application/vnd.github+json", "X-GitHub-Api-Version: 2022-11-28", "User-Agent: Traetoppen/" + current_version()])
-	if _request.request("https://api.github.com/repos/%s/releases/latest" % repository(), headers) != OK:
+	if _request.request("https://api.github.com/repos/%s/releases?per_page=100" % repository(), headers) != OK:
 		_set_state("unavailable")
 
-func accept_release(payload: Dictionary) -> void:
-	available = Version.select_asset(payload, current_version(), repository(), platform_name())
-	_set_state("available" if not available.is_empty() else "current")
+func accept_catalogue(payload: Array) -> void:
+	var selection := Version.select_catalogue(payload, current_version(), repository(), platform_name())
+	available = selection.asset
+	_set_state(selection.state)
 
-func _completed(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
+func _completed(result: int, code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	if _downloading:
 		_downloading = false
 		if result != HTTPRequest.RESULT_SUCCESS or code != 200 or not FileAccess.file_exists(downloaded_path) or FileAccess.get_sha256(downloaded_path) != available.get("sha256", ""):
@@ -182,17 +183,25 @@ func _completed(result: int, code: int, _headers: PackedStringArray, body: Packe
 			return
 		_set_state("ready")
 		return
-	if result == HTTPRequest.RESULT_SUCCESS and code == 404:
-		_set_state("current")
-		return
+	# A missing catalogue/repository is a failed check; an existing repository
+	# with no releases answers with an empty list and is handled below.
+	available.clear()
 	if result != HTTPRequest.RESULT_SUCCESS or code != 200:
 		_set_state("unavailable")
 		return
+	# Check only one page (100 releases, 4 MiB, 15 s). Another page means we
+	# cannot establish currency OR the highest semver, even with a usable asset.
+	var next_link := RegEx.new()
+	next_link.compile('(?i);\\s*rel\\s*=\\s*(?:"[^"]*\\bnext\\b[^"]*"|next)(?:\\s*[;,]|\\s*$)')
+	for header in headers:
+		if header.get_slice(":", 0).strip_edges().to_lower() == "link" and next_link.search(header) != null:
+			_set_state("unavailable")
+			return
 	var json := JSON.new()
-	if json.parse(body.get_string_from_utf8()) != OK or not json.data is Dictionary:
+	if json.parse(body.get_string_from_utf8()) != OK or not json.data is Array:
 		_set_state("unavailable")
 		return
-	accept_release(json.data)
+	accept_catalogue(json.data)
 
 func download() -> void:
 	if state not in ["available", "download_failed", "install_failed"] or available.is_empty(): return

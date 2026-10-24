@@ -31,11 +31,12 @@ func run(t) -> void:
 	# handshake below needs its tree
 	if not updates.is_inside_tree():
 		await t.frames(1)
+	_catalogue_selection(t, updates)
 	t.check("development_does_not_auto_check", not ReleaseUpdates.production())
 	updates._completed(HTTPRequest.RESULT_CANT_CONNECT, 0, PackedStringArray(), PackedByteArray())
 	t.check("offline_is_nonfatal", updates.state == "unavailable")
 	updates._completed(HTTPRequest.RESULT_SUCCESS, 404, PackedStringArray(), PackedByteArray())
-	t.check("no_first_release_is_normal", updates.state == "current")
+	t.check("missing_repository_is_unavailable", updates.state == "unavailable")
 	updates._completed(HTTPRequest.RESULT_SUCCESS, 200, PackedStringArray(), "not json".to_utf8_buffer())
 	t.check("malformed_response_is_nonfatal", updates.state == "unavailable")
 	var download := ProjectSettings.globalize_path("user://updater-test.zip")
@@ -154,6 +155,103 @@ func run(t) -> void:
 	updates._set_state("current")
 	settings.close()
 	await UiAudit.audit_screen(t, "updates")
+
+## Public releases can be created before their artifacts exist. Pick the newest
+## usable release, not merely the first/latest release or its unverified asset.
+func _catalogue_selection(t, updates: ReleaseUpdates) -> void:
+	var platform := ReleaseUpdates.platform_name()
+	if platform.is_empty():
+		# CI's Linux editor tests the same selector with an explicit Windows target.
+		platform = "windows"
+	var compatible := _release()
+	compatible.assets[0].name = "Traetoppen-v1.2.3-%s.zip" % platform
+	compatible.assets[0].browser_download_url = "https://github.com/magudb/PongPong/releases/download/v1.2.3/" + compatible.assets[0].name
+	var pending := {"tag_name": "v1.2.9", "draft": false, "prerelease": false, "assets": []}
+	var selection := V.select_catalogue([pending, compatible], "1.0.0", "magudb/PongPong", platform)
+	t.check("assetless_latest_does_not_hide_usable_update", selection.state == "available" and selection.asset.get("version", "") == "1.2.3", selection)
+	selection = V.select_catalogue([pending], "1.0.0", "magudb/PongPong", platform)
+	t.check("incomplete_new_release_is_not_current", selection.state == "unavailable", selection)
+	selection = V.select_catalogue([], "1.0.0", "magudb/PongPong", platform)
+	t.check("empty_release_catalogue_is_current", selection.state == "current", selection)
+	var draft := compatible.duplicate(true)
+	draft.draft = true
+	selection = V.select_catalogue([draft], "1.0.0", "magudb/PongPong", platform)
+	t.check("draft_catalogue_is_not_an_update", selection.state == "current" and selection.asset.is_empty(), selection)
+	var unsafe := compatible.duplicate(true)
+	unsafe.assets[0].browser_download_url = "https://example.com/update.zip"
+	selection = V.select_catalogue([unsafe], "1.0.0", "magudb/PongPong", platform)
+	t.check("untrusted_catalogue_asset_is_unavailable", selection.state == "unavailable" and selection.asset.is_empty(), selection)
+	updates._completed(HTTPRequest.RESULT_SUCCESS, 200, PackedStringArray(), JSON.stringify([pending, compatible]).to_utf8_buffer())
+	var expected := "unavailable" if ReleaseUpdates.platform_name().is_empty() else "available"
+	t.check("catalogue_response_reaches_selector", updates.state == expected and (expected != "available" or updates.available.get("version", "") == "1.2.3"), updates.state)
+	var newest := compatible.duplicate(true)
+	newest.tag_name = "v1.10.0"
+	newest.assets[0].name = "Traetoppen-v1.10.0-%s.zip" % platform
+	newest.assets[0].browser_download_url = "https://github.com/magudb/PongPong/releases/download/v1.10.0/" + newest.assets[0].name
+	selection = V.select_catalogue([compatible, newest, pending], "1.0.0", "magudb/PongPong", platform)
+	t.check("catalogue_uses_semver_not_list_order", selection.state == "available" and selection.asset.get("version", "") == "1.10.0", selection)
+	selection = V.select_catalogue([compatible], "2.0.0", "magudb/PongPong", platform)
+	t.check("catalogue_never_downgrades", selection.state == "current" and selection.asset.is_empty(), selection)
+	selection = V.select_catalogue(["not a release"], "1.0.0", "magudb/PongPong", platform)
+	t.check("malformed_catalogue_is_not_current", selection.state == "unavailable", selection)
+	var oversized: Array = []
+	oversized.resize(101)
+	selection = V.select_catalogue(oversized, "1.0.0", "magudb/PongPong", platform)
+	t.check("catalogue_response_is_bounded", selection.state == "unavailable" and selection.asset.is_empty(), selection)
+	_catalogue_pagination(t, updates, compatible)
+	_catalogue_metadata(t, updates)
+
+## A string outside the canonical release scheme is intentional and ignored;
+## absent/non-string required tags are broken metadata, not proof of currency.
+func _catalogue_metadata(t, updates: ReleaseUpdates) -> void:
+	for platform in ["windows", "macos", ""]:
+		var compatible := _release()
+		compatible.assets[0].name = "Traetoppen-v1.2.3-%s.zip" % platform
+		compatible.assets[0].browser_download_url = "https://github.com/magudb/PongPong/releases/download/v1.2.3/" + compatible.assets[0].name
+		for case in [["missing", null], ["null", null], ["integer", 123], ["float", 1.2], ["bool", false], ["array", []], ["object", {}]]:
+			var malformed := {"draft": false, "prerelease": false, "assets": []}
+			if case[0] != "missing": malformed.tag_name = case[1]
+			var selection := V.select_catalogue([malformed], "1.0.0", "magudb/PongPong", platform)
+			t.check("invalid_required_tag_%s_%s" % [case[0], platform], selection.state == "unavailable" and selection.asset.is_empty(), selection)
+			selection = V.select_catalogue([malformed, compatible], "1.0.0", "magudb/PongPong", platform)
+			var expected := "unavailable" if platform.is_empty() else "available"
+			t.check("invalid_tag_keeps_verified_fallback_%s_%s" % [case[0], platform], selection.state == expected and (expected != "available" or selection.asset.get("version", "") == "1.2.3"), selection)
+			if platform == "macos":
+				updates._completed(HTTPRequest.RESULT_SUCCESS, 200, PackedStringArray(), JSON.stringify([malformed]).to_utf8_buffer())
+				t.check("invalid_tag_response_" + case[0], updates.state == "unavailable" and updates.available.is_empty(), updates.state)
+		for tag in ["", "nightly", "1.2.3", "v01.2.3", "v1.2.3-beta", "v1.2", "v9999999999.2.3"]:
+			var selection := V.select_catalogue([{"tag_name": tag, "draft": false, "prerelease": false, "assets": []}], "1.0.0", "magudb/PongPong", platform)
+			var expected := "unavailable" if platform.is_empty() else "current"
+			t.check("noncanonical_string_tag_%s_%s" % [tag, platform], selection.state == expected and selection.asset.is_empty(), selection)
+		for flag in ["draft", "prerelease"]:
+			var malformed := {"draft": false, "prerelease": false, "assets": []}
+			malformed[flag] = true
+			var selection := V.select_catalogue([malformed], "1.0.0", "magudb/PongPong", platform)
+			t.check("required_tag_even_when_%s_%s" % [flag, platform], selection.state == "unavailable" and selection.asset.is_empty(), selection)
+
+## One bounded page cannot establish either currency or the highest semver if
+## GitHub advertises another page (even when this page has a verified update).
+func _catalogue_pagination(t, updates: ReleaseUpdates, compatible: Dictionary) -> void:
+	var full_page: Array = []
+	for index in 100:
+		full_page.append({"tag_name": "v9.0.%d" % index, "draft": index % 2 == 0, "prerelease": index % 2 != 0, "assets": []})
+	for platform in ["windows", "macos", ""]:
+		var selection := V.select_catalogue(full_page, "1.0.0", "magudb/PongPong", platform)
+		var expected := "unavailable" if platform.is_empty() else "current"
+		t.check("full_page_filters_nonstable_" + platform, selection.state == expected and selection.asset.is_empty(), selection)
+	var next := PackedStringArray(['Link: <https://api.github.com/repos/magudb/PongPong/releases?per_page=100&page=2>; rel="next", <https://api.github.com/repos/magudb/PongPong/releases?per_page=100&page=3>; rel="last"'])
+	updates._completed(HTTPRequest.RESULT_SUCCESS, 200, next, JSON.stringify(full_page).to_utf8_buffer())
+	t.check("full_page_with_next_is_not_current", updates.state == "unavailable" and updates.available.is_empty(), updates.state)
+	full_page[99] = compatible
+	updates._completed(HTTPRequest.RESULT_SUCCESS, 200, next, JSON.stringify(full_page).to_utf8_buffer())
+	t.check("next_page_could_have_higher_semver", updates.state == "unavailable" and updates.available.is_empty(), updates.state)
+	updates._completed(HTTPRequest.RESULT_SUCCESS, 200, PackedStringArray(['lInK: <https://api.github.com/repos/magudb/PongPong/releases?page=2>; ReL = "next"']), JSON.stringify([compatible]).to_utf8_buffer())
+	t.check("short_page_next_header_is_case_insensitive", updates.state == "unavailable" and updates.available.is_empty(), updates.state)
+	full_page[99] = full_page[0].duplicate(true)
+	for headers in [PackedStringArray(), PackedStringArray(['Link: <https://api.github.com/repos/magudb/PongPong/releases?page=1>; rel="last"'])]:
+		updates._completed(HTTPRequest.RESULT_SUCCESS, 200, headers, JSON.stringify(full_page).to_utf8_buffer())
+		var expected := "unavailable" if ReleaseUpdates.platform_name().is_empty() else "current"
+		t.check("complete_full_page_is_not_truncated_" + str(headers.size()), updates.state == expected and updates.available.is_empty(), updates.state)
 
 ## Helper result files: read with or without a byte order mark, unknown reasons stay generic, and the startup
 ## report takes the newest result and removes every result and handshake file.
