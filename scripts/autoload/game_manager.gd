@@ -255,9 +255,13 @@ func start_new_game(p_name: String, p_type: CharacterType, p_farm: String = "", 
 	PlayerRegistry.reset_states()
 	var dropped: Array = world_flags.keys()
 	world_flags.clear()
+	# Current runs owe Lyra's authored welcome even if a service portrait
+	# completes the lottery before the first physical meeting. Loaded legacy
+	# saves do not pass here, so genuinely completed old records stay final.
+	set_flag(&"mayor_welcome_pending", true)
 	set_flag(FLAG_INTRO_PENDING, true)
 	for key in dropped:
-		if key != FLAG_INTRO_PENDING:
+		if key not in [FLAG_INTRO_PENDING, &"mayor_welcome_pending"]:
 			EventBus.flag_changed.emit(StringName(str(key)), false)   # the new run resets a flag
 	unlocked_zones.assign(_default_zones())
 	discovered_locations.clear()

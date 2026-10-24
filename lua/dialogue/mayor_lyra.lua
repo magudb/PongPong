@@ -5,10 +5,12 @@ kind = "dialogue"
 id = "mayor_lyra"
 
 function get_dialogue(context)
-  local intro_done = context.intro_done or false
+  local intro_done = context.mayor_welcome_seen or
+    (context.quest_done_intro_lottery and not context.mayor_welcome_pending) or false
   if not intro_done then
     return {
       speaker = "mayor_lyra",
+      mayor_welcome = true,
       speaker_name_key = "NPC_MAYOR_LYRA",
       lines = {
         {
