@@ -52,9 +52,12 @@ func run(t) -> void:
 	t.check("appraisal_counter_stone_fee_one_commit",appraised.ok and eco.count_item(&"rough_skovkant") == old_count-1 and eco.gold == gold-30 and int(loot.dungeon.get("appraise",{}).get("skovkant",0)) == 1)
 	t.check("appraisal_unknown_rejected",not loot.appraise("wood",{"save":false}).ok)
 	loot.reset()
+	# Keep a real pre-existing stack; the appraisal above can also have awarded moonstone.
+	eco.add_item(&"moonstone",7,true)
+	var moonstone_before: int = eco.count_item(&"moonstone")
 	var boss_ctx := {"dungeon":true,"floor":8,"band":"svampelunden","uid":"dg:1:8:boss"}
 	var reward: Dictionary = loot.on_boss_defeated("snurresvamp_gloed",boss_ctx)
-	t.check("boss_first_kill_shard_and_two_moonstone",reward.ok and eco.count_item(&"dng_rune_gloed") == 1 and eco.count_item(&"moonstone") == 2 and loot.dungeon.boss.snurresvamp_gloed.first_done)
+	t.check("boss_first_kill_shard_and_two_moonstone",reward.ok and eco.count_item(&"dng_rune_gloed") == 1 and eco.count_item(&"moonstone") == moonstone_before+2 and loot.dungeon.boss.snurresvamp_gloed.first_done)
 	var prior: int = eco.count_item(&"moonstone")
 	t.check("boss_idempotent_per_uid",loot.on_boss_defeated("snurresvamp_gloed",boss_ctx).ok and eco.count_item(&"moonstone") == prior)
 	eco.add_item(&"dng_rune_snurre",1,true)
@@ -65,8 +68,24 @@ func run(t) -> void:
 	var saved: Dictionary = JSON.parse_string(JSON.stringify(loot.to_dict()))
 	loot.reset()
 	t.check("save_roundtrip_found_and_claims",loot.from_dict(saved) and loot.found("gem_rune_heart") and loot.spot_state("runehvaelvingen") == &"claimed")
+	_boss_stacks(t,loot,eco)
 	await _more(t,loot,eco,gm)
 	gm.set_flag(&"loot_test_finished",true)
+func _boss_stacks(t, loot: Node, eco: Node) -> void:
+	for owned in [0,7]:
+		loot.reset()
+		eco.reset()
+		if owned > 0: eco.add_item(&"moonstone",owned,true)
+		var context := {"dungeon":true,"floor":8,"band":"svampelunden","uid":"dg:1:8:stack_%d" % owned}
+		var reward: Dictionary = loot.on_boss_defeated("snurresvamp_gloed",context)
+		var amounts := {}
+		for row in reward.results:
+			amounts[str(row.id)] = int(row.amount)
+		t.check("boss_exact_reward_rows_stack_%d" % owned,reward.ok and reward.results.size() == 2 and amounts == {"dng_rune_gloed":1,"moonstone":2})
+		t.check("boss_exact_gain_stack_%d" % owned,eco.count_item(&"moonstone") == owned+2 and eco.count_item(&"dng_rune_gloed") == 1 and loot.dungeon.boss.snurresvamp_gloed.first_done)
+		var before := JSON.stringify([eco.to_dict(),loot.to_dict()])
+		var repeated: Dictionary = loot.on_boss_defeated("snurresvamp_gloed",context)
+		t.check("boss_repeat_preserves_stack_%d" % owned,repeated.ok and repeated.results.is_empty() and JSON.stringify([eco.to_dict(),loot.to_dict()]) == before)
 func _more(t, loot: Node, eco: Node, gm: Node) -> void:
 	var req := _request(loot,"rates",{"zone":"krystalgrotten","band":"krystalgrotten","ctx":{"floor":12},"container":"fe"})
 	var spec := LootRules.container_cfg(req.cfg,"krystalgrotten","fe")
