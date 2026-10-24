@@ -35,3 +35,33 @@ static func select_asset(release: Dictionary, current: String, repository: Strin
 		if regex.search(digest) == null or length <= 0 or length > 1073741824: continue
 		return {"version": version, "url": expected_url, "name": name, "sha256": digest.substr(7), "size": int(length)}
 	return {}
+
+## GitHub's latest release may have been published before its files exist.
+## Inspect a bounded catalogue and keep the newest verified update for this OS.
+## A newer but unusable release is not proof that this installation is current.
+static func select_catalogue(releases: Array, current: String, repository: String, platform_name: String) -> Dictionary:
+	var best: Dictionary = {}
+	var incomplete := false
+	var malformed := releases.size() > 100
+	if malformed or platform_name not in ["windows", "macos"] or numbers(current).is_empty():
+		return {"state": "unavailable", "asset": {}}
+	for entry in releases:
+		if not entry is Dictionary:
+			malformed = true
+			continue
+		if typeof(entry.get("draft")) != TYPE_BOOL or typeof(entry.get("prerelease")) != TYPE_BOOL:
+			malformed = true
+			continue
+		var tag: Variant = entry.get("tag_name")
+		if not tag is String:
+			malformed = true
+			continue
+		if entry.draft or entry.prerelease:
+			continue
+		if not tag.begins_with("v") or not newer(tag.substr(1), current):
+			continue
+		incomplete = true
+		var asset := select_asset(entry, current, repository, platform_name)
+		if not asset.is_empty() and (best.is_empty() or newer(asset.version, best.version)):
+			best = asset
+	return {"state": "available" if not best.is_empty() else "unavailable" if incomplete or malformed else "current", "asset": best}
