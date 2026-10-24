@@ -35,6 +35,9 @@ objectives = {
     on = "dialogue_started",
     npc = "smith_thorin",
     after_others = true,
+    needs = { crystal_shard = 5 },
+    consume = true,
+    requires_meeting = true,
     description_key = "OBJ_CRYSTAL_CAVE_RETURN_TO_SMITH",
   },
 }

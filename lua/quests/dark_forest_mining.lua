@@ -36,6 +36,9 @@ objectives = {
     on = "dialogue_started",
     npc = "smith_thorin",
     after_others = true,
+    needs = { iron_ore = 6, amethyst = 2 },
+    consume = true,
+    requires_meeting = true,
     description_key = "OBJ_DARK_FOREST_MINING_RETURN_TO_SMITH",
   },
 }

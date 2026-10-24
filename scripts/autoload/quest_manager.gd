@@ -212,6 +212,7 @@ func _ready() -> void:
 	EventBus.zone_entered.connect(_on_zone_entered)
 	EventBus.area_changed.connect(_on_area_changed)
 	EventBus.dialogue_started.connect(_on_dialogue_started)
+	EventBus.npc_meeting_started.connect(_on_npc_meeting_started)
 	EventBus.animal_adopted.connect(_on_animal_adopted)
 	EventBus.animal_fed.connect(_on_animal_fed)
 	EventBus.animal_product_collected.connect(_on_animal_product_collected)
@@ -881,6 +882,20 @@ func _on_dialogue_started(npc_id: StringName, dialogue_id: StringName) -> void:
 	_dispatch(&"dialogue_started", {"npc": str(npc_id), "dialogue": str(dialogue_id)})
 
 
+## Opt-in physical objectives retain the dialogue binding vocabulary while
+## legacy talk/show/proof objectives retain their existing event contract.
+## A portrait/giver string cannot authorize a delivery: identity and ownership
+## come from the actor that is currently holding the player in a conversation.
+func _on_npc_meeting_started(actor: Node) -> void:
+	if not actor is Npc2D or not actor.is_inside_tree() or actor.is_queued_for_deletion() or not actor.is_talking:
+		return
+	var owner_id := PlayerRegistry.registered_id(actor._talk_player)
+	if owner_id == &"":
+		return
+	PlayerRegistry.for_player(owner_id, func():
+		_dispatch(&"dialogue_started", {"npc": str(actor.npc_id), "dialogue": str(actor.dialogue_id), "meeting_actor": actor}))
+
+
 func _on_animal_adopted(animal_id: StringName, species: StringName) -> void:
 	_dispatch(&"animal_adopted", {"animal": str(animal_id), "species": str(species)})
 	_queue_refresh()
@@ -992,6 +1007,10 @@ func _step_for(od: Dictionary, objective_id: String, kind: StringName, ctx: Dict
 	if str(kind) != on:
 		return 0
 	if on == "dialogue_started":
+		# Physical and ordinary starts are disjoint, so neither can double count
+		# an objective when a real NPC emits both events.
+		if bool(od.get("requires_meeting", false)) != ctx.has("meeting_actor"):
+			return 0
 		var npc := str(ctx.get("npc", ""))
 		var any_of := _Data.strings(od.get("any_of", []))
 		if not any_of.is_empty():

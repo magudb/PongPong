@@ -220,21 +220,34 @@ func _can_stand(point: Vector2) -> bool:
 func interact(player: Node) -> void:
 	if is_talking or not _enabled or not is_inside_tree() or GameManager.is_modal_open():
 		return
-	if not bool(Svc.static_call("res://scripts/ghostfam/hook/ghostfam_hook.gd",&"before_talk",[self,player],true)):return
-	is_talking = true
-	_talk_player = player
-	_held = true
-	if is_instance_valid(player) and player.has_method("begin_talk"):
-		player.begin_talk(global_position)
-		visual.set_facing_direction(player.global_position - global_position)
-	set_act("talk")
-	EventBus.dialogue_started.emit(npc_id, dialogue_id)
+	var owner_id := PlayerRegistry.registered_id(player)
+	if owner_id == &"":
+		return
+	# Scope only synchronous work. Both legacy dialogue effects and physical
+	# deliveries belong to this registered body, not local/ambient identity.
+	var page: Dictionary = PlayerRegistry.for_player(owner_id, func():
+		if not bool(Svc.static_call("res://scripts/ghostfam/hook/ghostfam_hook.gd",&"before_talk",[self,player],true)):
+			return {}
+		is_talking = true
+		_talk_player = player
+		_held = true
+		if player.has_method("begin_talk"):
+			player.begin_talk(global_position)
+			visual.set_facing_direction(player.global_position - global_position)
+		set_act("talk")
+		# Build before signals can synchronously complete a quest.
+		var ctx := NpcDialogue.context(str(npc_id), player)
+		var initial := NpcDialogue.build(str(npc_id), str(dialogue_id), ctx, guest)
+		NpcDialogue.begin(str(npc_id), initial)
+		EventBus.dialogue_started.emit(npc_id, dialogue_id)
+		EventBus.npc_meeting_started.emit(self)
+		return initial)
+	if not is_talking:
+		return
 	_screen = get_tree().get_first_node_in_group("dialogue_ui")
 	if _screen == null:
 		_end_talk(0, false)
 		return
-	var ctx := NpcDialogue.context(str(npc_id), player)
-	var page := NpcDialogue.build(str(npc_id), str(dialogue_id), ctx, guest)
 	await _page(page)
 
 func _page(page: Dictionary) -> void:
@@ -242,41 +255,59 @@ func _page(page: Dictionary) -> void:
 	if not is_talking:
 		return
 	var player := _talk_player
-	_end_talk(int(result.get("lines_shown", 0)), bool(result.get("completed", false)))
-	Bridge.finish_topic(str(npc_id), page, bool(result.get("completed", false)), int(result.get("lines_shown", 0)))
-	var choice := LuaData.dict(result.get("choice", {}))
-	var action := str(choice.get("action", "close"))
-	var social := Bridge.action(str(npc_id), action, choice)
-	if bool(social.get("handled", false)):
-		if not LuaData.dict(social.get("page", {})).is_empty():
-			_begin_followup.call_deferred(player, social.page)
-	elif NpcDialogue.action(str(npc_id), action, choice, guest):
-		interact.call_deferred(player)
+	var owner_id := PlayerRegistry.registered_id(player)
+	if owner_id == &"":
+		_end_talk(0, false)
+		return
+	# Re-resolve after the await; the owner may have left the live roster.
+	PlayerRegistry.for_player(owner_id, func():
+		NpcDialogue.finish(str(npc_id), page, result)
+		_end_talk(int(result.get("lines_shown", 0)), bool(result.get("completed", false)))
+		Bridge.finish_topic(str(npc_id), page, bool(result.get("completed", false)), int(result.get("lines_shown", 0)))
+		var choice := LuaData.dict(result.get("choice", {}))
+		var action := str(choice.get("action", "close"))
+		var social := Bridge.action(str(npc_id), action, choice)
+		if bool(social.get("handled", false)):
+			if not LuaData.dict(social.get("page", {})).is_empty():
+				_begin_followup.call_deferred(player, social.page)
+		elif NpcDialogue.action(str(npc_id), action, choice, guest):
+			interact.call_deferred(player))
 
 func _begin_followup(player: Node, page: Dictionary) -> void:
-	if not is_inside_tree() or GameManager.is_modal_open():
+	if is_talking or not is_inside_tree() or GameManager.is_modal_open():
+		return
+	var owner_id := PlayerRegistry.registered_id(player)
+	if owner_id == &"":
 		return
 	_screen = get_tree().get_first_node_in_group("dialogue_ui")
 	if _screen == null:
 		return
-	is_talking = true
-	_held = true
-	_talk_player = player
-	if is_instance_valid(player):
-		player.begin_talk(global_position)
-	EventBus.dialogue_started.emit(npc_id, dialogue_id)
+	PlayerRegistry.for_player(owner_id, func():
+		is_talking = true
+		_held = true
+		_talk_player = player
+		if player.has_method("begin_talk"):
+			player.begin_talk(global_position)
+		NpcDialogue.begin(str(npc_id), page)
+		EventBus.dialogue_started.emit(npc_id, dialogue_id)
+		EventBus.npc_meeting_started.emit(self))
 	await _page(page)
 
 func _end_talk(lines: int, completed: bool) -> void:
 	if not is_talking:
 		return
+	var owner_id := PlayerRegistry.registered_id(_talk_player)
 	is_talking = false
 	_held = false
 	if is_instance_valid(_talk_player) and _talk_player.has_method("end_talk"):
 		_talk_player.end_talk()
 	_talk_player = null
-	SocialManager.on_conversation_finished(str(npc_id), lines, completed)
-	EventBus.dialogue_ended.emit()
+	if owner_id != &"":
+		PlayerRegistry.for_player(owner_id, func():
+			SocialManager.on_conversation_finished(str(npc_id), lines, completed)
+			EventBus.dialogue_ended.emit())
+	else:
+		EventBus.dialogue_ended.emit()
 	set_act("hover" if bool(_row.get("hover", false)) else "idle")
 	_update_bubble()
 
