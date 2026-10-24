@@ -24,7 +24,7 @@ func _run(t, native: bool) -> void:
 	ui._select("rough_skovkant")
 	var before: int = eco.gold
 	var observations := []
-	var observer := func(_id,_amount):
+	var observer := func(_player_id: StringName, _id,_amount):
 		var wire: Variant = JSON.parse_string(FileAccess.get_file_as_string(sm.slot_path(sm.AUTO_SLOT)))
 		observations.append(wire is Dictionary and int(wire.get("loot",{}).get("dungeon",{}).get("appraise",{}).get("skovkant",0)) >= 1)
 	EventBus.item_gained.connect(observer)

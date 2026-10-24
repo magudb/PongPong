@@ -223,9 +223,9 @@ void fragment() {
 	note.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	fixture.move_child(map,fixture.zone_label.get_index())
 	fixture.loot_feed.clear()
-	fixture.loot_feed.gain(&"glow_mushroom",2)
-	fixture.loot_feed.gain(&"iron_ore",3)
-	fixture.loot_feed.gain(&"moonstone",1)
+	fixture.loot_feed.gain(PlayerRegistry.local_id(), &"glow_mushroom",2)
+	fixture.loot_feed.gain(PlayerRegistry.local_id(), &"iron_ore",3)
+	fixture.loot_feed.gain(PlayerRegistry.local_id(), &"moonstone",1)
 	fixture.abilities.dodge.set_cooldown(.5,"0,4")
 	for child in fixture.get_children():
 		if child is WhisperLine: child._on_whisper("Noget rasler i bregnerne…")

@@ -166,7 +166,7 @@ func _swap(t) -> void:
 	t.check("swap_requires_carrots", not bool(basket.swap().ok) and gm.flag_int(&"swap_day") == 0)
 	eco.add_item(&"carrot", 4, true)
 	var observations: Array = []
-	var observe := func(_inventory):
+	var observe := func(_player_id: StringName, _inventory):
 		observations.append(eco.count_item(&"carrot") == 2 and eco.count_item(&"moonflower_seeds") + eco.count_item(&"glow_berry_seeds") == 1 and gm.flag_int(&"swap_day") == gm.total_day())
 		basket.swap()
 	t.autoload("EventBus").player_inventory_changed.connect(observe)

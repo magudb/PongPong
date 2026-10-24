@@ -140,7 +140,7 @@ func _menus() -> void:
 	await select._set_page(2)
 	var announced: Array = []
 	var reset_skins: Array = []
-	var on_character := func(skin: StringName) -> void: announced.append(skin)
+	var on_character := func(_player_id: StringName, skin: StringName) -> void: announced.append(skin)
 	var on_new := func() -> void: reset_skins.append(gm.character_skin)
 	bus.player_character_changed.connect(on_character)
 	bus.new_game_started.connect(on_new)
@@ -395,7 +395,7 @@ func _quest_rewards() -> void:
 	var carrots_first: bool = eco.count_item(&"carrot") == 2 and eco.count_item(&"turnip") == 0 and owed == {"turnip": 3}
 	t.check("one_free_slot_claims_only_what_fits", turnips_first or carrots_first, str(owed))
 	# A synchronous item-gained listener must not re-enter the same outstanding grant.
-	var reenter := func(_id: StringName, _amount: int) -> void: qm.claim_rewards()
+	var reenter := func(_player_id: StringName, _id: StringName, _amount: int) -> void: qm.claim_rewards()
 	bus.item_gained.connect(reenter)
 	eco.remove_item(&"wood", 99)
 	await t.frames(2)
@@ -415,7 +415,7 @@ func _quest_rewards() -> void:
 	qm.accept_quest(&"review_save_during_grant")
 	qm.complete_quest(&"review_save_during_grant")
 	var saved_during_grant: Array = []
-	var on_gain := func(_id: StringName, _amount: int) -> void: saved_during_grant.append(sm.save_game(2))
+	var on_gain := func(_player_id: StringName, _id: StringName, _amount: int) -> void: saved_during_grant.append(sm.save_game(2))
 	bus.item_gained.connect(on_gain)
 	eco.remove_item(&"wood", 99)
 	await t.frames(2)

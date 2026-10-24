@@ -1439,9 +1439,9 @@ func from_dict(data: Dictionary) -> bool:
 			next_order += 1
 	_accept_counter = next_order
 	active_quests = restored
-	completed_quests.assign(data.get("completed", []))
-	failed_quests.assign(data.get("failed", []))
-	offered_quests.assign(data.get("offered", []))
+	completed_quests = SaveCodec.names_from_json(data.get("completed", []))
+	failed_quests = SaveCodec.names_from_json(data.get("failed", []))
+	offered_quests = SaveCodec.names_from_json(data.get("offered", []))
 	quest_flags.clear()
 	for key in data.get("flags", {}):
 		if not str(key).begins_with("def_"):   # v1 saves carried quest defs as flags; defs are never loaded

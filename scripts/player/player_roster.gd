@@ -9,7 +9,11 @@ extends Node
 const SECTION := "players"
 
 ## player_id -> PlayerState
-var rows: Dictionary = {}
+var rows: Dictionary:
+	get: return PlayerRegistry._states
+	set(value):
+		PlayerRegistry._states = value
+		PlayerRegistry._fallback_state = value.get(&"p0", PlayerState.new())
 
 
 func _ready() -> void:
@@ -23,9 +27,7 @@ func _ready() -> void:
 
 ## The row for `player_id`, created on first use.
 func state(player_id: StringName = &"p0") -> PlayerState:
-	if not rows.has(player_id):
-		rows[player_id] = PlayerState.new(player_id, 1 if player_id == &"p0" else int(str(player_id).trim_prefix("p")) + 1)
-	return rows[player_id]
+	return PlayerRegistry.state(player_id)
 
 
 ## The local hero's row (single-player: the only one).
@@ -34,13 +36,16 @@ func local_state() -> PlayerState:
 
 
 func reset() -> void:
-	rows.clear()
-	# Adopt the shared fallback row: managers may already have written their new-game
-	# state into it before the world scene exists. Do not wipe it here.
-	rows[&"p0"] = PlayerRegistry._fallback_state
+	PlayerRegistry.reset_states()
 
 
 func to_dict() -> Dictionary:
+	var local := local_state()
+	var gm := GameData.gm()
+	if gm != null:
+		local.name = gm.player_name
+		local.character_type = gm.character_type
+		local.character_skin = gm.character_skin
 	var out := {}
 	for id in rows:
 		out[str(id)] = (rows[id] as PlayerState).to_dict()
@@ -48,14 +53,15 @@ func to_dict() -> Dictionary:
 
 
 func from_dict(d: Dictionary) -> bool:
-	rows.clear()
 	var raw: Variant = d.get("rows")
 	if not (raw is Dictionary):
 		return false
+	var restored := {}
 	for key in (raw as Dictionary):
 		var row: Variant = (raw as Dictionary)[key]
 		if row is Dictionary:
 			var st := PlayerState.new()
 			if st.from_dict(row as Dictionary):
-				rows[st.player_id] = st
+				restored[st.player_id] = st
+	rows = restored
 	return true

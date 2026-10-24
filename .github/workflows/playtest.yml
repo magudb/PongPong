@@ -13,7 +13,7 @@ name: playtest
 #             boot print no engine error or warning), the check_project.gd mutants, and the sections that
 #             do not depend on the hero (sections.py --neutral). Saves the import cache.
 #   playtest  4 heroes x 4 shards of the other sections, balanced by tools/ci/section_seconds.json.
-#   windowed  the run_windowed(t) sections in a real 1280x720 window (Xvfb + Mesa software GL), advisory.
+#   windowed  the run_windowed(t) sections in a real 1280x720 window (Xvfb + Mesa software GL).
 #   selftest  the harness's own negative tests (tools/dev/selftest_harness.sh).
 # tools/dev/ci_local.sh runs the same split on a developer machine (every section per hero, the neutral ones included).
 #
@@ -248,16 +248,14 @@ jobs:
     name: windowed harness (part ${{ matrix.shard }})
     runs-on: ubuntu-latest
     timeout-minutes: 80
-    # Advisory until its first green run: the pixel checks and the reviewed baselines were measured on
-    # macOS, and Mesa's software renderer has not run them yet. Delete this line to make it a gate.
-    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
         shard: [0, 1, 2, 3]
     env:
       # No sound card on the runner: without the dummy driver Godot warns that every audio driver failed.
-      GODOT_EXTRA_ARGS: --audio-driver Dummy
+      # EGL supports swap intervals under Xvfb; GLX warns before the harness starts.
+      GODOT_EXTRA_ARGS: --audio-driver Dummy --rendering-driver opengl3_es
 
     steps:
       - name: Checkout

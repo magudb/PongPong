@@ -944,7 +944,7 @@ func _full_backpack() -> void:
 	var wood_before: int = eco.count_item(&"wood")
 	var observations: Array = []
 	var reentry: Array = []
-	var on_gain := func(_id: StringName, _amount: int) -> void:
+	var on_gain := func(_player_id: StringName, _id: StringName, _amount: int) -> void:
 		observations.append(ls.opened.has("zz:atomic") and eco.count_item(&"wood") == wood_before + 3)
 		reentry.append(ls.open_container("zz", "trae", "zz:atomic")["ok"])
 	bus.item_gained.connect(on_gain)

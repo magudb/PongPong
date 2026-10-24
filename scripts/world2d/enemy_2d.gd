@@ -92,6 +92,9 @@ static func create_marker(params: Dictionary, pos: Vector2, marker_cell: Vector2
 
 func _ready() -> void:
 	add_to_group("enemy")
+	# Sleeping skips callbacks, but waking must not race reattaching the body
+	# to its physics space before its first move_and_slide().
+	disable_mode = CollisionObject2D.DISABLE_MODE_KEEP_ACTIVE
 	max_hp = DungeonRun.boss_hp(kind) if is_boss else DungeonRun.enemy_hp(kind,floor_number)
 	hp = max_hp
 	speed = float(cfg.get("speed",160))

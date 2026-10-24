@@ -252,6 +252,7 @@ func start_new_game(p_name: String, p_type: CharacterType, p_farm: String = "", 
 	year = 1
 	hour = day_start_hour()
 	minute = 0
+	PlayerRegistry.reset_states()
 	var dropped: Array = world_flags.keys()
 	world_flags.clear()
 	set_flag(FLAG_INTRO_PENDING, true)

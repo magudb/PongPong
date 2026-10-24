@@ -213,7 +213,7 @@ func _visual(t,world: WorldRoot2D,look: ForestDress) -> void:
 	var best: Dictionary = windows[0]
 	for window in windows:
 		if window.ms < best.ms: best = window
-	t.check("frame_budget",t.perf_ok("frame_budget",best.ms,6),str(windows))
+	t.render_budget("frame_budget", best.ms, 6, str(windows))
 	var calls := Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
 	t.check("draw_call_budget",calls <= 450,str(calls))
 	var average: float = t.median_usec(func() -> void: look._process(1.0/60),20,50)/1000.0

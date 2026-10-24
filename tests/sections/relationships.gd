@@ -51,7 +51,7 @@ func run(t) -> void:
 	row.gw = 2
 	t.check("special_shown_after_ordinary_limits",GiftFlow.gift_options("gardener_hoppe").any(func(r):return str(r.id)=="hjertebuket" and bool(r.special)))
 	var observed: Array = []
-	var observer := func(_pack):observed.append(FLOW.state("gardener_hoppe")==1 and EconomyManager.count_item(&"hjertebuket")==n-1)
+	var observer := func(_player_id: StringName, _pack):observed.append(FLOW.state("gardener_hoppe")==1 and EconomyManager.count_item(&"hjertebuket")==n-1)
 	EventBus.player_inventory_changed.connect(observer)
 	var result := GiftFlow.give_gift("gardener_hoppe","hjertebuket",true)
 	EventBus.player_inventory_changed.disconnect(observer)

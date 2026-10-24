@@ -14,7 +14,7 @@ loot	1	the real appraisal screen is DL7's own section
 maps_iso	1	generated dungeon floors are registered at run time (D2), not by the warp table
 mouse_targeting	1	the click-to-fly check runs only for a hero that can fly on the farm (the fairy)
 player_input	4	UI audit pixel checks; the farm flight check runs only for the fairy
-release_updates	3	UI audit pixel checks need a window
+release_updates	4	three UI audit pixel checks need a window; the macOS helper requires codesign and ditto on macOS
 shop_ui	8	UI audit pixel checks and the windowed compare_guide tool
 social_ui	12	UI audit pixel checks and the windowed compare_guide tool
 town_loop	2	the source-bound proofs (loop-mutants.json, loop-extension.json) are refreshed by tools/town/prove_*.py

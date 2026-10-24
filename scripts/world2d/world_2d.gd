@@ -201,7 +201,6 @@ func _ready() -> void:
 	day_night.glow_changed.connect(_on_glow_changed)
 	roster = PlayerRoster.new()
 	add_child(roster)
-	roster.reset()
 	player = _make_player()
 	_register_player(player, 0, 1)   # identity before add_child: _ready reads is_local for the camera
 	add_child(player)

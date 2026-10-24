@@ -4,6 +4,30 @@ extends RefCounted
 var events: Array[Dictionary] = []
 var bus: Node
 
+## Prototype area budgets predate the HUD and equipment. Keep their original
+## geometry limits, while callers record the presented costs separately.
+static func area_draw_calls(t) -> float:
+	var ui: CanvasLayer = t.world().game_ui
+	var held: HeldEquipment2D = t.player().held_equipment
+	var clothes: WardrobeLayers = t.player().outfit_layers
+	var shown := [ui.visible, held.rear.visible, held.front.visible, clothes.root.visible]
+	var processing := held.is_processing()
+	ui.hide()
+	held.set_process(false)
+	held.rear.hide()
+	held.front.hide()
+	clothes.root.hide()
+	await t.frames(3)
+	var calls := float(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
+	held.set_process(processing)
+	held.sync_pose()
+	ui.visible = shown[0]
+	held.rear.visible = shown[1]
+	held.front.visible = shown[2]
+	clothes.root.visible = shown[3]
+	await t.frames(3)
+	return calls
+
 func attach(t) -> void:
 	bus = t.autoload("EventBus")
 	bus.game_event.connect(_event)

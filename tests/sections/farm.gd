@@ -28,7 +28,7 @@ func run(t) -> void:
 		eco.add_item(seed, 1, true)
 		grid.till(cell)
 		var observed: Array = []
-		var inventory_changed := func(_items: Dictionary) -> void:
+		var inventory_changed := func(_player_id: StringName, _items: Dictionary) -> void:
 			observed.append(grid.get_plot(cell).crop_id == StringName(crop))
 		bus.player_inventory_changed.connect(inventory_changed)
 		t.expect(grid.plant(cell, seed) == "", crop + " seed consumed")
@@ -45,7 +45,7 @@ func run(t) -> void:
 		t.expect(grid.state_of(cell) == FarmGrid.State.READY and grid.visual_stage(cell) == 3, crop + " configured ripening")
 		var before: int = eco.count_item(StringName(crop))
 		observed.clear()
-		var on_gain := func(id: StringName, _amount: int) -> void:
+		var on_gain := func(_player_id: StringName, id: StringName, _amount: int) -> void:
 			if id == StringName(crop):
 				observed.append(grid.state_of(cell) != FarmGrid.State.READY and grid.harvest(cell) == 0)
 		bus.item_gained.connect(on_gain)

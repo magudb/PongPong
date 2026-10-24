@@ -19,6 +19,7 @@ const MUSIC_FADER := "MusicFade"
 const AMBIENT_FADERS: Array[String] = ["AmbientFadeA","AmbientFadeB"]
 ## The music fades from and to this level (absolute dB, as the player's volume plus its fader).
 const MUSIC_FADE_FLOOR_DB := -40.0
+const SHUTDOWN_TIMEOUT_MS := 2000
 ## An ambient loop plays at this volume; its fader adds the duck (0 at full level) or AMBIENT_SILENT_DB - AMBIENT_LEVEL_DB.
 const AMBIENT_LEVEL_DB := -16.0
 const AMBIENT_SILENT_DB := -60.0
@@ -41,6 +42,8 @@ var _own_faders := false                # true when this instance created per-in
 var _rain_id := ""
 var _cues: Array[Dictionary] = []
 var _shutting_down := false
+## Weak references include replaced/stopped streams still retiring on the mixer thread.
+var _playbacks: Array[WeakRef] = []
 var _stream_paths: Dictionary = {}      # "dir|id" -> resolved path ("" = does not exist): ResourceLoader.exists is hit once per id
 
 var master_volume_db: float = 0.0
@@ -126,6 +129,13 @@ func _fade_music(target_db: float,seconds: float) -> Tween:
 	return tween
 
 
+func _play(player: AudioStreamPlayer) -> void:
+	player.play()
+	_playbacks = _playbacks.filter(func(reference: WeakRef) -> bool: return reference.get_ref() != null)
+	if player.has_stream_playback():
+		_playbacks.append(weakref(player.get_stream_playback()))
+
+
 func play_sfx(sfx_id: String, volume_db: float = NAN, pitch: float = 1.0) -> void:
 	sfx_id = sfx_id.trim_prefix("sfx/")
 	if _shutting_down:
@@ -140,7 +150,7 @@ func play_sfx(sfx_id: String, volume_db: float = NAN, pitch: float = 1.0) -> voi
 			p.stream = stream
 			p.volume_db = sfx_volume_db if is_nan(volume_db) else volume_db
 			p.pitch_scale = pitch
-			p.play()
+			_play(p)
 			return
 	# Steal the slot the pool used longest ago (FIFO over SFX_POOL_SIZE, not always slot 0)
 	var stolen := _sfx_pool[_sfx_rr]
@@ -148,7 +158,7 @@ func play_sfx(sfx_id: String, volume_db: float = NAN, pitch: float = 1.0) -> voi
 	stolen.stream = stream
 	stolen.volume_db = sfx_volume_db if is_nan(volume_db) else volume_db
 	stolen.pitch_scale = pitch
-	stolen.play()
+	_play(stolen)
 
 
 func play_music(track_id: String, fade_seconds: float = 1.0) -> void:
@@ -179,7 +189,7 @@ func _start_music(stream: AudioStream, fade_seconds: float, request: int) -> voi
 	_music_player.stream = stream    # stops the old playback: the volume below is set on a stopped player
 	_music_player.volume_db = music_volume_db
 	_set_fader_db(MUSIC_FADE_FLOOR_DB-music_volume_db if fade_seconds > 0.0 else 0.0,_music_fader)
-	_music_player.play()
+	_play(_music_player)
 	if fade_seconds > 0:
 		_music_tween = _fade_music(music_volume_db, fade_seconds)
 
@@ -219,7 +229,7 @@ func play_voice(voice_key: String, volume_db: float = NAN) -> void:
 		return
 	_voice_player.stream = stream
 	_voice_player.volume_db = voice_volume_db if is_nan(volume_db) else volume_db
-	_voice_player.play()
+	_play(_voice_player)
 
 
 ## True when a voice line with this key exists (the same lookup play_voice does, without loading the stream).
@@ -302,7 +312,7 @@ func play_ambience(id: String,fade_seconds := 1.5) -> void:
 	if stream is AudioStreamOggVorbis:stream.loop = true
 	player.stream = stream
 	_fade_ambient(_ambient_slot,AMBIENT_SILENT_DB,0.0)
-	player.play()
+	_play(player)
 	_fade_ambient(_ambient_slot,AMBIENT_LEVEL_DB+_ambient_duck,fade_seconds)
 
 func duck_ambience(db: float) -> void:
@@ -325,7 +335,7 @@ func play_rain(on: bool) -> void:
 		return
 	if stream is AudioStreamOggVorbis:stream.loop = true
 	_rain_player.stream = stream
-	_rain_player.play()
+	_play(_rain_player)
 
 func stop_world_audio() -> void:
 	play_ambience("",0.3)
@@ -346,10 +356,15 @@ func _silence_all() -> void:
 func prepare_shutdown() -> void:
 	_shutting_down = true
 	_silence_all()
-	# Audio playback runs on its own mixer thread. Fixed-fps test frames can
-	# finish before that thread has processed stop requests; allow wall time.
-	var deadline := Time.get_ticks_msec()+80
-	while Time.get_ticks_msec()<deadline:await get_tree().process_frame
+	# stop() queues a fade and deletion on the mixer thread; the main thread then
+	# retires the playback. A fixed delay races that handoff on a loaded runner.
+	var deadline := Time.get_ticks_msec()+SHUTDOWN_TIMEOUT_MS
+	while not _playbacks.is_empty():
+		_playbacks = _playbacks.filter(func(reference: WeakRef) -> bool: return reference.get_ref() != null)
+		if _playbacks.is_empty() or Time.get_ticks_msec()>=deadline:
+			break
+		await get_tree().process_frame
+	_playbacks.clear()
 
 func _exit_tree() -> void:
 	_shutting_down = true

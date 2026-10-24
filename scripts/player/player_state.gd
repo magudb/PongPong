@@ -62,9 +62,22 @@ func to_dict() -> Dictionary:
 		"oil": oil,
 		"area": str(area),
 		"player_pos": [player_pos.x, player_pos.y],
-		"quests": quests.duplicate(true),
+		"quests": _quest_dict(),
 		"wardrobe": wardrobe.duplicate(true),
 	}
+
+
+func _quest_dict() -> Dictionary:
+	var out := quests.duplicate(true)
+	var active: Dictionary = out.get("active", {})
+	for id in active:
+		if active[id] is Object and active[id].has_method("to_dict"):
+			active[id] = active[id].to_dict()
+	var flags: Dictionary = out.get("flags", {})
+	for key in flags.keys():
+		if str(key).begins_with("def_"):
+			flags.erase(key)
+	return out
 
 
 ## Rebuild from a save row. Unknown / unsafe values are dropped; returns false only on a missing id.
