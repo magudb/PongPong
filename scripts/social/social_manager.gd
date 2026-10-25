@@ -21,7 +21,8 @@ extends Node
 
 const SECTION := "social"
 const SECTION_ORDER := 60                      # after loot 40 and collection 50 (SaveManager.FEATURE_ORDERS has no entry for it: the order is passed explicitly)
-const SAVE_V := 1
+const SAVE_V := 2
+const LIVING_STATE := "res://scripts/social/living/living_state.gd"
 const LAST_GIFTS := 3                          # the `ls` list of a row: the last three gifts [item, day]
 
 ## Fields of a saved row (zero fields are omitted; wk and gwk default to -1 = "never"). pc = the purchase counter packed as week * 100000 + points * 1000 + gold
@@ -54,6 +55,7 @@ var world_seed: int = 0
 ## player_id -> {npc id (String) -> {p, wk, gt, gd, gwk, gw, bd, bk, ls, kn, rv, rs, pc}} (RM8).
 ## Single-player has one key (`p0`); hearts/friendship are per hero.
 var _rows: Dictionary = {}
+var _living: Dictionary = {"v": 1, "world": {"pairs": {}}, "players": {}, "orphans": {"players": {}}}
 var _seen: Dictionary = {}               # event id -> 1 (heart events: once) or year (festival scenes: once per year)
 var _fest_year: Dictionary = {}          # festival id -> last year attended
 var _last_day: int = 0                   # total_day processed by the daily step
@@ -1259,11 +1261,69 @@ func _restore_state() -> void:
 	_write_festival_flag()
 
 
+# ======================================================================================= living receipt boundary
+
+## Offline authority only. Local registered co-op bodies are not a network peer.
+func living_can_simulate() -> bool:
+	var peer := multiplayer.multiplayer_peer if is_inside_tree() else null
+	return peer == null or peer is OfflineMultiplayerPeer
+
+
+## Silent, synchronous source-owned commit. No bus notification authorizes help.
+func living_record_delivery(source: Node) -> Dictionary:
+	if not living_can_simulate() or source != get_node_or_null("/root/QuestManager"):
+		return {"ok": false, "reason": "untrusted_source"}
+	if source == null or not source.has_method("living_delivery_context"):
+		return {"ok": false, "reason": "no_commit"}
+	var ctx: Dictionary = source.call("living_delivery_context", self)
+	if ctx.is_empty():
+		return {"ok": false, "reason": "no_commit"}
+	var actor: Node = ctx.get("actor")
+	if not is_instance_valid(actor):
+		return {"ok": false, "reason": "invalid_actor"}
+	var pid := PlayerRegistry.registered_id(actor.get("_talk_player"))
+	var npc := str(actor.get("npc_id"))
+	if pid == &"" or not SocialData.npcs().has(npc):
+		return {"ok": false, "reason": "invalid_owner"}
+	# Reconcile retired/restored content only on this authorized write (reads
+	# remain pure), preserving its source watermark before a new receipt.
+	var decoded: Dictionary = Svc.static_call(LIVING_STATE, &"decode", [_living, SocialData.npcs(), int(ctx.day)], {"ok": false})
+	if not decoded.get("ok", false):
+		return {"ok": false, "reason": "invalid_state"}
+	_living = decoded.state
+	return Svc.static_call(LIVING_STATE, &"record", [_living, pid, npc, int(ctx.day)], {"ok": false})
+
+
+## Explicit player reads; no ambient identity, row creation or goal evaluation.
+func living_context(npc: String, player_id: StringName) -> Dictionary:
+	if not SocialData.npcs().has(npc):
+		return {}
+	return Svc.static_call(LIVING_STATE, &"context", [living_snapshot(), npc, player_id, today()], {})
+
+
+func living_snapshot() -> Dictionary:
+	var decoded: Dictionary = Svc.static_call(LIVING_STATE, &"decode", [_living, SocialData.npcs(), GameManager.total_day()], {"ok": false})
+	return decoded.get("state", {}).duplicate(true)
+
+
+## Pure save preflight. Nested future codecs fail closed through SaveManager's
+## existing invalid-section verdict; a future social version gets 'version'.
+func validate_dict(d: Dictionary) -> bool:
+	var version: Variant = d.get("v", 1)
+	if typeof(version) not in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(version)) or float(version) != floorf(float(version)) or float(version) < 1 or float(version) > SAVE_V:
+		return false
+	if not d.has("living"):
+		return true
+	var decoded: Dictionary = Svc.static_call(LIVING_STATE, &"decode", [d.living, SocialData.npcs()], {"ok": false})
+	return bool(decoded.get("ok", false))
+
+
 # ======================================================================================= save / reset
 
 ## A new game (and a save without the section): points are re-seeded from the flags friend_<npc> so the old hearts-only saves keep their hearts; the weekly
 ## chat of a heart that was given in the week of friend_last_<npc> counts as taken.
 func reset() -> void:
+	_living = Svc.static_call(LIVING_STATE, &"empty", [], {})
 	_rows.clear()
 	_seen.clear()
 	_fest_year.clear()
@@ -1323,6 +1383,11 @@ func to_dict() -> Dictionary:
 		"npcs": (local_npcs as Dictionary).duplicate(true),
 		"seen": _seen.duplicate(), "fest": _fest_year.duplicate(), "partner": _partner.duplicate(),
 	}
+	# Sparse empty LC keeps the unchanged legacy social size budget. Missing
+	# living is explicitly the v1 empty default, not inferred historical help.
+	var living := living_snapshot()
+	if not living.get("players", {}).is_empty() or not living.get("orphans", {}).get("players", {}).is_empty():
+		out["living"] = living
 	if by_player.size() > 1 or (by_player.size() == 1 and not by_player.has(local_id)):
 		out["by_player"] = by_player
 	if not _event_owed.is_empty(): out["owed"] = _event_owed.duplicate()
@@ -1335,6 +1400,14 @@ func to_dict() -> Dictionary:
 ## Applies a saved section. NEVER emits and NEVER push_errors (a push_error would reject the whole load): an unknown NPC id (content drift) is a push_warning and
 ## goes to the orphans bucket, which the next save keeps; an orphan whose NPC exists again is taken back. Returns true.
 func from_dict(d: Dictionary) -> bool:
+	if not validate_dict(d):
+		return false
+	# LC has no deferred jobs or lifecycle effects. Replace its entire value on
+	# load/rollback/reset; the legacy daily queue never reads or writes LC.
+	var decoded: Dictionary = Svc.static_call(LIVING_STATE, &"decode", [d.get("living", Svc.static_call(LIVING_STATE, &"empty", [], {})), SocialData.npcs(), GameManager.total_day()], {"ok": false})
+	if not decoded.get("ok", false):
+		return false
+	_living = decoded.state
 	_rows.clear()
 	_orphans.clear()
 	_lines.clear()

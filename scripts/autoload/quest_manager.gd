@@ -1061,6 +1061,25 @@ func _game_event_matches(od: Dictionary, on: String, ctx: Dictionary) -> bool:
 	return true
 
 
+## Live only after the economy's silent deductions and before public observers.
+## This is not serialized, not an EventBus credential and not a caller occurrence.
+var _living_delivery_commit: Dictionary = {}
+
+
+func living_delivery_context(consumer: Node) -> Dictionary:
+	if consumer != get_node_or_null("/root/SocialManager") or _living_delivery_commit.is_empty():
+		return {}
+	var ctx := _living_delivery_commit
+	_living_delivery_commit = {}
+	var actor: Node = ctx.get("actor")
+	if not actor is Npc2D or not actor.is_inside_tree() or actor.is_queued_for_deletion() or not actor.is_talking or str(actor.npc_id) != "smith_thorin":
+		return {}
+	var pid := PlayerRegistry.registered_id(actor._talk_player)
+	if pid == &"" or pid != ctx.owner or PlayerRegistry.acting_id() != pid:
+		return {}
+	return {"actor": actor, "day": ctx.day}
+
+
 ## A matched event becomes progress. A delivery (`needs`) first checks and takes the goods: all of it in one commit with the progress.
 func _apply_hit(quest_id: StringName, objective_id: Variant, step: int, od: Dictionary, ctx: Dictionary) -> void:
 	var rt: QuestRuntime = active_quests[quest_id]
@@ -1070,6 +1089,18 @@ func _apply_hit(quest_id: StringName, objective_id: Variant, step: int, od: Dict
 		_note_missing(needs)
 		return
 	var commit := func() -> void:
+		# Only this shipped physical target-one consume source has day-unique
+		# occurrences (seven-day cooldown). Do not generalize to gifts/cookies.
+		if quest_id == &"dark_forest_mining" and str(objective_id) == "return_to_smith" and bool(od.get("consume", false)) and bool(od.get("requires_meeting", false)) and needs == {"iron_ore": 6, "amethyst": 2} and int(obj.get("target", 0)) == 1 and not bool(obj.get("done", false)):
+			var actor: Node = ctx.get("meeting_actor")
+			if actor is Npc2D and is_instance_valid(actor) and actor.is_inside_tree() and actor.is_talking and not actor.is_queued_for_deletion():
+				var owner := PlayerRegistry.registered_id(actor._talk_player)
+				if owner != &"" and owner == PlayerRegistry.acting_id() and str(actor.npc_id) == "smith_thorin":
+					_living_delivery_commit = {"actor": actor, "owner": owner, "day": GameManager.total_day()}
+					var social := get_node_or_null("/root/SocialManager")
+					if social != null and social.has_method("living_record_delivery"):
+						social.call("living_record_delivery", self)
+					_living_delivery_commit = {}
 		if not _Data.strings(od.get("any_of", [])).is_empty():
 			var seen: Array = _Data.arr(obj.get("seen", []))
 			seen.append(str(ctx.get("npc", "")))
