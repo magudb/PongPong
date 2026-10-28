@@ -348,11 +348,20 @@ func container_spot(zone: String, container_id: String) -> String:
 
 ## The one-time friendship gifts of loot.gifts: every row of `npc` whose hearts are reached (flag friend_<npc>) and that was not given yet, keyed `npc:hearts` in the claimed table.
 ## Public and idempotent: SocialManager calls it after EVERY heart gain; a second call grants nothing.
+func _gift_origin() -> Dictionary:
+	var id := PlayerRegistry.acting_id()
+	return {"id": id, "profile": PlayerRegistry.peek_state(id), "stamp": SaveManager._save_owner_stamp()}
+
+func _gift_current(origin: Dictionary) -> bool:
+	return NetAuthority.can_write() and SaveManager.continuation_available(origin.profile) and PlayerRegistry.acting_id() == origin.id and PlayerRegistry.peek_state(origin.id) == origin.profile and origin.stamp == SaveManager._save_owner_stamp()
+
 func check_friend_gifts(npc_id: String) -> Dictionary:
+	var origin := _gift_origin()
 	var hearts := GameManager.flag_int(StringName("friend_%s" % npc_id), 0)
 	var granted: Array = []
 	var sold: Array = []
 	for g in _Data.arr(loot_cfg().get("gifts", [])):
+		if not _gift_current(origin): break
 		var gd := _Data.dict(g)
 		if str(gd.get("npc", "")) != npc_id:
 			continue
@@ -491,12 +500,17 @@ func deliver(item_id: Variant, amount: int = 1) -> Dictionary:
 
 
 func _deliver(item_id: Variant, amount: int) -> Dictionary:
+	var origin := _gift_origin()
 	var id := StringName(str(item_id))
 	if id == &"" or amount <= 0:
 		return {"ok": false, "sold": false, "reason": &"invalid", "gold": 0}
 	if EconomyManager.add_item(id, amount):
+		if not _gift_current(origin):
+			return {"ok": true, "sold": false, "reason": &"superseded", "gold": 0}
 		_note_keepsake(id)
 		return {"ok": true, "sold": false, "reason": &"", "gold": 0}
+	if not _gift_current(origin):
+		return {"ok": false, "sold": false, "reason": &"superseded", "gold": 0}
 	var def := _Kinds.def(id)
 	var no_room := _goes_to_backpack(id) and EconomyManager.backpack_room_for(id) < amount and not (_Kinds.is_one_of_a_kind(id) and EconomyManager.count_item(id) >= 1)
 	if str(def.get("category", "")) in _duplicates_kinds() and not no_room:
@@ -578,6 +592,7 @@ func _open_base(zone: String, container_id: String, cc: Dictionary, uid: String,
 
 ## the common end of every mutating call: fit, consume, deliver, commit. plan = {ok, reason, results, delta, delegate?}
 func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNumberGenerator, rng_before: int) -> Dictionary:
+	var origin := _gift_origin()
 	var own_stream := r == rng
 	if not bool(plan.get("ok", false)):
 		_restore(r, rng_before, own_stream)
@@ -600,6 +615,7 @@ func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNum
 	var out_rows: Array = []
 	var sold: Array = []
 	var refused := [false]
+	var committed := [false]
 	EconomyManager.defer_notifications(func() -> void:
 		# has_items counts placed and worn copies, which remove_items never takes: the consumption decides, before anything is delivered (SYS-06)
 		if not consume.is_empty() and not EconomyManager.remove_items(consume):
@@ -613,13 +629,20 @@ func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNum
 			out_rows.append_array(rows.duplicate(true))
 		else:
 			for row in rows:
+				if not _gift_current(origin): break
 				var res := deliver(str(row["id"]), int(row["amount"]))
 				out_rows.append(row)
 				if bool(res.get("sold", false)):
 					sold.append({"id": str(row["id"]), "gold": int(res.get("gold", 0))})
 		_source = prior
+		if not _gift_current(origin): return
 		_commit(plan)
+		committed[0] = true
 	)
+	if not _gift_current(origin):
+		var superseded := _answer(committed[0], out_rows, &"superseded")
+		superseded["sold"] = sold
+		return superseded
 	if refused[0]:
 		_restore(r, rng_before, own_stream)
 		return _answer(false, [], &"missing_items")

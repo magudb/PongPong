@@ -319,10 +319,19 @@ func can_add_item(item_id: StringName, amount: int = 1) -> bool:
 
 ## Gives the player `amount` of an item. False when nothing was added: amount <= 0, no room, or a second copy of a keepsake.
 ## `silent` (the starter kit, loading) skips item_gained, rare_item_found and the toast.
+func _transaction_origin() -> Dictionary:
+	var id := PlayerRegistry.acting_id()
+	return {"id": id, "profile": PlayerRegistry.peek_state(id), "stamp": SaveManager._save_owner_stamp()}
+
+func _transaction_current(origin: Dictionary) -> bool:
+	return SaveManager.continuation_available(origin.profile) and PlayerRegistry.acting_id() == origin.id and PlayerRegistry.peek_state(origin.id) == origin.profile and origin.stamp == SaveManager._save_owner_stamp()
+
 func add_item(item_id: StringName, amount: int = 1, silent: bool = false) -> bool:
 	if amount <= 0 or item_id == &"":
 		return false
+	var origin := _transaction_origin()
 	adopt_misrouted()
+	if not _transaction_current(origin): return false
 	if _Kinds.is_one_of_a_kind(item_id) and (amount > 1 or count_item(item_id) >= 1):
 		return false
 	var kind := _Kinds.storage_of(item_id)
@@ -331,6 +340,9 @@ func add_item(item_id: StringName, amount: int = 1, silent: bool = false) -> boo
 		if store != null and store.has_method("add"):
 			if not bool(store.call("add", item_id, amount)):
 				return false
+			# The store has committed to the origin, but its public observers may
+			# have replaced the run. Do not equip or announce into that replacement.
+			if not _transaction_current(origin): return true
 			_auto_equip(item_id,not silent)
 			_gained(item_id, amount, silent)
 			return true
