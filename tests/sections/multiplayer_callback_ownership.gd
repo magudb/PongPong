@@ -41,7 +41,7 @@ func run(t) -> void:
 	var saves: Node = t.autoload("SaveManager")
 	var prior: String = saves.save_dir
 	t.on_cleanup(func(): saves.save_dir = prior)
-	for kind: String in ["lily_item", "lily_store", "lily_failed_item", "lily_failed_store", "adopt_clothing", "adopt_furniture", "migration_clothing", "migration_furniture", "reset_modal", "reset_character", "reset_modal_failed", "reset_character_failed"]:
+	for kind: String in ["lily_item", "lily_store", "lily_failed_item", "lily_failed_store", "adopt_clothing", "adopt_furniture", "migration_clothing", "migration_furniture", "reset_modal", "reset_character", "reset_modal_failed", "reset_character_failed", "enter_in_world", "hud_lifetime"]:
 		if OS.get_environment("MP4_CALLBACK_CASE") != "" and OS.get_environment("MP4_CALLBACK_CASE") != kind: continue
 		if not await t.start_world(): return
 		saves.save_dir = "user://mp4-callback-" + kind
@@ -51,8 +51,74 @@ func run(t) -> void:
 		elif kind.begins_with("adopt_"): _adopt(t, saves, kind)
 		elif kind.begins_with("migration_"): _migration(t, saves, kind)
 		elif kind.begins_with("reset_"): _reset(t, saves, kind)
+		elif kind == "enter_in_world": await _enter_in_world(t, saves)
+		elif kind == "hud_lifetime": await _hud_lifetime(t)
 		else: _lily_failed(t, saves, kind)
 		await t.go_menu()
+
+func _hud_lifetime(t) -> void:
+	var hud: Control = t.world().game_ui.get_screen(&"forest_hud")
+	var parent: Node = hud.get_parent()
+	var local: Node = PlayerRegistry.local_player()
+	t.check("hud_lifetime_live_owner", is_instance_valid(local) and PlayerRegistry.registered_id(local) == &"p0" and hud.is_inside_tree())
+	# Queue the real deferred arrival consumer, then detach its still-live HUD.
+	EventBus.game_event.emit(&"dungeon_floor_entered", {})
+	parent.remove_child(hud)
+	var oil_before: float = hud.oil_bar.value
+	var zone_before: String = hud.zone_label.text
+	var hints_before: Dictionary = hud._hint_tweens.duplicate()
+	EventBus.player_spawned.emit(local)
+	EventBus.area_changed.emit(&"farm")
+	EventBus.player_oil_changed.emit(&"p0", 0.0, 100.0)
+	EventBus.game_event.emit(&"dungeon_hint", {"id": "slash"})
+	EconomyManager.add_item(&"lantern_oil", 2, true)
+	await t.frames(2)
+	t.check("hud_lifetime_detached_callbacks_refused", not hud.is_inside_tree() and hud.oil_bar.value == oil_before and hud.zone_label.text == zone_before and hud._hint_tweens == hints_before and hud._pending_arrivals == 0, "still-live detached listeners cannot read a tree or create presentation tweens; oil=%s/%s zone=%s/%s hint keys=%s/%s" % [oil_before, hud.oil_bar.value, zone_before, hud.zone_label.text, hints_before.keys(), hud._hint_tweens.keys()])
+	parent.add_child(hud)
+	EventBus.player_spawned.emit(local)
+	EventBus.player_oil_changed.emit(&"p0", 50.0, 100.0)
+	EventBus.area_changed.emit(&"farm")
+	EconomyManager.add_item(&"lantern_oil", 1, true)
+	t.check("hud_lifetime_reentry_updates", hud._player == local and hud.oil_bar.value == 50.0 and hud.oil_count.text == "×%d" % EconomyManager.count_item(&"lantern_oil"), "existing signal connections resume normally after reentry")
+	# Queued deletion is also terminal even before the node leaves its tree.
+	var display: Array = [hud.oil_count.text, hud.oil_bar.value, hud.zone_label.text]
+	var queued_hints: Dictionary = hud._hint_tweens.duplicate()
+	hud.queue_free()
+	EventBus.player_spawned.emit(local)
+	EventBus.player_oil_changed.emit(&"p0", 10.0, 100.0)
+	EventBus.area_changed.emit(&"farm")
+	EventBus.game_event.emit(&"dungeon_hint", {"id": "slash"})
+	EconomyManager.add_item(&"lantern_oil", 1, true)
+	t.check("hud_lifetime_queued_callbacks_refused", display == [hud.oil_count.text, hud.oil_bar.value, hud.zone_label.text] and hud._hint_tweens == queued_hints)
+	await t.frames(2)
+	t.check("hud_lifetime_freed", not is_instance_valid(hud))
+
+func _enter_in_world(t, saves: Node) -> void:
+	GameManager.set_flag(GameManager.FLAG_INTRO_PENDING, true)
+	t.check("enter_in_world_earlier_saved", saves.save_game(0) and is_instance_valid(t.world()) and t.world().ready_for_play, "genuine loaded World, not retained synthetic detached HUD")
+	GameManager.set_flag(GameManager.FLAG_INTRO_PENDING, false)
+	GameManager.play_time_seconds = 222
+	EconomyManager.gold = 873
+	EconomyManager.add_item(&"stone", 17, true)
+	t.check("enter_in_world_winner_saved", saves.save_game(1))
+	var old_world: WeakRef = weakref(t.world())
+	var entered: Array = []
+	var winner: Dictionary = {}
+	var callback := func(key: StringName, value):
+		if key != GameManager.FLAG_INTRO_PENDING or value != false or not entered.is_empty(): return
+		entered.append(old_world.get_ref() != null and not old_world.get_ref().is_inside_tree())
+		entered.append(saves.load_game(1))
+		winner.merge(_snapshot(saves))
+	EventBus.flag_changed.connect(callback)
+	var loaded: bool = saves.load_and_enter(0)
+	EventBus.flag_changed.disconnect(callback)
+	t.check("enter_in_world_detached_boundary", entered == [true, true], "actual scene replacement detaches old World before final flag observer loads successfully; %s" % [entered])
+	t.check("enter_in_world_winner_immediate", not loaded and not winner.is_empty() and _matches(saves, winner) and EconomyManager.gold == 873 and EconomyManager.count_item(&"stone") == 17, "nested winner survives older facade immediately and after synchronous unwind")
+	# The real queued scene still enters; observe its actual readiness, not only
+	# change_scene_to_file's synchronous request acknowledgement.
+	var ready: bool = await t.until(func(): return t.world() != null and t.world().ready_for_play and PlayerRegistry.local_player() != null, 15.0)
+	await t.frames(3)
+	t.check("enter_in_world_ready_winner", ready and old_world.get_ref() == null and EconomyManager.gold == 873 and EconomyManager.count_item(&"stone") == 17 and saves.current_slot == 1 and PlayerRegistry.registered_id(PlayerRegistry.local_player()) == &"p0", "actual replacement World boots winner with a registered local actor and no detached listener errors")
 
 func _reset(t, saves: Node, kind: String) -> void:
 	if kind.ends_with("_failed"):

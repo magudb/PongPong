@@ -169,6 +169,7 @@ func _ready() -> void:
 	_assist()
 	_area_changed(&"")
 func _spawned(player: Node) -> void:
+	if not is_inside_tree() or is_queued_for_deletion(): return
 	if player != null and player != PlayerRegistry.local_player(get_tree()):
 		return
 	_player = player as Player2D
@@ -186,6 +187,7 @@ func _health(current: int, maximum: int) -> void:
 	backpack_chip.position.y = 180 if count > 6 else 146
 	assist_badge.position.y = backpack_chip.position.y+28
 func _oil(seconds: float, maximum: float) -> void:
+	if not is_inside_tree() or is_queued_for_deletion(): return
 	oil_bar.value = 100*seconds/maxf(1,maximum)
 	var low := oil_bar.value <= 20
 	if _oil_pulse != null and _oil_pulse.is_valid():
@@ -203,6 +205,7 @@ func _boss(key: String, ratio: float, shown: bool) -> void:
 	boss_bar.value = clampf(ratio,0,1)*100
 	if shown: floor_banner.dismiss()
 func _area_changed(_id: StringName) -> void:
+	if not is_inside_tree() or is_queued_for_deletion(): return
 	var world := get_tree().get_first_node_in_group("world_2d") as WorldRoot2D
 	var area: IsoArea = world.area if world != null else null
 	minimap.set_area(area)
@@ -215,6 +218,8 @@ func _fit_zone() -> void:
 	zone_label.offset_left = -132-width*.5
 	zone_label.offset_right = -132+width*.5
 func _inventory(_items: Dictionary) -> void:
+	# Scene replacement detaches the old HUD before freeing its signal listeners.
+	if not is_inside_tree() or is_queued_for_deletion(): return
 	# Batched owner-labelled notifications can flush after the body's scope returns.
 	# Resolve physical local membership again; neither the payload nor ambient row owns this HUD.
 	var owner_id: StringName = &"p0"
@@ -242,6 +247,7 @@ func _assist() -> void:
 	assist_badge.text = tr("ASSIST_TITLE")+": "+tr("ASSIST_PRESET_"+preset.to_upper())
 	if is_instance_valid(_player): _oil(_player.oil,_player.max_oil)
 func _event(id: StringName, payload: Dictionary) -> void:
+	if not is_inside_tree() or is_queued_for_deletion(): return
 	match id:
 		&"dungeon_floor_entered":
 			_pending_arrivals += 1
@@ -254,8 +260,10 @@ func _event(id: StringName, payload: Dictionary) -> void:
 func _show_arrival() -> void:
 	if _pending_arrivals <= 0: return
 	_pending_arrivals = 0
+	if not is_inside_tree() or is_queued_for_deletion(): return
 	floor_banner.show_floor(minimap.area,boss_box.visible)
 func pulse_ability(id: String) -> void:
+	if not is_inside_tree() or is_queued_for_deletion(): return
 	if id == "abilities":
 		for ability in abilities: pulse_ability(ability)
 		return
