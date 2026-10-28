@@ -56,6 +56,8 @@ func _connect_player() -> void:
 	bind_player(PlayerRegistry.local_player(get_tree()))
 
 func bind_player(node: Node) -> void:
+	if node != null and node != PlayerRegistry.local_player(get_tree()):
+		return
 	var previous: Node = _player.get_ref() if _player != null else null
 	if previous != null and previous.equipment_display_changed.is_connected(_refresh):
 		previous.equipment_display_changed.disconnect(_refresh)

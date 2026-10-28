@@ -563,7 +563,7 @@ func _toast_second_setup(t) -> void:
 	toast.setup("Second", "two", 3.0)                 # a REPLACEMENT: the first schedule must not run on
 	var alpha_after: float = toast.modulate.a
 	t.expect(toast.title_label.text == "Second" and toast.message_label.text == "two", "the second setup() shows the second text")
-	t.expect(alpha_before > 0.2 and is_equal_approx(alpha_after, alpha_before), "...and carries on from the current opacity instead of dropping to 0 (%.2f -> %.2f)" % [alpha_before, alpha_after])
+	t.check("toast_replacement_preserves_opacity", alpha_before > 0.2 and is_equal_approx(alpha_after, alpha_before), "...and carries on from the current opacity instead of dropping to 0 (%.2f -> %.2f)" % [alpha_before, alpha_after])
 	await t.seconds(0.9)                              # 1.0 s after the first call: the first schedule would have freed the toast at 0.75 s
 	t.expect(is_instance_valid(toast) and not toast.is_queued_for_deletion(), "a second setup() on a toast in the tree: the first fade's queue_free no longer removes it early")
 	t.expect(is_instance_valid(toast) and toast.modulate.a > 0.95, "...it holds full opacity for its own 3 s (%.2f)" % (toast.modulate.a if is_instance_valid(toast) else -1.0))

@@ -220,7 +220,7 @@ func run(p_t) -> void:
 	_test_inspect_cache()
 	_test_section_versions()
 	_test_content_drift()
-	_test_drift_buckets()
+	await _test_drift_buckets()
 	_test_summaries()
 	_test_summary_types()
 	_test_latest_slot()
@@ -1653,13 +1653,40 @@ func _test_drift_buckets() -> void:
 		eco.deliver_owed()
 		t.check("drift_owed_furniture_reaches_its_store", eco.owed.is_empty() and furniture.count_total("chair_pine") == before + 1 and eco._backpack_count(&"chair_pine") == 0,
 			"owed %s, chairs in the store %d -> %d" % [eco.owed, before, furniture.count_total("chair_pine")])
-	# a loaded world: the owed slots come back when its player spawns, not only on the next morning
+	# Keep the inherited unregistered spawn, now as the diagnostic NEGATIVE it is
+	# under the registered-physical-owner contract. Never borrow ambient p0.
 	eco.inventory.clear()
 	eco.owed.assign([{"id": &"stone", "amount": 3, "meta": {}}])
+	var profiles_before: Dictionary = PlayerRegistry._states.duplicate()
+	var owner: RefCounted = PlayerRegistry.peek_state(&"p0")
+	var state_before: Dictionary = owner.to_dict().duplicate(true)
+	var economy_before: Dictionary = eco.to_dict().duplicate(true)
 	var spawned := Node2D.new()
 	bus.player_spawned.emit(spawned)
 	spawned.free()
+	t.check("drift_unregistered_spawn_refused_without_profile_creation", PlayerRegistry._states == profiles_before and owner.to_dict() == state_before and eco.to_dict() == economy_before, "unregistered out-of-tree Node leaves inventory, owed, row identity and profile roster unchanged")
+	# Positive migration: a real saved row and an actual World boot emits its
+	# registered in-tree physical body once, with room for the original stone3.
+	PlayerRegistry.state(&"p1")
+	PlayerRegistry.for_player(&"p1", func():
+		eco.from_dict(eco.to_dict())
+		qm.from_dict(qm.to_dict()))
+	t.check("drift_spawn_real_save_load_positive", sm.save_game(0) and sm.load_game(0), "real disk roundtrip keeps owed stone before World entry")
+	var unrelated: RefCounted = PlayerRegistry.peek_state(&"p1")
+	var unrelated_before: Dictionary = unrelated.to_dict().duplicate(true)
+	var spawns: Array = []
+	var on_spawn := func(body: Node2D):
+		spawns.append([body.is_inside_tree(), PlayerRegistry.registered_id(body), PlayerRegistry.by_id(&"p0") == body])
+	bus.player_spawned.connect(on_spawn)
+	var entered: bool = await t.change_scene(WORLD_SCENE, 20.0)
+	if entered: await t.until(func(): return t.world() != null and t.world().ready_for_play, 10.0)
+	bus.player_spawned.disconnect(on_spawn)
+	t.check("drift_spawn_real_registered_owner_once", entered and spawns == [[true, &"p0", true]], "actual World._ready player_spawned, not a fabricated owner method: %s" % [spawns])
 	t.check("drift_owed_handed_back_when_a_loaded_world_spawns", eco.owed.is_empty() and eco.count_item(&"stone") == 3, "owed %s" % [eco.owed])
+	var after_spawn: Dictionary = eco.to_dict().duplicate(true)
+	bus.player_spawned.emit(t.player())
+	t.check("drift_spawn_delivery_exactly_once_unrelated_unchanged", eco.to_dict() == after_spawn and PlayerRegistry.peek_state(&"p1") == unrelated and unrelated.to_dict() == unrelated_before, "repeated real-body notification cannot replay owed delivery or touch p1")
+	await t.go_menu()
 	_set_state(1, 1)
 
 

@@ -71,6 +71,10 @@ static func race_key() -> String:
 	if g == null:
 		return "animal"
 	var idx: int = int(g.get("character_type"))
+	# Keep the legacy host projection; synchronous body scopes for other rows
+	# must not borrow that host's flight/run/tool species perks.
+	if PlayerRegistry._acting_id != &"" and PlayerRegistry._acting_id != &"p0":
+		idx = PlayerRegistry.state(PlayerRegistry._acting_id).character_type
 	var script: Script = g.get_script()
 	if script != _enum_script:
 		_enum_script = script

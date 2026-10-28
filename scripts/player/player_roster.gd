@@ -35,9 +35,61 @@ func reset() -> void:
 	PlayerRegistry.reset_states()
 
 
+func initialize_profile(id: StringName, peer_id: int, metadata: Dictionary) -> PlayerState:
+	if not NetAuthority.can_write() or rows.has(id) or not MultiplayerSession.profile_valid(metadata): return null
+	var row := PlayerState.new(id, peer_id)
+	row.reset_profile(metadata.name, int(metadata.character_type), StringName(metadata.character_skin))
+	var eco := Svc.node("EconomyManager")
+	row.gold = eco._gold_of(GameManager.config_value("economy.starting_gold", 500), 500)
+	row.equipment = eco._empty_equipment()
+	for entry in eco._starter_kit():
+		var item := StringName(str(entry[0]))
+		var amount := int(entry[1])
+		if amount <= 0: continue
+		var def := ItemKinds.def(item)
+		if str(def.get("category", "")) == "weapon":
+			row.arsenal[item] = mini(amount, Arsenal.CAP)
+		else:
+			var remaining := amount
+			while remaining > 0 and row.inventory.size() < eco.INVENTORY_SLOTS:
+				var count := mini(remaining, eco.max_stack_of(item))
+				row.inventory.append({"id": item, "amount": count, "meta": {}})
+				remaining -= count
+		var slot := str(eco.equip_slot_of(item))
+		if slot != "" and slot != "accessory":
+			var old: Variant = row.equipment.get(StringName(slot), &"")
+			if old == &"" or eco.equip_rank_of(item) > eco.equip_rank_of(old): row.equipment[StringName(slot)] = item
+	var wardrobe := Svc.node("WardrobeManager")
+	var kit := LuaData.dict(GameManager.config_value("starter_kit.wardrobe", {}))
+	var owned := {}
+	var equipped := {}
+	for item in LuaData.strings(kit.get("owned", [])) + LuaData.strings(kit.get("worn", [])):
+		if wardrobe.slot_of(item) != "": owned[item] = 1
+	for item in LuaData.strings(kit.get("worn", [])): equipped = wardrobe.preview_equipping(item, equipped)
+	row.wardrobe = {"v": 1, "owned": owned, "equipped": equipped, "presets": {}}
+	var slots: Array = []
+	for entry in eco._starter_kit():
+		if slots.size() < Hotbar.SIZE: slots.append(str(entry[0]))
+	while slots.size() < Hotbar.SIZE: slots.append("")
+	row.hotbar = {"slots": slots, "selected": 0}
+	return row
+
+
+func capture_live_bodies(world: Node) -> void:
+	if not NetAuthority.can_write(): return
+	for body in world.all_players():
+		var row := PlayerRegistry.peek_state(body.player_id)
+		if row == null: continue
+		row.player_pos = body.global_position
+		if body.area != null: row.area = body.area.map.id
+		for key in ["half_hearts", "stamina", "oil"]:
+			if key in body: row.set(key, body.get(key))
+		if "hotbar" in body: row.hotbar = body.hotbar.to_dict()
+
+
 func to_dict() -> Dictionary:
 	# Facades normalize runtime-only quest records and preserve content-drift buckets.
-	var local := local_state()
+	var local := state(&"p0")
 	var game := Svc.node("GameManager")
 	if game != null:
 		local.name = str(game.get("player_name"))

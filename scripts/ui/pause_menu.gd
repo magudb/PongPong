@@ -150,17 +150,41 @@ func _leave(quit_game: bool) -> void:
 	if _leaving:
 		return
 	_leaving = true
-	if quit_game:                              # GameManager owns the save-on-quit policy (the window's close button takes the same way)
-		await GameManager.quit_game(0, true, self)
+	var menu_lifetime: WeakRef = weakref(self)
+	var origin := GameManager.navigation_origin()
+	if quit_game:
+		# Hosts and guests share the origin-aware close/async shutdown; guests
+		# deliberately skip saving, as before.
+		await GameManager.quit_game(0, NetAuthority.can_write(), self)
+		if menu_lifetime.get_ref() != null: _leaving = false
+		return
+	if NetAuthority.can_write():
+		if not SaveManager.autosave():
+			if menu_lifetime.get_ref() == null: return
+			if not NetAuthority.can_write() or not GameManager.navigation_current(origin):
+				_leaving = false
+				return
+			var accepted := await UiConfirm.ask(self, "NOTIF_SAVE_FAILED_TITLE", tr("PAUSE_SAVE_FAILED_CONFIRM"), "NAV_OK")
+			if menu_lifetime.get_ref() == null: return
+			if not accepted or not GameManager.navigation_current(origin):
+				_leaving = false
+				return
+	if menu_lifetime.get_ref() == null: return
+	origin = GameManager.close_for_navigation(origin, &"leave_title")
+	if menu_lifetime.get_ref() == null: return
+	if origin.is_empty():
 		_leaving = false
 		return
-	if not SaveManager.autosave():
-		var accepted := await UiConfirm.ask(self, "NOTIF_SAVE_FAILED_TITLE", tr("PAUSE_SAVE_FAILED_CONFIRM"), "NAV_OK")
-		if not accepted:
-			_leaving = false
-			return
 	GameManager.pop_all_modals()
+	if menu_lifetime.get_ref() == null: return
+	if not GameManager.navigation_current(origin):
+		_leaving = false
+		return
 	GameManager.change_phase(GameManager.GamePhase.MENU)
+	if menu_lifetime.get_ref() == null: return
+	if not GameManager.navigation_current(origin):
+		_leaving = false
+		return
 	get_tree().change_scene_to_file("res://scenes/main/main_menu.tscn")
 
 func _floors() -> Variant:

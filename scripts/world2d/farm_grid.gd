@@ -96,6 +96,7 @@ func can_till(cell: Vector2i, ignore_placed: bool = false) -> bool:
 	return true
 
 func unlock_cells(zone_id: String) -> int:
+	if not NetAuthority.can_write(): return 0
 	if not _zones.has(zone_id) or _unlocked.has(zone_id):
 		return 0
 	_unlocked[zone_id] = true
@@ -142,6 +143,7 @@ func in_season(crop: StringName) -> bool:
 	return seasons.is_empty() or str(GameData.gm().season) in seasons
 
 func till(cell: Vector2i) -> bool:
+	if not NetAuthority.can_write(): return false
 	if _busy or not can_till(cell) or state_of(cell) != State.EMPTY:
 		return false
 	plots[cell] = PlotData.new()
@@ -151,6 +153,7 @@ func till(cell: Vector2i) -> bool:
 	return true
 
 func plant(cell: Vector2i, seed_item: StringName) -> String:
+	if not NetAuthority.can_write(): return "UI_TOOL_NO_EFFECT"
 	var p := get_plot(cell)
 	if _busy or p == null or p.state != State.TILLED or not can_till(cell):
 		return "UI_TOOL_NO_EFFECT"
@@ -196,6 +199,7 @@ func _water(p: PlotData, hour: float) -> void:
 ## `source` = &"player" (the can: EventBus.crop_watered, which quests and hints count) or the automation that watered it (&"sprinkler" ...:
 ## EventBus.crop_auto_watered). Either is sent only for a plot with a crop: wet bare soil waters no crop (GAP4-03).
 func water(cell: Vector2i, at_hour: float = -1.0, source: StringName = &"player") -> bool:
+	if not NetAuthority.can_write(): return false
 	var p := get_plot(cell)
 	if _busy or p == null or p.state in [State.EMPTY, State.WITHERED] or not can_till(cell):
 		return false
@@ -218,6 +222,7 @@ func _announce_water(cell: Vector2i, p: PlotData, source: StringName) -> void:
 		EventBus.crop_auto_watered.emit(plot_id(cell), source)
 
 func apply_supply(cell: Vector2i, item: StringName) -> bool:
+	if not NetAuthority.can_write(): return false
 	var p := get_plot(cell)
 	if _busy or p == null or p.state in [State.EMPTY, State.READY, State.WITHERED] or not can_till(cell):
 		return false
@@ -242,6 +247,7 @@ func apply_supply(cell: Vector2i, item: StringName) -> bool:
 	return ok
 
 func harvest(cell: Vector2i) -> int:
+	if not NetAuthority.can_write(): return 0
 	var p := get_plot(cell)
 	if _busy or p == null or p.state != State.READY:
 		return 0
@@ -275,6 +281,7 @@ func harvest(cell: Vector2i) -> int:
 ## Scythes clear dead crops; an axe/pickaxe can deliberately remove a living crop.
 ## Soil, today's water and watering supplies survive clearing and harvesting.
 func clear_crop(cell: Vector2i, dead_only: bool = true) -> bool:
+	if not NetAuthority.can_write(): return false
 	var p := get_plot(cell)
 	if _busy or p == null or p.crop_id == &"" or (dead_only and p.state != State.WITHERED):
 		return false
@@ -288,6 +295,7 @@ func clear_crop(cell: Vector2i, dead_only: bool = true) -> bool:
 
 ## Waters up to max_n crops that are not watered yet (the partner's daily chore): crop_auto_watered(plot, &"partner"), never the player's event.
 func water_unwatered(max_n: int) -> int:
+	if not NetAuthority.can_write(): return 0
 	if _busy:return 0
 	var changed: Array[Vector2i] = []
 	for cell in plots:
@@ -309,11 +317,13 @@ func _rain() -> bool:
 	return tm.is_raining() or tm.weather == &"torden"
 
 func _on_time_changed(hour: int, _minute: int) -> void:
+	if not NetAuthority.can_write(): return
 	# New-day automation runs at logical 06:00, never at the transient 02:00 roll.
 	if hour >= 6 and GameData.gm().total_day() == _last_day:
 		_auto_water(float(hour))
 
 func _on_weather_changed(_weather: StringName) -> void:
+	if not NetAuthority.can_write(): return
 	# TimeManager rolls the NEW weather before day_started. Grow the old day first.
 	if GameData.gm().total_day() == _last_day:
 		_auto_water(maxf(6.0, float(GameData.gm().hour)))
@@ -321,6 +331,7 @@ func _on_weather_changed(_weather: StringName) -> void:
 ## Rain (and thunder) waters every tilled plot, a watering supply its own plot (auto_water_days). Runs every game minute: the weather is asked ONCE
 ## per call and a dry day without a supplied plot leaves at once (GAP4-07).
 func _auto_water(hour: float) -> void:
+	if not NetAuthority.can_write(): return
 	var rain := _rain()
 	if not rain and not _has_auto_water():
 		return
@@ -341,6 +352,7 @@ func _has_auto_water() -> bool:
 	return false
 
 func _on_day_started(_day: int, _season: StringName) -> void:
+	if not NetAuthority.can_write(): return
 	var today: int = GameData.gm().total_day()
 	if today <= _last_day:
 		return
@@ -422,6 +434,7 @@ func validate_save(value: Variant) -> bool:
 	return validate_dict(value)
 
 func from_dict(value: Dictionary) -> bool:
+	if not NetAuthority.can_write(): return false
 	if not validate_save(value):
 		return false
 	configure_map(map)

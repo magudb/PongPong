@@ -530,6 +530,8 @@ func _pills_rows_slots() -> void:
 	t.set_font_size("font_size", "Chip", 17)
 	var cm := Vector4(18, 8, 18, 8)          # +2 px each side -> 37 px high
 	t.set_stylebox("normal", "Chip", box({"fill": C.CHALK, "radius": 999.0}, cm))
+	# Disabled chips keep their pill geometry; disabled text and the caller's dim remain intact.
+	t.set_stylebox("disabled", "Chip", box({"fill": C.CHALK, "radius": 999.0}, cm))
 	t.set_stylebox("hover", "Chip", box({"fill": Color("#fffdf6"), "radius": 999.0}, cm))      # a lighter face (idle is chalk already: a chalk wash would not show)
 	t.set_stylebox("pressed", "Chip", box({"fill": C.GOLD, "radius": 999.0}, cm))
 	t.set_stylebox("hover_pressed", "Chip", box({"fill": C.GOLD_HOVER, "radius": 999.0}, cm))

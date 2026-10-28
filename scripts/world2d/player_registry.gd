@@ -34,6 +34,11 @@ static func reset_states() -> void:
 	_states = {&"p0": _fallback_state}
 
 
+## Noncreating lookup for authorization and refusal paths.
+static func peek_state(player_id: StringName) -> PlayerState:
+	return _states.get(player_id) as PlayerState
+
+
 ## The acting player's session row, retained while no world scene exists.
 static func state(player_id: StringName = &"", tree: SceneTree = null) -> PlayerState:
 	var id := player_id if player_id != &"" else (_acting_id if _acting_id != &"" else local_id(tree))
@@ -52,19 +57,18 @@ static func world(tree: SceneTree = null) -> Node:
 	return tree.get_first_node_in_group(WORLD_GROUP)
 
 
-## The player this machine controls. Prefers the first body in group `player` (the historical
-## contract every call site had; test fixtures plant their own Node there), then the world
-## registry. Returns Node on purpose: fixtures may be plain Nodes, not Node2D.
+## World registration wins over group order. Only without a world may standalone
+## area fixtures use a local body or a plain Node in group `player`. That fallback
+## is presentation compatibility, never registered_id/body action authority.
 static func local_player(tree: SceneTree = null) -> Node:
-	var body := _first_body(tree)
-	if body != null:
-		return body
 	var w := world(tree)
-	if w != null and w.has_method("local_player"):
-		var p: Variant = w.call("local_player")
-		if p is Node:
-			return p as Node
-	return null
+	if w != null:
+		if w.has_method("local_player"):
+			var p: Variant = w.call("local_player")
+			if p is Node and registered_id(p) != &"":
+				return p as Node
+		return null
+	return _first_body(tree)
 
 
 ## Save id of the local player (`p0` when nothing is up). What player-scoped EventBus signals carry (MP3).
@@ -122,9 +126,15 @@ static func all_players(tree: SceneTree = null) -> Array:
 	return [] if one == null else [one]
 
 
-## The player an input event belongs to. MP1: always the local player (device binding is MP2).
-static func for_event(_event: InputEvent, tree: SceneTree = null) -> Node:
-	return local_player(tree)
+## A null event retains the historical idle fixture lookup. A physical event must
+## match a live local source; an unknown/foreign pad never borrows the host row.
+static func for_event(event: InputEvent, tree: SceneTree = null) -> Node:
+	if event == null:
+		return local_player(tree)
+	for p in all_players(tree):
+		if "controls" in p and p.get("controls").accepts_event(event):
+			return p
+	return null
 
 
 ## Resolve the actor id used by social/event code ("player" = the local hero).
@@ -141,4 +151,9 @@ static func _first_body(tree: SceneTree = null) -> Node:
 		tree = Engine.get_main_loop() as SceneTree
 	if tree == null:
 		return null
-	return tree.get_first_node_in_group(PLAYER_GROUP)
+	for p in tree.get_nodes_in_group(PLAYER_GROUP):
+		if p.is_queued_for_deletion():
+			continue
+		if not "is_local" in p or bool(p.get("is_local")):
+			return p
+	return null

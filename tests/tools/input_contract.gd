@@ -29,10 +29,10 @@ const ACTIONS: Dictionary = {
 	"dodge": {"keys": [KEY_SPACE], "joy": [JOY_BUTTON_B]},
 	# The pad runs and descends on LT, takes off on Y (light only acts in action areas, where nobody flies) and
 	# zooms with the right stick (review UX-04: a pad player could not run, fly or zoom)
-	"run": {"keys": [KEY_SHIFT], "axes": [[JOY_AXIS_TRIGGER_LEFT, 1.0]]},
-	"fly_toggle": {"keys": [KEY_F], "joy": [JOY_BUTTON_Y]},
+	"run": {"keys": [KEY_SHIFT], "joy": [JOY_BUTTON_LEFT_STICK], "axes": [[JOY_AXIS_TRIGGER_LEFT, 1.0]]},
+	"fly_toggle": {"keys": [KEY_F], "joy": [JOY_BUTTON_RIGHT_STICK, JOY_BUTTON_Y]},
 	# Shift, not Ctrl: Ctrl + arrows switches Spaces on macOS (review UX-16). Running is off while flying, so Shift is free there.
-	"fly_descend": {"keys": [KEY_SHIFT], "axes": [[JOY_AXIS_TRIGGER_LEFT, 1.0]]},
+	"fly_descend": {"keys": [KEY_SHIFT], "joy": [JOY_BUTTON_DPAD_DOWN], "axes": [[JOY_AXIS_TRIGGER_LEFT, 1.0]]},
 	# X is the keyboard tool / attack key (review UX-03: mouse-free play), the same letter as the pad button
 	"use_tool": {"keys": [KEY_X], "mouse": [MOUSE_BUTTON_LEFT], "joy": [JOY_BUTTON_X]},
 	"attack": {"keys": [KEY_X], "mouse": [MOUSE_BUTTON_LEFT], "joy": [JOY_BUTTON_X]},

@@ -32,6 +32,7 @@ var _weather: StringName = &"solskin"
 var _days_left := 0
 var _pending_friends: Dictionary = {}
 var _last_health := Vector2i(-1, -1)
+var _slot_epoch := 0
 
 ## The social overlay reserves a row below health without moving the chosen
 ## HUD when there are no birthdays. The HUD owns the spacer's lifetime.
@@ -68,14 +69,18 @@ func _ready() -> void:
 		toasts.visible = ToastStack.shown_with_modals(stack)
 		%WhisperLine.visible = toasts.visible)
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("hud", Callable(get_script(), &"fixture_setup"))
-	EventBus.gold_changed.connect(func(_player_id: StringName, amount, delta) -> void: _gold(amount, delta))
+	EventBus.gold_changed.connect(func(id: StringName, amount, delta) -> void:
+		if id == PlayerRegistry.local_id(): _gold(amount, delta))
 	EventBus.time_of_day_changed.connect(_time)
 	EventBus.day_started.connect(_date)
 	EventBus.season_changed.connect(_season_changed)
 	EventBus.weather_changed.connect(_weather_changed)
-	EventBus.player_stats_changed.connect(func(_player_id: StringName, stats) -> void: _stats(stats))
-	EventBus.player_health_changed.connect(func(_player_id: StringName, half_hearts, max_half_hearts) -> void: _health(half_hearts, max_half_hearts))
-	EventBus.hotbar_changed.connect(func(_player_id: StringName, entries, selected) -> void: set_hotbar(entries, selected))
+	EventBus.player_stats_changed.connect(func(id: StringName, stats) -> void:
+		if id == PlayerRegistry.local_id(): _stats(stats))
+	EventBus.player_health_changed.connect(func(id: StringName, half_hearts, max_half_hearts) -> void:
+		if id == PlayerRegistry.local_id(): _health(half_hearts, max_half_hearts))
+	EventBus.hotbar_changed.connect(func(id: StringName, entries, selected) -> void:
+		if id == PlayerRegistry.local_id(): set_hotbar(entries, selected))
 	EventBus.player_spawned.connect(_player_spawned)
 	EventBus.new_game_started.connect(_refresh_all)
 	EventBus.load_completed.connect(func(_slot: int): _refresh_all())
@@ -108,6 +113,7 @@ func _ready() -> void:
 		_show_save_state()                   # a HUD built while saving fails (a load from the pause menu) shows it from the start
 
 func _refresh_all() -> void:
+	_slot_epoch += 1
 	if not is_inside_tree() or is_queued_for_deletion():
 		return
 	_gold(EconomyManager.gold, 0)
@@ -126,6 +132,8 @@ func _refresh_all() -> void:
 		set_hotbar(_entries, _selected)
 
 func _player_spawned(player: Node2D) -> void:
+	if player != PlayerRegistry.local_player(get_tree()):
+		return
 	if player.get("hotbar") != null:
 		set_hotbar(player.hotbar.entries(), player.hotbar.selected)
 	_stats({"half_hearts": player.get("half_hearts"), "max_half_hearts": player.get("max_half_hearts"), "stamina": player.get("stamina"), "max_stamina": player.get("max_stamina")})
@@ -193,20 +201,25 @@ func _item_name(entry: Dictionary) -> String:
 	return tr(key) if key != "" else id.capitalize()
 
 func _slot_clicked(index: int) -> void:
-	# Deliver the same action as a number key after this GUI event finishes.
-	# The normal player guard owns modal / travel / tool restrictions.
+	# Keep the physical GUI origin: an unlabelled Action cannot carry authority.
 	set_hotbar(_entries, _selected)
-	_send_slot.call_deferred(index)
+	var body := PlayerRegistry.local_player(get_tree())
+	if not body is Player2D or not body.world_input_allowed() or not body.controls.accepts_event(InputEventMouseButton.new()):
+		return
+	var id := PlayerRegistry.registered_id(body)
+	_send_slot.call_deferred(index, weakref(body), id, body.controls, body.controls.revision, body.hotbar, body.area, PlayerRegistry.state(id), _slot_epoch)
 
-func _send_slot(index: int) -> void:
-	var press := InputEventAction.new()
-	press.action = StringName("slot_%d" % (index + 1))
-	press.pressed = true
-	Input.parse_input_event(press)
-	var release := InputEventAction.new()
-	release.action = press.action
-	release.pressed = false
-	Input.parse_input_event(release)
+func _send_slot(index: int, origin: WeakRef, id: StringName, source: PlayerInput, revision: int, bar: Hotbar, origin_area: Variant, row: PlayerState, epoch: int) -> void:
+	var body: Variant = origin.get_ref()
+	if not is_inside_tree() or is_queued_for_deletion() or epoch != _slot_epoch or not is_instance_valid(body):
+		return
+	if PlayerRegistry.registered_id(body) != id or PlayerRegistry.local_player(get_tree()) != body or PlayerRegistry.state(id) != row:
+		return
+	if body.controls != source or source.revision != revision or body.hotbar != bar or not is_instance_valid(origin_area) or body.area != origin_area:
+		return
+	if not source.accepts_event(InputEventMouseButton.new()):
+		return
+	body.select_gui_slot(index)
 
 func _quests_changed(_id: StringName) -> void:
 	_refresh_quests()

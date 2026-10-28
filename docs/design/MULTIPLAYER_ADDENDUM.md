@@ -284,7 +284,7 @@ Tiers: MP1–MP7 = CORE; MP8 = EXTENDED; MP9 = QA. No forward dependencies. Esti
 
 Until a package lands, the following are absent on purpose (the contract manifest reports them, `scripts/data/contract_manifest.gd`):
 
-* `scripts/player/player_input.gd` (MP2)
+
 * `scripts/net/multiplayer_session.gd` (MP4)
 * `scripts/net/intent_bus.gd` (MP6)
 * `scenes/ui/multiplayer_lobby.tscn` (MP7)
@@ -292,3 +292,9 @@ Until a package lands, the following are absent on purpose (the contract manifes
 * `localization/multiplayer.csv` (MP7)
 
 Single-player play never requires any of them. `PlayerStub2D` stays the area-framework fixture it is today.
+
+MP1/MP2's offline input prerequisites are implemented in `PlayerInput` and the body
+registry/camera paths; see `MP_INPUT_WAVE1.md` for exact source/device, passive-frame,
+pad-chord and compatibility contracts. This does not implement a LAN session. MP4's
+transport and MP5/6's replication/host validation remain absent. Existing state/save
+work uses the implemented `players.rows` shape, not the obsolete array sketch above.

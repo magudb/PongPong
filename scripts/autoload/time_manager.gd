@@ -55,6 +55,7 @@ func _process(delta: float) -> void:
 
 ## Feeds real time into the game clock. Only while PLAYING and not paused; a paused or modal game never ticks.
 func tick(delta: float) -> void:
+	if not NetAuthority.can_write(): return
 	if is_paused or GameManager.current_phase != GameManager.GamePhase.PLAYING:
 		return
 	_acc_minutes += delta * GameManager.minutes_per_real_second() * time_scale
@@ -66,19 +67,23 @@ func tick(delta: float) -> void:
 
 ## Stops the clock (the forest runs on the lantern-oil clock). Idempotent: pausing twice and resuming once runs it.
 func pause_time() -> void:
+	if not NetAuthority.can_write(): return
 	is_paused = true
 
 
 func resume_time() -> void:
+	if not NetAuthority.can_write(): return
 	is_paused = false
 
 
 func set_time_scale(scale: float) -> void:
+	if not NetAuthority.can_write(): return
 	time_scale = maxf(scale, 0.1)
 
 
 ## New game: weather, clock accumulator and pause state back to the start of a run (day 1 is sunny).
 func reset() -> void:
+	if not NetAuthority.can_write(): return
 	_weather_seed = maxi(1,int(randi() & 0x7fffffff))
 	time_scale = 1.0
 	is_paused = false
@@ -144,6 +149,7 @@ func is_raining() -> bool:
 
 ## Sets the weather by hand (tests, debug, scripted events) and announces it.
 func set_weather(weather_id: StringName) -> void:
+	if not NetAuthority.can_write(): return
 	if weather_id not in WEATHER_IDS:
 		push_error("TimeManager.set_weather: unknown weather id '%s'" % weather_id)
 		return
@@ -182,6 +188,7 @@ func weather_chances(p_season: StringName = &"") -> Dictionary:
 
 ## Rolls the weather of the new day exactly once: a second call for the same day (a stray day_started) does nothing.
 func roll_weather_for_day() -> void:
+	if not NetAuthority.can_write(): return
 	var today := GameManager.total_day()
 	if _weather_day == today:
 		return
@@ -213,11 +220,13 @@ func _weather_at(roll: float,in_season: StringName) -> StringName:
 ## Always rolls (a roll value in 0..1 can be passed in to make a test deterministic). The buckets run in the order of
 ## WEATHER_IDS with klart last, so the rare weather sits at the low end of the roll.
 func roll_weather(p_roll: float = -1.0) -> void:
+	if not NetAuthority.can_write(): return
 	var r := randf() if p_roll < 0.0 else minf(p_roll, 0.999999)
 	_apply_weather(_weather_at(r,GameManager.season))
 
 
 func _apply_weather(weather_id: StringName) -> void:
+	if not NetAuthority.can_write(): return
 	weather = weather_id
 	EventBus.weather_changed.emit(weather)
 
@@ -252,6 +261,7 @@ func to_dict() -> Dictionary:
 
 
 func from_dict(data: Dictionary) -> void:
+	if not NetAuthority.can_write(): return
 	is_paused = false # Session-only test clock freeze never carries into a loaded save.
 	var seed_value: Variant = data.get("weather_seed",null)
 	_weather_seed = int(seed_value) if (seed_value is int or seed_value is float) and is_finite(float(seed_value)) and float(seed_value)==floorf(float(seed_value)) and seed_value>0 and seed_value<=0x7fffffff else maxi(1,int(("weather-v1|"+GameManager.player_name+"|"+GameManager.farm_name).sha256_text().substr(0,7).hex_to_int()))

@@ -64,6 +64,8 @@ func _feel(key: String, fallback: Variant) -> Variant:
 
 ## `aim` is the clicked ground point (global) of a mouse press: the slash goes there even when the buffer fires it later.
 func request(ability: StringName, item: StringName = &"", aim: Variant = null) -> void:
+	if not player.world_input_allowed():
+		return
 	_buffer = ability
 	_buffer_time = float(_feel("input_buffer", 0.15))
 	if ability == &"slash":
@@ -82,6 +84,9 @@ func _attempt_buffer() -> void:
 		_buffer_aim = null
 
 func tick(delta: float) -> void:
+	player.actor_work(func(): _tick_owned(delta))
+
+func _tick_owned(delta: float) -> void:
 	stopped_this_tick = hit_stop > 0
 	if stopped_this_tick:
 		hit_stop -= 1
@@ -202,6 +207,9 @@ func swing_direction() -> Vector2:
 	return _swing_direction
 
 func swing(item: StringName = &"", aim: Variant = null) -> bool:
+	return bool(player.actor_work(func(): return _swing_owned(item, aim), false))
+
+func _swing_owned(item: StringName, aim: Variant) -> bool:
 	if not player.world_input_allowed() or player.state != S.FREE or float(cooldowns.slash) > 0.0 or player.is_flying:
 		return false
 	_weapon = _read_weapon(item)
@@ -270,6 +278,9 @@ func _apply_hits() -> void:
 		_shake_camera(2.0)
 
 func dodge() -> bool:
+	return bool(player.actor_work(_dodge_owned, false))
+
+func _dodge_owned() -> bool:
 	if not player.world_input_allowed() or player.is_flying or float(cooldowns.dodge) > 0:
 		return false
 	if player.state == S.SWING:
@@ -279,7 +290,7 @@ func dodge() -> bool:
 		return false
 	# The stick / keys are already a GROUND vector (walking uses them as one), so the
 	# dodge runs parallel to the walk; only the screen facing row needs converting.
-	var direction := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var direction := player.controls.move_vector()
 	if direction == Vector2.ZERO:
 		var precise: Variant = player.get("combat_aim")
 		direction = precise if precise is Vector2 and precise.length_squared() > .01 else Iso.to_ground(player.facing_vec)
@@ -299,6 +310,9 @@ func dodge() -> bool:
 	return true
 
 func fairy_light(free: bool = false) -> bool:
+	return bool(player.actor_work(func(): return _light_owned(free), false))
+
+func _light_owned(free: bool) -> bool:
 	if not free and (not player.world_input_allowed() or float(cooldowns.light) > 0 or player.state == S.DODGE):
 		return false
 	var gem: Dictionary = player._gem_effects()
@@ -324,6 +338,9 @@ func fairy_light(free: bool = false) -> bool:
 	return true
 
 func drink() -> bool:
+	return bool(player.actor_work(_drink_owned, false))
+
+func _drink_owned() -> bool:
 	if not player.world_input_allowed() or float(cooldowns.drink) > 0.0:
 		return false
 	for item in [&"health_tonic", &"svampe_eliksir"]:
@@ -336,6 +353,9 @@ func cd_ratio(ability: String) -> float:
 	return clampf(float(cooldowns.get(ability, 0.0)) / maxf(0.001, float(durations.get(ability, 1.0))), 0.0, 1.0)
 
 func take_damage(amount: int, from: Vector2 = Vector2.ZERO) -> bool:
+	return bool(player.actor_work(func(): return _take_owned_damage(amount, from), false))
+
+func _take_owned_damage(amount: int, from: Vector2) -> bool:
 	if amount <= 0 or _iframes > 0.0 or player.state == S.FAINTED:
 		return false
 	player.half_hearts = maxi(0, player.half_hearts - amount)
@@ -359,7 +379,7 @@ func take_damage(amount: int, from: Vector2 = Vector2.ZERO) -> bool:
 		player.state = S.FAINTED
 		player.visual.play_loop(&"sleep")
 		player.emit_signal("fainted")
-		EventBus.player_defeated.emit(PlayerRegistry.local_id())
+		EventBus.player_defeated.emit(player.player_id)
 	else:
 		player.state = S.HURT
 		_remaining = 0.28

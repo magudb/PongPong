@@ -98,7 +98,7 @@ static func glyph(action: StringName, dev: StringName = &"", family: StringName 
 		var f := family if PAD_LABELS.has(family) else pad_family()
 		for ev in events:
 			if ev is InputEventJoypadButton:
-				return _pad_name((ev as InputEventJoypadButton).button_index, f)
+				return _pad_name((ev as InputEventJoypadButton).button_index, f) + ("↓" if action == &"fly_descend" and ev.button_index == JOY_BUTTON_DPAD_DOWN else "")
 		for ev in events:
 			if ev is InputEventJoypadMotion:
 				var label := _axis_name(ev as InputEventJoypadMotion, f)
@@ -128,7 +128,7 @@ static func glyph_all(action: StringName, dev: StringName = &"") -> String:
 		var label := ""
 		if d == GAMEPAD:
 			if ev is InputEventJoypadButton:
-				label = _pad_name((ev as InputEventJoypadButton).button_index, family)
+				label = _pad_name((ev as InputEventJoypadButton).button_index, family) + ("↓" if action == &"fly_descend" and ev.button_index == JOY_BUTTON_DPAD_DOWN else "")
 			elif ev is InputEventJoypadMotion:
 				label = _axis_name(ev as InputEventJoypadMotion, family)
 		elif ev is InputEventKey:
@@ -191,6 +191,10 @@ static func _is_dpad(action: StringName) -> bool:
 
 
 static func _pad_name(button: int, family: StringName = XBOX) -> String:
+	if button == JOY_BUTTON_LEFT_STICK:
+		return "L3"
+	if button == JOY_BUTTON_RIGHT_STICK:
+		return "R3"
 	var labels: Dictionary = PAD_LABELS.get(family, PAD_LABELS[XBOX])
 	if labels.has(button):
 		var label := str(labels[button])

@@ -5,6 +5,17 @@ signal changed
 const SIZE := 8
 var slots: Array[StringName] = []
 var selected: int = 0
+var _body: WeakRef
+
+func bind_body(body: PlayerBody2D) -> void:
+	_body = weakref(body)
+
+func _count(item: StringName) -> int:
+	if _body == null:
+		return int(GameData.eco().count_item(item))
+	var body: Node = _body.get_ref()
+	var id := PlayerRegistry.registered_id(body)
+	return int(PlayerRegistry.for_player(id, func(): return GameData.eco().count_item(item))) if id != &"" else 0
 
 func _init() -> void:
 	slots.resize(SIZE)
@@ -54,7 +65,7 @@ func fill_defaults() -> void:
 	for item in items:
 		if index == SIZE:
 			break
-		if GameData.eco().has_item(StringName(item)):
+		if _count(StringName(item)) > 0:
 			slots[index] = StringName(item)
 			index += 1
 	changed.emit()
@@ -63,7 +74,7 @@ func entries() -> Array:
 	var out: Array = []
 	for item in slots:
 		var def := GameData.item_def(item)
-		out.append({"id": String(item), "amount": int(GameData.eco().count_item(item)),
+		out.append({"id": String(item), "amount": _count(item),
 			"name": str(def.get("name_key", "")), "rare": str(def.get("rarity", "normal"))})
 	return out
 

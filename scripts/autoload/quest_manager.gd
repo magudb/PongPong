@@ -107,6 +107,38 @@ var _claiming_rewards: bool = false
 var _claim_again: bool = false           # a claim was asked for while one ran (a reward completed another quest): run another pass
 var _reward_claim_queued: bool = false
 var _refresh_queued: bool = false
+var _reward_owners: Dictionary = {}
+var _refresh_owners: Dictionary = {}
+
+## A queued notification owns a row/body/session incarnation, not whichever
+## player happens to be ambient when Godot dispatches the deferred call.
+func _owner_ticket(id: StringName) -> Dictionary:
+	var row := PlayerRegistry.peek_state(id)
+	if row == null: return {}
+	var world := PlayerRegistry.world()
+	var body := PlayerRegistry.by_id(id)
+	if NetAuthority.owns_network_world() and body == null: return {}
+	var session: Node = world.get("session") if world != null else null
+	return {"id": id, "row": row, "world": weakref(world) if world != null else null, "body": weakref(body) if body != null else null, "session": weakref(session) if session != null else null, "epoch": session.generation if session != null else 0}
+
+func _owner_current(ticket: Dictionary) -> bool:
+	if not NetAuthority.can_write() or PlayerRegistry.peek_state(ticket.id) != ticket.row: return false
+	var world: Variant = ticket.world.get_ref() if ticket.world != null else null
+	if ticket.world != null and (not is_instance_valid(world) or PlayerRegistry.world() != world): return false
+	if ticket.world == null and PlayerRegistry.world() != null: return false
+	if ticket.body != null:
+		var body: Variant = ticket.body.get_ref()
+		if not is_instance_valid(body) or PlayerRegistry.by_id(ticket.id) != body or PlayerRegistry.registered_id(body) != ticket.id: return false
+	if ticket.session != null:
+		var session: Variant = ticket.session.get_ref()
+		if not is_instance_valid(session) or world == null or world.get("session") != session or session.generation != ticket.epoch: return false
+	return true
+
+func _for_event_owner(id: StringName, work: Callable) -> void:
+	if not NetAuthority.can_write() or PlayerRegistry.peek_state(id) == null: return
+	if NetAuthority.owns_network_world() and PlayerRegistry.by_id(id) == null: return
+	PlayerRegistry.for_player(id, work)
+
 var _dispatch_depth: int = 0
 var _giver_index: Dictionary = {}        # meta.giver -> [quest ids, sorted]: built once per set of definitions, not per offerable() call (SYS-04)
 var _giver_index_size: int = -1          # quest_defs.size() the index was built for (-1 = stale)
@@ -231,6 +263,9 @@ func _ready() -> void:
 ## A new run forgets progress and rewards, but keeps the definitions registered by LuaRuntime at boot (and the state queries the
 ## furniture / home / social managers registered: they belong to the game, not to the run).
 func reset() -> void:
+	if not NetAuthority.can_write(): return
+	_reward_owners.clear()
+	_refresh_owners.clear()
 	active_quests.clear()
 	completed_quests.clear()
 	failed_quests.clear()
@@ -655,6 +690,8 @@ func complete_manual(quest_id: StringName, objective_id: StringName, needs: Dict
 
 
 func complete_quest(quest_id: StringName) -> void:
+	var owner := _owner_ticket(PlayerRegistry.acting_id())
+	if owner.is_empty() or not _owner_current(owner): return
 	if quest_id not in active_quests:
 		return
 	var def := get_quest_def(quest_id)
@@ -676,21 +713,27 @@ func complete_quest(quest_id: StringName) -> void:
 		pending_rewards[quest_id] = owed
 	if rewards.has("gold"):
 		EconomyManager.add_gold(_Data.int_of(rewards["gold"]))
-	_grant_friendship(_Data.int_map(rewards.get("friendship", {})))
+	if not _owner_current(owner): return
+	_grant_friendship(_Data.int_map(rewards.get("friendship", {})), owner)
+	if not _owner_current(owner): return
 	claim_rewards()
-	EventBus.quest_completed.emit(PlayerRegistry.acting_id(), quest_id)
+	if not _owner_current(owner): return
+	EventBus.quest_completed.emit(owner.id, quest_id)
+	if not _owner_current(owner): return
 	EventBus.notification_posted.emit(
 		tr("NOTIF_QUEST_COMPLETED_TITLE"),
 		get_title(quest_id),
 		"quest_done"
 	)
+	if not _owner_current(owner): return
 	_lua_notify("quest_completed", quest_id)
 
 
 ## rewards.friendship = { npc = hearts }. SocialManager (S-core, the one writer of hearts) when it exists; else the world flag friend_<npc>
 ## (whole hearts, capped at FRIEND_CAP) and EventBus.friend_changed when the hearts changed.
-func _grant_friendship(hearts_by_npc: Dictionary) -> void:
+func _grant_friendship(hearts_by_npc: Dictionary, owner: Dictionary) -> void:
 	for npc in hearts_by_npc:
+		if not _owner_current(owner): return
 		var hearts := int(hearts_by_npc[npc])
 		if hearts <= 0:
 			continue
@@ -704,7 +747,8 @@ func _grant_friendship(hearts_by_npc: Dictionary) -> void:
 		if after == before:
 			continue
 		GameManager.set_flag(flag, after)
-		EventBus.friend_changed.emit(PlayerRegistry.acting_id(), StringName(str(npc)), after)
+		if not _owner_current(owner): return
+		EventBus.friend_changed.emit(owner.id, StringName(str(npc)), after)
 
 
 ## Delivers what fits, retaining the rest in the save. Called again after inventory changes and successful loads. A backpack stack
@@ -713,24 +757,33 @@ func _grant_friendship(hearts_by_npc: Dictionary) -> void:
 ## Returns true when nothing remains owed. The guard prevents item-gained listeners from claiming a grant twice; a claim asked for
 ## during a pass (a reward that completed another quest owes that quest's rewards) runs as one more pass before the guard is released.
 func claim_rewards() -> bool:
+	var owner := _owner_ticket(PlayerRegistry.acting_id())
+	if owner.is_empty() or not _owner_current(owner): return false
 	if _claiming_rewards:
 		_claim_again = true
 		return pending_rewards.is_empty()
 	_claiming_rewards = true
 	_claim_again = true
-	while _claim_again:
+	while _claim_again and _owner_current(owner):
 		_claim_again = false
-		_claim_pass()
+		_claim_pass(owner)
 	_claiming_rewards = false
-	return pending_rewards.is_empty()
+	# A synchronous load can enqueue a replacement row while this owner runs.
+	# Retain it until genuine unwind rather than polling a live claim guard.
+	if not _reward_owners.is_empty() and not _reward_claim_queued:
+		_reward_claim_queued = true
+		_run_reward_claim.call_deferred()
+	return _owner_current(owner) and pending_rewards.is_empty()
 
 
-func _claim_pass() -> void:
+func _claim_pass(owner: Dictionary) -> void:
 	for quest_id in pending_rewards.keys():
+		if not _owner_current(owner): return
 		if not pending_rewards.has(quest_id):
 			continue
 		var owed: Dictionary = pending_rewards[quest_id]
 		for item_id in owed.keys():
+			if not _owner_current(owner): return
 			var amount := int(owed[item_id])
 			var give := _claimable(StringName(item_id), amount)
 			if give <= 0:
@@ -740,8 +793,11 @@ func _claim_pass() -> void:
 				owed[item_id] = amount - give
 			else:
 				owed.erase(item_id)
-			if not _deliver_reward(StringName(item_id), give):
-				owed[item_id] = amount
+			var delivered := _deliver_reward(StringName(item_id), give)
+			# Delivery flushes public observers. Its already committed grant stays
+			# accounted on the origin, but no later grant or row lookup may borrow it.
+			if not _owner_current(owner): return
+			if not delivered: owed[item_id] = amount
 		if owed.is_empty():
 			pending_rewards.erase(quest_id)
 
@@ -763,9 +819,10 @@ func _deliver_reward(item_id: StringName, amount: int) -> bool:
 	return EconomyManager.add_item(item_id, amount)
 
 
-func _on_inventory_changed(_player_id: StringName, _inventory: Dictionary) -> void:
-	_queue_reward_claim()
-	_queue_refresh()
+func _on_inventory_changed(player_id: StringName, _inventory: Dictionary) -> void:
+	_for_event_owner(player_id, func():
+		_queue_reward_claim()
+		_queue_refresh())
 
 
 func _on_load_completed(_slot: int) -> void:
@@ -775,17 +832,25 @@ func _on_load_completed(_slot: int) -> void:
 
 
 func _queue_reward_claim() -> void:
-	if pending_rewards.is_empty() or _claiming_rewards or _reward_claim_queued:
-		return
+	if not NetAuthority.can_write(): return
+	if pending_rewards.is_empty(): return
+	var id := PlayerRegistry.acting_id()
+	var ticket := _owner_ticket(id)
+	if ticket.is_empty(): return
+	# A load may replace this row before its old deferred ticket dispatches.
+	if _reward_owners.has(id) and _owner_current(_reward_owners[id]): return
+	_reward_owners[id] = ticket
+	if _claiming_rewards or _reward_claim_queued: return
 	_reward_claim_queued = true
 	_run_reward_claim.call_deferred()
 
 
 func _run_reward_claim() -> void:
-	if not _reward_claim_queued:
-		return
+	var owners := _reward_owners
+	_reward_owners = {}
 	_reward_claim_queued = false
-	claim_rewards()
+	for ticket: Dictionary in owners.values():
+		if _owner_current(ticket): PlayerRegistry.for_player(ticket.id, claim_rewards)
 
 
 func fail_quest(quest_id: StringName) -> void:
@@ -846,6 +911,7 @@ func _on_lua_event(event_name: StringName, payload: Dictionary) -> void:
 
 
 func _on_day_started(_day: int, _season: StringName) -> void:
+	if not NetAuthority.can_write(): return
 	for quest_id in active_quests.keys():
 		if quest_id in active_quests:
 			_lua_notify("day_started", quest_id)
@@ -853,9 +919,11 @@ func _on_day_started(_day: int, _season: StringName) -> void:
 
 # =============================================================================================== event bindings
 
-func _on_item_gained(_player_id: StringName, item_id: StringName, amount: int) -> void:
-	_dispatch(&"item_gained", {"item": str(item_id), "amount": amount})
-	_queue_refresh()
+func _on_item_gained(player_id: StringName, item_id: StringName, amount: int) -> void:
+	var row := PlayerRegistry.peek_state(player_id)
+	_for_event_owner(player_id, func():
+		_dispatch(&"item_gained", {"item": str(item_id), "amount": amount})
+		if PlayerRegistry.peek_state(player_id) == row: _queue_refresh())
 
 
 func _on_crop_planted(plot_id: StringName, crop_id: StringName) -> void:
@@ -923,9 +991,10 @@ func _on_recipe_crafted(recipe_id: StringName, amount: int) -> void:
 
 
 ## Another quest was completed (this node emits the signal itself): the finished quest is no longer active, so it never counts for itself.
-func _on_quest_completed_signal(_player_id: StringName, quest_id: StringName) -> void:
-	var meta := _Data.dict(get_quest_def(quest_id).get("meta", {}))
-	_dispatch(&"quest_completed", {"quest": str(quest_id), "category": str(meta.get("category", ""))})
+func _on_quest_completed_signal(player_id: StringName, quest_id: StringName) -> void:
+	_for_event_owner(player_id, func():
+		var meta := _Data.dict(get_quest_def(quest_id).get("meta", {}))
+		_dispatch(&"quest_completed", {"quest": str(quest_id), "category": str(meta.get("category", ""))}))
 
 
 func _on_game_event(event_name: StringName, payload: Dictionary) -> void:
@@ -952,13 +1021,14 @@ func _on_home_upgraded(_old_tier: int, _new_tier: int) -> void:
 	refresh_objectives()
 
 
-func _on_friend_changed(_player_id: StringName, _npc_id: StringName, _hearts: int) -> void:
-	refresh_objectives()
+func _on_friend_changed(player_id: StringName, _npc_id: StringName, _hearts: int) -> void:
+	_for_event_owner(player_id, refresh_objectives)
 
 
 ## One event, every active quest, every open objective. A turn-in (after_others) is judged on the state BEFORE the event, so the progress this
 ## very event made never lets it through; keys() copies everywhere because progress can complete (and erase) a quest in the middle of the loop.
 func _dispatch(kind: StringName, ctx: Dictionary) -> void:
+	if not NetAuthority.can_write(): return
 	if active_quests.is_empty():
 		return
 	_dispatch_depth += 1
@@ -1153,6 +1223,7 @@ func _non_turn_ins_done(rt: QuestRuntime, defs: Dictionary) -> bool:
 ## Re-evaluates the derived objectives (have = true: the inventory count, on = "state": the query) of every active quest. Runs when a quest
 ## is accepted, on load, on the state signals and, coalesced to once per frame, after every inventory change; call it to settle a test.
 func refresh_objectives() -> void:
+	if not NetAuthority.can_write(): return
 	_refresh_queued = false
 	for quest_id in active_quests.keys():
 		if active_quests.has(quest_id):
@@ -1160,15 +1231,25 @@ func refresh_objectives() -> void:
 
 
 func _queue_refresh() -> void:
-	if _refresh_queued or active_quests.is_empty():
-		return
+	if not NetAuthority.can_write(): return
+	if active_quests.is_empty(): return
+	var id := PlayerRegistry.acting_id()
+	var ticket := _owner_ticket(id)
+	if ticket.is_empty(): return
+	# A load may replace this row before its old deferred ticket dispatches.
+	if _refresh_owners.has(id) and _owner_current(_refresh_owners[id]): return
+	_refresh_owners[id] = ticket
+	if _refresh_queued: return
 	_refresh_queued = true
 	_run_refresh.call_deferred()
 
 
 func _run_refresh() -> void:
-	if _refresh_queued:
-		refresh_objectives()
+	var owners := _refresh_owners
+	_refresh_owners = {}
+	_refresh_queued = false
+	for ticket: Dictionary in owners.values():
+		if _owner_current(ticket): PlayerRegistry.for_player(ticket.id, refresh_objectives)
 
 
 func _refresh_quest(quest_id: StringName) -> void:

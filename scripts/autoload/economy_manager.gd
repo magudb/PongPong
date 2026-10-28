@@ -108,7 +108,7 @@ func _ready() -> void:
 	add_child(arsenal)
 	EventBus.new_game_started.connect(reset)
 	EventBus.day_started.connect(func(_day: int, _season: StringName) -> void: deliver_owed())
-	EventBus.player_spawned.connect(func(_player: Node2D) -> void: deliver_owed())   # a loaded world: its HUD is up to say so
+	EventBus.player_spawned.connect(_on_player_spawned)   # a loaded world: its HUD is up to say so
 
 
 # ================================================================================================ new game
@@ -731,7 +731,9 @@ func use_item(item_id: StringName) -> bool:
 
 ## Applies heal / oil / energy through the player; the item is used up when at least one effect had room to work.
 func _consume(item_id: StringName, heal: int, oil: float, energy: float) -> bool:
-	var player := PlayerRegistry.local_player(get_tree()) if get_tree() != null else null
+	# A body-scoped input action may be running inside a conflicting caller scope.
+	# Deliver to the inventory row's actual registered body, not this machine's HUD hero.
+	var player := PlayerRegistry.by_id(PlayerRegistry.acting_id(), get_tree()) if PlayerRegistry.world(get_tree()) != null else PlayerRegistry.local_player(get_tree())
 	if player == null or _consuming:
 		return false
 	if player.has_method("apply_consumable"):
@@ -795,7 +797,15 @@ func _json_slots(source: Array) -> Array:
 ## Hands back what is owed (see `owed`) as far as the backpack has room, with the meta it was saved with, and says so: every
 ## morning and when the player of a loaded world spawns. A furniture or clothing id comes back as a misrouted copy that its store
 ## adopts at once (one its store refuses waits in the backpack like any misrouted copy), so it never waits for backpack room forever.
+func _on_player_spawned(body: Node2D) -> void:
+	if not NetAuthority.can_write(): return
+	var id := PlayerRegistry.registered_id(body)
+	if id == &"" or PlayerRegistry.peek_state(id) == null: return
+	PlayerRegistry.for_player(id, deliver_owed)
+
+
 func deliver_owed() -> void:
+	if not NetAuthority.can_write(): return
 	if owed.is_empty():
 		return
 	var given := 0

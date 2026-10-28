@@ -1,4 +1,6 @@
 extends RefCounted
+
+const ScopedInputObserver := preload("res://tests/lib/scoped_input_observer.gd")
 ## Player input regressions of the 2026-10-19 review (group "input"): what a REAL key, mouse or pad event does in
 ## Player2D._unhandled_input, the order of the shared bindings and the device-dependent aim.
 const SECTION := "player_input"
@@ -329,11 +331,12 @@ func _mac_keys(t, world: WorldRoot2D, p: Player2D) -> void:
 func _pad_run_fly_zoom(t, world: WorldRoot2D, p: Player2D) -> void:
 	var hints := [UiHints.glyph(&"run", &"gamepad", UiHints.XBOX), UiHints.glyph(&"fly_toggle", &"gamepad", UiHints.XBOX), UiHints.glyph(&"fly_descend", &"gamepad", UiHints.XBOX),
 		UiHints.glyph_pair(&"zoom_in", &"zoom_out", &"gamepad"), UiHints.glyph(&"run", &"gamepad", UiHints.PLAYSTATION)]
-	var hints_ok: bool = hints == ["LT", "Y", "LT", "RS↑ RS↓", "L2"]
-	Input.parse_input_event(_axis(JOY_AXIS_TRIGGER_LEFT, 1.0))
+	# MP2 adds primary L3/R3/down without removing historical LT/Y aliases.
+	var hints_ok: bool = hints == ["L3", "R3", str(TranslationServer.translate("NAV_PAD_DPAD")) + "↓", "RS↑ RS↓", "L3"]
+	Input.parse_input_event(ScopedInputObserver.tag_if_active(_axis(JOY_AXIS_TRIGGER_LEFT, 1.0)))
 	Input.flush_buffered_events()
 	var runs: bool = Input.is_action_pressed(&"run")
-	Input.parse_input_event(_axis(JOY_AXIS_TRIGGER_LEFT, 0.0))
+	Input.parse_input_event(ScopedInputObserver.tag_if_active(_axis(JOY_AXIS_TRIGGER_LEFT, 0.0)))
 	Input.flush_buffered_events()
 	var stops: bool = not Input.is_action_pressed(&"run")
 	world.call("_enter", &"farm", &"default")
@@ -555,7 +558,7 @@ func _controls_page(t) -> void:
 	for cell in panel._cells:
 		texts[str(cell[0][0])] = [str(cell[1].text), str(cell[2].text)]
 	var listed: bool = texts["NAV_CONTROLS_TOOL"][0].contains("X") and texts["NAV_CONTROLS_TOOL"][0].contains(str(TranslationServer.translate("KEY_MOUSE_LEFT"))) \
-		and texts["NAV_CONTROLS_RUN"][1] == "LT" and texts["NAV_CONTROLS_FLY"] == ["F", "Y"] and texts["INDRET_TITLE"][0] == "H" \
+		and texts["NAV_CONTROLS_RUN"][1] == "L3 / LT" and texts["NAV_CONTROLS_FLY"] == ["F", "R3 / Y"] and texts["INDRET_TITLE"][0] == "H" \
 		and texts["INV_TITLE"] == ["I / Tab", str(TranslationServer.translate("NAV_CONTROLS_PAUSE_ROW"))] and texts["NAV_CONTROLS_HOTBAR"][0] == "1–8" \
 		and texts["NAV_CONTROLS_CLICK"] == [str(TranslationServer.translate("NAV_CONTROLS_CLICK_GROUND")), str(TranslationServer.translate("NAV_CONTROLS_TILE_AHEAD_FMT")) % "X"]
 	var complete := true

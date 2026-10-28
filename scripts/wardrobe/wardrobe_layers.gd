@@ -6,6 +6,7 @@ const LAYER_SHADER := preload("res://shaders/wardrobe_layer.gdshader")
 const BODY_SHADER := preload("res://shaders/wardrobe_body.gdshader")
 const MOTIONS := {"idle":0, "walk":1, "run":2, "interact":3, "attack":4, "celebrate":5, "hover":6, "fly":6, "takeoff":6, "flight_land":6, "jump":7, "fall":8, "land":9, "sleep":10, "hit":11, "spin":12, "talk":13}
 var world_outfit := false
+var owner_body: PlayerBody2D
 var clock: IsoChibiSprite2D
 var root: Node2D
 var occluder: Sprite2D
@@ -31,9 +32,10 @@ func _ready() -> void:
 	root.name = "WornClothing"
 	clock.sprite.add_child(root)
 	if world_outfit:
-		EventBus.outfit_changed.connect(func(_player_id: StringName, equipped: Dictionary) -> void: set_outfit(equipped))
+		EventBus.outfit_changed.connect(func(id: StringName, equipped: Dictionary) -> void:
+			if is_instance_valid(owner_body) and PlayerRegistry.registered_id(owner_body) == id: set_outfit(equipped))
 		EventBus.player_character_changed.connect(_character_changed)
-		set_outfit(WardrobeManager.outfit())
+		set_outfit(_owned_outfit())
 	else:
 		set_outfit(current_outfit)
 
@@ -129,9 +131,16 @@ func _body_mat(base: Texture2D, mask: bool) -> ShaderMaterial:
 func _order(entry: Dictionary) -> int:
 	return int(Svc.lua_config("wardrobe.layer_z."+str(entry.record.family),WardrobeManager.slots().get(entry.slot, {}).get("z",0)))
 
-func _character_changed(_player_id: StringName, _id: StringName) -> void:
+func _owned_outfit() -> Dictionary:
+	if is_instance_valid(owner_body):
+		return owner_body.actor_work(func(): return WardrobeManager.outfit(), {})
+	return WardrobeManager.outfit()
+
+func _character_changed(id: StringName, _id: StringName) -> void:
+	if is_instance_valid(owner_body) and PlayerRegistry.registered_id(owner_body) != id:
+		return
 	# PlayerBody2D connected first and has already installed the new stock body.
-	set_outfit(WardrobeManager.outfit())
+	set_outfit(_owned_outfit())
 
 func _sprite(label: String) -> Sprite2D:
 	var sprite := Sprite2D.new()

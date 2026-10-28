@@ -1,4 +1,6 @@
 extends RefCounted
+
+const ScopedInputObserver := preload("res://tests/lib/scoped_input_observer.gd")
 ## Mouse targeting (owner request 2026-10-20: "use the mouse to click on the ground around the character so that it can be used
 ## for tools and weapons"). Every hover and click is a REAL event fed through Input at the window position of a ground point,
 ## so the GUI sees it first and the window stretch applies, as in play. Group "input".
@@ -29,7 +31,7 @@ func _motion_to(window_pos: Vector2) -> void:
 	# A real move (the aim device switches only on a move of UiNavWatcher.MOUSE_MOVE_MIN or more).
 	ev.relative = Vector2(30, 0) if window_pos.distance_to(_last_screen) < 30.0 else window_pos - _last_screen
 	_last_screen = window_pos
-	Input.parse_input_event(ev)
+	Input.parse_input_event(ScopedInputObserver.tag_if_active(ev))
 	Input.flush_buffered_events()
 
 func _button_at(window_pos: Vector2, pressed: bool) -> void:
@@ -39,7 +41,7 @@ func _button_at(window_pos: Vector2, pressed: bool) -> void:
 	ev.pressed = pressed
 	ev.position = window_pos
 	ev.global_position = window_pos
-	Input.parse_input_event(ev)
+	Input.parse_input_event(ScopedInputObserver.tag_if_active(ev))
 	Input.flush_buffered_events()
 
 func _hover(p: Player2D, at: Vector2) -> void:
@@ -61,18 +63,18 @@ func _key(code: Key, pressed := true) -> void:
 	ev.keycode = code
 	ev.physical_keycode = code
 	ev.pressed = pressed
-	Input.parse_input_event(ev)
+	Input.parse_input_event(ScopedInputObserver.tag_if_active(ev))
 	Input.flush_buffered_events()
 
 func _stick() -> void:
 	var ev := InputEventJoypadMotion.new()
 	ev.axis = JOY_AXIS_LEFT_X
 	ev.axis_value = 0.9
-	Input.parse_input_event(ev)
+	Input.parse_input_event(ScopedInputObserver.tag_if_active(ev))
 	ev = InputEventJoypadMotion.new()
 	ev.axis = JOY_AXIS_LEFT_X
 	ev.axis_value = 0.0
-	Input.parse_input_event(ev)
+	Input.parse_input_event(ScopedInputObserver.tag_if_active(ev))
 	Input.flush_buffered_events()
 
 func _free(p: Player2D) -> void:
@@ -94,6 +96,10 @@ func _select(p: Player2D, item: StringName) -> void:
 ## A point inside a cell but off its centre: clicks never land on the exact centre.
 func _in_cell(area: IsoArea, cell: Vector2i) -> Vector2:
 	return area.cell_to_global(cell) + Vector2(9.0, -5.0)
+
+## Exercise the same parsed-event/GUI pipeline in the delegated native gate.
+func run_windowed(t) -> void:
+	await run(t)
 
 func run(t) -> void:
 	await t.start_world()
@@ -333,7 +339,22 @@ func _gui_never_reaches_world(t, world: WorldRoot2D, p: Player2D, centre: Vector
 	p.hotbar.assign(0, HOE)
 	p.hotbar.select(0)
 	var cell: Vector2i = centre + area.facing_step(1)
+	# The held-path assertion above keeps its own complete successful-use ledger.
+	# Its failure may have tilled this cell already; isolate only this later fixture.
+	if world.farm.plots.erase(cell):
+		world.farm.plot_changed.emit(cell)
+	var stamina_before: float = p.stamina
+	_click(p, _in_cell(area, cell))
+	t.check("modal_fixture_nonmodal_hoe_positive", used == [[HOE, cell, true]] and world.farm.state_of(cell) == FarmGrid.State.TILLED and p.stamina < stamina_before,
+		"same target %s, genuine nonmodal tool_used %s" % [cell, used])
+	_free(p)
+	if world.farm.plots.erase(cell):
+		world.farm.plot_changed.emit(cell)
+	# This recorder belongs to the GUI/modal probe, not the preceding held test.
+	used.clear()
 	var gm: Node = t.autoload("GameManager")
+	t.check("modal_fixture_empty_and_eligible", world.farm.state_of(cell) == FarmGrid.State.EMPTY and world.farm.can_till(cell) and p.cursor_cell(HOE) == cell and p.hotbar.current() == HOE and GameData.eco().count_item(HOE) > 0 and p.stamina == p.max_stamina and p.stamina > 0 and p.state == PlayerBody2D.S.FREE and not gm.is_modal_open(),
+		"empty reachable target %s, selected owned hoe, full stamina, FREE, no modal" % cell)
 	gm.push_modal(&"mouse_targeting_probe", true)
 	await t.frames(2)
 	_click(p, _in_cell(area, cell))

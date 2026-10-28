@@ -93,10 +93,20 @@ const GEM := "res://scripts/combat/lantern_gem.gd"
 const PLACEMENT := "res://scripts/farm/placement_service.gd"
 
 func _ready() -> void:
+	if admission_only:
+		super._ready()
+		hotbar.bind_body(self)
+		var row := PlayerRegistry.peek_state(player_id)
+		if row != null:
+			half_hearts = row.half_hearts
+			stamina = row.stamina
+			oil = row.oil
+			if row.hotbar is Dictionary: hotbar.from_dict(row.hotbar)
+		return
 	EventBus.modal_changed.connect(func(stack):
-		if stack.is_empty() and is_inside_tree():
+		if stack.is_empty() and controls.local_active():
 			# A pausing modal stopped _input: take up the pointer where it is now, not where it was when the modal opened.
-			_cursor_screen = get_viewport().get_mouse_position()
+			_cursor_screen = controls.pointer_position(get_viewport())
 		if not stack.is_empty():
 			_farm_use_held = false
 			_click_buffer = null
@@ -126,21 +136,25 @@ func _ready() -> void:
 	combat.setup(self)
 	combat.weapon_drawn.connect(func(_item: StringName): _sync_equipment_display())
 	hotbar.changed.connect(_emit_hotbar)
+	hotbar.bind_body(self)
 	hotbar.fill_defaults()
 	outfit_layers = WardrobeLayers.new()
 	outfit_layers.world_outfit = true
+	outfit_layers.owner_body = self
 	visual.add_child(outfit_layers)
 	held_equipment = HeldEquipment2D.new()
 	held_equipment.name = "HeldEquipment"
 	add_child(held_equipment)
-	EventBus.hotbar_assign_requested.connect(func(_player_id: StringName, slot: int, item_id: StringName) -> void: hotbar.assign(slot, item_id))
+	EventBus.hotbar_assign_requested.connect(func(id: StringName, slot: int, item_id: StringName) -> void:
+		if PlayerRegistry.registered_id(self) == id: hotbar.assign(slot, item_id))
 	EventBus.player_inventory_changed.connect(_on_inventory_changed)
-	EventBus.outfit_changed.connect(func(_player_id: StringName, _outfit: Dictionary): refresh_stats())
+	EventBus.outfit_changed.connect(func(id: StringName, _outfit: Dictionary):
+		if PlayerRegistry.registered_id(self) == id: refresh_stats())
 	EventBus.home_upgraded.connect(func(_old: int, _new: int): refresh_stats())
 	EventBus.hygge_changed.connect(func(_score: int, _level: StringName): refresh_stats())
 	EventBus.game_event.connect(_on_game_event)
 	_emit_stats_on_bus()
-	EventBus.player_oil_changed.emit(PlayerRegistry.local_id(), oil, max_oil)
+	_emit_oil()
 	var footsteps := PlayerFootsteps.new()
 	footsteps.name = "Footsteps"
 	add_child(footsteps)
@@ -152,6 +166,9 @@ func _notification(what: int) -> void:
 		_marker.queue_free()
 
 func refresh_stats() -> void:
+	actor_work(_refresh_owned_stats)
+
+func _refresh_owned_stats() -> void:
 	_walk = float(GameData.player_cfg("walk_speed", 285)) * (1.0 + Perks.total("speed"))
 	_run = float(GameData.player_cfg("run_speed", 450)) * (1.0 + Perks.total("speed"))
 	max_stamina = float(GameData.player_cfg("max_stamina", 100)) + Perks.total("energy")
@@ -161,6 +178,8 @@ func refresh_stats() -> void:
 	_emit_stats_on_bus()
 
 func _on_character_changed(player_id: StringName, character_id: StringName) -> void:
+	if player_id != self.player_id:
+		return
 	super._on_character_changed(player_id, character_id)
 	refresh_stats()
 
@@ -189,12 +208,13 @@ func enter_area(target: IsoArea, at: Vector2) -> void:
 		_marker.get_parent().remove_child(_marker)
 	area.ground_fx.add_child(_marker)
 	_marker.projection = area.projection
+	_marker.visible = controls.local_active()
 	oil_draining = _is_action_area() and area.map.ambient in [&"forest", &"cave"] and int(area.map.extra.get("floor",0)) > 0
 	lantern.enabled = _is_action_area() and area.map.ambient in [&"forest", &"cave"]
 	_update_lantern()
 
 func world_input_allowed() -> bool:
-	return area != null and not GameData.gm().is_modal_open() and state not in [S.TALKING, S.FAINTED] and not _event_active and not _world_in_transition()
+	return controls.local_active() and PlayerRegistry.registered_id(self) != &"" and area != null and not GameData.gm().is_modal_open() and state not in [S.TALKING, S.FAINTED] and not _event_active and not _world_in_transition()
 
 ## A travel, the night or a faint runs behind the black fade (WorldRoot2D.traveling / sleeping): E on a counter would open its screen
 ## UNDER the fade, where the next keys act on it blind (review GAP1-03). Hotkey screens already refuse then (UiNav.world_is_free).
@@ -206,18 +226,39 @@ func _world_in_transition() -> bool:
 ## _unhandled_input (the GUI takes it), yet it still makes the mouse the device in use, so the marker hides over the HUD;
 ## a move over an open panel or modal changes no device.
 func _input(event: InputEvent) -> void:
+	if not controls.handle_event(event):
+		return
 	if event is InputEventMouse:
 		_cursor_screen = (event as InputEventMouse).position
 	if event is InputEventMouseMotion and not GameData.gm().is_modal_open():
 		_track_aim_device(event)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not controls.handle_event(event):
+		return
+	actor_work(func(): _handle_world_event(event))
+
+## Trusted owner-resolved HUD dispatch shares world guards, not synthetic identity.
+func select_gui_slot(index: int) -> void:
+	if world_input_allowed():
+		actor_work(func(): hotbar.select(index))
+
+func _handle_world_event(event: InputEvent) -> void:
 	if event.is_action_released("use_tool"):
 		_farm_use_held = false
 	_track_aim_device(event)
 	if event is InputEventMouse:
 		_cursor_screen = (event as InputEventMouse).position
 	if not world_input_allowed():
+		return
+	var chord_slot := controls.hotbar_slot(event)
+	if chord_slot >= 0:
+		hotbar.select(chord_slot)
+		_climb_down = false
+		controls.consume_if_handled()
+		return
+	if event is InputEventJoypadButton and controls.hotbar_modifier():
+		controls.consume_if_handled()
 		return
 	# A press on a HUD panel that only passes the mouse on (a PanelContainer) still reaches here: it is not a click on the ground.
 	if event is InputEventMouseButton and event.pressed and not _is_wheel(event as InputEventMouseButton) and _cursor_over_gui():
@@ -236,15 +277,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed(&"hotbar_previous") or event.is_action_pressed(&"hotbar_next"):
 		hotbar.cycle(-1 if event.is_action_pressed(&"hotbar_previous") else 1)
-		get_viewport().set_input_as_handled()
+		controls.consume_if_handled()
 		return
 	for index in 10:
 		if event.is_action_pressed("slot_%d" % (index + 1)):
 			hotbar.select(index) # 9/0 remain defined inputs; this eight-slot layout ignores them.
-			get_viewport().set_input_as_handled()
+			controls.consume_if_handled()
 			return
 	if _zoom_input(event):
-		get_viewport().set_input_as_handled()
+		controls.consume_if_handled()
 		return
 	if _is_action_area():
 		# attack and use_tool share every binding: in an action area the press is an attack through the
@@ -297,7 +338,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		hop()
 	for action in ["interact", "fly_toggle", "attack", "dodge", "light", "drink", "jump", "use_tool"]:
 		if event.is_action_pressed(action):
-			get_viewport().set_input_as_handled()
+			controls.consume_if_handled()
 			break
 
 ## Swings aim at the cursor only while the mouse is the device in use: a real mouse move or a click picks it,
@@ -337,7 +378,7 @@ func _tool_target_in_front() -> bool:
 ## The cursor's point on the ground, in the global coordinates of the area. The canvas transform of this frame holds the
 ## camera (its zoom and smoothing); event positions are already in viewport coordinates (canvas_items stretch, Retina).
 func cursor_global() -> Vector2:
-	return get_canvas_transform().affine_inverse() * _cursor_screen
+	return controls.aim_position(self)
 
 ## The cell a click works on: the ground cell under the cursor when it is one of the nine cells around the feet (the feet's
 ## own cell only for what can be done standing on it, _feet_cell_ok), else the neighbour cell toward the cursor. NO_CELL
@@ -438,10 +479,36 @@ func set_zoom(value: float) -> void:
 		_set_zoom(value)
 
 func _physics_process(delta: float) -> void:
+	# Remote samples are passive until MP5/6 supplies host validation/replication.
+	if not controls.local_active():
+		_input_revoked()
+		return
+	actor_work(func(): _tick_owned(delta))
+
+func _input_revoked() -> void:
+	super._input_revoked()
+	_farm_use_held = false
+	_click_buffer = null
+	_climb_up = false
+	_climb_down = false
+	_marker_pointer = false
+	mouse_aim = false
+	if combat != null:
+		combat.clear_buffer()
+		combat.attack_held = false
+	if is_instance_valid(_marker):
+		_marker.hide()
+
+func _tick_owned(delta: float) -> void:
 	if area == null or combat == null:
 		return
-	if not Input.is_action_pressed("use_tool"):
+	if not controls.is_action_pressed(&"use_tool"):
 		_farm_use_held = false
+	if not controls.is_action_pressed(&"attack"):
+		combat.attack_held = false
+	if is_flying:
+		_climb_up = controls.is_action_pressed(&"jump")
+		_climb_down = controls.is_action_pressed(&"fly_descend")
 	_sync_equipment_display()
 	var paused: bool = GameData.gm().is_modal_open() or state in [S.TALKING, S.FAINTED] or _event_active
 	if paused:
@@ -467,11 +534,11 @@ func _physics_process(delta: float) -> void:
 		state = S.FREE
 		_using_item = &""
 	_sync_equipment_display()
-	var direction := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var direction := controls.move_vector()
 	var running := false
 	if _exhausted and stamina >= max_stamina * float(GameData.player_cfg("run_recover_ratio", 0.2)):
 		_exhausted = false
-	if state == S.FREE and not is_flying and not _landing and direction != Vector2.ZERO and Input.is_action_pressed("run") and not _exhausted:
+	if state == S.FREE and not is_flying and not _landing and direction != Vector2.ZERO and controls.is_action_pressed(&"run") and not _exhausted:
 		running = true
 		_spend_stamina(float(GameData.player_cfg("run_cost_per_second", 15)) * float(GameData.perk("run_cost_mult", 1.0)) * delta)
 		if stamina <= 0:
@@ -518,7 +585,7 @@ func _physics_process(delta: float) -> void:
 			_farm_use_item = hotbar.current()
 			use_selected()
 			_click_cell = null
-	if _farm_use_held and _farm_repeat_allowed() and Input.is_action_pressed("use_tool") and state == S.FREE:
+	if _farm_use_held and _farm_repeat_allowed() and controls.is_action_pressed(&"use_tool") and state == S.FREE:
 		# A held click repeats on the cells the cursor moves over (never while it rests on the HUD).
 		_click_cell = cursor_cell(hotbar.current()) if _farm_use_mouse and mouse_aim else null
 		var cell := tool_cell()
@@ -582,6 +649,9 @@ func interaction_text(it: Node) -> String:
 	return super.interaction_text(it)
 
 func try_interact() -> bool:
+	return bool(actor_work(_try_owned_interact, false))
+
+func _try_owned_interact() -> bool:
 	if not world_input_allowed() or not can_interact_now():
 		return false
 	if _at_farm() and farm.state_of(target_cell()) == FarmGrid.State.READY:
@@ -589,6 +659,9 @@ func try_interact() -> bool:
 	return super.try_interact()
 
 func use_selected() -> bool:
+	return bool(actor_work(_use_owned_selected, false))
+
+func _use_owned_selected() -> bool:
 	if is_flying and world_input_allowed() and hotbar.current() != &"":
 		# Tools stay refused in flight, with a word why (a click, X and the pad alike), at most every FLIGHT_WHISPER_S.
 		if _flight_whisper_time == 0.0:
@@ -728,14 +801,16 @@ func _spend_stamina(amount: float) -> void:
 	_regen_delay = float(GameData.player_cfg("stamina_regen_delay", 1.0))
 
 func _emit_stats_on_bus() -> void:
+	if PlayerRegistry.registered_id(self) == &"":
+		return
 	var values := {"half_hearts": half_hearts, "max_half_hearts": max_half_hearts, "stamina": stamina, "max_stamina": max_stamina}
 	if values == _last_stats:
 		return
 	if _last_stats.get("half_hearts", -1) != half_hearts or _last_stats.get("max_half_hearts", -1) != max_half_hearts:
-		EventBus.player_health_changed.emit(PlayerRegistry.local_id(), half_hearts, max_half_hearts)
+		EventBus.player_health_changed.emit(player_id, half_hearts, max_half_hearts)
 	_last_stats = values.duplicate()
 	stats_changed.emit()
-	EventBus.player_stats_changed.emit(PlayerRegistry.local_id(), values)
+	EventBus.player_stats_changed.emit(player_id, values)
 
 ## One readout for the HUD and the fitted item presenter. An action keeps its
 ## actual source item until completion even if the hotbar or equipment changes.
@@ -744,6 +819,9 @@ func equipment_display() -> Dictionary:
 	return {"id": _display_item, "context": _display_context, "available": _display_available, "drawn": _display_drawn}
 
 func _sync_equipment_display() -> void:
+	actor_work(_sync_owned_equipment_display)
+
+func _sync_owned_equipment_display() -> void:
 	var item := hotbar.current()
 	var context: StringName = &"selected"
 	if combat != null and state == S.SWING:
@@ -770,11 +848,14 @@ func _sync_equipment_display() -> void:
 	equipment_display_changed.emit()
 
 func _emit_hotbar() -> void:
+	if PlayerRegistry.registered_id(self) == &"":
+		return
 	_sync_equipment_display()
-	EventBus.hotbar_changed.emit(PlayerRegistry.local_id(), hotbar.entries(), hotbar.selected)
+	EventBus.hotbar_changed.emit(player_id, hotbar.entries(), hotbar.selected)
 
-func _on_inventory_changed(_player_id: StringName, _items: Dictionary) -> void:
-	_emit_hotbar()
+func _on_inventory_changed(id: StringName, _items: Dictionary) -> void:
+	if PlayerRegistry.registered_id(self) == id:
+		_emit_hotbar()
 
 func heal_half(amount: int) -> void:
 	half_hearts = clampi(half_hearts + maxi(0, amount), 0, max_half_hearts)
@@ -798,10 +879,15 @@ func add_oil(seconds: float) -> void:
 	_oil_empty_time = 0.0
 	_update_lantern()
 	if oil != before:
-		EventBus.player_oil_changed.emit(PlayerRegistry.local_id(), oil, max_oil)
+		_emit_oil()
 
 func restore_oil() -> void:
 	add_oil(max_oil)
+
+func _emit_oil() -> void:
+	var id := PlayerRegistry.registered_id(self)
+	if id != &"":
+		EventBus.player_oil_changed.emit(id, oil, max_oil)
 
 func begin_dungeon_run() -> void:
 	_oil_low_said = false
@@ -818,7 +904,7 @@ func apply_consumable(health: int, oil_seconds: float, energy: float) -> void:
 	_update_lantern()
 	_emit_stats_on_bus()
 	if before != oil:
-		EventBus.player_oil_changed.emit(PlayerRegistry.local_id(), oil, max_oil)
+		_emit_oil()
 
 func restore_after_sleep() -> void:
 	refresh_stats()
@@ -839,7 +925,7 @@ func revive(at: Vector2) -> void:
 	restore_after_sleep()
 
 func _update_oil(delta: float) -> void:
-	if not oil_draining:
+	if not controls.local_active() or not oil_draining:
 		return
 	# The oil rules are called directly: their old late-binding fallbacks re-implemented them differently (they ignored
 	# the auto-refuel and oil assists, review QUAL-11).
@@ -852,7 +938,7 @@ func _update_oil(delta: float) -> void:
 	var context := {"paused": false, "on_floor": oil_draining, "race_mult": float(GameData.perk("oil_use_mult", 1.0)), "gem_mult": float(gem.get("oil_mult", 1.0)), "assist_oil": _assist_oil()}
 	oil = clampf(DungeonOilRules.step(oil, delta, context), 0.0, max_oil)
 	if int(before) != int(oil):
-		EventBus.player_oil_changed.emit(PlayerRegistry.local_id(), oil, max_oil)
+		_emit_oil()
 	if oil / max_oil < float(GameData.combat("oil_whisper_ratio", 0.2)) and not _oil_low_said:
 		_oil_low_said = true
 		EventBus.whisper_requested.emit("WHISPER_OIL_LOW")
@@ -891,7 +977,7 @@ func _update_ghost(delta: float) -> void:
 	ghost_light.enabled = ghost_light.energy > 0.0
 
 func can_fly_here() -> bool:
-	return area != null and area.map.flight_allowed and bool(GameData.perk("can_fly", false))
+	return bool(actor_work(func(): return area != null and area.map.flight_allowed and bool(GameData.perk("can_fly", false)), false))
 
 func hop() -> bool:
 	if state != S.FREE or is_flying or is_jumping or _landing:
@@ -1090,7 +1176,7 @@ func event_walk_to(at: Vector2, speed: float = 185.0) -> bool:
 	return generation == _event_generation and Iso.ground_dist(global_position, at) <= 4.0
 
 func camera_focus(target: Variant, zoom: float, seconds: float = 0.25) -> void:
-	if not is_inside_tree() or area == null: return
+	if not controls.local_active() or area == null: return
 	_camera_generation += 1
 	var generation := _camera_generation
 	if _camera_tween != null and _camera_tween.is_running(): _camera_tween.kill()
@@ -1104,6 +1190,7 @@ func camera_focus(target: Variant, zoom: float, seconds: float = 0.25) -> void:
 	if is_inside_tree() and generation == _camera_generation: _apply_camera_limits()
 
 func camera_release(seconds: float = 0.25) -> void:
+	if not controls.local_active(): return
 	_camera_generation += 1
 	var generation := _camera_generation
 	if _camera_tween != null and _camera_tween.is_running(): _camera_tween.kill()

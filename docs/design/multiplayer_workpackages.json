@@ -134,7 +134,6 @@
     }
   ],
   "honestStubs": [
-    "scripts/player/player_input.gd (MP2)",
     "scripts/net/multiplayer_session.gd (MP4)",
     "scripts/net/intent_bus.gd (MP6)",
     "scenes/ui/multiplayer_lobby.tscn (MP7)",
@@ -225,6 +224,7 @@
   "newPackages": [
     {
       "id": "MP1-player-registry",
+      "implementation": "Existing registry/spawn tables retained; registered live local bodies take precedence over player-group order, detached/queued/unregistered clones are excluded, and event lookup matches a local source device. Null-event no-world fixture compatibility remains. See MP_INPUT_WAVE1.md; LAN spawn/handshake remains MP4.",
       "title": "Player registry: player_id / peer_id / is_local on bodies, WorldRoot2D.players[], lookup helpers, migration of every get_first_node_in_group('player')",
       "wave": "1",
       "size": "L",
@@ -247,6 +247,7 @@
     },
     {
       "id": "MP2-player-input",
+      "implementation": "Offline PlayerInput is implemented: default keyboard/mouse + pad 0, exact bound-pad samples, pausable gameplay with always-on raw sample capture, passive bounded/typed/expiring remote frames (no RPC or world authority), source-local aim and viewport consumption. L3/R3/down are additive bindings; LB-first D-pad chords select both hotbar banks without descend/cycle/drink overlap. Existing single-player production-path tests and multiplayer_input cover parity. See MP_INPUT_WAVE1.md; connected acceptance is not claimed.",
       "title": "PlayerInput abstraction: device-bound input for Player2D/PlayerBody2D/PlayerCombat2D, mouse-aim indirection, pad binding gaps closed",
       "wave": "1",
       "size": "L",
@@ -439,6 +440,7 @@
     },
     {
       "id": "RM2-player-scripts-input",
+      "implementation": "All continuous polls in the three player scripts route through controls; raw events and camera activation honor locality/physical registration. Input-triggered synchronous actions use the registered body row and restore the caller. Narrow hotbar/outfit/HUD/consumable consumers honor that owner; the broader MP3/RM7 actor migration remains separate.",
       "target": "P06-player-farm-core / scripts/world2d/player_*.gd, player_combat_2d.gd",
       "wave": "1",
       "size": "M",

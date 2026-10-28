@@ -4,6 +4,7 @@ const TIMEOUT_S := 240.0
 const SELECT := "res://scenes/ui/character_select.tscn"
 
 func run(t) -> void:
+	await _chip_disabled_geometry(t)
 	var save_manager: Node = t.autoload("SaveManager")
 	var previous_save_dir: String = save_manager.save_dir
 	save_manager.save_dir = "user://menus-pristine"
@@ -458,7 +459,56 @@ func _quit_saves(t) -> void:
 	sm.save_dir = dir_before
 
 
+## A disabled Chip must not borrow generic Button padding and grow its entire row.
+## Use real Controls and deferred container layout, not a reconstructed minimum-size formula.
+func _chip_disabled_geometry(t) -> void:
+	var panel := PanelContainer.new()
+	panel.position = Vector2(32, 32)
+	t.root.add_child(panel)
+	var row := HBoxContainer.new()
+	panel.add_child(row)
+	var chips: Array[Button] = []
+	for caption in ["1280×720", "1600×900", "1920×1080"]:
+		var chip := Button.new()
+		chip.theme_type_variation = &"Chip"
+		chip.text = caption
+		row.add_child(chip)
+		chips.append(chip)
+	await t.frames(2)
+	var chip: Button = chips[-1]
+	var normal := chip.get_theme_stylebox("normal")
+	var pressed := chip.get_theme_stylebox("pressed")
+	var focus := chip.get_theme_stylebox("focus")
+	var enabled_height := chip.get_combined_minimum_size().y
+	var row_before := row.get_global_rect()
+	var panel_before := panel.get_global_rect()
+	var first_before := chips[0].get_global_rect()
+	var enabled_image: Image
+	if t.has_window():
+		enabled_image = await t.capture("chip_enabled_geometry")
+	UiNav.set_enabled(chip, false)
+	chip.modulate.a = 0.5  # Same presentation as SettingsUI._update_sizes; no preset capability override.
+	await t.frames(2)
+	var disabled := chip.get_theme_stylebox("disabled")
+	var padding := Vector4(disabled.content_margin_left, disabled.content_margin_top, disabled.content_margin_right, disabled.content_margin_bottom)
+	t.check("chip_disabled_padding", padding == Vector4(18, 8, 18, 8), str(padding))
+	t.check("chip_disabled_minimum_height", enabled_height == 37.0 and chip.get_combined_minimum_size().y == enabled_height,
+		"enabled %s, disabled %s" % [enabled_height, chip.get_combined_minimum_size().y])
+	t.check("chip_disabled_row_panel_stable", row.get_global_rect() == row_before and panel.get_global_rect() == panel_before and chips[0].get_global_rect() == first_before,
+		"row %s -> %s; panel %s -> %s" % [row_before, row.get_global_rect(), panel_before, panel.get_global_rect()])
+	t.check("chip_disabled_rounded_face", disabled.get("radius") == 999.0 and disabled.get("fill") == normal.get("fill"))
+	t.check("chip_other_states_preserved", chip.get_theme_stylebox("normal") == normal and chip.get_theme_stylebox("pressed") == pressed and chip.get_theme_stylebox("focus") == focus
+		and normal.get("fill") == Color("#fbf5e6") and pressed.get("fill") == Color("#e3c372") and focus.get("draw_body") == false)
+	t.check("chip_disabled_nonfocusable_dim", chip.disabled and chip.focus_mode == Control.FOCUS_NONE and not UiNav.is_stop(chip) and chip.modulate.a == 0.5)
+	if t.has_window():
+		var disabled_image: Image = await t.capture("chip_disabled_geometry")
+		var at := Vector2i(chip.get_global_rect().position + Vector2(chip.size.x * 0.5, 5))
+		t.check("chip_disabled_rendered_dim", enabled_image != null and disabled_image != null and t.color_delta(enabled_image.get_pixelv(at), disabled_image.get_pixelv(at)) > 10.0)
+	panel.free()
+
+
 func run_windowed(t) -> void:
+	await _chip_disabled_geometry(t)
 	const Fixtures := preload("res://scripts/ui/dev/ui_fixtures.gd")
 	await t.clear_scene()
 	# Earlier gameplay sections autosave on exit. Pin the visual fixtures to

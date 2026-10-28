@@ -151,11 +151,14 @@ func _ready() -> void:
 	add_child(preload("res://scenes/ui/dungeon/loot_reveal.tscn").instantiate())
 	preload("res://scripts/dungeon_run/cues.gd").attach(self)
 	EventBus.player_spawned.connect(_spawned)
-	EventBus.player_health_changed.connect(func(_player_id: StringName, half_hearts, max_half_hearts) -> void: _health(half_hearts, max_half_hearts))
-	EventBus.player_oil_changed.connect(func(_player_id: StringName, seconds, max_seconds) -> void: _oil(seconds, max_seconds))
+	EventBus.player_health_changed.connect(func(id: StringName, half_hearts, max_half_hearts) -> void:
+		if id == PlayerRegistry.local_id(): _health(half_hearts, max_half_hearts))
+	EventBus.player_oil_changed.connect(func(id: StringName, seconds, max_seconds) -> void:
+		if id == PlayerRegistry.local_id(): _oil(seconds, max_seconds))
 	EventBus.boss_bar_changed.connect(_boss)
 	EventBus.area_changed.connect(_area_changed)
-	EventBus.player_inventory_changed.connect(func(_player_id: StringName, inventory) -> void: _inventory(inventory))
+	EventBus.player_inventory_changed.connect(func(id: StringName, inventory) -> void:
+		if id == PlayerRegistry.local_id(): _inventory(inventory))
 	EventBus.game_event.connect(_event)
 	EventBus.modal_changed.connect(func(stack):
 		# the whisper follows the toasts: above a panel, hidden under the dialogue and an event scene
@@ -166,6 +169,8 @@ func _ready() -> void:
 	_assist()
 	_area_changed(&"")
 func _spawned(player: Node) -> void:
+	if player != null and player != PlayerRegistry.local_player(get_tree()):
+		return
 	_player = player as Player2D
 	if _player != null:
 		_health(_player.half_hearts,_player.max_half_hearts)
@@ -210,6 +215,19 @@ func _fit_zone() -> void:
 	zone_label.offset_left = -132-width*.5
 	zone_label.offset_right = -132+width*.5
 func _inventory(_items: Dictionary) -> void:
+	# Batched owner-labelled notifications can flush after the body's scope returns.
+	# Resolve physical local membership again; neither the payload nor ambient row owns this HUD.
+	var owner_id: StringName = &"p0"
+	if PlayerRegistry.world(get_tree()) != null:
+		var owner: Variant = PlayerRegistry.local_player(get_tree())
+		if not is_instance_valid(owner) or not owner is Player2D:
+			return
+		owner_id = PlayerRegistry.registered_id(owner)
+		if owner_id == &"":
+			return
+	# Boot / no-world fixtures retain the shared p0 row, never a caller's acting row.
+	PlayerRegistry.for_player(owner_id, _refresh_inventory)
+func _refresh_inventory() -> void:
 	var eco := Svc.node("EconomyManager")
 	if eco == null: return
 	oil_count.text = "×%d" % (eco.count_item(&"lantern_oil")+eco.count_item(&"lysdraabe"))

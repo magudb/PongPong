@@ -14,8 +14,19 @@ var state: int = S.FREE
 ## Identity (MP1). Single-player defaults: one local hero `p0` on peer 1, slot 0.
 var player_id: StringName = &"p0"
 var peer_id: int = 1
-var is_local: bool = true
+var is_local: bool = true:
+	set(value):
+		if is_local == value:
+			return
+		is_local = value
+		controls.clear()
+		controls.refresh_sources()
+		if camera != null:
+			camera.enabled = value and controls.local_active()
+## Admission replicas have camera/input identity, but no gameplay boot.
+var admission_only := false
 var player_slot: int = 0
+var controls := PlayerInput.new()
 var facing8: int = 0
 var facing_vec: Vector2 = Vector2(0, 1)
 var forced_clip: StringName = &""
@@ -50,7 +61,29 @@ const BRIEF_STATES: Array[S] = [S.USING, S.DODGE, S.SWING, S.HURT]
 const ZOOM_STEP := 0.05
 
 
+func _enter_tree() -> void:
+	controls.attach(self)
+
+func _exit_tree() -> void:
+	controls.detach()
+	if camera != null:
+		camera.enabled = false
+
+## Only physical membership authorizes synchronous row access. Never await in work.
+func actor_work(work: Callable, refused: Variant = null) -> Variant:
+	var id := PlayerRegistry.registered_id(self)
+	return PlayerRegistry.for_player(id, work) if id != &"" else refused
+
+func _input_revoked() -> void:
+	_gvel = Vector2.ZERO
+	velocity = Vector2.ZERO
+
 func _ready() -> void:
+	var capture := PlayerInput.Capture.new()
+	capture.name = "InputCapture"
+	capture.owner_ref = weakref(self)
+	capture.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(capture)
 	add_to_group("player")
 	collision_layer = Iso.LAYER_PLAYER
 	collision_mask = Iso.MASK_WALKING
@@ -77,11 +110,14 @@ func _ready() -> void:
 	camera.position_smoothing_speed = 6.0
 	camera.limit_smoothed = true
 	camera.zoom = Vector2.ONE * Iso.DEFAULT_ZOOM
+	camera.enabled = controls.local_active()
 	add_child(camera)
-	if is_local:
+	if controls.local_active():
 		camera.make_current()
-	var gm: Node = GameData.gm()
-	set_character(GameData.visual_for_skin(StringName(str(gm.get("character_skin")))) if gm != null else "fox")
+	if PlayerRegistry.registered_id(self) != &"":
+		actor_work(_refresh_owned_character)
+	else:
+		_refresh_owned_character() # standalone area fixtures, presentation only
 	EventBus.player_character_changed.connect(_on_character_changed)
 	get_viewport().size_changed.connect(_apply_camera_limits)
 
@@ -119,10 +155,16 @@ func set_character(visual_id: String) -> void:
 		visual.load_character(visual_id)
 
 
-func _on_character_changed(_player_id: StringName, _character_id: StringName) -> void:
+func _on_character_changed(changed_id: StringName, _character_id: StringName) -> void:
+	if changed_id != player_id:
+		return
+	actor_work(_refresh_owned_character)
+
+func _refresh_owned_character() -> void:
 	var gm: Node = GameData.gm()
-	if gm != null:
-		set_character(GameData.visual_for_skin(StringName(str(gm.get("character_skin")))))
+	var id := PlayerRegistry.registered_id(self)
+	var skin: StringName = PlayerRegistry.state(id).character_skin if id != &"" and (id != &"p0" or admission_only) else StringName(str(gm.get("character_skin"))) if gm != null else &"default"
+	set_character(GameData.visual_for_skin(skin))
 
 
 ## Called by WorldRoot2D whenever the player is put into an area.
@@ -139,7 +181,9 @@ func enter_area(p_area: IsoArea, spawn_global: Vector2) -> void:
 	camera.zoom = Vector2.ONE * _target_zoom
 	_apply_camera_limits()
 	camera.position_smoothing_enabled = true
-	camera.make_current()
+	camera.enabled = controls.local_active()
+	if controls.local_active():
+		camera.make_current()
 	camera.reset_smoothing()
 	z_index = 0
 
@@ -157,13 +201,19 @@ func _apply_camera_limits() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not controls.handle_event(event):
+		return
 	if GameData.gm().is_modal_open() or state == S.TALKING or area == null:
 		return
 	if _zoom_input(event):
-		get_viewport().set_input_as_handled()
+		controls.consume_if_handled()
 	elif event.is_action_pressed("interact"):
 		if try_interact():
-			get_viewport().set_input_as_handled()
+			controls.consume_if_handled()
+
+
+func _input(event: InputEvent) -> void:
+	controls.handle_event(event)
 
 
 ## Wheel notches, and the macOS trackpad, which sends a two-finger scroll as InputEventPanGesture and a pinch as
@@ -188,7 +238,7 @@ func _zoom_input(event: InputEvent) -> bool:
 ## The right stick zooms while it is held (player.zoom_stick_per_second at full tilt). A wheel notch is released
 ## within its own event flush, so it adds nothing here.
 func _zoom_stick(delta: float) -> void:
-	var push := Input.get_action_strength("zoom_in") - Input.get_action_strength("zoom_out")
+	var push := controls.action_strength(&"zoom_in") - controls.action_strength(&"zoom_out")
 	if push != 0.0:
 		_set_zoom(_target_zoom + push * float(GameData.player_cfg("zoom_stick_per_second", 0.5)) * delta)
 
@@ -201,14 +251,15 @@ func _set_zoom(z: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if area == null:
+	# Passive remote samples never authorize the fallback/base simulation either.
+	if area == null or not controls.local_active():
 		return
 	var in_dir := Vector2.ZERO
 	if state == S.FREE:
-		in_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+		in_dir = controls.move_vector()
 	if not GameData.gm().is_modal_open():
 		_zoom_stick(delta)
-	var speed: float = _run if Input.is_action_pressed("run") else _walk
+	var speed: float = _run if controls.is_action_pressed(&"run") else _walk
 	_gvel = _gvel.move_toward(in_dir * speed, (_accel if in_dir != Vector2.ZERO else _decel) * delta)
 	velocity = Iso.to_screen(_gvel)
 	move_and_slide()
@@ -220,7 +271,7 @@ func _physics_process(delta: float) -> void:
 		if forced_clip != &"":
 			visual.play_loop(forced_clip)
 		else:
-			visual.update_motion(velocity, Input.is_action_pressed("run"), false, false, in_dir)
+			visual.update_motion(velocity, controls.is_action_pressed(&"run"), false, false, in_dir)
 	_update_prompt(delta)
 
 
@@ -260,8 +311,8 @@ func restore_after_sleep() -> void:
 
 ## Mirrors the local stats_changed on the contract signals: the HUD screens listen to the bus, not to this stub.
 func _emit_stats_on_bus() -> void:
-	EventBus.player_health_changed.emit(PlayerRegistry.local_id(), half_hearts, max_half_hearts)
-	EventBus.player_stats_changed.emit(PlayerRegistry.local_id(), {"half_hearts": half_hearts, "max_half_hearts": max_half_hearts, "stamina": stamina, "max_stamina": max_stamina})
+	EventBus.player_health_changed.emit(player_id, half_hearts, max_half_hearts)
+	EventBus.player_stats_changed.emit(player_id, {"half_hearts": half_hearts, "max_half_hearts": max_half_hearts, "stamina": stamina, "max_stamina": max_stamina})
 
 
 ## The cell in front of the feet (the one a tool or E acts on).
@@ -363,7 +414,7 @@ func _update_prompt(delta: float = 0.0) -> void:
 	var text := interaction_text(it)
 	if text != _prompt:
 		_prompt = text
-		EventBus.interaction_prompt_changed.emit(PlayerRegistry.local_id(), text)
+		EventBus.interaction_prompt_changed.emit(player_id, text)
 
 func interaction_text(it: Node) -> String:
 	return str(it.call("get_interaction_prompt")) if it != null and it.has_method("get_interaction_prompt") else ""

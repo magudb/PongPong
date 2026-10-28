@@ -194,6 +194,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if not NetAuthority.can_write(): return
 	if GameManager.current_phase != GameManager.GamePhase.PLAYING or not autosave_enabled:
 		return
 	_auto_save_timer += delta
@@ -203,6 +204,7 @@ func _process(delta: float) -> void:
 
 ## New game (EventBus.new_game_started): no current slot, timers zero, nothing waits for a world, no stale error.
 func reset() -> void:
+	if not NetAuthority.can_write(): return
 	_backup_validation.clear()
 	_inspect_cache.clear()
 	run_id = _new_run_id()
@@ -261,6 +263,7 @@ func has_any_save() -> bool:
 
 
 func delete_save(slot: int = 0) -> void:
+	if not NetAuthority.can_write(): return
 	if not is_valid_slot(slot):
 		return
 	for path in [slot_path(slot), backup_path(slot), slot_path(slot) + ".tmp", slot_path(slot) + ".old"]:
@@ -277,6 +280,7 @@ func delete_save(slot: int = 0) -> void:
 ## NOTIF_SAVED_* and becomes current_slot. Returns false when the file could not be written (see _save_failed); the old file
 ## of the slot is then untouched.
 func save_game(slot: int = 0, is_auto: bool = false) -> bool:
+	if not NetAuthority.can_write(): return false
 	if GameManager.is_modal_open(&"event"):
 		last_error = {"slot":slot,"code":"event","detail":"scene effects have not committed"}
 		return false
@@ -286,7 +290,9 @@ func save_game(slot: int = 0, is_auto: bool = false) -> bool:
 		last_error = {"slot": slot, "code": "slot", "detail": "slot %d does not exist" % slot}
 		return false
 	var silent := slot == AUTO_SLOT
+	var delivery_owner := _save_owner_stamp()
 	var payload := gather_payload()
+	if not NetAuthority.can_write() or delivery_owner != _save_owner_stamp(): return false
 	if not _gather_failures.is_empty():
 		# A section that could not describe itself would be missing from the file and reset to new-game state on the next load:
 		# nothing is written, the file of the slot (and its .bak) stays as it was.
@@ -298,6 +304,8 @@ func save_game(slot: int = 0, is_auto: bool = false) -> bool:
 		_roll_backup(slot)
 	else:
 		_keep_foreign_auto_file()
+	# Validation and quarantine can synchronously replace the saving world/session.
+	if not NetAuthority.can_write() or delivery_owner != _save_owner_stamp(): return false
 	if not _write_atomic(slot_path(slot), text):
 		last_error = {"slot": slot, "code": "write", "detail": "could not write %s" % slot_path(slot)}
 		return _save_failed(slot, silent)
@@ -331,14 +339,24 @@ func _save_failed(slot: int, silent: bool) -> bool:
 
 ## Writes the auto slot (never a manual one) and restarts the autosave countdown.
 func autosave() -> bool:
+	if not NetAuthority.can_write(): return false
 	_auto_save_timer = 0.0
 	return save_game(AUTO_SLOT, true)
 
 
+var _queued_autosave_owner: Array = []
+
+func _save_owner_stamp() -> Array:
+	var world := PlayerRegistry.world()
+	var session: Node = world.get("session") if world != null else null
+	return [run_id, world.get_instance_id() if world != null else 0, session.get_instance_id() if session != null else 0, session.generation if session != null else 0]
+
 func _on_day_ended(_day: int, _season: StringName) -> void:
+	if not NetAuthority.can_write(): return
 	if not autosave_enabled or _autosave_queued or not _game_running():
 		return
 	_autosave_queued = true
+	_queued_autosave_owner = _save_owner_stamp()
 	_run_queued_autosave.call_deferred()
 
 
@@ -346,6 +364,9 @@ func _run_queued_autosave() -> void:
 	if not _autosave_queued:                   # reset() (a new game began in the same frame) dropped it: nothing of the old run is saved
 		return
 	_autosave_queued = false
+	var owner_matches := _queued_autosave_owner == _save_owner_stamp()
+	_queued_autosave_owner = []
+	if not NetAuthority.can_write() or not owner_matches: return
 	if autosave_enabled and _game_running():
 		autosave()
 
@@ -358,75 +379,106 @@ func _game_running() -> bool:
 
 # ------------------------------------------------------------------ loading
 
+## An offline load owns admission until its complete synchronous call returns,
+## including validators, rollback snapshots, mutators and completion observers.
+## Depth preserves the existing nested facade/apply calls without choosing a new
+## reset/load precedence policy. reset() must not release an in-flight owner.
+var _offline_load_depth := 0
+
+func network_admission_blocked() -> bool:
+	return _offline_load_depth > 0
+
 ## Validates, then applies atomically (see the header). Does not touch the phase or the scene: the caller (load screen,
 ## continue_latest) enters the world. Emits load_completed(slot) on success; a manual slot becomes current_slot, the auto slot
 ## does not (see current_slot).
 func load_game(slot: int = 0) -> bool:
-	last_error = {}
-	if not is_readable_slot(slot):
-		return _fail_load(slot, "missing", "slot %d does not exist" % slot)
-	var info := inspect_slot(slot)
-	match info["state"]:
-		&"empty":
-			return _fail_load(slot, "missing", "no save in slot %d" % slot)
-		&"newer":
-			return _fail_load(slot, "version", str(info["detail"]))
-		&"corrupt":
-			return _fail_load(slot, str(info["code"]), str(info["detail"]))
-	var applied := _apply_payload(info["payload"])
-	if not applied["ok"] and not info["from_backup"]:
-		# the file passed every check and still did not apply (a section refused it): its .bak is the next best thing
-		var backup := _inspect_backup(slot)
-		if not backup.is_empty() and _apply_payload(backup["payload"])["ok"]:
-			info = backup
-			applied = {"ok": true, "detail": ""}
-	if not applied["ok"]:
-		return _fail_load(slot, "apply", str(applied["detail"]))
-	if is_manual_slot(slot):                   # the auto slots are not places the player saves to: keep the manual slot of this run
-		current_slot = slot
-	run_id = _run_id_of(info["payload"])
-	if run_id.begins_with(LEGACY_RUN_PREFIX):
-		run_id = _new_run_id()                 # written into every later save of this run: one derived id must never join two runs for good
-	if slot == AUTO_SLOT:
-		_auto_file_seen = {"hash": FileAccess.get_sha256(slot_path(slot)), "run": run_id}   # the auto file IS this run
-	_auto_save_timer = 0.0
-	if info["from_backup"]:
-		_toast(tr("NOTIF_LOAD_BACKUP_TITLE"), tr("NOTIF_LOAD_BACKUP_MSG"), slot + 1)
-	EventBus.load_completed.emit(slot)
-	return true
+	_offline_load_depth += 1
+	# Keep the whole operation lexical: no callable unfenced implementation entry.
+	var operation := func() -> bool:
+		if NetAuthority.owns_network_world(): return false
+		last_error = {}
+		if not is_readable_slot(slot):
+			return _fail_load(slot, "missing", "slot %d does not exist" % slot)
+		var info := inspect_slot(slot)
+		match info["state"]:
+			&"empty":
+				return _fail_load(slot, "missing", "no save in slot %d" % slot)
+			&"newer":
+				return _fail_load(slot, "version", str(info["detail"]))
+			&"corrupt":
+				return _fail_load(slot, str(info["code"]), str(info["detail"]))
+		var applied := _apply_payload(info["payload"])
+		if not applied["ok"] and not info["from_backup"]:
+			# the file passed every check and still did not apply (a section refused it): its .bak is the next best thing
+			var backup := _inspect_backup(slot)
+			if not backup.is_empty() and _apply_payload(backup["payload"])["ok"]:
+				info = backup
+				applied = {"ok": true, "detail": ""}
+		if not applied["ok"]:
+			return _fail_load(slot, "apply", str(applied["detail"]))
+		if is_manual_slot(slot):                   # the auto slots are not places the player saves to: keep the manual slot of this run
+			current_slot = slot
+		run_id = _run_id_of(info["payload"])
+		if run_id.begins_with(LEGACY_RUN_PREFIX):
+			run_id = _new_run_id()                 # written into every later save of this run: one derived id must never join two runs for good
+		if slot == AUTO_SLOT:
+			_auto_file_seen = {"hash": FileAccess.get_sha256(slot_path(slot)), "run": run_id}   # the auto file IS this run
+		_auto_save_timer = 0.0
+		if info["from_backup"]:
+			_toast(tr("NOTIF_LOAD_BACKUP_TITLE"), tr("NOTIF_LOAD_BACKUP_MSG"), slot + 1)
+		EventBus.load_completed.emit(slot)
+		return true
+	var result: bool = operation.call()
+	_offline_load_depth -= 1
+	return result
 
 
 ## load_game(slot), then the whole way into the world: pop every modal, phase PLAYING, change to world_scene (WORLD_SCENE,
 ## whose WorldRoot2D takes pending_world). False (with feedback) leaves phase, scene AND the running game exactly as they were:
 ## a world scene that does not exist is refused before the save is applied.
 func load_and_enter(slot: int) -> bool:
-	if not ResourceLoader.exists(world_scene):          # checked BEFORE the save is applied: a load that cannot enter the world leaves no half-loaded game behind
-		last_error = {}
-		return _fail_load(slot, "scene", "%s does not exist" % world_scene)
-	if not load_game(slot):
-		return false
-	var err := get_tree().change_scene_to_file(world_scene)
-	if err != OK:
-		return _fail_load(slot, "scene", "could not change to %s (error %d)" % [world_scene, err])
-	# An old save may contain the transient new-game opening flag. Continue/load
-	# must never replay the letter or first morning when the new world enters.
-	GameManager.set_flag(GameManager.FLAG_INTRO_PENDING, false)
-	GameManager.pop_all_modals()
-	GameManager.change_phase(GameManager.GamePhase.PLAYING)
-	return true
+	_offline_load_depth += 1
+	# Keep the whole operation lexical: no callable unfenced implementation entry.
+	var operation := func() -> bool:
+		if NetAuthority.owns_network_world(): return false
+		if not ResourceLoader.exists(world_scene):          # checked BEFORE the save is applied: a load that cannot enter the world leaves no half-loaded game behind
+			last_error = {}
+			return _fail_load(slot, "scene", "%s does not exist" % world_scene)
+		if not load_game(slot):
+			return false
+		var err := get_tree().change_scene_to_file(world_scene)
+		if err != OK:
+			return _fail_load(slot, "scene", "could not change to %s (error %d)" % [world_scene, err])
+		# An old save may contain the transient new-game opening flag. Continue/load
+		# must never replay the letter or first morning when the new world enters.
+		GameManager.set_flag(GameManager.FLAG_INTRO_PENDING, false)
+		GameManager.pop_all_modals()
+		GameManager.change_phase(GameManager.GamePhase.PLAYING)
+		return true
+	var result: bool = operation.call()
+	_offline_load_depth -= 1
+	return result
 
 
 ## The Continue button of the title screen: loads the newest save (get_latest_slot) and enters the world.
 func continue_latest() -> bool:
-	var slot := get_latest_slot()
-	if slot == NO_SLOT:
-		last_error = {}
-		return _fail_load(NO_SLOT, "missing", "no loadable save in any slot")
-	return load_and_enter(slot)
+	_offline_load_depth += 1
+	# Keep the whole operation lexical: no callable unfenced implementation entry.
+	var operation := func() -> bool:
+		if NetAuthority.owns_network_world(): return false
+		var slot := get_latest_slot()
+		if slot == NO_SLOT:
+			last_error = {}
+			return _fail_load(NO_SLOT, "missing", "no loadable save in any slot")
+		return load_and_enter(slot)
+	var result: bool = operation.call()
+	_offline_load_depth -= 1
+	return result
 
 
 ## The world dictionary of the loaded game, once: WorldRoot2D._ready calls it after its areas and player exist.
 func consume_pending_world() -> Dictionary:
+	if not NetAuthority.can_write(): return {}
 	var world := pending_world
 	pending_world = {}
 	return world
@@ -719,6 +771,10 @@ func _node_of(entry: Dictionary) -> Node:
 ## the world. `quests` carries no Lua definitions. A section whose to_dict() does not return a Dictionary is left out and
 ## named in _gather_failures, which makes save_game() refuse to write the payload.
 func gather_payload() -> Dictionary:
+	if not NetAuthority.can_write(): return {}
+	var gather_owner := _save_owner_stamp()
+	var live_world := PlayerRegistry.world()
+	if live_world != null and live_world.get("roster") != null: live_world.roster.capture_live_bodies(live_world)
 	var payload: Dictionary = {}
 	_gather_failures.clear()
 	for entry in _ordered_entries():
@@ -726,6 +782,7 @@ func gather_payload() -> Dictionary:
 		if node == null or not node.has_method("to_dict"):
 			continue
 		var data: Variant = node.call("to_dict")
+		if not NetAuthority.can_write() or gather_owner != _save_owner_stamp(): return {}
 		if typeof(data) != TYPE_DICTIONARY:
 			push_error("SaveManager: %s.to_dict() did not return a Dictionary, the section '%s' is not saved" % [node.name, entry["name"]])
 			_gather_failures.append(str(entry["name"]))
@@ -737,6 +794,7 @@ func gather_payload() -> Dictionary:
 		if not payload.has(key):
 			payload[key] = (_carried_sections[key] as Variant)
 	payload["world"] = _json_safe(_gather_world(), "world")
+	if not NetAuthority.can_write() or gather_owner != _save_owner_stamp(): return {}
 	if payload.get("players") is Dictionary:
 		var rows: Dictionary = payload.players.get("rows", {})
 		var local: Dictionary = rows.get(str(PlayerRegistry.local_id()), {})
@@ -760,6 +818,7 @@ func gather_payload() -> Dictionary:
 ## The live world's to_dict(); without a world (title screen, world not built yet after a load) the state that is still
 ## waiting in pending_world, so a save made in between does not lose the world.
 func _gather_world() -> Dictionary:
+	if not NetAuthority.can_write(): return {}
 	var tree := get_tree()
 	var world: Node = tree.get_first_node_in_group(&"world_2d") if tree != null else null
 	if world != null and world.has_method("to_dict"):
@@ -1150,56 +1209,63 @@ func _summarize(payload: Dictionary) -> Dictionary:
 
 ## Applies a validated payload to the sections, all or nothing. {ok, detail}. See the header (LOADING).
 func _apply_payload(payload: Dictionary) -> Dictionary:
-	if not payload.has("wardrobe") and payload.get("players") is Dictionary:
-		payload = payload.duplicate(true)
-		payload["wardrobe"] = payload.players.rows.p0.get("wardrobe", {})
-	var entries := _ordered_entries()
-	if not has_section("players") and is_instance_valid(_staging_roster):
-		entries.append({"name": "players", "node": _staging_roster, "order": 15, "seq": -1})
-		entries.sort_custom(_entry_before)
-	var snapshot: Dictionary = {}
-	for entry in entries:
-		var node := _node_of(entry)
-		if node != null and node.has_method("to_dict"):
-			var before: Variant = node.call("to_dict")
-			snapshot[entry["name"]] = (before as Dictionary).duplicate(true) if typeof(before) == TYPE_DICTIONARY else {}
-	var guard := ApplyGuard.new()
-	OS.add_logger(guard)
-	var failure := ""
-	var touched: Array[Dictionary] = []          # the sections that ran from_dict / reset (the failing one included)
-	for entry in entries:
-		var node := _node_of(entry)
-		if node == null:
-			continue
-		var section_name: String = entry["name"]
-		if payload.has(section_name):
-			if not node.has_method("from_dict"):
-				continue
-			touched.append(entry)
-			var result: Variant = node.call("from_dict", (payload[section_name] as Dictionary).duplicate(true))
-			if typeof(result) == TYPE_BOOL and not result:
-				failure = "section '%s' rejected its data" % section_name
-		elif node.has_method("reset"):
-			touched.append(entry)
-			node.call("reset")
-		if failure == "" and guard.errors > 0:
-			failure = "section '%s' raised an error: %s" % [section_name, guard.first]
-		if failure != "":
-			break
-	if failure == "":
-		pending_world = _dict_of(payload.get("world")).duplicate(true)
-		var known := section_names()
-		_carried_sections = {}
-		for key in payload:
-			if not (str(key) in known) and not (str(key) in RESERVED_SECTION_NAMES):
-				_carried_sections[str(key)] = payload[key].duplicate(true) if payload[key] is Dictionary or payload[key] is Array else payload[key]
-	else:
-		for entry in touched:                      # sections that were never reached still hold their own state
+	_offline_load_depth += 1
+	# Keep the whole operation lexical: no callable unfenced implementation entry.
+	var operation := func() -> Dictionary:
+		if NetAuthority.owns_network_world(): return {"ok": false, "detail": "network world owns lifecycle"}
+		if not payload.has("wardrobe") and payload.get("players") is Dictionary:
+			payload = payload.duplicate(true)
+			payload["wardrobe"] = payload.players.rows.p0.get("wardrobe", {})
+		var entries := _ordered_entries()
+		if not has_section("players") and is_instance_valid(_staging_roster):
+			entries.append({"name": "players", "node": _staging_roster, "order": 15, "seq": -1})
+			entries.sort_custom(_entry_before)
+		var snapshot: Dictionary = {}
+		for entry in entries:
 			var node := _node_of(entry)
-			if node != null and node.has_method("from_dict") and snapshot.has(entry["name"]):
-				node.call("from_dict", (snapshot[entry["name"]] as Dictionary).duplicate(true))
-	OS.remove_logger(guard)
-	return {"ok": failure == "", "detail": failure}
+			if node != null and node.has_method("to_dict"):
+				var before: Variant = node.call("to_dict")
+				snapshot[entry["name"]] = (before as Dictionary).duplicate(true) if typeof(before) == TYPE_DICTIONARY else {}
+		var guard := ApplyGuard.new()
+		OS.add_logger(guard)
+		var failure := ""
+		var touched: Array[Dictionary] = []          # the sections that ran from_dict / reset (the failing one included)
+		for entry in entries:
+			var node := _node_of(entry)
+			if node == null:
+				continue
+			var section_name: String = entry["name"]
+			if payload.has(section_name):
+				if not node.has_method("from_dict"):
+					continue
+				touched.append(entry)
+				var result: Variant = node.call("from_dict", (payload[section_name] as Dictionary).duplicate(true))
+				if typeof(result) == TYPE_BOOL and not result:
+					failure = "section '%s' rejected its data" % section_name
+			elif node.has_method("reset"):
+				touched.append(entry)
+				node.call("reset")
+			if failure == "" and guard.errors > 0:
+				failure = "section '%s' raised an error: %s" % [section_name, guard.first]
+			if failure != "":
+				break
+		if failure == "":
+			pending_world = _dict_of(payload.get("world")).duplicate(true)
+			var known := section_names()
+			_carried_sections = {}
+			for key in payload:
+				if not (str(key) in known) and not (str(key) in RESERVED_SECTION_NAMES):
+					_carried_sections[str(key)] = payload[key].duplicate(true) if payload[key] is Dictionary or payload[key] is Array else payload[key]
+		else:
+			for entry in touched:                      # sections that were never reached still hold their own state
+				var node := _node_of(entry)
+				if node != null and node.has_method("from_dict") and snapshot.has(entry["name"]):
+					node.call("from_dict", (snapshot[entry["name"]] as Dictionary).duplicate(true))
+		OS.remove_logger(guard)
+		return {"ok": failure == "", "detail": failure}
+	var result: Dictionary = operation.call()
+	_offline_load_depth -= 1
+	return result
 
 
 # ------------------------------------------------------------------ runs and the auto file
@@ -1222,6 +1288,7 @@ func _run_id_of(payload: Dictionary) -> String:
 ## Before an autosave replaces save_auto.json (see RUNS in the header): the autosave of another run becomes save_auto.prev.json,
 ## a file that does not load is quarantined. Neither ever stops the autosave itself.
 func _keep_foreign_auto_file() -> void:
+	var delivery_owner := _save_owner_stamp()
 	var path := slot_path(AUTO_SLOT)
 	if not FileAccess.file_exists(path):
 		return
@@ -1229,6 +1296,7 @@ func _keep_foreign_auto_file() -> void:
 		return                                 # the file this session wrote last for this run
 	var parsed := _read_json_file(path)
 	var checked := validate_payload(parsed["data"]) if parsed["state"] == "ok" else {"ok": false}
+	if not NetAuthority.can_write() or delivery_owner != _save_owner_stamp(): return
 	if not checked["ok"]:
 		_quarantine_auto_file(path)
 		return
@@ -1243,6 +1311,7 @@ func _keep_foreign_auto_file() -> void:
 
 ## Moves an auto file that does not load to save_auto.damaged-<unix>.json and keeps only the newest QUARANTINE_KEEP of those.
 func _quarantine_auto_file(path: String) -> void:
+	var delivery_owner := _save_owner_stamp()
 	var stamp := int(clock_override if clock_override >= 0.0 else Time.get_unix_time_from_system())
 	var target := save_dir.path_join(QUARANTINE_FILE % stamp)
 	while FileAccess.file_exists(target):
@@ -1252,6 +1321,7 @@ func _quarantine_auto_file(path: String) -> void:
 		return
 	print("[Save] the auto file did not load; it was kept as %s" % ProjectSettings.globalize_path(target))
 	EventBus.notification_posted.emit(tr("NOTIF_AUTO_SET_ASIDE_TITLE"), tr("NOTIF_AUTO_SET_ASIDE_MSG") % target.get_file(), "save")
+	if not NetAuthority.can_write() or delivery_owner != _save_owner_stamp(): return
 	var kept: Array[String] = []
 	for file_name in DirAccess.get_files_at(save_dir):
 		if file_name.begins_with("save_auto.damaged-") and file_name.ends_with(".json"):
@@ -1391,6 +1461,7 @@ func _replace_file(source: String, destination: String) -> Error:
 ## A manual save keeps the file it replaces as save_N.bak.json, but only when that file is a valid payload, so a damaged
 ## file never replaces a good .bak.
 func _roll_backup(slot: int) -> void:
+	var delivery_owner := _save_owner_stamp()
 	var path := slot_path(slot)
 	var backup := backup_path(slot)
 	if backup == "" or not FileAccess.file_exists(path):
@@ -1404,6 +1475,7 @@ func _roll_backup(slot: int) -> void:
 		var valid: bool = bool(validated.get("valid", false)) if same_content else (previous["state"] == "ok" and bool(validate_payload(previous["data"])["ok"]))
 		validated = {"hash": digest, "content": signature, "valid": valid}
 		_backup_validation[path] = validated
+	if not NetAuthority.can_write() or delivery_owner != _save_owner_stamp(): return
 	if not bool(validated.get("valid", false)):
 		return
 	var temp := backup + ".tmp"

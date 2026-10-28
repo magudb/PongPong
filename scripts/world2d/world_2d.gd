@@ -52,6 +52,9 @@ var players: Array = []
 var player_by_peer: Dictionary = {}
 ## Per-player profile rows (MP3). Not an autoload (DT-MP6).
 var roster: PlayerRoster
+## Set before insertion. Guests deliberately do NOT boot a playable world in MP4.
+var guest_bootstrap := false
+var session: MultiplayerSession
 var farm: Node
 var greenhouse_farm: FarmGrid
 var area: IsoArea
@@ -180,6 +183,13 @@ static func load_map(id: StringName) -> AreaMap:
 
 func _ready() -> void:
 	add_to_group("world_2d")
+	session = MultiplayerSession.new()
+	session.name = "MultiplayerSession"
+	add_child(session)
+	if guest_bootstrap:
+		roster = PlayerRoster.new()
+		add_child(roster)
+		return
 	GameManager.change_phase(GameManager.GamePhase.PLAYING)   # the 2D game never captures the mouse: the cursor stays visible
 	holder = Node2D.new()
 	holder.name = "AreaHolder"
@@ -273,11 +283,13 @@ func _notification(what: int) -> void:
 ## process, so the title scene after a quit to menu would inherit it. Leaving the tree puts the PROJECT default back; coming back
 ## (remove_child / add_child of the world) sets the area's colour again.
 func _enter_tree() -> void:
+	if guest_bootstrap: NetAuthority.bind_guest(self)
 	if area != null and day_night != null:
 		_apply_clear_color()
 
 
 func _exit_tree() -> void:
+	if is_instance_valid(session): session.close(&"world_detached")
 	RenderingServer.set_default_clear_color(project_clear_color())
 
 
@@ -345,14 +357,19 @@ func _register_player(p: Node2D, slot: int, peer_id: int = 1) -> void:
 		return
 	while players.size() <= slot:
 		players.append(null)
+	var displaced: Variant = players[slot]
 	players[slot] = p
 	player_by_peer[peer_id] = p
 	p.set("player_slot", slot)
 	p.set("player_id", StringName("p%d" % slot))
 	p.set("peer_id", peer_id)
-	p.set("is_local", peer_id == 1)
+	p.set("is_local", peer_id == (session.api.get_unique_id() if session != null and session.api != null and session.peer != null else 1))
 	if slot == 0:
 		player = p
+	if is_instance_valid(displaced) and displaced != p and "controls" in displaced:
+		displaced.get("controls").refresh_authority()
+	if "controls" in p:
+		p.get("controls").refresh_sources()
 
 
 ## Removes a body from the slot table and emits player_despawned. Returns the player_id.
@@ -363,6 +380,7 @@ func _unregister_player(p: Node2D) -> StringName:
 	if "player_id" in p:
 		pid = StringName(str(p.get("player_id")))
 	var idx: int = players.find(p)
+	if idx < 0: return &""
 	if idx >= 0:
 		players[idx] = null
 	if idx == 0 and player == p:
@@ -371,7 +389,9 @@ func _unregister_player(p: Node2D) -> StringName:
 		if player_by_peer[k] == p:
 			player_by_peer.erase(k)
 			break
-	if p.get_parent() != null:
+	# During World tree exit the parent is busy removing its children. Revoke
+	# tables/input now; queued deletion also handles a retained detached World.
+	if p.is_inside_tree() and p.get_parent() != null:
 		p.get_parent().remove_child(p)
 	p.queue_free()
 	if pid != &"":
@@ -379,38 +399,65 @@ func _unregister_player(p: Node2D) -> StringName:
 	return pid
 
 
+## Atomically revoke a closing session's complete body table before any public
+## departure signal (or tree-exit observer) can read it. The session retains p0
+## on a host; guest projection rows are restored only after its maps are empty.
+func _retire_session_bodies(owner_session: Node) -> Array[StringName]:
+	var ids: Array[StringName] = []
+	if owner_session != session or owner_session.state != &"ended": return ids
+	var bodies: Array = []
+	for body in players.duplicate():
+		if not is_instance_valid(body) or (owner_session.is_host() and body == player): continue
+		var slot: int = players.find(body)
+		if slot < 0: continue
+		players[slot] = null
+		if body == player: player = null
+		for peer_id in player_by_peer.keys():
+			if player_by_peer[peer_id] == body: player_by_peer.erase(peer_id)
+		ids.append(StringName(str(body.get("player_id"))))
+		bodies.append(body)
+	owner_session._restore_offline_rows()
+	var lifetime: WeakRef = weakref(self)
+	for body in bodies:
+		if not is_instance_valid(body): continue
+		if body.is_inside_tree() and body.get_parent() != null: body.get_parent().remove_child(body)
+		if lifetime.get_ref() == null: return ids
+		if is_instance_valid(body): body.queue_free()
+	return ids
+
+
 # ---------------------------------------------------------------- player registry (MP1)
 
 
 func local_player() -> Node2D:
-	if players.size() > 0 and is_instance_valid(players[0]):
-		return players[0]
-	return player
+	for p in all_players():
+		if bool(p.get("is_local")):
+			return p
+	return null
 
 
 func player_by_id(player_id: StringName) -> Node2D:
 	for p in players:
-		if p != null and is_instance_valid(p) and StringName(str(p.get("player_id"))) == player_id:
+		if is_instance_valid(p) and p.is_inside_tree() and not p.is_queued_for_deletion() and StringName(str(p.get("player_id"))) == player_id:
 			return p as Node2D
 	return null
 
 
 func player_by_peer_id(peer_id: int) -> Node2D:
 	var p: Variant = player_by_peer.get(peer_id)
-	return p as Node2D if p != null and is_instance_valid(p) else null
+	return p as Node2D if is_instance_valid(p) and p.is_inside_tree() and not p.is_queued_for_deletion() else null
 
 
 func all_players() -> Array:
 	var out: Array = []
 	for p in players:
-		if p != null and is_instance_valid(p):
+		if is_instance_valid(p) and p.is_inside_tree() and not p.is_queued_for_deletion():
 			out.append(p)
 	return out
 
 
-## The player an input event belongs to. MP1: always the local player (device binding is MP2).
-func player_for_event(_event: InputEvent) -> Node2D:
-	return local_player()
+func player_for_event(event: InputEvent) -> Node2D:
+	return PlayerRegistry.for_event(event, get_tree()) as Node2D
 
 
 func _give_farm(p: Node) -> void:

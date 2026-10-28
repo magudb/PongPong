@@ -42,6 +42,8 @@ var _own_faders := false                # true when this instance created per-in
 var _rain_id := ""
 var _cues: Array[Dictionary] = []
 var _shutting_down := false
+var _shutdown_serial := 0
+var _shutdown_current: Callable = Callable()
 ## Weak references include replaced/stopped streams still retiring on the mixer thread.
 var _playbacks: Array[WeakRef] = []
 var _stream_paths: Dictionary = {}      # "dir|id" -> resolved path ("" = does not exist): ResourceLoader.exists is hit once per id
@@ -138,7 +140,7 @@ func _play(player: AudioStreamPlayer) -> void:
 
 func play_sfx(sfx_id: String, volume_db: float = NAN, pitch: float = 1.0) -> void:
 	sfx_id = sfx_id.trim_prefix("sfx/")
-	if _shutting_down:
+	if _shutdown_blocks_playback():
 		_record("sfx",sfx_id,false)
 		return
 	var stream := _load_stream(SFX_DIR, sfx_id)
@@ -163,7 +165,7 @@ func play_sfx(sfx_id: String, volume_db: float = NAN, pitch: float = 1.0) -> voi
 
 func play_music(track_id: String, fade_seconds: float = 1.0) -> void:
 	track_id = track_id.trim_prefix("music/")
-	if _shutting_down:
+	if _shutdown_blocks_playback():
 		_record("music",track_id,false)
 		return
 	var stream := _load_stream(MUSIC_DIR, track_id)
@@ -217,7 +219,7 @@ func _cancel_music_transition() -> void:
 
 func play_voice(voice_key: String, volume_db: float = NAN) -> void:
 	stop_voice()
-	if _shutting_down or not LocalizationManager.is_da():
+	if _shutdown_blocks_playback() or not LocalizationManager.is_da():
 		_record("voice",voice_key,false)
 		return
 	var stream := _load_stream("", voice_key)
@@ -297,7 +299,7 @@ func _fade_ambient(index: int,target: float,seconds: float,stop := false) -> voi
 
 func play_ambience(id: String,fade_seconds := 1.5) -> void:
 	id = id.trim_prefix("amb/")
-	if _shutting_down:
+	if _shutdown_blocks_playback():
 		_record("amb",id,false)
 		return
 	var stream := _load_stream(AMBIENT_DIR,id) if id!="" else null
@@ -322,7 +324,7 @@ func duck_ambience(db: float) -> void:
 	if _ambient_id!="":_fade_ambient(_ambient_slot,AMBIENT_LEVEL_DB+_ambient_duck,0.5)
 
 func play_rain(on: bool) -> void:
-	if _shutting_down:
+	if _shutdown_blocks_playback():
 		_record("amb","rain" if on else "",false)
 		return
 	var id := "rain" if on else ""
@@ -353,18 +355,34 @@ func _silence_all() -> void:
 			player.stop()
 			player.stream = null
 
-func prepare_shutdown() -> void:
+## Presentation can arrive synchronously from a replacement before the old
+## drain resumes. Cancel only that shutdown; never restore the old World's cues.
+func _shutdown_blocks_playback() -> bool:
+	if _shutting_down and _shutdown_current.is_valid() and not _shutdown_current.call():
+		_shutting_down = false
+		_shutdown_current = Callable()
+	return _shutting_down
+
+func prepare_shutdown(current: Callable = Callable()) -> void:
+	_shutdown_serial += 1
+	var serial := _shutdown_serial
+	_shutdown_current = current
 	_shutting_down = true
 	_silence_all()
-	# stop() queues a fade and deletion on the mixer thread; the main thread then
-	# retires the playback. A fixed delay races that handoff on a loaded runner.
+	# Selectors describe stopped players now, not a request from a replacement.
+	_ambient_id = ""
+	_rain_id = ""
+	# Each drain owns its retirement snapshot. A cancelled drain must not clear
+	# the ledger of new playbacks or undo a later legitimate shutdown.
+	var retiring := _playbacks.duplicate()
 	var deadline := Time.get_ticks_msec()+SHUTDOWN_TIMEOUT_MS
-	while not _playbacks.is_empty():
-		_playbacks = _playbacks.filter(func(reference: WeakRef) -> bool: return reference.get_ref() != null)
-		if _playbacks.is_empty() or Time.get_ticks_msec()>=deadline:
+	while not retiring.is_empty():
+		if serial != _shutdown_serial or not _shutdown_blocks_playback(): return
+		retiring = retiring.filter(func(reference: WeakRef) -> bool: return reference.get_ref() != null)
+		if retiring.is_empty() or Time.get_ticks_msec()>=deadline:
 			break
 		await get_tree().process_frame
-	_playbacks.clear()
+	if serial == _shutdown_serial and _shutdown_blocks_playback(): _playbacks.clear()
 
 func _exit_tree() -> void:
 	_shutting_down = true

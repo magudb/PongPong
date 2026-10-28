@@ -77,7 +77,7 @@ func _row_texts(row: Array) -> Array[String]:
 		"NAV_CONTROLS_ZOOM":
 			return [tr("NAV_CONTROLS_WHEEL"), UiHints.glyph_pair(&"zoom_in", &"zoom_out", pad)]
 		"NAV_CONTROLS_HOTBAR":
-			return ["%s–%s" % [UiHints.glyph(&"slot_1", kb), UiHints.glyph(&"slot_8", kb)], UiHints.glyph_pair(&"hotbar_previous", &"hotbar_next", pad)]
+			return ["%s–%s" % [UiHints.glyph(&"slot_1", kb), UiHints.glyph(&"slot_8", kb)], UiHints.glyph_pair(&"hotbar_previous", &"hotbar_next", pad) + "←→\n" + UiHints.glyph(&"ui_page_up", pad) + "(+" + UiHints.glyph(&"ui_page_down", pad) + ") + ↑→↓←"]
 	var action: StringName = row[1][0]
 	var on_pad := UiHints.glyph_all(action, pad)
 	return [UiHints.glyph_all(action, kb), on_pad if on_pad != "" else tr("NAV_CONTROLS_PAUSE_ROW")]

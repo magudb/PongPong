@@ -1,4 +1,6 @@
 extends "res://tests/lib/asserts.gd"
+
+const ScopedInputObserver := preload("res://tests/lib/scoped_input_observer.gd")
 ## Driving helpers of the `t` object: time (frames / physics / seconds / until), input (tap / hold / press),
 ## node lookup and autoload access. Second layer of asserts -> drive -> flow -> t.
 ##
@@ -239,11 +241,11 @@ func tap(action: StringName) -> void:
 	var ev := InputEventAction.new()
 	ev.action = action
 	ev.pressed = true
-	Input.parse_input_event(ev)
+	Input.parse_input_event(ScopedInputObserver.tag_if_active(ev))
 	var up := InputEventAction.new()
 	up.action = action
 	up.pressed = false
-	Input.parse_input_event(up)
+	Input.parse_input_event(ScopedInputObserver.tag_if_active(up))
 
 
 ## Press, wait `n` frames (default 2), release. For code that polls Input.is_action_just_pressed().
@@ -285,12 +287,12 @@ func tap_key(keycode: Key) -> void:
 	ev.keycode = keycode
 	ev.physical_keycode = keycode
 	ev.pressed = true
-	Input.parse_input_event(ev)
+	Input.parse_input_event(ScopedInputObserver.tag_if_active(ev))
 	var up := InputEventKey.new()
 	up.keycode = keycode
 	up.physical_keycode = keycode
 	up.pressed = false
-	Input.parse_input_event(up)
+	Input.parse_input_event(ScopedInputObserver.tag_if_active(up))
 
 
 ## Moves the mouse to a position of the root viewport (hover effects, tooltips, focus). Mouse events are pushed
@@ -300,7 +302,7 @@ func move_mouse(pos: Vector2) -> void:
 	var ev := InputEventMouseMotion.new()
 	ev.position = pos
 	ev.global_position = pos
-	tree.root.push_input(ev)
+	tree.root.push_input(ScopedInputObserver.tag_if_active(ev, "push"))
 
 
 ## A real click at a viewport position: motion, press, release (GUI hit-testing, focus and `pressed` all behave as
@@ -313,13 +315,13 @@ func click(pos: Vector2, button: MouseButton = MOUSE_BUTTON_LEFT) -> void:
 	down.button_index = button
 	down.pressed = true
 	down.button_mask = 1 << (button - 1)
-	tree.root.push_input(down)
+	tree.root.push_input(ScopedInputObserver.tag_if_active(down, "push"))
 	var up := InputEventMouseButton.new()
 	up.position = pos
 	up.global_position = pos
 	up.button_index = button
 	up.pressed = false
-	tree.root.push_input(up)
+	tree.root.push_input(ScopedInputObserver.tag_if_active(up, "push"))
 
 
 ## A real click on a button, with the checks a player's click implies: fails when the node is missing, is not a button, is

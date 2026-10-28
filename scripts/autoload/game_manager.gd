@@ -74,7 +74,8 @@ var unlocked_zones: Array[StringName] = [&"farm", &"city"]
 var discovered_locations: Array[StringName] = []
 
 var play_time_seconds: float = 0.0
-var is_single_player: bool = true
+var is_single_player: bool:
+	get: return not NetAuthority.owns_network_world()
 
 var _base_phase: GamePhase = GamePhase.MENU
 var _modals: Array[Dictionary] = []          # [{name: StringName, pauses: bool}] in push order
@@ -97,16 +98,49 @@ func _ready() -> void:
 ## question with Cancel the game keeps running. The updater (it has just saved) and the release smoke pass `save` = false.
 func quit_game(code := 0, save := true, asker: Control = null) -> void:
 	if _quitting or _quit_asking:return
+	var origin := navigation_origin()
 	if save and not await save_before_quit(asker):return
-	if _quitting:return
+	if _quitting or not navigation_current(origin):return
+	origin = close_for_navigation(origin, &"quit")
+	if origin.is_empty(): return
 	if quit_seam.is_valid():
 		quit_seam.call(code)
 		return
 	_quitting = true
-	get_tree().paused = true
 	var audio := get_node_or_null("/root/AudioManager")
-	if audio!=null and audio.has_method("prepare_shutdown"):await audio.prepare_shutdown()
+	if audio!=null and audio.has_method("prepare_shutdown"):await audio.prepare_shutdown(navigation_current.bind(origin))
+	# Audio has a bounded asynchronous mixer drain. A replacement admitted while
+	# it yielded owns the game now; do not pause or quit that incarnation.
+	if not navigation_current(origin):
+		_quitting = false
+		return
+	get_tree().paused = true
 	get_tree().quit(code)
+
+
+## Navigation cancellation, not an admission ban: supported ordinary close/rehost
+## remains available. Capture before public callbacks, allow only this close's
+## expected generation/guest-row restoration, then check at every continuation.
+func navigation_origin() -> Dictionary:
+	var scene := get_tree().current_scene
+	return {"stamp": SaveManager._save_owner_stamp(), "row": PlayerRegistry.peek_state(&"p0"), "scene": scene.get_instance_id() if scene != null else 0}
+
+func navigation_current(origin: Dictionary) -> bool:
+	if origin.is_empty() or origin.stamp != SaveManager._save_owner_stamp() or origin.row != PlayerRegistry.peek_state(&"p0"): return false
+	var scene := get_tree().current_scene
+	return origin.scene == (scene.get_instance_id() if scene != null else 0)
+
+func close_for_navigation(origin: Dictionary, reason: StringName) -> Dictionary:
+	if not navigation_current(origin): return {}
+	var session := NetAuthority.session()
+	var expected := origin.duplicate(true)
+	if is_instance_valid(session):
+		if session._closing: return {}
+		if session.role != &"offline" and session.state != &"ended":
+			expected.stamp[3] += 1
+			expected.row = session.navigation_row_after_close()
+		session.close(reason)
+	return expected if navigation_current(expected) else {}
 
 
 ## Autosaves a running world before the game closes; true = go on and quit. Nothing to save (no world: the title, the
@@ -114,11 +148,15 @@ func quit_game(code := 0, save := true, asker: Control = null) -> void:
 ## A failed save asks PAUSE_SAVE_FAILED_CONFIRM on `asker` with Cancel as the default; without an asker (the window's close
 ## button) the question gets a host Control of its own on the GameUI layer (the HUDs cannot host it: their controls never take focus).
 func save_before_quit(asker: Control = null) -> bool:
+	if not NetAuthority.can_write(): return true
 	if get_tree().get_first_node_in_group("world_2d") == null or is_modal_open(&"event"):
 		return true
 	var saves := get_node_or_null("/root/SaveManager")
-	if saves == null or not saves.has_method("autosave") or bool(saves.call("autosave")):
-		return true
+	if saves == null or not saves.has_method("autosave"): return true
+	var save_origin: Array = saves._save_owner_stamp()
+	var saved := bool(saves.call("autosave"))
+	if not NetAuthority.can_write() or save_origin != saves._save_owner_stamp(): return false
+	if saved: return true
 	var host: Control = null
 	if asker == null or not asker.is_visible_in_tree():
 		host = Control.new()
@@ -135,10 +173,11 @@ func save_before_quit(asker: Control = null) -> bool:
 	_quit_asking = false
 	if host != null:
 		host.queue_free()
-	return accepted
+	return accepted and save_origin == saves._save_owner_stamp()
 
 
 func _process(delta: float) -> void:
+	if not NetAuthority.can_write(): return
 	if current_phase == GamePhase.PLAYING:
 		play_time_seconds += delta
 
@@ -242,6 +281,7 @@ func minutes_per_real_second() -> float:
 
 ## Starts a fresh run: resets this node's state, then announces it. `p_skin` empty selects the default skin of the race.
 func start_new_game(p_name: String, p_type: CharacterType, p_farm: String = "", p_skin: StringName = &"") -> void:
+	if NetAuthority.owns_network_world(): return
 	player_name = p_name.strip_edges() if p_name.strip_edges() != "" else tr("DEFAULT_PLAYER_NAME")
 	character_type = p_type
 	character_skin = p_skin if p_skin != &"" else _default_skin_for(p_type)
@@ -384,7 +424,7 @@ func _refresh_phase() -> void:
 		current_phase = _base_phase
 	var tree := get_tree()
 	if tree != null:
-		tree.paused = current_phase == GamePhase.PAUSED
+		tree.paused = current_phase == GamePhase.PAUSED and NetAuthority.can_write()
 
 
 # ------------------------------------------------------------------ world flags
@@ -399,6 +439,7 @@ func _flag_store(flag: StringName) -> Dictionary:
 
 
 func set_flag(flag: StringName, value: Variant) -> void:
+	if not NetAuthority.can_write(): return
 	var store := _flag_store(flag)
 	if value == null:
 		if store.erase(flag):
@@ -418,6 +459,7 @@ func set_flag(flag: StringName, value: Variant) -> void:
 ## Commit related progression flags before notifying synchronous observers.
 ## Invalid input is refused atomically; the single-flag API retains its errors.
 func set_flags(changes: Dictionary) -> bool:
+	if not NetAuthority.can_write(): return false
 	var next := {}
 	for key in changes:
 		if not (key is String or key is StringName) or str(key) == "": return false
@@ -444,6 +486,7 @@ func get_flag(flag: StringName, default_value: Variant = false) -> Variant:
 
 
 func clear_flag(flag: StringName) -> void:
+	if not NetAuthority.can_write(): return
 	if _flag_store(flag).erase(flag):
 		EventBus.flag_changed.emit(flag, false)
 
@@ -491,6 +534,7 @@ func is_zone_unlocked(zone_id: StringName) -> bool:
 
 ## Unlocks a zone once: zone_unlocked and the unlock toast. Never emits zone_entered (WorldRoot2D owns that signal).
 func unlock_zone(zone_id: StringName) -> void:
+	if not NetAuthority.can_write(): return
 	if zone_id == &"" or zone_id in unlocked_zones:
 		return
 	unlocked_zones.append(zone_id)
@@ -500,6 +544,7 @@ func unlock_zone(zone_id: StringName) -> void:
 
 
 func _on_zone_entered(zone_id: StringName) -> void:
+	if not NetAuthority.can_write(): return
 	if zone_id not in discovered_locations:
 		discovered_locations.append(zone_id)
 
@@ -517,6 +562,7 @@ func _format_one(template: String, arg: String) -> String:
 ## the overflow, as often as needed. Each roll puts the clock back by one calendar day (24 h; E h when day_end_hour E < 24), so
 ## the clock restarts at day_roll_restart_hour(). time_of_day_changed fires once at the end with the settled raw hour (2..25).
 func advance_time(minutes: int) -> void:
+	if not NetAuthority.can_write(): return
 	if minutes < 0:
 		return
 	var end_minutes := day_end_hour() * 60
@@ -539,6 +585,7 @@ func advance_time(minutes: int) -> void:
 ## Puts the clock at hour:minute of the same day (clamped to the day's hours) and announces it; no time passes, nothing grows. The one way
 ## a scene sets the clock (the first-morning tutorial), so time_of_day_changed is only ever emitted here.
 func set_clock(p_hour: int, p_minute: int) -> void:
+	if not NetAuthority.can_write(): return
 	hour = clampi(p_hour, day_start_hour(), day_end_hour() - 1)
 	minute = clampi(p_minute, 0, 59)
 	EventBus.time_of_day_changed.emit(hour, minute)
@@ -546,6 +593,7 @@ func set_clock(p_hour: int, p_minute: int) -> void:
 
 ## Ends the current day now and starts the next morning at day_start_hour: day_ended, then day_started.
 func end_day() -> void:
+	if not NetAuthority.can_write(): return
 	EventBus.day_ended.emit(day, season)
 	_step_calendar()
 	hour = day_start_hour()
@@ -559,6 +607,7 @@ func end_day() -> void:
 ## is 2..5) only the rest of the night is skipped.
 ## Returns the number of calendar days that passed (1 or 0).
 func sleep_until_morning() -> int:
+	if not NetAuthority.can_write(): return 0
 	var wake_hour := day_start_hour()
 	if hour < wake_hour:
 		hour = wake_hour
@@ -645,6 +694,7 @@ func to_dict() -> Dictionary:
 ## Applies a saved game. Does not touch the phase (the scene flow sets it: loading from the menu must not start the clock
 ## and loading from the pause menu must not drop the pause) and announces the skin like a new game does.
 func from_dict(data: Dictionary) -> void:
+	if NetAuthority.owns_network_world(): return
 	player_name = str(data.get("player_name", ""))
 	character_type = clampi(int(data.get("character_type", CharacterType.ANIMAL)), 0, CharacterType.size() - 1) as CharacterType
 	character_skin = StringName(str(data.get("character_skin", _default_skin_for(character_type))))
