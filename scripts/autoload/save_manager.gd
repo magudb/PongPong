@@ -481,15 +481,19 @@ func load_and_enter(slot: int) -> bool:
 			return _fail_load(slot, "scene", "%s does not exist" % world_scene)
 		if not load_game(slot):
 			return false
+		var incarnation := _lifecycle_revision
 		var err := get_tree().change_scene_to_file(world_scene)
 		if err != OK:
 			return _fail_load(slot, "scene", "could not change to %s (error %d)" % [world_scene, err])
 		# An old save may contain the transient new-game opening flag. Continue/load
 		# must never replay the letter or first morning when the new world enters.
+		if incarnation != _lifecycle_revision: return false
 		GameManager.set_flag(GameManager.FLAG_INTRO_PENDING, false)
+		if incarnation != _lifecycle_revision: return false
 		GameManager.pop_all_modals()
+		if incarnation != _lifecycle_revision: return false
 		GameManager.change_phase(GameManager.GamePhase.PLAYING)
-		return true
+		return incarnation == _lifecycle_revision
 	var result: bool = operation.call()
 	_offline_load_depth -= 1
 	return result
@@ -501,7 +505,10 @@ func continue_latest() -> bool:
 	# Keep the whole operation lexical: no callable unfenced implementation entry.
 	var operation := func() -> bool:
 		if NetAuthority.owns_network_world(): return false
+		var inspected_owner := _rollback_owner_stamp()
+		var inspected_profiles := PlayerRegistry._states.duplicate()
 		var slot := get_latest_slot()
+		if inspected_owner != _rollback_owner_stamp() or not _profiles_current(inspected_profiles): return false
 		if slot == NO_SLOT:
 			last_error = {}
 			return _fail_load(NO_SLOT, "missing", "no loadable save in any slot")
@@ -1242,6 +1249,17 @@ func _summarize(payload: Dictionary) -> Dictionary:
 
 # ------------------------------------------------------------------ payload: apply
 
+func _profiles_current(expected: Dictionary) -> bool:
+	for id in expected:
+		if PlayerRegistry.peek_state(id) != expected[id]: return false
+	return true
+
+func _superseded_apply(owner: Array, detail: String) -> Dictionary:
+	# A departed body/replaced codec/profile is not necessarily a successful
+	# nested load. Revoke the unsafe old run without changing a newer winner.
+	if owner[0] == _save_owner_stamp(): invalidate_lifecycle()
+	return {"ok": false, "detail": detail, "superseded": true}
+
 func _rollback_owner_stamp() -> Array:
 	var bodies: Array = []
 	for body in PlayerRegistry.all_players():
@@ -1265,6 +1283,7 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 		var snapshot: Dictionary = {}
 		var identities: Array[Callable] = []
 		var owner := _rollback_owner_stamp()
+		var profiles := PlayerRegistry._states.duplicate()
 		var guard := ApplyGuard.new()
 		OS.add_logger(guard)
 		var apply := func() -> Dictionary:
@@ -1277,12 +1296,17 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 				if not node.has_method("to_dict") or not node.has_method("from_dict"):
 					return {"ok": false, "detail": "section '%s' lacks rollback codec" % entry.name}
 				var before: Variant = node.call("to_dict")
+				if owner != _rollback_owner_stamp() or not _profiles_current(profiles):
+					return _superseded_apply(owner, "snapshot owner superseded")
 				if guard.errors > 0 or not before is Dictionary:
 					return {"ok": false, "detail": "section '%s' snapshot failed" % entry.name}
-				if node.has_method("validate_dict") and not bool(node.call("validate_dict", before)):
+				var valid := not node.has_method("validate_dict") or bool(node.call("validate_dict", before))
+				if owner != _rollback_owner_stamp() or not _profiles_current(profiles):
+					return _superseded_apply(owner, "snapshot validator superseded")
+				if guard.errors > 0:
+					return {"ok": false, "detail": "section '%s' snapshot validator failed" % entry.name}
+				if not valid:
 					return {"ok": false, "detail": "section '%s' snapshot invalid" % entry.name}
-				if owner != _rollback_owner_stamp():
-					return {"ok": false, "detail": "snapshot owner superseded", "superseded": true}
 				snapshot[entry.name] = before.duplicate(true)
 			for entry in entries:
 				var node := _node_of(entry)
@@ -1299,13 +1323,14 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 					if not node.has_method("from_dict"): continue
 					touched.append(entry)
 					var result: Variant = node.call("from_dict", (payload[section_name] as Dictionary).duplicate(true))
+					if section_name == "players": profiles = PlayerRegistry._states.duplicate()
 					if typeof(result) == TYPE_BOOL and not result:
 						failure = "section '%s' rejected its data" % section_name
 				elif node.has_method("reset"):
 					touched.append(entry)
 					node.call("reset")
-				if owner != _rollback_owner_stamp():
-					return {"ok": false, "detail": "apply owner superseded", "superseded": true}
+				if owner != _rollback_owner_stamp() or not _profiles_current(profiles):
+					return _superseded_apply(owner, "apply owner superseded")
 				if failure == "" and guard.errors > 0:
 					failure = "section '%s' raised an error: %s" % [section_name, guard.first]
 				if failure != "": break
@@ -1331,12 +1356,13 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 						continue
 					if not touched.has(entry):
 						var current_data: Variant = node.call("to_dict")
-						if owner != _rollback_owner_stamp():
-							return {"ok": false, "detail": failure + "; rollback superseded", "superseded": true}
+						if owner != _rollback_owner_stamp() or not _profiles_current(profiles):
+							return _superseded_apply(owner, failure + "; rollback superseded")
 						if current_data is Dictionary and JSON.stringify(current_data, "", true, true) == JSON.stringify(snapshot[entry.name], "", true, true): continue
 					var result: Variant = node.call("restore_rollback" if node.has_method("restore_rollback") else "from_dict", snapshot[entry.name].duplicate(true))
-					if owner != _rollback_owner_stamp():
-						return {"ok": false, "detail": failure + "; rollback superseded", "superseded": true}
+					if entry.name == "players": profiles = PlayerRegistry._states.duplicate()
+					if owner != _rollback_owner_stamp() or not _profiles_current(profiles):
+						return _superseded_apply(owner, failure + "; rollback superseded")
 					if typeof(result) == TYPE_BOOL and not result: restored = false
 				for entry in entries:
 					if not snapshot.has(entry.name): continue
@@ -1345,6 +1371,8 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 						values_restored = false
 						continue
 					var after: Variant = node.call("to_dict")
+					if owner != _rollback_owner_stamp() or not _profiles_current(profiles):
+						return _superseded_apply(owner, failure + "; rollback verification superseded")
 					if not after is Dictionary or JSON.stringify(after, "", true, true) != JSON.stringify(snapshot[entry.name], "", true, true):
 						values_restored = false
 				if guard.errors != rollback_errors or owner != _rollback_owner_stamp(): values_restored = false

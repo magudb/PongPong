@@ -1269,7 +1269,8 @@ func _write_birthday_flag(names: Array[String]) -> void:
 		GameManager.set_flag(&"birthday_today", names[0])
 
 
-## The derived flags, state only (no event): used by from_dict() (a load puts the world in the state the save was in). reset() deliberately does NOT call it.
+## Restore derived flags without social events; flag setters can still notify.
+## reset() deliberately does NOT call this load-only state restoration.
 func _restore_state() -> void:
 	var lifecycle_owner := SaveManager._save_owner_stamp()
 	_write_birthday_flag(birthdays_today())

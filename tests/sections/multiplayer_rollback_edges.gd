@@ -34,7 +34,7 @@ func run(t) -> void:
 	var saves: Node = t.autoload("SaveManager")
 	var prior: String = saves.save_dir
 	t.on_cleanup(func(): saves.save_dir = prior)
-	for kind: String in ["untouched", "roster", "social", "snapshot_load", "validator_reset", "rollback_load", "partial", "null", "false", "invalid", "error", "direct", "repeat", "owed"]:
+	for kind: String in ["untouched", "roster", "social", "snapshot_load", "validator_reset", "rollback_load", "partial", "null", "false", "invalid", "error", "direct", "repeat", "owed", "profile_replace", "queued"]:
 		if OS.get_environment("MP4_EDGE_CASE") != "" and OS.get_environment("MP4_EDGE_CASE") != kind: continue
 		if not await t.start_world(): return
 		saves.save_dir = "user://mp4-rollback-edge-" + kind
@@ -47,6 +47,8 @@ func run(t) -> void:
 		elif kind == "direct": _direct(t, saves)
 		elif kind == "repeat": _repeat(t, saves)
 		elif kind == "owed": _owed(t, saves)
+		elif kind == "profile_replace": _profile_replace(t, saves)
+		elif kind == "queued": await _queued(t, saves)
 		await t.go_menu()
 
 func _add(t, saves: Node, label := "mp4_edge", order := 1000) -> Section:
@@ -181,8 +183,13 @@ func _direct(t, saves: Node) -> void:
 	var old := PlayerRegistry.peek_state(&"p0")
 	var payload: Dictionary = saves.gather_payload()
 	var rid: String = saves.run_id
+	payload["world"] = {"mp4_pending": [1, 2]}
+	payload["mp4_carried"] = {"v": 1, "marker": "new"}
+	saves.pending_world = {"old_pending": true}
+	saves.set("_carried_sections", {"old_carried": {"old": true}})
 	var result: Dictionary = saves._apply_payload(payload)
-	t.check("same_value_direct_success_revokes", result.ok and saves.run_id == rid and PlayerRegistry.peek_state(&"p0") != old and _released(saves), "genuine identical-valued direct apply is still a new physical incarnation")
+	t.check("same_value_direct_success_revokes", result.ok and saves.run_id == rid and PlayerRegistry.peek_state(&"p0") != old and _released(saves), "genuine identical-valued profile direct apply is still a new physical incarnation")
+	t.check("direct_pending_and_carried_commit", saves.pending_world == payload.world and saves.get("_carried_sections") == {"mp4_carried": payload.mp4_carried}, "direct success commits pending world and exact unknown section inventory")
 
 func _repeat(t, saves: Node) -> void:
 	var section := _add(t, saves)
@@ -190,12 +197,16 @@ func _repeat(t, saves: Node) -> void:
 	var old := PlayerRegistry.peek_state(&"p0")
 	var flags: Dictionary = old.flags
 	var inventory: Array = old.inventory
+	saves.pending_world = {"mp4_pending": [1, 2, 3]}
+	saves.set("_carried_sections", {"mp4_retained": {"v": 1, "marker": "origin"}})
+	var pending: Dictionary = saves.pending_world.duplicate(true)
+	var carried: Dictionary = saves.get("_carried_sections").duplicate(true)
 	var all_ok := true
 	for i in 3:
 		section.rejects = 1
 		var result: Dictionary = saves._apply_payload(payload)
 		all_ok = all_ok and not result.ok and not str(result.detail).contains("incomplete") and PlayerRegistry.peek_state(&"p0") == old and is_same(flags, old.flags) and is_same(inventory, old.inventory) and _released(saves)
-	t.check("repeat_original_graph_retained", all_ok and section.calls == 6, "three complete actual rollbacks, same original row and nested collection references")
+	t.check("repeat_original_graph_retained", all_ok and section.calls == 6 and saves.pending_world == pending and saves.get("_carried_sections") == carried, "three complete actual rollbacks, same original row, nested references and exact pending/carried metadata")
 	_remove(saves, section)
 
 func _owed(t, saves: Node) -> void:
@@ -220,4 +231,36 @@ func _owed(t, saves: Node) -> void:
 	t.check("owed_graph_and_remaining_delivery", claimed and owed.is_empty() and quests.pending_rewards.is_empty() and EconomyManager.count_item(&"wood") == wood + 2 and EconomyManager.count_item(&"stone") == stone + 3, "local owed Dictionary still live; no lost later grant, detached remainder or duplicate")
 	quests.claim_rewards()
 	t.check("owed_exactly_once_and_release", EconomyManager.count_item(&"wood") == wood + 2 and EconomyManager.count_item(&"stone") == stone + 3 and _released(saves), "independent next claim is idempotent")
+	_remove(saves, section)
+
+func _queued(t, saves: Node) -> void:
+	var section := _add(t, saves)
+	var quests: Node = t.autoload("QuestManager")
+	var old := PlayerRegistry.peek_state(&"p0")
+	var wood: int = EconomyManager.count_item(&"wood")
+	quests.pending_rewards[&"mp4_queued"] = {"wood": 2}
+	quests._queue_reward_claim()
+	t.check("queued_original_ticket_eligible", quests.get("_reward_owners").get(&"p0", {}).get("row") == old and saves.save_game(0), "real deferred claim owns original profile before load")
+	section.rejects = 1
+	var loaded: bool = saves.load_game(0)
+	t.check("queued_genuine_rollback", not loaded and section.calls == 2 and PlayerRegistry.peek_state(&"p0") == old, "real full disk apply rollback before original deferred claim wakes")
+	for i in 3: await t.tree.process_frame
+	t.check("queued_original_work_not_stranded", quests.pending_rewards.is_empty() and EconomyManager.count_item(&"wood") == wood + 2 and _released(saves), "restored queued ticket makes progress without another inventory event or manual claim")
+	for i in 2: await t.tree.process_frame
+	t.check("queued_exactly_once", EconomyManager.count_item(&"wood") == wood + 2, "extra provisional wakeups do not replay original grant")
+	_remove(saves, section)
+
+func _profile_replace(t, saves: Node) -> void:
+	var section := _add(t, saves)
+	var payload: Dictionary = saves.gather_payload()
+	var old := PlayerRegistry.peek_state(&"p0")
+	var replacement := PlayerState.new(&"p0", 1)
+	replacement.reset_profile("ReplacementWinner", 0, &"animal_fox")
+	var before := replacement.to_dict().duplicate(true)
+	section.rejects = 1
+	section.apply_callback = func():
+		if section.calls == 1: PlayerRegistry._states[&"p0"] = replacement
+	var result: Dictionary = saves._apply_payload(payload)
+	t.check("profile_replace_actual_boundary", section.calls >= 1 and not result.ok, "real late failed apply replaces actual p0 profile, not merely its values")
+	t.check("profile_replace_no_resurrection", PlayerRegistry.peek_state(&"p0") == replacement and replacement != old and replacement.to_dict() == before and result.get("superseded", false) and _released(saves), "rollback must not resurrect old pointers or mutate the replacement")
 	_remove(saves, section)

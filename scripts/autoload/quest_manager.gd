@@ -1549,6 +1549,14 @@ static func _valid_count(value: Variant) -> bool:
 	return is_finite(number) and number >= 0.0 and number <= 9007199254740991.0 and number == floorf(number)
 
 
+## Codec restoration rebuilds profiles and can replace deferred owner tickets.
+## A certified failed rollback must preserve the original queue, including work
+## already scheduled before loading. Provisional deferred wakeups become no-ops.
+func capture_rollback_identity() -> Callable:
+	var checkpoint := preload("res://scripts/player/rollback_identity.gd").new()
+	checkpoint.keep_fields(self, ["_reward_owners", "_refresh_owners", "_reward_claim_queued", "_refresh_queued", "_accept_counter"])
+	return func() -> void: checkpoint.restore()
+
 func from_dict(data: Dictionary) -> bool:
 	if not validate_dict(data):
 		return false

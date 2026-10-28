@@ -146,9 +146,12 @@ func capture_rollback_identity() -> Callable:
 		for runtime in profile.quests.get("active", {}).values():
 			if runtime is RefCounted:
 				checkpoint.keep_script_fields(runtime)
+	var quests := Svc.node("QuestManager")
+	var restore_queue: Callable = quests.call("capture_rollback_identity") if quests != null and quests.has_method("capture_rollback_identity") else Callable()
 	return func() -> void:
 		checkpoint.restore()
 		rows = original
+		if restore_queue.is_valid(): restore_queue.call()
 
 func from_dict(d: Dictionary) -> bool:
 	if not validate_dict(d): return false
@@ -159,6 +162,7 @@ func from_dict(d: Dictionary) -> bool:
 		if not profile.from_dict(d.rows[key]): return false
 		restored[profile.player_id] = profile
 	rows = restored
+	var installed := restored.duplicate()
 	var host := state()
 	var game := Svc.node("GameManager")
 	if game != null:
@@ -170,9 +174,12 @@ func from_dict(d: Dictionary) -> bool:
 		PlayerRegistry.for_player(id, func() -> void:
 			var row: Dictionary = d.rows[str(id)]
 			for pair in [["EconomyManager", row], ["QuestManager", row.get("quests", {})]]:
-				if lifecycle_owner != SaveManager._save_owner_stamp() or PlayerRegistry.peek_state(id) != restored[id]: return
+				if lifecycle_owner != SaveManager._save_owner_stamp() or PlayerRegistry.peek_state(id) != installed[id]: return
 				var manager := Svc.node(pair[0])
 				if manager != null and manager.has_method("from_dict"): manager.call("from_dict", pair[1].duplicate(true))
 		)
-		if lifecycle_owner != SaveManager._save_owner_stamp() or not is_same(rows, restored): return false
+		if not SaveManager._profiles_current(installed):
+			if lifecycle_owner == SaveManager._save_owner_stamp(): SaveManager.invalidate_lifecycle()
+			return false
+		if lifecycle_owner != SaveManager._save_owner_stamp(): return false
 	return true
