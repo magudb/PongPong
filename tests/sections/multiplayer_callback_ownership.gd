@@ -41,15 +41,108 @@ func run(t) -> void:
 	var saves: Node = t.autoload("SaveManager")
 	var prior: String = saves.save_dir
 	t.on_cleanup(func(): saves.save_dir = prior)
-	for kind: String in ["lily_item", "lily_store", "lily_failed_item", "lily_failed_store"]:
+	for kind: String in ["lily_item", "lily_store", "lily_failed_item", "lily_failed_store", "adopt_clothing", "adopt_furniture", "migration_clothing", "migration_furniture"]:
 		if OS.get_environment("MP4_CALLBACK_CASE") != "" and OS.get_environment("MP4_CALLBACK_CASE") != kind: continue
 		if not await t.start_world(): return
 		saves.save_dir = "user://mp4-callback-" + kind
 		DirAccess.make_dir_recursive_absolute(saves.save_dir)
 		if kind == "lily_item": _lily_item(t, saves)
 		elif kind == "lily_store": _lily_store(t, saves)
+		elif kind.begins_with("adopt_"): _adopt(t, saves, kind)
+		elif kind.begins_with("migration_"): _migration(t, saves, kind)
 		else: _lily_failed(t, saves, kind)
 		await t.go_menu()
+
+func _migration(t, saves: Node, kind: String) -> void:
+	var clothing := kind == "migration_clothing"
+	var item: StringName = &"dress_sun_meadow" if clothing else &"sofa_leaf"
+	var late := Rollback.LateSection.new()
+	t.tree.root.add_child(late)
+	saves.register_section("mp4_callback_late", late, 1000)
+	t.check(kind + "_saved", saves.save_game(1))
+	var entered: Array = []
+	var gains: Array = []
+	var source := PlayerRegistry.peek_state(&"p0")
+	var callback := func():
+		if not entered.is_empty(): return
+		if (WardrobeManager.count_total(item) if clothing else FurnitureManager.count_total(item)) == 0: return
+		entered.append("owned")
+		late.rejects = 1
+		entered.append(saves.load_game(1))
+		entered.append(late.calls)
+		entered.append(PlayerRegistry.peek_state(&"p0") == source)
+	var furniture := func(reason):
+		if reason == &"stock": callback.call()
+	var gained := func(_pid, id, n): gains.append([id, n])
+	if clothing: WardrobeManager.owned_changed.connect(callback)
+	else: EventBus.furniture_changed.connect(furniture)
+	EventBus.item_gained.connect(gained)
+	var raw := {"inventory": [{"id": "stone", "amount": 2}, {"id": str(item), "amount": 1}, {"id": str(item), "amount": 1}]}
+	EconomyManager.from_dict(raw)
+	EconomyManager.adopt_misrouted()
+	EventBus.item_gained.disconnect(gained)
+	if clothing: WardrobeManager.owned_changed.disconnect(callback)
+	else: EventBus.furniture_changed.disconnect(furniture)
+	t.check(kind + "_failed_load_restores", entered == ["owned", false, 2, true] and not str(saves.last_error).contains("incomplete"), "actual failed nested disk apply, certified same-owner recovery; %s %s" % [entered, saves.last_error])
+	t.check(kind + "_exact_migration", EconomyManager.count_item(&"stone") == 2 and EconomyManager.count_item(item) == 2 and (WardrobeManager.count_total(item) == 1 if clothing else FurnitureManager.count_total(item) == 1) and gains.is_empty(), "both rows retained exactly: one owned plus refused duplicate in backpack; no repeat item_gained; inventory=%s store=%s gains=%s" % [EconomyManager.inventory, WardrobeManager.count_total(item) if clothing else FurnitureManager.count_total(item), gains])
+	t.check(kind + "_future_live", EconomyManager.add_item(&"stone", 1, true) and EconomyManager.count_item(&"stone") == 3 and saves.save_game(2))
+	saves.unregister_section("mp4_callback_late")
+	late.free()
+
+func _adopt(t, saves: Node, kind: String) -> void:
+	EconomyManager.add_item(&"stone", 7, true)
+	EconomyManager.add_item(&"wood", 4, true)
+	EconomyManager.gold = 873
+	var clothing := kind == "adopt_clothing"
+	var item: StringName = &"dress_sun_meadow" if clothing else &"sofa_leaf"
+	var legacy: Dictionary = saves.gather_payload().duplicate(true)
+	legacy["players"]["rows"]["p0"]["inventory"] = [{"id": "stone", "amount": 2, "meta": {}}, {"id": str(item), "amount": 1, "meta": {}}]
+	legacy["wardrobe"]["owned"].erase("dress_sun_meadow")
+	legacy["players"]["rows"]["p0"]["wardrobe"]["owned"].erase("dress_sun_meadow")
+	legacy["furniture"]["stock"].erase("sofa_leaf")
+	var valid: Dictionary = saves.validate_payload(legacy)
+	var file := FileAccess.open(saves.slot_path(0), FileAccess.WRITE)
+	file.store_string(JSON.stringify(legacy, "", true, true))
+	file.close()
+	t.check(kind + "_eligible", valid.ok and saves.save_game(1) and EconomyManager.inventory.size() >= 2 and WardrobeManager.can_add(&"dress_sun_meadow"), "valid legacy incoming wardrobe slot and distinct real winner backpack")
+	var entered: Array = []
+	var winner: Dictionary = {}
+	var old_rows: Array = []
+	var tails: Array = []
+	var finished: Array = []
+	var callback := func():
+		if not entered.is_empty() or EconomyManager.count_item(item) < 1: return
+		if not clothing and FurnitureManager.count_total(item) < 1: return
+		if clothing and WardrobeManager.count_total(item) < 1: return
+		entered.append(EconomyManager.inventory.size() == 2 and EconomyManager.inventory[1].id == item)
+		old_rows.append(PlayerRegistry.peek_state(&"p0"))
+		entered.append(saves.load_game(1))
+		winner.merge(_snapshot(saves))
+		finished.append(true)
+	var outfit := func(_pid, _outfit):
+		if not finished.is_empty(): tails.append("outfit")
+	var presets := func():
+		if not finished.is_empty(): tails.append("presets")
+	var furniture := func(reason):
+		if not finished.is_empty(): tails.append(reason)
+		elif not clothing and reason == &"stock": callback.call()
+	var hygge := func(_score, _level):
+		if not finished.is_empty(): tails.append("hygge")
+	EventBus.hygge_changed.connect(hygge)
+	EventBus.outfit_changed.connect(outfit)
+	WardrobeManager.presets_changed.connect(presets)
+	EventBus.furniture_changed.connect(furniture)
+	if clothing: WardrobeManager.owned_changed.connect(callback)
+	var loaded: bool = saves.load_game(0)
+	if clothing: WardrobeManager.owned_changed.disconnect(callback)
+	EventBus.hygge_changed.disconnect(hygge)
+	EventBus.furniture_changed.disconnect(furniture)
+	WardrobeManager.presets_changed.disconnect(presets)
+	EventBus.outfit_changed.disconnect(outfit)
+	t.check(kind + "_store_pre_removal", entered == [true, true] and old_rows.size() == 1, "actual store commit callback, while source slot still present, successfully loads winner; %s" % [entered])
+	t.check(kind + "_winner_no_slot_loss", not loaded and not winner.is_empty() and _matches(saves, winner) and EconomyManager.count_item(&"stone") == 7 and EconomyManager.count_item(&"wood") == 4, "old adoption may not remove winner's unrelated row or continue migration")
+	t.check(kind + "_no_stale_notifications", tails.is_empty(), "revoked old loader must not publish replacement's outfit/presets/furniture as its migration; %s" % [tails])
+	t.check(kind + "_future_progress", EconomyManager.add_item(&"stone", 1, true) and EconomyManager.count_item(&"stone") == 8 and saves.save_game(2) and not saves.network_admission_blocked(), "normal current-owner item and disk-save remain live")
 
 func _snapshot(saves: Node) -> Dictionary:
 	return {"game": GameManager.to_dict().duplicate(true), "profile": PlayerRegistry.peek_state(&"p0"), "row": PlayerRegistry.peek_state(&"p0").to_dict().duplicate(true), "loot": LootService.to_dict().duplicate(true), "furniture": FurnitureManager.to_dict().duplicate(true), "pending": saves.pending_world.duplicate(true), "run": saves.run_id, "slot": saves.current_slot}

@@ -527,11 +527,14 @@ func list_sellable() -> Array[Dictionary]:
 func adopt_misrouted(only_kind: StringName = &"") -> void:
 	if not _misrouted:
 		return
+	var origin := _transaction_origin()
+	var source := inventory
 	var still := false
 	var moved := false
-	var i := inventory.size() - 1
+	var i := source.size() - 1
 	while i >= 0:
-		var slot := inventory[i]
+		if not _transaction_current(origin) or not is_same(source, inventory): return
+		var slot := source[i]
 		var kind := _Kinds.storage_of(slot["id"])
 		if kind != _Kinds.BACKPACK:
 			# A store adopts only its own rows while loading. Another store may
@@ -541,8 +544,12 @@ func adopt_misrouted(only_kind: StringName = &"") -> void:
 				i -= 1
 				continue
 			var store := _store_for(kind)
-			if store != null and store.has_method("add") and bool(store.call("add", slot["id"], int(slot["amount"]))):
-				inventory.remove_at(i)
+			var added := store != null and store.has_method("add") and bool(store.call("add", slot["id"], int(slot["amount"])))
+			# add() publishes synchronously. Both the row and its exact source
+			# collection must still belong to this migration before source removal.
+			if not _transaction_current(origin) or not is_same(source, inventory): return
+			if added:
+				source.remove_at(i)
 				moved = true
 			else:
 				still = true

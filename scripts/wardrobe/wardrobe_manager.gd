@@ -203,6 +203,7 @@ func to_dict() -> Dictionary:
 	return out
 
 func from_dict(data: Dictionary) -> bool:
+	var origin := EconomyManager._transaction_origin()
 	if LuaData.int_of(data.get("v", 1), -1) != SECTION_VERSION or not data.get("owned", {}) is Dictionary or not data.get("equipped", {}) is Dictionary or not data.get("presets", {}) is Dictionary:
 		return false
 	var next_owned := {}
@@ -224,9 +225,13 @@ func from_dict(data: Dictionary) -> bool:
 		if data.get("presets", {}).get(key) is Dictionary:
 			presets[key] = _valid_outfit(data.presets[key], false)
 	adopt_from_backpack()
+	if not EconomyManager._transaction_current(origin): return false
 	_publish()
+	if not EconomyManager._transaction_current(origin): return false
 	owned_changed.emit()
+	if not EconomyManager._transaction_current(origin): return false
 	presets_changed.emit()
+	if not EconomyManager._transaction_current(origin): return false
 	_check_sets.call_deferred()
 	return true
 

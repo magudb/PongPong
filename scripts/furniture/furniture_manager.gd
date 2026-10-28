@@ -247,6 +247,7 @@ func to_dict() -> Dictionary:
 	return out
 
 func from_dict(data: Dictionary) -> bool:
+	var origin := EconomyManager._transaction_origin()
 	if LuaData.int_of(data.get("v", 1), -1) != SECTION_VERSION or not data.get("stock", {}) is Dictionary or not data.get("placed", []) is Array:
 		return false
 	var kept: Dictionary = data.get("orphans", {}) if data.get("orphans", {}) is Dictionary else {}
@@ -288,10 +289,12 @@ func from_dict(data: Dictionary) -> bool:
 		stock[str(entry.item)] = count_stock(entry.item) + 1
 	decorate_mode = false
 	adopt_from_backpack()
+	if not EconomyManager._transaction_current(origin): return false
 	_changed(&"load")
-	return true
+	return EconomyManager._transaction_current(origin)
 
 func _changed(reason: StringName) -> void:
+	var origin := EconomyManager._transaction_origin()
 	var score := hygge_score()
 	var level := hygge_level_index()
 	var changed := score != _last_hygge or level != _last_level
@@ -299,8 +302,11 @@ func _changed(reason: StringName) -> void:
 	_last_hygge = score
 	_last_level = level
 	EconomyManager.after_transaction(func() -> void:
+		if not EconomyManager._transaction_current(origin): return
 		EventBus.furniture_changed.emit(reason)
+		if not EconomyManager._transaction_current(origin): return
 		if changed:
 			EventBus.hygge_changed.emit(score, StringName(str(HomeData.hygge_level(level).get("id", "koldt"))))
+			if not EconomyManager._transaction_current(origin): return
 			if gained:EventBus.game_event.emit(&"hygge_level", {"level": level})
 	)
