@@ -313,8 +313,10 @@ func start_new_game(p_name: String, p_type: CharacterType, p_farm: String = "", 
 	play_time_seconds = 0.0
 	_base_phase = GamePhase.PLAYING
 	_drop_modals()
+	if lifecycle_owner != SaveManager._save_owner_stamp(): return
 	# the skin is final here; the reset wave of every other system comes last
 	EventBus.player_character_changed.emit(PlayerRegistry.local_id(), character_skin)
+	if lifecycle_owner != SaveManager._save_owner_stamp(): return
 	EventBus.new_game_started.emit()
 
 

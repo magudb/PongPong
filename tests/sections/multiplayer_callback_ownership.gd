@@ -41,7 +41,7 @@ func run(t) -> void:
 	var saves: Node = t.autoload("SaveManager")
 	var prior: String = saves.save_dir
 	t.on_cleanup(func(): saves.save_dir = prior)
-	for kind: String in ["lily_item", "lily_store", "lily_failed_item", "lily_failed_store", "adopt_clothing", "adopt_furniture", "migration_clothing", "migration_furniture"]:
+	for kind: String in ["lily_item", "lily_store", "lily_failed_item", "lily_failed_store", "adopt_clothing", "adopt_furniture", "migration_clothing", "migration_furniture", "reset_modal", "reset_character", "reset_modal_failed", "reset_character_failed"]:
 		if OS.get_environment("MP4_CALLBACK_CASE") != "" and OS.get_environment("MP4_CALLBACK_CASE") != kind: continue
 		if not await t.start_world(): return
 		saves.save_dir = "user://mp4-callback-" + kind
@@ -50,8 +50,83 @@ func run(t) -> void:
 		elif kind == "lily_store": _lily_store(t, saves)
 		elif kind.begins_with("adopt_"): _adopt(t, saves, kind)
 		elif kind.begins_with("migration_"): _migration(t, saves, kind)
+		elif kind.begins_with("reset_"): _reset(t, saves, kind)
 		else: _lily_failed(t, saves, kind)
 		await t.go_menu()
+
+func _reset(t, saves: Node, kind: String) -> void:
+	if kind.ends_with("_failed"):
+		_reset_failed(t, saves, kind)
+		return
+	EconomyManager.add_item(&"stone", 17, true)
+	EconomyManager.gold = 873
+	QuestManager.accept_quest(&"lost_cat")
+	GameManager.play_time_seconds = 222
+	t.check(kind + "_winner_saved", QuestManager.is_active(&"lost_cat") and saves.save_game(1), "distinguishable real progressed disk winner")
+	GameManager.push_modal(&"mp4_reset")
+	var entered: Array = []
+	var winner: Dictionary = {}
+	var replace := func():
+		if not entered.is_empty(): return
+		entered.append(kind)
+		entered.append(saves.load_game(1))
+		winner.merge(_snapshot(saves))
+		entered.append(EconomyManager.gold == 873 and EconomyManager.count_item(&"stone") == 17 and QuestManager.is_active(&"lost_cat") and saves.current_slot == 1 and not saves.pending_world.is_empty())
+	var modal := func(stack):
+		if kind == "reset_modal" and stack.is_empty(): replace.call()
+	var character := func(_pid, _skin):
+		if kind == "reset_character": replace.call()
+	EventBus.modal_changed.connect(modal)
+	EventBus.player_character_changed.connect(character)
+	GameManager.start_new_game("OldReset", GameManager.CharacterType.ANIMAL)
+	EventBus.player_character_changed.disconnect(character)
+	EventBus.modal_changed.disconnect(modal)
+	t.check(kind + "_real_success", entered == [kind, true, true], "successful nested load at actual reset final observer; %s" % [entered])
+	t.check(kind + "_winner_after_unwind", not winner.is_empty() and _matches(saves, winner) and EconomyManager.gold == 873 and EconomyManager.count_item(&"stone") == 17 and QuestManager.is_active(&"lost_cat"), "no obsolete new_game_started reset wave may erase winner/run/pending")
+	t.check(kind + "_future_live", SocialManager.add_points(&"fairy_lily", 1).ok and saves.save_game(2) and not saves.network_admission_blocked())
+
+func _reset_failed(t, saves: Node, kind: String) -> void:
+	var late := Rollback.LateSection.new()
+	t.tree.root.add_child(late)
+	saves.register_section("mp4_callback_late", late, 1000)
+	EconomyManager.gold = 873
+	t.check(kind + "_saved", saves.save_game(1))
+	var old_run: String = saves.run_id
+	GameManager.push_modal(&"mp4_reset")
+	var entered: Array = []
+	var waves: Array = []
+	var replace := func():
+		if not entered.is_empty(): return
+		entered.append(kind)
+		# Reset has installed a fresh sparse profile but has not run manager
+		# defaults yet. Establish the real closed-codec preimage for this FULL
+		# rollback control; raw sparse failures remain separate evidence.
+		EconomyManager.from_dict(EconomyManager.to_dict())
+		QuestManager.from_dict(QuestManager.to_dict())
+		WardrobeManager.to_dict()
+		HomeManager.from_dict(HomeManager.to_dict())
+		var profile := PlayerRegistry.peek_state(&"p0")
+		late.rejects = 1
+		entered.append(saves.load_game(1))
+		entered.append(late.calls)
+		entered.append(PlayerRegistry.peek_state(&"p0") == profile)
+	var modal := func(stack):
+		if kind == "reset_modal_failed" and stack.is_empty(): replace.call()
+	var character := func(_pid, _skin):
+		if kind == "reset_character_failed": replace.call()
+	var wave := func(): waves.append(true)
+	EventBus.modal_changed.connect(modal)
+	EventBus.player_character_changed.connect(character)
+	EventBus.new_game_started.connect(wave)
+	GameManager.start_new_game("CompleteReset", GameManager.CharacterType.ANIMAL)
+	EventBus.new_game_started.disconnect(wave)
+	EventBus.player_character_changed.disconnect(character)
+	EventBus.modal_changed.disconnect(modal)
+	t.check(kind + "_genuine_restore", entered == [kind, false, 2, true], "failed nested apply restores the new reset profile, not successful replacement; %s %s" % [entered, saves.last_error])
+	t.check(kind + "_complete_wave", waves == [true] and GameManager.player_name == "CompleteReset" and saves.run_id != old_run and saves.current_slot == -1 and saves.pending_world.is_empty() and EconomyManager.gold == int(GameManager.config_value("economy.starting_gold", 500)) and EconomyManager.count_item(&"hoe_wooden") == 1 and QuestManager.active_quests.is_empty() and QuestManager.pending_rewards.is_empty() and LootService.claimed.is_empty() and GameManager.modal_stack().is_empty(), "ordinary complete reset wave remains enabled after a failed nested load")
+	t.check(kind + "_next_progress", EconomyManager.add_item(&"stone", 1, true) and saves.save_game(2) and not saves.network_admission_blocked())
+	saves.unregister_section("mp4_callback_late")
+	late.free()
 
 func _migration(t, saves: Node, kind: String) -> void:
 	var clothing := kind == "migration_clothing"
