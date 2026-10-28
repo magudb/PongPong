@@ -1040,6 +1040,14 @@ func to_dict() -> Dictionary:
 	return out
 
 
+## Rollback restores the exact already-validated runtime preimage. The ordinary
+## disk loader deliberately expands optional dungeon defaults; doing so while
+## unwinding a friendship gift would change its sparse committed accounting.
+func restore_rollback(d: Dictionary) -> bool:
+	if not from_dict(d): return false
+	dungeon = _Data.dict(d.get("dungeon", {})).duplicate(true)
+	return true
+
 ## false rejects the load (the whole load is then rolled back): a newer version or a section of the wrong shape
 func from_dict(d: Dictionary) -> bool:
 	if not validate_dict(d):

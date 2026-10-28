@@ -119,10 +119,10 @@ func _owner_ticket(id: StringName) -> Dictionary:
 	var body := PlayerRegistry.by_id(id)
 	if NetAuthority.owns_network_world() and body == null: return {}
 	var session: Node = world.get("session") if world != null else null
-	return {"id": id, "row": row, "world": weakref(world) if world != null else null, "body": weakref(body) if body != null else null, "session": weakref(session) if session != null else null, "epoch": session.generation if session != null else 0}
+	return {"id": id, "row": row, "world": weakref(world) if world != null else null, "body": weakref(body) if body != null else null, "session": weakref(session) if session != null else null, "epoch": session.generation if session != null else 0, "stamp": SaveManager._save_owner_stamp()}
 
 func _owner_current(ticket: Dictionary) -> bool:
-	if not NetAuthority.can_write() or PlayerRegistry.peek_state(ticket.id) != ticket.row: return false
+	if not NetAuthority.can_write() or PlayerRegistry.peek_state(ticket.id) != ticket.row or not SaveManager.continuation_available(ticket.row) or ticket.stamp != SaveManager._save_owner_stamp(): return false
 	var world: Variant = ticket.world.get_ref() if ticket.world != null else null
 	if ticket.world != null and (not is_instance_valid(world) or PlayerRegistry.world() != world): return false
 	if ticket.world == null and PlayerRegistry.world() != null: return false

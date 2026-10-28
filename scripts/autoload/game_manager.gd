@@ -282,6 +282,8 @@ func minutes_per_real_second() -> float:
 ## Starts a fresh run: resets this node's state, then announces it. `p_skin` empty selects the default skin of the race.
 func start_new_game(p_name: String, p_type: CharacterType, p_farm: String = "", p_skin: StringName = &"") -> void:
 	if NetAuthority.owns_network_world(): return
+	SaveManager.invalidate_lifecycle()
+	var lifecycle_owner := SaveManager._save_owner_stamp()
 	player_name = p_name.strip_edges() if p_name.strip_edges() != "" else tr("DEFAULT_PLAYER_NAME")
 	character_type = p_type
 	character_skin = p_skin if p_skin != &"" else _default_skin_for(p_type)
@@ -299,10 +301,13 @@ func start_new_game(p_name: String, p_type: CharacterType, p_farm: String = "", 
 	# completes the lottery before the first physical meeting. Loaded legacy
 	# saves do not pass here, so genuinely completed old records stay final.
 	set_flag(&"mayor_welcome_pending", true)
+	if lifecycle_owner != SaveManager._save_owner_stamp(): return
 	set_flag(FLAG_INTRO_PENDING, true)
+	if lifecycle_owner != SaveManager._save_owner_stamp(): return
 	for key in dropped:
 		if key not in [FLAG_INTRO_PENDING, &"mayor_welcome_pending"]:
 			EventBus.flag_changed.emit(StringName(str(key)), false)   # the new run resets a flag
+			if lifecycle_owner != SaveManager._save_owner_stamp(): return
 	unlocked_zones.assign(_default_zones())
 	discovered_locations.clear()
 	play_time_seconds = 0.0
@@ -695,6 +700,7 @@ func to_dict() -> Dictionary:
 ## and loading from the pause menu must not drop the pause) and announces the skin like a new game does.
 func from_dict(data: Dictionary) -> void:
 	if NetAuthority.owns_network_world(): return
+	var lifecycle_owner := SaveManager._save_owner_stamp()
 	player_name = str(data.get("player_name", ""))
 	character_type = clampi(int(data.get("character_type", CharacterType.ANIMAL)), 0, CharacterType.size() - 1) as CharacterType
 	character_skin = StringName(str(data.get("character_skin", _default_skin_for(character_type))))
@@ -717,9 +723,11 @@ func from_dict(data: Dictionary) -> void:
 	for key in old_flags.keys():
 		if not new_flags.has(key):
 			EventBus.flag_changed.emit(StringName(str(key)), false)   # the load dropped a flag
+			if lifecycle_owner != SaveManager._save_owner_stamp(): return
 	for key in new_flags:
 		if not old_flags.has(key) or old_flags[key] != new_flags[key]:
 			EventBus.flag_changed.emit(StringName(str(key)), new_flags[key])
+			if lifecycle_owner != SaveManager._save_owner_stamp(): return
 	unlocked_zones.assign(_string_names(data.get("unlocked_zones", _default_zones())))
 	discovered_locations.assign(_string_names(data.get("discovered_locations", [])))
 	play_time_seconds = float(data.get("play_time_seconds", 0.0))

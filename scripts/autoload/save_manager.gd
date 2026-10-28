@@ -205,6 +205,7 @@ func _process(delta: float) -> void:
 ## New game (EventBus.new_game_started): no current slot, timers zero, nothing waits for a world, no stale error.
 func reset() -> void:
 	if not NetAuthority.can_write(): return
+	invalidate_lifecycle()
 	_backup_validation.clear()
 	_inspect_cache.clear()
 	run_id = _new_run_id()
@@ -349,7 +350,7 @@ var _queued_autosave_owner: Array = []
 func _save_owner_stamp() -> Array:
 	var world := PlayerRegistry.world()
 	var session: Node = world.get("session") if world != null else null
-	return [run_id, world.get_instance_id() if world != null else 0, session.get_instance_id() if session != null else 0, session.generation if session != null else 0]
+	return [run_id, world.get_instance_id() if world != null else 0, session.get_instance_id() if session != null else 0, session.generation if session != null else 0, _lifecycle_revision]
 
 func _on_day_ended(_day: int, _season: StringName) -> void:
 	if not NetAuthority.can_write(): return
@@ -384,6 +385,30 @@ func _game_running() -> bool:
 ## Depth preserves the existing nested facade/apply calls without choosing a new
 ## reset/load precedence policy. reset() must not release an in-flight owner.
 var _offline_load_depth := 0
+## Monotonic committed incarnation, independent of the persisted run id.
+var _lifecycle_revision := 0
+
+## Deny continuation of exact pre-operation profiles until lexical unwind. This
+## cannot grant/adopt authority; it keeps a restored origin suspended through
+## backup validation and final observers. Nested replacement rows remain usable.
+class OriginBarrier extends RefCounted:
+	var profiles: Array = []
+
+var _origin_barriers: Array[OriginBarrier] = []
+
+func _hold_origins() -> OriginBarrier:
+	var barrier := OriginBarrier.new()
+	barrier.profiles = PlayerRegistry._states.values()
+	_origin_barriers.append(barrier)
+	return barrier
+
+func continuation_available(profile: RefCounted) -> bool:
+	for barrier: OriginBarrier in _origin_barriers:
+		if profile in barrier.profiles: return false
+	return true
+
+func invalidate_lifecycle() -> void:
+	_lifecycle_revision += 1
 
 func network_admission_blocked() -> bool:
 	return _offline_load_depth > 0
@@ -393,13 +418,16 @@ func network_admission_blocked() -> bool:
 ## does not (see current_slot).
 func load_game(slot: int = 0) -> bool:
 	_offline_load_depth += 1
+	var barrier := _hold_origins()
 	# Keep the whole operation lexical: no callable unfenced implementation entry.
 	var operation := func() -> bool:
 		if NetAuthority.owns_network_world(): return false
 		last_error = {}
 		if not is_readable_slot(slot):
 			return _fail_load(slot, "missing", "slot %d does not exist" % slot)
+		var inspected_owner := _rollback_owner_stamp()
 		var info := inspect_slot(slot)
+		if inspected_owner != _rollback_owner_stamp(): return false
 		match info["state"]:
 			&"empty":
 				return _fail_load(slot, "missing", "no save in slot %d" % slot)
@@ -408,12 +436,16 @@ func load_game(slot: int = 0) -> bool:
 			&"corrupt":
 				return _fail_load(slot, str(info["code"]), str(info["detail"]))
 		var applied := _apply_payload(info["payload"])
-		if not applied["ok"] and not info["from_backup"]:
+		if applied.get("superseded", false): return false
+		if not applied["ok"] and applied.get("backup_safe", false) and not info["from_backup"]:
 			# the file passed every check and still did not apply (a section refused it): its .bak is the next best thing
+			var backup_owner := _rollback_owner_stamp()
 			var backup := _inspect_backup(slot)
-			if not backup.is_empty() and _apply_payload(backup["payload"])["ok"]:
-				info = backup
-				applied = {"ok": true, "detail": ""}
+			if backup_owner != _rollback_owner_stamp(): return false
+			if not backup.is_empty():
+				applied = _apply_payload(backup["payload"])
+				if applied.get("superseded", false): return false
+				if applied["ok"]: info = backup
 		if not applied["ok"]:
 			return _fail_load(slot, "apply", str(applied["detail"]))
 		if is_manual_slot(slot):                   # the auto slots are not places the player saves to: keep the manual slot of this run
@@ -424,11 +456,14 @@ func load_game(slot: int = 0) -> bool:
 		if slot == AUTO_SLOT:
 			_auto_file_seen = {"hash": FileAccess.get_sha256(slot_path(slot)), "run": run_id}   # the auto file IS this run
 		_auto_save_timer = 0.0
+		var committed_owner := _rollback_owner_stamp()
 		if info["from_backup"]:
 			_toast(tr("NOTIF_LOAD_BACKUP_TITLE"), tr("NOTIF_LOAD_BACKUP_MSG"), slot + 1)
+			if committed_owner != _rollback_owner_stamp(): return false
 		EventBus.load_completed.emit(slot)
-		return true
+		return committed_owner == _rollback_owner_stamp()
 	var result: bool = operation.call()
+	_origin_barriers.erase(barrier)
 	_offline_load_depth -= 1
 	return result
 
@@ -1207,9 +1242,16 @@ func _summarize(payload: Dictionary) -> Dictionary:
 
 # ------------------------------------------------------------------ payload: apply
 
+func _rollback_owner_stamp() -> Array:
+	var bodies: Array = []
+	for body in PlayerRegistry.all_players():
+		bodies.append([body.get_instance_id(), PlayerRegistry.registered_id(body)])
+	return [_save_owner_stamp(), bodies, _validator_key()]
+
 ## Applies a validated payload to the sections, all or nothing. {ok, detail}. See the header (LOADING).
 func _apply_payload(payload: Dictionary) -> Dictionary:
 	_offline_load_depth += 1
+	var barrier := _hold_origins()
 	# Keep the whole operation lexical: no callable unfenced implementation entry.
 	var operation := func() -> Dictionary:
 		if NetAuthority.owns_network_world(): return {"ok": false, "detail": "network world owns lifecycle"}
@@ -1221,49 +1263,106 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 			entries.append({"name": "players", "node": _staging_roster, "order": 15, "seq": -1})
 			entries.sort_custom(_entry_before)
 		var snapshot: Dictionary = {}
-		for entry in entries:
-			var node := _node_of(entry)
-			if node != null and node.has_method("to_dict"):
-				var before: Variant = node.call("to_dict")
-				snapshot[entry["name"]] = (before as Dictionary).duplicate(true) if typeof(before) == TYPE_DICTIONARY else {}
+		var identities: Array[Callable] = []
+		var owner := _rollback_owner_stamp()
 		var guard := ApplyGuard.new()
 		OS.add_logger(guard)
-		var failure := ""
-		var touched: Array[Dictionary] = []          # the sections that ran from_dict / reset (the failing one included)
-		for entry in entries:
-			var node := _node_of(entry)
-			if node == null:
-				continue
-			var section_name: String = entry["name"]
-			if payload.has(section_name):
-				if not node.has_method("from_dict"):
-					continue
-				touched.append(entry)
-				var result: Variant = node.call("from_dict", (payload[section_name] as Dictionary).duplicate(true))
-				if typeof(result) == TYPE_BOOL and not result:
-					failure = "section '%s' rejected its data" % section_name
-			elif node.has_method("reset"):
-				touched.append(entry)
-				node.call("reset")
-			if failure == "" and guard.errors > 0:
-				failure = "section '%s' raised an error: %s" % [section_name, guard.first]
-			if failure != "":
-				break
-		if failure == "":
-			pending_world = _dict_of(payload.get("world")).duplicate(true)
-			var known := section_names()
-			_carried_sections = {}
-			for key in payload:
-				if not (str(key) in known) and not (str(key) in RESERVED_SECTION_NAMES):
-					_carried_sections[str(key)] = payload[key].duplicate(true) if payload[key] is Dictionary or payload[key] is Array else payload[key]
-		else:
-			for entry in touched:                      # sections that were never reached still hold their own state
+		var apply := func() -> Dictionary:
+			# Preflight every mutating section before the first write. A failed
+			# snapshot is not an empty preimage and cannot authorize restoration.
+			for entry in entries:
 				var node := _node_of(entry)
-				if node != null and node.has_method("from_dict") and snapshot.has(entry["name"]):
-					node.call("from_dict", (snapshot[entry["name"]] as Dictionary).duplicate(true))
+				if node == null: continue
+				if not node.has_method("from_dict") and not node.has_method("reset"): continue
+				if not node.has_method("to_dict") or not node.has_method("from_dict"):
+					return {"ok": false, "detail": "section '%s' lacks rollback codec" % entry.name}
+				var before: Variant = node.call("to_dict")
+				if guard.errors > 0 or not before is Dictionary:
+					return {"ok": false, "detail": "section '%s' snapshot failed" % entry.name}
+				if node.has_method("validate_dict") and not bool(node.call("validate_dict", before)):
+					return {"ok": false, "detail": "section '%s' snapshot invalid" % entry.name}
+				if owner != _rollback_owner_stamp():
+					return {"ok": false, "detail": "snapshot owner superseded", "superseded": true}
+				snapshot[entry.name] = before.duplicate(true)
+			for entry in entries:
+				var node := _node_of(entry)
+				if node != null and node.has_method("capture_rollback_identity"):
+					identities.append(node.call("capture_rollback_identity"))
+			var failure := ""
+			var backup_safe := false
+			var touched: Array[Dictionary] = []
+			for entry in entries:
+				var node := _node_of(entry)
+				if node == null: continue
+				var section_name: String = entry.name
+				if payload.has(section_name):
+					if not node.has_method("from_dict"): continue
+					touched.append(entry)
+					var result: Variant = node.call("from_dict", (payload[section_name] as Dictionary).duplicate(true))
+					if typeof(result) == TYPE_BOOL and not result:
+						failure = "section '%s' rejected its data" % section_name
+				elif node.has_method("reset"):
+					touched.append(entry)
+					node.call("reset")
+				if owner != _rollback_owner_stamp():
+					return {"ok": false, "detail": "apply owner superseded", "superseded": true}
+				if failure == "" and guard.errors > 0:
+					failure = "section '%s' raised an error: %s" % [section_name, guard.first]
+				if failure != "": break
+			if failure == "":
+				invalidate_lifecycle()
+				pending_world = _dict_of(payload.get("world")).duplicate(true)
+				var known := section_names()
+				_carried_sections = {}
+				for key in payload:
+					if not (str(key) in known) and not (str(key) in RESERVED_SECTION_NAMES):
+						_carried_sections[str(key)] = payload[key].duplicate(true) if payload[key] is Dictionary or payload[key] is Array else payload[key]
+			else:
+				var restored := true
+				var values_restored := true
+				var rollback_errors := guard.errors
+				# A callback can mutate a section beyond the applied prefix.
+				# Restore every certified preimage, not only direct mutator calls.
+				for entry in entries:
+					if not snapshot.has(entry.name): continue
+					var node := _node_of(entry)
+					if node == null:
+						restored = false
+						continue
+					if not touched.has(entry):
+						var current_data: Variant = node.call("to_dict")
+						if owner != _rollback_owner_stamp():
+							return {"ok": false, "detail": failure + "; rollback superseded", "superseded": true}
+						if current_data is Dictionary and JSON.stringify(current_data, "", true, true) == JSON.stringify(snapshot[entry.name], "", true, true): continue
+					var result: Variant = node.call("restore_rollback" if node.has_method("restore_rollback") else "from_dict", snapshot[entry.name].duplicate(true))
+					if owner != _rollback_owner_stamp():
+						return {"ok": false, "detail": failure + "; rollback superseded", "superseded": true}
+					if typeof(result) == TYPE_BOOL and not result: restored = false
+				for entry in entries:
+					if not snapshot.has(entry.name): continue
+					var node := _node_of(entry)
+					if node == null:
+						values_restored = false
+						continue
+					var after: Variant = node.call("to_dict")
+					if not after is Dictionary or JSON.stringify(after, "", true, true) != JSON.stringify(snapshot[entry.name], "", true, true):
+						values_restored = false
+				if guard.errors != rollback_errors or owner != _rollback_owner_stamp(): values_restored = false
+				backup_safe = values_restored
+				restored = restored and values_restored
+				if restored:
+					# The operation, not an error code or equal run id, owns this
+					# callback-free publication of its authenticated preimage.
+					for restore: Callable in identities: restore.call()
+				else:
+					failure += "; rollback incomplete"
+					invalidate_lifecycle()
+			return {"ok": failure == "", "detail": failure, "revision": _lifecycle_revision, "backup_safe": backup_safe}
+		var applied: Dictionary = apply.call()
 		OS.remove_logger(guard)
-		return {"ok": failure == "", "detail": failure}
+		return applied
 	var result: Dictionary = operation.call()
+	_origin_barriers.erase(barrier)
 	_offline_load_depth -= 1
 	return result
 

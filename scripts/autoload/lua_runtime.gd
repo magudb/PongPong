@@ -669,6 +669,20 @@ func _invoke_module_function(sid: String, fname: String, args: Array) -> Diction
 	return {}
 
 
+## Synchronous interpreted execution owns its origin across public callbacks.
+## A reentrant invocation captures current authority, then restores its caller's.
+var _effect_origin: Dictionary = {}
+
+func _capture_effect_origin() -> Dictionary:
+	var id := PlayerRegistry.acting_id()
+	var saves := _node("SaveManager")
+	return {"id": id, "row": PlayerRegistry.peek_state(id), "stamp": saves._save_owner_stamp() if saves != null else []}
+
+func _effect_current() -> bool:
+	if _effect_origin.is_empty(): return true # ordinary public bridge, outside interpreted work
+	var saves := _node("SaveManager")
+	return (saves == null or saves.continuation_available(_effect_origin.row)) and PlayerRegistry.acting_id() == _effect_origin.id and PlayerRegistry.peek_state(_effect_origin.id) == _effect_origin.row and _effect_origin.stamp == (saves._save_owner_stamp() if saves != null else [])
+
 ## Runs the function `fname` of script `sid` with `args` and returns what it returns (nil -> null). A function that is
 ## missing, or whose body uses something outside the subset, answers null; nothing here raises an engine error.
 func _invoke_function(sid: String, fname: String, args: Array) -> Variant:
@@ -683,7 +697,8 @@ func _invoke_function(sid: String, fname: String, args: Array) -> Variant:
 	if not func_def.has("ast"):
 		func_def["ast"] = _Parser.compile_body(str(func_def.get("body", "")), int(func_def.get("body_line", 1)))     # lazily, once
 	# an api call can run another Lua function (offer_quest -> a quest hook): the location is restored afterwards
-	var outer := [_cur_sid, _cur_fn, _cur_line]
+	var outer := [_cur_sid, _cur_fn, _cur_line, _effect_origin]
+	_effect_origin = _capture_effect_origin()
 	_cur_sid = sid
 	_cur_fn = fname
 	_cur_line = int(func_def.get("line", 0))
@@ -691,6 +706,7 @@ func _invoke_function(sid: String, fname: String, args: Array) -> Variant:
 	_cur_sid = outer[0]
 	_cur_fn = outer[1]
 	_cur_line = outer[2]
+	_effect_origin = outer[3]
 	if outcome == null:
 		return null
 	return (outcome as Array)[0]
@@ -709,6 +725,7 @@ func _exec_block(stmts: Array, scopes: Array) -> Variant:
 
 func _run_statements(stmts: Array, scopes: Array) -> Variant:
 	for s in stmts:
+		if not _effect_current(): return [null]
 		_cur_line = int(s.back())
 		match str(s[0]):
 			"local":
@@ -844,6 +861,9 @@ func _call(path: String, args: Array) -> Variant:
 
 ## The functions Lua can call (statements and queries): api.<name>(...) or the bare query name.
 func _call_api(method: String, args: Array) -> Variant:
+	# Arguments may themselves invoke a callback. Check again at dispatch, not
+	# only at the preceding statement boundary.
+	if not _effect_current(): return null
 	match method:
 		"add_gold":
 			lua_add_gold(_int_arg(args, 0, 0))

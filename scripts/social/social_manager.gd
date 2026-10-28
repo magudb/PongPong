@@ -306,6 +306,15 @@ func stage(npc: Variant) -> StringName:
 	return out
 
 
+## A friendship grant owns its actual player and Social rows across public
+## observers. Nested grants capture their own origin; this is not an ambient lock.
+func _grant_origin(npc: String, row: Dictionary) -> Dictionary:
+	var id := PlayerRegistry.acting_id()
+	return {"id": id, "profile": PlayerRegistry.peek_state(id), "row": row, "npc": npc, "stamp": SaveManager._save_owner_stamp()}
+
+func _grant_current(origin: Dictionary) -> bool:
+	return NetAuthority.can_write() and SaveManager.continuation_available(origin.profile) and PlayerRegistry.acting_id() == origin.id and PlayerRegistry.peek_state(origin.id) == origin.profile and origin.stamp == SaveManager._save_owner_stamp() and is_same(_row_for(origin.id, origin.npc, false), origin.row)
+
 ## The single writer. `source`: chat gift quest event festival purchase birthday lua debug. `opts`: {toast: false} keeps the stage-up toast back (the caller merges
 ## toasts: one per conversation). Returns {ok, points, hearts, gained, hearts_before, stage_before, stage_after, source}; a refusal is {ok: false, reason,
 ## gained: 0, points, hearts} with the reasons bad_delta unknown_npc locked absent. At the cap the answer is ok with gained 0 and nothing is emitted.
@@ -329,21 +338,26 @@ func add_points(npc: Variant, delta: int, source: StringName = &"", opts: Dictio
 	var result := {"ok": true, "gained": maxi(gained, 0), "points": before_points, "hearts": before_hearts, "hearts_before": before_hearts, "stage_before": before_stage, "stage_after": before_stage, "source": String(source)}
 	if gained <= 0:
 		return result
+	var origin := _grant_origin(id, row)
 	row["p"] = before_points + gained
-	_mirror(id)
 	var after_hearts := hearts(id)
 	var after_stage := stage(id)
 	result["points"] = int(row["p"])
 	result["hearts"] = after_hearts
 	result["stage_after"] = after_stage
-	EventBus.game_event.emit(EV_POINTS, {"player_id": str(PlayerRegistry.acting_id()), "npc": id, "delta": gained, "points": int(row["p"]), "hearts": after_hearts, "source": String(source)})
+	_mirror(id)
+	if not _grant_current(origin): return result
+	EventBus.game_event.emit(EV_POINTS, {"player_id": str(origin.id), "npc": id, "delta": gained, "points": int(row["p"]), "hearts": after_hearts, "source": String(source)})
+	if not _grant_current(origin): return result
 	if after_hearts > before_hearts:
-		EventBus.friend_changed.emit(PlayerRegistry.acting_id(), StringName(id), after_hearts)
+		EventBus.friend_changed.emit(origin.id, StringName(id), after_hearts)
+		if not _grant_current(origin): return result
 		var loot := Svc.node("LootService")
 		if loot != null and loot.has_method("check_friend_gifts"):
 			loot.call("check_friend_gifts", StringName(id))
+	if not _grant_current(origin): return result
 	if after_stage != before_stage:
-		_stage_changed(id, after_stage, bool(opts.get("toast", true)))
+		_stage_changed(id, after_stage, bool(opts.get("toast", true)), _grant_current.bind(origin))
 	return result
 
 
@@ -368,8 +382,9 @@ func _mirror(npc: String) -> void:
 	GameManager.set_flag(StringName("friend_" + npc), hearts(npc))
 
 
-func _stage_changed(npc: String, new_stage: StringName, with_toast: bool) -> void:
+func _stage_changed(npc: String, new_stage: StringName, with_toast: bool, current: Callable = Callable()) -> void:
 	EventBus.game_event.emit(EV_RELATION, {"npc": npc, "stage": String(new_stage), "partner": false})
+	if current.is_valid() and not current.call(): return
 	if with_toast:
 		_toast(_t("SOC_SYS_TOAST_TITLE"), _stage_line(npc, new_stage))
 
@@ -1256,7 +1271,9 @@ func _write_birthday_flag(names: Array[String]) -> void:
 
 ## The derived flags, state only (no event): used by from_dict() (a load puts the world in the state the save was in). reset() deliberately does NOT call it.
 func _restore_state() -> void:
+	var lifecycle_owner := SaveManager._save_owner_stamp()
 	_write_birthday_flag(birthdays_today())
+	if lifecycle_owner != SaveManager._save_owner_stamp(): return
 	_festival_active = festival_active()
 	_write_festival_flag()
 
@@ -1397,8 +1414,15 @@ func to_dict() -> Dictionary:
 	return out
 
 
-## Applies a saved section. NEVER emits and NEVER push_errors (a push_error would reject the whole load): an unknown NPC id (content drift) is a push_warning and
-## goes to the orphans bucket, which the next save keeps; an orphan whose NPC exists again is taken back. Returns true.
+## Preserve only the legacy grant/session graph on certified failed rollback.
+## Living remains owned by its unchanged value codec, not this identity hook.
+func capture_rollback_identity() -> Callable:
+	var checkpoint := preload("res://scripts/player/rollback_identity.gd").new()
+	checkpoint.keep_fields(self, ["_rows", "_orphans", "_lines", "_toast_queue", "_toast_next_ms", "_shop_now", "_event_owed", "world_seed", "_last_day", "_seen", "_fest_year", "_partner", "_festival_active"])
+	return func() -> void: checkpoint.restore()
+
+## Applies a saved section. Unknown NPC ids remain in the orphan bucket. Derived
+## birthday/festival flag restoration can synchronously notify public observers.
 func from_dict(d: Dictionary) -> bool:
 	if not validate_dict(d):
 		return false

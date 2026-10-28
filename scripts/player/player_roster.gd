@@ -135,8 +135,24 @@ func validate_dict(d: Dictionary) -> bool:
 	return true
 
 
+## Private runtime identity checkpoint, never a save codec or load permit.
+## Only the enclosing verified rollback may publish these original references.
+func capture_rollback_identity() -> Callable:
+	var checkpoint := preload("res://scripts/player/rollback_identity.gd").new()
+	var original := rows
+	checkpoint.keep_value(original)
+	for profile: PlayerState in original.values():
+		checkpoint.keep_script_fields(profile)
+		for runtime in profile.quests.get("active", {}).values():
+			if runtime is RefCounted:
+				checkpoint.keep_script_fields(runtime)
+	return func() -> void:
+		checkpoint.restore()
+		rows = original
+
 func from_dict(d: Dictionary) -> bool:
 	if not validate_dict(d): return false
+	var lifecycle_owner := SaveManager._save_owner_stamp()
 	var restored := {}
 	for key in d.rows:
 		var profile := PlayerState.new()
@@ -154,7 +170,9 @@ func from_dict(d: Dictionary) -> bool:
 		PlayerRegistry.for_player(id, func() -> void:
 			var row: Dictionary = d.rows[str(id)]
 			for pair in [["EconomyManager", row], ["QuestManager", row.get("quests", {})]]:
+				if lifecycle_owner != SaveManager._save_owner_stamp() or PlayerRegistry.peek_state(id) != restored[id]: return
 				var manager := Svc.node(pair[0])
 				if manager != null and manager.has_method("from_dict"): manager.call("from_dict", pair[1].duplicate(true))
 		)
+		if lifecycle_owner != SaveManager._save_owner_stamp() or not is_same(rows, restored): return false
 	return true
