@@ -234,7 +234,7 @@ func _ready() -> void:
 	EventBus.lua_event.connect(_on_lua_event)
 	EventBus.lua_reloaded.connect(_on_lua_reloaded)
 	EventBus.day_started.connect(_on_day_started)
-	EventBus.new_game_started.connect(reset)
+	EventBus.reset_wave_started.connect(reset)
 	EventBus.player_inventory_changed.connect(_on_inventory_changed)
 	EventBus.load_completed.connect(_on_load_completed)
 	EventBus.item_gained.connect(_on_item_gained)
@@ -262,7 +262,9 @@ func _ready() -> void:
 
 ## A new run forgets progress and rewards, but keeps the definitions registered by LuaRuntime at boot (and the state queries the
 ## furniture / home / social managers registered: they belong to the game, not to the run).
-func reset() -> void:
+func reset(origin: Dictionary = {}) -> void:
+	if origin.is_empty(): origin = EventBus.reset_origin()
+	if not EventBus.reset_current(origin): return
 	if not NetAuthority.can_write(): return
 	_reward_owners.clear()
 	_refresh_owners.clear()

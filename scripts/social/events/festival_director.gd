@@ -31,15 +31,18 @@ func _ready() -> void:
 	EventBus.time_of_day_changed.connect(func(_hour,_minute): _schedule())
 	EventBus.area_changed.connect(func(_id): _schedule())
 	EventBus.load_completed.connect(func(_slot): reset())
-	EventBus.new_game_started.connect(reset)
+	EventBus.reset_wave_started.connect(reset)
 	set_process(false)
 
-func reset() -> void:
+func reset(origin: Dictionary = {}) -> void:
+	if origin.is_empty(): origin = EventBus.reset_origin()
+	if not EventBus.reset_current(origin): return
 	queue.clear()
 	# A scene still suspended in play() must not hold the start latch past a reset.
 	_play_generation += 1
 	_starting = false
-	runner.cancel()
+	runner.cancel(origin)
+	if not EventBus.reset_current(origin): return
 	if is_instance_valid(_stage): _stage.queue_free()
 	_stage = null
 	_schedule()

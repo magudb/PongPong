@@ -445,7 +445,7 @@ func _new_game_and_starter_kit() -> void:
 	eco.add_gold(-499)
 	t.new_game()
 	t.expect(_inv() == _starter_backpack() and eco.gold == 500 and eco.equipment.get("tool_scythe") == &"scythe", "every new game restores gold, backpack and equipment")
-	t.expect(bus.new_game_started.get_connections().any(func(c: Dictionary) -> bool: return c["callable"].get_object() == eco), "reset() is connected to EventBus.new_game_started")
+	t.expect(bus.reset_wave_started.get_connections().any(func(c: Dictionary) -> bool: return c["callable"].get_object() == eco), "reset() is connected to EventBus.new_game_started")
 
 
 func _signals() -> void:

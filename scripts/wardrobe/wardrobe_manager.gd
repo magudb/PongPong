@@ -46,7 +46,7 @@ var orphans: Dictionary:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	SaveManager.register_section("wardrobe", self, SaveManager.FEATURE_ORDERS.wardrobe)
-	EventBus.new_game_started.connect(reset)
+	EventBus.reset_wave_started.connect(reset)
 
 func slots() -> Dictionary:
 	return LuaData.dict(Svc.lua_config("wardrobe.equip_slots", {}))
@@ -175,7 +175,9 @@ func gear_points(kind: String) -> float:
 		total += bonuses[index]
 	return total
 
-func reset() -> void:
+func reset(origin: Dictionary = {}) -> void:
+	if origin.is_empty(): origin = EventBus.reset_origin()
+	if not EventBus.reset_current(origin): return
 	owned.clear()
 	equipped.clear()
 	presets.clear()
@@ -183,6 +185,7 @@ func reset() -> void:
 	# A pre-wardrobe save may have genuine clothing in its backpack. Adopt it
 	# before filling missing starter pieces, so no owned piece disappears.
 	adopt_from_backpack()
+	if not EventBus.reset_current(origin): return
 	var kit := LuaData.dict(Svc.lua_config("starter_kit.wardrobe", {}))
 	for id in LuaData.strings(kit.get("owned", [])) + LuaData.strings(kit.get("worn", [])):
 		if slot_of(id) != "":
@@ -190,7 +193,9 @@ func reset() -> void:
 	for id in LuaData.strings(kit.get("worn", [])):
 		equipped = preview_equipping(id, equipped)
 	_publish()
+	if not EventBus.reset_current(origin): return
 	owned_changed.emit()
+	if not EventBus.reset_current(origin): return
 	presets_changed.emit()
 
 func adopt_from_backpack() -> void:

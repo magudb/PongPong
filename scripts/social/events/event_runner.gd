@@ -30,7 +30,7 @@ static func yearly(meta: Dictionary) -> bool:
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	EventBus.new_game_started.connect(cancel)
+	EventBus.reset_wave_started.connect(cancel)
 	EventBus.load_completed.connect(func(_slot): cancel())
 
 func seen(id: String, definition: Dictionary) -> bool:
@@ -298,15 +298,21 @@ func _release() -> void:
 		if actor != null and actor.has_method("event_end"): actor.event_end()
 	_actors.clear()
 
-func cancel() -> void:
+func cancel(origin: Dictionary = {}) -> void:
+	if origin.is_empty(): origin = EventBus.reset_origin()
+	if not EventBus.reset_current(origin): return
 	_generation += 1
 	var player := _actor("player") if is_inside_tree() else null
 	if _camera_used and is_instance_valid(player) and player.has_method("camera_release"): player.camera_release(0.0)
+	if not EventBus.reset_current(origin): return
 	_camera_used = false
 	if is_instance_valid(_dialogue) and _dialogue.is_open(): _dialogue.close()
-	for ref in _actors:
+	if not EventBus.reset_current(origin): return
+	for ref in _actors.duplicate():
+		if not EventBus.reset_current(origin): return
 		var actor: Node = ref.get_ref()
 		if actor != null and actor.has_method("event_end"): actor.event_end()
+	if not EventBus.reset_current(origin): return
 	_actors.clear()
 	_effects.clear()
 	active = ""

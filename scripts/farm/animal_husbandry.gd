@@ -298,7 +298,7 @@ func _ready() -> void:
 	_load_husbandry_config()
 	EventBus.lua_reloaded.connect(_load_husbandry_config)
 	EventBus.day_started.connect(_on_day_started)
-	EventBus.new_game_started.connect(reset)
+	EventBus.reset_wave_started.connect(reset)
 	EventBus.item_purchased.connect(_on_item_purchased)
 
 
@@ -353,7 +353,9 @@ func _load_husbandry_config() -> void:
 		buildings_data = (bsrc as Dictionary).duplicate(true)
 
 
-func reset() -> void:
+func reset(origin: Dictionary = {}) -> void:
+	if origin.is_empty(): origin = EventBus.reset_origin()
+	if not EventBus.reset_current(origin): return
 	animals.clear()
 	buildings.clear()
 	orphans = {"animals": {}, "buildings": {}}

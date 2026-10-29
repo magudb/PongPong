@@ -185,7 +185,7 @@ func _ready() -> void:
 	run_id = _new_run_id()
 	_ensure_dir()
 	_recover_interrupted_writes()
-	EventBus.new_game_started.connect(reset)
+	EventBus.reset_wave_started.connect(reset)
 	EventBus.day_ended.connect(_on_day_ended)
 	# Present before a world exists: Continue can validate/apply every profile at the title.
 	_staging_roster = PlayerRoster.new()
@@ -203,7 +203,9 @@ func _process(delta: float) -> void:
 
 
 ## New game (EventBus.new_game_started): no current slot, timers zero, nothing waits for a world, no stale error.
-func reset() -> void:
+func reset(origin: Dictionary = {}) -> void:
+	if origin.is_empty(): origin = EventBus.reset_origin()
+	if not EventBus.reset_current(origin): return
 	if not NetAuthority.can_write(): return
 	invalidate_lifecycle()
 	_backup_validation.clear()
@@ -216,6 +218,7 @@ func reset() -> void:
 	last_error = {}
 	save_failing = false
 	_carried_sections = {}
+	origin["stamp"] = _save_owner_stamp()
 
 
 # ------------------------------------------------------------------ slots and paths

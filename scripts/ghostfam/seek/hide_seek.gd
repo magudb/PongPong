@@ -46,8 +46,10 @@ static func reset_feedback(_slot: int = -1) -> void:
 	_feedback.clear()
 	_feedback_day = -1
 	_kin_hint = false
+static func _reset_wave(origin: Dictionary) -> void:
+	if EventBus.reset_current(origin): reset_feedback()
 func _ready() -> void:
-	if not EventBus.new_game_started.is_connected(reset_feedback):EventBus.new_game_started.connect(reset_feedback)
+	if not EventBus.reset_wave_started.is_connected(_reset_wave):EventBus.reset_wave_started.connect(_reset_wave)
 	if not EventBus.load_completed.is_connected(reset_feedback):EventBus.load_completed.connect(reset_feedback)
 	shimmer = Node2D.new()
 	shimmer.name = "Shimmer"

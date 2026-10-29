@@ -1400,7 +1400,7 @@ func to_dict() -> Dictionary:
 func from_dict(_d: Dictionary) -> bool:
 	return true
 
-func reset() -> void:
+func reset(_origin: Dictionary = {}) -> void:
 	resets += 1
 	done.clear()
 """
@@ -1420,7 +1420,7 @@ func _floors_hosting() -> void:
 			order = int(entry["order"])
 	var wired := false
 	if node != null:
-		for c in bus.new_game_started.get_connections():
+		for c in bus.reset_wave_started.get_connections():
 			if (c["callable"] as Callable).get_object() == node:
 				wired = true
 	t.check("dungeon_floors_node_hosted_and_section_registered", hosted and node != null and section == node and order == 45 and wired and sm.FEATURE_ORDERS.size() == 6 and sm.FEATURE_ORDERS.get("players") == 15 and not sm.FEATURE_ORDERS.has("dungeon") and ls.floors() == node,

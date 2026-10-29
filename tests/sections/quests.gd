@@ -1082,7 +1082,7 @@ func _new_game_and_probes() -> void:
 	_need(problems, qm.active_quests.is_empty() and qm.completed_quests.is_empty() and qm.offered_quests.is_empty() and qm.pending_rewards.is_empty() and qm.quest_flags.is_empty() and qm.completed_days.is_empty(), "new_game_started did not clear the runtime state")
 	_need(problems, not _def("lost_cat").is_empty() and not _def("zz_p13_owed").is_empty(), "new_game_started wiped the definitions")
 	_need(problems, qm.get_tracked().is_empty() and qm.get_active_count() == 0 and qm.get_completed_count() == 0, "the tracker / journal lists survived the new game")
-	var wired: bool = bus.new_game_started.get_connections().any(func(c: Dictionary) -> bool: return c["callable"].get_object() == qm and str(c["callable"].get_method()) == "reset")
+	var wired: bool = bus.reset_wave_started.get_connections().any(func(c: Dictionary) -> bool: return c["callable"].get_object() == qm and str(c["callable"].get_method()) == "reset")
 	_need(problems, wired, "QuestManager.reset is not connected to EventBus.new_game_started")
 	t.check("new_game_resets_runtime_and_keeps_definitions", problems.is_empty(), "reset() on new_game_started: active, completed, offered, owed rewards and flags gone, definitions stay: %s" % str(problems.slice(0, 3)))
 	# the Lua probes of the interpreter live in P10's tests/fixtures/lua and are replayed by data.lua_probes; the quest files must stay inside that subset

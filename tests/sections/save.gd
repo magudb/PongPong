@@ -531,7 +531,7 @@ func _test_api_surface() -> void:
 		"six manual slots 0..5, auto slot %d, payload version %d" % [sm.AUTO_SLOT, sm.PAYLOAD_VERSION])
 	# reset() is wired to new_game_started (core.new_game_wires_SaveManager asserts the same from the other side)
 	var wired := false
-	for c in bus.new_game_started.get_connections():
+	for c in bus.reset_wave_started.get_connections() + bus.new_game_started.get_connections():
 		if (c["callable"] as Callable).get_object() == sm:
 			wired = true
 	t.check("reset_wired_to_new_game", wired, "SaveManager.reset() is connected to new_game_started")
@@ -547,7 +547,7 @@ func _test_api_surface() -> void:
 	# every feature manager that registered itself follows the reset contract (connects reset() to new_game_started): vacuous
 	# until HomeManager / FurnitureManager / WardrobeManager / LootService exist, then it guards each of them
 	var connected := {}
-	for c in bus.new_game_started.get_connections():
+	for c in bus.reset_wave_started.get_connections() + bus.new_game_started.get_connections():
 		var target: Object = (c["callable"] as Callable).get_object()
 		if target != null:
 			connected[target] = true

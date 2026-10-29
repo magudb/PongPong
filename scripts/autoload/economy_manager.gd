@@ -106,7 +106,7 @@ func _ready() -> void:
 	arsenal = Arsenal.new()
 	arsenal.name = "Arsenal"
 	add_child(arsenal)
-	EventBus.new_game_started.connect(reset)
+	EventBus.reset_wave_started.connect(reset)
 	EventBus.day_started.connect(func(_day: int, _season: StringName) -> void: deliver_owed())
 	EventBus.player_spawned.connect(_on_player_spawned)   # a loaded world: its HUD is up to say so
 
@@ -114,7 +114,9 @@ func _ready() -> void:
 # ================================================================================================ new game
 
 ## A new run: starting gold, empty backpack, starter kit (silent), nothing equipped but the kit's best tools.
-func reset() -> void:
+func reset(origin: Dictionary = {}) -> void:
+	if origin.is_empty(): origin = EventBus.reset_origin()
+	if not EventBus.reset_current(origin): return
 	gold = _gold_of(_Svc.lua_config("economy.starting_gold", DEFAULT_STARTING_GOLD), DEFAULT_STARTING_GOLD)
 	inventory.clear()
 	owed.clear()
@@ -122,9 +124,12 @@ func reset() -> void:
 	equipment = _empty_equipment()
 	_misrouted = false
 	for entry in _starter_kit():
-		add_item(StringName(entry[0]), int(entry[1]), true)
-	_publish(&"player_inventory_changed", [get_inventory_dict()])
-	_publish(&"gold_changed", [gold, 0])
+		if not EventBus.reset_current(origin): return
+		add_item(StringName(entry[0]), int(entry[1]), true, origin)
+	if not EventBus.reset_current(origin): return
+	_publish(&"player_inventory_changed", [get_inventory_dict()], origin)
+	if not EventBus.reset_current(origin): return
+	_publish(&"gold_changed", [gold, 0], origin)
 
 
 ## The starter tools of lua/data/starter_kit.lua `starter_kit.tools` as [[id, amount], ...];
@@ -180,10 +185,12 @@ const PLAYER_SCOPED_EVENTS: Array[StringName] = [
 ]
 
 
-func _publish(event_name: StringName, args: Array) -> void:
+func _publish(event_name: StringName, args: Array, reset_origin: Dictionary = {}) -> void:
 	if event_name in PLAYER_SCOPED_EVENTS:
 		args = [PlayerRegistry.acting_id()] + args
-	after_transaction(func() -> void: EventBus.emit_signal.callv([event_name] + args))
+	after_transaction(func() -> void:
+		if not reset_origin.is_empty() and not EventBus.reset_current(reset_origin): return
+		EventBus.emit_signal.callv([event_name] + args))
 
 
 # ================================================================================================ gold
@@ -326,7 +333,8 @@ func _transaction_origin() -> Dictionary:
 func _transaction_current(origin: Dictionary) -> bool:
 	return SaveManager.continuation_available(origin.profile) and PlayerRegistry.acting_id() == origin.id and PlayerRegistry.peek_state(origin.id) == origin.profile and origin.stamp == SaveManager._save_owner_stamp()
 
-func add_item(item_id: StringName, amount: int = 1, silent: bool = false) -> bool:
+func add_item(item_id: StringName, amount: int = 1, silent: bool = false, reset_origin: Dictionary = {}) -> bool:
+	if not reset_origin.is_empty() and not EventBus.reset_current(reset_origin): return false
 	if amount <= 0 or item_id == &"":
 		return false
 	var origin := _transaction_origin()
@@ -344,7 +352,7 @@ func add_item(item_id: StringName, amount: int = 1, silent: bool = false) -> boo
 			# have replaced the run. Do not equip or announce into that replacement.
 			if not _transaction_current(origin): return true
 			_auto_equip(item_id,not silent)
-			_gained(item_id, amount, silent)
+			_gained(item_id, amount, silent, reset_origin)
 			return true
 	if item_def(item_id).is_empty():
 		_log_once("unknown item `%s` entered the backpack: no Lua def, no name and no price" % item_id)
@@ -356,7 +364,7 @@ func add_item(item_id: StringName, amount: int = 1, silent: bool = false) -> boo
 		_misrouted = true                 # its store does not exist yet: the item waits in the backpack to be adopted
 	_stack_into_backpack(item_id, amount)
 	_auto_equip(item_id,not silent)
-	_gained(item_id, amount, silent)
+	_gained(item_id, amount, silent, reset_origin)
 	return true
 
 
@@ -962,8 +970,8 @@ func _stack_into_backpack(item_id: StringName, amount: int, meta: Dictionary = {
 
 
 ## One successful add: the backpack signal always, the rest unless silent.
-func _gained(item_id: StringName, amount: int, silent: bool) -> void:
-	_publish(&"player_inventory_changed", [get_inventory_dict()])
+func _gained(item_id: StringName, amount: int, silent: bool, reset_origin: Dictionary = {}) -> void:
+	_publish(&"player_inventory_changed", [get_inventory_dict()], reset_origin)
 	if silent:
 		return
 	_publish(&"item_gained", [item_id, amount])

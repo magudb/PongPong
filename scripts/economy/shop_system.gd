@@ -78,7 +78,7 @@ var _logged: Dictionary = {}
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	EventBus.new_game_started.connect(reset)
+	EventBus.reset_wave_started.connect(reset)
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.lua_reloaded.connect(_on_lua_reloaded)
 
@@ -91,7 +91,9 @@ func _on_lua_reloaded() -> void:
 
 
 ## A new run: every shelf is full again, rotation counts are forgotten.
-func reset() -> void:
+func reset(origin: Dictionary = {}) -> void:
+	if origin.is_empty(): origin = EventBus.reset_origin()
+	if not EventBus.reset_current(origin): return
 	_stock.clear()
 	_bought_rot.clear()
 	_rotation_cache.clear()

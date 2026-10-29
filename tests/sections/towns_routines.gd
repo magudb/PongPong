@@ -115,7 +115,7 @@ func _festivals(t) -> void:
 	Routines.where_is("gardener_hoppe", ctx)
 	var asked: int = calls[0]
 	var bus: Node = t.autoload("EventBus")
-	var hooked: bool = bus.new_game_started.is_connected(Routines._end_session) and bus.load_completed.is_connected(Routines._end_loaded_session)
+	var hooked: bool = bus.reset_wave_started.is_connected(Routines._end_session) and bus.load_completed.is_connected(Routines._end_loaded_session)
 	Routines._end_session()
 	Routines.where_is("gardener_hoppe", ctx)
 	t.check("festival_posts_asked_again_in_a_new_run", hooked and calls[0] == asked + 1, "new game and load hooked %s; %d override calls, %d before the new run" % [hooked, calls[0], asked])

@@ -101,13 +101,15 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	rng.randomize()
 	SaveManager.register_section(SECTION, self, int(SaveManager.FEATURE_ORDERS.get(SECTION, 40)))
-	EventBus.new_game_started.connect(reset)
+	EventBus.reset_wave_started.connect(reset)
 	EventBus.game_event.connect(_on_game_event)
 	host_dungeon_floors()
 
 
 ## A new game: nothing found, nothing claimed, a new seed.
-func reset() -> void:
+func reset(origin: Dictionary = {}) -> void:
+	if origin.is_empty(): origin = EventBus.reset_origin()
+	if not EventBus.reset_current(origin): return
 	opened.clear()
 	claimed.clear()
 	wanderers.clear()
@@ -1009,8 +1011,8 @@ func host_dungeon_floors() -> bool:
 	add_child(node)
 	_floors_node = node
 	SaveManager.register_section(DUNGEON_SECTION, node, DUNGEON_SECTION_ORDER)
-	if node.has_method("reset") and not EventBus.new_game_started.is_connected(Callable(node, "reset")):
-		EventBus.new_game_started.connect(Callable(node, "reset"))
+	if node.has_method("reset") and not EventBus.reset_wave_started.is_connected(Callable(node, "reset")):
+		EventBus.reset_wave_started.connect(Callable(node, "reset"))
 	return true
 
 

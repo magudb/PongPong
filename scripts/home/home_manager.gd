@@ -77,7 +77,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	SaveManager.register_section("home", self, SaveManager.FEATURE_ORDERS["home"])
 	EventBus.day_started.connect(_on_day_started)
-	EventBus.new_game_started.connect(reset)
+	EventBus.reset_wave_started.connect(reset)
 	EventBus.dialogue_started.connect(_on_dialogue_started)
 	EventBus.dialogue_ended.connect(_on_dialogue_ended)
 	EventBus.player_inventory_changed.connect(_on_inventory_changed)
@@ -302,14 +302,18 @@ func _on_day_started(_day: int, _season: StringName) -> void:
 # ---------------------------------------------------------------------------------------------------------------- flags
 
 ## home_tier / home_building (and home_castle_built) always follow the state; home_upgrade_done is only written by finish_upgrade() and the builder dialogue.
-func _sync_flags() -> void:
+func _sync_flags(origin: Dictionary = {}) -> void:
+	if not origin.is_empty() and not EventBus.reset_current(origin): return
 	GameManager.set_flag(GameManager.FLAG_HOME_TIER, tier)
-	_sync_derived_flags()
+	if not origin.is_empty() and not EventBus.reset_current(origin): return
+	_sync_derived_flags(origin)
 
 
 ## home_building and home_castle_built are DERIVED from this section (the construction under way, the tier): always rewritten.
-func _sync_derived_flags() -> void:
+func _sync_derived_flags(origin: Dictionary = {}) -> void:
+	if not origin.is_empty() and not EventBus.reset_current(origin): return
 	GameManager.set_flag(GameManager.FLAG_HOME_BUILDING, int(construction["target"]) if is_under_construction() else 0)
+	if not origin.is_empty() and not EventBus.reset_current(origin): return
 	if castle_built():
 		GameManager.set_flag(FLAG_CASTLE_BUILT, true)
 	else:
@@ -733,7 +737,9 @@ func _format(template: String, args: Array) -> String:
 # ---------------------------------------------------------------------------------------------------------------- lifecycle and save section
 
 ## A new game (and a save without the section): a Skur, nothing under construction, an empty chest, no festival, no visits; the flags follow.
-func reset() -> void:
+func reset(origin: Dictionary = {}) -> void:
+	if origin.is_empty(): origin = EventBus.reset_origin()
+	if not EventBus.reset_current(origin): return
 	tier = 1
 	construction = {}
 	chest = {}
@@ -746,7 +752,8 @@ func reset() -> void:
 	_visits_owed = []
 	_dialogue_npc = &""
 	last_visit = {}
-	_sync_flags()
+	_sync_flags(origin)
+	if not EventBus.reset_current(origin): return
 	GameManager.set_flag(GameManager.FLAG_HOME_UPGRADE_DONE, 0)
 
 

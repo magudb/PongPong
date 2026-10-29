@@ -392,7 +392,7 @@ func _registration(t) -> void:
 	t.expect(names.count("home") == 1 and _sm.has_section("home"), "SaveManager has the section `home` exactly once")
 	t.expect(int(_sm.FEATURE_ORDERS["home"]) == 10 and _sm.section_names().find("home") > _sm.section_names().find("shops"), "order 10: after the built-in sections")
 	t.expect(_sm.section_node("home") == _hm, "the node behind the section is HomeManager")
-	t.expect(_bus.new_game_started.is_connected(_hm.reset), "reset() is wired to new_game_started by the manager itself")
+	t.expect(_bus.reset_wave_started.is_connected(_hm.reset), "reset() is wired to new_game_started by the manager itself")
 	t.expect(_bus.day_started.is_connected(_hm._on_day_started), "the morning handler listens to day_started")
 	t.expect(Fresh.FEATURE_NODES.has("HomeManager"), "the test helper Fresh resets HomeManager with the other feature managers")
 

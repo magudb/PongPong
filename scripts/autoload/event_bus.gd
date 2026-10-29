@@ -39,6 +39,23 @@ signal weather_changed(weather: StringName)
 
 # --- Run lifecycle ---
 signal new_game_started()
+## Internal mutating fanout. The public no-argument notification remains usable
+## by legacy emitters/observers; each synchronous emission owns its own origin.
+signal reset_wave_started(origin: Dictionary)
+
+func _ready() -> void:
+	new_game_started.connect(_reset_wave)
+
+func _reset_wave() -> void:
+	reset_wave_started.emit(reset_origin())
+
+## No ambient token: callers retain this exact origin through their callees.
+func reset_origin() -> Dictionary:
+	return {"stamp": SaveManager._save_owner_stamp(), "profile": PlayerRegistry.peek_state(&"p0")}
+
+func reset_current(origin: Dictionary) -> bool:
+	return NetAuthority.can_write() and origin.get("profile") == PlayerRegistry.peek_state(&"p0") and origin.get("stamp") == SaveManager._save_owner_stamp()
+
 signal modal_changed(stack: Array)
 
 # --- Farm ---

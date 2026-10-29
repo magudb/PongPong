@@ -16,11 +16,11 @@ var rows: Dictionary:
 
 func _ready() -> void:
 	# GameManager clears all rows before the new-game signal; ensure the host exists.
-	EventBus.new_game_started.connect(_on_new_game)
+	EventBus.reset_wave_started.connect(_on_new_game)
 
 
-func _on_new_game() -> void:
-	state()
+func _on_new_game(origin: Dictionary) -> void:
+	if EventBus.reset_current(origin): state()
 
 
 func state(player_id: StringName = &"p0") -> PlayerState:

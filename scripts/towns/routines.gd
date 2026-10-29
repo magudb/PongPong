@@ -52,7 +52,8 @@ static func clear_cache() -> void:
 
 
 ## The per-day memos belong to one run: a new game or a load (another seed, other hearts) starts them again.
-static func _end_session() -> void:
+static func _end_session(origin: Dictionary = {}) -> void:
+	if not origin.is_empty() and not EventBus.reset_current(origin): return
 	_fb.clear()
 	_plans.clear()
 	_plans_day = -1
@@ -69,7 +70,7 @@ static func _hook_session() -> void:
 	if bus == null:
 		return
 	_session_hooked = true
-	bus.connect("new_game_started", _end_session)
+	bus.connect("reset_wave_started", _end_session)
 	bus.connect("load_completed", _end_loaded_session)
 
 

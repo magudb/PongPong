@@ -58,7 +58,9 @@ func _ready() -> void:
 	reset()
 func _exit_tree() -> void:
 	_drain_tasks()
-func reset() -> void:
+func reset(origin: Dictionary = {}) -> void:
+	if origin.is_empty(): origin = EventBus.reset_origin()
+	if not EventBus.reset_current(origin): return
 	_invalidate()
 	world_seed = str(DungeonRng.hash_key("newgame",int(Time.get_unix_time_from_system()),Time.get_ticks_usec() & 0x7FFFFFFF))
 	seed_day = 0

@@ -22,7 +22,7 @@ var decorate_mode := false:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	SaveManager.register_section("furniture", self, SaveManager.FEATURE_ORDERS.furniture)
-	EventBus.new_game_started.connect(reset)
+	EventBus.reset_wave_started.connect(reset)
 	EventBus.home_upgraded.connect(func(_old, _new): rebuild_for_tier())
 
 func max_stack_of(id: Variant) -> int:
@@ -211,7 +211,9 @@ func perk_points(kind: String) -> float:
 func adopt_from_backpack() -> void:
 	EconomyManager.adopt_misrouted(ItemKinds.FURNITURE)
 
-func reset() -> void:
+func reset(origin: Dictionary = {}) -> void:
+	if origin.is_empty(): origin = EventBus.reset_origin()
+	if not EventBus.reset_current(origin): return
 	stock.clear()
 	orphans = {"stock": {}, "placed": []}
 	_build_grid()
@@ -219,6 +221,7 @@ func reset() -> void:
 	_last_hygge = -1
 	_last_level = -1
 	adopt_from_backpack()
+	if not EventBus.reset_current(origin): return
 	var kit := LuaData.dict(Svc.lua_config("starter_kit.furniture", {}))
 	for id in LuaData.strings(kit.get("placed", [])):
 		if count_total(id) == 0:

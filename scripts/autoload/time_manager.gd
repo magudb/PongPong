@@ -46,7 +46,7 @@ var season_growth_mod: Dictionary = {
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	EventBus.day_started.connect(_on_day_started)
-	EventBus.new_game_started.connect(reset)
+	EventBus.reset_wave_started.connect(reset)
 
 
 func _process(delta: float) -> void:
@@ -82,7 +82,9 @@ func set_time_scale(scale: float) -> void:
 
 
 ## New game: weather, clock accumulator and pause state back to the start of a run (day 1 is sunny).
-func reset() -> void:
+func reset(origin: Dictionary = {}) -> void:
+	if origin.is_empty(): origin = EventBus.reset_origin()
+	if not EventBus.reset_current(origin): return
 	if not NetAuthority.can_write(): return
 	_weather_seed = maxi(1,int(randi() & 0x7fffffff))
 	time_scale = 1.0

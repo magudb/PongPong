@@ -250,6 +250,8 @@ func _contract() -> Dictionary:
 	all_contract.merge(FEATURE_SIGNALS)
 	all_contract.merge(REVIEW_SIGNALS)
 	all_contract.merge(MULTIPLAYER_SIGNALS)
+	# Internal lexical reset fanout; public new_game_started keeps arity zero.
+	all_contract["reset_wave_started"] = "origin:Dictionary"
 	return all_contract
 
 
@@ -699,7 +701,7 @@ func _test_new_game() -> void:
 	var wired := 0
 	var pending: Array[String] = []
 	var connected := {}
-	for c in bus.new_game_started.get_connections():
+	for c in bus.reset_wave_started.get_connections():
 		var owner_obj: Object = (c["callable"] as Callable).get_object()
 		if owner_obj != null:
 			connected[owner_obj] = true

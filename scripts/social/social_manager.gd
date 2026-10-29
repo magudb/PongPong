@@ -101,7 +101,7 @@ var director_path: String = DIRECTOR
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_process(false)
-	EventBus.new_game_started.connect(reset)
+	EventBus.reset_wave_started.connect(reset)
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.time_of_day_changed.connect(_on_time_changed)
 	EventBus.load_completed.connect(_on_load_completed)
@@ -1340,7 +1340,9 @@ func validate_dict(d: Dictionary) -> bool:
 
 ## A new game (and a save without the section): points are re-seeded from the flags friend_<npc> so the old hearts-only saves keep their hearts; the weekly
 ## chat of a heart that was given in the week of friend_last_<npc> counts as taken.
-func reset() -> void:
+func reset(origin: Dictionary = {}) -> void:
+	if origin.is_empty(): origin = EventBus.reset_origin()
+	if not EventBus.reset_current(origin): return
 	_living = Svc.static_call(LIVING_STATE, &"empty", [], {})
 	_rows.clear()
 	_seen.clear()
