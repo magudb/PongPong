@@ -295,28 +295,31 @@ func start_new_game(p_name: String, p_type: CharacterType, p_farm: String = "", 
 	hour = day_start_hour()
 	minute = 0
 	PlayerRegistry.reset_states()
+	# Own intentional replacement precedes all public callbacks. A supported
+	# roster reset can replace this profile without changing the save stamp.
+	var lifecycle_profile := PlayerRegistry.peek_state(&"p0")
 	var dropped: Array = world_flags.keys()
 	world_flags.clear()
 	# Current runs owe Lyra's authored welcome even if a service portrait
 	# completes the lottery before the first physical meeting. Loaded legacy
 	# saves do not pass here, so genuinely completed old records stay final.
 	set_flag(&"mayor_welcome_pending", true)
-	if lifecycle_owner != SaveManager._save_owner_stamp(): return
+	if lifecycle_owner != SaveManager._save_owner_stamp() or PlayerRegistry.peek_state(&"p0") != lifecycle_profile: return
 	set_flag(FLAG_INTRO_PENDING, true)
-	if lifecycle_owner != SaveManager._save_owner_stamp(): return
+	if lifecycle_owner != SaveManager._save_owner_stamp() or PlayerRegistry.peek_state(&"p0") != lifecycle_profile: return
 	for key in dropped:
 		if key not in [FLAG_INTRO_PENDING, &"mayor_welcome_pending"]:
 			EventBus.flag_changed.emit(StringName(str(key)), false)   # the new run resets a flag
-			if lifecycle_owner != SaveManager._save_owner_stamp(): return
+			if lifecycle_owner != SaveManager._save_owner_stamp() or PlayerRegistry.peek_state(&"p0") != lifecycle_profile: return
 	unlocked_zones.assign(_default_zones())
 	discovered_locations.clear()
 	play_time_seconds = 0.0
 	_base_phase = GamePhase.PLAYING
 	_drop_modals()
-	if lifecycle_owner != SaveManager._save_owner_stamp(): return
+	if lifecycle_owner != SaveManager._save_owner_stamp() or PlayerRegistry.peek_state(&"p0") != lifecycle_profile: return
 	# the skin is final here; the reset wave of every other system comes last
 	EventBus.player_character_changed.emit(PlayerRegistry.local_id(), character_skin)
-	if lifecycle_owner != SaveManager._save_owner_stamp(): return
+	if lifecycle_owner != SaveManager._save_owner_stamp() or PlayerRegistry.peek_state(&"p0") != lifecycle_profile: return
 	EventBus.new_game_started.emit()
 
 

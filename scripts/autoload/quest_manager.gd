@@ -570,6 +570,8 @@ func accept_quest(quest_id: StringName) -> bool:
 
 ## The part of accept_quest after the checks (the table-driven completability test also starts quests whose hidden Lua gate it cannot open).
 func _activate(quest_id: StringName, def: Dictionary) -> void:
+	var owner := _owner_ticket(PlayerRegistry.acting_id())
+	if owner.is_empty() or not _owner_current(owner): return
 	var rt := QuestRuntime.new()
 	rt.id = quest_id
 	rt.state = QuestState.ACTIVE
@@ -590,15 +592,18 @@ func _activate(quest_id: StringName, def: Dictionary) -> void:
 	active_quests[quest_id] = rt
 	offered_quests.erase(quest_id)
 	EventBus.quest_accepted.emit(PlayerRegistry.acting_id(), quest_id)
+	if not _owner_current(owner): return
 	EventBus.notification_posted.emit(
 		tr("NOTIF_QUEST_ACCEPTED_TITLE"),
 		get_title(quest_id),
 		"quest"
 	)
+	if not _owner_current(owner): return
 	_lua_notify("quest_accepted", quest_id)
+	if not _owner_current(owner): return
 	# what the player already owns / stands in counts from the first moment (have and state objectives)
-	if quest_id in active_quests:
-		_refresh_quest(quest_id)
+	if active_quests.get(quest_id) == rt:
+		_refresh_quest(quest_id, owner)
 
 
 func _can_start(quest_id: StringName) -> bool:
@@ -634,6 +639,8 @@ func _quest_context() -> Dictionary:
 
 
 func update_objective(quest_id: StringName, objective_id: StringName, amount: int = 1) -> void:
+	var owner := _owner_ticket(PlayerRegistry.acting_id())
+	if owner.is_empty() or not _owner_current(owner): return
 	if quest_id not in active_quests:
 		return
 	var rt: QuestRuntime = active_quests[quest_id]
@@ -646,11 +653,13 @@ func update_objective(quest_id: StringName, objective_id: StringName, amount: in
 	if obj["current"] >= obj["target"]:
 		obj["done"] = true
 	EventBus.quest_objective_updated.emit(PlayerRegistry.acting_id(), quest_id, objective_id, obj["current"], obj["target"])
-	_check_completion(quest_id)
+	if _owner_current(owner) and active_quests.get(quest_id) == rt: _check_completion(quest_id)
 
 
 ## Progress that is a VALUE (have / state objectives): set to `value` (0..target), done once the target is reached. Unchanged = no signal.
 func _set_progress(quest_id: StringName, objective_id: Variant, value: int) -> void:
+	var owner := _owner_ticket(PlayerRegistry.acting_id())
+	if owner.is_empty() or not _owner_current(owner): return
 	if quest_id not in active_quests:
 		return
 	var rt: QuestRuntime = active_quests[quest_id]
@@ -666,7 +675,7 @@ func _set_progress(quest_id: StringName, objective_id: Variant, value: int) -> v
 	if current >= int(obj["target"]):
 		obj["done"] = true
 	EventBus.quest_objective_updated.emit(PlayerRegistry.acting_id(), quest_id, StringName(str(objective_id)), current, obj["target"])
-	_check_completion(quest_id)
+	if _owner_current(owner) and active_quests.get(quest_id) == rt: _check_completion(quest_id)
 
 
 func can_complete_manual(quest_id: StringName, objective_id: StringName) -> bool:
@@ -913,8 +922,10 @@ func _on_lua_event(event_name: StringName, payload: Dictionary) -> void:
 
 
 func _on_day_started(_day: int, _season: StringName) -> void:
-	if not NetAuthority.can_write(): return
+	var owner := _owner_ticket(PlayerRegistry.acting_id())
+	if owner.is_empty() or not _owner_current(owner): return
 	for quest_id in active_quests.keys():
+		if not _owner_current(owner): return
 		if quest_id in active_quests:
 			_lua_notify("day_started", quest_id)
 
@@ -922,10 +933,11 @@ func _on_day_started(_day: int, _season: StringName) -> void:
 # =============================================================================================== event bindings
 
 func _on_item_gained(player_id: StringName, item_id: StringName, amount: int) -> void:
-	var row := PlayerRegistry.peek_state(player_id)
+	var owner := _owner_ticket(player_id)
+	if owner.is_empty(): return
 	_for_event_owner(player_id, func():
 		_dispatch(&"item_gained", {"item": str(item_id), "amount": amount})
-		if PlayerRegistry.peek_state(player_id) == row: _queue_refresh())
+		if _owner_current(owner): _queue_refresh())
 
 
 func _on_crop_planted(plot_id: StringName, crop_id: StringName) -> void:
@@ -967,8 +979,10 @@ func _on_npc_meeting_started(actor: Node) -> void:
 
 
 func _on_animal_adopted(animal_id: StringName, species: StringName) -> void:
-	_dispatch(&"animal_adopted", {"animal": str(animal_id), "species": str(species)})
-	_queue_refresh()
+	var owner := _owner_ticket(PlayerRegistry.acting_id())
+	if owner.is_empty(): return
+	_dispatch(&"animal_adopted", {"animal": str(animal_id), "species": str(species)}, owner)
+	if _owner_current(owner): _queue_refresh()
 
 
 func _on_animal_fed(animal_id: StringName, food_id: StringName) -> void:
@@ -980,8 +994,10 @@ func _on_animal_product_collected(animal_id: StringName, product_id: StringName,
 
 
 func _on_building_built(building_id: StringName, building_type: StringName) -> void:
-	_dispatch(&"building_built", {"building": str(building_id), "type": str(building_type)})
-	_queue_refresh()
+	var owner := _owner_ticket(PlayerRegistry.acting_id())
+	if owner.is_empty(): return
+	_dispatch(&"building_built", {"building": str(building_id), "type": str(building_type)}, owner)
+	if _owner_current(owner): _queue_refresh()
 
 
 func _on_enemy_defeated(enemy_id: StringName, kind: StringName, _loot: Array) -> void:
@@ -1006,9 +1022,12 @@ func _on_game_event(event_name: StringName, payload: Dictionary) -> void:
 ## The old id convention (objectives WITHOUT `on`): collect_<item> is fed by what a resource node dropped. Objectives with an `on` never
 ## read it (their item_gained already counts the drop: this is what the old double counting was).
 func _on_resource_depleted(_node_id: StringName, loot: Array) -> void:
+	var owner := _owner_ticket(PlayerRegistry.acting_id())
+	if owner.is_empty() or not _owner_current(owner): return
 	for entry in loot:
+		if not _owner_current(owner): return
 		if entry is Dictionary:
-			_dispatch(&"resource_loot", {"item": str((entry as Dictionary).get("id", "")), "amount": int((entry as Dictionary).get("amount", 1))})
+			_dispatch(&"resource_loot", {"item": str((entry as Dictionary).get("id", "")), "amount": int((entry as Dictionary).get("amount", 1))}, owner)
 
 
 func _on_furniture_changed(_reason: StringName) -> void:
@@ -1029,19 +1048,22 @@ func _on_friend_changed(player_id: StringName, _npc_id: StringName, _hearts: int
 
 ## One event, every active quest, every open objective. A turn-in (after_others) is judged on the state BEFORE the event, so the progress this
 ## very event made never lets it through; keys() copies everywhere because progress can complete (and erase) a quest in the middle of the loop.
-func _dispatch(kind: StringName, ctx: Dictionary) -> void:
-	if not NetAuthority.can_write(): return
+func _dispatch(kind: StringName, ctx: Dictionary, owner: Dictionary = {}) -> void:
+	if owner.is_empty(): owner = _owner_ticket(PlayerRegistry.acting_id())
+	if owner.is_empty() or not _owner_current(owner): return
 	if active_quests.is_empty():
 		return
 	_dispatch_depth += 1
 	for quest_id in active_quests.keys():
+		if not _owner_current(owner): break
 		if active_quests.has(quest_id):
-			_dispatch_to_quest(quest_id, kind, ctx)
+			_dispatch_to_quest(quest_id, kind, ctx, owner)
 	_dispatch_depth -= 1
-	_flush_missing()
+	if _owner_current(owner): _flush_missing()
+	elif _dispatch_depth == 0: _missing.clear()
 
 
-func _dispatch_to_quest(quest_id: StringName, kind: StringName, ctx: Dictionary) -> void:
+func _dispatch_to_quest(quest_id: StringName, kind: StringName, ctx: Dictionary, owner: Dictionary) -> void:
 	var rt: QuestRuntime = active_quests[quest_id]
 	var defs := _objective_defs(quest_id)
 	var others_done := _non_turn_ins_done(rt, defs)
@@ -1058,7 +1080,7 @@ func _dispatch_to_quest(quest_id: StringName, kind: StringName, ctx: Dictionary)
 			continue
 		hits.append([objective_id, step, od])
 	for hit in hits:
-		if not active_quests.has(quest_id) or active_quests[quest_id] != rt:
+		if not _owner_current(owner) or not active_quests.has(quest_id) or active_quests[quest_id] != rt:
 			return
 		var od_hit: Dictionary = hit[2]
 		_apply_hit(quest_id, hit[0], int(hit[1]), od_hit, ctx)
@@ -1225,11 +1247,13 @@ func _non_turn_ins_done(rt: QuestRuntime, defs: Dictionary) -> bool:
 ## Re-evaluates the derived objectives (have = true: the inventory count, on = "state": the query) of every active quest. Runs when a quest
 ## is accepted, on load, on the state signals and, coalesced to once per frame, after every inventory change; call it to settle a test.
 func refresh_objectives() -> void:
-	if not NetAuthority.can_write(): return
+	var owner := _owner_ticket(PlayerRegistry.acting_id())
+	if owner.is_empty() or not _owner_current(owner): return
 	_refresh_queued = false
 	for quest_id in active_quests.keys():
+		if not _owner_current(owner): return
 		if active_quests.has(quest_id):
-			_refresh_quest(quest_id)
+			_refresh_quest(quest_id, owner)
 
 
 func _queue_refresh() -> void:
@@ -1254,11 +1278,13 @@ func _run_refresh() -> void:
 		if _owner_current(ticket): PlayerRegistry.for_player(ticket.id, refresh_objectives)
 
 
-func _refresh_quest(quest_id: StringName) -> void:
+func _refresh_quest(quest_id: StringName, owner: Dictionary = {}) -> void:
+	if owner.is_empty(): owner = _owner_ticket(PlayerRegistry.acting_id())
+	if owner.is_empty() or not _owner_current(owner): return
 	var rt: QuestRuntime = active_quests[quest_id]
 	var defs := _objective_defs(quest_id)
 	for objective_id in rt.objectives.keys():
-		if not active_quests.has(quest_id) or active_quests[quest_id] != rt:
+		if not _owner_current(owner) or not active_quests.has(quest_id) or active_quests[quest_id] != rt:
 			return
 		var obj: Dictionary = rt.objectives[objective_id]
 		if bool(obj.get("done", false)):
@@ -1275,6 +1301,7 @@ func _refresh_quest(quest_id: StringName) -> void:
 			if not bool(GameManager.get_flag(StringName(str(od.completed_flag)), false)):
 				continue
 			value = int(obj["target"])
+		if not _owner_current(owner) or active_quests.get(quest_id) != rt: return
 		if value < 0:
 			continue
 		if bool(od.get("after_others", false)) and not _non_turn_ins_done(rt, defs):
