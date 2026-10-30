@@ -53,7 +53,9 @@ static func clear_cache() -> void:
 
 ## The per-day memos belong to one run: a new game or a load (another seed, other hearts) starts them again.
 static func _end_session(origin: Dictionary = {}) -> void:
-	if not origin.is_empty() and not EventBus.reset_current(origin): return
+	if not origin.is_empty():
+		var bus: Node = Svc.node("EventBus")
+		if bus == null or not bus.has_method("reset_current") or not bus.call("reset_current", origin): return
 	_fb.clear()
 	_plans.clear()
 	_plans_day = -1
