@@ -2,6 +2,17 @@ extends TTScreen
 ## NPCs and event scenes await the same modal lifetime; text takes no keyboard focus.
 signal session_finished(result: Dictionary)
 signal choice_selected(action: String, data: Dictionary)
+
+## A shared screen's completion belongs to one request, never to a global
+## notification. The result is committed before any close/choice observer.
+class Request extends RefCounted:
+	signal resolved
+	var result: Dictionary = {}
+	var shown := 0
+	var displaying := false
+	var notified := false
+
+var _request: Request
 const Portraits := preload("res://scripts/ui/theme/tt_portraits.gd")
 ## Accept / interact presses are ignored this long after the choices appear (UX-12): a player tapping E through the lines must SEE the
 ## choices before a press can answer one, instead of the next tap committing the first choice unseen. Mouse clicks on a choice are aimed
@@ -53,10 +64,22 @@ func _initial_focus() -> Control:
 	return _buttons[0] if not _buttons.is_empty() else null
 
 func show_lines(speaker: Dictionary, lines: Array, choices: Array = []) -> Dictionary:
-	# Resolve the old await before starting the next one.
-	if _session:
-		_finish(false)
+	return await wait_request(request_lines(speaker, lines, choices))
+
+## Reserve ownership BEFORE retiring the previous request: its observers may
+## synchronously replace even this not-yet-displayed request.
+func create_request() -> Request:
+	return Request.new()
+
+func request_lines(speaker: Dictionary, lines: Array, choices: Array = [], prepared: Request = null) -> Request:
+	var ticket := prepared if prepared != null else create_request()
+	if not ticket.result.is_empty() or ticket == _request: return ticket
+	var previous := _request
+	_request = ticket
 	_generation += 1
+	if previous != null:
+		_finish_request(previous, false)
+	if _request != ticket or not ticket.result.is_empty(): return ticket
 	_speaker = speaker.duplicate(true)
 	_lines = lines.duplicate(true)
 	_choices = choices.duplicate(true)
@@ -64,18 +87,28 @@ func show_lines(speaker: Dictionary, lines: Array, choices: Array = []) -> Dicti
 	_line_name_key = ""
 	_shown = 0
 	_session = true
+	ticket.displaying = true
 	%TextLabel.text = ""
 	_clear_choices()
+	if _request != ticket: return ticket
 	super.open()
+	if _request != ticket: return ticket
 	if not is_open():
-		# Refused (another modal is on top): nothing was shown or answered.
-		_session = false
-		return {"completed": false, "lines_shown": 0, "choice": {}, "refused": true}
-	# This frameless overlay dispatches advance in _input; the panel/choice buttons
-	# own GUI clicks. World actions remain guarded by the dialogue modal/phase.
+		_finish_request(ticket, false, {}, true)
+		return ticket
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_next_line()
-	return await session_finished
+	return ticket
+
+func wait_request(ticket: RefCounted) -> Dictionary:
+	if not ticket is Request: return {}
+	if ticket.result.is_empty(): await ticket.resolved
+	return ticket.result
+
+## Exact-ticket teardown; an old actor may not close a replacement page.
+func close_request(ticket: RefCounted) -> void:
+	if ticket is Request and _request == ticket:
+		_finish_request(ticket, false)
 
 func start_dialogue(speaker: Dictionary, lines: Array, choices: Array = []) -> Dictionary:
 	return await show_lines(speaker, lines, choices)
@@ -108,7 +141,10 @@ func _input(event: InputEvent) -> void:
 	super._input(event)
 
 func _next_line() -> void:
+	var ticket := _request
+	if ticket == null: return
 	_clear_choices()
+	if _request != ticket: return
 	_line += 1
 	if _line >= _lines.size():
 		if _choices.is_empty():
@@ -124,14 +160,19 @@ func _next_line() -> void:
 	_elapsed = 0
 	_typing = not text.is_empty()
 	_shown += 1
+	if _request != null: _request.shown = _shown
 	_voice_key = str(row.get("voice_key", ""))
 	_has_voice = LocalizationManager.is_da() and _voice_key != "" and AudioManager.voice_exists(_voice_key)
 	AudioManager.stop_voice()
+	if _request != ticket: return
 	if _has_voice:
 		AudioManager.play_voice(_voice_key)
+	if _request != ticket: return
 	%NextButton.visible = true
 	_refresh_texts()
+	if _request != ticket: return
 	EventBus.dialogue_line_shown.emit(%SpeakerLabel.text, text, _voice_key)
+	if _request != ticket: return
 	var focus := get_viewport().gui_get_focus_owner()
 	if focus != null:
 		focus.release_focus()
@@ -194,18 +235,44 @@ func _on_cancel() -> void:
 		close()
 
 func _finish(completed: bool, choice: Dictionary = {}) -> void:
-	if not _session:
-		return
-	_session = false
-	_generation += 1
-	_typing = false
-	_has_voice = false
-	AudioManager.stop_voice()
-	_clear_choices()
-	super.close()
-	if completed and not choice.is_empty():
-		choice_selected.emit(str(choice.get("action", "close")), choice.duplicate(true))
-	session_finished.emit({"completed": completed, "lines_shown": _shown, "choice": choice.duplicate(true)})
+	if _request != null:
+		_finish_request(_request, completed, choice)
+
+func _finish_request(ticket: Request, completed: bool, choice: Dictionary = {}, refused := false) -> void:
+	if not ticket.result.is_empty(): return
+	var picked := choice.duplicate(true)
+	_freeze(picked)
+	var result := {"completed": completed, "lines_shown": ticket.shown, "choice": picked}
+	if refused: result["refused"] = true
+	result.make_read_only()
+	ticket.result = result
+	if _request == ticket: _request = null
+	var successor := _request
+	if ticket.displaying:
+		ticket.displaying = false
+		_session = false
+		_typing = false
+		_has_voice = false
+		_clear_choices()
+		if _request == successor:
+			AudioManager.stop_voice()
+		if _request == successor:
+			super.close()
+	if completed and not picked.is_empty():
+		choice_selected.emit(str(picked.get("action", "close")), picked)
+	# Global signals are notifications, never receipts. Both run once even if
+	# a callback starts AND finishes a replacement request synchronously.
+	session_finished.emit(result)
+	ticket.notified = true
+	ticket.resolved.emit()
+
+static func _freeze(value: Variant) -> void:
+	if value is Dictionary:
+		for item in value.values(): _freeze(item)
+		value.make_read_only()
+	elif value is Array:
+		for item in value: _freeze(item)
+		value.make_read_only()
 
 func _exit_tree() -> void:
 	_finish(false)

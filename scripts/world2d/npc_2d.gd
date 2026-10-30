@@ -44,6 +44,7 @@ var _bubble_shown := "-"              # the kind the label shows now ("-" = neve
 var _bubble_queued := false
 var _talk_player: Node
 var _screen: Node
+var _ui_request: RefCounted
 var _act := &"idle"
 var _walk_generation := 0
 var _event_target := Vector2.ZERO
@@ -261,7 +262,13 @@ func interact(player: Node) -> void:
 	await _page(page)
 
 func _page(page: Dictionary) -> void:
-	var result: Dictionary = await _screen.show_lines({"id": str(npc_id), "name_key": display_name_key}, LuaData.arr(page.get("lines", [])), LuaData.arr(page.get("choices", [])))
+	var screen := _screen
+	var request: RefCounted = screen.create_request()
+	_ui_request = request
+	screen.request_lines({"id": str(npc_id), "name_key": display_name_key}, LuaData.arr(page.get("lines", [])), LuaData.arr(page.get("choices", [])), request)
+	var result: Dictionary = await screen.wait_request(request)
+	if _ui_request != request: return
+	_ui_request = null
 	if not is_talking:
 		return
 	var player := _talk_player
@@ -327,10 +334,13 @@ func handle_choice(action: String, data: Dictionary = {}) -> void:
 func _exit_tree() -> void:
 	_finish_walk(false)
 	if is_talking:
-		# Clear ownership before resuming the awaiting page on screen disposal.
+		# Capture the exact request before terminal callbacks can open another.
+		var screen := _screen
+		var request := _ui_request
+		_ui_request = null
 		_end_talk(0, false)
-		if is_instance_valid(_screen) and _screen.is_open():
-			_screen.close()
+		if is_instance_valid(screen) and request != null:
+			screen.close_request(request)
 	_walk_generation += 1
 
 func set_driven(enabled: bool) -> void:
