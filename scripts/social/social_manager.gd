@@ -407,10 +407,18 @@ func talked_today(npc: Variant) -> bool:
 ## Esc after the first line is not). The FIRST FINISHED conversation of a calendar week (Monday..Sunday) gives exactly one heart (the DF3 floor); the daily
 ## greeting and every further chat of the week give nothing. ONE combined toast (heart, stage-up, keeper sample). Returns {weekly_heart}.
 func on_conversation_finished(npc: Variant, lines_shown: int, completed: bool = true) -> Dictionary:
+	return conversation_finished_owned(npc, lines_shown, completed, EventBus.interaction_origin())
+
+## The whole weekly completion owns one origin, not only its points leaf.
+func conversation_finished_owned(npc: Variant, lines_shown: int, completed: bool, origin: Dictionary) -> Dictionary:
+	if not EventBus.interaction_current(origin): return {"weekly_heart": false}
 	var id := str(npc)
 	if not can_befriend(id) or lines_shown < SocialData.cfg_int("chat_min_lines", 1):
 		return {"weekly_heart": false}
+	if not EventBus.interaction_current(origin): return {"weekly_heart": false}
 	var row := _row(id)
+	var grant := _grant_origin(id, row)
+	if not _conversation_current(origin, grant): return {"weekly_heart": false}
 	row["gt"] = today()
 	row["bk"] = 1                                          # you know their birthday once you have talked
 	if not completed:
@@ -421,24 +429,33 @@ func on_conversation_finished(npc: Variant, lines_shown: int, completed: bool = 
 	if LuaData.int_of(row["wk"], -1) != week():
 		row["wk"] = week()
 		GameManager.set_flag(StringName("friend_last_" + id), today())
+		if not _conversation_current(origin, grant): return {"weekly_heart": got}
 		var r := add_points(id, SocialData.cfg_int("chat_points", 100), &"chat", {"toast": false})
 		got = bool(r.get("ok", false)) and int(r.get("gained", 0)) > 0
+		if not _conversation_current(origin, grant): return {"weekly_heart": got}
 		if got:
 			parts.append(_t("SOC_SYS_TOAST_HEART_FMT", [_name_of(id), hearts(id), heart_cap()]))
 			if stage(id) != stage_before:
 				parts.append(_stage_line(id, stage(id)))
-			var sample := _keeper_sample(id)
+			var sample := _keeper_sample(id, origin, grant)
+			if not _conversation_current(origin, grant): return {"weekly_heart": got}
 			if sample != "":
 				parts.append(sample)
+	if not _conversation_current(origin, grant): return {"weekly_heart": got}
 	EventBus.game_event.emit(EV_CHAT, {"npc": id, "weekly_heart": got})
+	if not _conversation_current(origin, grant): return {"weekly_heart": got}
 	if not parts.is_empty():
 		_toast(_t("SOC_SYS_TOAST_TITLE"), "\n".join(parts))
 	return {"weekly_heart": got}
 
 
+func _conversation_current(origin: Dictionary, grant: Dictionary) -> bool:
+	return EventBus.interaction_current(origin) and _grant_current(grant)
+
 ## The weekly keeper sample: with the weekly heart of a SHOPKEEPER whose citizens row names a sample {item, from_hearts} and hearts >= from_hearts, ONE
 ## cheap item is handed over through EconomyManager (the data and its price limits are S-data's). Returns the toast line, "" when nothing was given.
-func _keeper_sample(npc: String) -> String:
+func _keeper_sample(npc: String, origin: Dictionary, grant: Dictionary) -> String:
+	if not _conversation_current(origin, grant): return ""
 	var sample := SocialData.sample_of(npc)
 	var item := str(sample.get("item", ""))
 	if item == "" or hearts(npc) < LuaData.int_of(sample.get("from_hearts", 0)):
@@ -446,7 +463,9 @@ func _keeper_sample(npc: String) -> String:
 	var eco := Svc.node("EconomyManager")
 	if eco == null or not eco.has_method("add_item") or not bool(eco.call("add_item", StringName(item), 1, true)):
 		return ""
+	if not _conversation_current(origin, grant): return ""
 	var def: Variant = eco.call("item_def", item) if eco.has_method("item_def") else {}
+	if not _conversation_current(origin, grant): return ""
 	var item_name := _t(str(LuaData.dict(def).get("name_key", "ITEM_" + item.to_upper())))
 	return _t("SOC_SYS_TOAST_SAMPLE_FMT", [_name_of(npc), item_name])
 

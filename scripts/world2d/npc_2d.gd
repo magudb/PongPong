@@ -350,7 +350,7 @@ func _end_talk(lines: int, completed: bool, expected: RefCounted = null) -> void
 	if is_instance_valid(player) and player.has_method("end_talk"): player.end_talk()
 	if EventBus.interaction_current(origin):
 		PlayerRegistry.for_player(origin.recipient.player_id, func():
-			SocialManager.on_conversation_finished(str(npc_id), lines, completed))
+			SocialManager.conversation_finished_owned(str(npc_id), lines, completed, origin))
 	EventBus.publish_dialogue_ended(origin, attachment)
 	if _talk_attachment != null: return
 	set_act("hover" if bool(_row.get("hover", false)) else "idle")
