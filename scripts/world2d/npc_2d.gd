@@ -286,7 +286,7 @@ func _page(page: Dictionary, origin: Dictionary, attachment: RefCounted, screen:
 	# Earned page effects belong to the original profile, not body presence.
 	if EventBus.interaction_current(origin):
 		PlayerRegistry.for_player(origin.recipient.player_id, func():
-			NpcDialogue.finish(str(npc_id), page, result))
+			NpcDialogue.finish_owned(str(npc_id), page, result, origin))
 	_end_talk(int(result.get("lines_shown", 0)), bool(result.get("completed", false)), attachment)
 	if not EventBus.interaction_current(origin): return
 	PlayerRegistry.for_player(origin.recipient.player_id, func():

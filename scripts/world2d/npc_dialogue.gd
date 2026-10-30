@@ -76,8 +76,14 @@ static func begin(npc: String, page: Dictionary) -> void:
 ## Record the authored welcome only after it was read. Legacy active mayor-talk
 ## progress alone cannot prove this: the old tutorial flag hid that very page.
 static func finish(npc: String, page: Dictionary, result: Dictionary) -> void:
+	finish_owned(npc, page, result, EventBus.interaction_origin())
+
+## A completing page retains profile authority independently of its body.
+static func finish_owned(npc: String, page: Dictionary, result: Dictionary, origin: Dictionary) -> void:
+	if not EventBus.interaction_current(origin): return
 	if npc == "mayor_lyra" and bool(page.get("mayor_welcome", false)) and bool(result.get("completed", false)) and int(result.get("lines_shown", 0)) >= LuaData.arr(page.get("lines", [])).size():
 		GameManager.set_flag(&"mayor_welcome_seen", true)
+		if not EventBus.interaction_current(origin): return
 		GameManager.clear_flag(&"mayor_welcome_pending")
 
 ## Called after the dialogue's modal has ended. Returns whether to ask the next quiz question.
