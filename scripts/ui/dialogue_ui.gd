@@ -262,7 +262,10 @@ func _finish_request(ticket: Request, completed: bool, choice: Dictionary = {}, 
 		choice_selected.emit(str(picked.get("action", "close")), picked)
 	# Global signals are notifications, never receipts. Both run once even if
 	# a callback starts AND finishes a replacement request synchronously.
-	session_finished.emit(result)
+	# A refused open historically returns privately without a terminal notice.
+	# It still resolves this exact receipt; no request was displayed.
+	if not refused:
+		session_finished.emit(result)
 	ticket.notified = true
 	ticket.resolved.emit()
 

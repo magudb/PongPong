@@ -32,9 +32,35 @@ func run(t) -> void:
 	t.check("public_notifications_once", notices.size() == 2 and chosen == ["receipt_old"], "each terminal notice still delivered, including nested close")
 	t.check("receipt_recursive_immutable", old[0].is_read_only() and old[0].choice.is_read_only() and old[0].choice.nested.is_read_only())
 	await _close_reentry(t, ui)
+	await _refusal(t, ui)
 	await _line_reentry(t, ui)
 	await _actor_exit(t, ui)
+	await _screen_exit(t, ui)
 	await t.go_menu()
+
+func _screen_exit(t, ui: Node) -> void:
+	var out: Array = []
+	_show(ui, [{"text_key": "DLG_LYRA_HELLO"}], [], out)
+	var parent: Node = ui.get_parent()
+	parent.remove_child(ui)
+	t.check("screen_exit_resolves_exact_waiter", out.size() == 1 and not out[0].completed and out[0].lines_shown == 1 and not ui._session and not GameManager.is_modal_open(&"dialogue"))
+	parent.add_child(ui)
+	var future: Array = []
+	_show(ui, [{"text_key": "DLG_LYRA_HELLO"}], [], future)
+	ui.close()
+	t.check("screen_exit_future_request", future.size() == 1 and not future[0].completed and future[0].lines_shown == 1)
+
+func _refusal(t, ui: Node) -> void:
+	GameManager.push_modal(&"receipt_blocker")
+	var notices: Array = []
+	var out: Array = []
+	var on_finished := func(result): notices.append(result)
+	ui.session_finished.connect(on_finished)
+	_show(ui, [{"text_key": "DLG_LYRA_HELLO"}], [], out)
+	ui.session_finished.disconnect(on_finished)
+	t.check("refusal_private_result", out.size() == 1 and out[0].get("refused", false) and not out[0].completed and out[0].lines_shown == 0 and not ui.is_open())
+	t.check("refusal_keeps_public_contract", notices.is_empty(), "legacy refused show_lines returns without public session_finished")
+	GameManager.pop_modal(&"receipt_blocker")
 
 func _close_reentry(t, ui: Node) -> void:
 	var lines := [{"text_key": "DLG_LYRA_HELLO"}]
