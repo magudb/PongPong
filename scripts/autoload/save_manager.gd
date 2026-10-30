@@ -819,9 +819,14 @@ func gather_payload() -> Dictionary:
 	if not NetAuthority.can_write(): return {}
 	var gather_owner := _save_owner_stamp()
 	var live_world := PlayerRegistry.world()
+	_gather_failures.clear()
+	# Refuse this incomplete live-world case before codecs can create/default
+	# a missing host profile. No body means no authoritative final pose/hotbar.
+	if live_world != null and live_world.has_method("save_body_available") and not live_world.call("save_body_available"):
+		_gather_failures.append("world")
+		return {}
 	if live_world != null and live_world.get("roster") != null: live_world.roster.capture_live_bodies(live_world)
 	var payload: Dictionary = {}
-	_gather_failures.clear()
 	for entry in _ordered_entries():
 		var node := _node_of(entry)
 		if node == null or not node.has_method("to_dict"):
@@ -838,8 +843,12 @@ func gather_payload() -> Dictionary:
 	for key in _carried_sections:
 		if not payload.has(key):
 			payload[key] = (_carried_sections[key] as Variant)
-	payload["world"] = _json_safe(_gather_world(), "world")
+	var world_data: Variant = _gather_world()
 	if not NetAuthority.can_write() or gather_owner != _save_owner_stamp(): return {}
+	if not world_data is Dictionary:
+		_gather_failures.append("world")
+		return {}
+	payload["world"] = _json_safe(world_data, "world")
 	if payload.get("players") is Dictionary:
 		var rows: Dictionary = payload.players.get("rows", {})
 		var local: Dictionary = rows.get(str(PlayerRegistry.local_id()), {})
@@ -862,14 +871,13 @@ func gather_payload() -> Dictionary:
 
 ## The live world's to_dict(); without a world (title screen, world not built yet after a load) the state that is still
 ## waiting in pending_world, so a save made in between does not lose the world.
-func _gather_world() -> Dictionary:
-	if not NetAuthority.can_write(): return {}
+## A live serializer's refusal must propagate, never fall back to stale pending data.
+func _gather_world() -> Variant:
+	if not NetAuthority.can_write(): return null
 	var tree := get_tree()
 	var world: Node = tree.get_first_node_in_group(&"world_2d") if tree != null else null
 	if world != null and world.has_method("to_dict"):
-		var data: Variant = world.call("to_dict")
-		if typeof(data) == TYPE_DICTIONARY:
-			return data
+		return world.call("to_dict")
 	return pending_world.duplicate(true)
 
 

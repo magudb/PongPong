@@ -1072,9 +1072,18 @@ func get_area_flag(area_id: StringName, key: String, default_value: Variant = nu
 
 # ------------------------------------------------------------------ save / load
 
+## A live world needs its actual registered host body. Profile defaults or an old
+## captured roster pose cannot prove the departed body's final position/hotbar.
+## This is callback-free and noncreating, also used before section gather.
+func save_body_available() -> bool:
+	return is_instance_valid(player) and player_by_id(&"p0") == player
+
 ## The world part of a save (SaveManager hands it back through pending_world): area id, player position, crops, hotbar, placed
 ## items and per-area flags. Everything is JSON-safe (vectors as arrays).
-func to_dict() -> Dictionary:
+## Null explicitly refuses an incomplete live world; it is NOT an empty save.
+func to_dict() -> Variant:
+	if not save_body_available(): return null
+	var body: WeakRef = weakref(player)
 	var d: Dictionary = {
 		"v": 1,
 		"area": String(area.map.id),
@@ -1088,6 +1097,8 @@ func to_dict() -> Dictionary:
 		d["farm"] = farm.call("to_dict")
 	if greenhouse_farm != null:
 		d["greenhouse_farm"] = greenhouse_farm.to_dict()
+	# Farm codecs can synchronously depart/free or replace the original body.
+	if not save_body_available() or body.get_ref() != player: return null
 	var hb: Variant = player.get("hotbar") if "hotbar" in player else null
 	if hb is Object and (hb as Object).has_method("to_dict"):
 		d["hotbar"] = (hb as Object).call("to_dict")
