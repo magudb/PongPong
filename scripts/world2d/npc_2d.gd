@@ -250,11 +250,11 @@ func _interact_owned(player_ref: Variant, origin: Dictionary) -> void:
 		set_act("talk")
 		# Build before starts can synchronously complete a quest. Each boundary
 		# validates the SAME root; in-callee authored multi-writes are separate.
-		var ctx := NpcDialogue.context(str(npc_id), player)
+		var ctx := NpcDialogue.context_owned(str(npc_id), player, origin)
 		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return {}
-		var initial := NpcDialogue.build(str(npc_id), str(dialogue_id), ctx, guest)
+		var initial := NpcDialogue.build_owned(str(npc_id), str(dialogue_id), ctx, guest, origin)
 		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return {}
-		NpcDialogue.begin(str(npc_id), initial)
+		NpcDialogue.begin_owned(str(npc_id), initial, origin)
 		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return {}
 		EventBus.publish_dialogue_started(origin, npc_id, dialogue_id, attachment)
 		if _attached(attachment): EventBus.publish_npc_meeting(origin, self, attachment)
@@ -278,30 +278,9 @@ func _present_page(page: Dictionary, origin: Dictionary, attachment: RefCounted)
 	return request
 
 func _page(page: Dictionary, origin: Dictionary, attachment: RefCounted, screen: Node, request: RefCounted) -> void:
-	screen.request_lines({"id": str(npc_id), "name_key": display_name_key}, LuaData.arr(page.get("lines", [])), LuaData.arr(page.get("choices", [])), request)
-	var result: Dictionary = await screen.wait_request(request)
-	if _ui_request != request or not _attached(attachment): return
-	_ui_request = null
-	var player_ref: Variant = weakref(_talk_player) if is_instance_valid(_talk_player) else null
-	# Earned page effects belong to the original profile, not body presence.
-	if EventBus.interaction_current(origin):
-		PlayerRegistry.for_player(origin.recipient.player_id, func():
-			NpcDialogue.finish_owned(str(npc_id), page, result, origin))
-	_end_talk(int(result.get("lines_shown", 0)), bool(result.get("completed", false)), attachment)
-	if not EventBus.interaction_current(origin): return
-	PlayerRegistry.for_player(origin.recipient.player_id, func():
-		Bridge.finish_topic(str(npc_id), page, bool(result.get("completed", false)), int(result.get("lines_shown", 0)))
-		var player: Variant = player_ref.get_ref() if player_ref is WeakRef else null
-		if not EventBus.interaction_body_current(origin, self, player): return
-		var choice := LuaData.dict(result.get("choice", {}))
-		var action := str(choice.get("action", "close"))
-		var social := Bridge.action(str(npc_id), action, choice)
-		if not EventBus.interaction_body_current(origin, self, player): return
-		if bool(social.get("handled", false)):
-			if not LuaData.dict(social.get("page", {})).is_empty():
-				_owned_followup.call_deferred(player_ref, social.page, origin)
-		elif NpcDialogue.action(str(npc_id), action, choice, guest):
-			if EventBus.interaction_body_current(origin, self, player): _interact_owned.call_deferred(player_ref, origin))
+	# The completing receipt outlives this optional physical actor. Its static
+	# continuation retains only weak bodies/actors and the original profile.
+	NpcDialogue.present_owned(self, page, origin, attachment, screen, request)
 
 func _owned_followup(player_ref: Variant, page: Dictionary, origin: Dictionary) -> void:
 	var player: Variant = player_ref.get_ref() if player_ref is WeakRef else null
@@ -325,7 +304,7 @@ func _begin_followup(player: Variant, page: Dictionary, origin: Dictionary = {})
 		_talk_attachment = attachment
 		if player.has_method("begin_talk"): player.begin_talk(global_position)
 		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return
-		NpcDialogue.begin(str(npc_id), page)
+		NpcDialogue.begin_owned(str(npc_id), page, origin)
 		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return
 		EventBus.publish_dialogue_started(origin, npc_id, dialogue_id, attachment)
 		if _attached(attachment): EventBus.publish_npc_meeting(origin, self, attachment))

@@ -40,14 +40,21 @@ static func has_evidence(id: String) -> bool:
 	return threshold.has(id) and step() >= int(threshold[id])
 
 static func advance(expected: int) -> bool:
+	return advance_owned(expected, EventBus.interaction_origin())
+
+static func advance_owned(expected: int, origin: Dictionary) -> bool:
+	if not EventBus.interaction_current(origin): return false
 	if expected < 0 or expected >= STEPS.size() or step() != expected:
 		return false
+	if not EventBus.interaction_current(origin): return false
 	if expected == 6 and not bloom_ready():
 		return false
+	if not EventBus.interaction_current(origin): return false
 	# Store the date before publishing objective progress. A save from an
 	# objective listener then sees the complete watering transaction.
 	if expected == 5:
 		GameManager.set_flag(WATER_DAY, GameManager.total_day())
+		if not EventBus.interaction_current(origin): return false
 	return QuestManager.complete_manual(QUEST, StringName(STEPS[expected].id))
 
 static func choice(npc: String) -> Dictionary:
@@ -73,12 +80,15 @@ static func topic_page(npc: String) -> Dictionary:
 		"lines": [{"text_key": key}], "choices": [{"text_key": "REL_TALK_GOODBYE", "action": "close"}]}
 
 static func finish_topic(npc: String, page: Dictionary, completed: bool, shown: int) -> bool:
-	if not page.has("garden_step"):
+	return finish_topic_owned(npc, page, completed, shown, EventBus.interaction_origin())
+
+static func finish_topic_owned(npc: String, page: Dictionary, completed: bool, shown: int, origin: Dictionary) -> bool:
+	if not EventBus.interaction_current(origin) or not page.has("garden_step"):
 		return false
 	var expected := int(page.garden_step)
 	if completed and shown >= LuaData.arr(page.get("lines", [])).size() and str(page.get("garden_npc", "")) == npc:
 		if expected >= 0 and expected < STEPS.size() and str(STEPS[expected].get("npc", "")) == npc:
-			advance(expected)
+			advance_owned(expected, origin)
 	return true
 
 static func guide_key() -> String:

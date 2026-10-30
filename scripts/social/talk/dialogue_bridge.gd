@@ -3,6 +3,14 @@ extends RefCounted
 ## Pure dialogue decoration; topics commit only after their page is read.
 const TALK := preload("res://scripts/social/talk/social_talk.gd")
 
+static func _origin() -> Dictionary:
+	var bus := Svc.node("EventBus")
+	return bus.call("interaction_origin") if bus != null else {}
+
+static func _current(origin: Dictionary) -> bool:
+	var bus := Svc.node("EventBus")
+	return bus != null and bool(bus.call("interaction_current", origin))
+
 static func decorate(npc: String, dialogue: Dictionary, context: Dictionary = {}) -> Dictionary:
 	var out := dialogue.duplicate(true)
 	if out.get("social", true) == false:
@@ -86,12 +94,19 @@ static func topics(npc: String) -> Array[Dictionary]:
 	return out
 
 static func topic_page(npc: String) -> Dictionary:
+	return topic_page_owned(npc, _origin())
+
+static func topic_page_owned(npc: String, origin: Dictionary) -> Dictionary:
+	if not _current(origin): return {}
 	var options := topics(npc)
+	if not _current(origin): return {}
 	if options.is_empty():
 		return {}
 	var sm := Svc.node("SocialManager")
 	var row: Dictionary = sm.call("row_of", npc)
+	if not _current(origin): return {}
 	var chosen := mini(int(float(sm.call("roll", [npc, "topic", sm.call("today")])) * options.size()), options.size() - 1)
+	if not _current(origin): return {}
 	# Reveal each of the three loved items before rotating known topics.
 	var all: Array = Svc.lua_config("social_topics." + npc, [])
 	for i in options.size():
@@ -105,16 +120,27 @@ static func topic_page(npc: String) -> Dictionary:
 		"topic": topic, "topic_index": all.find(topic)}
 
 static func finish_topic(npc: String, page: Dictionary, completed: bool, lines_shown: int) -> bool:
-	if MotherStory.finish_topic(npc,page,completed,lines_shown): return true
-	if SecretGardenStory.finish_topic(npc, page, completed, lines_shown):
+	return finish_topic_owned(npc, page, completed, lines_shown, _origin())
+
+static func finish_topic_owned(npc: String, page: Dictionary, completed: bool, lines_shown: int, origin: Dictionary) -> bool:
+	if not _current(origin): return false
+	if MotherStory.finish_topic_owned(npc,page,completed,lines_shown,origin): return true
+	if not _current(origin): return false
+	if SecretGardenStory.finish_topic_owned(npc, page, completed, lines_shown, origin):
 		return true
+	if not _current(origin): return false
 	var sm := Svc.node("SocialManager")
 	if sm == null or not completed or lines_shown <= 0 or not page.has("topic"):
 		return false
 	var row: Dictionary = sm.call("row_of", npc)
-	if int(row.get("tp", 0)) == int(sm.call("today")):
+	if not _current(origin): return false
+	var today := int(sm.call("today"))
+	if not _current(origin): return false
+	if int(row.get("tp", 0)) == today:
 		return false
-	row["tp"] = sm.call("today")
+	var known_cap := SocialData.cfg_int("gifts.known_cap", 40)
+	if not _current(origin): return false
+	row["tp"] = today
 	var index := int(page.get("topic_index", -1))
 	if index >= 0:
 		row["rv"] = int(row.get("rv", 0)) | (1 << index)
@@ -122,7 +148,7 @@ static func finish_topic(npc: String, page: Dictionary, completed: bool, lines_s
 	var known := LuaData.dict(row.get("kn", {}))
 	known.erase(item)
 	known[item] = "love"
-	while known.size() > SocialData.cfg_int("gifts.known_cap", 40):
+	while known.size() > known_cap:
 		known.erase(known.keys()[0])
 	row["kn"] = known
 	return true
@@ -130,6 +156,10 @@ static func finish_topic(npc: String, page: Dictionary, completed: bool, lines_s
 ## Npc2D calls this after ending a page, so child modals never overlap the old page.
 ## Unknown actions still reach EventBus; this layer supplies the shared action data.
 static func action(npc: String, action_id: String, data: Dictionary) -> Dictionary:
+	return action_owned(npc, action_id, data, _origin())
+
+static func action_owned(npc: String, action_id: String, data: Dictionary, origin: Dictionary) -> Dictionary:
+	if not _current(origin): return {"handled": true}
 	match action_id:
 		"seek_hint":
 			return {"handled":true,"page":Svc.static_call("res://scripts/ghostfam/seek/hide_seek.gd",&"hint_page",[],{})}
@@ -148,7 +178,7 @@ static func action(npc: String, action_id: String, data: Dictionary) -> Dictiona
 			choices.append({"id": "close", "text_key": "REL_TALK_GOODBYE", "action": "close"})
 			return {"handled": true, "page": {"speaker": npc, "social": false, "lines": [], "choices": choices}}
 		"social_topic":
-			return {"handled": true, "page": topic_page(npc)}
+			return {"handled": true, "page": topic_page_owned(npc, origin)}
 		"give_gift":
 			var bus := Svc.node("EventBus")
 			if bus != null:

@@ -57,7 +57,12 @@ static func can_read(id: String) -> bool:
 	if id == "memory_map": return has(id) or MotherMemoryWork.complete("memory_lamp")
 	return MotherMemoryWork.complete(id)
 static func record(id: String) -> bool:
+	return record_owned(id, EventBus.interaction_origin())
+
+static func record_owned(id: String, origin: Dictionary) -> bool:
+	if not EventBus.interaction_current(origin): return false
 	if not can_read(id) or has(id): return false
+	if not EventBus.interaction_current(origin): return false
 	var changes := {"forest_mother_version":VERSION,PREFIX+id:GameManager.total_day()}
 	if id == "mother_fate":
 		# One commit owns the truth, refusal and keepsake. No inventory insert
@@ -66,25 +71,54 @@ static func record(id: String) -> bool:
 		changes[PREFIX+"role_refused"] = true
 		changes[PREFIX+"seed_tin_homeward"] = true
 	GameManager.set_flags(changes)
-	sync()
+	# The atomic evidence commit is earned even when its observer supersedes
+	# the operation. Only the remaining projection/save/notification is revoked.
+	if not EventBus.interaction_current(origin): return true
+	sync_owned(origin)
+	if not EventBus.interaction_current(origin): return true
 	SaveManager.autosave()
-	EventBus.game_event.emit(&"forest_mother_evidence",{"id":id,"chapter":chapter(),"version":VERSION})
+	if not EventBus.interaction_current(origin): return true
+	var current_chapter := chapter()
+	if not EventBus.interaction_current(origin): return true
+	EventBus.game_event.emit(&"forest_mother_evidence",{"id":id,"chapter":current_chapter,"version":VERSION})
 	return true
+
 static func sync() -> void:
-	if _syncing or not enabled(): return
+	sync_owned(EventBus.interaction_origin())
+
+static func sync_owned(origin: Dictionary) -> void:
+	if _syncing or not EventBus.interaction_current(origin) or not enabled(): return
+	if not EventBus.interaction_current(origin): return
 	_syncing = true
+	_sync_chapters_owned(origin)
+	_syncing = false
+
+## Keep unwind outside the cancellable loop; a refused suffix must not strand
+## future genuine work, nor latch a temporary failed-load barrier.
+static func _sync_chapters_owned(origin: Dictionary) -> void:
 	GameManager.set_flag(&"forest_mother_version",VERSION)
+	if not EventBus.interaction_current(origin): return
 	for row in CHAPTERS:
+		if not EventBus.interaction_current(origin): return
 		var quest := quest_id(row.id)
 		if QuestManager.is_completed(quest): continue
+		if not EventBus.interaction_current(origin): return
 		if not QuestManager.is_active(quest):
+			if not EventBus.interaction_current(origin): return
 			GameManager.set_flag(StringName("forest_mother_ready_"+str(row.id)),true)
+			if not EventBus.interaction_current(origin): return
 			QuestManager.accept_quest(quest)
+			if not EventBus.interaction_current(origin): return
 		for id in row.needs:
-			if has(id): QuestManager.complete_manual(quest,StringName(id))
-		if row.has("boss_floor") and boss_cleared(row.boss_floor): QuestManager.complete_manual(quest,&"checkpoint")
+			if not EventBus.interaction_current(origin): return
+			if has(id):
+				QuestManager.complete_manual(quest,StringName(id))
+				if not EventBus.interaction_current(origin): return
+		if row.has("boss_floor") and boss_cleared(row.boss_floor):
+			if not EventBus.interaction_current(origin): return
+			QuestManager.complete_manual(quest,&"checkpoint")
+			if not EventBus.interaction_current(origin): return
 		if not QuestManager.is_completed(quest): break
-	_syncing = false
 static func chapter() -> String:
 	for row in CHAPTERS:
 		if not QuestManager.is_completed(quest_id(row.id)): return row.id
@@ -120,7 +154,11 @@ static func topic_page(npc: String) -> Dictionary:
 	if evidence != "": key = "FM_E_"+evidence.to_upper()+"_TEXT"
 	return {"speaker":npc,"social":false,"mother_npc":npc,"mother_evidence":evidence,"lines":[{"text_key":key},{"text_key":"FM_RECORD_ACCOUNT" if evidence != "" else next_lead()}],"choices":[{"text_key":"REL_TALK_GOODBYE","action":"close"}]}
 static func finish_topic(npc: String,page: Dictionary,completed: bool,shown: int) -> bool:
-	if not page.has("mother_npc"): return false
+	return finish_topic_owned(npc, page, completed, shown, EventBus.interaction_origin())
+
+static func finish_topic_owned(npc: String,page: Dictionary,completed: bool,shown: int,origin: Dictionary) -> bool:
+	if not EventBus.interaction_current(origin) or not page.has("mother_npc"): return false
 	var id := str(page.get("mother_evidence",""))
-	if completed and shown >= LuaData.arr(page.get("lines",[])).size() and str(page.mother_npc) == npc and id != "" and id == _npc_evidence(npc): record(id)
+	if completed and shown >= LuaData.arr(page.get("lines",[])).size() and str(page.mother_npc) == npc and id != "" and id == _npc_evidence(npc):
+		if EventBus.interaction_current(origin): record_owned(id, origin)
 	return true
