@@ -64,6 +64,8 @@ var _claiming_gifts := false
 var _visit_day: int = 0                     # total day of the last guest visit (idempotence, never saved)
 var _visit: Dictionary = {}                 # {npc, item, week, index} of that visit
 var _dialogue_npc: StringName = &""
+var _dialogue_origin: Dictionary = {}
+var _dialogue_attachment: RefCounted
 var _dialogue_done_at_start: int = 0
 var _captured_loot: Array = []              # results of the loot_rolled signal seen while a visit container is opened
 var _loot_reason: String = ""               # LootService's reason for the last visit container ("" = a find, "nothing" = it was empty, else why it refused)
@@ -78,8 +80,8 @@ func _ready() -> void:
 	SaveManager.register_section("home", self, SaveManager.FEATURE_ORDERS["home"])
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.reset_wave_started.connect(reset)
-	EventBus.dialogue_started.connect(_on_dialogue_started)
-	EventBus.dialogue_ended.connect(_on_dialogue_ended)
+	EventBus.interaction_started.connect(_on_dialogue_started)
+	EventBus.interaction_ended.connect(_on_dialogue_ended)
 	EventBus.player_inventory_changed.connect(_on_inventory_changed)
 
 
@@ -320,15 +322,21 @@ func _sync_derived_flags(origin: Dictionary = {}) -> void:
 		GameManager.clear_flag(FLAG_CASTLE_BUILT)
 
 
-func _on_dialogue_started(npc_id: StringName, _dialogue_id: StringName) -> void:
+func _on_dialogue_started(origin: Dictionary, npc_id: StringName, _dialogue_id: StringName, attachment: RefCounted) -> void:
+	if attachment == null or not EventBus.interaction_current(origin): return
+	_dialogue_origin = origin
+	_dialogue_attachment = attachment
 	_dialogue_npc = npc_id
 	_dialogue_done_at_start = GameManager.flag_int(GameManager.FLAG_HOME_UPGRADE_DONE, 0)
 
 
 ## The builder has had her celebration line (the dialogue branch reads home_upgrade_done): the flag goes back to 0. A tier that finished DURING the
 ## dialogue keeps its flag (the builder has not said anything about it yet).
-func _on_dialogue_ended() -> void:
+func _on_dialogue_ended(origin: Dictionary, attachment: RefCounted) -> void:
+	if attachment == null or attachment != _dialogue_attachment or origin != _dialogue_origin or not EventBus.interaction_current(origin): return
 	var talked_to := _dialogue_npc
+	_dialogue_attachment = null
+	_dialogue_origin = {}
 	_dialogue_npc = &""
 	if str(talked_to) != str(_HomeData.config().get("builder_npc", "fairy_builder")):
 		return
@@ -751,6 +759,8 @@ func reset(origin: Dictionary = {}) -> void:
 	_visit = {}
 	_visits_owed = []
 	_dialogue_npc = &""
+	_dialogue_attachment = null
+	_dialogue_origin = {}
 	last_visit = {}
 	_sync_flags(origin)
 	if not EventBus.reset_current(origin): return
@@ -819,6 +829,8 @@ func from_dict(d: Dictionary) -> bool:
 			_visits_owed.append({"week": owed_week, "index": owed_index, "npc": str(owed.get("npc", ""))})
 	last_visit = {}
 	_dialogue_npc = &""
+	_dialogue_attachment = null
+	_dialogue_origin = {}
 	# home_tier, home_building and home_castle_built are MIRRORS of this section: always rewritten from it, so a flag that disagrees with the tier (a
 	# damaged save, an old writer) can never make the gates that read the flag disagree with the ones that read `tier` (ARCH-07); home_upgrade_done is present.
 	_sync_flags()

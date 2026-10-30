@@ -124,9 +124,9 @@ func _guardians(t) -> void:
 		t.check("prior_victory_counts_" + str(id), qm.get_objective_progress(&"bossernes_vej", id).done)
 	t.check("guardian_report_still_required", not qm.is_completed(&"bossernes_vej"))
 	var gold: int = eco.gold
-	EventBus.dialogue_started.emit(&"guard_oak", &"guard_oak")
+	EventBus.start_dialogue(&"guard_oak", &"guard_oak")
 	t.check("guardian_report_pays_once", qm.is_completed(&"bossernes_vej") and eco.gold == gold + 800)
-	EventBus.dialogue_started.emit(&"guard_oak", &"guard_oak")
+	EventBus.start_dialogue(&"guard_oak", &"guard_oak")
 	t.check("repeated_guardian_report_cannot_pay_twice", eco.gold == gold + 800)
 
 func _story_work(t) -> void:

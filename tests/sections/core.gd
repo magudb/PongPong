@@ -93,6 +93,9 @@ const FEATURE_SIGNALS := {
 ## The devin-review fix round: flags are event-driven (IsoArea used to poll them at 4 Hz). The 2026-10-19 review: a Lua reload
 ## (F9) tells the systems that copied Lua data (LUA-03).
 const REVIEW_SIGNALS := {
+	"interaction_started": "origin:Dictionary,npc_id:StringName,dialogue_id:StringName,attachment:RefCounted",
+	"interaction_meeting": "origin:Dictionary,actor:Nil,attachment:RefCounted",
+	"interaction_ended": "origin:Dictionary,attachment:RefCounted",
 	"npc_meeting_started": "actor:Node",
 	"flag_changed": "flag:StringName,value:Nil",
 	"save_failed": "slot:int,code:String",

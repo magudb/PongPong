@@ -185,7 +185,7 @@ static func legacy_saves(t) -> void:
 		if state != "absent":
 			qm.accept_quest(&"intro_lottery")
 		if state == "met":
-			bus.dialogue_started.emit(&"mayor_lyra", &"mayor_lyra")
+			bus.start_dialogue(&"mayor_lyra", &"mayor_lyra")
 		if state == "completed":
 			qm.complete_quest(&"intro_lottery")
 		# These are the actual flags written by the old opening in a v3 file.

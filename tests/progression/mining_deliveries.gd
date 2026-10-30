@@ -63,7 +63,7 @@ static func hand_in(t, quest: StringName, needs: Dictionary, cave := false) -> v
 	var reenter := func(_pid, q):
 		if q == quest:
 			completions.append(q)
-			bus.npc_meeting_started.emit(smith)
+			bus.start_npc_meeting(smith)
 	bus.quest_completed.connect(reenter)
 	smith.interact(t.player())
 	var expected := {}
@@ -158,12 +158,12 @@ static func service_offer(t, ready: StringName, offered: StringName, service: St
 	t.check(label + "_opening_offer_cannot_hand_in", qm.to_dict() == before and eco.to_dict() == economy)
 	# Neither a borrowed NPC id nor a service node nor an idle real smith owns
 	# a physical meeting. Exercise the consumer's source/ownership boundary.
-	bus.dialogue_started.emit(&"smith_thorin", &"smith_thorin")
-	bus.npc_meeting_started.emit(owner)
+	bus.start_dialogue(&"smith_thorin", &"smith_thorin")
+	bus.start_npc_meeting(owner)
 	var idle := Npc2D.create({"id": "smith_thorin", "wander": "0"})
 	idle.area = t.world().area
 	t.world().area.objects.add_child(idle)
-	bus.npc_meeting_started.emit(idle)
+	bus.start_npc_meeting(idle)
 	idle.queue_free()
 	t.check(label + "_unowned_sources_cannot_hand_in", qm.to_dict() == before and eco.to_dict() == economy)
 	if decision == "cancel":
@@ -211,7 +211,7 @@ static func invalid_owner(t, producer: String) -> void:
 		# conversation owner must resolve to the registered body, not its id.
 		smith.is_talking = true
 		smith._talk_player = fake
-		bus.npc_meeting_started.emit(smith)
+		bus.start_npc_meeting(smith)
 	t.check("invalid_" + producer + "_unregistered_owner_refused", _owner_state(t, &"p0") == before)
 	if producer != "consumer":
 		t.check("invalid_" + producer + "_cannot_open_conversation", not smith.is_talking and not t.tree.get_first_node_in_group("dialogue_ui").is_open())
@@ -230,7 +230,7 @@ static func invalid_owner(t, producer: String) -> void:
 		else:
 			smith.is_talking = true
 			smith._talk_player = invalid
-			bus.npc_meeting_started.emit(smith)
+			bus.start_npc_meeting(smith)
 		t.check("invalid_" + producer + "_null_or_nonplayer_refused", _owner_state(t, &"p0") == before and not t.tree.get_first_node_in_group("dialogue_ui").is_open())
 	ordinary.queue_free()
 	smith._talk_player = null
@@ -301,7 +301,7 @@ static func owner_hand_in(t, quest: StringName, producer: String, ambient: Strin
 	var reenter := func(pid, q):
 		if q == quest:
 			completions.append(pid)
-			bus.npc_meeting_started.emit(smith)
+			bus.start_npc_meeting(smith)
 	bus.quest_objective_updated.connect(observe)
 	bus.quest_completed.connect(reenter)
 	var inventory_players: Array = []
@@ -322,7 +322,7 @@ static func owner_hand_in(t, quest: StringName, producer: String, ambient: Strin
 		elif producer == "consumer":
 			smith.is_talking = true
 			smith._talk_player = players[0]
-			bus.npc_meeting_started.emit(smith)
+			bus.start_npc_meeting(smith)
 		else:
 			smith._begin_followup(players[0], {"lines": [{"text_key": "DLG_NEUTRAL"}], "choices": [{"text_key": "REL_TALK_GOODBYE", "action": "close"}]})
 		t.check(label + "_restores_callers_scope", PlayerRegistry._acting_id == prior_scope)

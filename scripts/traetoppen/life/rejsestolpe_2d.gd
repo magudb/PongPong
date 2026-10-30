@@ -19,14 +19,16 @@ func _process(_delta: float) -> void:
 func interact(player: Node) -> void:
 	if _busy or not is_enabled():
 		return
+	var origin := EventBus.interaction_origin()
+	if origin.is_empty(): return
 	_busy = true
 	var choices: Array = []
 	for row in LuaData.arr(GameManager.config_value("traetoppen.fast_travel.stops", [])):
 		if str(row.id) != stop and GameManager.flag_int(StringName(str(row.flag))) > 0:
 			choices.append({"text_key": "LIFE_STOP_" + str(row.id).to_upper(), "action": "travel", "spawn": str(row.spawn)})
 	choices.append({"text_key": "LIFE_LATER", "action": "close"})
-	var result := await LifeFlow.ask(self, "merchant_pip", [{"text_key": "LIFE_TRAVEL_INTRO"}], choices)
+	var result := await LifeFlow.ask(self, "merchant_pip", [{"text_key": "LIFE_TRAVEL_INTRO"}], choices, origin)
 	var choice := LuaData.dict(result.get("choice", {}))
-	if is_inside_tree() and is_instance_valid(player) and str(choice.get("action", "")) == "travel":
+	if EventBus.interaction_current(origin) and is_inside_tree() and is_instance_valid(player) and str(choice.get("action", "")) == "travel":
 		EventBus.area_change_requested.emit(area.map.id, StringName(str(choice.spawn)))
 	_busy = false

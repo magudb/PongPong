@@ -45,6 +45,8 @@ var _bubble_queued := false
 var _talk_player: Node
 var _screen: Node
 var _ui_request: RefCounted
+var _talk_origin: Dictionary = {}
+var _talk_attachment: RefCounted
 var _act := &"idle"
 var _walk_generation := 0
 var _event_target := Vector2.ZERO
@@ -218,115 +220,141 @@ func _can_stand(point: Vector2) -> bool:
 	_query.collision_mask = collision_mask
 	return get_world_2d().direct_space_state.intersect_shape(_query, 1).is_empty()
 
-func _interaction_observation(owner_id: StringName) -> Dictionary:
-	var profile := PlayerRegistry.peek_state(owner_id)
-	var world := PlayerRegistry.world()
-	var session: Node = world.get("session") if world != null else null
-	var role := StringName(session.role) if session != null else &"offline"
-	return OperationOrigin.snapshot(owner_id, profile, SaveManager._save_owner_stamp(), role, NetAuthority.can_write(), SaveManager.continuation_available(profile))
-
+## Public root; all internal resumes use _interact_owned with the old origin.
 func interact(player: Node) -> void:
-	if is_talking or not _enabled or not is_inside_tree() or GameManager.is_modal_open():
-		return
-	var owner_id := PlayerRegistry.registered_id(player)
-	if owner_id == &"":
-		return
-	var origin := OperationOrigin.capture(_interaction_observation(owner_id))
-	if origin.is_empty(): return
-	# Scope only synchronous work. Both legacy dialogue effects and physical
-	# deliveries belong to this registered body, not local/ambient identity.
-	var page: Dictionary = PlayerRegistry.for_player(owner_id, func():
-		if not bool(Svc.static_call("res://scripts/ghostfam/hook/ghostfam_hook.gd",&"before_talk",[self,player],true)):
-			return {}
+	if not is_instance_valid(player): return
+	var id := PlayerRegistry.registered_id(player)
+	if id == &"": return
+	_interact_owned(weakref(player), EventBus.interaction_origin(id, self, player))
+
+func _attached(attachment: RefCounted) -> bool:
+	return attachment != null and _talk_attachment == attachment and is_talking
+
+## Resolve weak/Variant arguments BEFORE any typed Node dispatch.
+func _interact_owned(player_ref: Variant, origin: Dictionary) -> void:
+	var player: Variant = player_ref.get_ref() if player_ref is WeakRef else null
+	if is_talking or not _enabled or not is_inside_tree() or GameManager.is_modal_open() or not EventBus.interaction_body_current(origin, self, player): return
+	var attachment := RefCounted.new()
+	var page: Dictionary = PlayerRegistry.for_player(origin.recipient.player_id, func():
+		if not bool(Svc.static_call("res://scripts/ghostfam/hook/ghostfam_hook.gd", &"before_talk", [self, player], true)): return {}
+		if not EventBus.interaction_body_current(origin, self, player): return {}
 		is_talking = true
+		_talk_origin = origin
+		_talk_attachment = attachment
 		_talk_player = player
 		_held = true
 		if player.has_method("begin_talk"):
 			player.begin_talk(global_position)
-			visual.set_facing_direction(player.global_position - global_position)
+		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return {}
+		visual.set_facing_direction(player.global_position - global_position)
 		set_act("talk")
-		# Build before signals can synchronously complete a quest.
+		# Build before starts can synchronously complete a quest. Each boundary
+		# validates the SAME root; in-callee authored multi-writes are separate.
 		var ctx := NpcDialogue.context(str(npc_id), player)
+		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return {}
 		var initial := NpcDialogue.build(str(npc_id), str(dialogue_id), ctx, guest)
+		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return {}
 		NpcDialogue.begin(str(npc_id), initial)
-		EventBus.dialogue_started.emit(npc_id, dialogue_id)
-		if OperationOrigin.is_current(origin, _interaction_observation(owner_id)):
-			EventBus.npc_meeting_started.emit(self)
+		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return {}
+		EventBus.publish_dialogue_started(origin, npc_id, dialogue_id, attachment)
+		if _attached(attachment): EventBus.publish_npc_meeting(origin, self, attachment)
 		return initial)
-	if not is_talking:
+	if not _attached(attachment): return
+	if page.is_empty() or not EventBus.interaction_physical_current(origin, self):
+		_end_talk(0, false, attachment)
 		return
-	_screen = get_tree().get_first_node_in_group("dialogue_ui")
-	if _screen == null:
-		_end_talk(0, false)
-		return
-	await _page(page)
+	_present_page(page, origin, attachment)
 
-func _page(page: Dictionary) -> void:
-	var screen := _screen
+func _present_page(page: Dictionary, origin: Dictionary, attachment: RefCounted) -> RefCounted:
+	if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return null
+	var screen := get_tree().get_first_node_in_group("dialogue_ui")
+	if screen == null:
+		_end_talk(0, false, attachment)
+		return null
+	_screen = screen
 	var request: RefCounted = screen.create_request()
 	_ui_request = request
+	_page(page, origin, attachment, screen, request)
+	return request
+
+func _page(page: Dictionary, origin: Dictionary, attachment: RefCounted, screen: Node, request: RefCounted) -> void:
 	screen.request_lines({"id": str(npc_id), "name_key": display_name_key}, LuaData.arr(page.get("lines", [])), LuaData.arr(page.get("choices", [])), request)
 	var result: Dictionary = await screen.wait_request(request)
-	if _ui_request != request: return
+	if _ui_request != request or not _attached(attachment): return
 	_ui_request = null
-	if not is_talking:
-		return
-	var player := _talk_player
-	var owner_id := PlayerRegistry.registered_id(player)
-	if owner_id == &"":
-		_end_talk(0, false)
-		return
-	# Re-resolve after the await; the owner may have left the live roster.
-	PlayerRegistry.for_player(owner_id, func():
-		NpcDialogue.finish(str(npc_id), page, result)
-		_end_talk(int(result.get("lines_shown", 0)), bool(result.get("completed", false)))
+	var player_ref: Variant = weakref(_talk_player) if is_instance_valid(_talk_player) else null
+	# Earned page effects belong to the original profile, not body presence.
+	if EventBus.interaction_current(origin):
+		PlayerRegistry.for_player(origin.recipient.player_id, func():
+			NpcDialogue.finish(str(npc_id), page, result))
+	_end_talk(int(result.get("lines_shown", 0)), bool(result.get("completed", false)), attachment)
+	if not EventBus.interaction_current(origin): return
+	PlayerRegistry.for_player(origin.recipient.player_id, func():
 		Bridge.finish_topic(str(npc_id), page, bool(result.get("completed", false)), int(result.get("lines_shown", 0)))
+		var player: Variant = player_ref.get_ref() if player_ref is WeakRef else null
+		if not EventBus.interaction_body_current(origin, self, player): return
 		var choice := LuaData.dict(result.get("choice", {}))
 		var action := str(choice.get("action", "close"))
 		var social := Bridge.action(str(npc_id), action, choice)
+		if not EventBus.interaction_body_current(origin, self, player): return
 		if bool(social.get("handled", false)):
 			if not LuaData.dict(social.get("page", {})).is_empty():
-				_begin_followup.call_deferred(player, social.page)
+				_owned_followup.call_deferred(player_ref, social.page, origin)
 		elif NpcDialogue.action(str(npc_id), action, choice, guest):
-			interact.call_deferred(player))
+			if EventBus.interaction_body_current(origin, self, player): _interact_owned.call_deferred(player_ref, origin))
 
-func _begin_followup(player: Node, page: Dictionary) -> void:
-	if is_talking or not is_inside_tree() or GameManager.is_modal_open():
-		return
-	var owner_id := PlayerRegistry.registered_id(player)
-	if owner_id == &"":
-		return
-	_screen = get_tree().get_first_node_in_group("dialogue_ui")
-	if _screen == null:
-		return
-	PlayerRegistry.for_player(owner_id, func():
+func _owned_followup(player_ref: Variant, page: Dictionary, origin: Dictionary) -> void:
+	var player: Variant = player_ref.get_ref() if player_ref is WeakRef else null
+	if not EventBus.interaction_body_current(origin, self, player): return
+	_begin_followup(player, page, origin)
+
+## Explicit independent page root when origin is omitted (tutorial/tool API).
+## Internal followups always pass their retained origin, never recapture it.
+func _begin_followup(player: Variant, page: Dictionary, origin: Dictionary = {}) -> RefCounted:
+	if is_talking or not is_inside_tree() or GameManager.is_modal_open() or not is_instance_valid(player): return null
+	var id := PlayerRegistry.registered_id(player)
+	if id == &"": return null
+	if origin.is_empty(): origin = EventBus.interaction_origin(id, self, player)
+	if not EventBus.interaction_body_current(origin, self, player): return null
+	var attachment := RefCounted.new()
+	PlayerRegistry.for_player(id, func():
 		is_talking = true
 		_held = true
 		_talk_player = player
-		if player.has_method("begin_talk"):
-			player.begin_talk(global_position)
+		_talk_origin = origin
+		_talk_attachment = attachment
+		if player.has_method("begin_talk"): player.begin_talk(global_position)
+		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return
 		NpcDialogue.begin(str(npc_id), page)
-		EventBus.dialogue_started.emit(npc_id, dialogue_id)
-		EventBus.npc_meeting_started.emit(self))
-	await _page(page)
+		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return
+		EventBus.publish_dialogue_started(origin, npc_id, dialogue_id, attachment)
+		if _attached(attachment): EventBus.publish_npc_meeting(origin, self, attachment))
+	if not _attached(attachment): return null
+	if not EventBus.interaction_physical_current(origin, self):
+		_end_talk(0, false, attachment)
+		return null
+	return _present_page(page, origin, attachment)
 
-func _end_talk(lines: int, completed: bool) -> void:
-	if not is_talking:
-		return
-	var owner_id := PlayerRegistry.registered_id(_talk_player)
+func _end_talk(lines: int, completed: bool, expected: RefCounted = null) -> void:
+	if not is_talking or (expected != null and not _attached(expected)): return
+	# Detach the exact talk BEFORE any body/social/public callback. Old cleanup
+	# must not erase a synchronously installed replacement on this same actor.
+	var origin := _talk_origin
+	var attachment := _talk_attachment
+	var player := _talk_player
 	is_talking = false
 	_held = false
-	if is_instance_valid(_talk_player) and _talk_player.has_method("end_talk"):
-		_talk_player.end_talk()
 	_talk_player = null
-	if owner_id != &"":
-		PlayerRegistry.for_player(owner_id, func():
-			SocialManager.on_conversation_finished(str(npc_id), lines, completed)
-			EventBus.dialogue_ended.emit())
-	else:
-		EventBus.dialogue_ended.emit()
+	_talk_origin = {}
+	_talk_attachment = null
+	if is_instance_valid(player) and player.has_method("end_talk"): player.end_talk()
+	if EventBus.interaction_current(origin):
+		PlayerRegistry.for_player(origin.recipient.player_id, func():
+			SocialManager.on_conversation_finished(str(npc_id), lines, completed))
+	EventBus.publish_dialogue_ended(origin, attachment)
+	if _talk_attachment != null: return
 	set_act("hover" if bool(_row.get("hover", false)) else "idle")
-	_update_bubble()
+	if is_inside_tree(): _update_bubble()
 
 func handle_choice(action: String, data: Dictionary = {}) -> void:
 	NpcDialogue.action(str(npc_id), action, data, guest)

@@ -43,7 +43,7 @@ func run(t) -> void:
 	qm.accept_quest(&"snurresvampen")
 	bus.area_changed.emit(&"moerkeskoven_f4")
 	bus.enemy_defeated.emit(&"boss", &"snurresvamp", [])
-	bus.dialogue_started.emit(&"guard_oak", &"guard_oak")
+	bus.start_dialogue(&"guard_oak", &"guard_oak")
 	t.check("boss_quest_binds_floor_four", qm.is_completed(&"snurresvampen"), "real floor, boss and turn-in signals complete the quest")
 	Engine.time_scale = old_speed
 	save.autosave_enabled = old_auto

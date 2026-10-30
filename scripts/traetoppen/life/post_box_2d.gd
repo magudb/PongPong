@@ -59,18 +59,24 @@ func _draw() -> void:
 func interact(_player: Node) -> void:
 	if _busy or not is_enabled():
 		return
+	var origin := EventBus.interaction_origin()
+	if origin.is_empty(): return
 	refresh()
+	if not EventBus.interaction_current(origin): return
 	if GameManager.total_day() <= 1 or GameManager.flag_int(&"post_read_day") == GameManager.total_day():
 		EventBus.whisper_requested.emit("LIFE_POST_EMPTY")
 		return
 	_busy = true
 	var row := letter.duplicate()
 	GameManager.set_flag(&"post_read_day", GameManager.total_day())
+	if not EventBus.interaction_current(origin):
+		_busy = false
+		return
 	letter.clear()
 	queue_redraw()
 	EventBus.game_event.emit(&"post_read", {"quest_id": str(row.get("quest_id", ""))})
 	if row.is_empty():
 		EventBus.whisper_requested.emit("LIFE_POST_EMPTY")
 	else:
-		await LifeFlow.offer(self, row)
+		await LifeFlow.offer(self, row, origin)
 	_busy = false

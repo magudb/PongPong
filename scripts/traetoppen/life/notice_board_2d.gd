@@ -12,7 +12,10 @@ func rows() -> Array[Dictionary]:
 func interact(_player: Node) -> void:
 	if _busy or not is_enabled():
 		return
+	var origin := EventBus.interaction_origin()
+	if origin.is_empty(): return
 	var offers := rows()
+	if not EventBus.interaction_current(origin): return
 	if offers.is_empty():
 		EventBus.whisper_requested.emit("LIFE_BOARD_EMPTY")
 		return
@@ -21,9 +24,9 @@ func interact(_player: Node) -> void:
 	for row in offers:
 		choices.append({"text_key": "QUEST_%s_TITLE" % str(row.quest_id).to_upper(), "action": "offer", "quest_id": str(row.quest_id), "giver": str(row.giver)})
 	choices.append({"text_key": "LIFE_LATER", "action": "close"})
-	var result := await LifeFlow.ask(self, "mayor_lyra", [{"text_key": "LIFE_BOARD_INTRO"}], choices)
-	if is_inside_tree():
+	var result := await LifeFlow.ask(self, "mayor_lyra", [{"text_key": "LIFE_BOARD_INTRO"}], choices, origin)
+	if is_inside_tree() and EventBus.interaction_current(origin):
 		var choice := LuaData.dict(result.get("choice", {}))
 		if str(choice.get("action", "")) == "offer":
-			await LifeFlow.offer(self, choice)
+			await LifeFlow.offer(self, choice, origin)
 	_busy = false

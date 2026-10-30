@@ -122,6 +122,7 @@ func _owner_ticket(id: StringName) -> Dictionary:
 	return {"id": id, "row": row, "world": weakref(world) if world != null else null, "body": weakref(body) if body != null else null, "session": weakref(session) if session != null else null, "epoch": session.generation if session != null else 0, "stamp": SaveManager._save_owner_stamp()}
 
 func _owner_current(ticket: Dictionary) -> bool:
+	if ticket.has("interaction") and not EventBus.interaction_current(ticket.interaction): return false
 	if not NetAuthority.can_write() or PlayerRegistry.peek_state(ticket.id) != ticket.row or not SaveManager.continuation_available(ticket.row) or ticket.stamp != SaveManager._save_owner_stamp(): return false
 	var world: Variant = ticket.world.get_ref() if ticket.world != null else null
 	if ticket.world != null and (not is_instance_valid(world) or PlayerRegistry.world() != world): return false
@@ -243,8 +244,8 @@ func _ready() -> void:
 	EventBus.crop_harvested.connect(_on_crop_harvested)
 	EventBus.zone_entered.connect(_on_zone_entered)
 	EventBus.area_changed.connect(_on_area_changed)
-	EventBus.dialogue_started.connect(_on_dialogue_started)
-	EventBus.npc_meeting_started.connect(_on_npc_meeting_started)
+	EventBus.interaction_started.connect(_on_dialogue_started)
+	EventBus.interaction_meeting.connect(_on_npc_meeting_started)
 	EventBus.animal_adopted.connect(_on_animal_adopted)
 	EventBus.animal_fed.connect(_on_animal_fed)
 	EventBus.animal_product_collected.connect(_on_animal_product_collected)
@@ -960,22 +961,26 @@ func _on_area_changed(area_id: StringName) -> void:
 	_dispatch(&"area_changed", {"area": str(area_id)})
 
 
-func _on_dialogue_started(npc_id: StringName, dialogue_id: StringName) -> void:
-	_dispatch(&"dialogue_started", {"npc": str(npc_id), "dialogue": str(dialogue_id)})
+func _on_dialogue_started(origin: Dictionary, npc_id: StringName, dialogue_id: StringName, _attachment: RefCounted) -> void:
+	if not EventBus.interaction_current(origin): return
+	var owner := _owner_ticket(origin.recipient.player_id)
+	if owner.is_empty(): return
+	owner["interaction"] = origin
+	PlayerRegistry.for_player(owner.id, func():
+		_dispatch(&"dialogue_started", {"npc": str(npc_id), "dialogue": str(dialogue_id)}, owner))
 
 
 ## Opt-in physical objectives retain the dialogue binding vocabulary while
 ## legacy talk/show/proof objectives retain their existing event contract.
 ## A portrait/giver string cannot authorize a delivery: identity and ownership
 ## come from the actor that is currently holding the player in a conversation.
-func _on_npc_meeting_started(actor: Node) -> void:
-	if not actor is Npc2D or not actor.is_inside_tree() or actor.is_queued_for_deletion() or not actor.is_talking:
-		return
-	var owner_id := PlayerRegistry.registered_id(actor._talk_player)
-	if owner_id == &"":
-		return
-	PlayerRegistry.for_player(owner_id, func():
-		_dispatch(&"dialogue_started", {"npc": str(actor.npc_id), "dialogue": str(actor.dialogue_id), "meeting_actor": actor}))
+func _on_npc_meeting_started(origin: Dictionary, actor: Variant, _attachment: RefCounted) -> void:
+	if not EventBus.interaction_physical_current(origin, actor): return
+	var owner := _owner_ticket(origin.recipient.player_id)
+	if owner.is_empty(): return
+	owner["interaction"] = origin
+	PlayerRegistry.for_player(owner.id, func():
+		_dispatch(&"dialogue_started", {"npc": str(actor.npc_id), "dialogue": str(actor.dialogue_id), "meeting_actor": actor}, owner))
 
 
 func _on_animal_adopted(animal_id: StringName, species: StringName) -> void:

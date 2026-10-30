@@ -42,13 +42,13 @@ static func run(t) -> void:
 	t.world().add_child(forged)
 	smith.is_talking = true
 	smith._talk_player = forged
-	bus.npc_meeting_started.emit(smith)
+	bus.start_npc_meeting(smith)
 	t.check("forged_registered_id_not_help", _memories(sm, &"p1").is_empty() and load("res://tests/progression/mining_deliveries.gd")._owner_state(t, &"p1") == before[&"p1"])
 	forged.queue_free()
 	var departed: Node = bodies[0]
 	t.world()._unregister_player(departed)
 	smith._talk_player = departed
-	bus.npc_meeting_started.emit(smith)
+	bus.start_npc_meeting(smith)
 	t.check("departed_body_not_help", _memories(sm, &"p1").is_empty() and load("res://tests/progression/mining_deliveries.gd")._owner_state(t, &"p1") == before[&"p1"])
 	var replacement := PlayerStub2D.new()
 	t.world()._register_player(replacement, 1, 2)
@@ -85,7 +85,7 @@ static func run(t) -> void:
 		# Source capability must already be closed before public observers.
 		if sm.has_method("living_record_delivery"):
 			t.check("observer_" + kind + "_source_closed", not sm.living_record_delivery(qm).get("ok", false))
-		bus.npc_meeting_started.emit(smith)
+		bus.start_npc_meeting(smith)
 	var objective := func(pid, q, obj, _n, _target):
 		if q == Q and obj == &"return_to_smith":
 			t.check("memory_objective_actor", pid == &"p1")
@@ -121,8 +121,8 @@ static func run(t) -> void:
 		var committed: Dictionary = sm.living_snapshot()
 		t.check("direct_source_call_refused", not sm.living_record_delivery(qm).get("ok", false))
 		bus.game_event.emit(&"lc_interaction_committed", {"npc": NPC, "player_id": "p2", "fulfilled": true})
-		bus.dialogue_started.emit(&"smith_thorin", &"smith_thorin")
-		bus.npc_meeting_started.emit(smith)
+		bus.start_dialogue(&"smith_thorin", &"smith_thorin")
+		bus.start_npc_meeting(smith)
 		PlayerRegistry.for_player(&"p2", func(): qm.complete_quest(Q))
 		t.check("raw_bus_and_direct_completion_not_help", sm.living_snapshot() == committed)
 		smith._begin_followup(bodies[0], {"lines": [{"text_key": "DLG_NEUTRAL"}], "choices": [{"text_key": "REL_TALK_GOODBYE", "action": "close"}]})

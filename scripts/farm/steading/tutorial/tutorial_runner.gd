@@ -9,6 +9,7 @@ class SkipGate extends Node:
 			session.skip()
 			get_viewport().set_input_as_handled()
 
+var origin: Dictionary = {}
 var world: Node
 var actors: Dictionary = {}
 var active := false
@@ -16,17 +17,20 @@ var skipped := false
 var gate: Node
 var trace: Array[String] = []
 
-static func run(target: Node) -> bool:
+static func run(target: Node, retained: Dictionary = {}) -> bool:
+	if retained.is_empty(): retained = EventBus.interaction_origin()
+	if not EventBus.interaction_current(retained): return false
 	if not bool(GameManager.config_value("farm_tutorial.first_morning.enabled", true)):
 		return false
 	if bool(GameManager.get_flag(&"first_morning_done", false)):
 		return true
 	var session := TutorialRunner.new()
+	session.origin = retained
 	session.world = target
 	return await session.play()
 
 func _good() -> bool:
-	return is_instance_valid(world) and world.is_inside_tree()
+	return EventBus.interaction_current(origin) and is_instance_valid(world) and world.is_inside_tree()
 
 func skip() -> void:
 	skipped = true
@@ -63,7 +67,7 @@ func play() -> bool:
 					GameManager.pop_modal(&"tutorial_setup")
 			"dialogue":
 				if str(step.get("context", "")) == "intro":
-					await preload("res://scripts/world2d/intro_sequence.gd").letter(world)
+					await preload("res://scripts/world2d/intro_sequence.gd").letter(world, origin)
 				else:
 					await _dialogue(str(step.get("id", "")), str(step.get("npc", "postman_pip")))
 			"npc_leave":
@@ -118,7 +122,10 @@ func _dialogue(module: String, npc: String) -> void:
 	if not _good():
 		return
 	var actor: Npc2D = actors.get(npc)
+	var owned := EventBus.interaction_attach(origin, actor, world.player)
+	if owned.is_empty(): return
 	var ctx := NpcDialogue.context(npc, world.player)
+	if not _good(): return
 	var page := LuaRuntime.get_dialogue(module, ctx)
 	if actor == null or page.is_empty():
 		return
@@ -128,11 +135,11 @@ func _dialogue(module: String, npc: String) -> void:
 	if screen == null:
 		return
 	actor.dialogue_id = StringName(module)
-	actor._begin_followup(world.player, page)
-	if not actor.is_talking or not screen.is_open():
+	var request: RefCounted = actor._begin_followup(world.player, page, owned)
+	if request == null:
 		skipped = true
 		return
-	var result: Dictionary = await screen.session_finished
+	var result: Dictionary = await screen.wait_request(request)
 	if not bool(result.get("completed", false)):
 		skipped = true
 	# Let the actor's normal completion release the player before the next page.

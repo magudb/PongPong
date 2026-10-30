@@ -91,6 +91,92 @@ signal dialogue_started(npc_id: StringName, dialogue_id: StringName)
 signal npc_meeting_started(actor: Node)
 signal dialogue_line_shown(speaker: String, text: String, voice_key: String)
 signal dialogue_ended()
+## Raw dialogue signals above are notification-only. Public observers all run
+## first; explicit producers retain one origin across every phase and await.
+signal interaction_started(origin: Dictionary, npc_id: StringName, dialogue_id: StringName, attachment: RefCounted)
+signal interaction_meeting(origin: Dictionary, actor: Variant, attachment: RefCounted)
+signal interaction_ended(origin: Dictionary, attachment: RefCounted)
+
+func _interaction_observation(id: StringName) -> Dictionary:
+	var profile := PlayerRegistry.peek_state(id)
+	var world := PlayerRegistry.world()
+	var session: Node = world.get("session") if world != null else null
+	return OperationOrigin.snapshot(id, profile, SaveManager._save_owner_stamp(), StringName(session.role) if session != null else &"offline", NetAuthority.can_write(), SaveManager.continuation_available(profile))
+
+## Genuine root only. Internal continuations must carry the returned context.
+## p0 is the world anchor even when a different registered hero is the recipient.
+func interaction_origin(id: StringName = &"", actor: Variant = null, body: Variant = null) -> Dictionary:
+	if id == &"": id = PlayerRegistry.acting_id()
+	var anchor := OperationOrigin.capture(_interaction_observation(&"p0"))
+	var recipient := OperationOrigin.capture(_interaction_observation(id))
+	if anchor.is_empty() or recipient.is_empty(): return {}
+	var physical := {}
+	var world := PlayerRegistry.world()
+	if actor != null and is_instance_valid(body):
+		physical = OperationOrigin.capture_physical(OperationOrigin.physical_snapshot(id, body, actor, world, world.get("session") if world != null else null, PlayerRegistry.registered_id(body), PlayerRegistry.by_id(id)))
+	var origin := {"anchor": anchor, "recipient": recipient, "physical": physical}
+	origin.make_read_only()
+	return origin
+
+func interaction_current(origin: Dictionary) -> bool:
+	return origin.get("anchor") is Dictionary and origin.get("recipient") is Dictionary and OperationOrigin.is_current(origin.anchor, _interaction_observation(&"p0")) and OperationOrigin.is_current(origin.recipient, _interaction_observation(origin.recipient.get("player_id", &"")))
+
+func interaction_attach(origin: Dictionary, actor: Variant, body: Variant) -> Dictionary:
+	if not interaction_current(origin): return {}
+	var id: StringName = origin.recipient.player_id
+	var world := PlayerRegistry.world()
+	var physical := OperationOrigin.capture_physical(OperationOrigin.physical_snapshot(id, body, actor, world, world.get("session") if world != null else null, PlayerRegistry.registered_id(body), PlayerRegistry.by_id(id)))
+	if physical.is_empty(): return {}
+	var attached := {"anchor": origin.anchor, "recipient": origin.recipient, "physical": physical}
+	attached.make_read_only()
+	return attached
+
+func interaction_body_current(origin: Dictionary, actor: Variant, body: Variant) -> bool:
+	if not interaction_current(origin) or not is_instance_valid(actor) or not origin.get("physical") is Dictionary: return false
+	var id := PlayerRegistry.registered_id(body)
+	if id == &"" or id != origin.recipient.player_id: return false
+	var world := PlayerRegistry.world()
+	return OperationOrigin.is_physical_current(origin.physical, OperationOrigin.physical_snapshot(id, body, actor, world, world.get("session") if world != null else null, id, PlayerRegistry.by_id(id)))
+
+func interaction_physical_current(origin: Dictionary, actor: Variant) -> bool:
+	return is_instance_valid(actor) and actor is Npc2D and actor.is_talking and interaction_body_current(origin, actor, actor._talk_player)
+
+func publish_dialogue_started(origin: Dictionary, npc_id: StringName, dialogue_id: StringName, attachment: RefCounted) -> bool:
+	if not interaction_current(origin) or attachment == null: return false
+	dialogue_started.emit(npc_id, dialogue_id)
+	if interaction_current(origin): interaction_started.emit(origin, npc_id, dialogue_id, attachment)
+	return interaction_current(origin)
+
+func publish_npc_meeting(origin: Dictionary, actor: Variant, attachment: RefCounted) -> bool:
+	if not interaction_physical_current(origin, actor) or attachment == null: return false
+	npc_meeting_started.emit(actor)
+	if interaction_physical_current(origin, actor): interaction_meeting.emit(origin, actor, attachment)
+	return interaction_physical_current(origin, actor)
+
+## Terminal notification is owed even for a revoked origin; only labelled model
+## effects may authorize anything, paired with the exact original attachment.
+func publish_dialogue_ended(origin: Dictionary, attachment: RefCounted) -> bool:
+	dialogue_ended.emit()
+	if attachment != null and interaction_current(origin): interaction_ended.emit(origin, attachment)
+	return interaction_current(origin)
+
+## Explicit root adapters for independent requests/tools. Never use these to
+## resume an old interaction. The start receipt must be retained for its end.
+func start_dialogue(npc_id: StringName, dialogue_id: StringName) -> Dictionary:
+	var origin := interaction_origin()
+	var attachment := RefCounted.new()
+	publish_dialogue_started(origin, npc_id, dialogue_id, attachment)
+	return {"origin": origin, "attachment": attachment}
+
+func end_dialogue(receipt: Dictionary) -> void:
+	publish_dialogue_ended(receipt.get("origin", {}), receipt.get("attachment"))
+
+func start_npc_meeting(actor: Variant) -> bool:
+	if not is_instance_valid(actor) or not actor is Npc2D or not actor.is_talking: return false
+	var id := PlayerRegistry.registered_id(actor._talk_player)
+	if id == &"": return false
+	var origin := interaction_origin(id, actor, actor._talk_player)
+	return publish_npc_meeting(origin, actor, RefCounted.new())
 
 # --- World / Adventure ---
 ## zone_entered / zone_exited are emitted ONLY by WorldRoot2D (the player entered an area or one of its zones);

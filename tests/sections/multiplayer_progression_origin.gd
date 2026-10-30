@@ -73,7 +73,7 @@ func _quest(t, saves: Node, kind: String) -> void:
 			t.check("quest_failed_authenticated_identity", entered == [true, false, true] and late.calls == 2 and not str(saves.last_error).contains("incomplete"), "%s %s" % [entered, saves.last_error])
 		t.check("quest_" + kind + "_both_earned", QuestManager.is_completed(&"forest_patrol") and QuestManager.is_completed(&"night_flower") and EconomyManager.gold == gold_before + 570 and EconomyManager.count_item(&"moonflower_seeds") == 5 and EconomyManager.count_item(&"fairy_dust") == 1, "complete event continues both authored turn-ins and exact rewards")
 		var paid := EconomyManager.gold
-		EventBus.dialogue_started.emit(&"guard_oak", &"guard_oak")
+		EventBus.start_dialogue(&"guard_oak", &"guard_oak")
 		t.check("quest_" + kind + "_no_replay", EconomyManager.gold == paid and saves.save_game(3))
 		if kind == "failed": saves.unregister_section("mp4_origin_late")
 		late.free()
@@ -83,7 +83,7 @@ func _quest(t, saves: Node, kind: String) -> void:
 	if kind == "same":
 		t.check("quest_same_success_identical_values", entered == [true, true, true, true] and not winner.is_empty() and Callback.new()._snapshot(saves) == winner and QuestManager.is_active(&"forest_patrol") and QuestManager.is_active(&"night_flower") and EconomyManager.gold == gold_before, "successful same-valued disk replacement revokes objective-completion and sibling suffix")
 		QuestManager.complete_quest(&"forest_patrol")
-		EventBus.dialogue_started.emit(&"guard_oak", &"guard_oak")
+		EventBus.start_dialogue(&"guard_oak", &"guard_oak")
 		t.check("quest_same_current_progress_once", QuestManager.is_completed(&"forest_patrol") and QuestManager.is_completed(&"night_flower") and EconomyManager.gold == gold_before + 570 and EconomyManager.count_item(&"moonflower_seeds") == 5)
 		await _close(t)
 		return
@@ -93,7 +93,7 @@ func _quest(t, saves: Node, kind: String) -> void:
 	var gold := EconomyManager.gold
 	var seeds := EconomyManager.count_item(&"moonflower_seeds")
 	var dust := EconomyManager.count_item(&"fairy_dust")
-	EventBus.dialogue_started.emit(&"guard_oak", &"guard_oak")
+	EventBus.start_dialogue(&"guard_oak", &"guard_oak")
 	t.check("quest_origin_next_current_event_once", QuestManager.is_completed(&"forest_patrol") and QuestManager.is_completed(&"night_flower") and EconomyManager.gold == gold + 570 and EconomyManager.count_item(&"moonflower_seeds") == seeds + 5 and EconomyManager.count_item(&"fairy_dust") == dust + 1, "current event completes both and gives exact authored rewards")
 	await _close(t)
 
