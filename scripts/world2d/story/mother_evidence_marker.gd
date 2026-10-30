@@ -175,7 +175,7 @@ static func _present_owned(actor_ref: WeakRef, body_ref: WeakRef, id: String, or
 		actor = actor_ref.get_ref()
 		body = body_ref.get_ref()
 		if not bool(result.get("completed", false)) or action == "close" or not EventBus.interaction_body_current(origin, actor, body): break
-		feedback = PlayerRegistry.for_player(origin.recipient.player_id, func(): return MotherMemoryWork.apply(id, action))
+		feedback = PlayerRegistry.for_player(origin.recipient.player_id, func(): return MotherMemoryWork.apply_owned(id, action, origin))
 		actor = actor_ref.get_ref()
 		body = body_ref.get_ref()
 		if not EventBus.interaction_body_current(origin, actor, body): break

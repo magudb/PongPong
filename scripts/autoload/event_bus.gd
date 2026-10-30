@@ -85,6 +85,9 @@ signal quest_accepted(player_id: StringName, quest_id: StringName)
 signal quest_objective_updated(player_id: StringName, quest_id: StringName, objective_id: StringName, progress: int, target: int)
 signal quest_completed(player_id: StringName, quest_id: StringName)
 signal quest_failed(player_id: StringName, quest_id: StringName)
+## Authored Mother evidence/work projection retains its producer origin.
+## Public game_event remains an unchanged notification, never a new permit.
+signal mother_progressed(origin: Dictionary)
 signal dialogue_started(npc_id: StringName, dialogue_id: StringName)
 ## Physical dialogue ownership, not the portrait borrowed by a service/offer.
 ## The consumer derives identity from the live talking actor, never an NPC id supplied by a service.

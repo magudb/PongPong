@@ -33,7 +33,12 @@ static func choices(id: String) -> Array:
 	return result
 
 static func apply(id: String, action: String) -> String:
+	return apply_owned(id, action, EventBus.interaction_origin())
+
+static func apply_owned(id: String, action: String, origin: Dictionary) -> String:
+	if not EventBus.interaction_current(origin): return ""
 	if not MotherStory.enabled() or id not in IDS or complete(id): return ""
+	if not EventBus.interaction_current(origin): return ""
 	var value := state(id)
 	if id == "memory_lamp":
 		var actions := ["stitch_0", "stitch_1", "stitch_2"]
@@ -52,6 +57,9 @@ static func apply(id: String, action: String) -> String:
 		else: return ""
 	if value != state(id):
 		GameManager.set_flag(StringName(MotherStory.PREFIX+"work_"+id), value)
+		if not EventBus.interaction_current(origin): return ""
 		SaveManager.autosave()
+		if not EventBus.interaction_current(origin): return ""
 		EventBus.game_event.emit(&"forest_mother_work", {"id":id, "complete":complete(id)})
+		if EventBus.interaction_current(origin): EventBus.mother_progressed.emit(origin)
 	return ""

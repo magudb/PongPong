@@ -18,6 +18,7 @@ func _ready() -> void:
 	EventBus.quest_completed.connect(_quest)
 	EventBus.quest_objective_updated.connect(_objective)
 	EventBus.game_event.connect(_event)
+	EventBus.mother_progressed.connect(_progress_owned)
 	EventBus.load_completed.connect(_loaded)
 func _quest(_player_id: StringName, _id: StringName) -> void:
 	MotherStory.sync()
@@ -27,9 +28,17 @@ func _objective(_player_id: StringName, _quest_id: StringName,_id: StringName,_c
 		MotherStory.sync()
 		_refresh()
 func _event(id: StringName,_data: Dictionary) -> void:
-	if id in [&"dungeon_boss_defeated",&"forest_mother_evidence",&"forest_mother_work"]:
+	if id == &"dungeon_boss_defeated":
 		MotherStory.sync()
 		_refresh()
+	elif id in [&"forest_mother_evidence", &"forest_mother_work"]:
+		# The public event is presentation-only. The actual producer publishes
+		# its retained origin after every public observer has returned.
+		_refresh()
+func _progress_owned(origin: Dictionary) -> void:
+	if not EventBus.interaction_current(origin): return
+	PlayerRegistry.for_player(origin.recipient.player_id, func(): MotherStory.sync_owned(origin))
+	if EventBus.interaction_current(origin): _refresh()
 func _loaded(_slot: int) -> void:
 	MotherStory.sync()
 	if world.area != null: _area_ready(world.area.map.id)

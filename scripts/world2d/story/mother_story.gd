@@ -81,6 +81,7 @@ static func record_owned(id: String, origin: Dictionary) -> bool:
 	var current_chapter := chapter()
 	if not EventBus.interaction_current(origin): return true
 	EventBus.game_event.emit(&"forest_mother_evidence",{"id":id,"chapter":current_chapter,"version":VERSION})
+	if EventBus.interaction_current(origin): EventBus.mother_progressed.emit(origin)
 	return true
 
 static func sync() -> void:
