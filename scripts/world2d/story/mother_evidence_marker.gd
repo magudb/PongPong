@@ -7,6 +7,9 @@ var _busy := false
 var _leaving := false
 var _player: Node
 var _screen: Node
+var _origin: Dictionary = {}
+var _request: RefCounted
+var _talk_generation := -1
 var _picture: Sprite2D
 var _keepsake: Sprite2D
 var _flowers: Array[Sprite2D] = []
@@ -109,50 +112,93 @@ func _lines() -> Array:
 		return [{"name_key":"FM_SCRIBE_NAME","text_key":"FM_SCRIBE_FINAL_OFFER"},{"text_key":"FM_FINAL_ACCOUNT"},{"text_key":"FM_FINAL_TRUTH"},{"text_key":"FM_FINAL_BARGAIN"}]
 	return [{"text_key":MotherStory.evidence_text_key(evidence_id)}]
 func interact(player: Node) -> void:
-	if _busy or not is_enabled() or GameManager.is_modal_open(): return
-	_screen = LifeFlow.screen(get_tree())
-	if _screen == null: return
+	if not is_instance_valid(player): return
+	var id := PlayerRegistry.registered_id(player)
+	if id == &"": return
+	var origin := EventBus.interaction_origin(id, self, player)
+	if _busy or not is_enabled() or GameManager.is_modal_open() or not EventBus.interaction_body_current(origin, self, player): return
+	var screen := LifeFlow.screen(get_tree())
+	if screen == null: return
+	# Reserve the exact receipt before begin_talk or any presentation callback.
+	var request: RefCounted = screen.create_request()
+	_screen = screen
+	_request = request
+	_origin = origin
 	_busy = true
 	_player = player
-	if _player.has_method("begin_talk"): _player.begin_talk(global_position)
-	if evidence_id in MotherMemoryWork.IDS and MotherStory.enabled() and not MotherMemoryWork.complete(evidence_id):
-		var feedback := ""
-		while not _leaving and is_inside_tree() and not MotherMemoryWork.complete(evidence_id):
-			var work_lines: Array = [{"text_key":MotherMemoryWork.instructions(evidence_id)}]
-			if feedback != "": work_lines.append({"text_key":feedback})
-			var work_portrait: Texture2D = _picture.texture if _picture != null else null
-			var work_result: Dictionary = await _screen.show_lines({"id":"", "name_key":"FM_NAME", "portrait":work_portrait}, work_lines, MotherMemoryWork.choices(evidence_id))
-			var action := str(LuaData.dict(work_result.get("choice", {})).get("action", "close"))
-			if _leaving or not is_inside_tree() or not bool(work_result.get("completed", false)) or action == "close":
-				_release()
-				return
-			feedback = MotherMemoryWork.apply(evidence_id, action)
-			refresh()
-	if _leaving or not is_inside_tree():
-		_release()
-		return
-	var may_record := MotherStory.can_read(evidence_id)
-	var choices: Array = []
-	var lines := _lines() if may_record else [{"text_key":MotherStory.next_lead()}]
-	if may_record and not MotherStory.has(evidence_id):
-		var key := "FM_RECORD"
-		if evidence_id == "mother_fate": key = "FM_REFUSE_ROLE"
-		elif evidence_id == "legacy_home": key = "FM_PLANT_LEGACY"
-		elif evidence_id == "traveller_account": key = "FM_RETURN_NAME"
-		choices.append({"text_key":key,"action":"mother_record"})
-	choices.append({"text_key":"REL_TALK_GOODBYE","action":"close"})
-	var portrait: Texture2D = _picture.texture if _picture != null else null
-	var result: Dictionary = await _screen.show_lines({"id":"","name_key":"FM_NAME","portrait":portrait},lines,choices)
-	if not _leaving and is_inside_tree() and result.get("completed",false) == true and str(LuaData.dict(result.get("choice",{})).get("action","")) == "mother_record" and may_record:
-		MotherStory.record(evidence_id)
-		refresh()
-	_release()
-func _release() -> void:
-	# Travel/damage must not clear a newer player state.
-	if is_instance_valid(_player) and _player.get("state") == PlayerBody2D.S.TALKING and _player.has_method("end_talk"): _player.end_talk()
+	_talk_generation = int(player.talk_generation) + 1
+	_present_owned(weakref(self), weakref(player), evidence_id, origin, screen, request, _talk_generation, global_position)
+
+## Static so an earned terminal receipt survives actual marker destruction.
+static func _present_owned(actor_ref: WeakRef, body_ref: WeakRef, id: String, origin: Dictionary, screen: Node, request: RefCounted, hold: int, at: Vector2) -> void:
+	var actor: Variant = actor_ref.get_ref()
+	var body: Variant = body_ref.get_ref()
+	if not EventBus.interaction_body_current(origin, actor, body): return
+	if body.has_method("begin_talk"): body.begin_talk(at)
+	var feedback := ""
+	while true:
+		actor = actor_ref.get_ref()
+		body = body_ref.get_ref()
+		if not EventBus.interaction_body_current(origin, actor, body): break
+		var page: Dictionary = PlayerRegistry.for_player(origin.recipient.player_id, func():
+			var work := id in MotherMemoryWork.IDS and MotherStory.enabled() and not MotherMemoryWork.complete(id)
+			if not EventBus.interaction_current(origin): return {}
+			if work:
+				var lines: Array = [{"text_key": MotherMemoryWork.instructions(id)}]
+				if feedback != "": lines.append({"text_key": feedback})
+				return {"work": true, "lines": lines, "choices": MotherMemoryWork.choices(id)}
+			var may_record := MotherStory.can_read(id)
+			if not EventBus.interaction_current(origin): return {}
+			var choices: Array = []
+			var lines: Array = actor._lines() if may_record else [{"text_key": MotherStory.next_lead()}]
+			if may_record and not MotherStory.has(id):
+				var key: String = {"mother_fate": "FM_REFUSE_ROLE", "legacy_home": "FM_PLANT_LEGACY", "traveller_account": "FM_RETURN_NAME"}.get(id, "FM_RECORD")
+				choices.append({"text_key": key, "action": "mother_record"})
+			choices.append({"text_key": "REL_TALK_GOODBYE", "action": "close"})
+			return {"work": false, "may_record": may_record, "lines": lines, "choices": choices})
+		actor = actor_ref.get_ref()
+		body = body_ref.get_ref()
+		if page.is_empty() or not EventBus.interaction_body_current(origin, actor, body): break
+		var portrait: Texture2D = actor._picture.texture if actor._picture != null else null
+		actor._request = request
+		actor = null
+		body = null
+		screen.request_lines({"id": "", "name_key": "FM_NAME", "portrait": portrait}, page.lines, page.choices, request)
+		var result: Dictionary = await screen.wait_request(request)
+		var action := str(LuaData.dict(result.get("choice", {})).get("action", "close"))
+		if not bool(page.work):
+			# Reading/recording evidence is earned by the completed page. It is
+			# not new physical work, and body/marker departure does not revoke it.
+			if bool(result.get("completed", false)) and action == "mother_record" and bool(page.may_record) and EventBus.interaction_current(origin):
+				PlayerRegistry.for_player(origin.recipient.player_id, func(): MotherStory.record_owned(id, origin))
+			break
+		actor = actor_ref.get_ref()
+		body = body_ref.get_ref()
+		if not bool(result.get("completed", false)) or action == "close" or not EventBus.interaction_body_current(origin, actor, body): break
+		feedback = PlayerRegistry.for_player(origin.recipient.player_id, func(): return MotherMemoryWork.apply(id, action))
+		actor = actor_ref.get_ref()
+		body = body_ref.get_ref()
+		if not EventBus.interaction_body_current(origin, actor, body): break
+		actor.refresh()
+		request = screen.create_request()
+	actor = actor_ref.get_ref()
+	if is_instance_valid(actor):
+		actor._release(hold)
+		if EventBus.interaction_current(origin) and actor.is_inside_tree(): actor.refresh()
+
+func _release(expected: int = -1) -> void:
+	if expected != -1 and expected != _talk_generation: return
+	var body: Variant = _player
+	var hold := _talk_generation
 	_player = null
+	_request = null
 	_busy = false
+	_talk_generation = -1
+	if is_instance_valid(body) and body.get("talk_generation") == hold and body.get("state") == PlayerBody2D.S.TALKING and body.has_method("end_talk"): body.end_talk()
+
 func _exit_tree() -> void:
 	_leaving = true
-	if _busy and is_instance_valid(_screen): _screen.close()
+	var screen := _screen
+	var request := _request
 	_release()
+	if is_instance_valid(screen) and request != null: screen.close_request(request)

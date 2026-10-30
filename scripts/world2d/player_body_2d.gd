@@ -11,6 +11,8 @@ var farm: Node
 var visual: IsoChibiSprite2D
 var camera: Camera2D
 var state: int = S.FREE
+## A cleanup owns one begin_talk, not any later hold on this body.
+var talk_generation := 0
 ## Identity (MP1). Single-player defaults: one local hero `p0` on peer 1, slot 0.
 var player_id: StringName = &"p0"
 var peer_id: int = 1
@@ -282,6 +284,7 @@ func take_damage(_half_hearts: int, _from_global: Vector2 = Vector2.ZERO) -> boo
 
 
 func begin_talk(_pos: Vector2 = Vector2.ZERO) -> void:
+	talk_generation += 1
 	state = S.TALKING
 	velocity = Vector2.ZERO
 	_gvel = Vector2.ZERO
