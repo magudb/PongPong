@@ -1114,6 +1114,9 @@ func from_dict(d: Dictionary) -> void:
 
 
 func _apply_saved(d: Dictionary) -> void:
+	# Shared world data can apply without a physical host. Body projection is
+	# optional and may target only the original still-registered incarnation.
+	var body: WeakRef = weakref(player) if save_body_available() else null
 	var saved_placed: Array = d.get("placed", []) if d.get("placed", []) is Array else []
 	var saved_orphans: Array = d.get("placed_orphans", []) if d.get("placed_orphans", []) is Array else []
 	var repaired: Dictionary = FarmEquipment.repair_placed(saved_placed, saved_orphans)
@@ -1124,14 +1127,14 @@ func _apply_saved(d: Dictionary) -> void:
 		farm.call("from_dict", d["farm"])
 	if greenhouse_farm != null:
 		greenhouse_farm.from_dict(d.get("greenhouse_farm", {"plots": {}}))
-	var hb: Variant = player.get("hotbar") if "hotbar" in player else null
+	var hb: Variant = player.get("hotbar") if body != null and save_body_available() and body.get_ref() == player and "hotbar" in player else null
 	if hb is Object and (hb as Object).has_method("from_dict") and d.has("hotbar"):
 		(hb as Object).call("from_dict", d["hotbar"])
 	# The coordinates belong to the area the save was made in. When that map is gone (renamed, removed, a save from another build)
 	# the world entered the default area instead: keep the spawn point there, a position of another map is void in this one.
 	var saved_id := StringName(str(d.get("area", "")))
 	var same_area: bool = saved_id == &"" or (area != null and area.map.id == saved_id)
-	if same_area and area != null and d.has("player_pos"):
+	if same_area and area != null and d.has("player_pos") and body != null and save_body_available() and body.get_ref() == player:
 		# a save file is untrusted: anything but two finite numbers is a damaged position and starts at the spawn
 		var saved_pos: Variant = _saved_position(d["player_pos"])
 		player.global_position = _inside_area(saved_pos as Vector2) if saved_pos is Vector2 else area.get_spawn("default")
