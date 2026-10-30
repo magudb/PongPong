@@ -217,12 +217,21 @@ func _can_stand(point: Vector2) -> bool:
 	_query.collision_mask = collision_mask
 	return get_world_2d().direct_space_state.intersect_shape(_query, 1).is_empty()
 
+func _interaction_observation(owner_id: StringName) -> Dictionary:
+	var profile := PlayerRegistry.peek_state(owner_id)
+	var world := PlayerRegistry.world()
+	var session: Node = world.get("session") if world != null else null
+	var role := StringName(session.role) if session != null else &"offline"
+	return OperationOrigin.snapshot(owner_id, profile, SaveManager._save_owner_stamp(), role, NetAuthority.can_write(), SaveManager.continuation_available(profile))
+
 func interact(player: Node) -> void:
 	if is_talking or not _enabled or not is_inside_tree() or GameManager.is_modal_open():
 		return
 	var owner_id := PlayerRegistry.registered_id(player)
 	if owner_id == &"":
 		return
+	var origin := OperationOrigin.capture(_interaction_observation(owner_id))
+	if origin.is_empty(): return
 	# Scope only synchronous work. Both legacy dialogue effects and physical
 	# deliveries belong to this registered body, not local/ambient identity.
 	var page: Dictionary = PlayerRegistry.for_player(owner_id, func():
@@ -240,7 +249,8 @@ func interact(player: Node) -> void:
 		var initial := NpcDialogue.build(str(npc_id), str(dialogue_id), ctx, guest)
 		NpcDialogue.begin(str(npc_id), initial)
 		EventBus.dialogue_started.emit(npc_id, dialogue_id)
-		EventBus.npc_meeting_started.emit(self)
+		if OperationOrigin.is_current(origin, _interaction_observation(owner_id)):
+			EventBus.npc_meeting_started.emit(self)
 		return initial)
 	if not is_talking:
 		return
