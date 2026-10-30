@@ -55,7 +55,7 @@ static func advance_owned(expected: int, origin: Dictionary) -> bool:
 	if expected == 5:
 		GameManager.set_flag(WATER_DAY, GameManager.total_day())
 		if not EventBus.interaction_current(origin): return false
-	return QuestManager.complete_manual(QUEST, StringName(STEPS[expected].id))
+	return QuestManager.complete_manual_owned(QUEST, StringName(STEPS[expected].id), {}, false, origin)
 
 static func choice(npc: String) -> Dictionary:
 	if npc not in HELPERS or step() < 0:

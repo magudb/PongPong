@@ -108,16 +108,16 @@ static func _sync_chapters_owned(origin: Dictionary) -> void:
 			if not EventBus.interaction_current(origin): return
 			GameManager.set_flag(StringName("forest_mother_ready_"+str(row.id)),true)
 			if not EventBus.interaction_current(origin): return
-			QuestManager.accept_quest(quest)
+			QuestManager.accept_quest_owned(quest, origin)
 			if not EventBus.interaction_current(origin): return
 		for id in row.needs:
 			if not EventBus.interaction_current(origin): return
 			if has(id):
-				QuestManager.complete_manual(quest,StringName(id))
+				QuestManager.complete_manual_owned(quest,StringName(id),{},false,origin)
 				if not EventBus.interaction_current(origin): return
 		if row.has("boss_floor") and boss_cleared(row.boss_floor):
 			if not EventBus.interaction_current(origin): return
-			QuestManager.complete_manual(quest,&"checkpoint")
+			QuestManager.complete_manual_owned(quest,&"checkpoint",{},false,origin)
 			if not EventBus.interaction_current(origin): return
 		if not QuestManager.is_completed(quest): break
 static func chapter() -> String:

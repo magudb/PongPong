@@ -130,7 +130,7 @@ static func action_owned(npc: String, action_id: String, data: Dictionary, guest
 			var id := StringName(str(data.get("quest_id", "")))
 			if QuestManager.is_offerable(id):
 				if not EventBus.interaction_current(origin): return false
-				QuestManager.accept_quest(id)
+				QuestManager.accept_quest_owned(id, origin)
 		"open_shop":
 			ShopSystem.open_shop(StringName(str(data.get("shop_id", ""))))
 		"open_journal":
@@ -146,12 +146,12 @@ static func action_owned(npc: String, action_id: String, data: Dictionary, guest
 		"show_info":
 			EventBus.notification_posted.emit(TranslationServer.translate("UI_INFO"), TranslationServer.translate(str(data.get("info_key", ""))), "info")
 		"quest_update", "give_item":
-			QuestManager.complete_manual(StringName(str(data.get("quest_id", ""))), StringName(str(data.get("objective_id", ""))), LuaData.dict(data.get("needs", {})), bool(data.get("consume", false)))
+			QuestManager.complete_manual_owned(StringName(str(data.get("quest_id", ""))), StringName(str(data.get("objective_id", ""))), LuaData.dict(data.get("needs", {})), bool(data.get("consume", false)), origin)
 		"math_answer":
 			if int(data.get("answer", -9999)) == int(data.get("correct", -1)):
 				GameManager.set_flag(StringName(str(data.get("result_flag", ""))), true)
 				if not EventBus.interaction_current(origin): return false
-				QuestManager.update_objective(StringName(str(data.get("quest_id", ""))), StringName(str(data.get("objective_id", ""))))
+				QuestManager.update_objective_owned(StringName(str(data.get("quest_id", ""))), StringName(str(data.get("objective_id", ""))), 1, origin)
 				if not EventBus.interaction_current(origin): return false
 				EventBus.notification_posted.emit(TranslationServer.translate("MATH_CORRECT_TITLE"), TranslationServer.translate("MATH_CORRECT_MSG"), "success")
 			else:

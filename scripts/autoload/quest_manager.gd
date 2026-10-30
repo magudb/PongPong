@@ -135,6 +135,23 @@ func _owner_current(ticket: Dictionary) -> bool:
 		if not is_instance_valid(session) or world == null or world.get("session") != session or session.generation != ticket.epoch: return false
 	return true
 
+## Progress roots capture before queries or observers; inherited interaction
+## tickets keep the SAME context, conjoined with the private row/body guards.
+func _progress_owner(owner: Dictionary = {}) -> Dictionary:
+	if owner.is_empty(): owner = _owner_ticket(PlayerRegistry.acting_id())
+	if owner.is_empty() or not _owner_current(owner): return {}
+	if not owner.has("interaction"):
+		owner = owner.duplicate()
+		owner["interaction"] = EventBus.interaction_origin(owner.id)
+	return owner if _owner_current(owner) else {}
+
+func _owned_ticket(origin: Dictionary) -> Dictionary:
+	if not EventBus.interaction_current(origin): return {}
+	var owner := _owner_ticket(origin.recipient.player_id)
+	if owner.is_empty(): return {}
+	owner["interaction"] = origin
+	return owner if _owner_current(owner) else {}
+
 func _for_event_owner(id: StringName, work: Callable) -> void:
 	if not NetAuthority.can_write() or PlayerRegistry.peek_state(id) == null: return
 	if NetAuthority.owns_network_world() and PlayerRegistry.by_id(id) == null: return
@@ -557,7 +574,16 @@ func _offer_allowed(quest_id: StringName) -> bool:
 # =============================================================================================== accept / progress / complete
 
 func accept_quest(quest_id: StringName) -> bool:
-	if not _can_start(quest_id) or not _offer_allowed(quest_id):
+	return accept_quest_owned(quest_id, EventBus.interaction_origin())
+
+func accept_quest_owned(quest_id: StringName, origin: Dictionary) -> bool:
+	var owner := _owned_ticket(origin)
+	if owner.is_empty(): return false
+	return PlayerRegistry.for_player(owner.id, func(): return _accept_quest(quest_id, owner))
+
+func _accept_quest(quest_id: StringName, owner: Dictionary) -> bool:
+	if not _owner_current(owner) or not _can_start(quest_id): return false
+	if not _owner_current(owner) or not _offer_allowed(quest_id):
 		return false
 
 	var def := get_quest_def(quest_id)
@@ -565,13 +591,14 @@ func accept_quest(quest_id: StringName) -> bool:
 		push_warning("Unknown quest: %s" % quest_id)
 		return false
 
-	_activate(quest_id, def)
+	if not _owner_current(owner): return false
+	_activate(quest_id, def, owner)
 	return true
 
 
 ## The part of accept_quest after the checks (the table-driven completability test also starts quests whose hidden Lua gate it cannot open).
-func _activate(quest_id: StringName, def: Dictionary) -> void:
-	var owner := _owner_ticket(PlayerRegistry.acting_id())
+func _activate(quest_id: StringName, def: Dictionary, owner: Dictionary = {}) -> void:
+	owner = _progress_owner(owner)
 	if owner.is_empty() or not _owner_current(owner): return
 	var rt := QuestRuntime.new()
 	rt.id = quest_id
@@ -640,7 +667,14 @@ func _quest_context() -> Dictionary:
 
 
 func update_objective(quest_id: StringName, objective_id: StringName, amount: int = 1) -> void:
-	var owner := _owner_ticket(PlayerRegistry.acting_id())
+	update_objective_owned(quest_id, objective_id, amount, EventBus.interaction_origin())
+
+func update_objective_owned(quest_id: StringName, objective_id: StringName, amount: int, origin: Dictionary) -> void:
+	var owner := _owned_ticket(origin)
+	if owner.is_empty(): return
+	PlayerRegistry.for_player(owner.id, func(): _update_objective(quest_id, objective_id, amount, owner))
+
+func _update_objective(quest_id: StringName, objective_id: StringName, amount: int, owner: Dictionary) -> void:
 	if owner.is_empty() or not _owner_current(owner): return
 	if quest_id not in active_quests:
 		return
@@ -654,12 +688,12 @@ func update_objective(quest_id: StringName, objective_id: StringName, amount: in
 	if obj["current"] >= obj["target"]:
 		obj["done"] = true
 	EventBus.quest_objective_updated.emit(PlayerRegistry.acting_id(), quest_id, objective_id, obj["current"], obj["target"])
-	if _owner_current(owner) and active_quests.get(quest_id) == rt: _check_completion(quest_id)
+	if _owner_current(owner) and quest_id == SecretGardenStory.QUEST: EventBus.mother_progressed.emit(owner.interaction)
+	if _owner_current(owner) and active_quests.get(quest_id) == rt: _check_completion(quest_id, owner)
 
 
 ## Progress that is a VALUE (have / state objectives): set to `value` (0..target), done once the target is reached. Unchanged = no signal.
-func _set_progress(quest_id: StringName, objective_id: Variant, value: int) -> void:
-	var owner := _owner_ticket(PlayerRegistry.acting_id())
+func _set_progress(quest_id: StringName, objective_id: Variant, value: int, owner: Dictionary) -> void:
 	if owner.is_empty() or not _owner_current(owner): return
 	if quest_id not in active_quests:
 		return
@@ -676,7 +710,8 @@ func _set_progress(quest_id: StringName, objective_id: Variant, value: int) -> v
 	if current >= int(obj["target"]):
 		obj["done"] = true
 	EventBus.quest_objective_updated.emit(PlayerRegistry.acting_id(), quest_id, StringName(str(objective_id)), current, obj["target"])
-	if _owner_current(owner) and active_quests.get(quest_id) == rt: _check_completion(quest_id)
+	if _owner_current(owner) and quest_id == SecretGardenStory.QUEST: EventBus.mother_progressed.emit(owner.interaction)
+	if _owner_current(owner) and active_quests.get(quest_id) == rt: _check_completion(quest_id, owner)
 
 
 func can_complete_manual(quest_id: StringName, objective_id: StringName) -> bool:
@@ -688,11 +723,20 @@ func can_complete_manual(quest_id: StringName, objective_id: StringName) -> bool
 
 ## Manual map interactions commit all resource costs before publishing quest or inventory signals.
 func complete_manual(quest_id: StringName, objective_id: StringName, needs: Dictionary = {}, consume: bool = false) -> bool:
-	if not can_complete_manual(quest_id, objective_id):
+	return complete_manual_owned(quest_id, objective_id, needs, consume, EventBus.interaction_origin())
+
+func complete_manual_owned(quest_id: StringName, objective_id: StringName, needs: Dictionary, consume: bool, origin: Dictionary) -> bool:
+	var owner := _owned_ticket(origin)
+	if owner.is_empty(): return false
+	return PlayerRegistry.for_player(owner.id, func(): return _complete_manual(quest_id, objective_id, needs, consume, owner))
+
+func _complete_manual(quest_id: StringName, objective_id: StringName, needs: Dictionary, consume: bool, owner: Dictionary) -> bool:
+	if not _owner_current(owner) or not can_complete_manual(quest_id, objective_id):
 		return false
 	var rt: QuestRuntime = active_quests[quest_id]
 	var remaining := int(rt.objectives[objective_id]["target"]) - int(rt.objectives[objective_id]["current"])
-	var commit := func() -> void: update_objective(quest_id, objective_id, remaining)
+	var commit := func() -> void:
+		if _owner_current(owner) and active_quests.get(quest_id) == rt: _update_objective(quest_id, objective_id, remaining, owner)
 	if consume:
 		return EconomyManager.consume_backpack_items(needs, commit)
 	if not EconomyManager.has_items(needs):
@@ -702,7 +746,14 @@ func complete_manual(quest_id: StringName, objective_id: StringName, needs: Dict
 
 
 func complete_quest(quest_id: StringName) -> void:
-	var owner := _owner_ticket(PlayerRegistry.acting_id())
+	complete_quest_owned(quest_id, EventBus.interaction_origin())
+
+func complete_quest_owned(quest_id: StringName, origin: Dictionary) -> void:
+	var owner := _owned_ticket(origin)
+	if owner.is_empty(): return
+	PlayerRegistry.for_player(owner.id, func(): _complete_quest(quest_id, owner))
+
+func _complete_quest(quest_id: StringName, owner: Dictionary) -> void:
 	if owner.is_empty() or not _owner_current(owner): return
 	if quest_id not in active_quests:
 		return
@@ -731,6 +782,8 @@ func complete_quest(quest_id: StringName) -> void:
 	claim_rewards()
 	if not _owner_current(owner): return
 	EventBus.quest_completed.emit(owner.id, quest_id)
+	if not _owner_current(owner): return
+	EventBus.mother_progressed.emit(owner.interaction)
 	if not _owner_current(owner): return
 	EventBus.notification_posted.emit(
 		tr("NOTIF_QUEST_COMPLETED_TITLE"),
@@ -892,12 +945,13 @@ func get_quest_progress(quest_id: StringName) -> Dictionary:
 	return (active_quests[quest_id] as QuestRuntime).to_dict()
 
 
-func _check_completion(quest_id: StringName) -> void:
+func _check_completion(quest_id: StringName, owner: Dictionary) -> void:
+	if not _owner_current(owner) or not active_quests.has(quest_id): return
 	var rt: QuestRuntime = active_quests[quest_id]
 	for obj_id in rt.objectives:
 		if not rt.objectives[obj_id]["done"]:
 			return
-	complete_quest(quest_id)
+	_complete_quest(quest_id, owner)
 
 
 func _lua_notify(event: String, quest_id: StringName) -> void:
@@ -1054,7 +1108,7 @@ func _on_friend_changed(player_id: StringName, _npc_id: StringName, _hearts: int
 ## One event, every active quest, every open objective. A turn-in (after_others) is judged on the state BEFORE the event, so the progress this
 ## very event made never lets it through; keys() copies everywhere because progress can complete (and erase) a quest in the middle of the loop.
 func _dispatch(kind: StringName, ctx: Dictionary, owner: Dictionary = {}) -> void:
-	if owner.is_empty(): owner = _owner_ticket(PlayerRegistry.acting_id())
+	owner = _progress_owner(owner)
 	if owner.is_empty() or not _owner_current(owner): return
 	if active_quests.is_empty():
 		return
@@ -1088,7 +1142,7 @@ func _dispatch_to_quest(quest_id: StringName, kind: StringName, ctx: Dictionary,
 		if not _owner_current(owner) or not active_quests.has(quest_id) or active_quests[quest_id] != rt:
 			return
 		var od_hit: Dictionary = hit[2]
-		_apply_hit(quest_id, hit[0], int(hit[1]), od_hit, ctx)
+		_apply_hit(quest_id, hit[0], int(hit[1]), od_hit, ctx, owner)
 
 
 ## Progress one event gives to one objective: 0 = the event does not bind to it.
@@ -1180,7 +1234,8 @@ func living_delivery_context(consumer: Node) -> Dictionary:
 
 
 ## A matched event becomes progress. A delivery (`needs`) first checks and takes the goods: all of it in one commit with the progress.
-func _apply_hit(quest_id: StringName, objective_id: Variant, step: int, od: Dictionary, ctx: Dictionary) -> void:
+func _apply_hit(quest_id: StringName, objective_id: Variant, step: int, od: Dictionary, ctx: Dictionary, owner: Dictionary) -> void:
+	if not _owner_current(owner): return
 	var rt: QuestRuntime = active_quests[quest_id]
 	var obj: Dictionary = rt.objectives[objective_id]
 	var needs := _needs_of(od)
@@ -1188,14 +1243,15 @@ func _apply_hit(quest_id: StringName, objective_id: Variant, step: int, od: Dict
 		_note_missing(needs)
 		return
 	var commit := func() -> void:
+		if not _owner_current(owner) or active_quests.get(quest_id) != rt: return
 		# Only this shipped physical target-one consume source has day-unique
 		# occurrences (seven-day cooldown). Do not generalize to gifts/cookies.
 		if quest_id == &"dark_forest_mining" and str(objective_id) == "return_to_smith" and bool(od.get("consume", false)) and bool(od.get("requires_meeting", false)) and needs == {"iron_ore": 6, "amethyst": 2} and int(obj.get("target", 0)) == 1 and not bool(obj.get("done", false)):
 			var actor: Node = ctx.get("meeting_actor")
 			if actor is Npc2D and is_instance_valid(actor) and actor.is_inside_tree() and actor.is_talking and not actor.is_queued_for_deletion():
-				var owner := PlayerRegistry.registered_id(actor._talk_player)
-				if owner != &"" and owner == PlayerRegistry.acting_id() and str(actor.npc_id) == "smith_thorin":
-					_living_delivery_commit = {"actor": actor, "owner": owner, "day": GameManager.total_day()}
+				var physical_owner := PlayerRegistry.registered_id(actor._talk_player)
+				if physical_owner != &"" and physical_owner == PlayerRegistry.acting_id() and str(actor.npc_id) == "smith_thorin":
+					_living_delivery_commit = {"actor": actor, "owner": physical_owner, "day": GameManager.total_day()}
 					var social := get_node_or_null("/root/SocialManager")
 					if social != null and social.has_method("living_record_delivery"):
 						social.call("living_record_delivery", self)
@@ -1204,7 +1260,7 @@ func _apply_hit(quest_id: StringName, objective_id: Variant, step: int, od: Dict
 			var seen: Array = _Data.arr(obj.get("seen", []))
 			seen.append(str(ctx.get("npc", "")))
 			obj["seen"] = seen
-		update_objective(quest_id, StringName(str(objective_id)), step)
+		if _owner_current(owner): _update_objective(quest_id, StringName(str(objective_id)), step, owner)
 	if bool(od.get("consume", false)) and not needs.is_empty():
 		if not EconomyManager.consume_backpack_items(needs, commit):
 			_note_missing(needs)
@@ -1252,7 +1308,15 @@ func _non_turn_ins_done(rt: QuestRuntime, defs: Dictionary) -> bool:
 ## Re-evaluates the derived objectives (have = true: the inventory count, on = "state": the query) of every active quest. Runs when a quest
 ## is accepted, on load, on the state signals and, coalesced to once per frame, after every inventory change; call it to settle a test.
 func refresh_objectives() -> void:
-	var owner := _owner_ticket(PlayerRegistry.acting_id())
+	refresh_objectives_owned(EventBus.interaction_origin())
+
+func refresh_objectives_owned(origin: Dictionary) -> void:
+	var owner := _owned_ticket(origin)
+	if owner.is_empty(): return
+	PlayerRegistry.for_player(owner.id, func(): _refresh_objectives(owner))
+
+func _refresh_objectives(owner: Dictionary) -> void:
+	owner = _progress_owner(owner)
 	if owner.is_empty() or not _owner_current(owner): return
 	_refresh_queued = false
 	for quest_id in active_quests.keys():
@@ -1265,7 +1329,7 @@ func _queue_refresh() -> void:
 	if not NetAuthority.can_write(): return
 	if active_quests.is_empty(): return
 	var id := PlayerRegistry.acting_id()
-	var ticket := _owner_ticket(id)
+	var ticket := _progress_owner(_owner_ticket(id))
 	if ticket.is_empty(): return
 	# A load may replace this row before its old deferred ticket dispatches.
 	if _refresh_owners.has(id) and _owner_current(_refresh_owners[id]): return
@@ -1280,11 +1344,11 @@ func _run_refresh() -> void:
 	_refresh_owners = {}
 	_refresh_queued = false
 	for ticket: Dictionary in owners.values():
-		if _owner_current(ticket): PlayerRegistry.for_player(ticket.id, refresh_objectives)
+		if _owner_current(ticket): PlayerRegistry.for_player(ticket.id, func(): _refresh_objectives(ticket))
 
 
 func _refresh_quest(quest_id: StringName, owner: Dictionary = {}) -> void:
-	if owner.is_empty(): owner = _owner_ticket(PlayerRegistry.acting_id())
+	owner = _progress_owner(owner)
 	if owner.is_empty() or not _owner_current(owner): return
 	var rt: QuestRuntime = active_quests[quest_id]
 	var defs := _objective_defs(quest_id)
@@ -1311,7 +1375,7 @@ func _refresh_quest(quest_id: StringName, owner: Dictionary = {}) -> void:
 			continue
 		if bool(od.get("after_others", false)) and not _non_turn_ins_done(rt, defs):
 			continue
-		_set_progress(quest_id, objective_id, value)
+		_set_progress(quest_id, objective_id, value, owner)
 
 
 func _have_value(od: Dictionary) -> int:

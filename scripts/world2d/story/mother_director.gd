@@ -21,11 +21,9 @@ func _ready() -> void:
 	EventBus.mother_progressed.connect(_progress_owned)
 	EventBus.load_completed.connect(_loaded)
 func _quest(_player_id: StringName, _id: StringName) -> void:
-	MotherStory.sync()
 	_refresh()
 func _objective(_player_id: StringName, _quest_id: StringName,_id: StringName,_current: int,_target: int) -> void:
 	if _quest_id == SecretGardenStory.QUEST:
-		MotherStory.sync()
 		_refresh()
 func _event(id: StringName,_data: Dictionary) -> void:
 	if id == &"dungeon_boss_defeated":
