@@ -160,9 +160,17 @@ var _deferred_notifications: Array[Callable] = []
 ## Execute an already-validated multi-item transaction before observers can save or
 ## re-enter it. This batches notifications, not validation or rollback. Nested calls
 ## share the outer transaction; normal calls keep their existing synchronous events.
-func defer_notifications(action: Callable) -> void:
+func defer_notifications(action: Callable, continuation: Callable = Callable()) -> void:
 	_notification_depth += 1
+	var first := _deferred_notifications.size()
 	action.call()
+	# An explicit enclosing caller may revoke its not-yet-published suffix.
+	# Keep this lexical: no ambient permission and no change to ordinary roots.
+	if continuation.is_valid():
+		for i in range(first, _deferred_notifications.size()):
+			var notification := _deferred_notifications[i]
+			_deferred_notifications[i] = func() -> void:
+				if continuation.call(): notification.call()
 	_notification_depth -= 1
 	if _notification_depth == 0:
 		var queued := _deferred_notifications

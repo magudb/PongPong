@@ -650,9 +650,9 @@ func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNum
 					sold.append({"id": str(row["id"]), "gold": int(res.get("gold", 0))})
 		_source = prior
 		if not _gift_current(origin): return
-		_commit(plan)
-		committed[0] = true
-	)
+		_commit(plan, origin)
+		committed[0] = _gift_current(origin)
+	, _gift_current.bind(origin))
 	if not _gift_current(origin):
 		var superseded := _answer(committed[0], out_rows, &"superseded")
 		superseded["sold"] = sold
@@ -679,9 +679,11 @@ func _fits_plan(plan: Dictionary, rows: Array, consume: Dictionary) -> bool:
 	return _fits_pack(_backpack_needs(rows), consume)
 
 
-func _commit(plan: Dictionary) -> void:
+func _commit(plan: Dictionary, origin: Dictionary) -> void:
+	if not _gift_current(origin): return
 	if bool(plan.get("delegate", false)):
 		var st: Variant = _delegate_call(&"commit", [dungeon.duplicate(true), plan])
+		if not _gift_current(origin): return
 		if typeof(st) == TYPE_DICTIONARY:
 			# the registry written by deliver() during this transaction must survive a delegate that returns its own copy of the state
 			var keep := _Data.dict(dungeon.get("found", {}))
