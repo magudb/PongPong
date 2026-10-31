@@ -45,6 +45,7 @@ func _physics_process(dt: float) -> void:
 		start_pattern(mode)
 	super._physics_process(dt)
 func start_pattern(mode: String) -> void:
+	_next_combat_request()
 	_cancel_attack()
 	var params := LuaData.dict(cfg.patterns)
 	var direction := Iso.to_ground(player.global_position-global_position).normalized()
@@ -91,7 +92,20 @@ func stun(seconds: float) -> void:
 	super.stun(seconds)
 	remaining = maxf(remaining,dazed)
 	cooldown = maxf(cooldown,wait)
+func stun_owned(seconds: float, receipt: Dictionary, request: Dictionary) -> void:
+	if not Enemy2D._combat_request_current(receipt, request): return
+	var dazed := remaining if state in [S.RECOVER,S.STUN] else 0.0
+	var wait := cooldown
+	super.stun_owned(seconds, receipt, request)
+	if not Enemy2D._combat_request_current(receipt, request): return
+	remaining = maxf(remaining,dazed)
+	cooldown = maxf(cooldown,wait)
 func _on_health_changed() -> void:
+	# A terminal health refresh is still a public notification, not a revival
+	# request that can revoke the exact committed corpse's cleanup.
+	if state == S.DEAD:
+		EventBus.boss_bar_changed.emit(str(cfg.name_key),float(hp)/max_hp,awake)
+		return
 	var receipt := EventBus.combat_receipt(EventBus.combat_origin(), self)
 	if EventBus.combat_current(receipt):
 		PlayerRegistry.for_player(&"p0", func(): _on_health_changed_owned(receipt))
@@ -145,7 +159,8 @@ func spawn_add_owned(kind_id: String, count: int, receipt: Dictionary, request: 
 		if not Enemy2D._combat_request_current(receipt, request): return
 
 func reset_fight() -> void:
-	_combat_serial += 1
+	var was_dead := state == S.DEAD
+	_next_combat_request()
 	if not awake and hp == max_hp: return
 	_cancel_attack()
 	for ref in summoned:
@@ -158,6 +173,9 @@ func reset_fight() -> void:
 	cycle = 0
 	awake = false
 	state = S.IDLE
+	if was_dead:
+		set_physics_process(true)
+		_hurtbox.monitorable = true
 	cooldown = 0
 	global_position = home
 	ground_velocity = Vector2.ZERO

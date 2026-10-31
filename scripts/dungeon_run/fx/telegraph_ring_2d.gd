@@ -66,8 +66,13 @@ func configure(params: Dictionary) -> void:
 	queue_redraw()
 
 func finish() -> void:
+	finish_owned(serial)
+
+func finish_owned(lease: int) -> void:
+	if serial != lease: return
 	active = false
 	visible = false
+	if serial != lease: return
 	set_process(false)
 
 func hit_area() -> Dictionary:

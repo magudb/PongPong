@@ -171,6 +171,9 @@ func _death(t) -> void:
 	if boss == null: return
 	GameManager.set_flag(&"forest_mother_version", 0)
 	var bars: Array = []
+	# A real revival resumes simulation. Keep the registered player inside the
+	# arena so its legitimate distance-reset root cannot erase the judged hit.
+	t.player().global_position = boss.home + Vector2(0,100)
 	var seen: Array = []
 	var notices: Array = []
 	var died: Array = []

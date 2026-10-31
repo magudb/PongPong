@@ -54,13 +54,19 @@ var _host: Node2D
 var _eyes: Sprite2D
 var _stop := 0
 var _combat_serial := 0
+var _death_tween: Tween
+
+func _next_combat_request() -> void:
+	_combat_serial += 1
+	if _death_tween != null and _death_tween.is_valid(): _death_tween.kill()
+	_death_tween = null
 
 ## Physical request identity is separate from the retained H1 model receipt.
 ## Never recapture model authority when a virtual callee resumes.
 func _combat_request(receipt: Dictionary) -> Dictionary:
 	if not EventBus.combat_current(receipt) or not is_inside_tree() or is_queued_for_deletion() or not is_instance_valid(area): return {}
-	_combat_serial += 1
-	var request := {"enemy":weakref(self), "serial":_combat_serial, "area":weakref(area), "objects":weakref(area.objects), "ground_fx":weakref(area.ground_fx), "visual":weakref(visual)}
+	_next_combat_request()
+	var request := {"enemy":weakref(self), "serial":_combat_serial, "area":weakref(area), "objects":weakref(area.objects), "ground_fx":weakref(area.ground_fx), "visual":weakref(visual), "hurtbox":weakref(_hurtbox)}
 	request.make_read_only()
 	return request
 
@@ -260,6 +266,7 @@ func _physics_process(dt: float) -> void:
 	visual.update_motion(velocity,false,false,bool(cfg.get("flying",false)),Iso.to_screen(direction))
 
 func begin_windup(geometry: Dictionary, seconds: float, mode: String) -> bool:
+	_next_combat_request()
 	_cancel_attack()
 	var duration := seconds*DungeonRun.windup_mult()
 	geometry["duration"] = duration+.03
@@ -320,22 +327,51 @@ func _recover() -> void:
 func _warning_valid() -> bool:
 	return is_instance_valid(warning) and warning.serial == warning_serial
 func _cancel_attack() -> void:
-	if _warning_valid(): warning.finish()
+	var serial := _combat_serial
+	_cancel_attack_if(func(): return _combat_serial == serial)
+
+func _cancel_attack_if(current: Callable) -> void:
+	if not current.call(): return
+	var ring: Variant = warning
+	var lease := warning_serial
+	if is_instance_valid(ring) and ring.serial == lease: ring.finish()
+	if not current.call(): return
 	if is_instance_valid(_attack): _attack.set_deferred("monitorable",false)
 	if is_instance_valid(visual): visual.modulate = Color.WHITE
+
 func reveal() -> void:
-	if not ambush or ambush_state == "revealed": return
+	var serial := _combat_serial
+	_reveal_if(func(): return _combat_serial == serial)
+
+func reveal_owned(receipt: Dictionary, request: Dictionary) -> void:
+	_reveal_if(Enemy2D._combat_request_current.bind(receipt, request))
+
+func _reveal_if(current: Callable) -> void:
+	if not current.call() or not ambush or ambush_state == "revealed": return
+	var host: WeakRef = weakref(_host) if is_instance_valid(_host) else null
 	ambush_state = "revealed"
 	visual.visible = true
+	if not current.call(): return
 	if is_instance_valid(_eyes): _eyes.visible = false
-	if is_instance_valid(_host):
-		area.remove_prop(_host)
-		area.place_prop("empty_bush",cell)
+	if not current.call(): return
+	if host != null and is_instance_valid(host.get_ref()):
+		area.remove_prop(host.get_ref())
+		if current.call(): area.place_prop("empty_bush",cell)
+
 func stun(seconds: float) -> void:
-	if state == S.DEAD: return
+	var serial := _combat_serial
+	_stun_if(seconds, func(): return _combat_serial == serial)
+
+func stun_owned(seconds: float, receipt: Dictionary, request: Dictionary) -> void:
+	_stun_if(seconds, Enemy2D._combat_request_current.bind(receipt, request))
+
+func _stun_if(seconds: float, current: Callable) -> void:
+	if not current.call() or state == S.DEAD: return
 	stun_generation += 1
-	reveal()
-	_cancel_attack()
+	_reveal_if(current)
+	if not current.call(): return
+	_cancel_attack_if(current)
+	if not current.call(): return
 	state = S.STUN
 	hop_altitude = 0
 	remaining = maxf(.01,seconds)
@@ -357,17 +393,19 @@ func _take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dic
 	if not Enemy2D._combat_request_current(receipt, request): return
 	set_awake(true)
 	if not Enemy2D._combat_request_current(receipt, request): return
-	reveal()
+	reveal_owned(receipt, request)
 	if not Enemy2D._combat_request_current(receipt, request): return
 	hp = maxi(0,hp-damage)
 	var armoured := armor and state in [S.WINDUP,S.LUNGE]
 	if not armoured:
 		ground_velocity = Iso.to_ground(global_position-from).normalized()*550
-		stun(.38)
+		stun_owned(.38, receipt, request)
+	if not Enemy2D._combat_request_current(receipt, request): return
 	if not DungeonRun.assist("assist_reduce_flash"): visual.flash(Color("fbf5e6"),.18)
-	HitSpark2D.play(area.objects,global_position+Vector2(0,-50),ItemKinds.rarity_of(attacker.combat.active_weapon_id()) if attacker is Player2D else "normal")
+	HitSpark2D.play_owned(area.objects,global_position+Vector2(0,-50),ItemKinds.rarity_of(attacker.combat.active_weapon_id()) if attacker is Player2D else "normal",Enemy2D._combat_request_current.bind(receipt, request))
+	if not Enemy2D._combat_request_current(receipt, request): return
 	EventBus.game_event.emit(&"audio_cue",{"cue":"sfx/hit_soft"})
-	if not EventBus.combat_current(receipt): return
+	if not Enemy2D._combat_request_current(receipt, request): return
 	_on_health_changed_owned(receipt, request)
 	if not Enemy2D._combat_request_current(receipt, request): return
 	if hp <= 0:
@@ -417,7 +455,7 @@ func _die_owned(receipt: Dictionary, inherited: Dictionary = {}) -> void:
 	process_mode = PROCESS_MODE_INHERIT
 	set_physics_process(false)
 	_cancel_attack()
-	if Enemy2D._combat_attachment_current(request): _hurtbox.set_deferred("monitorable",false)
+	if Enemy2D._combat_attachment_current(request): Enemy2D._disable_dead_hurtbox.call_deferred(request)
 	if Enemy2D._combat_request_current(receipt, request): _death_cleanup_owned(receipt, request)
 	Enemy2D._finish_death_owned(receipt, request, terminal)
 
@@ -448,11 +486,25 @@ static func _finish_death_owned(receipt: Dictionary, request: Dictionary, termin
 	if Enemy2D._combat_attachment_current(request):
 		enemy = request.enemy.get_ref()
 		var art: Variant = request.visual.get_ref()
-		var tween: Tween = enemy.create_tween().set_parallel(true)
-		tween.tween_property(art,"modulate:a",0.0,.5)
-		tween.tween_property(art,"scale",Vector2.ONE*.8,.5)
-		tween.chain().tween_callback(Enemy2D._free_dead_request.bind(request))
+		var tween: Tween = enemy.create_tween()
+		enemy._death_tween = tween
+		tween.tween_method(Enemy2D._fade_dead_request.bind(request,art.modulate,art.scale),0.0,1.0,.5)
+		tween.tween_callback(Enemy2D._free_dead_request.bind(request))
 	if terminal.boss: EventBus.combat_finished.emit(true)
 
 static func _free_dead_request(request: Dictionary) -> void:
 	if Enemy2D._combat_attachment_current(request): request.enemy.get_ref().queue_free()
+
+static func _fade_dead_request(amount: float, request: Dictionary, tint: Color, size: Vector2) -> void:
+	# Exact old physical cleanup survives profile replacement, never a newer
+	# same-node request. Do not borrow model permission for these old resources.
+	if not Enemy2D._combat_attachment_current(request): return
+	var art: Variant = request.visual.get_ref()
+	art.modulate = Color(tint,lerpf(tint.a,0.0,amount))
+	art.scale = size.lerp(Vector2.ONE*.8,amount)
+
+static func _disable_dead_hurtbox(request: Dictionary) -> void:
+	if not Enemy2D._combat_attachment_current(request): return
+	var enemy: Variant = request.enemy.get_ref()
+	var box: Variant = request.hurtbox.get_ref()
+	if enemy.state == S.DEAD and is_instance_valid(box) and enemy._hurtbox == box: box.monitorable = false
