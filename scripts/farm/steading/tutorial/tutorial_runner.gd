@@ -21,6 +21,21 @@ var trace: Array[String] = []
 var _area_ref: WeakRef
 var _screen_ref: WeakRef
 var _request: RefCounted
+var _body_ref: WeakRef
+var _body_origin: Dictionary = {}
+var _area_retired := false
+var _body_retired := false
+
+func _retire_body() -> void:
+	_body_retired = true
+	skip()
+
+func _retire_area() -> void:
+	_area_retired = true
+	skip()
+
+func _body_current() -> bool:
+	return not _body_retired and (_body_ref == null or EventBus.interaction_body_current(_body_origin, world, _body_ref.get_ref()))
 
 static func run(target: Node, retained: Dictionary = {}) -> bool:
 	if retained.is_empty(): retained = EventBus.interaction_origin(&"p0")
@@ -36,7 +51,7 @@ static func run(target: Node, retained: Dictionary = {}) -> bool:
 	return await session.play()
 
 func _good() -> bool:
-	if not EventBus.interaction_current(origin) or not is_instance_valid(world) or not world.is_inside_tree() or world.is_queued_for_deletion() or PlayerRegistry.world() != world: return false
+	if _area_retired or not EventBus.interaction_current(origin) or not is_instance_valid(world) or not world.is_inside_tree() or world.is_queued_for_deletion() or PlayerRegistry.world() != world: return false
 	var area: Variant = world.area
 	return is_instance_valid(area) and area is Node and area.is_inside_tree() and not area.is_queued_for_deletion() and (_area_ref == null or _area_ref.get_ref() == area)
 
@@ -47,9 +62,25 @@ func skip() -> void:
 		screen.close_request(_request)
 
 func play() -> bool:
-	if not _good() or str(world.area.map.id) != "farm":
-		return false
+	if active or not _good() or str(world.area.map.id) != "farm": return false
+	var body: Variant = world.player
+	if not is_instance_valid(body) or PlayerRegistry.registered_id(body) != &"p0": return false
+	_body_ref = weakref(body)
+	_body_origin = EventBus.interaction_attach(origin, world, body)
+	if _body_origin.is_empty(): return false
 	_area_ref = weakref(world.area)
+	world.tree_exiting.connect(_retire_area)
+	world.area.tree_exiting.connect(_retire_area)
+	body.tree_exiting.connect(_retire_body)
+	var result := await _play()
+	body = _body_ref.get_ref()
+	if is_instance_valid(body) and body.tree_exiting.is_connected(_retire_body): body.tree_exiting.disconnect(_retire_body)
+	for ref in [weakref(world) if is_instance_valid(world) else null, _area_ref]:
+		var node: Variant = ref.get_ref() if ref is WeakRef else null
+		if is_instance_valid(node) and node.tree_exiting.is_connected(_retire_area): node.tree_exiting.disconnect(_retire_area)
+	return result
+
+func _play() -> bool:
 	active = true
 	var hour := float(GameManager.config_value("farm_tutorial.first_morning.hour", 6))
 	TimeManager.set_weather(&"klart")
@@ -88,7 +119,7 @@ func play() -> bool:
 					GameManager.pop_modal(hold)
 			"dialogue":
 				if str(step.get("context", "")) == "intro":
-					await preload("res://scripts/world2d/intro_sequence.gd").letter(world, origin, self)
+					if _body_current(): await preload("res://scripts/world2d/intro_sequence.gd").letter(world, origin, self)
 				else:
 					await _dialogue(str(step.get("id", "")), str(step.get("npc", "postman_pip")))
 			"npc_leave":
@@ -127,8 +158,9 @@ func play() -> bool:
 	return true
 
 func _enter(id: String, post: String) -> void:
-	if not _good() or skipped: return
+	if not _good() or not _body_current() or skipped: return
 	var point: Vector2 = NpcDirector.post_ground(str(world.area.map.id), StringName(post))
+	if not _good() or not _body_current() or skipped: return
 	if point == Vector2.INF:
 		for marker in world.area.find_markers("post"):
 			if str(marker.params.get("name", "")) == post:
@@ -149,7 +181,7 @@ func _enter(id: String, post: String) -> void:
 
 func _owns_actor(id: String, actor: Variant) -> bool:
 	var parent_ref: Variant = _actor_parents.get(id)
-	return is_instance_valid(actor) and actor is Npc2D and actors.get(id) == actor and parent_ref is WeakRef and actor.get_parent() == parent_ref.get_ref() and actor.activity_current(_actor_receipts.get(id))
+	return is_instance_valid(actor) and actor is Npc2D and actors.get(id) == actor and parent_ref is WeakRef and actor.get_parent() == parent_ref.get_ref() and (_area_ref == null or actor.area == _area_ref.get_ref()) and actor.activity_current(_actor_receipts.get(id))
 
 func _retire_actor(id: String) -> void:
 	var actor: Variant = actors.get(id)
@@ -160,7 +192,7 @@ func _retire_actor(id: String) -> void:
 	if owned: actor.queue_free()
 
 func _actor_current(id: String, actor: Variant) -> bool:
-	return _good() and _owns_actor(id, actor) and actor.area == world.area and world.area.is_ancestor_of(actor)
+	return _good() and _body_current() and _owns_actor(id, actor) and actor.area == world.area and world.area.is_ancestor_of(actor)
 
 func _dialogue(module: String, npc: String) -> void:
 	if not _good():
@@ -170,7 +202,7 @@ func _dialogue(module: String, npc: String) -> void:
 	var owned := EventBus.interaction_attach(origin, actor, world.player)
 	if owned.is_empty(): return
 	var body_ref: WeakRef = weakref(world.player)
-	var ctx: Dictionary = PlayerRegistry.for_player(origin.recipient.player_id, func(): return NpcDialogue.context(npc, body_ref.get_ref()))
+	var ctx: Dictionary = PlayerRegistry.for_player(origin.recipient.player_id, func(): return NpcDialogue.context_owned(npc, body_ref.get_ref(), origin))
 	if not _actor_current(npc, actor) or not EventBus.interaction_body_current(owned, actor, body_ref.get_ref()): return
 	var page: Dictionary = PlayerRegistry.for_player(origin.recipient.player_id, func(): return LuaRuntime.get_dialogue(module, ctx))
 	if not _actor_current(npc, actor) or not EventBus.interaction_body_current(owned, actor, body_ref.get_ref()) or page.is_empty():
@@ -219,7 +251,7 @@ func _leave(npc: String, destination: String) -> void:
 	for waypoint in path:
 		if not _actor_current(npc, actor) or skipped:
 			break
-		actor.event_walk_to(waypoint, 285)
+		actor.event_walk_to(waypoint, 285, _actor_receipts[npc], func(): return _actor_current(npc, actor) and not skipped)
 		while _actor_current(npc, actor) and actor._event_walking and not skipped:
 			await world.get_tree().physics_frame
 	_retire_actor(npc)

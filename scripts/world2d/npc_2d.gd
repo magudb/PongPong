@@ -47,6 +47,7 @@ var _screen: Node
 var _ui_request: RefCounted
 var _talk_origin: Dictionary = {}
 var _talk_attachment: RefCounted
+var _talk_activity: RefCounted
 # Identity of the actor activity, separate from model and UI request authority.
 # Trusted roots replace it; an inherited tutorial activity may only retain it.
 var _activity: RefCounted = RefCounted.new()
@@ -233,6 +234,9 @@ func interact(player: Node) -> void:
 func _attached(attachment: RefCounted) -> bool:
 	return attachment != null and _talk_attachment == attachment and is_talking
 
+func _talk_current(attachment: RefCounted, origin: Dictionary) -> bool:
+	return _attached(attachment) and activity_current(_talk_activity) and EventBus.interaction_physical_current(origin, self)
+
 ## Resolve weak/Variant arguments BEFORE any typed Node dispatch.
 func _interact_owned(player_ref: Variant, origin: Dictionary) -> void:
 	var player: Variant = player_ref.get_ref() if player_ref is WeakRef else null
@@ -245,32 +249,33 @@ func _interact_owned(player_ref: Variant, origin: Dictionary) -> void:
 		is_talking = true
 		_talk_origin = origin
 		_talk_attachment = attachment
+		_talk_activity = _activity
 		_talk_player = player
 		_held = true
 		if player.has_method("begin_talk"):
 			player.begin_talk(global_position)
-		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return {}
+		if not _talk_current(attachment, origin): return {}
 		visual.set_facing_direction(player.global_position - global_position)
 		set_act("talk")
 		# Build before starts can synchronously complete a quest. Each boundary
 		# validates the SAME root; in-callee authored multi-writes are separate.
 		var ctx := NpcDialogue.context_owned(str(npc_id), player, origin)
-		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return {}
+		if not _talk_current(attachment, origin): return {}
 		var initial := NpcDialogue.build_owned(str(npc_id), str(dialogue_id), ctx, guest, origin)
-		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return {}
+		if not _talk_current(attachment, origin): return {}
 		NpcDialogue.begin_owned(str(npc_id), initial, origin)
-		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return {}
+		if not _talk_current(attachment, origin): return {}
 		EventBus.publish_dialogue_started(origin, npc_id, dialogue_id, attachment)
-		if _attached(attachment): EventBus.publish_npc_meeting(origin, self, attachment)
+		if _talk_current(attachment, origin): EventBus.publish_npc_meeting(origin, self, attachment)
 		return initial)
 	if not _attached(attachment): return
-	if page.is_empty() or not EventBus.interaction_physical_current(origin, self):
+	if page.is_empty() or not _talk_current(attachment, origin):
 		_end_talk(0, false, attachment)
 		return
 	_present_page(page, origin, attachment)
 
 func _present_page(page: Dictionary, origin: Dictionary, attachment: RefCounted) -> RefCounted:
-	if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return null
+	if not _talk_current(attachment, origin): return null
 	var screen := get_tree().get_first_node_in_group("dialogue_ui")
 	if screen == null:
 		_end_talk(0, false, attachment)
@@ -308,14 +313,15 @@ func _begin_followup(player: Variant, page: Dictionary, origin: Dictionary = {},
 		_talk_player = player
 		_talk_origin = origin
 		_talk_attachment = attachment
+		_talk_activity = _activity
 		if player.has_method("begin_talk"): player.begin_talk(global_position)
-		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return
+		if not _talk_current(attachment, origin): return
 		NpcDialogue.begin_owned(str(npc_id), page, origin)
-		if not _attached(attachment) or not EventBus.interaction_physical_current(origin, self): return
+		if not _talk_current(attachment, origin): return
 		EventBus.publish_dialogue_started(origin, npc_id, dialogue_id, attachment)
-		if _attached(attachment): EventBus.publish_npc_meeting(origin, self, attachment))
+		if _talk_current(attachment, origin): EventBus.publish_npc_meeting(origin, self, attachment))
 	if not _attached(attachment): return null
-	if not EventBus.interaction_physical_current(origin, self):
+	if not activity_current(_talk_activity) or not EventBus.interaction_physical_current(origin, self):
 		_end_talk(0, false, attachment)
 		return null
 	return _present_page(page, origin, attachment)
@@ -326,18 +332,20 @@ func _end_talk(lines: int, completed: bool, expected: RefCounted = null) -> void
 	# must not erase a synchronously installed replacement on this same actor.
 	var origin := _talk_origin
 	var attachment := _talk_attachment
+	var activity := _talk_activity
 	var player := _talk_player
 	is_talking = false
-	_held = false
+	if _activity == activity: _held = false
 	_talk_player = null
 	_talk_origin = {}
 	_talk_attachment = null
+	_talk_activity = null
 	if is_instance_valid(player) and player.has_method("end_talk"): player.end_talk()
 	if EventBus.interaction_current(origin):
 		PlayerRegistry.for_player(origin.recipient.player_id, func():
 			SocialManager.conversation_finished_owned(str(npc_id), lines, completed, origin))
 	EventBus.publish_dialogue_ended(origin, attachment)
-	if _talk_attachment != null: return
+	if _talk_attachment != null or _activity != activity: return
 	set_act("hover" if bool(_row.get("hover", false)) else "idle")
 	if is_inside_tree(): _update_bubble()
 
@@ -422,15 +430,29 @@ func event_end() -> void:
 
 ## Return a completion signal rather than awaiting on this disposable Node.
 ## Callers can await it; despawn and cancellation also resolve the ticket.
-func event_walk_to(point: Vector2, speed := 100.0) -> Signal:
-	_finish_walk(false)
-	_walk_generation += 1
-	_walk_ticket = WalkTicket.new()
+func event_walk_to(point: Vector2, speed := 100.0, retained_activity: RefCounted = null, current: Callable = Callable()) -> Signal:
+	var ticket := WalkTicket.new()
+	if retained_activity == null: _activity = RefCounted.new()
+	var activity := _activity
+	var admitted := (retained_activity == null or activity_current(retained_activity)) and (not current.is_valid() or bool(current.call()))
+	if admitted:
+		_walk_generation += 1
+		var generation := _walk_generation
+		_finish_walk(false)
+		# Resolving a previous ticket is callback-producing. Never overwrite a
+		# newer walk/hold/talk, or renew the tutorial's revoked model origin.
+		admitted = _activity == activity and _walk_generation == generation and (not current.is_valid() or bool(current.call()))
+	if not admitted:
+		# Preserve the public Signal return contract even for refused admission.
+		# This resolves only the refused ticket, never retries physical work.
+		ticket.finished.emit.call_deferred(false)
+		return ticket.finished
+	_walk_ticket = ticket
 	_event_target = point
 	_event_speed = maxf(1, speed)
 	_walk_left = Iso.to_ground(point - global_position).length() / _event_speed + 3.0
 	_event_walking = true
-	return _walk_ticket.finished
+	return ticket.finished
 
 func _finish_walk(completed: bool) -> void:
 	_event_walking = false
