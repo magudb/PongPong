@@ -164,6 +164,7 @@ func defer_notifications(action: Callable, continuation: Callable = Callable()) 
 	_notification_depth += 1
 	var first := _deferred_notifications.size()
 	var model := _notification_model()
+	var recipient := PlayerRegistry.acting_id()
 	action.call()
 	# Revoke only this model's unpublished suffix. A callback may replace the
 	# model and perform independent current work before returning to this stack.
@@ -173,7 +174,11 @@ func defer_notifications(action: Callable, continuation: Callable = Callable()) 
 			if entry.model != model: continue
 			var notification: Callable = entry.action
 			entry.action = func() -> void:
-				if continuation.call(): notification.call()
+				# Dispatch in the retained recipient's synchronous scope. The
+				# original guard still validates its exact model/stamp; scope is
+				# not new authority after a nested for_player has unwound.
+				PlayerRegistry.for_player(recipient, func() -> void:
+					if continuation.call(): notification.call())
 	_notification_depth -= 1
 	if _notification_depth == 0:
 		var queued := _deferred_notifications
