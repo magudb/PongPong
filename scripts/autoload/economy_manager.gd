@@ -154,7 +154,7 @@ static func _empty_equipment() -> Dictionary:
 
 
 var _notification_depth := 0
-var _deferred_notifications: Array[Callable] = []
+var _deferred_notifications: Array[Dictionary] = []
 
 
 ## Execute an already-validated multi-item transaction before observers can save or
@@ -163,25 +163,33 @@ var _deferred_notifications: Array[Callable] = []
 func defer_notifications(action: Callable, continuation: Callable = Callable()) -> void:
 	_notification_depth += 1
 	var first := _deferred_notifications.size()
+	var model := _notification_model()
 	action.call()
-	# An explicit enclosing caller may revoke its not-yet-published suffix.
-	# Keep this lexical: no ambient permission and no change to ordinary roots.
+	# Revoke only this model's unpublished suffix. A callback may replace the
+	# model and perform independent current work before returning to this stack.
 	if continuation.is_valid():
 		for i in range(first, _deferred_notifications.size()):
-			var notification := _deferred_notifications[i]
-			_deferred_notifications[i] = func() -> void:
+			var entry := _deferred_notifications[i]
+			if entry.model != model: continue
+			var notification: Callable = entry.action
+			entry.action = func() -> void:
 				if continuation.call(): notification.call()
 	_notification_depth -= 1
 	if _notification_depth == 0:
 		var queued := _deferred_notifications
 		_deferred_notifications = []
 		for notification in queued:
-			notification.call()
+			notification.action.call()
+
+
+# Identity metadata only, never permission to perform an economic operation.
+func _notification_model() -> Array:
+	return [PlayerRegistry.peek_state(&"p0"), PlayerRegistry.peek_state(PlayerRegistry.acting_id()), SaveManager._save_owner_stamp()]
 
 
 func after_transaction(action: Callable) -> void:
 	if _notification_depth > 0:
-		_deferred_notifications.append(action)
+		_deferred_notifications.append({"action":action, "model":_notification_model()})
 	else:
 		action.call()
 

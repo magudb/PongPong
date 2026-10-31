@@ -605,8 +605,9 @@ func _open_base(zone: String, container_id: String, cc: Dictionary, uid: String,
 
 
 ## the common end of every mutating call: fit, consume, deliver, commit. plan = {ok, reason, results, delta, delegate?}
-func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNumberGenerator, rng_before: int) -> Dictionary:
-	var origin := _gift_origin()
+func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNumberGenerator, rng_before: int, retained: Variant = null) -> Dictionary:
+	var origin: Dictionary = _gift_origin() if retained == null else retained
+	if origin.is_empty() or not _gift_current(origin): return _answer(false, [], &"superseded")
 	var own_stream := r == rng
 	if not bool(plan.get("ok", false)):
 		_restore(r, rng_before, own_stream)
@@ -621,7 +622,9 @@ func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNum
 		_restore(r, rng_before, own_stream)
 		return _answer(false, [], &"no_gold")
 	var orbs := str(ctx.get("deliver", DELIVER_ADD)) == DELIVER_ORBS
-	if not orbs and not _fits_plan(plan, rows, consume):
+	var fits := orbs or _fits_plan(plan, rows, consume, origin)
+	if not _gift_current(origin): return _answer(false, [], &"superseded")
+	if not fits:
 		_restore(r, rng_before, own_stream)
 		if not bool(ctx.get("quiet_full", false)):
 			_announce_full(bool(ctx.get("dungeon", false)) or str(ctx.get("uid", "")).begins_with(DUNGEON_UID_PREFIX))
@@ -631,6 +634,7 @@ func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNum
 	var refused := [false]
 	var committed := [false]
 	EconomyManager.defer_notifications(func() -> void:
+		if not _gift_current(origin): return
 		# has_items counts placed and worn copies, which remove_items never takes: the consumption decides, before anything is delivered (SYS-06)
 		if not consume.is_empty() and not EconomyManager.remove_items(consume):
 			refused[0] = true
@@ -644,7 +648,7 @@ func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNum
 		else:
 			for row in rows:
 				if not _gift_current(origin): break
-				var res := deliver(str(row["id"]), int(row["amount"]))
+				var res := deliver_owned(str(row["id"]), int(row["amount"]), origin.interaction) if origin.has("interaction") else deliver(str(row["id"]), int(row["amount"]))
 				out_rows.append(row)
 				if bool(res.get("sold", false)):
 					sold.append({"id": str(row["id"]), "gold": int(res.get("gold", 0))})
@@ -671,9 +675,10 @@ func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNum
 
 
 ## The fit of a plan: the delegate's own fits(plan, pack_view) when it has one (the pack_view already has the consumed items taken out), else the virtual pack of this service
-func _fits_plan(plan: Dictionary, rows: Array, consume: Dictionary) -> bool:
-	if bool(plan.get("delegate", false)) and _delegate_has(&"fits"):
-		var ok: Variant = _delegate_call(&"fits", [plan, _pack_view(rows, consume)])
+func _fits_plan(plan: Dictionary, rows: Array, consume: Dictionary, origin: Dictionary) -> bool:
+	var path: String = origin.get("delegate_path", delegate_path)
+	if bool(plan.get("delegate", false)) and _delegate_has(&"fits", path):
+		var ok: Variant = _delegate_call(&"fits", [plan, _pack_view(rows, consume)], path)
 		if typeof(ok) == TYPE_BOOL:
 			return ok
 	return _fits_pack(_backpack_needs(rows), consume)
@@ -682,7 +687,7 @@ func _fits_plan(plan: Dictionary, rows: Array, consume: Dictionary) -> bool:
 func _commit(plan: Dictionary, origin: Dictionary) -> void:
 	if not _gift_current(origin): return
 	if bool(plan.get("delegate", false)):
-		var st: Variant = _delegate_call(&"commit", [dungeon.duplicate(true), plan])
+		var st: Variant = _delegate_call(&"commit", [dungeon.duplicate(true), plan], origin.get("delegate_path", delegate_path))
 		if not _gift_current(origin): return
 		if typeof(st) == TYPE_DICTIONARY:
 			# the registry written by deliver() during this transaction must survive a delegate that returns its own copy of the state
@@ -719,6 +724,12 @@ func _commit(plan: Dictionary, origin: Dictionary) -> void:
 
 ## The delegate path of a mutating call: plan -> fit -> deliver -> commit through the late-bound rules.
 func _run_delegate(method: StringName, source_kind: StringName, extra: Dictionary, uid: String, ctx: Dictionary) -> Dictionary:
+	var origin := _gift_origin()
+	origin["interaction"] = EventBus.interaction_origin(origin.id)
+	origin["delegate_path"] = delegate_path
+	if not _gift_current(origin): return _answer(false, [], &"superseded")
+	var r := _stream(ctx)
+	var before := r.state
 	var c := ctx.duplicate()
 	c.erase("odds")                                              # ctx.odds is ignored
 	c["uid"] = uid
@@ -734,7 +745,8 @@ func _run_delegate(method: StringName, source_kind: StringName, extra: Dictionar
 		stream = "appraise:"+str(req.band)
 		key = int(_Data.dict(dungeon.get("appraise",{})).get(str(req.band),0))
 	req["rng"] = c.get("rng",DungeonLootRng.keyed(stream,key))
-	var v: Variant = _delegate_call(method, [dungeon.duplicate(true), req])
+	var v: Variant = _delegate_call(method, [dungeon.duplicate(true), req], origin.delegate_path)
+	if not _gift_current(origin): return _answer(false, [], &"superseded")
 	if typeof(v) != TYPE_DICTIONARY:
 		return _answer(false, [], &"no_rules")
 	var plan: Dictionary = (v as Dictionary).duplicate(true)
@@ -745,7 +757,7 @@ func _run_delegate(method: StringName, source_kind: StringName, extra: Dictionar
 		typed.append(_typed_row(_Data.dict(row)))
 	plan["results"] = typed
 	var source := StringName("%s:%s" % [source_kind, str(extra.get("container", extra.get("boss", extra.get("spot", extra.get("creature", extra.get("node_kind", ""))))))])
-	return _finish(source, plan, c, _stream(c), _stream(c).state)
+	return _finish(source, plan, c, r, before, origin)
 
 ## Snapshot primitive item facts once per data load; the delegate never reads services.
 func _delegate_config() -> Dictionary:
@@ -765,15 +777,16 @@ func _is_dungeon(uid: String, ctx: Dictionary) -> bool:
 	return uid.begins_with(DUNGEON_UID_PREFIX) or bool(ctx.get("dungeon", false))
 
 
-func _delegate_has(method: StringName) -> bool:
-	if not ResourceLoader.exists(delegate_path):
+func _delegate_has(method: StringName, path: String = "") -> bool:
+	if path == "": path = delegate_path
+	if not ResourceLoader.exists(path):
 		return false
-	var script: Variant = load(delegate_path)
+	var script: Variant = load(path)
 	return script is Script and (script as Script).has_method(method)
 
 
-func _delegate_call(method: StringName, args: Array) -> Variant:
-	return _Svc.static_call(delegate_path, method, args, null)
+func _delegate_call(method: StringName, args: Array, path: String = "") -> Variant:
+	return _Svc.static_call(delegate_path if path == "" else path, method, args, null)
 
 
 ## what a delegate's fits() may need, with the items of `consume` already taken out: the free slots, the room left in the existing stacks and the max stack of every item of
