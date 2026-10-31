@@ -28,6 +28,14 @@ static func _pool_current(parent: WeakRef, pool: WeakRef, current: Callable) -> 
 	var q: Variant = pool.get_ref()
 	return is_instance_valid(p) and is_instance_valid(q) and not p.is_queued_for_deletion() and not q.is_queued_for_deletion() and q.get_parent() == p and p.get_node_or_null("TelegraphPool") == q
 
+static func _slot_attached(slot: WeakRef, pool: WeakRef, lease: int) -> bool:
+	var node: Variant = slot.get_ref()
+	var owner: Variant = pool.get_ref()
+	return is_instance_valid(node) and is_instance_valid(owner) and not node.is_queued_for_deletion() and node.is_inside_tree() and node.get_parent() == owner and node.serial == lease
+
+static func _slot_current(parent: WeakRef, pool: WeakRef, slot: WeakRef, lease: int, current: Callable) -> bool:
+	return _pool_current(parent,pool,current) and _slot_attached(slot,pool,lease)
+
 static func warm_owned(parent: Node, current: Callable) -> void:
 	if not current.call() or not is_instance_valid(parent) or parent.is_queued_for_deletion(): return
 	var owner: WeakRef = weakref(parent)
@@ -61,6 +69,7 @@ static func play_owned(parent: Node, at: Vector2, params: Dictionary, current: C
 	if not _pool_current(owner,ref,current): return null
 	var chosen: TelegraphRing2D = null
 	for node in pool.get_children():
+		if node.is_queued_for_deletion() or not node.is_inside_tree(): continue
 		if not node.active:
 			chosen = node
 			break
@@ -71,15 +80,16 @@ static func play_owned(parent: Node, at: Vector2, params: Dictionary, current: C
 	var lease := chosen.serial
 	var slot: WeakRef = weakref(chosen)
 	chosen.global_position = at
-	if not _pool_current(owner,ref,current) or not is_instance_valid(slot.get_ref()) or chosen.serial != lease: return null
-	chosen._configure_owned(params,func(): return _pool_current(owner,ref,current),lease)
-	if not _pool_current(owner,ref,current) or not is_instance_valid(slot.get_ref()) or chosen.serial != lease: return null
+	if not _slot_current(owner,ref,slot,lease,current): return null
+	var attached := _slot_attached.bind(slot,ref,lease)
+	chosen._configure_owned(params,func(): return _slot_current(owner,ref,slot,lease,current),lease,attached)
+	if not _slot_current(owner,ref,slot,lease,current) or not chosen.active or not chosen.visible: return null
 	return chosen
 
 func configure(params: Dictionary) -> void:
 	_configure_owned(params,func(): return true,serial)
 
-func _configure_owned(params: Dictionary, current: Callable, lease: int) -> void:
+func _configure_owned(params: Dictionary, current: Callable, lease: int, attached: Callable = Callable()) -> void:
 	if serial != lease or not current.call(): return
 	shape_kind = str(params.get("shape","ring"))
 	radius = maxf(1,float(params.get("radius",90)))
@@ -93,8 +103,8 @@ func _configure_owned(params: Dictionary, current: Callable, lease: int) -> void
 	_owner = weakref(owner) if owner!=null else null
 	active = true
 	visible = true
-	if serial != lease or not current.call():
-		finish_owned(lease)
+	if serial != lease or not active or not visible or not current.call():
+		if not attached.is_valid() or attached.call(): finish_owned(lease)
 		return
 	# The GroundFx parent already owns global z=-9.
 	z_index = 0
@@ -106,9 +116,14 @@ func finish() -> void:
 
 func finish_owned(lease: int) -> void:
 	if serial != lease: return
+	# Retire BEFORE visibility observers: finish-only cannot resume activation,
+	# and a callback's newer globally unique lease must not be disabled here.
+	_serial += 1
+	serial = _serial
+	var retired := serial
 	active = false
 	visible = false
-	if serial != lease: return
+	if serial != retired: return
 	set_process(false)
 
 func hit_area() -> Dictionary:

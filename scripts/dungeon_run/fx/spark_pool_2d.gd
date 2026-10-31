@@ -22,6 +22,14 @@ static func _pool_current(parent: WeakRef, pool: WeakRef, current: Callable) -> 
 	var q: Variant = pool.get_ref()
 	return is_instance_valid(p) and is_instance_valid(q) and not p.is_queued_for_deletion() and not q.is_queued_for_deletion() and q.get_parent() == p and p.get_node_or_null("SparkPool") == q
 
+static func _slot_attached(slot: WeakRef, pool: WeakRef, lease: int) -> bool:
+	var node: Variant = slot.get_ref()
+	var owner: Variant = pool.get_ref()
+	return is_instance_valid(node) and is_instance_valid(owner) and not node.is_queued_for_deletion() and node.is_inside_tree() and node.get_parent() == owner and node.serial == lease
+
+static func _slot_current(parent: WeakRef, pool: WeakRef, slot: WeakRef, lease: int, current: Callable) -> bool:
+	return _pool_current(parent,pool,current) and _slot_attached(slot,pool,lease)
+
 static func warm_owned(parent: Node, current: Callable) -> void:
 	if not current.call() or not is_instance_valid(parent) or parent.is_queued_for_deletion(): return
 	var owner: WeakRef = weakref(parent)
@@ -55,6 +63,7 @@ static func play_owned(parent: Node, at: Vector2, color: Color, current: Callabl
 	if not _pool_current(owner, ref, current): return null
 	var chosen: DungeonSpark2D = null
 	for node in pool.get_children():
+		if node.is_queued_for_deletion() or not node.is_inside_tree(): continue
 		if not node.active:
 			chosen = node
 			break
@@ -67,11 +76,11 @@ static func play_owned(parent: Node, at: Vector2, color: Color, current: Callabl
 	chosen.age = 0
 	chosen.tint = color
 	chosen.global_position = at
-	if not _pool_current(owner, ref, current) or not is_instance_valid(slot.get_ref()) or chosen.serial != lease: return null
+	if not _slot_current(owner, ref, slot, lease, current): return null
 	chosen.active = true
 	chosen.visible = true
-	if not _pool_current(owner, ref, current) or not is_instance_valid(slot.get_ref()) or chosen.serial != lease:
-		if is_instance_valid(slot.get_ref()): slot.get_ref().finish_owned(lease)
+	if not _slot_current(owner, ref, slot, lease, current) or not chosen.active or not chosen.visible:
+		if _slot_attached(slot,ref,lease): slot.get_ref().finish_owned(lease)
 		return null
 	chosen.set_process(true)
 	return chosen
@@ -81,9 +90,14 @@ func finish() -> void:
 
 func finish_owned(lease: int) -> void:
 	if serial != lease: return
+	# Retire BEFORE visibility observers: finish-only cannot resume activation,
+	# and a callback's newer globally unique lease must not be disabled here.
+	_serial += 1
+	serial = _serial
+	var retired := serial
 	active = false
 	visible = false
-	if serial != lease: return
+	if serial != retired: return
 	set_process(false)
 
 func _process(dt: float) -> void:
