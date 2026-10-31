@@ -84,7 +84,7 @@ func play() -> bool:
 					GameManager.pop_modal(hold)
 			"dialogue":
 				if str(step.get("context", "")) == "intro":
-					await preload("res://scripts/world2d/intro_sequence.gd").letter(world, origin)
+					await preload("res://scripts/world2d/intro_sequence.gd").letter(world, origin, self)
 				else:
 					await _dialogue(str(step.get("id", "")), str(step.get("npc", "postman_pip")))
 			"npc_leave":

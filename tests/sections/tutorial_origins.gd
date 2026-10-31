@@ -15,6 +15,64 @@ func run(t) -> void:
 	for seam in ["weather", "clock", "step", "accepted", "seen"]:
 		await _suffix(t, seam)
 	await _exact_skip(t)
+	for mode in ["failed", "incomplete", "same"]: await _continuation(t, mode)
+	await _normal(t)
+
+func _normal(t) -> void:
+	GameManager.clear_config_overrides()
+	var starts: Array = []
+	var start := func(id, _module): starts.append(str(id))
+	EventBus.dialogue_started.connect(start)
+	await t.start_world("", "Mia", "Lillegren", "", true)
+	await preload("res://tests/sections/farm_first_morning.gd").new()._opening(t)
+	EventBus.dialogue_started.disconnect(start)
+	t.check("normal_actual_opening_order_quests_and_release", starts == ["postman_pip", "fairy_king", "postman_pip"] and QuestManager.is_active(&"intro_lottery") and QuestManager.is_active(&"forste_dage") and t.player().state == PlayerBody2D.S.FREE and not GameManager.is_modal_open())
+	await t.go_menu()
+
+func _continuation(t, mode: String) -> void:
+	GameManager.clear_config_overrides()
+	if not await t.start_world(): return
+	_freeze(t)
+	var saves: Node = t.autoload("SaveManager")
+	var old_dir: String = saves.save_dir
+	saves.save_dir = "user://tutorial-owned-" + mode
+	var late := preload("res://tests/sections/multiplayer_rollback.gd").LateSection.new()
+	t.tree.root.add_child(late)
+	saves.register_section("tutorial_late", late, 1000)
+	t.check(mode + "_tutorial_real_primary_no_backup", saves.save_game(0) and not FileAccess.file_exists(saves.save_dir + "/save_0.bak.json"))
+	var session := Runner.new()
+	session.world = t.world()
+	session.origin = EventBus.interaction_origin(&"p0")
+	session.skipped = true
+	var origin: Dictionary = session.origin
+	var profile := PlayerRegistry.peek_state(&"p0")
+	var stamp: Array = saves._save_owner_stamp()
+	var entered: Array = []
+	var decoder: Array = []
+	var final: Array = []
+	late.callback = func(): decoder.append(not EventBus.interaction_current(origin))
+	var failed := func(title, _message, kind):
+		if kind == "save" and title == TranslationServer.translate("NOTIF_LOAD_FAILED_TITLE"):
+			final.append(PlayerRegistry.peek_state(&"p0") == profile and saves._save_owner_stamp() == stamp and not saves.continuation_available(profile) and not EventBus.interaction_current(origin))
+	var flag := func(key, _value):
+		if key != &"intro_letter_seen" or not entered.is_empty(): return
+		entered.append(true)
+		late.rejects = 1 if mode == "failed" else (2 if mode == "incomplete" else 0)
+		entered.append(saves._apply_payload(saves.gather_payload()).ok if mode == "same" else saves.load_game(0))
+	EventBus.flag_changed.connect(flag)
+	EventBus.notification_posted.connect(failed)
+	await session.play()
+	EventBus.flag_changed.disconnect(flag)
+	EventBus.notification_posted.disconnect(failed)
+	if mode == "failed":
+		t.check("failed_tutorial_same_origin_resumes_earned_prefix_once", entered == [true, false] and EventBus.interaction_current(origin) and bool(GameManager.get_flag(&"first_morning_done", false)) and QuestManager.is_active(&"intro_lottery") and QuestManager.is_active(&"forste_dage"))
+		t.check("failed_tutorial_decoder_and_outer_final_barriers", decoder == [true, true] and final == [true])
+	else:
+		t.check(mode + "_tutorial_replacement_revokes_next_flag", entered == [true, mode == "same"] and not EventBus.interaction_current(origin) and not bool(GameManager.get_flag(&"first_morning_done", false)))
+	saves.unregister_section("tutorial_late")
+	late.free()
+	saves.save_dir = old_dir
+	await t.go_menu()
 
 func _suffix(t, seam: String) -> void:
 	if not await t.start_world(): return

@@ -512,6 +512,38 @@ func offerable_for(givers: Array) -> Array[Dictionary]:
 	return out
 
 
+## Owned readers retain the same private ticket through callback-producing Lua
+## availability and registered gates, including all giver/quest iterations.
+func is_offerable_owned(quest_id: StringName, origin: Dictionary) -> bool:
+	var owner := _owned_ticket(origin)
+	if owner.is_empty(): return false
+	return PlayerRegistry.for_player(owner.id, func(): return _offerable_owned(quest_id, owner))
+
+func _offerable_owned(quest_id: StringName, owner: Dictionary) -> bool:
+	if not _owner_current(owner) or get_quest_def(quest_id).is_empty() or quest_id in active_quests: return false
+	if not _can_start(quest_id) or not _owner_current(owner): return false
+	var allowed := _requirements_met(quest_id)
+	return _owner_current(owner) and allowed
+
+func offerable_owned(npc_id: Variant, origin: Dictionary) -> Array[StringName]:
+	var owner := _owned_ticket(origin)
+	var out: Array[StringName] = []
+	if owner.is_empty(): return out
+	PlayerRegistry.for_player(owner.id, func():
+		var quests := _quests_of_giver(str(npc_id))
+		for quest_id in quests:
+			if not _owner_current(owner): break
+			if _offerable_owned(quest_id, owner): out.append(quest_id))
+	return out if _owner_current(owner) else []
+
+func offerable_for_owned(givers: Array, origin: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for giver in givers:
+		if not EventBus.interaction_current(origin): return []
+		for quest_id in offerable_owned(giver, origin):
+			out.append({"quest_id": quest_id, "giver": StringName(str(giver))})
+	return out if EventBus.interaction_current(origin) else []
+
 func _quests_of_giver(giver: String) -> Array[StringName]:
 	var out: Array[StringName] = []
 	if giver == "":
