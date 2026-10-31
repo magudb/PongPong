@@ -16,9 +16,13 @@ var active := false
 var skipped := false
 var gate: Node
 var trace: Array[String] = []
+var _area_ref: WeakRef
+var _screen_ref: WeakRef
+var _request: RefCounted
 
 static func run(target: Node, retained: Dictionary = {}) -> bool:
-	if retained.is_empty(): retained = EventBus.interaction_origin()
+	if retained.is_empty(): retained = EventBus.interaction_origin(&"p0")
+	if retained.get("recipient", {}).get("player_id") != &"p0": return false
 	if not EventBus.interaction_current(retained): return false
 	if not bool(GameManager.config_value("farm_tutorial.first_morning.enabled", true)):
 		return false
@@ -30,41 +34,54 @@ static func run(target: Node, retained: Dictionary = {}) -> bool:
 	return await session.play()
 
 func _good() -> bool:
-	return EventBus.interaction_current(origin) and is_instance_valid(world) and world.is_inside_tree()
+	return EventBus.interaction_current(origin) and is_instance_valid(world) and world.is_inside_tree() and PlayerRegistry.world() == world and (_area_ref == null or _area_ref.get_ref() == world.area)
 
 func skip() -> void:
 	skipped = true
-	if _good():
-		var screen := world.get_tree().get_first_node_in_group("dialogue_ui")
-		if screen != null and screen.is_open():
-			screen.close()
+	var screen: Variant = _screen_ref.get_ref() if _screen_ref != null else null
+	if is_instance_valid(screen) and _request != null:
+		screen.close_request(_request)
 
 func play() -> bool:
 	if not _good() or str(world.area.map.id) != "farm":
 		return false
+	_area_ref = weakref(world.area)
 	active = true
 	var hour := float(GameManager.config_value("farm_tutorial.first_morning.hour", 6))
 	TimeManager.set_weather(&"klart")
+	if not _good():
+		active = false
+		return true
 	GameManager.set_clock(int(hour), int(round(fmod(hour, 1) * 60)))
+	if not _good():
+		active = false
+		return true
 	gate = SkipGate.new()
 	gate.session = self
 	gate.name = "FirstMorningInput"
 	world.add_child(gate)
+	if not _good():
+		active = false
+		gate.queue_free()
+		return true
 	var steps := LuaData.arr(GameManager.config_value("farm_tutorial.first_morning.steps", []))
 	for step in steps:
 		if skipped or not _good():
 			break
 		trace.append(str(step.kind))
 		EventBus.game_event.emit(&"tutorial_step", {"kind": str(step.kind), "id": str(step.get("id", step.get("npc", step.get("quest", ""))))})
+		if not _good() or skipped: break
 		match str(step.kind):
 			"npc_enter":
 				_enter(str(step.npc), str(step.post))
-				if DisplayServer.get_name() != "headless" and actors.has(str(step.npc)):
+				if _good() and not skipped and DisplayServer.get_name() != "headless" and is_instance_valid(actors.get(str(step.npc))):
 					# Own and await every request; Escape cancels the sequence after
 					# the current warm finishes, without abandoning threaded sheets.
-					GameManager.push_modal(&"tutorial_setup", false)
-					await actors[str(step.npc)].visual.warm_clips(["idle", "talk", "walk"])
-					GameManager.pop_modal(&"tutorial_setup")
+					var hold := StringName("tutorial_setup_%s" % get_instance_id())
+					GameManager.push_modal(hold, false)
+					if _good() and not skipped and is_instance_valid(actors.get(str(step.npc))):
+						await actors[str(step.npc)].visual.warm_clips(["idle", "talk", "walk"])
+					GameManager.pop_modal(hold)
 			"dialogue":
 				if str(step.get("context", "")) == "intro":
 					await preload("res://scripts/world2d/intro_sequence.gd").letter(world, origin)
@@ -73,7 +90,7 @@ func play() -> bool:
 			"npc_leave":
 				await _leave(str(step.npc), str(step.get("to", "warp")))
 			"quest_accept":
-				QuestManager.accept_quest(StringName(str(step.quest)))
+				QuestManager.accept_quest_owned(StringName(str(step.quest)), origin)
 			"hint":
 				EventBus.game_event.emit(&"tutorial_hint_request", {"id": str(step.id)})
 			"wait":
@@ -85,15 +102,17 @@ func play() -> bool:
 	# Skip still delivers every accepted quest in this extensible sequence.
 	if _good():
 		for step in steps:
+			if not _good(): break
 			if str(step.kind) == "quest_accept":
-				QuestManager.accept_quest(StringName(str(step.quest)))
+				QuestManager.accept_quest_owned(StringName(str(step.quest)), origin)
 		if skipped:
 			for step in steps:
+				if not _good(): break
 				if str(step.kind) == "hint":
 					EventBus.game_event.emit(&"tutorial_hint_request", {"id": str(step.id)})
-		GameManager.set_flag(&"intro_letter_seen", true)
-		GameManager.set_flag(&"first_morning_done", true)
-		EventBus.game_event.emit(&"tutorial_finished", {"skipped": skipped})
+		if EventBus.interaction_current(origin): GameManager.set_flag(&"intro_letter_seen", true)
+		if EventBus.interaction_current(origin): GameManager.set_flag(&"first_morning_done", true)
+		if EventBus.interaction_current(origin): EventBus.game_event.emit(&"tutorial_finished", {"skipped": skipped})
 	for actor in actors.values():
 		if is_instance_valid(actor):
 			actor.queue_free()
@@ -103,6 +122,7 @@ func play() -> bool:
 	return true
 
 func _enter(id: String, post: String) -> void:
+	if not _good() or skipped: return
 	var point: Vector2 = NpcDirector.post_ground(str(world.area.map.id), StringName(post))
 	if point == Vector2.INF:
 		for marker in world.area.find_markers("post"):
@@ -113,33 +133,45 @@ func _enter(id: String, post: String) -> void:
 	var actor := Npc2D.create({"id": id, "wander": "0", "guest": true})
 	actor.area = world.area
 	actor.position = Iso.to_screen(point)
-	world.area.objects.add_child(actor)
-	actor.event_begin()
-	actor.face("SW")
 	actors[id] = actor
+	world.area.objects.add_child(actor)
+	if not _actor_current(id, actor): return
+	actor.event_begin()
+	if not _actor_current(id, actor): return
+	actor.face("SW")
+
+func _actor_current(id: String, actor: Variant) -> bool:
+	return _good() and is_instance_valid(actor) and actor.is_inside_tree() and not actor.is_queued_for_deletion() and actors.get(id) == actor and actor.area == world.area
 
 func _dialogue(module: String, npc: String) -> void:
 	if not _good():
 		return
-	var actor: Npc2D = actors.get(npc)
+	var actor: Variant = actors.get(npc)
+	if not _actor_current(npc, actor) or not is_instance_valid(world.player): return
 	var owned := EventBus.interaction_attach(origin, actor, world.player)
 	if owned.is_empty(): return
-	var ctx := NpcDialogue.context(npc, world.player)
-	if not _good(): return
-	var page := LuaRuntime.get_dialogue(module, ctx)
-	if actor == null or page.is_empty():
+	var body_ref: WeakRef = weakref(world.player)
+	var ctx: Dictionary = PlayerRegistry.for_player(origin.recipient.player_id, func(): return NpcDialogue.context(npc, body_ref.get_ref()))
+	if not _actor_current(npc, actor) or not EventBus.interaction_body_current(owned, actor, body_ref.get_ref()): return
+	var page: Dictionary = PlayerRegistry.for_player(origin.recipient.player_id, func(): return LuaRuntime.get_dialogue(module, ctx))
+	if not _actor_current(npc, actor) or not EventBus.interaction_body_current(owned, actor, body_ref.get_ref()) or page.is_empty():
 		return
 	page["social"] = false
 	page = Svc.static_call("res://scripts/reactions/race_reactions.gd", &"apply", [npc, ctx, page], page)
+	if not _actor_current(npc, actor) or not EventBus.interaction_body_current(owned, actor, body_ref.get_ref()): return
 	var screen: Node = world.get_tree().get_first_node_in_group("dialogue_ui")
 	if screen == null:
 		return
+	_screen_ref = weakref(screen)
 	actor.dialogue_id = StringName(module)
-	var request: RefCounted = actor._begin_followup(world.player, page, owned)
+	var request: RefCounted = actor._begin_followup(body_ref.get_ref(), page, owned)
+	_request = request
+	if skipped and is_instance_valid(screen) and request != null: screen.close_request(request)
 	if request == null:
 		skipped = true
 		return
 	var result: Dictionary = await screen.wait_request(request)
+	if _request == request: _request = null
 	if not bool(result.get("completed", false)):
 		skipped = true
 	# Let the actor's normal completion release the player before the next page.
@@ -169,6 +201,6 @@ func _leave(npc: String, destination: String) -> void:
 		actor.event_walk_to(waypoint, 285)
 		while _good() and is_instance_valid(actor) and actor._event_walking and not skipped:
 			await world.get_tree().physics_frame
-	if is_instance_valid(actor):
+	if is_instance_valid(actor) and actors.get(npc) == actor:
 		actor.queue_free()
-	actors.erase(npc)
+		actors.erase(npc)
