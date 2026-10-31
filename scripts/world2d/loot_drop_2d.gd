@@ -9,6 +9,7 @@ var collected := false
 var tint := Color("fbf5e6")
 var _retry: float = 0
 var _player: Node2D
+var _spawn_current := Callable()
 
 class PendingDrops extends Node:
 	var rows: Array[Dictionary] = []
@@ -48,11 +49,29 @@ static func spawn(parent: Node, at: Vector2, item: Variant, count: int = 1) -> L
 	orb.global_position = at
 	return orb
 
+## H2 owns only admission and the immediate add-child suffix. Cap collection,
+## _ready queue/cap policy and PendingDrops inheritance remain the H4 boundary.
+static func spawn_owned(parent: Node, at: Vector2, item: Variant, count: int, current: Callable) -> LootDrop2D:
+	if not current.call(): return null
+	var orbs := parent.get_children().filter(func(n): return n is LootDrop2D and not n.collected and not n.is_queued_for_deletion())
+	if orbs.size() >= CAP:
+		# Keep the existing collector/queue economics; not certified owned by H2.
+		return spawn(parent, at, item, count)
+	var orb := create({"id":item,"amount":count})
+	orb._spawn_current = current
+	parent.add_child(orb)
+	if not current.call() or not is_instance_valid(orb) or not orb.is_inside_tree() or orb.is_queued_for_deletion(): return null
+	orb.global_position = at
+	return orb
+
 func setup(item: StringName, count: int) -> void:
 	item_id = item
 	amount = maxi(1,count)
 
 func _ready() -> void:
+	if _spawn_current.is_valid() and not _spawn_current.call():
+		set_process(false)
+		return
 	var siblings := get_parent().get_children().filter(func(node): return node is LootDrop2D and node != self and not node.collected and not node.is_queued_for_deletion())
 	if siblings.size() >= CAP and not siblings[0].collect():
 		queue_for(get_parent()).rows.append({"id":str(item_id),"amount":amount,"position":global_position})

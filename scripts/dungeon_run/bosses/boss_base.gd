@@ -95,13 +95,18 @@ func _on_health_changed() -> void:
 	var receipt := EventBus.combat_receipt(EventBus.combat_origin(), self)
 	if EventBus.combat_current(receipt):
 		PlayerRegistry.for_player(&"p0", func(): _on_health_changed_owned(receipt))
-func _on_health_changed_owned(receipt: Dictionary) -> void:
+func _on_health_changed_owned(receipt: Dictionary, inherited: Dictionary = {}) -> void:
 	if not EventBus.combat_current(receipt): return
+	var request := _combat_request(receipt) if inherited.is_empty() else inherited
+	if not Enemy2D._combat_request_current(receipt, request): return
 	EventBus.boss_bar_changed.emit(str(cfg.name_key),float(hp)/max_hp,awake)
+	if not Enemy2D._combat_request_current(receipt, request): return
 	while phase < 2 and hp <= max_hp*([.66,.33][phase]):
-		phase += 1
-		LootDrop2D.spawn(area.objects,global_position+Vector2(45 if phase == 1 else -45,40),"tornebaer",1)
-		spawn_add("bat",adds/2)
+		phase += 1 # committed phase prefix, never rolled back after an observer
+		LootDrop2D.spawn_owned(area.objects,global_position+Vector2(45 if phase == 1 else -45,40),"tornebaer",1,Enemy2D._combat_request_current.bind(receipt, request))
+		if not Enemy2D._combat_request_current(receipt, request): return
+		spawn_add_owned("bat",adds/2,receipt,request)
+		if not Enemy2D._combat_request_current(receipt, request): return
 func spawn_add(kind_id: String, count: int) -> void:
 	for i in count:
 		if not DungeonEnemyRoster.of(area).has_room(): return
@@ -116,7 +121,31 @@ func spawn_add(kind_id: String, count: int) -> void:
 		area.objects.add_child(enemy)
 		enemy.stun(.6)
 		TelegraphRing2D.play(area.ground_fx,candidate,{"radius":55,"duration":.6})
+func spawn_add_owned(kind_id: String, count: int, receipt: Dictionary, request: Dictionary) -> void:
+	for i in count:
+		if not Enemy2D._combat_request_current(receipt, request): return
+		if not DungeonEnemyRoster.of(area).has_room(): return
+		var candidate := home+Iso.to_screen(Vector2.from_angle(TAU*i/maxi(count,1)+phase)*250)
+		if not area.is_walkable(area.global_to_cell(candidate)): candidate = home+Vector2(100,0)
+		var enemy: Variant = Enemy2D.create_marker({"kind":kind_id,"tier":tier,"persist":0},candidate,area.global_to_cell(candidate),area)
+		if not Enemy2D._combat_request_current(receipt, request):
+			if is_instance_valid(enemy): enemy.queue_free()
+			return
+		if enemy == null: continue
+		enemy.persist_cell = false
+		enemy.uid = uid+":add:"+str(phase)+":"+str(summoned.size())
+		enemy.context["uid"] = enemy.uid
+		summoned.append(weakref(enemy))
+		area.objects.add_child(enemy)
+		if not Enemy2D._combat_request_current(receipt, request): return
+		if not is_instance_valid(enemy) or not enemy.is_inside_tree() or enemy.is_queued_for_deletion(): return
+		enemy.stun(.6)
+		if not Enemy2D._combat_request_current(receipt, request): return
+		TelegraphRing2D.play(area.ground_fx,candidate,{"radius":55,"duration":.6})
+		if not Enemy2D._combat_request_current(receipt, request): return
+
 func reset_fight() -> void:
+	_combat_serial += 1
 	if not awake and hp == max_hp: return
 	_cancel_attack()
 	for ref in summoned:

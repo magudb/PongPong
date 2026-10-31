@@ -53,6 +53,27 @@ var _hurtbox: Area2D
 var _host: Node2D
 var _eyes: Sprite2D
 var _stop := 0
+var _combat_serial := 0
+
+## Physical request identity is separate from the retained H1 model receipt.
+## Never recapture model authority when a virtual callee resumes.
+func _combat_request(receipt: Dictionary) -> Dictionary:
+	if not EventBus.combat_current(receipt) or not is_inside_tree() or is_queued_for_deletion() or not is_instance_valid(area): return {}
+	_combat_serial += 1
+	var request := {"enemy":weakref(self), "serial":_combat_serial, "area":weakref(area), "objects":weakref(area.objects), "ground_fx":weakref(area.ground_fx), "visual":weakref(visual)}
+	request.make_read_only()
+	return request
+
+static func _combat_request_current(receipt: Dictionary, request: Dictionary) -> bool:
+	if request.is_empty() or not EventBus.combat_current(receipt): return false
+	var enemy: Variant = request.enemy.get_ref()
+	if not is_instance_valid(enemy) or not enemy.is_inside_tree() or enemy.is_queued_for_deletion() or enemy._combat_serial != request.serial: return false
+	var target: Variant = request.area.get_ref()
+	if not is_instance_valid(target) or not target.is_inside_tree() or target.is_queued_for_deletion() or enemy.area != target: return false
+	for key in ["objects", "ground_fx", "visual"]:
+		var node: Variant = request[key].get_ref()
+		if not is_instance_valid(node) or not node.is_inside_tree() or node.is_queued_for_deletion(): return false
+	return target.objects == request.objects.get_ref() and target.ground_fx == request.ground_fx.get_ref() and enemy.visual == request.visual.get_ref()
 static var _aggro_run := ""
 static func begin_run() -> void:
 	_aggro_run = ""
@@ -329,8 +350,12 @@ func take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dict
 
 func _take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dictionary) -> void:
 	if state == S.DEAD or damage <= 0 or not EventBus.combat_current(receipt): return
+	var request := _combat_request(receipt)
+	if not Enemy2D._combat_request_current(receipt, request): return
 	set_awake(true)
+	if not Enemy2D._combat_request_current(receipt, request): return
 	reveal()
+	if not Enemy2D._combat_request_current(receipt, request): return
 	hp = maxi(0,hp-damage)
 	var armoured := armor and state in [S.WINDUP,S.LUNGE]
 	if not armoured:
@@ -340,8 +365,8 @@ func _take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dic
 	HitSpark2D.play(area.objects,global_position+Vector2(0,-50),ItemKinds.rarity_of(attacker.combat.active_weapon_id()) if attacker is Player2D else "normal")
 	EventBus.game_event.emit(&"audio_cue",{"cue":"sfx/hit_soft"})
 	if not EventBus.combat_current(receipt): return
-	_on_health_changed_owned(receipt)
-	if not EventBus.combat_current(receipt): return
+	_on_health_changed_owned(receipt, request)
+	if not Enemy2D._combat_request_current(receipt, request): return
 	if hp <= 0:
 		if is_instance_valid(attacker) and PlayerRegistry.registered_id(attacker) == receipt.origin.recipient.player_id: WeaponFx.on_kill(attacker,self)
 		if EventBus.combat_current(receipt): _die_owned(receipt)
@@ -349,7 +374,7 @@ func _on_health_changed() -> void:
 	var receipt := EventBus.combat_receipt(EventBus.combat_origin(), self)
 	if EventBus.combat_current(receipt):
 		PlayerRegistry.for_player(&"p0", func(): _on_health_changed_owned(receipt))
-func _on_health_changed_owned(_receipt: Dictionary) -> void:
+func _on_health_changed_owned(_receipt: Dictionary, _request: Dictionary = {}) -> void:
 	pass
 func hit_damage() -> int:
 	if critter: return 0
