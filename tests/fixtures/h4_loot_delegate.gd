@@ -1,5 +1,7 @@
 extends RefCounted
 ## Supported LootService delegate installation, not a replacement pure reader.
+static func _static_init() -> void:
+	_hook("bind")
 static func _hook(seam: String) -> void:
 	var callback: Callable = Engine.get_meta("h4_delegate_hook", Callable())
 	if callback.is_valid(): callback.call(seam)

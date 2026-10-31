@@ -12,6 +12,9 @@ var _player: Node2D
 var _spawn_current := Callable()
 var _drop_origin: Dictionary = {}
 var _generation := 0
+var _collecting := false
+var _drop_parent: WeakRef
+var _drop_attachment: WeakRef
 
 class PendingDrops extends Node:
 	var rows: Array[Dictionary] = []
@@ -30,16 +33,26 @@ class PendingDrops extends Node:
 			row["origin"] = EventBus.interaction_origin(&"p0")
 			row["owner"] = weakref(parent)
 			row["queue"] = weakref(self)
+			row["attachment"] = weakref(parent.get_parent())
+		if not row.get("attachment") is WeakRef or row.attachment.get_ref() != parent.get_parent(): return
 		var origin: Dictionary = row.origin
+		var row_state := row.duplicate()
+		var attachment: WeakRef = row.attachment
 		var queue_ref: WeakRef = row.queue
 		var parent_ref: WeakRef = row.owner
 		if queue_ref.get_ref() != self or parent_ref.get_ref() != parent: return
+		if not EventBus.interaction_current(origin):
+			# Retire only the exact obsolete front row, never adopt its successor.
+			# A temporary load/rollback barrier is not retirement authority.
+			if LootDrop2D._live(self) and not rows.is_empty() and is_same(rows[0],row) and NetAuthority.can_write() and SaveManager.continuation_available(PlayerRegistry.peek_state(&"p0")):
+				rows.pop_front()
+			return
 		var current := func() -> bool:
 			var queue: Variant = queue_ref.get_ref()
 			var owner: Variant = parent_ref.get_ref()
-			return LootDrop2D._live(queue) and LootDrop2D._live(owner) and queue.get_parent() == owner and not queue.rows.is_empty() and is_same(queue.rows[0],row) and EventBus.interaction_current(origin)
+			return LootDrop2D._live(queue) and LootDrop2D._live(owner) and queue.get_parent() == owner and owner.get_parent() == attachment.get_ref() and not queue.rows.is_empty() and is_same(queue.rows[0],row) and queue.rows[0] == row_state and EventBus.interaction_current(origin)
 		if not current.call(): return
-		var orbs := parent.get_children().filter(func(n): return n is LootDrop2D and not n.collected and not n.is_queued_for_deletion())
+		var orbs := parent.get_children().filter(func(n): return n is LootDrop2D and not n.collected and not n.is_queued_for_deletion() and EventBus.interaction_current(n._drop_origin) and n._drop_attached())
 		if orbs.size() >= CAP: orbs[0].collect()
 		if not current.call(): return
 		if orbs.size() < CAP or orbs[0].collected:
@@ -49,15 +62,22 @@ class PendingDrops extends Node:
 			var spawn_current := func() -> bool:
 				var queue: Variant = queue_ref.get_ref()
 				var owner: Variant = parent_ref.get_ref()
-				return LootDrop2D._live(queue) and LootDrop2D._live(owner) and queue.get_parent() == owner and EventBus.interaction_current(origin)
-			LootDrop2D.spawn_owned(parent,row.position,row.id,int(row.amount),spawn_current,origin)
+				return LootDrop2D._live(queue) and LootDrop2D._live(owner) and queue.get_parent() == owner and owner.get_parent() == attachment.get_ref() and EventBus.interaction_current(origin)
+			LootDrop2D.spawn_owned(parent,row_state.position,row_state.id,int(row_state.amount),spawn_current,origin)
 
 static func queue_for(parent: Node) -> PendingDrops:
+	var origin := EventBus.interaction_origin(&"p0")
+	if not _live(parent) or not EventBus.interaction_current(origin): return null
+	var parent_ref: WeakRef = weakref(parent)
+	var attachment: WeakRef = weakref(parent.get_parent()) if parent.get_parent() != null else null
 	var queue: PendingDrops = parent.get_node_or_null("PendingDrops")
 	if queue == null:
 		queue = PendingDrops.new()
 		queue.name = "PendingDrops"
 		parent.add_child(queue)
+	var owner: Variant = parent_ref.get_ref()
+	if not _live(owner) or owner.get_parent() != (attachment.get_ref() if attachment != null else null) or not EventBus.interaction_current(origin): return null
+	if not _live(queue) or queue.get_parent() != owner or owner.get_node_or_null("PendingDrops") != queue: return null
 	return queue
 
 static func create(params: Dictionary, origin: Variant = null) -> LootDrop2D:
@@ -79,14 +99,14 @@ static func spawn_owned(parent: Node, at: Vector2, item: Variant, count: int, cu
 	var attached := func() -> bool:
 		var node: Variant = parent_ref.get_ref()
 		return _live(node) and node.get_parent() == (attachment.get_ref() if attachment != null else null) and current.call()
-	var orbs := parent.get_children().filter(func(n): return n is LootDrop2D and not n.collected and not n.is_queued_for_deletion())
+	var orbs := parent.get_children().filter(func(n): return n is LootDrop2D and not n.collected and not n.is_queued_for_deletion() and EventBus.interaction_current(n._drop_origin) and n._drop_attached())
 	if orbs.size() >= CAP:
 		var taken: bool = orbs[0].collect()
 		if not attached.call(): return null
 		if not taken:
 			var queue := queue_for(parent)
 			if attached.call() and _live(queue) and queue.get_parent() == parent:
-				queue.rows.append({"id":str(item),"amount":count,"position":at,"origin":model,"owner":parent_ref,"queue":weakref(queue)})
+				queue.rows.append({"id":str(item),"amount":count,"position":at,"origin":model,"owner":parent_ref,"queue":weakref(queue),"attachment":weakref(parent.get_parent())})
 			return null
 	var orb := create({"id":item,"amount":count},model)
 	orb._spawn_current = attached
@@ -98,13 +118,26 @@ static func spawn_owned(parent: Node, at: Vector2, item: Variant, count: int, cu
 static func _live(node: Variant) -> bool:
 	return is_instance_valid(node) and node is Node and node.is_inside_tree() and not node.is_queued_for_deletion()
 
+func _bind_drop_attachment() -> void:
+	var parent := get_parent()
+	_drop_parent = weakref(parent) if parent != null else null
+	_drop_attachment = weakref(parent.get_parent()) if parent != null and parent.get_parent() != null else null
+
+func _drop_attached() -> bool:
+	var parent: Variant = _drop_parent.get_ref() if _drop_parent != null else null
+	return _live(self) and _live(parent) and get_parent() == parent and parent.get_parent() == (_drop_attachment.get_ref() if _drop_attachment != null else null)
+
 func setup(item: StringName, count: int) -> void:
 	_generation += 1
+	_collecting = false
+	_spawn_current = Callable()
 	_drop_origin = EventBus.interaction_origin(&"p0")
+	_bind_drop_attachment()
 	item_id = item
 	amount = maxi(1,count)
 
 func _ready() -> void:
+	_bind_drop_attachment()
 	var parent := get_parent()
 	var serial := _generation
 	var self_ref: WeakRef = weakref(self)
@@ -114,16 +147,16 @@ func _ready() -> void:
 	var current := func() -> bool:
 		var node: Variant = self_ref.get_ref()
 		var owner: Variant = parent_ref.get_ref()
-		return _live(node) and _live(owner) and node.get_parent() == owner and node._generation == serial and EventBus.interaction_current(origin) and (not inherited.is_valid() or inherited.call())
+		return _live(node) and node._drop_attached() and _live(owner) and node.get_parent() == owner and node._generation == serial and EventBus.interaction_current(origin) and (not inherited.is_valid() or inherited.call())
 	if not current.call(): return
-	var siblings := parent.get_children().filter(func(node): return node is LootDrop2D and node != self and not node.collected and not node.is_queued_for_deletion())
+	var siblings := parent.get_children().filter(func(node): return node is LootDrop2D and node != self and not node.collected and not node.is_queued_for_deletion() and EventBus.interaction_current(node._drop_origin) and node._drop_attached())
 	if siblings.size() >= CAP:
 		var taken: bool = siblings[0].collect()
 		if not current.call(): return
 		if not taken:
 			var queue := queue_for(parent)
 			if not current.call() or not _live(queue) or queue.get_parent() != parent: return
-			queue.rows.append({"id":str(item_id),"amount":amount,"position":global_position,"origin":origin,"owner":parent_ref,"queue":weakref(queue)})
+			queue.rows.append({"id":str(item_id),"amount":amount,"position":global_position,"origin":origin,"owner":parent_ref,"queue":weakref(queue),"attachment":weakref(parent.get_parent())})
 			collected = true
 			queue_free()
 			return
@@ -154,7 +187,7 @@ func pickup_mult() -> float:
 	return maxf(1,float(gem.get("pickup_mult",1)))
 
 func _process(dt: float) -> void:
-	if collected: return
+	if collected or not _drop_attached() or not EventBus.interaction_current(_drop_origin): return
 	age += dt
 	_retry = maxf(0,_retry-dt)
 	queue_redraw()
@@ -167,7 +200,17 @@ func _process(dt: float) -> void:
 
 func collect() -> bool:
 	if collected: return true
-	if not _live(self) or not EventBus.interaction_current(_drop_origin): return false
+	if _collecting: return false
+	_collecting = true
+	var serial := _generation
+	var self_ref: WeakRef = weakref(self)
+	var result := _collect_once()
+	var node: Variant = self_ref.get_ref()
+	if is_instance_valid(node) and node._generation == serial: node._collecting = false
+	return result
+
+func _collect_once() -> bool:
+	if not _drop_attached() or not EventBus.interaction_current(_drop_origin): return false
 	var serial := _generation
 	var origin := _drop_origin
 	var self_ref: WeakRef = weakref(self)
@@ -176,7 +219,7 @@ func collect() -> bool:
 	var resource_current := func() -> bool:
 		var node: Variant = self_ref.get_ref()
 		var parent: Variant = parent_ref.get_ref()
-		return _live(node) and _live(parent) and node.get_parent() == parent and node._generation == serial and node._player == (collector_ref.get_ref() if collector_ref != null else null)
+		return _live(node) and node._drop_attached() and _live(parent) and node.get_parent() == parent and node._generation == serial and node._player == (collector_ref.get_ref() if collector_ref != null else null)
 	var current := func() -> bool: return resource_current.call() and EventBus.interaction_current(origin)
 	var def := GameData.item_def(item_id)
 	if bool(def.get("heal_on_pickup",false)) and is_instance_valid(_player) and int(_player.get("half_hearts")) < int(_player.get("max_half_hearts")):

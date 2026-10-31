@@ -178,8 +178,9 @@ func _duplicates_kinds() -> Array[String]:
 ## Opens a container (chest, crate, boss chest of the base algorithm): n rolls, the wanderer check, ordinary rolls, delivery. `zone` = the AREA id of the map (farm, skovkant ...)
 ## or the dungeon band; `container_id` = trae | jern | fe | konge | dig | noegle ...; `uid` = area id + ":" + the marker cell (UID helper: container_uid), or `dg:<day>:<floor>:<cell>`.
 func open_container(zone: String, container_id: String, uid: String, ctx: Dictionary = {}) -> Dictionary:
-	if _is_dungeon(uid, ctx) and _delegate_has(&"roll_container"):
-		return _run_delegate(&"roll_container", &"chest", {"kind": &"container", "zone": zone, "container": container_id}, uid, ctx)
+	if _is_dungeon(uid, ctx):
+		var delegated := _try_delegate(&"roll_container", &"chest", {"kind": &"container", "zone": zone, "container": container_id}, uid, ctx)
+		if not delegated.is_empty(): return delegated
 	var cc := _Rules.container_cfg(loot_cfg(), zone, container_id)
 	if cc.is_empty():
 		return _answer(false, [], &"unknown_container")
@@ -188,8 +189,9 @@ func open_container(zone: String, container_id: String, uid: String, ctx: Dictio
 
 ## A dig spot: the container `dig` (find_chance 0.12, the farm 0.06): a miss is still a dig, the spot is spent for the day.
 func dig(zone: String, uid: String, ctx: Dictionary = {}) -> Dictionary:
-	if _is_dungeon(uid, ctx) and _delegate_has(&"roll_container"):
-		return _run_delegate(&"roll_container", &"dig", {"kind": &"dig", "zone": zone, "container": "dig"}, uid, ctx)
+	if _is_dungeon(uid, ctx):
+		var delegated := _try_delegate(&"roll_container", &"dig", {"kind": &"dig", "zone": zone, "container": "dig"}, uid, ctx)
+		if not delegated.is_empty(): return delegated
 	var cc := _Rules.container_cfg(loot_cfg(), zone, "dig")
 	if cc.is_empty():
 		return _answer(false, [], &"unknown_container")
@@ -198,12 +200,11 @@ func dig(zone: String, uid: String, ctx: Dictionary = {}) -> Dictionary:
 
 ## A resource node (crystal, ore, plant) of the dungeon: only the delegate knows the yields (dungeon_loot.node_yields); without it {ok = false, reason = &"no_rules"}.
 func node_loot(kind: String, uid: String, ctx: Dictionary = {}) -> Dictionary:
-	if _delegate_has(&"roll_node"):
-		var c := ctx.duplicate()
-		if not c.has("deliver"):
-			c["deliver"] = DELIVER_ADD
-		return _run_delegate(&"roll_node", &"node", {"kind": &"node", "node_kind": kind}, uid, c)
-	return _answer(false, [], &"no_rules")
+	var c := ctx.duplicate()
+	if not c.has("deliver"):
+		c["deliver"] = DELIVER_ADD
+	var delegated := _try_delegate(&"roll_node", &"node", {"kind": &"node", "node_kind": kind}, uid, c)
+	return delegated if not delegated.is_empty() else _answer(false, [], &"no_rules")
 
 
 ## A creature kill: one roll of loot.creatures.<kind>. The results are RETURNED (ctx.deliver = "orbs" is the default): the caller spawns one pickup orb per row and the
@@ -213,8 +214,9 @@ func on_enemy_defeated(kind: String, ctx: Dictionary = {}) -> Dictionary:
 	if not c.has("deliver"):
 		c["deliver"] = DELIVER_ORBS
 	var uid := str(c.get("uid", ""))
-	if _is_dungeon(uid, c) and _delegate_has(&"roll_drop"):
-		return _run_delegate(&"roll_drop", &"creature", {"kind": &"drop", "creature": kind}, uid, c)
+	if _is_dungeon(uid, c):
+		var delegated := _try_delegate(&"roll_drop", &"creature", {"kind": &"drop", "creature": kind}, uid, c)
+		if not delegated.is_empty(): return delegated
 	var cc := _Data.dict(_Data.dict(loot_cfg().get("creatures", {})).get(kind, {}))
 	if cc.is_empty():
 		return _answer(false, [], &"unknown_creature")
@@ -235,8 +237,9 @@ func on_enemy_defeated(kind: String, ctx: Dictionary = {}) -> Dictionary:
 ## pool pays exhausted_item x exhausted_amount). The boss table is keyed by boss id.
 func on_boss_defeated(boss_id: String, ctx: Dictionary = {}) -> Dictionary:
 	var uid := str(ctx.get("uid", ""))
-	if _is_dungeon(uid, ctx) and _delegate_has(&"boss_result"):
-		return _run_delegate(&"boss_result", &"boss", {"kind": &"boss", "boss": boss_id}, uid, ctx)
+	if _is_dungeon(uid, ctx):
+		var delegated := _try_delegate(&"boss_result", &"boss", {"kind": &"boss", "boss": boss_id}, uid, ctx)
+		if not delegated.is_empty(): return delegated
 	var bcfg := _Data.dict(_Data.dict(loot_cfg().get("boss", {})).get(boss_id, {}))
 	if bcfg.is_empty():
 		return _answer(false, [], &"unknown_boss")
@@ -327,8 +330,9 @@ func claim_spot(spot_id: String, ctx: Dictionary = {}) -> Dictionary:
 		var merged := _Data.dict(c.get("consume", {})).duplicate()
 		merged.merge(consume, true)
 		c["consume"] = merged
-	if _is_dungeon(uid, ctx) and _delegate_has(&"roll_spot"):
-		return _run_delegate(&"roll_spot", &"spot", {"kind": &"spot", "spot": spot_id}, uid, c)
+	if _is_dungeon(uid, ctx):
+		var delegated := _try_delegate(&"roll_spot", &"spot", {"kind": &"spot", "spot": spot_id}, uid, c)
+		if not delegated.is_empty(): return delegated
 	var item := str(spot.get("item", ""))
 	if item == "" or (found(item) and _Kinds.is_one_of_a_kind(item)):
 		return _answer(false, [], &"claimed")
@@ -410,9 +414,16 @@ func appraisal_quote(rough_id: String) -> Dictionary:
 
 ## Fru Ugle's appraisal of ONE unknown stone: the fee is paid, the stone is consumed and one cut gem delivered in ONE transaction (two-phase). Only the delegate has the rules.
 func appraise(rough_id: String, ctx: Dictionary = {}) -> Dictionary:
-	if not _delegate_has(&"roll_appraisal"):
+	var origin := _delegate_origin()
+	var available := _delegate_has(&"roll_appraisal",origin.delegate_path)
+	if not _gift_current(origin): return {"ok":false,"gem":"","rarity":"","fee":0,"reason":&"superseded"}
+	if not available:
 		return {"ok": false, "gem": "", "rarity": "", "fee": 0, "reason": &"no_rules"}
-	var quote := appraisal_quote(rough_id)
+	var quote: Dictionary = {}
+	if _delegate_has(&"appraisal_quote",origin.delegate_path):
+		var value: Variant = _delegate_call(&"appraisal_quote",[_delegate_config(),rough_id],origin.delegate_path)
+		if value is Dictionary: quote = value
+	if not _gift_current(origin): return {"ok":false,"gem":"","rarity":"","fee":0,"reason":&"superseded"}
 	var fee := _Data.int_of(quote.get("fee", 0))
 	if EconomyManager.gold < fee:
 		return {"ok": false, "gem": "", "rarity": "", "fee": fee, "reason": &"no_gold"}
@@ -424,9 +435,9 @@ func appraise(rough_id: String, ctx: Dictionary = {}) -> Dictionary:
 	var res := {}
 	# Keep item/reveal observers outside the save boundary too, not just the caller.
 	EconomyManager.defer_notifications(func() -> void:
-		res.merge(_run_delegate(&"roll_appraisal", &"appraisal", {"kind": &"appraisal", "rough": rough_id, "band": str(quote.get("band", "")), "fee": fee}, str(c.get("uid", "")), c))
-		if bool(res["ok"]) and bool(ctx.get("save",true)): SaveManager.autosave()
-	)
+		res.merge(_run_delegate(&"roll_appraisal", &"appraisal", {"kind": &"appraisal", "rough": rough_id, "band": str(quote.get("band", "")), "fee": fee}, str(c.get("uid", "")), c, origin))
+		if _gift_current(origin) and bool(res["ok"]) and bool(ctx.get("save",true)): SaveManager.autosave()
+	, _gift_current.bind(origin))
 	var rows: Array = res.get("results", [])
 	var first: Dictionary = rows[0] if not rows.is_empty() and typeof(rows[0]) == TYPE_DICTIONARY else {}
 	return {"ok": bool(res["ok"]), "gem": str(first.get("id", "")), "rarity": str(first.get("rarity", "")), "fee": fee if bool(res["ok"]) else 0, "reason": res["reason"]}
@@ -722,11 +733,24 @@ func _commit(plan: Dictionary, origin: Dictionary) -> void:
 		}
 
 
-## The delegate path of a mutating call: plan -> fit -> deliver -> commit through the late-bound rules.
-func _run_delegate(method: StringName, source_kind: StringName, extra: Dictionary, uid: String, ctx: Dictionary) -> Dictionary:
+## Capture before loading a supported extension (its static initializer is a
+## callback too). An empty result alone means absent rules and permits fallback.
+func _delegate_origin() -> Dictionary:
 	var origin := _gift_origin()
 	origin["interaction"] = EventBus.interaction_origin(origin.id)
 	origin["delegate_path"] = delegate_path
+	return origin
+
+func _try_delegate(method: StringName, source_kind: StringName, extra: Dictionary, uid: String, ctx: Dictionary) -> Dictionary:
+	var origin := _delegate_origin()
+	if not _gift_current(origin): return _answer(false, [], &"superseded")
+	var available := _delegate_has(method,origin.delegate_path)
+	if not _gift_current(origin): return _answer(false, [], &"superseded")
+	if not available: return {}
+	return _run_delegate(method,source_kind,extra,uid,ctx,origin)
+
+## Internal continuation, never a new root after an extension callback.
+func _run_delegate(method: StringName, source_kind: StringName, extra: Dictionary, uid: String, ctx: Dictionary, origin: Dictionary) -> Dictionary:
 	if not _gift_current(origin): return _answer(false, [], &"superseded")
 	var r := _stream(ctx)
 	var before := r.state
