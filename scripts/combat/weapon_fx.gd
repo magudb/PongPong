@@ -69,6 +69,24 @@ static func on_kill(player: Node, _enemy: Node) -> void:
 		"heart_on_kill":
 			if _count(player,str(info.get("id","heart_on_kill")),"kill") % maxi(1,int(effect.get("every",8))) == 0 and player.has_method("heal_half"):
 				player.heal_half(1)
+## Inherited kill effects use only the original registered body receipt.
+static func on_kill_owned(player: Variant, _enemy: Variant, receipt: Dictionary) -> void:
+	if not is_instance_valid(player) or not player is Node or not EventBus.combat_current(receipt): return
+	for attached in receipt.bodies:
+		if attached.body.get_ref() != player or attached.origin.recipient.player_id != receipt.origin.recipient.player_id: continue
+		if not EventBus.interaction_body_current(attached.origin, player, player): return
+		var work := func():
+			var info := _info(player)
+			if not EventBus.combat_current(receipt) or not EventBus.interaction_body_current(attached.origin, player, player): return
+			var effect := LuaData.dict(info.get("effect",{}))
+			if str(effect.get("id","")) == "oil_on_kill":
+				if player.has_method("add_oil_owned"): player.add_oil_owned(float(effect.get("s",2)), receipt, attached.origin)
+			elif str(effect.get("id","")) == "heart_on_kill":
+				if _count(player,str(info.get("id","heart_on_kill")),"kill") % maxi(1,int(effect.get("every",8))) == 0 and player.has_method("heal_half_owned"):
+					player.heal_half_owned(1, receipt, attached.origin)
+		PlayerRegistry.for_player(attached.origin.recipient.player_id, work)
+		return
+
 static func on_light(player: Node, params: Dictionary) -> Dictionary:
 	var result := params.duplicate(true)
 	var effect := LuaData.dict(_info(player,result.get("weapon",null)).get("effect",{}))

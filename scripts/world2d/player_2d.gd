@@ -883,6 +883,11 @@ func heal_half(amount: int) -> void:
 	half_hearts = clampi(half_hearts + maxi(0, amount), 0, max_half_hearts)
 	_emit_stats_on_bus()
 
+func heal_half_owned(amount: int, receipt: Dictionary, origin: Dictionary) -> void:
+	if not _combat_body_current(receipt, origin): return
+	half_hearts = clampi(half_hearts + maxi(0, amount), 0, max_half_hearts)
+	_emit_stats_on_bus_owned(receipt, origin)
+
 func apply_slow(multiplier: float, seconds: float) -> void:
 	_slow_mult = minf(_slow_mult,clampf(multiplier,.1,1))
 	_slow_remaining = maxf(_slow_remaining,seconds)
@@ -902,6 +907,11 @@ func add_oil(seconds: float) -> void:
 	_update_lantern()
 	if oil != before:
 		_emit_oil()
+
+func add_oil_owned(seconds: float, receipt: Dictionary, origin: Dictionary) -> void:
+	if not _combat_body_current(receipt, origin): return
+	# add_oil has one terminal notification and no writes after that callback.
+	add_oil(seconds)
 
 func restore_oil() -> void:
 	add_oil(max_oil)

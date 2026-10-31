@@ -65,7 +65,10 @@ func _combat_request(receipt: Dictionary) -> Dictionary:
 	return request
 
 static func _combat_request_current(receipt: Dictionary, request: Dictionary) -> bool:
-	if request.is_empty() or not EventBus.combat_current(receipt): return false
+	return EventBus.combat_current(receipt) and Enemy2D._combat_attachment_current(request)
+
+static func _combat_attachment_current(request: Dictionary) -> bool:
+	if request.is_empty(): return false
 	var enemy: Variant = request.enemy.get_ref()
 	if not is_instance_valid(enemy) or not enemy.is_inside_tree() or enemy.is_queued_for_deletion() or enemy._combat_serial != request.serial: return false
 	var target: Variant = request.area.get_ref()
@@ -368,8 +371,8 @@ func _take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dic
 	_on_health_changed_owned(receipt, request)
 	if not Enemy2D._combat_request_current(receipt, request): return
 	if hp <= 0:
-		if is_instance_valid(attacker) and PlayerRegistry.registered_id(attacker) == receipt.origin.recipient.player_id: WeaponFx.on_kill(attacker,self)
-		if EventBus.combat_current(receipt): _die_owned(receipt)
+		if is_instance_valid(attacker) and attacker is Node and PlayerRegistry.registered_id(attacker) == receipt.origin.recipient.player_id: WeaponFx.on_kill_owned(attacker,self,receipt)
+		if Enemy2D._combat_request_current(receipt, request): _die_owned(receipt, request)
 func _on_health_changed() -> void:
 	var receipt := EventBus.combat_receipt(EventBus.combat_origin(), self)
 	if EventBus.combat_current(receipt):
@@ -402,26 +405,54 @@ func _die() -> void:
 	if EventBus.combat_current(receipt):
 		PlayerRegistry.for_player(&"p0", func(): _die_owned(receipt))
 
-func _die_owned(receipt: Dictionary) -> void:
+func _die_owned(receipt: Dictionary, inherited: Dictionary = {}) -> void:
 	if state == S.DEAD or not EventBus.combat_current(receipt): return
+	var request := _combat_request(receipt) if inherited.is_empty() else inherited
+	if not Enemy2D._combat_request_current(receipt, request): return
+	# Reserve the fatal phase BEFORE the first callback. A newer same-node root
+	# can replace physical work, not erase this phase's once-only notifications.
+	var terminal := {"uid":uid, "kind":kind, "boss":is_boss, "context":context.duplicate(true), "cell":cell, "persist":persist_cell, "drops":LuaData.arr(cfg.get("drops",[])).duplicate(true), "at":global_position, "rng":rng}
+	terminal.make_read_only()
 	state = S.DEAD
 	process_mode = PROCESS_MODE_INHERIT
 	set_physics_process(false)
 	_cancel_attack()
-	_hurtbox.set_deferred("monitorable",false)
-	var loot_rows := []
-	var service := Svc.node("LootService")
-	if not is_boss and service != null:
-		var answer: Dictionary = service.on_enemy_defeated(kind,context)
-		if answer.get("ok",false): loot_rows.append_array(answer.get("results",[]))
-	for row in LuaData.arr(cfg.get("drops",[])):
-		if rng.randf() < float(row.get("chance",0)):
-			loot_rows.append({"id":str(row.item),"amount":rng.randi_range(int(row.get("min",1)),int(row.get("max",1)))})
-	for row in loot_rows: LootDrop2D.spawn(area.objects,global_position+Vector2(rng.randf_range(-25,25),0),row.id,int(row.amount))
-	if persist_cell and not is_boss: LootMarkers.mark_done(area,cell,context)
-	EventBus.publish_enemy_defeated_owned(receipt, uid, kind, loot_rows)
-	died.emit(self)
-	var tween := create_tween().set_parallel(true)
-	tween.tween_property(visual,"modulate:a",0.0,.5)
-	tween.tween_property(visual,"scale",Vector2.ONE*.8,.5)
-	tween.chain().tween_callback(queue_free)
+	if Enemy2D._combat_attachment_current(request): _hurtbox.set_deferred("monitorable",false)
+	if Enemy2D._combat_request_current(receipt, request): _death_cleanup_owned(receipt, request)
+	Enemy2D._finish_death_owned(receipt, request, terminal)
+
+func _death_cleanup_owned(_receipt: Dictionary, _request: Dictionary) -> void:
+	pass
+
+static func _finish_death_owned(receipt: Dictionary, request: Dictionary, terminal: Dictionary) -> void:
+	var loot_rows: Array = []
+	if Enemy2D._combat_request_current(receipt, request):
+		var service := Svc.node("LootService")
+		# Delegated planning/commit and cap collectors remain the H4 boundary.
+		if not terminal.boss and service != null:
+			var answer: Dictionary = service.on_enemy_defeated(terminal.kind,terminal.context)
+			if answer.get("ok",false): loot_rows.append_array(answer.get("results",[]))
+		if Enemy2D._combat_request_current(receipt, request):
+			for row in terminal.drops:
+				if terminal.rng.randf() < float(row.get("chance",0)):
+					loot_rows.append({"id":str(row.item),"amount":terminal.rng.randi_range(int(row.get("min",1)),int(row.get("max",1)))})
+		for row in loot_rows:
+			if not Enemy2D._combat_request_current(receipt, request): break
+			LootDrop2D.spawn_owned(request.objects.get_ref(),terminal.at+Vector2(terminal.rng.randf_range(-25,25),0),row.id,int(row.amount),Enemy2D._combat_request_current.bind(receipt,request))
+	if EventBus.combat_current(receipt) and terminal.persist and not terminal.boss:
+		var target: Variant = request.area.get_ref()
+		if is_instance_valid(target) and target.is_inside_tree() and not target.is_queued_for_deletion(): LootMarkers.mark_done(target,terminal.cell,terminal.context)
+	EventBus.publish_enemy_defeated_owned(receipt, terminal.uid, terminal.kind, loot_rows)
+	var enemy: Variant = request.enemy.get_ref()
+	if is_instance_valid(enemy): enemy.died.emit(enemy)
+	if Enemy2D._combat_attachment_current(request):
+		enemy = request.enemy.get_ref()
+		var art: Variant = request.visual.get_ref()
+		var tween: Tween = enemy.create_tween().set_parallel(true)
+		tween.tween_property(art,"modulate:a",0.0,.5)
+		tween.tween_property(art,"scale",Vector2.ONE*.8,.5)
+		tween.chain().tween_callback(Enemy2D._free_dead_request.bind(request))
+	if terminal.boss: EventBus.combat_finished.emit(true)
+
+static func _free_dead_request(request: Dictionary) -> void:
+	if Enemy2D._combat_attachment_current(request): request.enemy.get_ref().queue_free()

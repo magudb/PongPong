@@ -169,15 +169,15 @@ func _die() -> void:
 	if EventBus.combat_current(receipt):
 		PlayerRegistry.for_player(&"p0", func(): _die_owned(receipt))
 
-func _die_owned(receipt: Dictionary) -> void:
-	if state == S.DEAD or not EventBus.combat_current(receipt): return
+func _death_cleanup_owned(_receipt: Dictionary, request: Dictionary) -> void:
+	var sequences := get_children().filter(func(n): return n.get_script() == Sequence).map(func(n): return weakref(n))
+	var adds_before := summoned.duplicate()
 	EventBus.boss_bar_changed.emit(str(cfg.name_key),0,false)
-	for node in get_children():
-		if node.get_script() == Sequence: node.queue_free()
-	for ref in summoned:
-		if ref.get_ref() != null: ref.get_ref().queue_free()
-	super._die_owned(receipt)
-	EventBus.combat_finished.emit(true)
+	# Do not discover resources after an observer could start another fight.
+	if not Enemy2D._combat_attachment_current(request): return
+	for ref in sequences + adds_before:
+		var node: Variant = ref.get_ref()
+		if is_instance_valid(node) and not node.is_queued_for_deletion(): node.queue_free()
 func _exit_tree() -> void:
 	EventBus.boss_bar_changed.emit(str(cfg.get("name_key","")),0,false)
 	if is_instance_valid(arena_ring): arena_ring.queue_free()
