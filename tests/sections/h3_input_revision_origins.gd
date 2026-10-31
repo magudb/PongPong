@@ -5,6 +5,9 @@ const H1 := preload("res://tests/sections/boss_terminal_origins.gd")
 
 func run(t) -> void:
 	await _rebind(t)
+	await _current_dodge(t, true)
+	await _current_dodge(t, false)
+	await _replacement(t)
 
 func _rebind(t) -> void:
 	var boss: DungeonBoss2D = await H1.new()._start(t)
@@ -61,4 +64,95 @@ func _rebind(t) -> void:
 	t.check("genuine_next_current_request_hits", await t.until_game(func(): return boss.hp < hp, 1.0))
 	await t.seconds(1.0)
 	t.check("genuine_next_action_completes_on_natural_frames", player.state == PlayerBody2D.S.FREE and player.world_input_allowed() and player.is_physics_processing())
+	await t.go_menu()
+
+func _current_dodge(t, buffered: bool) -> void:
+	var boss: DungeonBoss2D = await H1.new()._start(t)
+	if boss == null: return
+	GameManager.set_flag(&"forest_mother_version", 0)
+	var player: Player2D = t.player()
+	var combat := player.combat
+	var tag := "current_buffer" if buffered else "newer_dodge"
+	EconomyManager.add_item(&"sword_rusty", 1)
+	player.global_position = boss.home + Vector2(-60, 0)
+	player.controls.bind_default()
+	player.set_physics_process(true)
+	await t.physics(2)
+	var seen: Array = []
+	var notices: Array = []
+	var child := func(node):
+		if not buffered or not node is Slash2D or not seen.is_empty(): return
+		seen.append(combat._action_serial)
+		player.controls.bind_default()
+		combat.request(&"dodge")
+		seen.append(combat._buffer_serial)
+		seen.append(combat._buffer_origin)
+	var dodged := func(): notices.append([combat._action_serial, combat._remaining, combat.cooldowns.dodge])
+	player.child_entered_tree.connect(child)
+	player.dodged.connect(dodged)
+	t.check(tag + "_real_swing_enabled_eligible", player.is_physics_processing() and player.world_input_allowed() and combat.swing(&"sword_rusty", boss.global_position))
+	player.child_entered_tree.disconnect(child)
+	if buffered:
+		t.check(tag + "_public_new_revision_press_buffered", seen.size() == 3 and player.state == PlayerBody2D.S.SWING and combat._buffer == &"dodge" and combat._buffer_serial == seen[1] and combat._root_current(seen[2]))
+	else:
+		t.check(tag + "_natural_late_swing_admits_dodge_phase", await t.until_game(func(): return player.state == PlayerBody2D.S.SWING and 1.0 - combat._remaining / combat._swing_duration >= .4, 1.0))
+		seen.append(combat._action_serial)
+		player.controls.bind_default()
+		t.check(tag + "_public_dodge_replaces_obsolete_serial", combat.dodge() and player.state == PlayerBody2D.S.DODGE and combat._action_serial > seen[0])
+	t.check(tag + "_genuine_dodge_publication_on_current_root", await t.until_game(func(): return notices.size() == 1, .3))
+	player.dodged.disconnect(dodged)
+	var position := player.global_position
+	await t.physics(3)
+	t.check(tag + "_new_serial_timer_iframes_and_motion_survive", notices.size() == 1 and player.state == PlayerBody2D.S.DODGE and combat._action_serial == notices[0][0] and combat._remaining > 0 and combat._remaining < notices[0][1] and combat.cooldowns.dodge < notices[0][2] and combat._iframes > 0 and player.invulnerable and combat.extra_altitude > 0 and player.global_position != position)
+	await t.seconds(1.0)
+	t.check(tag + "_natural_completion_and_clocks_not_stalled", player.state == PlayerBody2D.S.FREE and combat.cooldowns.dodge == 0 and combat._iframes == 0 and not player.invulnerable and player.is_physics_processing())
+	await t.go_menu()
+
+func _replacement(t) -> void:
+	var boss: DungeonBoss2D = await H1.new()._start(t)
+	if boss == null: return
+	GameManager.set_flag(&"forest_mother_version", 0)
+	var player: Player2D = t.player()
+	var combat := player.combat
+	EconomyManager.add_item(&"sword_rusty", 1)
+	player.global_position = boss.home + Vector2(-60, 0)
+	player.controls.bind_default()
+	player.set_physics_process(true)
+	await t.physics(2)
+	var receiver := Node2D.new()
+	t.world().add_child(receiver)
+	var old_visual := player.visual
+	var old_camera := player.camera
+	var visual := IsoChibiSprite2D.create(old_visual.character_id)
+	player.add_child(visual)
+	visual.set_spin(.73)
+	var camera := Camera2D.new()
+	camera.enabled = false
+	player.add_child(camera)
+	camera.position = Vector2(71, 73)
+	var seen: Array = []
+	var notices: Array = []
+	var child := func(node):
+		if not node is Slash2D or not seen.is_empty(): return
+		seen.append(combat._action_serial)
+		player.controls.bind_default()
+		old_visual.reparent(receiver)
+		old_camera.reparent(receiver)
+		player.visual = visual
+		player.camera = camera
+	var drawn := func(_id): notices.append(true)
+	combat.weapon_drawn.connect(drawn)
+	player.child_entered_tree.connect(child)
+	t.check("rebind_replacement_real_enabled_swing_admitted", player.is_physics_processing() and player.world_input_allowed() and combat.swing(&"sword_rusty", boss.global_position))
+	player.child_entered_tree.disconnect(child)
+	t.check("rebind_replacement_actual_callback_and_old_suffix_refused", seen.size() == 1 and notices.is_empty() and player.visual == visual and player.camera == camera)
+	var hp := boss.hp
+	await t.seconds(1.0)
+	t.check("rebind_replacement_natural_retirement_no_presentation_adoption", player.state == PlayerBody2D.S.FREE and is_equal_approx(visual._spin, .73) and camera.position == Vector2(71, 73) and boss.hp == hp and notices.is_empty())
+	combat.request(&"slash", &"sword_rusty", boss.global_position)
+	t.check("rebind_replacement_genuine_current_action_publishes", notices.size() == 1 and player.state == PlayerBody2D.S.SWING and combat._action_serial > seen[0])
+	t.check("rebind_replacement_genuine_current_action_hits", await t.until_game(func(): return boss.hp < hp, 1.0))
+	combat.weapon_drawn.disconnect(drawn)
+	await t.seconds(1.0)
+	t.check("rebind_replacement_future_natural_completion", player.state == PlayerBody2D.S.FREE and visual._spin == 0 and player.world_input_allowed())
 	await t.go_menu()
