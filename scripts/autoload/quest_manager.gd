@@ -127,6 +127,10 @@ func _owner_current(ticket: Dictionary) -> bool:
 	var world: Variant = ticket.world.get_ref() if ticket.world != null else null
 	if ticket.world != null and (not is_instance_valid(world) or PlayerRegistry.world() != world): return false
 	if ticket.world == null and PlayerRegistry.world() != null: return false
+	if ticket.has("combat_area"):
+		var area: Variant = ticket.combat_area.get_ref() if ticket.combat_area != null else null
+		if ticket.combat_area != null and (not is_instance_valid(area) or not area.is_inside_tree() or area.is_queued_for_deletion()): return false
+		if world != null and world.get("area") != area: return false
 	if ticket.body != null:
 		var body: Variant = ticket.body.get_ref()
 		if not is_instance_valid(body) or PlayerRegistry.by_id(ticket.id) != body or PlayerRegistry.registered_id(body) != ticket.id: return false
@@ -267,7 +271,6 @@ func _ready() -> void:
 	EventBus.animal_fed.connect(_on_animal_fed)
 	EventBus.animal_product_collected.connect(_on_animal_product_collected)
 	EventBus.building_built.connect(_on_building_built)
-	EventBus.enemy_defeated.connect(_on_enemy_defeated)
 	EventBus.recipe_crafted.connect(_on_recipe_crafted)
 	EventBus.quest_completed.connect(_on_quest_completed_signal)
 	EventBus.resource_node_depleted.connect(_on_resource_depleted)
@@ -1098,8 +1101,27 @@ func _on_building_built(building_id: StringName, building_type: StringName) -> v
 	if _owner_current(owner): _queue_refresh()
 
 
-func _on_enemy_defeated(enemy_id: StringName, kind: StringName, _loot: Array) -> void:
-	_dispatch(&"enemy_defeated", {"enemy": str(enemy_id), "kind": str(kind)})
+## Only an earned combat producer may omit its optional physical body.
+## Exact profile/stamp/world/session + retained interaction stay mandatory.
+func combat_receipt(origin: Dictionary) -> Dictionary:
+	var owner := _owned_ticket(origin)
+	if owner.is_empty(): return {}
+	var world := PlayerRegistry.world()
+	var area: Node = world.get("area") if world != null else null
+	owner["combat_area"] = weakref(area) if area != null else null
+	owner["body"] = null
+	return owner
+
+func enemy_defeated_owned(owner: Dictionary, enemy_id: StringName, kind: StringName) -> void:
+	if owner.is_empty() or not _owner_current(owner): return
+	PlayerRegistry.for_player(owner.id, func():
+		_dispatch(&"enemy_defeated", {"enemy": str(enemy_id), "kind": str(kind)}, owner))
+
+func combat_event_owned(owner: Dictionary, event: StringName, payload: Dictionary) -> void:
+	if event not in [&"dungeon_boss_defeated", &"skovhjerte_grown"] or owner.is_empty() or not _owner_current(owner): return
+	PlayerRegistry.for_player(owner.id, func():
+		_dispatch(&"game_event", {"event": str(event), "payload": payload}, owner))
+
 
 
 func _on_recipe_crafted(recipe_id: StringName, amount: int) -> void:
@@ -1114,7 +1136,7 @@ func _on_quest_completed_signal(player_id: StringName, quest_id: StringName) -> 
 
 
 func _on_game_event(event_name: StringName, payload: Dictionary) -> void:
-	if event_name == &"post_read": return # explicitly migrated producer; notification only
+	if event_name in [&"post_read", &"dungeon_boss_defeated", &"skovhjerte_grown"]: return # explicitly migrated producers; notification only
 	_dispatch(&"game_event", {"event": str(event_name), "payload": payload})
 
 ## Only the committed mail read has model-only earned authority. Generic Quest

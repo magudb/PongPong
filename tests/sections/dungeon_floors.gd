@@ -87,7 +87,8 @@ func run(t) -> void:
 	await world.travel(&"moerkeskoven_f4",&"default")
 	var gate: Dictionary = world.area.find_markers("warp").filter(func(m): return str(m.params.get("to","")) == "moerkeskoven_f5")[0]
 	t.check("floors.boss_gate_starts_closed",not gate.node.armed)
-	EventBus.enemy_defeated.emit(&"test_boss",&"snurresvamp",[])
+	var boss: DungeonBoss2D = world.area.find_markers("enemy").filter(func(marker): return marker.node is DungeonBoss2D)[0].node
+	boss.take_hit(9999, world.player.global_position, world.player)
 	await t.frames(2)
 	t.check("floors.boss_flag_opens_hulen_and_chest",gate.node.armed and bool(gm.get_flag(&"dg_boss_clear",false)))
 	gm.push_modal(&"pause",true)

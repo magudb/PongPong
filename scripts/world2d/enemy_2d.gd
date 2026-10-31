@@ -319,7 +319,10 @@ func stun(seconds: float) -> void:
 func hit_stop(frames: int) -> void:
 	_stop = maxi(frames,0)
 func take_hit(damage: int, from: Vector2, attacker: Node = null) -> void:
-	if state == S.DEAD or damage <= 0: return
+	take_hit_owned(damage, from, attacker, EventBus.combat_receipt(EventBus.combat_origin(attacker), self))
+
+func take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dictionary) -> void:
+	if state == S.DEAD or damage <= 0 or not EventBus.combat_current(receipt): return
 	set_awake(true)
 	reveal()
 	hp = maxi(0,hp-damage)
@@ -330,11 +333,15 @@ func take_hit(damage: int, from: Vector2, attacker: Node = null) -> void:
 	if not DungeonRun.assist("assist_reduce_flash"): visual.flash(Color("fbf5e6"),.18)
 	HitSpark2D.play(area.objects,global_position+Vector2(0,-50),ItemKinds.rarity_of(attacker.combat.active_weapon_id()) if attacker is Player2D else "normal")
 	EventBus.game_event.emit(&"audio_cue",{"cue":"sfx/hit_soft"})
-	_on_health_changed()
+	if not EventBus.combat_current(receipt): return
+	_on_health_changed_owned(receipt)
+	if not EventBus.combat_current(receipt): return
 	if hp <= 0:
-		if attacker != null: WeaponFx.on_kill(attacker,self)
-		_die()
+		if is_instance_valid(attacker) and PlayerRegistry.registered_id(attacker) == receipt.origin.recipient.player_id: WeaponFx.on_kill(attacker,self)
+		if EventBus.combat_current(receipt): _die_owned(receipt)
 func _on_health_changed() -> void:
+	_on_health_changed_owned(EventBus.combat_receipt(EventBus.combat_origin(), self))
+func _on_health_changed_owned(_receipt: Dictionary) -> void:
 	pass
 func hit_damage() -> int:
 	if critter: return 0
@@ -358,7 +365,10 @@ func cloud(at: Vector2) -> void:
 	area.ground_fx.add_child(node)
 	node.global_position = at
 func _die() -> void:
-	if state == S.DEAD: return
+	_die_owned(EventBus.combat_receipt(EventBus.combat_origin(), self))
+
+func _die_owned(receipt: Dictionary) -> void:
+	if state == S.DEAD or not EventBus.combat_current(receipt): return
 	state = S.DEAD
 	process_mode = PROCESS_MODE_INHERIT
 	set_physics_process(false)
@@ -374,7 +384,7 @@ func _die() -> void:
 			loot_rows.append({"id":str(row.item),"amount":rng.randi_range(int(row.get("min",1)),int(row.get("max",1)))})
 	for row in loot_rows: LootDrop2D.spawn(area.objects,global_position+Vector2(rng.randf_range(-25,25),0),row.id,int(row.amount))
 	if persist_cell and not is_boss: LootMarkers.mark_done(area,cell,context)
-	EventBus.enemy_defeated.emit(uid,kind,loot_rows)
+	EventBus.publish_enemy_defeated_owned(receipt, uid, kind, loot_rows)
 	died.emit(self)
 	var tween := create_tween().set_parallel(true)
 	tween.tween_property(visual,"modulate:a",0.0,.5)

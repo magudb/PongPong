@@ -92,6 +92,9 @@ func stun(seconds: float) -> void:
 	remaining = maxf(remaining,dazed)
 	cooldown = maxf(cooldown,wait)
 func _on_health_changed() -> void:
+	_on_health_changed_owned(EventBus.combat_receipt(EventBus.combat_origin(), self))
+func _on_health_changed_owned(receipt: Dictionary) -> void:
+	if not EventBus.combat_current(receipt): return
 	EventBus.boss_bar_changed.emit(str(cfg.name_key),float(hp)/max_hp,awake)
 	while phase < 2 and hp <= max_hp*([.66,.33][phase]):
 		phase += 1
@@ -131,13 +134,16 @@ func reset_fight() -> void:
 	arena_ring.set_process(true)
 	EventBus.boss_bar_changed.emit(str(cfg.name_key),1,false)
 func _die() -> void:
-	if state == S.DEAD: return
+	_die_owned(EventBus.combat_receipt(EventBus.combat_origin(), self))
+
+func _die_owned(receipt: Dictionary) -> void:
+	if state == S.DEAD or not EventBus.combat_current(receipt): return
 	EventBus.boss_bar_changed.emit(str(cfg.name_key),0,false)
 	for node in get_children():
 		if node.get_script() == Sequence: node.queue_free()
 	for ref in summoned:
 		if ref.get_ref() != null: ref.get_ref().queue_free()
-	super._die()
+	super._die_owned(receipt)
 	EventBus.combat_finished.emit(true)
 func _exit_tree() -> void:
 	EventBus.boss_bar_changed.emit(str(cfg.get("name_key","")),0,false)

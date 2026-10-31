@@ -49,17 +49,26 @@ static func arc_pct() -> int:
 static func dodge_bonus() -> float:
 	return DungeonAssist.dodge_bonus()
 static func boss_killed(kind: String, number: int) -> Dictionary:
+	var result := boss_killed_owned(kind, number, EventBus.combat_receipt(EventBus.interaction_origin(&"p0")))
+	return {"first": result.first, "hearts_bonus": result.hearts_bonus}
+
+static func boss_killed_owned(kind: String, number: int, receipt: Dictionary) -> Dictionary:
 	var gm := Svc.node("GameManager")
-	if gm == null or kind not in LuaData.strings(cfg("boss_kinds",[])): return {"first":false,"hearts_bonus":hearts_bonus()}
+	var result := {"first": false, "hearts_bonus": hearts_bonus()}
+	if gm == null or not EventBus.combat_current(receipt) or kind not in LuaData.strings(cfg("boss_kinds",[])): return result
 	var key := "dungeon_boss_"+kind
 	var first := int(gm.flag_int(StringName(key),0)) == 0
 	var bonus := hearts_bonus()
 	if first: bonus = mini(bonus+int(cfg("hearts_per_boss",2)),LuaData.arr(cfg("boss_kinds",[])).size()*int(cfg("hearts_per_boss",2)))
+	# One earned atomic batch: observers always see BOTH permanent values.
 	gm.set_flags({key:gm.total_day(),"dungeon_hearts_bonus":bonus})
+	result = {"first": first, "hearts_bonus": bonus}
+	if not EventBus.combat_current(receipt): return result
 	if first:
 		EventBus.notification_posted.emit(TranslationServer.translate("DEXP_SKOVHJERTE"),"","heart")
-		EventBus.game_event.emit(&"skovhjerte_grown",{"bonus":bonus,"hearts_max":hearts_max(),"floor":number,"level":number})
-	return {"first":first,"hearts_bonus":bonus}
+		if not EventBus.combat_current(receipt): return result
+		EventBus.publish_combat_event_owned(receipt, &"skovhjerte_grown", {"bonus":bonus,"hearts_max":hearts_max(),"floor":number,"level":number})
+	return result
 static func after_defeat(gold_lost: int) -> void:
 	var gm := Svc.node("GameManager")
 	if gm == null: return

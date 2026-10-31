@@ -162,8 +162,9 @@ func _checkpoint(number: int) -> void:
 	# Invoke the real persistent boss owner; combat itself has separate native
 	# bot coverage. The story must accept these already-cleared checkpoints.
 	var kind := str(DungeonSpec.spec_for(LuaData.dict(Svc.lua_config("dungeon",{})),number).boss_kind)
-	DungeonRun.boss_killed(kind,number)
-	EventBus.game_event.emit(&"dungeon_boss_defeated",{"kind":kind,"floor":number})
+	var receipt := EventBus.combat_receipt(EventBus.interaction_origin(&"p0"))
+	DungeonRun.boss_killed_owned(kind, number, receipt)
+	EventBus.publish_combat_event_owned(receipt, &"dungeon_boss_defeated", {"kind":kind,"floor":number})
 func _marker(id: String) -> MotherEvidenceMarker:
 	for node in world.area.objects.get_children():
 		if node is MotherEvidenceMarker and node.evidence_id == id: return node

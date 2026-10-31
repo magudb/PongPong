@@ -483,7 +483,7 @@ func _vocabulary_events() -> void:
 	bus.animal_fed.emit(&"a1", &"hay")
 	bus.animal_product_collected.emit(&"a1", &"milk", 4)
 	bus.building_built.emit(&"b1", &"barn")
-	bus.enemy_defeated.emit(&"e1", &"bat", [])
+	bus.defeat_enemy(&"e1", &"bat", [])
 	bus.recipe_crafted.emit(&"honey_cake", 1)
 	_need(problems, _cur(q, "adopt") + _cur(q, "fed") + _cur(q, "egg") + _cur(q, "coop") + _cur(q, "kill") + _cur(q, "craft") == 0, "an event with the wrong species / food / product / type / kind / recipe counted")
 	bus.animal_adopted.emit(&"a2", &"chicken")
@@ -492,7 +492,7 @@ func _vocabulary_events() -> void:
 	bus.animal_product_collected.emit(&"a1", &"egg", 2)
 	bus.animal_product_collected.emit(&"a1", &"egg", 2)
 	bus.building_built.emit(&"b2", &"coop")
-	bus.enemy_defeated.emit(&"e2", &"snurresvamp", [])
+	bus.defeat_enemy(&"e2", &"snurresvamp", [])
 	bus.recipe_crafted.emit(&"flower_necklace", 2)
 	_need(problems, _done(q, "adopt") and _done(q, "fed") and _cur(q, "egg") == 4 and _done(q, "coop") and _done(q, "kill") and _cur(q, "craft") == 2,
 		"adopt %d, fed %d, egg %d (want 4), coop %d, kill %d, craft %d (want 2)" % [_cur(q, "adopt"), _cur(q, "fed"), _cur(q, "egg"), _cur(q, "coop"), _cur(q, "kill"), _cur(q, "craft")])
@@ -591,7 +591,8 @@ func _game_events() -> void:
 	qm.reset()
 	for pair in [["dungeon_floor_entered", 1], ["dungeon_runestone_activated", 3], ["dungeon_boss_defeated", 4], ["dungeon_run_ended", 1]]:
 		var qd := _start("zz_p13_%s" % pair[0], [{"id": "o", "target": 1, "on": "game_event", "event": pair[0]}], false)
-		bus.game_event.emit(StringName(pair[0]), (EVENT_PAYLOADS[pair[0]] as Dictionary).duplicate(true))
+		if pair[0] == "dungeon_boss_defeated": bus.combat_event(StringName(pair[0]), (EVENT_PAYLOADS[pair[0]] as Dictionary).duplicate(true))
+		else: bus.game_event.emit(StringName(pair[0]), (EVENT_PAYLOADS[pair[0]] as Dictionary).duplicate(true))
 		_need(problems, qm.is_completed(qd), "%s with its real payload did not complete an objective bound to it" % pair[0])
 	t.check("dungeon_event_payloads_bind", problems.is_empty(), "dungeon_floor_entered, dungeon_runestone_activated, dungeon_boss_defeated, dungeon_run_ended: %s" % str(problems))
 	qm.reset()
@@ -746,8 +747,8 @@ func _turn_ins_have_and_delivery() -> void:
 	problems.clear()
 	_fresh()
 	q = _start("zz_p13_flagged", [{"id": "bats", "target": 3, "on": "enemy_defeated", "kind": "bat", "completed_flag": "zz_p13_bats_done"}])
-	bus.enemy_defeated.emit(&"e1", &"bat", [])
-	bus.enemy_defeated.emit(&"e2", &"bat", [])
+	bus.defeat_enemy(&"e1", &"bat", [])
+	bus.defeat_enemy(&"e2", &"bat", [])
 	eco.add_item(&"wood", 1)
 	await t.frames(1)
 	qm.refresh_objectives()
@@ -1362,7 +1363,7 @@ func _drive(qid: String, events_fed: Dictionary) -> Dictionary:
 						bus.building_built.emit(&"building_t", StringName(_first(od.get("type", ""), "coop")))
 				"enemy_defeated":
 					for i in target:
-						bus.enemy_defeated.emit(&"enemy_t", StringName(_first(od.get("kind", ""), "bat")), [])
+						bus.defeat_enemy(&"enemy_t", StringName(_first(od.get("kind", ""), "bat")), [])
 				"recipe_crafted":
 					for i in target:
 						bus.recipe_crafted.emit(StringName(_first(od.get("recipe", ""), "iron_ingot")), 1)
@@ -1383,6 +1384,7 @@ func _drive(qid: String, events_fed: Dictionary) -> Dictionary:
 						events_fed[event_name] = true
 						for i in target:
 							if event_name == "post_read": bus.publish_post_read(bus.interaction_origin(), _payload_for(event_name, od))
+							elif event_name in ["dungeon_boss_defeated", "skovhjerte_grown"]: bus.combat_event(StringName(event_name), _payload_for(event_name, od))
 							else: bus.game_event.emit(StringName(event_name), _payload_for(event_name, od))
 					else:
 						problems.append("%s.%s: `on = %s` has no driver in this test" % [qid, oid, on])

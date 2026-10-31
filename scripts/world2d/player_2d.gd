@@ -168,14 +168,23 @@ func _notification(what: int) -> void:
 func refresh_stats() -> void:
 	actor_work(_refresh_owned_stats)
 
+func refresh_stats_owned(receipt: Dictionary, origin: Dictionary) -> void:
+	if not _combat_body_current(receipt, origin): return
+	PlayerRegistry.for_player(origin.recipient.player_id, func():
+		_calculate_stats()
+		_emit_stats_on_bus_owned(receipt, origin))
+
 func _refresh_owned_stats() -> void:
+	_calculate_stats()
+	_emit_stats_on_bus()
+
+func _calculate_stats() -> void:
 	_walk = float(GameData.player_cfg("walk_speed", 285)) * (1.0 + Perks.total("speed"))
 	_run = float(GameData.player_cfg("run_speed", 450)) * (1.0 + Perks.total("speed"))
 	max_stamina = float(GameData.player_cfg("max_stamina", 100)) + Perks.total("energy")
 	stamina = minf(stamina, max_stamina)
 	max_half_hearts = maxi(1, int(Svc.static_call(RULES, &"hearts_max", [], GameData.combat("max_half_hearts", 10))))
 	half_hearts = mini(half_hearts, max_half_hearts)
-	_emit_stats_on_bus()
 
 func _on_character_changed(player_id: StringName, character_id: StringName) -> void:
 	if player_id != self.player_id:
@@ -184,7 +193,7 @@ func _on_character_changed(player_id: StringName, character_id: StringName) -> v
 	refresh_stats()
 
 func _on_game_event(event: StringName, _data: Dictionary) -> void:
-	if event in [&"assist_changed", &"skovhjerte_grown"]:
+	if event == &"assist_changed":
 		refresh_stats()
 
 func enter_area(target: IsoArea, at: Vector2) -> void:
@@ -811,6 +820,19 @@ func _emit_stats_on_bus() -> void:
 	_last_stats = values.duplicate()
 	stats_changed.emit()
 	EventBus.player_stats_changed.emit(player_id, values)
+
+func _emit_stats_on_bus_owned(receipt: Dictionary, origin: Dictionary) -> void:
+	if not _combat_body_current(receipt, origin): return
+	var values := {"half_hearts": half_hearts, "max_half_hearts": max_half_hearts, "stamina": stamina, "max_stamina": max_stamina}
+	if values == _last_stats: return
+	var id: StringName = origin.recipient.player_id
+	if _last_stats.get("half_hearts", -1) != half_hearts or _last_stats.get("max_half_hearts", -1) != max_half_hearts:
+		EventBus.player_health_changed.emit(id, half_hearts, max_half_hearts)
+		if not _combat_body_current(receipt, origin): return
+	_last_stats = values.duplicate()
+	stats_changed.emit()
+	if not _combat_body_current(receipt, origin): return
+	EventBus.player_stats_changed.emit(id, values)
 
 ## One readout for the HUD and the fitted item presenter. An action keeps its
 ## actual source item until completion even if the hotbar or equipment changes.

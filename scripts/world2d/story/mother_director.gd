@@ -27,7 +27,7 @@ func _objective(_player_id: StringName, _quest_id: StringName,_id: StringName,_c
 		_refresh()
 func _event(id: StringName,_data: Dictionary) -> void:
 	if id == &"dungeon_boss_defeated":
-		MotherStory.sync()
+		# Explicit producer sends mother_progressed after public observers.
 		_refresh()
 	elif id in [&"forest_mother_evidence", &"forest_mother_work"]:
 		# The public event is presentation-only. The actual producer publishes

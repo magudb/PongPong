@@ -1,6 +1,7 @@
 class_name DungeonRunWatch
 extends Node
 var active := false
+var run_identity := RefCounted.new()
 var floors: Dictionary = {}
 var deepest := 0
 var finds := 0
@@ -17,8 +18,10 @@ func _ready() -> void:
 	EventBus.game_event.connect(_event)
 	EventBus.area_changed.connect(_area)
 	EventBus.item_gained.connect(_item)
-	EventBus.enemy_defeated.connect(func(_id,_kind,_loot):
-		if active: kills += 1)
+
+func enemy_defeated_owned(receipt: Dictionary) -> void:
+	if EventBus.combat_current(receipt) and receipt.watch.get_ref() == self and receipt.watch_run == run_identity and active:
+		kills += 1
 func _area(id: StringName) -> void:
 	if str(id) == str(DungeonRulesData.value("dungeon.hub.area","moerkeskoven")):
 		active = false
@@ -27,6 +30,7 @@ func _event(event: StringName, payload: Dictionary) -> void:
 	match event:
 		&"dungeon_floor_entered":
 			if not active:
+				run_identity = RefCounted.new()
 				floors.clear()
 				deepest = 0
 				finds = 0
@@ -47,6 +51,7 @@ func _event(event: StringName, payload: Dictionary) -> void:
 					EconomyManager.consume_backpack_items({"etagekort":1},func(): service.reveal_floor(number); EventBus.game_event.emit(&"floor_map_used",{"floor":number}); EventBus.whisper_requested.emit("DEXP_MAP_READ"))
 			DungeonTutorial.say("lantern")
 		&"dungeon_run_ended":
+			run_identity = RefCounted.new()
 			active = false
 			if str(payload.get("reason","")) == "left":
 				_summary = [tr("DEXP_SUMMARY_FLOORS_FMT") % [floors.size(),deepest],tr("DEXP_SUMMARY_FINDS_FMT") % [finds,rare],tr("DEXP_SUMMARY_BEST_FMT") % tr(str(ItemKinds.def(best).get("name_key","DEXP_SUMMARY_NONE"))) if best != "" else tr("DEXP_SUMMARY_NONE")]

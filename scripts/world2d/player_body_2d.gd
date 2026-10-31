@@ -318,6 +318,17 @@ func _emit_stats_on_bus() -> void:
 	EventBus.player_stats_changed.emit(player_id, {"half_hearts": half_hearts, "max_half_hearts": max_half_hearts, "stamina": stamina, "max_stamina": max_stamina})
 
 
+## Inherited heart refresh checks inside the helper, not just at its caller.
+func _combat_body_current(receipt: Dictionary, origin: Dictionary) -> bool:
+	return EventBus.combat_current(receipt) and EventBus.interaction_body_current(origin, self, self)
+
+func _emit_stats_on_bus_owned(receipt: Dictionary, origin: Dictionary) -> void:
+	if not _combat_body_current(receipt, origin): return
+	var id: StringName = origin.recipient.player_id
+	EventBus.player_health_changed.emit(id, half_hearts, max_half_hearts)
+	if not _combat_body_current(receipt, origin): return
+	EventBus.player_stats_changed.emit(id, {"half_hearts": half_hearts, "max_half_hearts": max_half_hearts, "stamina": stamina, "max_stamina": max_stamina})
+
 ## The cell in front of the feet (the one a tool or E acts on).
 func target_cell() -> Vector2i:
 	return area.global_to_cell(global_position) + area.facing_step(facing8)

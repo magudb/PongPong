@@ -195,6 +195,94 @@ signal resource_node_depleted(node_id: StringName, loot: Array)
 signal rare_item_found(item_id: StringName, rarity: StringName)
 signal enemy_encountered(enemy_id: StringName)
 signal enemy_defeated(enemy_id: StringName, kind: StringName, loot: Array)
+## A terminal producer captures before its first callback. Optional bodies do
+## not own an earned model kill; world/session/area and exact profiles still do.
+func combat_origin(attacker: Variant = null) -> Dictionary:
+	if attacker == null: return interaction_origin(&"p0")
+	if not is_instance_valid(attacker) or not attacker is Node: return {}
+	var id := PlayerRegistry.registered_id(attacker)
+	return interaction_origin(id) if id != &"" else {}
+
+func combat_receipt(origin: Dictionary, enemy: Variant = null) -> Dictionary:
+	if not interaction_current(origin): return {}
+	var world := PlayerRegistry.world()
+	var area: Node = world.get("area") if world != null else null
+	var session: Node = world.get("session") if world != null else null
+	var floors := DungeonFloors.inst()
+	var watch: Node = world.get_node_or_null("RunWatch") if world != null else null
+	var bodies: Array = []
+	for body in PlayerRegistry.all_players():
+		var id := PlayerRegistry.registered_id(body)
+		if id == &"": continue
+		var attached := interaction_origin(id, body, body)
+		if interaction_body_current(attached, body, body):
+			bodies.append({"body": weakref(body), "origin": attached, "profile": PlayerRegistry.peek_state(id)})
+	var receipt := {"origin": origin,
+		"anchor_profile": PlayerRegistry.peek_state(&"p0"),
+		"profile": PlayerRegistry.peek_state(origin.recipient.player_id),
+		"world": weakref(world) if world != null else null,
+		"area": weakref(area) if area != null else null,
+		"session": weakref(session) if session != null else null,
+		"epoch": session.generation if session != null else 0,
+		"bodies": bodies,
+		"quest": QuestManager.combat_receipt(origin),
+		"floors": weakref(floors) if floors != null else null,
+		"floor": floors.defeat_receipt(enemy) if floors != null else {},
+		"watch": weakref(watch) if watch != null and watch.active else null,
+		"watch_run": watch.run_identity if watch != null else null}
+	receipt.make_read_only()
+	return receipt
+
+func combat_current(receipt: Dictionary) -> bool:
+	if receipt.is_empty() or not interaction_current(receipt.get("origin", {})): return false
+	var world: Variant = receipt.world.get_ref() if receipt.world != null else null
+	if receipt.world != null and (not is_instance_valid(world) or not world.is_inside_tree() or world.is_queued_for_deletion()): return false
+	if PlayerRegistry.world() != world: return false
+	var area: Variant = receipt.area.get_ref() if receipt.area != null else null
+	if receipt.area != null and (not is_instance_valid(area) or not area.is_inside_tree() or area.is_queued_for_deletion()): return false
+	if world != null and world.get("area") != area: return false
+	var session: Variant = receipt.session.get_ref() if receipt.session != null else null
+	if world != null and world.get("session") != session: return false
+	return receipt.session == null or (is_instance_valid(session) and session.generation == receipt.epoch)
+
+## Public once and first; raw notifications cannot mint a new model operation.
+func publish_enemy_defeated_owned(receipt: Dictionary, id: StringName, kind: StringName, loot: Array) -> bool:
+	enemy_defeated.emit(id, kind, loot)
+	if not combat_current(receipt): return false
+	QuestManager.enemy_defeated_owned(receipt.quest, id, kind)
+	if not combat_current(receipt): return false
+	var floors: Variant = receipt.floors.get_ref() if receipt.floors != null else null
+	if is_instance_valid(floors): floors.enemy_defeated_owned(receipt, kind)
+	if not combat_current(receipt): return false
+	var watch: Variant = receipt.watch.get_ref() if receipt.watch != null else null
+	if is_instance_valid(watch): watch.enemy_defeated_owned(receipt)
+	return combat_current(receipt)
+
+func publish_combat_event_owned(receipt: Dictionary, name: StringName, payload: Dictionary) -> bool:
+	if name not in [&"dungeon_boss_defeated", &"skovhjerte_grown"] or not combat_current(receipt): return false
+	game_event.emit(name, payload)
+	if not combat_current(receipt): return false
+	QuestManager.combat_event_owned(receipt.quest, name, payload)
+	if not combat_current(receipt): return false
+	if name == &"skovhjerte_grown":
+		for body_receipt in receipt.bodies:
+			if not combat_current(receipt): return false
+			var body: Variant = body_receipt.body.get_ref()
+			if is_instance_valid(body) and body.has_method("refresh_stats_owned"):
+				body.refresh_stats_owned(receipt, body_receipt.origin)
+	elif name == &"dungeon_boss_defeated":
+		mother_progressed.emit(receipt.origin)
+	return combat_current(receipt)
+
+## Genuine independent model producers, including intentional tools/fixtures.
+## Already-owned callers must use the retained receipt overloads above.
+func defeat_enemy(id: StringName, kind: StringName, loot: Array = []) -> bool:
+	var receipt := combat_receipt(interaction_origin())
+	return publish_enemy_defeated_owned(receipt, id, kind, loot) if combat_current(receipt) else false
+
+func combat_event(name: StringName, payload: Dictionary) -> bool:
+	return publish_combat_event_owned(combat_receipt(interaction_origin()), name, payload)
+
 signal combat_finished(victory: bool)
 signal boss_bar_changed(name_key: String, ratio: float, visible: bool)
 signal whisper_requested(text_key: String)

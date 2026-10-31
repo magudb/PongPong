@@ -7,6 +7,7 @@ var last_error := ""
 var world_seed := ""
 var seed_day := 0
 var active := false
+var _run_identity := RefCounted.new()
 var floor := 0
 var deepest := 0
 var stones: Dictionary = {}
@@ -53,7 +54,6 @@ func _ready() -> void:
 	EventBus.area_changed.connect(_area_changed)
 	EventBus.area_change_requested.connect(_area_requested)
 	EventBus.day_started.connect(_morning)
-	EventBus.enemy_defeated.connect(_enemy_defeated)
 	EventBus.player_spawned.connect(_restore_run)
 	reset()
 func _exit_tree() -> void:
@@ -62,6 +62,7 @@ func reset(origin: Dictionary = {}) -> void:
 	if origin.is_empty(): origin = EventBus.reset_origin()
 	if not EventBus.reset_current(origin): return
 	_invalidate()
+	_run_identity = RefCounted.new()
 	world_seed = str(DungeonRng.hash_key("newgame",int(Time.get_unix_time_from_system()),Time.get_ticks_usec() & 0x7FFFFFFF))
 	seed_day = 0
 	active = false
@@ -87,6 +88,7 @@ func _valid_floor(number: int) -> bool:
 func _id(number: int) -> StringName:
 	return StringName(str(LuaData.dict(cfg.get("hub",{})).get("floor_prefix","moerkeskoven_f"))+str(number))
 func _clear_day(day: int) -> void:
+	_run_identity = RefCounted.new()
 	_invalidate()
 	seed_day = day
 	done.clear()
@@ -100,6 +102,7 @@ func start_run(first_floor: int) -> bool:
 	active = true
 	floor = first_floor
 	if fresh:
+		_run_identity = RefCounted.new()
 		GameManager.set_flag(&"dungeon_last_spark_used",false)
 		var player := PlayerRegistry.local_player(get_tree())
 		if player != null and player.has_method("begin_dungeon_run"): player.begin_dungeon_run()
@@ -133,6 +136,7 @@ func end_run(reason: StringName = &"left") -> void:
 	GameManager.pop_all_modals()
 	if not active: return
 	var reached := floor
+	_run_identity = RefCounted.new()
 	active = false
 	floor = 0
 	EventBus.game_event.emit(&"dungeon_run_ended",{"reason":str(reason),"deepest":deepest,"floors":seen.size(),"floor":reached,"level":reached})
@@ -294,18 +298,39 @@ func _restore_boss_flag() -> void:
 	for marker in world.area.find_markers("enemy"):
 		if str(marker.params.get("boss","0")) == "1" and is_done_cell(world.area,marker.cell):
 			GameManager.set_flag(StringName(str(cfg.flags.boss_clear)),true)
-func _enemy_defeated(_id: StringName, kind: StringName, _drops: Array = []) -> void:
-	if not active: return
-	var row := DungeonSpec.spec_for(cfg,floor)
-	if str(row.get("boss_kind","")) != str(kind): return
-	var world := get_tree().get_first_node_in_group("world_2d")
-	if world == null or world.area == null: return
-	for marker in world.area.find_markers("enemy"):
-		if str(marker.params.get("boss","0")) == "1": mark_done_cell(world.area,marker.cell)
-	GameManager.set_flag(StringName(str(cfg.flags.boss_clear)),true)
-	var result: Dictionary = Svc.static_call("res://scripts/dungeon_run/dungeon_run.gd",&"boss_killed",[str(kind),floor],{})
-	EventBus.game_event.emit(&"dungeon_boss_defeated",{"boss":str(kind),"kind":str(kind),"floor":floor,"level":floor,"first_kill":bool(result.get("first",false))})
-	EventBus.whisper_requested.emit("HULEN_ROOTS_PART")
+## Cache generation changes on apply AND rollback. This operation identity
+## changes only on genuine run boundaries; exact origin authenticates restored
+## continuation, never equality of descriptors or the cache generation alone.
+func defeat_receipt(enemy: Variant) -> Dictionary:
+	if not active or not is_instance_valid(enemy) or not enemy is Enemy2D or not enemy.is_boss: return {}
+	var world := _world()
+	if world == null or world.area != enemy.area or floor_of(enemy.area) != floor: return {}
+	if str(DungeonSpec.spec_for(cfg, floor).get("boss_kind", "")) != enemy.kind: return {}
+	for marker in enemy.area.find_markers("enemy"):
+		if marker.node == enemy and marker.cell == enemy.cell and str(marker.params.get("boss", "0")) == "1":
+			return {"run": _run_identity, "seed": world_seed, "day": seed_day, "spec": spec, "gen": gen, "floor": floor, "cell": enemy.cell, "uid": enemy.uid, "enemy": weakref(enemy), "clear_flag": StringName(str(cfg.flags.boss_clear))}
+	return {}
+
+func _defeat_current(receipt: Dictionary) -> bool:
+	if not EventBus.combat_current(receipt): return false
+	var old: Dictionary = receipt.floor
+	if old.is_empty() or not active or old.run != _run_identity or old.seed != world_seed or old.day != seed_day or old.spec != spec or old.gen != gen or old.floor != floor: return false
+	var area: Variant = receipt.area.get_ref()
+	var enemy: Variant = old.enemy.get_ref()
+	if not is_instance_valid(enemy) or enemy.area != area or enemy.uid != old.uid or enemy.cell != old.cell: return false
+	return area.find_markers("enemy").any(func(marker): return marker.node == enemy and marker.cell == old.cell and str(marker.params.get("boss", "0")) == "1")
+
+func enemy_defeated_owned(receipt: Dictionary, kind: StringName) -> void:
+	if not _defeat_current(receipt): return
+	var old: Dictionary = receipt.floor
+	if str(DungeonSpec.spec_for(cfg, old.floor).get("boss_kind", "")) != str(kind): return
+	mark_done_cell(receipt.area.get_ref(), old.cell)
+	GameManager.set_flag(old.clear_flag, true)
+	if not _defeat_current(receipt): return
+	var result := DungeonRun.boss_killed_owned(str(kind), old.floor, receipt)
+	if not _defeat_current(receipt): return
+	EventBus.publish_combat_event_owned(receipt, &"dungeon_boss_defeated", {"boss":str(kind),"kind":str(kind),"floor":old.floor,"level":old.floor,"first_kill":bool(result.get("first",false))})
+	if _defeat_current(receipt): EventBus.whisper_requested.emit("HULEN_ROOTS_PART")
 func _attach_world_effects(number: int) -> void:
 	var world := get_tree().get_first_node_in_group("world_2d")
 	if world == null or world.area == null or floor_of(world.area) != number: return
