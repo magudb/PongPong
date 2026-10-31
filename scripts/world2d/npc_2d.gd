@@ -47,6 +47,9 @@ var _screen: Node
 var _ui_request: RefCounted
 var _talk_origin: Dictionary = {}
 var _talk_attachment: RefCounted
+# Identity of the actor activity, separate from model and UI request authority.
+# Trusted roots replace it; an inherited tutorial activity may only retain it.
+var _activity: RefCounted = RefCounted.new()
 var _act := &"idle"
 var _walk_generation := 0
 var _event_target := Vector2.ZERO
@@ -234,6 +237,7 @@ func _attached(attachment: RefCounted) -> bool:
 func _interact_owned(player_ref: Variant, origin: Dictionary) -> void:
 	var player: Variant = player_ref.get_ref() if player_ref is WeakRef else null
 	if is_talking or not _enabled or not is_inside_tree() or GameManager.is_modal_open() or not EventBus.interaction_body_current(origin, self, player): return
+	_activity = RefCounted.new()
 	var attachment := RefCounted.new()
 	var page: Dictionary = PlayerRegistry.for_player(origin.recipient.player_id, func():
 		if not bool(Svc.static_call("res://scripts/ghostfam/hook/ghostfam_hook.gd", &"before_talk_owned", [self, player, origin], true)): return {}
@@ -289,12 +293,14 @@ func _owned_followup(player_ref: Variant, page: Dictionary, origin: Dictionary) 
 
 ## Explicit independent page root when origin is omitted (tutorial/tool API).
 ## Internal followups always pass their retained origin, never recapture it.
-func _begin_followup(player: Variant, page: Dictionary, origin: Dictionary = {}) -> RefCounted:
+func _begin_followup(player: Variant, page: Dictionary, origin: Dictionary = {}, retained_activity: RefCounted = null) -> RefCounted:
+	if retained_activity != null and not activity_current(retained_activity): return null
 	if is_talking or not is_inside_tree() or GameManager.is_modal_open() or not is_instance_valid(player): return null
 	var id := PlayerRegistry.registered_id(player)
 	if id == &"": return null
 	if origin.is_empty(): origin = EventBus.interaction_origin(id, self, player)
 	if not EventBus.interaction_body_current(origin, self, player): return null
+	if retained_activity == null: _activity = RefCounted.new()
 	var attachment := RefCounted.new()
 	PlayerRegistry.for_player(id, func():
 		is_talking = true
@@ -339,6 +345,7 @@ func handle_choice(action: String, data: Dictionary = {}) -> void:
 	NpcDialogue.action(str(npc_id), action, data, guest)
 
 func _exit_tree() -> void:
+	_activity = null
 	_finish_walk(false)
 	if is_talking:
 		# Capture the exact request before terminal callbacks can open another.
@@ -364,7 +371,11 @@ func set_interaction_reach(reach: float) -> void:
 		var shape := _interact.get_child(0) as CollisionShape2D
 		(shape.shape as ConvexPolygonShape2D).points = _ellipse(Vector2(reach, reach * Iso.squash()))
 
+func activity_current(receipt: RefCounted) -> bool:
+	return receipt != null and _activity == receipt and is_inside_tree() and not is_queued_for_deletion()
+
 func hold(held: bool) -> void:
+	_activity = RefCounted.new()
 	_held = held
 	if held:
 		velocity = Vector2.ZERO
@@ -392,11 +403,14 @@ func face(direction: Variant) -> void:
 	var index := Iso.DIR8_NAMES.find(str(direction)) if direction is String or direction is StringName else int(direction)
 	visual.set_direction_index(clampi(index, 0, 7))
 
-func event_begin() -> void:
+func event_begin(retained_activity: RefCounted = null) -> void:
+	if retained_activity != null and not activity_current(retained_activity): return
+	if retained_activity == null: _activity = RefCounted.new()
 	_event = true
 	_bubble = ""
+	_held = true
+	velocity = Vector2.ZERO
 	_update_bubble()
-	hold(true)
 
 func event_end() -> void:
 	_event = false

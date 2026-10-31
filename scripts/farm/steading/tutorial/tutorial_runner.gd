@@ -12,6 +12,8 @@ class SkipGate extends Node:
 var origin: Dictionary = {}
 var world: Node
 var actors: Dictionary = {}
+var _actor_receipts: Dictionary = {}
+var _actor_parents: Dictionary = {}
 var active := false
 var skipped := false
 var gate: Node
@@ -115,10 +117,11 @@ func play() -> bool:
 		if EventBus.interaction_current(origin): GameManager.set_flag(&"intro_letter_seen", true)
 		if EventBus.interaction_current(origin): GameManager.set_flag(&"first_morning_done", true)
 		if EventBus.interaction_current(origin): EventBus.game_event.emit(&"tutorial_finished", {"skipped": skipped})
-	for actor in actors.values():
-		if is_instance_valid(actor):
-			actor.queue_free()
+	for id in actors.keys():
+		_retire_actor(str(id))
 	actors.clear()
+	_actor_receipts.clear()
+	_actor_parents.clear()
 	if is_instance_valid(gate):
 		gate.queue_free()
 	return true
@@ -136,14 +139,28 @@ func _enter(id: String, post: String) -> void:
 	actor.area = world.area
 	actor.position = Iso.to_screen(point)
 	actors[id] = actor
+	_actor_receipts[id] = actor._activity
+	_actor_parents[id] = weakref(world.area.objects)
 	world.area.objects.add_child(actor)
 	if not _actor_current(id, actor): return
-	actor.event_begin()
+	actor.event_begin(_actor_receipts[id])
 	if not _actor_current(id, actor): return
 	actor.face("SW")
 
+func _owns_actor(id: String, actor: Variant) -> bool:
+	var parent_ref: Variant = _actor_parents.get(id)
+	return is_instance_valid(actor) and actor is Npc2D and actors.get(id) == actor and parent_ref is WeakRef and actor.get_parent() == parent_ref.get_ref() and actor.activity_current(_actor_receipts.get(id))
+
+func _retire_actor(id: String) -> void:
+	var actor: Variant = actors.get(id)
+	var owned := _owns_actor(id, actor)
+	actors.erase(id)
+	_actor_receipts.erase(id)
+	_actor_parents.erase(id)
+	if owned: actor.queue_free()
+
 func _actor_current(id: String, actor: Variant) -> bool:
-	return _good() and is_instance_valid(actor) and actor is Npc2D and actor.is_inside_tree() and not actor.is_queued_for_deletion() and actors.get(id) == actor and actor.area == world.area and world.area.is_ancestor_of(actor)
+	return _good() and _owns_actor(id, actor) and actor.area == world.area and world.area.is_ancestor_of(actor)
 
 func _dialogue(module: String, npc: String) -> void:
 	if not _good():
@@ -166,7 +183,7 @@ func _dialogue(module: String, npc: String) -> void:
 		return
 	_screen_ref = weakref(screen)
 	actor.dialogue_id = StringName(module)
-	var request: RefCounted = actor._begin_followup(body_ref.get_ref(), page, owned)
+	var request: RefCounted = actor._begin_followup(body_ref.get_ref(), page, owned, _actor_receipts[npc])
 	_request = request
 	if skipped and is_instance_valid(screen) and request != null: screen.close_request(request)
 	if request == null:
@@ -205,6 +222,4 @@ func _leave(npc: String, destination: String) -> void:
 		actor.event_walk_to(waypoint, 285)
 		while _actor_current(npc, actor) and actor._event_walking and not skipped:
 			await world.get_tree().physics_frame
-	if is_instance_valid(actor) and actors.get(npc) == actor:
-		actor.queue_free()
-		actors.erase(npc)
+	_retire_actor(npc)
