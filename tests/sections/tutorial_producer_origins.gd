@@ -11,6 +11,8 @@ func run(t) -> void:
 	await _admission_hold(t)
 	await _intro_body_completion(t)
 	await _intro_area_completion(t)
+	for mode in ["body", "area", "reaction"]: await _intro_departure(t, mode)
+	await _host_policy(t)
 	for mode in ["body", "area"]: await _root_attachment(t, mode)
 	for mode in ["direct", "disk", "backup", "failed", "incomplete"]:
 		await _post_reentry(t, mode)
@@ -99,11 +101,13 @@ func _leave_successor(t) -> void:
 	var entered: Array = []
 	var successor: Array = []
 	var references: Array = []
+	var enabled: Array = []
 	var watch := func():
 		if not session.trace.has("npc_leave") or not references.is_empty(): return
 		var walking: Variant = session.actors.get("postman_pip")
 		if not is_instance_valid(walking) or walking._walk_ticket == null: return
 		references.append(weakref(walking))
+		enabled.append(walking.is_physics_processing())
 		walking._walk_ticket.finished.connect(func(completed):
 			entered.append(completed)
 			walking.event_walk_to(walking.global_position, 100).connect(func(arrived): successor.append(arrived)), CONNECT_ONE_SHOT)
@@ -117,7 +121,7 @@ func _leave_successor(t) -> void:
 			ui.get_node("%NextButton").pressed.emit()
 		await t.frames(2)
 	t.tree.physics_frame.disconnect(watch)
-	t.check("leave_real_authored_walk_enabled", references.size() == 1 and references[0].get_ref() != null and references[0].get_ref().is_physics_processing())
+	t.check("leave_real_authored_walk_enabled", enabled == [true])
 	await t.until(func(): return not successor.is_empty() and done == [true], 6)
 	await t.physics(3)
 	var actor: Variant = references[0].get_ref() if references.size() == 1 else null
@@ -216,11 +220,7 @@ func _intro_body_completion(t) -> void:
 		body.get_parent().remove_child(body)
 		body.free()
 	ui.closed.connect(closed)
-	for i in 12:
-		if ui._request != request or not ui.is_open(): break
-		ui._typing = false
-		ui.get_node("%NextButton").pressed.emit()
-		await t.frames(2)
+	await _read_letter(t, ui, request)
 	ui.closed.disconnect(closed)
 	t.check("intro_body_loss_preserves_earned_seen", left == [true] and done == [true] and request.result.get("completed", false) and bool(GameManager.get_flag(&"intro_letter_seen", false)))
 	t.check("intro_body_loss_no_optional_reaction", not ui.is_open() and ui._request == null)
@@ -241,11 +241,7 @@ func _intro_area_completion(t) -> void:
 		parent.remove_child(area)
 		parent.add_child(area)
 	ui.closed.connect(closed)
-	for i in 12:
-		if ui._request != request or not ui.is_open(): break
-		ui._typing = false
-		ui.get_node("%NextButton").pressed.emit()
-		await t.frames(2)
+	await _read_letter(t, ui, request)
 	ui.closed.disconnect(closed)
 	t.check("intro_actual_completed_before_area_departure", moved == [true] and area.is_inside_tree() and t.world().area == area)
 	t.check("intro_retired_area_no_optional_reaction", not ui.is_open() and done == [true])
@@ -253,6 +249,65 @@ func _intro_area_completion(t) -> void:
 	await t.frames(2)
 	t.check("intro_retired_area_preserves_preterminal_earned_seen", request.result.get("completed", false) and done == [true] and bool(GameManager.get_flag(&"intro_letter_seen", false)))
 	await t.go_menu()
+
+func _host_policy(t) -> void:
+	if not await t.start_world(): return
+	var world: Node = t.world()
+	var guest: Node2D = world._make_player()
+	world._register_player(guest, 1, 2)
+	world.add_child(guest)
+	guest.enter_area(world.area, t.player().global_position)
+	PlayerRegistry.for_player(&"p1", func():
+		EconomyManager.from_dict(EconomyManager.to_dict())
+		QuestManager.from_dict(QuestManager.to_dict()))
+	var profile := PlayerRegistry.peek_state(&"p1")
+	var before: Variant = JSON.parse_string(JSON.stringify(profile.to_dict()))
+	var refused: bool = await Runner.run(world, EventBus.interaction_origin(&"p1"))
+	await preload("res://scripts/world2d/intro_sequence.gd").letter(world, EventBus.interaction_origin(&"p1"))
+	t.check("guest_explicit_tutorial_and_intro_refuse", not refused and not t.first(&"dialogue_ui").is_open() and not bool(GameManager.get_flag(&"first_morning_done", false)))
+	var session := Runner.new()
+	session.world = world
+	session.skipped = true
+	var done: Array = []
+	PlayerRegistry.for_player(&"p1", func():
+		session.origin = EventBus.interaction_origin(&"p0")
+		_launch(session, done))
+	t.check("host_skip_under_conflicting_guest_scope", done == [true] and QuestManager.is_active(&"intro_lottery") and QuestManager.is_active(&"forste_dage") and PlayerRegistry.acting_id() == &"p0")
+	t.check("host_scope_whole_guest_profile_unchanged", PlayerRegistry.peek_state(&"p1") == profile and JSON.parse_string(JSON.stringify(profile.to_dict())) == before)
+	await t.go_menu()
+
+func _intro_departure(t, mode: String) -> void:
+	if not await t.start_world("ghost"): return
+	var world: Node = t.world()
+	var ui: Node = t.first(&"dialogue_ui")
+	var done: Array = []
+	_intro(world, done)
+	var initial: RefCounted = ui._request
+	if mode == "reaction": await _read_letter(t, ui, initial)
+	t.check(mode + "_intro_departure_precondition", ui.is_open() and (bool(initial.result.get("completed", false)) if mode == "reaction" else initial.result.is_empty()))
+	if mode == "area":
+		var area: Node = world.area
+		var parent: Node = area.get_parent()
+		parent.remove_child(area)
+		parent.add_child(area)
+	else:
+		world._unregister_player(t.player())
+	await t.frames(3)
+	t.check(mode + "_intro_departure_exact_waiter_resolved", done == [true] and not ui.is_open() and ui._request == null)
+	# A genuine already-read page survives optional reaction loss. A scene or
+	# body lost BEFORE terminal cannot manufacture an eligible Escape receipt.
+	ui.close()
+	await t.frames(2)
+	t.check(mode + "_intro_departure_earned_model_only", bool(GameManager.get_flag(&"intro_letter_seen", false)) == (mode == "reaction"))
+	await t.go_menu()
+
+func _read_letter(t, ui: Node, request: RefCounted) -> void:
+	await t.until_game(func():
+		if ui._request != request or not ui.is_open(): return true
+		ui._typing = false
+		ui.get_node("%NextButton").pressed.emit()
+		return ui._request != request or not ui.is_open(), 6.0)
+	await t.frames(2)
 
 func _intro(world: Node, done: Array) -> void:
 	await preload("res://scripts/world2d/intro_sequence.gd").letter(world)
