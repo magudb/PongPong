@@ -34,7 +34,9 @@ static func run(target: Node, retained: Dictionary = {}) -> bool:
 	return await session.play()
 
 func _good() -> bool:
-	return EventBus.interaction_current(origin) and is_instance_valid(world) and world.is_inside_tree() and PlayerRegistry.world() == world and (_area_ref == null or _area_ref.get_ref() == world.area)
+	if not EventBus.interaction_current(origin) or not is_instance_valid(world) or not world.is_inside_tree() or world.is_queued_for_deletion() or PlayerRegistry.world() != world: return false
+	var area: Variant = world.area
+	return is_instance_valid(area) and area is Node and area.is_inside_tree() and not area.is_queued_for_deletion() and (_area_ref == null or _area_ref.get_ref() == area)
 
 func skip() -> void:
 	skipped = true
@@ -141,7 +143,7 @@ func _enter(id: String, post: String) -> void:
 	actor.face("SW")
 
 func _actor_current(id: String, actor: Variant) -> bool:
-	return _good() and is_instance_valid(actor) and actor.is_inside_tree() and not actor.is_queued_for_deletion() and actors.get(id) == actor and actor.area == world.area
+	return _good() and is_instance_valid(actor) and actor is Npc2D and actor.is_inside_tree() and not actor.is_queued_for_deletion() and actors.get(id) == actor and actor.area == world.area and world.area.is_ancestor_of(actor)
 
 func _dialogue(module: String, npc: String) -> void:
 	if not _good():
@@ -179,8 +181,9 @@ func _dialogue(module: String, npc: String) -> void:
 		await world.get_tree().process_frame
 
 func _leave(npc: String, destination: String) -> void:
-	var actor: Npc2D = actors.get(npc)
-	if actor == null or not is_instance_valid(actor) or not _good():
+	# Validate the received Variant before any typed dispatch or property access.
+	var actor: Variant = actors.get(npc)
+	if not _actor_current(npc, actor):
 		return
 	var point: Vector2 = world.area.get_spawn("from_traetoppen")
 	if destination != "warp":
@@ -194,12 +197,13 @@ func _leave(npc: String, destination: String) -> void:
 			break
 	if path.is_empty():
 		path.append(point)
+	if not _actor_current(npc, actor): return
 	actor._interact.collision_layer = 0
 	for waypoint in path:
-		if not _good() or not is_instance_valid(actor) or skipped:
+		if not _actor_current(npc, actor) or skipped:
 			break
 		actor.event_walk_to(waypoint, 285)
-		while _good() and is_instance_valid(actor) and actor._event_walking and not skipped:
+		while _actor_current(npc, actor) and actor._event_walking and not skipped:
 			await world.get_tree().physics_frame
 	if is_instance_valid(actor) and actors.get(npc) == actor:
 		actor.queue_free()
