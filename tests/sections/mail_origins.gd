@@ -23,6 +23,7 @@ func run(t) -> void:
 	await _busy(t)
 	await _invalid(t)
 	await _queued(t)
+	await _hint_after_apply(t)
 
 func _body(t) -> Node2D:
 	var body: Node2D = t.world()._make_player()
@@ -193,11 +194,59 @@ func _p1(t) -> void:
 	ui.close()
 	await t.go_menu()
 
+# Commit the authored day-two prefix through the real current-world hint root.
+# Never manufacture its flag/queue/cooldown or suppress polling after apply.
+func _mail_hint_prefix(t, label: String, process_only := false) -> bool:
+	var hints: Node = t.world().get_node_or_null("FarmTutorialHints")
+	var eligible: bool = hints is TutorialHints and hints.world == t.world() and hints.is_processing() and hints._active() and QuestManager.is_active(&"forste_dage") and GameManager.total_day() == 2 and GameManager.current_phase == GameManager.GamePhase.PLAYING and str(t.world().area.map.id) == "farm"
+	t.check(label + "_hint_current_authored_eligible", eligible and hints.hints == LuaData.arr(GameManager.config_value("farm_tutorial.hints", [])) and hints.hints.any(func(row): return str(row.get("id", "")) == "mail" and str(row.get("on", "")) == "day_at_least" and int(row.get("day", 0)) == 2) and GameManager.flag_int(&"tut_hint_mail") == 0)
+	if not eligible: return false
+	var shown: Array = []
+	var whispers: Array = []
+	var event := func(id, payload):
+		if id == &"tutorial_hint_shown": shown.append(str(payload.get("id", "")))
+	var whisper := func(line): whispers.append(line)
+	EventBus.game_event.connect(event)
+	EventBus.whisper_requested.connect(whisper)
+	# If another genuine hint owns the gap, wait real finite time. Earlier pending
+	# hints remain visible and use their normal authored ordering and cooldown.
+	var deadline := float(Time.get_ticks_msec()) / 1000.0 + 60.0
+	while GameManager.flag_int(&"tut_hint_mail") == 0 and float(Time.get_ticks_msec()) / 1000.0 < deadline:
+		if not process_only: hints.tick(float(Time.get_ticks_msec()) / 1000.0)
+		if GameManager.flag_int(&"tut_hint_mail") == 0: await t.frames(1)
+	var mail_rows: Array = hints.hints.filter(func(row): return str(row.get("id", "")) == "mail")
+	var committed: bool = GameManager.flag_int(&"tut_hint_mail") == 1 and shown.count("mail") == 1 and mail_rows.size() == 1 and whispers.count(UiHints.format_line(mail_rows[0])) == 1
+	t.check(label + "_hint_real_commit_public_once", committed)
+	var before := shown.duplicate()
+	hints.tick(float(Time.get_ticks_msec()) / 1000.0)
+	t.check(label + "_hint_normal_idempotence_polling_enabled", shown == before and GameManager.flag_int(&"tut_hint_mail") == 1 and hints.is_processing())
+	EventBus.game_event.disconnect(event)
+	EventBus.whisper_requested.disconnect(whisper)
+	return committed
+
+func _hint_after_apply(t) -> void:
+	var box: Node = await _start(t)
+	if box == null: return
+	GameManager.day = 1
+	var saves: Node = t.autoload("SaveManager")
+	var incoming: Dictionary = saves.gather_payload()
+	t.check("hint_normal_healthy_apply_before_eligibility", GameManager.flag_int(&"tut_hint_mail") == 0 and saves._apply_payload(incoming).ok and GameManager.flag_int(&"tut_hint_mail") == 0)
+	GameManager.day = 2
+	# No manual tick until after commit: actual _process must still run after apply.
+	await _mail_hint_prefix(t, "hint_after_apply_process", true)
+	await t.go_menu()
+
 func _replace(t, seam: String) -> void:
 	var box: Node = await _start(t)
 	if box == null: return
+	if not await _mail_hint_prefix(t, seam):
+		await t.go_menu()
+		return
 	var saves: Node = t.autoload("SaveManager")
 	var winner: Dictionary = saves.gather_payload()
+	var missing_hint := winner.duplicate(true)
+	missing_hint.game.world_flags.erase("tut_hint_mail")
+	t.check(seam + "_hint_remains_judged_snapshot_field", winner.game.world_flags.get("tut_hint_mail") == 1 and not Compare.new()._same_payload(winner, missing_hint))
 	var seen: Array = []
 	var notices: Array = []
 	var whispers: Array = []
@@ -226,8 +275,10 @@ func _replace(t, seam: String) -> void:
 	EventBus.game_event.disconnect(event)
 	EventBus.whisper_requested.disconnect(whisper)
 	t.check(seam + "_mail_actual_healthy_apply", seen.size() == 3 and seen[1] == true)
-	t.check(seam + "_mail_winner_exact_whole_unwind", seen.size() == 3 and Compare.new()._same_payload(seen[2], saves.gather_payload()))
+	var whole_unwind: Dictionary = saves.gather_payload()
+	t.check(seam + "_mail_winner_exact_whole_unwind", seen.size() == 3 and Compare.new()._same_payload(seen[2], whole_unwind), JSON.stringify({"changed": Compare.new()._changed(seen[2], whole_unwind), "expected": seen[2], "actual": whole_unwind}, "", true, true) if seen.size() == 3 else "observer absent")
 	t.check(seam + "_mail_no_old_presentation", not t.first(&"dialogue_ui").is_open() and not box._busy and (seam != "toast" or whispers.is_empty()))
 	await t.frames(3)
-	t.check(seam + "_mail_winner_exact_queued_frames", seen.size() == 3 and Compare.new()._same_payload(seen[2], saves.gather_payload()), str(Compare.new()._changed(seen[2], saves.gather_payload())) if seen.size() == 3 else "observer absent")
+	var queued_frames: Dictionary = saves.gather_payload()
+	t.check(seam + "_mail_winner_exact_queued_frames", seen.size() == 3 and Compare.new()._same_payload(seen[2], queued_frames), JSON.stringify({"changed": Compare.new()._changed(seen[2], queued_frames), "expected": seen[2], "actual": queued_frames}, "", true, true) if seen.size() == 3 else "observer absent")
 	await t.go_menu()
