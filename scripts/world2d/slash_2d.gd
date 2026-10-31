@@ -17,7 +17,12 @@ func setup(p_dir: Vector2, p_radius: float, p_half: float, p_duration: float) ->
 	duration = p_duration
 
 
+var origin_current: Callable
+
 func _ready() -> void:
+	if origin_current.is_valid() and not origin_current.call():
+		queue_free()
+		return
 	var tw: Tween = create_tween()
 	tw.tween_property(self, "progress", 1.0, duration)
 	tw.tween_callback(queue_free)

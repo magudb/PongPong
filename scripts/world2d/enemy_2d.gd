@@ -80,7 +80,7 @@ func _combat_request(receipt: Dictionary) -> Dictionary:
 	return request
 
 static func _combat_request_current(receipt: Dictionary, request: Dictionary) -> bool:
-	return EventBus.combat_current(receipt) and Enemy2D._combat_attachment_current(request)
+	return EventBus.combat_current(receipt) and (not receipt.has("attack_current") or receipt.attack_current.call()) and Enemy2D._combat_attachment_current(request)
 
 static func _combat_attachment_current(request: Dictionary) -> bool:
 	if request.is_empty(): return false
@@ -403,13 +403,13 @@ func take_hit(damage: int, from: Vector2, attacker: Node = null) -> void:
 	take_hit_owned(damage, from, attacker, EventBus.combat_receipt(EventBus.combat_origin(attacker), self))
 
 func take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dictionary) -> void:
-	if state == S.DEAD or damage <= 0 or not EventBus.combat_current(receipt): return
+	if state == S.DEAD or damage <= 0 or not EventBus.combat_current(receipt) or (receipt.has("attack_current") and not receipt.attack_current.call()): return
 	# Scope synchronous legacy presentation/query hooks to the authentic owner,
 	# including environmental p0 hits inside a conflicting caller's scope.
 	PlayerRegistry.for_player(receipt.origin.recipient.player_id, func(): _take_hit_owned(damage, from, attacker, receipt))
 
 func _take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dictionary) -> void:
-	if state == S.DEAD or damage <= 0 or not EventBus.combat_current(receipt): return
+	if state == S.DEAD or damage <= 0 or not EventBus.combat_current(receipt) or (receipt.has("attack_current") and not receipt.attack_current.call()): return
 	var request := _combat_request(receipt)
 	if not Enemy2D._combat_request_current(receipt, request): return
 	set_awake(true)

@@ -47,6 +47,61 @@ static func on_swing(player: Node2D, supplied: Variant = null) -> void:
 				if id == "moon_wave" and (offset.dot(aim) < 0 or absf(offset.cross(aim)) > 45): continue
 				if enemy.has_method("take_hit"): enemy.take_hit(damage,player.global_position,player)
 			_pulse(player,radius)
+## Enclosing attack owns the counter, every immediate target and pulse.
+static func on_swing_owned(player: Node2D, info: Dictionary, receipt: Dictionary, current: Callable, aim: Vector2) -> void:
+	if not current.call(): return
+	var effect := LuaData.dict(info.get("effect",{}))
+	var id := str(effect.get("id",""))
+	if id == "": return
+	var index := _count(player,str(info.get("id",id)),"swing")
+	match id:
+		"light_arc":
+			var radius := 400*float(effect.get("radius_mult",1))
+			for enemy in _near(player,radius):
+				if not current.call(): return
+				if not is_instance_valid(enemy): continue
+				if enemy is Enemy2D:
+					var target := EventBus.combat_target_receipt(receipt,enemy,current)
+					enemy.reveal_owned(target,enemy._combat_request(target))
+				elif enemy.has_method("reveal"): enemy.reveal()
+			if current.call(): _pulse_owned(player,radius,current)
+		"reveal_chests":
+			EventBus.game_event.emit(&"dungeon_chest_sense_changed",{"cells":int(effect.get("cells",12))})
+		"moon_wave","quake":
+			if index % maxi(1,int(effect.get("every",4))) != 0: return
+			var radius := float(effect.get("range",360)) if id == "moon_wave" else float(effect.get("radius",160))
+			var damage := maxi(1,roundi(float(info.get("damage",0))*float(effect.get("mult",.6))))
+			for enemy in _near(player,radius):
+				if not current.call(): return
+				if not is_instance_valid(enemy): continue
+				var offset := Iso.to_ground(enemy.global_position-player.global_position)
+				if id == "moon_wave" and (offset.dot(aim) < 0 or absf(offset.cross(aim)) > 45): continue
+				if enemy.has_method("take_hit_owned"): enemy.take_hit_owned(damage,player.global_position,player,EventBus.combat_target_receipt(receipt,enemy,current))
+				elif enemy.has_method("take_hit"): enemy.take_hit(damage,player.global_position,player)
+			if current.call(): _pulse_owned(player,radius,current)
+
+static func _pulse_owned(player: Node2D, radius: float, current: Callable) -> void:
+	if not current.call(): return
+	var parent := _parent(player)
+	var ring := LightRing2D.new()
+	ring.setup(radius)
+	ring.origin_current = current
+	parent.add_child(ring)
+	if not current.call() or not is_instance_valid(ring) or ring.get_parent() != parent: return
+	ring.global_position = player.global_position
+	if not current.call(): return
+	ring.modulate = Color("fbf5e6",.35 if DungeonRun.assist("assist_reduce_flash") else .65)
+
+static func on_hit_owned(player: Node, enemy: Variant, info: Dictionary, receipt: Dictionary, current: Callable) -> void:
+	if not current.call() or not is_instance_valid(enemy): return
+	var effect := LuaData.dict(info.get("effect",{}))
+	if str(effect.get("id","")) != "stun_chance" or not enemy.has_method("stun") or bool(enemy.get("armor")): return
+	var chance := clampf(float(effect.get("p",0)),0,1)
+	var rng: Variant = enemy.get("rng")
+	if chance >= 1 or (rng is RandomNumberGenerator and rng.randf() < chance):
+		if enemy is Enemy2D: enemy.stun_owned(float(effect.get("s",.5)),receipt,enemy._combat_request(receipt))
+		else: enemy.stun(float(effect.get("s",.5)))
+
 static func _pulse(player: Node2D, radius: float) -> void:
 	var ring := LightRing2D.new()
 	ring.setup(radius)

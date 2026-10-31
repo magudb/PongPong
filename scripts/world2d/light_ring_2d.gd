@@ -10,7 +10,12 @@ func setup(p_radius: float) -> void:
 	radius = p_radius
 
 
+var origin_current: Callable
+
 func _ready() -> void:
+	if origin_current.is_valid() and not origin_current.call():
+		queue_free()
+		return
 	var tw: Tween = create_tween()
 	tw.tween_property(self, "t", 1.0, 0.7).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_callback(queue_free)

@@ -233,6 +233,17 @@ func combat_receipt(origin: Dictionary, enemy: Variant = null) -> Dictionary:
 	receipt.make_read_only()
 	return receipt
 
+## Contact admission inherits every original profile/body/run observation.
+## Only the target's marker is selected now; no new model origin is minted.
+func combat_target_receipt(parent: Dictionary, enemy: Variant, current: Callable) -> Dictionary:
+	if not combat_current(parent) or not current.is_valid() or not current.call(): return {}
+	var result := parent.duplicate()
+	var floors: Variant = parent.floors.get_ref() if parent.floors != null else null
+	result["floor"] = floors.defeat_receipt(enemy) if is_instance_valid(floors) else {}
+	result["attack_current"] = current
+	result.make_read_only()
+	return result
+
 func combat_current(receipt: Dictionary) -> bool:
 	if receipt.is_empty() or not interaction_current(receipt.get("origin", {})): return false
 	var world: Variant = receipt.world.get_ref() if receipt.world != null else null
