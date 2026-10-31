@@ -55,13 +55,19 @@ func _attack_root() -> Dictionary:
 	root.make_read_only()
 	return root
 
-func _body_attachment_current(root: Dictionary) -> bool:
+## Input revisions revoke attack admission, not the still-owned body's cleanup.
+## Keep exact physical/component/control/locality identity for retirement; only
+## live action continuation additionally requires the captured input revision.
+func _body_attachment_identity_current(root: Dictionary) -> bool:
 	if root.is_empty() or not is_instance_valid(player) or not is_inside_tree() or is_queued_for_deletion() or get_parent() != player or player.get("combat") != self: return false
 	if root.body.get_ref() != player: return false
 	var world := PlayerRegistry.world()
 	var physical := OperationOrigin.physical_snapshot(root.attached.recipient.player_id, player, player, world, world.get("session") if world != null else null, PlayerRegistry.registered_id(player), PlayerRegistry.by_id(root.attached.recipient.player_id))
 	if not OperationOrigin.is_physical_current(root.attached.physical, physical): return false
-	return root.area.get_ref() == player.area and root.controls == player.controls and root.input_revision == player.controls.revision and root.local == player.is_local
+	return root.area.get_ref() == player.area and root.controls == player.controls and root.local == player.is_local
+
+func _body_attachment_current(root: Dictionary) -> bool:
+	return _body_attachment_identity_current(root) and root.input_revision == player.controls.revision
 
 func _presentation_current(root: Dictionary, key: String) -> bool:
 	var node: Variant = root[key].get_ref()
@@ -78,7 +84,7 @@ func _root_current(root: Dictionary) -> bool:
 ## Never release a newer buffer, modal, dodge or shared art.
 func _retire_obsolete_swing() -> int:
 	var action := _swing_action
-	if action.is_empty() or action.serial != _action_serial or not _body_attachment_current(action.root) or _root_current(action.root): return _action_serial
+	if action.is_empty() or action.serial != _action_serial or not _body_attachment_identity_current(action.root) or _root_current(action.root): return _action_serial
 	if player.state != S.SWING: return _action_serial
 	player.state = S.FREE
 	_remaining = 0.0
