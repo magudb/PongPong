@@ -120,11 +120,11 @@ func finish_owned(lease: int) -> void:
 	# and a callback's newer globally unique lease must not be disabled here.
 	_serial += 1
 	serial = _serial
-	var retired := serial
 	active = false
-	visible = false
-	if serial != retired: return
+	# Stop callback-free work before notifying visibility observers. A receiver
+	# may transfer/enable this slot without allocating a replacement play lease.
 	set_process(false)
+	visible = false
 
 func hit_area() -> Dictionary:
 	return {"shape":shape_kind,"radius":radius,"rect":Rect2(0,-width/2,length,width),"direction":direction}

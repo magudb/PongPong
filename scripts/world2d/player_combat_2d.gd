@@ -55,26 +55,30 @@ func _attack_root() -> Dictionary:
 	root.make_read_only()
 	return root
 
-func _attachment_current(root: Dictionary) -> bool:
+func _body_attachment_current(root: Dictionary) -> bool:
 	if root.is_empty() or not is_instance_valid(player) or not is_inside_tree() or is_queued_for_deletion() or get_parent() != player or player.get("combat") != self: return false
 	if root.body.get_ref() != player: return false
 	var world := PlayerRegistry.world()
 	var physical := OperationOrigin.physical_snapshot(root.attached.recipient.player_id, player, player, world, world.get("session") if world != null else null, PlayerRegistry.registered_id(player), PlayerRegistry.by_id(root.attached.recipient.player_id))
 	if not OperationOrigin.is_physical_current(root.attached.physical, physical): return false
-	if root.area.get_ref() != player.area or root.controls != player.controls or root.input_revision != player.controls.revision or root.local != player.is_local: return false
-	for key in ["visual", "camera"]:
-		var node: Variant = root[key].get_ref()
-		if not is_instance_valid(node) or not node.is_inside_tree() or node.is_queued_for_deletion() or node.get_parent() != player or player.get(key) != node: return false
-	return true
+	return root.area.get_ref() == player.area and root.controls == player.controls and root.input_revision == player.controls.revision and root.local == player.is_local
+
+func _presentation_current(root: Dictionary, key: String) -> bool:
+	var node: Variant = root[key].get_ref()
+	return is_instance_valid(node) and node.is_inside_tree() and not node.is_queued_for_deletion() and node.get_parent() == player and player.get(key) == node
+
+func _attachment_current(root: Dictionary) -> bool:
+	return _body_attachment_current(root) and _presentation_current(root, "visual") and _presentation_current(root, "camera")
 
 func _root_current(root: Dictionary) -> bool:
 	return _attachment_current(root) and EventBus.combat_current(root.receipt) and EventBus.interaction_body_current(root.attached, player, player)
 
-## Model replacement revokes hits, not the right to retire this exact old
-## physical action. Never release a newer buffer, modal, dodge or shared art.
+## An obsolete swing keeps only its exact body's bookkeeping and individually
+## retained presentation cleanup, never authority over replacement attachments.
+## Never release a newer buffer, modal, dodge or shared art.
 func _retire_obsolete_swing() -> int:
 	var action := _swing_action
-	if action.is_empty() or action.serial != _action_serial or not _attachment_current(action.root) or _root_current(action.root): return _action_serial
+	if action.is_empty() or action.serial != _action_serial or not _body_attachment_current(action.root) or _root_current(action.root): return _action_serial
 	if player.state != S.SWING: return _action_serial
 	player.state = S.FREE
 	_remaining = 0.0
@@ -87,8 +91,8 @@ func _retire_obsolete_swing() -> int:
 		attack_held = false
 	_invalidate_swing()
 	var retired := _action_serial
-	player.visual.set_spin(0.0)
-	if retired == _action_serial and _attachment_current(action.root): player.camera.position = Vector2.ZERO
+	if _presentation_current(action.root, "visual"): action.root.visual.get_ref().set_spin(0.0)
+	if retired == _action_serial and _body_attachment_current(action.root) and _presentation_current(action.root, "camera"): action.root.camera.get_ref().position = Vector2.ZERO
 	return retired
 
 func _attack_current(action: Dictionary) -> bool:
@@ -166,6 +170,8 @@ func _tick_owned(delta: float) -> void:
 	if not _root_current(root): return
 	var serial := _retire_obsolete_swing()
 	if not _root_current(root) or serial != _action_serial: return
+	# A fresh tick is not a renewal of a stored swing's continuation lease.
+	if player.state == S.SWING and not _attack_current(_swing_action): return
 	stopped_this_tick = hit_stop > 0
 	if stopped_this_tick:
 		hit_stop -= 1
