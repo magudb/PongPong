@@ -236,7 +236,7 @@ func _interact_owned(player_ref: Variant, origin: Dictionary) -> void:
 	if is_talking or not _enabled or not is_inside_tree() or GameManager.is_modal_open() or not EventBus.interaction_body_current(origin, self, player): return
 	var attachment := RefCounted.new()
 	var page: Dictionary = PlayerRegistry.for_player(origin.recipient.player_id, func():
-		if not bool(Svc.static_call("res://scripts/ghostfam/hook/ghostfam_hook.gd", &"before_talk", [self, player], true)): return {}
+		if not bool(Svc.static_call("res://scripts/ghostfam/hook/ghostfam_hook.gd", &"before_talk_owned", [self, player, origin], true)): return {}
 		if not EventBus.interaction_body_current(origin, self, player): return {}
 		is_talking = true
 		_talk_origin = origin

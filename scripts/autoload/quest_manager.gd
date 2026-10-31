@@ -620,7 +620,14 @@ func _activate(quest_id: StringName, def: Dictionary, owner: Dictionary = {}) ->
 	active_quests[quest_id] = rt
 	offered_quests.erase(quest_id)
 	EventBus.quest_accepted.emit(PlayerRegistry.acting_id(), quest_id)
-	if not _owner_current(owner): return
+	if not _owner_current(owner) or active_quests.get(quest_id) != rt: return
+	# Intentional family acceptance is an effect of THIS acceptance, never a
+	# fresh operation minted by a raw public-notification subscriber.
+	if quest_id == &"ghostfam_hittegods":
+		var social := Svc.node("SocialManager")
+		var family := social.get_node_or_null("FamilyQuests") if social != null else null
+		if family != null: family.accepted_owned(rt, owner)
+	if not _owner_current(owner) or active_quests.get(quest_id) != rt: return
 	EventBus.notification_posted.emit(
 		tr("NOTIF_QUEST_ACCEPTED_TITLE"),
 		get_title(quest_id),

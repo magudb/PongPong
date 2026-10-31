@@ -109,60 +109,95 @@ func _refresh() -> void:
 		_kin_hint = true
 		EventBus.whisper_requested.emit(tr("SEEK_GHOSTFAM_KIN_GLOW"))
 func before_talk(player: Node) -> bool:
+	var id := PlayerRegistry.registered_id(player)
+	if id == &"": return false
+	return before_talk_owned(player, EventBus.interaction_origin(id, npc, player))
+func before_talk_owned(player: Variant, origin: Dictionary) -> bool:
+	if not EventBus.interaction_body_current(origin, npc, player): return false
 	var slot := _live_slot()
+	if not EventBus.interaction_body_current(origin, npc, player): return false
+	var self_ref: WeakRef = weakref(self)
+	var npc_ref: WeakRef = weakref(npc)
+	var player_ref: WeakRef = weakref(player)
 	if not slot.is_empty() and not found_slot(int(slot.number)):
-		if not player is Node2D or Iso.to_ground(player.global_position-npc.global_position).length()>float(LuaData.dict(cfg().get("hint",{})).get("find_px",72)):return false
-		_find(int(slot.number))
+		if not player is Node2D or Iso.to_ground(player.global_position-npc.global_position).length()>float(LuaData.dict(cfg().get("hint",{})).get("find_px",72)): return false
+		_find_owned(int(slot.number), origin, self_ref)
 	else:
-		# A full furniture stack can defer a gift; ordinary conversation retries it.
-		GameManager.set_flag(&"ghostfam_seek_gift_now",claim_rewards())
-	_refresh()
+		var gift := _claim_rewards_owned(origin, self_ref)
+		if EventBus.interaction_current(origin): GameManager.set_flag(&"ghostfam_seek_gift_now", gift)
+	# Presentation needs the original live attachment; earned effects above do not.
+	_refresh_owned(self_ref, npc_ref, player_ref, origin)
 	return true
+static func _refresh_owned(seek_ref: WeakRef, npc_ref: WeakRef, player_ref: WeakRef, origin: Dictionary) -> void:
+	var current: Variant = seek_ref.get_ref()
+	var actor: Variant = npc_ref.get_ref()
+	var body: Variant = player_ref.get_ref()
+	if is_instance_valid(current) and current.is_inside_tree() and EventBus.interaction_body_current(origin, actor, body): current._refresh()
 func _find(number: int) -> bool:
-	if number not in [1,2] or found_slot(number):return false
-	var today := GameManager.total_day()
-	var mask := GameManager.flag_int(&"ghostfam_seek_today",0) if GameManager.flag_int(&"ghostfam_seek_day",0)==today else 0
-	var cap := int(cfg().get("daily_cap",2))
-	if int((mask&1)!=0)+int((mask&2)!=0)>=cap:return false
-	EconomyManager.defer_notifications(func() -> void:
-		var total := GameManager.flag_int(&"ghostfam_seek_total",0)+1
-		GameManager.set_flags({"ghostfam_seek_total":total,"ghostfam_seek_day":today,"ghostfam_seek_today":mask|(1<<(number-1)),"ghostfam_seek_found_now":number,"ghostfam_seek_gift_now":0})
-		SocialManager.add_points(NPC,int(cfg().get("find_points",5)),&"seek",{"toast":false})
-		var gift := claim_rewards()
-		GameManager.set_flag(&"ghostfam_seek_gift_now",gift)
-		EconomyManager.after_transaction(func() -> void:
-			EventBus.whisper_requested.emit(tr("SEEK_GHOSTFAM_TOAST_FOUND_FMT")%total)
-		)
-	)
-	return true
+	return _find_owned(number, EventBus.interaction_origin(), weakref(self))
+static func _find_owned(number: int, origin: Dictionary, seek_ref: WeakRef) -> bool:
+	if not EventBus.interaction_current(origin): return false
+	return PlayerRegistry.for_player(origin.recipient.player_id, func():
+		if number not in [1,2] or found_slot(number): return false
+		var today := GameManager.total_day()
+		var mask := GameManager.flag_int(&"ghostfam_seek_today",0) if GameManager.flag_int(&"ghostfam_seek_day",0)==today else 0
+		var cap := int(cfg().get("daily_cap",2))
+		if int((mask&1)!=0)+int((mask&2)!=0)>=cap or not EventBus.interaction_current(origin): return false
+		EconomyManager.defer_notifications(func() -> void:
+			if not EventBus.interaction_current(origin): return
+			var total := GameManager.flag_int(&"ghostfam_seek_total",0)+1
+			GameManager.set_flags({"ghostfam_seek_total":total,"ghostfam_seek_day":today,"ghostfam_seek_today":mask|(1<<(number-1)),"ghostfam_seek_found_now":number,"ghostfam_seek_gift_now":0})
+			if not EventBus.interaction_current(origin): return
+			SocialManager.add_points(NPC,int(cfg().get("find_points",5)),&"seek",{"toast":false})
+			if not EventBus.interaction_current(origin): return
+			var gift := _claim_rewards_owned(origin, seek_ref)
+			if not EventBus.interaction_current(origin): return
+			GameManager.set_flag(&"ghostfam_seek_gift_now",gift)
+			EconomyManager.after_transaction(func() -> void:
+				if EventBus.interaction_current(origin): EventBus.whisper_requested.emit(TranslationServer.translate("SEEK_GHOSTFAM_TOAST_FOUND_FMT")%total)))
+		return true)
 ## Check all unclaimed steps so a migrated save or a deferred gift catches up.
 ## No automatic duplicate sale: a full target store leaves the reward pending.
 func claim_rewards() -> int:
-	if _claiming:return 0
-	_claiming = true
+	return _claim_rewards_owned(EventBus.interaction_origin(), weakref(self))
+static func _claim_rewards_owned(origin: Dictionary, seek_ref: WeakRef) -> int:
+	if not EventBus.interaction_current(origin): return 0
+	var seeker: Variant = seek_ref.get_ref()
+	if not is_instance_valid(seeker) or seeker._claiming: return 0
+	seeker._claiming = true
 	var granted := [0]
-	EconomyManager.defer_notifications(func() -> void:
-		var total := GameManager.flag_int(&"ghostfam_seek_total",0)
-		var mask := GameManager.flag_int(&"ghostfam_seek_claimed",0)
-		var ladder := LuaData.arr(cfg().get("ladder",[]))
-		for i in ladder.size():
-			var step := LuaData.dict(ladder[i])
-			if int(step.finds)>total or (mask&(1<<i))!=0:continue
-			var item := str(step.item)
-			var owned := ItemKinds.is_one_of_a_kind(item) and (EconomyManager.count_item(StringName(item))>0 or LootService.found(item))
-			if owned:item = str(step.get("fallback",""))
-			if item=="" or not EconomyManager.can_add_item(StringName(item)):
-				EconomyManager.after_transaction(func() -> void:EventBus.whisper_requested.emit(tr("SEEK_GHOSTFAM_TOAST_BAG_FULL")))
-				continue
-			var result := LootService.deliver(item)
-			if not bool(result.get("ok",false)):continue
-			mask |= (1<<i)
-			GameManager.set_flag(&"ghostfam_seek_claimed",mask)
-			granted[0] = i+1+(10 if owned else 0)
-			var shown := tr(str(ItemKinds.def(item).get("name_key","ITEM_"+item.to_upper())))
-			EconomyManager.after_transaction(func() -> void:EventBus.whisper_requested.emit(tr("SEEK_GHOSTFAM_TOAST_GIFT_FMT")%shown))
-	)
-	_claiming = false
+	PlayerRegistry.for_player(origin.recipient.player_id, func():
+		EconomyManager.defer_notifications(func() -> void:
+			var ladder := LuaData.arr(cfg().get("ladder",[]))
+			for i in ladder.size():
+				if not EventBus.interaction_current(origin): break
+				# Re-resolve scalar accounting after authenticated rollback; never
+				# retain a detached nested container or adopt a replacement profile.
+				var total := GameManager.flag_int(&"ghostfam_seek_total",0)
+				var mask := GameManager.flag_int(&"ghostfam_seek_claimed",0)
+				var step := LuaData.dict(ladder[i])
+				if int(step.finds)>total or (mask&(1<<i))!=0: continue
+				var item := str(step.item)
+				var owned := ItemKinds.is_one_of_a_kind(item) and (EconomyManager.count_item(StringName(item))>0 or LootService.found(item))
+				if owned: item = str(step.get("fallback",""))
+				if not EventBus.interaction_current(origin): break
+				if item=="" or not EconomyManager.can_add_item(StringName(item)):
+					EconomyManager.after_transaction(func() -> void:
+						if EventBus.interaction_current(origin): EventBus.whisper_requested.emit(TranslationServer.translate("SEEK_GHOSTFAM_TOAST_BAG_FULL")))
+					continue
+				if not EventBus.interaction_current(origin): break
+				var result := LootService.deliver(item)
+				if not bool(result.get("ok",false)): continue
+				# Delivery is the earned prefix. Account only in its originating run.
+				granted[0] = i+1+(10 if owned else 0)
+				if not EventBus.interaction_current(origin): break
+				GameManager.set_flag(&"ghostfam_seek_claimed",mask|(1<<i))
+				if not EventBus.interaction_current(origin): break
+				var shown := TranslationServer.translate(str(ItemKinds.def(item).get("name_key","ITEM_"+item.to_upper())))
+				EconomyManager.after_transaction(func() -> void:
+					if EventBus.interaction_current(origin): EventBus.whisper_requested.emit(TranslationServer.translate("SEEK_GHOSTFAM_TOAST_GIFT_FMT")%shown))))
+	seeker = seek_ref.get_ref()
+	if is_instance_valid(seeker): seeker._claiming = false
 	return int(granted[0])
 static func card_choice(npc_id: String) -> Dictionary:
 	return {"id":"seek_card","text_key":"SEEK_GHOSTFAM_CARD_TITLE","action":"seek_card"} if npc_id==NPC else {}
