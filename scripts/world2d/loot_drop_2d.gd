@@ -109,10 +109,12 @@ static func spawn_owned(parent: Node, at: Vector2, item: Variant, count: int, cu
 				queue.rows.append({"id":str(item),"amount":count,"position":at,"origin":model,"owner":parent_ref,"queue":weakref(queue),"attachment":weakref(parent.get_parent())})
 			return null
 	var orb := create({"id":item,"amount":count},model)
+	var serial := orb._generation
 	orb._spawn_current = attached
 	parent.add_child(orb)
-	if not attached.call() or not _live(orb) or orb.get_parent() != parent: return null
+	if not attached.call() or not _live(orb) or orb.get_parent() != parent or orb._generation != serial or not is_same(orb._drop_origin,model): return null
 	orb.global_position = at
+	if not attached.call() or not _live(orb) or orb.get_parent() != parent or orb._generation != serial or not is_same(orb._drop_origin,model): return null
 	return orb
 
 static func _live(node: Variant) -> bool:

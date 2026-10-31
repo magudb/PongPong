@@ -294,6 +294,30 @@ func defeat_enemy(id: StringName, kind: StringName, loot: Array = []) -> bool:
 func combat_event(name: StringName, payload: Dictionary) -> bool:
 	return publish_combat_event_owned(combat_receipt(interaction_origin()), name, payload)
 
+## Capture model and optional physical recipient before the producer's callbacks.
+## Raw dungeon_surprise is notification-only, like the other owned fanouts.
+func dungeon_surprise_receipt(origin: Dictionary) -> Dictionary:
+	if not interaction_current(origin): return {}
+	var world := PlayerRegistry.world()
+	var watch: Node = world.get_node_or_null("RunWatch") if world != null else null
+	var body: Variant = DungeonRulesData.player()
+	var physical := {}
+	var combat := {}
+	if is_instance_valid(body) and PlayerRegistry.registered_id(body) != &"":
+		physical = interaction_origin(PlayerRegistry.registered_id(body),body,body)
+		combat = combat_receipt(physical)
+	return {"origin":origin,"watch":weakref(watch) if watch != null else null,"world":weakref(world) if world != null else null,"body":weakref(body) if is_instance_valid(body) else null,"physical":physical,"combat":combat}
+
+func publish_dungeon_surprise(receipt: Dictionary, payload: Dictionary) -> bool:
+	if receipt.is_empty() or not interaction_current(receipt.origin): return false
+	game_event.emit(&"dungeon_surprise",payload)
+	if not interaction_current(receipt.origin): return false
+	var watch: Variant = receipt.watch.get_ref() if receipt.watch != null else null
+	var world: Variant = receipt.world.get_ref() if receipt.world != null else null
+	if is_instance_valid(watch) and is_instance_valid(world) and watch.is_inside_tree() and not watch.is_queued_for_deletion() and watch.get_parent()==world and world.get_node_or_null("RunWatch")==watch:
+		watch.surprise_owned(receipt,payload)
+	return interaction_current(receipt.origin)
+
 signal combat_finished(victory: bool)
 signal boss_bar_changed(name_key: String, ratio: float, visible: bool)
 signal whisper_requested(text_key: String)

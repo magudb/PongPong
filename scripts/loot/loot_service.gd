@@ -619,6 +619,8 @@ func _open_base(zone: String, container_id: String, cc: Dictionary, uid: String,
 func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNumberGenerator, rng_before: int, retained: Variant = null) -> Dictionary:
 	var origin: Dictionary = _gift_origin() if retained == null else retained
 	if origin.is_empty() or not _gift_current(origin): return _answer(false, [], &"superseded")
+	var effect_origin: Dictionary = origin.interaction if origin.has("interaction") else EventBus.interaction_origin(origin.id)
+	var surprise_receipt: Dictionary = origin.surprise_receipt if origin.has("surprise_receipt") else EventBus.dungeon_surprise_receipt(effect_origin)
 	var own_stream := r == rng
 	if not bool(plan.get("ok", false)):
 		_restore(r, rng_before, own_stream)
@@ -675,11 +677,15 @@ func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNum
 	if refused[0]:
 		_restore(r, rng_before, own_stream)
 		return _answer(false, [], &"missing_items")
-	if not orbs and not out_rows.is_empty():
-		_announce_after_transaction(&"loot_rolled",[source,out_rows])
-	_announce_cap()
-	var surprise := _Data.dict(plan.get("surprise",{}))
-	if not surprise.is_empty(): _announce_after_transaction(&"game_event",[&"dungeon_surprise",surprise.duplicate(true)])
+	var surprise := _Data.dict(plan.get("surprise",{})).duplicate(true)
+	EconomyManager.after_transaction(func() -> void:
+		PlayerRegistry.for_player(origin.id, func() -> void:
+			if not _gift_current(origin): return
+			if not orbs and not out_rows.is_empty(): EventBus.loot_rolled.emit(source,out_rows)
+			if not _gift_current(origin): return
+			_announce_cap(origin)
+			if not _gift_current(origin): return
+			if not surprise.is_empty(): EventBus.publish_dungeon_surprise(surprise_receipt,surprise)))
 	var answer := _answer(true, out_rows, &"")
 	answer["sold"] = sold
 	return answer
@@ -738,6 +744,7 @@ func _commit(plan: Dictionary, origin: Dictionary) -> void:
 func _delegate_origin() -> Dictionary:
 	var origin := _gift_origin()
 	origin["interaction"] = EventBus.interaction_origin(origin.id)
+	origin["surprise_receipt"] = EventBus.dungeon_surprise_receipt(origin.interaction)
 	origin["delegate_path"] = delegate_path
 	return origin
 
@@ -906,12 +913,12 @@ func _announce_full(dungeon_call: bool) -> void:
 
 
 ## the whisper and the event of a day that reached the cap, ONCE per day
-func _announce_cap() -> void:
-	if not daily_cap_reached() or _cap_told_day == _today():
+func _announce_cap(origin: Dictionary) -> void:
+	if not _gift_current(origin) or not daily_cap_reached() or _cap_told_day == _today():
 		return
 	_cap_told_day = _today()
 	EventBus.game_event.emit(&"loot_day_capped", {"day": _today()})
-	EventBus.whisper_requested.emit(KEY_DAY_TIRED)
+	if _gift_current(origin): EventBus.whisper_requested.emit(KEY_DAY_TIRED)
 
 
 # ================================================================================================ small helpers

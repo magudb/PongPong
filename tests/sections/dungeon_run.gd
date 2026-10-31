@@ -85,9 +85,10 @@ func _run(t, native: bool) -> void:
 	world.player.oil = 50
 	world.player.half_hearts = 3
 	var gold: int = eco.gold
-	EventBus.game_event.emit(&"dungeon_surprise",{"id":"firefly_swarm","oil_s":30})
-	EventBus.game_event.emit(&"dungeon_surprise",{"id":"acorn_purse","gold":25})
-	EventBus.game_event.emit(&"dungeon_surprise",{"id":"cocoa_thermos","heal_half_hearts":2})
+	var surprise_origin := EventBus.interaction_origin()
+	EventBus.publish_dungeon_surprise(EventBus.dungeon_surprise_receipt(surprise_origin),{"id":"firefly_swarm","oil_s":30})
+	EventBus.publish_dungeon_surprise(EventBus.dungeon_surprise_receipt(surprise_origin),{"id":"acorn_purse","gold":25})
+	EventBus.publish_dungeon_surprise(EventBus.dungeon_surprise_receipt(surprise_origin),{"id":"cocoa_thermos","heal_half_hearts":2})
 	t.check("run_watch_applies_surprises",world.player.oil == 80 and world.player.half_hearts == 5 and eco.gold == gold+25,str([world.player.oil,world.player.half_hearts,eco.gold-gold,t.tree.get_nodes_in_group("player").size()]))
 	var picker: Array = DungeonRun.picker_lines(12)
 	t.check("picker_warns_for_highlighted_floor",picker[0].warn and not DungeonRun.picker_lines(1)[0].warn and picker[4].text.contains("10"))

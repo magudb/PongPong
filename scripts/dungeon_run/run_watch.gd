@@ -56,7 +56,8 @@ func _event(event: StringName, payload: Dictionary) -> void:
 			if str(payload.get("reason","")) == "left":
 				_summary = [tr("DEXP_SUMMARY_FLOORS_FMT") % [floors.size(),deepest],tr("DEXP_SUMMARY_FINDS_FMT") % [finds,rare],tr("DEXP_SUMMARY_BEST_FMT") % tr(str(ItemKinds.def(best).get("name_key","DEXP_SUMMARY_NONE"))) if best != "" else tr("DEXP_SUMMARY_NONE")]
 				_summary_wait = 0.3
-		&"dungeon_surprise": _surprise(payload)
+		# dungeon_surprise is public notification only. The producer invokes
+		# surprise_owned after all public observers using its retained receipt.
 		&"dungeon_runestone_activated": DungeonTutorial.say("rune")
 ## The statistics of a run in progress from a save (DungeonFloors' run record): the count goes on after a Continue.
 func restore(record: Dictionary) -> void:
@@ -75,19 +76,21 @@ func _item(_player_id: StringName, id: StringName, amount: int) -> void:
 	finds += amount
 	if Rarity.rank(ItemKinds.rarity_of(id)) >= Rarity.rank(&"rare"): rare += amount
 	if best == "" or Rarity.rank(ItemKinds.rarity_of(id)) > Rarity.rank(ItemKinds.rarity_of(best)): best = str(id)
-func _surprise(payload: Dictionary) -> void:
-	var player := DungeonRulesData.player()
+func surprise_owned(receipt: Dictionary, payload: Dictionary) -> void:
+	var origin: Dictionary = receipt.get("origin",{})
+	if not EventBus.interaction_current(origin): return
+	var player: Variant = receipt.body.get_ref() if receipt.body != null else null
 	match str(payload.get("id","")):
 		"firefly_swarm":
-			if player != null: player.add_oil(maxf(float(payload.get("oil_s",30)),0))
-			EventBus.whisper_requested.emit("DEXP_SURPRISE_FIREFLIES")
+			if EventBus.interaction_body_current(receipt.physical,player,player): player.add_oil_owned(maxf(float(payload.get("oil_s",30)),0),receipt.combat,receipt.physical)
+			if EventBus.interaction_current(origin): EventBus.whisper_requested.emit("DEXP_SURPRISE_FIREFLIES")
 		"acorn_purse":
 			var gold := maxi(int(payload.get("gold",0)),0)
-			EconomyManager.add_gold(gold)
-			EventBus.whisper_requested.emit(tr("DEXP_SURPRISE_PURSE_FMT") % gold)
+			PlayerRegistry.for_player(origin.recipient.player_id,func(): EconomyManager.add_gold(gold))
+			if EventBus.interaction_current(origin): EventBus.whisper_requested.emit(tr("DEXP_SURPRISE_PURSE_FMT") % gold)
 		"cocoa_thermos":
-			if player != null: player.heal_half(maxi(int(payload.get("heal_half_hearts",2)),0))
-			EventBus.whisper_requested.emit("DEXP_SURPRISE_COCOA")
+			if EventBus.interaction_body_current(receipt.physical,player,player): player.heal_half_owned(maxi(int(payload.get("heal_half_hearts",2)),0),receipt.combat,receipt.physical)
+			if EventBus.interaction_current(origin): EventBus.whisper_requested.emit("DEXP_SURPRISE_COCOA")
 		"pip_note": EventBus.whisper_requested.emit(tr("DEXP_SURPRISE_NOTE_FMT") % tr(str(payload.get("hint_key","DTUT_RUNE"))))
 func _process(dt: float) -> void:
 	var gm := Svc.node("GameManager")

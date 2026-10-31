@@ -72,6 +72,10 @@ func _delegate(t, seam: String, mode: String) -> void:
 	var prior: String = loot.delegate_path
 	loot.delegate_path = "res://tests/fixtures/h4_loot_delegate.gd"
 	var tag := "delegate_"+seam+"_"+mode
+	# Bound the real second-resolution envelope premise before the original
+	# winner capture; preserve every timestamp field and all three-frame checks.
+	if mode == "direct":
+		t.check(tag+"_real_timestamp_entry_window",await t.until(func(): return fmod(Time.get_unix_time_from_system(),1.0)<.15,2.0))
 	var origin := EventBus.interaction_origin()
 	var seen: Array = []
 	var calls: Array = []
