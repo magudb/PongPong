@@ -186,7 +186,7 @@ static func _claim_rewards_owned(origin: Dictionary, seek_ref: WeakRef) -> int:
 						if EventBus.interaction_current(origin): EventBus.whisper_requested.emit(TranslationServer.translate("SEEK_GHOSTFAM_TOAST_BAG_FULL")))
 					continue
 				if not EventBus.interaction_current(origin): break
-				var result := LootService.deliver(item)
+				var result := LootService.deliver_owned(item, 1, origin)
 				if not bool(result.get("ok",false)): continue
 				# Delivery is the earned prefix. Account only in its originating run.
 				granted[0] = i+1+(10 if owned else 0)

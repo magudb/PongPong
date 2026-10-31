@@ -102,6 +102,12 @@ static func hidden_quest_items(npc: String) -> int:
 
 static func give_gift(npc: String, item: String, confirmed := false) -> Dictionary:
 	if RELATION.is_token(item):return RELATION.give(npc,item,confirmed)
+	var bus := Svc.node("EventBus")
+	var origin: Dictionary = bus.call("interaction_origin") if bus != null else {}
+	if origin.is_empty(): return {"ok":false, "reason":"superseded"}
+	var social := Svc.node("SocialManager")
+	var family := social.get_node_or_null("FamilyQuests") if social != null else null
+	var family_ticket: Dictionary = family.gift_ticket(origin) if family != null else {}
 	if _busy:
 		return {"ok": false, "reason": "busy"}
 	var sm := Svc.node("SocialManager")
@@ -126,9 +132,11 @@ static func give_gift(npc: String, item: String, confirmed := false) -> Dictiona
 		return {"ok": false, "reason": "today"}
 	if birthday == "" and int(limits.left_week) <= 0:
 		return {"ok": false, "reason": "week"}
+	if not bool(bus.call("interaction_current", origin)): return {"ok":false, "reason":"superseded"}
 	_busy = true
 	var result := {"ok": false, "reason": "no_item"}
 	var commit := func() -> void:
+		if not bool(bus.call("interaction_current", origin)): return
 		if not bool(eco.call("remove_item", StringName(item), 1)):
 			return
 		var today := int(sm.call("today"))
@@ -164,9 +172,12 @@ static func give_gift(npc: String, item: String, confirmed := false) -> Dictiona
 			sm.call("add_points", npc, points, &"gift", {"toast": false})
 		result.clear()
 		result.merge({"ok": true, "item": item, "class": str(cls), "points": points, "birthday": birthday, "repeated": repeated, "hearts": sm.call("hearts", npc), "hearts_before": before_hearts, "stage_before": before_stage, "stage_after": sm.call("stage", npc)})
-		var bus := Svc.node("EventBus")
-		if bus != null:
-			eco.call("after_transaction", func() -> void: bus.emit_signal("game_event", &"gift_given", {"npc": npc, "item": item, "taste": str(cls), "points": points, "birthday": birthday != ""}))
+		var payload := {"npc": npc, "item": item, "taste": str(cls), "points": points, "birthday": birthday != ""}
+		eco.call("after_transaction", func() -> void:
+			# Public once, first. The model effect keeps the original labelled
+			# recipient/runtime even if an earlier public observer installs a run.
+			bus.emit_signal("game_event", &"gift_given", payload)
+			if is_instance_valid(family): family.gift_given_owned(family_ticket, payload))
 	eco.call("defer_notifications", commit)
 	_busy = false
 	return result

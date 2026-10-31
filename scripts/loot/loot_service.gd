@@ -355,6 +355,7 @@ func _gift_origin() -> Dictionary:
 	return {"id": id, "profile": PlayerRegistry.peek_state(id), "stamp": SaveManager._save_owner_stamp()}
 
 func _gift_current(origin: Dictionary) -> bool:
+	if origin.has("interaction") and not EventBus.interaction_current(origin.interaction): return false
 	return NetAuthority.can_write() and SaveManager.continuation_available(origin.profile) and PlayerRegistry.acting_id() == origin.id and PlayerRegistry.peek_state(origin.id) == origin.profile and origin.stamp == SaveManager._save_owner_stamp()
 
 func check_friend_gifts(npc_id: String) -> Dictionary:
@@ -501,15 +502,25 @@ func deliver(item_id: Variant, amount: int = 1) -> Dictionary:
 	return result
 
 
-func _deliver(item_id: Variant, amount: int) -> Dictionary:
+## Explicit model delivery for an enclosing interaction; no fresh root adoption.
+func deliver_owned(item_id: Variant, amount: int, interaction: Dictionary) -> Dictionary:
+	if not EventBus.interaction_current(interaction): return {"ok":false, "reason":&"superseded", "sold":false, "gold":0}
+	return PlayerRegistry.for_player(interaction.recipient.player_id, func():
+		var result := {}
+		EconomyManager.defer_notifications(func() -> void: result.merge(_deliver(item_id, amount, interaction)))
+		return result)
+
+func _deliver(item_id: Variant, amount: int, interaction: Dictionary = {}) -> Dictionary:
 	var origin := _gift_origin()
+	if not interaction.is_empty(): origin["interaction"] = interaction
+	if not interaction.is_empty() and not _gift_current(origin): return {"ok":false, "reason":&"superseded", "sold":false, "gold":0}
 	var id := StringName(str(item_id))
 	if id == &"" or amount <= 0:
 		return {"ok": false, "sold": false, "reason": &"invalid", "gold": 0}
 	if EconomyManager.add_item(id, amount):
 		if not _gift_current(origin):
 			return {"ok": true, "sold": false, "reason": &"superseded", "gold": 0}
-		_note_keepsake(id)
+		_note_keepsake(id, interaction)
 		return {"ok": true, "sold": false, "reason": &"", "gold": 0}
 	if not _gift_current(origin):
 		return {"ok": false, "sold": false, "reason": &"superseded", "gold": 0}
@@ -520,14 +531,14 @@ func _deliver(item_id: Variant, amount: int) -> Dictionary:
 		var gold := mini(_Economy.total_of(unit, amount), _Economy.MAX_GOLD)
 		if gold > 0:
 			EconomyManager.add_gold(gold)
-		_note_keepsake(id)
+		_note_keepsake(id, interaction)
 		var shown := tr(str(def.get("name_key", "ITEM_%s" % str(id).to_upper())))
-		_announce_after_transaction(&"whisper_requested", [tr("FIND_UI_DUPLICATE_FMT") % [shown, gold]])
+		_announce_after_transaction(&"whisper_requested", [tr("FIND_UI_DUPLICATE_FMT") % [shown, gold]], interaction)
 		return {"ok": true, "sold": true, "reason": &"sold", "gold": gold}
 	return {"ok": false, "sold": false, "reason": &"full" if no_room else &"refused", "gold": 0}
 
 
-func _note_keepsake(id: StringName) -> void:
+func _note_keepsake(id: StringName, interaction: Dictionary = {}) -> void:
 	if not _Kinds.is_one_of_a_kind(id):
 		return
 	var registry := _Data.dict(dungeon.get("found", {}))
@@ -536,13 +547,14 @@ func _note_keepsake(id: StringName) -> void:
 	registry[str(id)] = _today()
 	dungeon["found"] = registry
 	var rarity := _Kinds.rarity_of(id)
-	_announce_after_transaction(&"game_event", [&"loot_keepsake_found", {"item": str(id), "rarity": str(rarity), "source": _source}])
+	_announce_after_transaction(&"game_event", [&"loot_keepsake_found", {"item": str(id), "rarity": str(rarity), "source": _source}], interaction)
 	var shown := tr(str(_Kinds.def(id).get("name_key", "ITEM_%s" % str(id).to_upper())))
-	_announce_after_transaction(&"whisper_requested", [tr(KEY_KEEPSAKE_FMT) % shown])
+	_announce_after_transaction(&"whisper_requested", [tr(KEY_KEEPSAKE_FMT) % shown], interaction)
 
 
-func _announce_after_transaction(event_name: StringName, args: Array) -> void:
-	EconomyManager.after_transaction(func() -> void: EventBus.emit_signal.callv([event_name] + args))
+func _announce_after_transaction(event_name: StringName, args: Array, interaction: Dictionary = {}) -> void:
+	EconomyManager.after_transaction(func() -> void:
+		if interaction.is_empty() or EventBus.interaction_current(interaction): EventBus.emit_signal.callv([event_name] + args))
 
 
 # ================================================================================================ the container algorithm (base)

@@ -135,7 +135,8 @@ func interaction_attach(origin: Dictionary, actor: Variant, body: Variant) -> Di
 	return attached
 
 func interaction_body_current(origin: Dictionary, actor: Variant, body: Variant) -> bool:
-	if not interaction_current(origin) or not is_instance_valid(actor) or not origin.get("physical") is Dictionary: return false
+	# Variant lifetime checks must precede registered_id's typed Node boundary.
+	if not interaction_current(origin) or not is_instance_valid(actor) or not is_instance_valid(body) or not body is Node or not origin.get("physical") is Dictionary: return false
 	var id := PlayerRegistry.registered_id(body)
 	if id == &"" or id != origin.recipient.player_id: return false
 	var world := PlayerRegistry.world()

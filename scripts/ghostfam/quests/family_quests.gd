@@ -62,12 +62,24 @@ func collect_parcel_owned(origin: Dictionary, expected: Variant = null) -> bool:
 		# The original committed parcel is earned even when its publication
 		# replaces the profile. Do not read or modify the winner's runtime.
 		return bool(runtime.meta.parcel_given))
-func _event(id: StringName,payload: Dictionary) -> void:
-	if id!=&"gift_given" or _busy or not QuestManager.is_active(LOST):return
-	var runtime: QuestManager.QuestRuntime = QuestManager.active_quests[LOST]
-	if not bool(runtime.meta.get("parcel_given",false)) or str(payload.get("npc",""))!=str(runtime.meta.get("lost_owner","")) or str(payload.get("item",""))!=str(runtime.meta.get("lost_item","")):return
-	_busy = true
-	EconomyManager.defer_notifications(func() -> void:
-		QuestManager.complete_manual(LOST,&"return")
-	)
-	_busy = false
+func _event(_id: StringName, _payload: Dictionary) -> void:
+	pass # Public notification only; no winner authority from a raw emission.
+
+## Capture at the intentional gift root, before deduction/points/public observers.
+func gift_ticket(origin: Dictionary) -> Dictionary:
+	if not EventBus.interaction_current(origin): return {}
+	return PlayerRegistry.for_player(origin.recipient.player_id, func():
+		var runtime: Variant = QuestManager.active_quests.get(LOST)
+		if not _runtime_current(origin, runtime): return {}
+		return {"origin":origin, "runtime":runtime})
+
+func gift_given_owned(ticket: Dictionary, payload: Dictionary) -> void:
+	if _busy or ticket.is_empty() or not _runtime_current(ticket.origin, ticket.runtime): return
+	var origin: Dictionary = ticket.origin
+	PlayerRegistry.for_player(origin.recipient.player_id, func():
+		var runtime: QuestManager.QuestRuntime = ticket.runtime
+		if not bool(runtime.meta.get("parcel_given",false)) or str(payload.get("npc",""))!=str(runtime.meta.get("lost_owner","")) or str(payload.get("item",""))!=str(runtime.meta.get("lost_item","")): return
+		_busy = true
+		EconomyManager.defer_notifications(func() -> void:
+			if _runtime_current(origin, runtime): QuestManager.complete_manual_owned(LOST, &"return", {}, false, origin))
+		_busy = false)
