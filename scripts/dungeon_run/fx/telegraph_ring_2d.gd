@@ -20,34 +20,67 @@ func _ready() -> void:
 	material = ink
 
 static func warm(parent: Node) -> void:
-	if parent.get_node_or_null("TelegraphPool") != null: return
-	var pool := Node2D.new()
-	pool.name = "TelegraphPool"
-	parent.add_child(pool)
-	for i in CAP:
+	warm_owned(parent, func(): return true)
+
+static func _pool_current(parent: WeakRef, pool: WeakRef, current: Callable) -> bool:
+	if not current.call(): return false
+	var p: Variant = parent.get_ref()
+	var q: Variant = pool.get_ref()
+	return is_instance_valid(p) and is_instance_valid(q) and not p.is_queued_for_deletion() and not q.is_queued_for_deletion() and q.get_parent() == p and p.get_node_or_null("TelegraphPool") == q
+
+static func warm_owned(parent: Node, current: Callable) -> void:
+	if not current.call() or not is_instance_valid(parent) or parent.is_queued_for_deletion(): return
+	var owner: WeakRef = weakref(parent)
+	var pool: Node = parent.get_node_or_null("TelegraphPool")
+	var fresh := pool == null
+	if fresh:
+		pool = Node2D.new()
+		pool.name = "TelegraphPool"
+	var ref: WeakRef = weakref(pool)
+	if fresh: parent.add_child(pool)
+	if not _pool_current(owner,ref,current): return
+	while pool.get_child_count() < CAP:
 		var ring := TelegraphRing2D.new()
-		ring.name = "Ring%d" % i
+		ring.name = "Ring%d" % pool.get_child_count()
+		ring.visible = false
+		ring.set_process(false)
 		pool.add_child(ring)
-		ring.finish()
+		if not _pool_current(owner,ref,current): return
 
 static func play(parent: Node, at: Vector2, params: Dictionary) -> TelegraphRing2D:
-	warm(parent)
-	var pool := parent.get_node("TelegraphPool")
+	return play_owned(parent,at,params,func(): return true)
+
+static func play_owned(parent: Node, at: Vector2, params: Dictionary, current: Callable) -> TelegraphRing2D:
+	if not current.call() or not is_instance_valid(parent): return null
+	var owner: WeakRef = weakref(parent)
+	warm_owned(parent,current)
+	if not current.call() or not is_instance_valid(owner.get_ref()): return null
+	var pool: Node = owner.get_ref().get_node_or_null("TelegraphPool")
+	if pool == null: return null
+	var ref: WeakRef = weakref(pool)
+	if not _pool_current(owner,ref,current): return null
 	var chosen: TelegraphRing2D = null
 	for node in pool.get_children():
 		if not node.active:
 			chosen = node
 			break
 	# A live warning is a gameplay promise: saturation delays the producer.
-	# Reusing it early could leave its attack invisible or change its area.
 	if chosen == null: return null
 	_serial += 1
 	chosen.serial = _serial
+	var lease := chosen.serial
+	var slot: WeakRef = weakref(chosen)
 	chosen.global_position = at
-	chosen.configure(params)
+	if not _pool_current(owner,ref,current) or not is_instance_valid(slot.get_ref()) or chosen.serial != lease: return null
+	chosen._configure_owned(params,func(): return _pool_current(owner,ref,current),lease)
+	if not _pool_current(owner,ref,current) or not is_instance_valid(slot.get_ref()) or chosen.serial != lease: return null
 	return chosen
 
 func configure(params: Dictionary) -> void:
+	_configure_owned(params,func(): return true,serial)
+
+func _configure_owned(params: Dictionary, current: Callable, lease: int) -> void:
+	if serial != lease or not current.call(): return
 	shape_kind = str(params.get("shape","ring"))
 	radius = maxf(1,float(params.get("radius",90)))
 	width = maxf(1,float(params.get("width",60)))
@@ -60,7 +93,10 @@ func configure(params: Dictionary) -> void:
 	_owner = weakref(owner) if owner!=null else null
 	active = true
 	visible = true
-	# The GroundFx parent already owns global z=-9; doubling it hides warnings below the tiles.
+	if serial != lease or not current.call():
+		finish_owned(lease)
+		return
+	# The GroundFx parent already owns global z=-9.
 	z_index = 0
 	set_process(true)
 	queue_redraw()

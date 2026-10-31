@@ -26,11 +26,12 @@ static func warm_owned(parent: Node, current: Callable) -> void:
 	if not current.call() or not is_instance_valid(parent) or parent.is_queued_for_deletion(): return
 	var owner: WeakRef = weakref(parent)
 	var pool: Node = parent.get_node_or_null("SparkPool")
-	if pool == null:
+	var fresh := pool == null
+	if fresh:
 		pool = Node2D.new()
 		pool.name = "SparkPool"
-		parent.add_child(pool)
 	var ref: WeakRef = weakref(pool)
+	if fresh: parent.add_child(pool)
 	if not _pool_current(owner, ref, current): return
 	# A reentrant current play may already have filled a partially warm pool.
 	while pool.get_child_count() < CAP:

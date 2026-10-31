@@ -9,19 +9,24 @@ var combo_left := 1
 var summoned: Array = []
 var arena_ring: Node2D
 func _ready() -> void:
+	if not _birth_continue(): return
 	cfg["lunge_mult"] = float(cfg.patterns.dash_speed)/float(cfg.speed)
 	super._ready()
+	if not _birth_continue(): return
 	arena_ring = load("res://scripts/dungeon_run/bosses/arena_ring.gd").new()
 	arena_ring.player = player
 	area.ground_fx.add_child(arena_ring)
+	if not _birth_continue(): return
 	arena_ring.global_position = global_position
 	EventBus.boss_bar_changed.emit(str(cfg.name_key),1,false)
+	if not _birth_continue(): return
 	var halo := Sprite2D.new()
 	halo.texture = Glow.light_texture()
 	halo.modulate = Color(str(cfg.glow),.16)
 	halo.material = Glow.additive_material()
 	halo.position.y = -70
 	visual.add_child(halo)
+	if _birth_continue(): _birth_current = Callable()
 func set_awake(on: bool) -> void:
 	if not on and awake:reset_fight()
 	super.set_awake(on)
@@ -108,10 +113,9 @@ func _on_health_changed() -> void:
 		return
 	var receipt := EventBus.combat_receipt(EventBus.combat_origin(), self)
 	if EventBus.combat_current(receipt):
-		PlayerRegistry.for_player(&"p0", func(): _on_health_changed_owned(receipt))
-func _on_health_changed_owned(receipt: Dictionary, inherited: Dictionary = {}) -> void:
+		PlayerRegistry.for_player(&"p0", func(): _on_health_changed_owned(receipt, _combat_request(receipt)))
+func _on_health_changed_owned(receipt: Dictionary, request: Dictionary) -> void:
 	if not EventBus.combat_current(receipt): return
-	var request := _combat_request(receipt) if inherited.is_empty() else inherited
 	if not Enemy2D._combat_request_current(receipt, request): return
 	EventBus.boss_bar_changed.emit(str(cfg.name_key),float(hp)/max_hp,awake)
 	if not Enemy2D._combat_request_current(receipt, request): return
@@ -150,12 +154,13 @@ func spawn_add_owned(kind_id: String, count: int, receipt: Dictionary, request: 
 		enemy.uid = uid+":add:"+str(phase)+":"+str(summoned.size())
 		enemy.context["uid"] = enemy.uid
 		summoned.append(weakref(enemy))
+		enemy._birth_current = Enemy2D._combat_request_current.bind(receipt,request)
 		area.objects.add_child(enemy)
 		if not Enemy2D._combat_request_current(receipt, request): return
 		if not is_instance_valid(enemy) or not enemy.is_inside_tree() or enemy.is_queued_for_deletion(): return
-		enemy.stun(.6)
+		enemy._stun_if(.6,Enemy2D._combat_request_current.bind(receipt,request))
 		if not Enemy2D._combat_request_current(receipt, request): return
-		TelegraphRing2D.play(area.ground_fx,candidate,{"radius":55,"duration":.6})
+		TelegraphRing2D.play_owned(area.ground_fx,candidate,{"radius":55,"duration":.6},Enemy2D._combat_request_current.bind(receipt,request))
 		if not Enemy2D._combat_request_current(receipt, request): return
 
 func reset_fight() -> void:
@@ -183,9 +188,10 @@ func reset_fight() -> void:
 	arena_ring.set_process(true)
 	EventBus.boss_bar_changed.emit(str(cfg.name_key),1,false)
 func _die() -> void:
+	if state == S.DEAD: return
 	var receipt := EventBus.combat_receipt(EventBus.combat_origin(), self)
 	if EventBus.combat_current(receipt):
-		PlayerRegistry.for_player(&"p0", func(): _die_owned(receipt))
+		PlayerRegistry.for_player(&"p0", func(): _die_owned(receipt, _combat_request(receipt)))
 
 func _death_cleanup_owned(_receipt: Dictionary, request: Dictionary) -> void:
 	var sequences := get_children().filter(func(n): return n.get_script() == Sequence).map(func(n): return weakref(n))
@@ -197,5 +203,7 @@ func _death_cleanup_owned(_receipt: Dictionary, request: Dictionary) -> void:
 		var node: Variant = ref.get_ref()
 		if is_instance_valid(node) and not node.is_queued_for_deletion(): node.queue_free()
 func _exit_tree() -> void:
+	var old_ring: WeakRef = weakref(arena_ring) if is_instance_valid(arena_ring) else null
 	EventBus.boss_bar_changed.emit(str(cfg.get("name_key","")),0,false)
-	if is_instance_valid(arena_ring): arena_ring.queue_free()
+	# The bar observer can install a replacement; retire only the captured ring.
+	if old_ring != null and is_instance_valid(old_ring.get_ref()): old_ring.get_ref().queue_free()

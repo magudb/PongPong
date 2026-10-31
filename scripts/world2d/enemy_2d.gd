@@ -55,6 +55,15 @@ var _eyes: Sprite2D
 var _stop := 0
 var _combat_serial := 0
 var _death_tween: Tween
+# Admission only: released after ready, never a permanent AI/profile binding.
+var _birth_current: Callable
+
+func _birth_continue() -> bool:
+	if not _birth_current.is_valid() or _birth_current.call(): return true
+	set_physics_process(false)
+	# Refused birth owns only its never-adopted partial actor, not a newer root.
+	if _combat_serial == 0: queue_free()
+	return false
 
 func _next_combat_request() -> void:
 	_combat_serial += 1
@@ -121,6 +130,7 @@ static func create_marker(params: Dictionary, pos: Vector2, marker_cell: Vector2
 	return node
 
 func _ready() -> void:
+	if not _birth_continue(): return
 	add_to_group("enemy")
 	# Sleeping skips callbacks, but waking must not race reattaching the body
 	# to its physics space before its first move_and_slide().
@@ -139,8 +149,10 @@ func _ready() -> void:
 	body_shape.points = _ellipse(24,14)
 	body.shape = body_shape
 	add_child(body)
+	if not _birth_continue(): return
 	visual = IsoChibiSprite2D.create(str(cfg.get("visual",CharacterCatalog.enemy_visual(kind))))
 	add_child(visual)
+	if not _birth_continue(): return
 	visual.self_modulate = Color(str(cfg.get("tint","ffffff")))
 	_hurtbox = Area2D.new()
 	_hurtbox.name = "Hurtbox"
@@ -154,6 +166,7 @@ func _ready() -> void:
 	shape.position.y = -altitude*.5-10
 	_hurtbox.add_child(shape)
 	add_child(_hurtbox)
+	if not _birth_continue(): return
 	_attack = Area2D.new()
 	_attack.name = "Attack"
 	_attack.collision_layer = Iso.LAYER_ENEMY_ATTACK
@@ -163,12 +176,15 @@ func _ready() -> void:
 	_attack_shape.shape = ConvexPolygonShape2D.new()
 	_attack.add_child(_attack_shape)
 	add_child(_attack)
+	if not _birth_continue(): return
 	home = global_position
 	player = PlayerRegistry.local_player(get_tree()) as Node2D
 	if ambush:
 		ambush_state = "hidden"
 		visual.visible = false
+		if not _birth_continue(): return
 		_host = area.place_prop("bush_eyes_a" if rng.randi()%2 == 0 else "bush_eyes_b",cell)
+		if not _birth_continue(): return
 		var art := ArtCatalog.prop(&"eyes_glow")
 		_eyes = Sprite2D.new()
 		_eyes.texture = art.texture
@@ -176,8 +192,11 @@ func _ready() -> void:
 		_eyes.offset = -art.pivot
 		_eyes.material = Glow.additive_material()
 		add_child(_eyes)
+		if not _birth_continue(): return
 	DungeonEnemyRoster.of(area).register(self)
 	set_awake(false)
+	if not _birth_continue(): return
+	if not is_boss: _birth_current = Callable()
 
 static func _ellipse(rx: float, ry: float) -> PackedVector2Array:
 	var points := PackedVector2Array()
@@ -347,7 +366,8 @@ func reveal_owned(receipt: Dictionary, request: Dictionary) -> void:
 	_reveal_if(Enemy2D._combat_request_current.bind(receipt, request))
 
 func _reveal_if(current: Callable) -> void:
-	if not current.call() or not ambush or ambush_state == "revealed": return
+	if not current.call() or not ambush: return
+	if ambush_state == "revealed" and (not is_instance_valid(_host) or _host.is_queued_for_deletion()): return
 	var host: WeakRef = weakref(_host) if is_instance_valid(_host) else null
 	ambush_state = "revealed"
 	visual.visible = true
@@ -356,6 +376,7 @@ func _reveal_if(current: Callable) -> void:
 	if not current.call(): return
 	if host != null and is_instance_valid(host.get_ref()):
 		area.remove_prop(host.get_ref())
+		_host = null
 		if current.call(): area.place_prop("empty_bush",cell)
 
 func stun(seconds: float) -> void:
@@ -412,10 +433,11 @@ func _take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dic
 		if is_instance_valid(attacker) and attacker is Node and PlayerRegistry.registered_id(attacker) == receipt.origin.recipient.player_id: WeaponFx.on_kill_owned(attacker,self,receipt)
 		if Enemy2D._combat_request_current(receipt, request): _die_owned(receipt, request)
 func _on_health_changed() -> void:
+	if state == S.DEAD: return
 	var receipt := EventBus.combat_receipt(EventBus.combat_origin(), self)
 	if EventBus.combat_current(receipt):
-		PlayerRegistry.for_player(&"p0", func(): _on_health_changed_owned(receipt))
-func _on_health_changed_owned(_receipt: Dictionary, _request: Dictionary = {}) -> void:
+		PlayerRegistry.for_player(&"p0", func(): _on_health_changed_owned(receipt, _combat_request(receipt)))
+func _on_health_changed_owned(_receipt: Dictionary, _request: Dictionary) -> void:
 	pass
 func hit_damage() -> int:
 	if critter: return 0
@@ -439,13 +461,13 @@ func cloud(at: Vector2) -> void:
 	area.ground_fx.add_child(node)
 	node.global_position = at
 func _die() -> void:
+	if state == S.DEAD: return
 	var receipt := EventBus.combat_receipt(EventBus.combat_origin(), self)
 	if EventBus.combat_current(receipt):
-		PlayerRegistry.for_player(&"p0", func(): _die_owned(receipt))
+		PlayerRegistry.for_player(&"p0", func(): _die_owned(receipt, _combat_request(receipt)))
 
-func _die_owned(receipt: Dictionary, inherited: Dictionary = {}) -> void:
+func _die_owned(receipt: Dictionary, request: Dictionary) -> void:
 	if state == S.DEAD or not EventBus.combat_current(receipt): return
-	var request := _combat_request(receipt) if inherited.is_empty() else inherited
 	if not Enemy2D._combat_request_current(receipt, request): return
 	# Reserve the fatal phase BEFORE the first callback. A newer same-node root
 	# can replace physical work, not erase this phase's once-only notifications.
@@ -456,7 +478,7 @@ func _die_owned(receipt: Dictionary, inherited: Dictionary = {}) -> void:
 	set_physics_process(false)
 	_cancel_attack()
 	if Enemy2D._combat_attachment_current(request): Enemy2D._disable_dead_hurtbox.call_deferred(request)
-	if Enemy2D._combat_request_current(receipt, request): _death_cleanup_owned(receipt, request)
+	if Enemy2D._combat_attachment_current(request): _death_cleanup_owned(receipt, request)
 	Enemy2D._finish_death_owned(receipt, request, terminal)
 
 func _death_cleanup_owned(_receipt: Dictionary, _request: Dictionary) -> void:
