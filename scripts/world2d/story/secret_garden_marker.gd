@@ -159,7 +159,7 @@ static func _present_owned(actor_ref: WeakRef, body_ref: WeakRef, origin: Dictio
 				elif action == "garden_start" and physical:
 					PlayerRegistry.for_player(origin.recipient.player_id, func():
 						if SecretGardenStory.step() < 0 and EventBus.interaction_current(origin) and QuestManager.is_offerable(SecretGardenStory.QUEST) and EventBus.interaction_current(origin):
-							QuestManager.accept_quest(SecretGardenStory.QUEST))
+							QuestManager.accept_quest_owned(SecretGardenStory.QUEST, origin))
 	actor = actor_ref.get_ref()
 	if is_instance_valid(actor):
 		actor._release(hold)

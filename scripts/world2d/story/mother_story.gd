@@ -30,6 +30,7 @@ const CHAPTERS := [
 ]
 const HELPERS := ["mapseller_natteblik","appraiser_fru_ugle","postman_pip","guard_oak","ghostfam_dyne","ghostfam_silke"]
 static var _syncing := false
+static var _sync_origin: Dictionary = {}
 static func enabled() -> bool:
 	return SecretGardenStory.has_evidence("garden_trail") or GameManager.flag_int(&"forest_mother_version",0) == VERSION
 static func has(id: String) -> bool:
@@ -88,11 +89,18 @@ static func sync() -> void:
 	sync_owned(EventBus.interaction_origin())
 
 static func sync_owned(origin: Dictionary) -> void:
-	if _syncing or not EventBus.interaction_current(origin) or not enabled(): return
+	if not EventBus.interaction_current(origin) or not enabled(): return
 	if not EventBus.interaction_current(origin): return
+	# Suppress recursive projection of the same current operation, not a
+	# genuine newer load/area root after the suspended origin was revoked.
+	if _syncing and EventBus.interaction_current(_sync_origin): return
+	var previous_syncing := _syncing
+	var previous_origin := _sync_origin
 	_syncing = true
+	_sync_origin = origin
 	_sync_chapters_owned(origin)
-	_syncing = false
+	_sync_origin = previous_origin
+	_syncing = previous_syncing
 
 ## Keep unwind outside the cancellable loop; a refused suffix must not strand
 ## future genuine work, nor latch a temporary failed-load barrier.

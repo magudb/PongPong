@@ -37,23 +37,43 @@ func _progress_owned(origin: Dictionary) -> void:
 	if not EventBus.interaction_current(origin): return
 	PlayerRegistry.for_player(origin.recipient.player_id, func(): MotherStory.sync_owned(origin))
 	if EventBus.interaction_current(origin): _refresh()
+## Load and area notifications are genuine current-state roots. Their own
+## suffixes never call a root adapter after a synchronous replacement.
 func _loaded(_slot: int) -> void:
-	MotherStory.sync()
-	if world.area != null: _area_ready(world.area.map.id)
+	var request := _attachment_request()
+	if not _attachment_current(request): return
+	PlayerRegistry.for_player(&"p0", func(): MotherStory.sync_owned(request.origin))
+	if _attachment_current(request) and request.area != null:
+		_area_ready_owned(request)
 func _refresh() -> void:
-	if world.area == null: return
+	if not is_inside_tree() or not is_instance_valid(world) or not world.is_inside_tree() or world.is_queued_for_deletion() or PlayerRegistry.world() != world: return
+	if not is_instance_valid(world.area) or not world.area.is_inside_tree() or world.area.is_queued_for_deletion(): return
 	for node in world.area.objects.get_children():
 		if node is MotherEvidenceMarker: node.refresh()
-func _area_ready(_id: StringName) -> void:
+func _attachment_request() -> Dictionary:
+	if not is_inside_tree() or not is_instance_valid(world) or not world.is_inside_tree() or world.is_queued_for_deletion() or PlayerRegistry.world() != world: return {}
 	_generation += 1
-	var token := _generation
-	var area := world.area
+	return {"token": _generation, "origin": EventBus.interaction_origin(&"p0"), "world": weakref(world), "area": weakref(world.area) if is_instance_valid(world.area) else null}
+func _attachment_current(request: Dictionary) -> bool:
+	if request.is_empty() or not is_inside_tree() or is_queued_for_deletion() or request.token != _generation or not EventBus.interaction_current(request.origin): return false
+	var target: Variant = request.world.get_ref()
+	if not is_instance_valid(target) or target != world or not target.is_inside_tree() or target.is_queued_for_deletion() or PlayerRegistry.world() != target: return false
+	var area: Variant = request.area.get_ref() if request.area != null else null
+	if request.area != null and (not is_instance_valid(area) or not area.is_inside_tree() or area.is_queued_for_deletion()): return false
+	return target.area == area
+func _area_ready(_id: StringName) -> void:
+	_area_ready_owned(_attachment_request())
+func _area_ready_owned(request: Dictionary) -> void:
+	if not _attachment_current(request) or request.area == null: return
+	var area: IsoArea = request.area.get_ref()
 	anchors.clear()
-	MotherStory.sync()
-	if not MotherStory.enabled(): return
-	await get_tree().physics_frame
-	await get_tree().physics_frame
-	if token != _generation or not is_instance_valid(area) or world.area != area: return
+	PlayerRegistry.for_player(&"p0", func(): MotherStory.sync_owned(request.origin))
+	if not _attachment_current(request) or not MotherStory.enabled(): return
+	var tree := get_tree()
+	await tree.physics_frame
+	if not _attachment_current(request): return
+	await tree.physics_frame
+	if not _attachment_current(request): return
 	var number := DungeonFloors.floor_of(area)
 	var wanted: Array[Dictionary] = []
 	for row in MotherStory.EVIDENCE:
@@ -79,6 +99,7 @@ func _area_ready(_id: StringName) -> void:
 				if not route.is_empty(): path = route.slice(maxi(0,route.size()-6))
 	var used := {}
 	for index in wanted.size():
+		if not _attachment_current(request): return
 		var existing: MotherEvidenceMarker
 		for node in area.objects.get_children():
 			if node is MotherEvidenceMarker and node.evidence_id == wanted[index].id:
@@ -86,6 +107,7 @@ func _area_ready(_id: StringName) -> void:
 				break
 		if existing != null:
 			existing.refresh()
+			if not _attachment_current(request): return
 			used[existing.cell] = true
 			anchors.append({"id":wanted[index].id,"cell":existing.cell,"node":existing})
 			continue
@@ -100,6 +122,7 @@ func _area_ready(_id: StringName) -> void:
 		marker.cell = at
 		marker.position = area.objects.to_local(area.cell_to_global(at))
 		area.objects.add_child(marker)
+		if not _attachment_current(request): return
 		anchors.append({"id":wanted[index].id,"cell":at,"node":marker})
 func _arrival_path(nav: NavGrid,start: Vector2i,minimum: int) -> Array[Vector2i]:
 	var best: Array[Vector2i] = [nav.nearest_free(start)]
