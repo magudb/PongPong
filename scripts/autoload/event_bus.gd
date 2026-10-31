@@ -243,6 +243,15 @@ signal lua_reloaded()
 ## Consumers must ignore names they do not know.
 signal game_event(name: StringName, payload: Dictionary)
 
+## Narrow intentional mail migration: unchanged public payload/arity, public
+## observers first, then the original earned recipient. Raw emits only notify.
+func publish_post_read(origin: Dictionary, payload: Dictionary, receipt: Dictionary = {}) -> bool:
+	if not interaction_current(origin): return false
+	if receipt.is_empty(): receipt = QuestManager.post_read_receipt(origin)
+	game_event.emit(&"post_read", payload)
+	if interaction_current(origin): QuestManager.apply_post_read_receipt(receipt, payload)
+	return interaction_current(origin)
+
 
 func emit_lua_event(event_name: StringName, payload: Dictionary = {}) -> void:
 	lua_event.emit(event_name, payload)

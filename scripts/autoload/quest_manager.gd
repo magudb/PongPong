@@ -1114,7 +1114,21 @@ func _on_quest_completed_signal(player_id: StringName, quest_id: StringName) -> 
 
 
 func _on_game_event(event_name: StringName, payload: Dictionary) -> void:
+	if event_name == &"post_read": return # explicitly migrated producer; notification only
 	_dispatch(&"game_event", {"event": str(event_name), "payload": payload})
+
+## Only the committed mail read has model-only earned authority. Generic Quest
+## delivery/physical tickets keep their original registered-body requirement.
+func post_read_receipt(origin: Dictionary) -> Dictionary:
+	var owner := _owned_ticket(origin)
+	if owner.is_empty(): return {}
+	owner["body"] = null
+	return owner
+
+func apply_post_read_receipt(owner: Dictionary, payload: Dictionary) -> void:
+	if owner.is_empty() or not _owner_current(owner): return
+	PlayerRegistry.for_player(owner.id, func():
+		_dispatch(&"game_event", {"event": "post_read", "payload": payload}, owner))
 
 
 ## The old id convention (objectives WITHOUT `on`): collect_<item> is fed by what a resource node dropped. Objectives with an `on` never

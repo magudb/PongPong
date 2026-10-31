@@ -543,7 +543,7 @@ func _game_events() -> void:
 	bus.game_event.emit(&"furniture_placed", {"item": "bed", "rarity": "unique"})
 	_need(problems, _done(q, "rare"), "a third unique piece did not finish the objective (%d)" % _cur(q, "rare"))
 	bus.game_event.emit(&"furniture_placed", {"payload": "none"})
-	bus.game_event.emit(&"post_read", {"quest_id": "lost_cat"})
+	bus.publish_post_read(bus.interaction_origin(), {"quest_id": "lost_cat"})
 	_need(problems, _done(q, "any"), "a game_event without filters did not bind")
 	bus.game_event.emit(&"unknown_event", {"level": 99, "rarity": "unique"})
 	_need(problems, not _done(q, "deep") and not _done(q, "mine"), "an unknown event name moved an objective")
@@ -1382,7 +1382,8 @@ func _drive(qid: String, events_fed: Dictionary) -> Dictionary:
 						var event_name := str(od.get("event", "")) if on == "game_event" else on
 						events_fed[event_name] = true
 						for i in target:
-							bus.game_event.emit(StringName(event_name), _payload_for(event_name, od))
+							if event_name == "post_read": bus.publish_post_read(bus.interaction_origin(), _payload_for(event_name, od))
+							else: bus.game_event.emit(StringName(event_name), _payload_for(event_name, od))
 					else:
 						problems.append("%s.%s: `on = %s` has no driver in this test" % [qid, oid, on])
 			await t.frames(1)
@@ -1722,7 +1723,7 @@ func _forste_dage() -> void:
 	bus.game_event.emit(&"plot_tilled", {"plot_id": "plot_3_4"})
 	bus.game_event.emit(&"plot_tilled", {"plot_id": "plot_3_5"})
 	_need(problems, _done(q, "till") and not _done(q, "mail"), "plot_tilled x2: till %s mail %s" % [_done(q, "till"), _done(q, "mail")])
-	bus.game_event.emit(&"post_read", {"quest_id": "lost_cat"})
+	bus.publish_post_read(bus.interaction_origin(), {"quest_id": "lost_cat"})
 	_need(problems, qm.is_completed(q), "post_read did not finish the quest")
 	t.check("forste_dage_vocabulary_plot_tilled_post_read", problems.is_empty(), "on = game_event with event plot_tilled / post_read completes objectives (the tutorial's bindings): %s" % str(problems))
 	qm.reset()
