@@ -268,7 +268,7 @@ func set_direction_index(index: int) -> void:
 		_sync_sprite()
 
 
-func set_facing_direction(movement: Vector2) -> void:
+func set_facing_direction(movement: Vector2, current: Callable = Callable()) -> void:
 	if movement.length_squared() < 0.001:
 		return
 	_direction_explicit = true
@@ -277,7 +277,7 @@ func set_facing_direction(movement: Vector2) -> void:
 	var next_direction := wrapi(int(round(clockwise_from_south / (PI / 4.0))), 0, 8)
 	if direction_index != next_direction:
 		direction_index = next_direction
-		_sync_sprite()
+		_sync_sprite(current)
 
 
 ## Drives the locomotion clips from the body's motion. `facing_override`: the game moves in GROUND units (screen y is
@@ -310,12 +310,12 @@ func play_loop(clip: StringName) -> void:
 
 ## Plays a clip once and locks locomotion until it ends (then back to idle, action_finished is emitted).
 ## `rate` multiplies the clip's fps for this play only.
-func play_action(clip: StringName, rate: float = 1.0) -> void:
+func play_action(clip: StringName, rate: float = 1.0, current: Callable = Callable()) -> void:
 	if not _animations.has(clip):
 		return
 	_locked = true
 	_action_rate = rate
-	_play(clip, true)
+	_play(clip, true, current)
 
 
 ## True while a non-looping action clip (swing, hit, jump...) is playing.
@@ -453,7 +453,7 @@ func _apply_sprite_transform() -> void:
 	sprite.offset = _base_sprite_offset + Vector2(0.0, pivot)
 
 
-func _play(clip: StringName, force: bool = false) -> void:
+func _play(clip: StringName, force: bool = false, current: Callable = Callable()) -> void:
 	if clip == current_clip and not force:
 		return
 	if not _animations.has(clip):
@@ -468,7 +468,7 @@ func _play(clip: StringName, force: bool = false) -> void:
 	_cache_clip()
 	_frame = clampi(int(phase * _clip_frames), 0, _clip_frames - 1) if stride_transition else 0
 	_frame_timer = 0.0
-	_sync_sprite()
+	_sync_sprite(current)
 
 
 func _cache_clip() -> void:
@@ -517,7 +517,7 @@ func _sheet_path(clip_key: StringName) -> String:
 	return CHARACTERS_DIR + resolved_id + "/" + String(spec.get("sheet", String(clip_key) + TEXTURE_EXTENSION))
 
 
-func _sync_sprite() -> void:
+func _sync_sprite(current: Callable = Callable()) -> void:
 	if not is_node_ready() or not _animations.has(current_clip):
 		return
 	var clip_key := current_clip
@@ -528,7 +528,9 @@ func _sync_sprite() -> void:
 		_textures.erase(clip_key)
 		push_error("Unable to load character sprite sheet: %s/%s" % [resolved_id, clip_key])
 		return
+	if current.is_valid() and not current.call(): return
 	sprite.texture = image
+	if current.is_valid() and not current.call(): return
 	sprite.region_rect = Rect2(
 		float(_frame * FRAME_SIZE), float(direction_index * FRAME_SIZE),
 		float(FRAME_SIZE), float(FRAME_SIZE)

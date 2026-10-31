@@ -13,7 +13,7 @@ func setup(p_radius: float) -> void:
 var origin_current: Callable
 
 func _ready() -> void:
-	if origin_current.is_valid() and not origin_current.call():
+	if is_queued_for_deletion() or (origin_current.is_valid() and not origin_current.call()):
 		queue_free()
 		return
 	var tw: Tween = create_tween()

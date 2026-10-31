@@ -404,13 +404,16 @@ func take_hit(damage: int, from: Vector2, attacker: Node = null) -> void:
 
 func take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dictionary) -> void:
 	if state == S.DEAD or damage <= 0 or not EventBus.combat_current(receipt) or (receipt.has("attack_current") and not receipt.attack_current.call()): return
-	# Scope synchronous legacy presentation/query hooks to the authentic owner,
-	# including environmental p0 hits inside a conflicting caller's scope.
-	PlayerRegistry.for_player(receipt.origin.recipient.player_id, func(): _take_hit_owned(damage, from, attacker, receipt))
+	take_contact_hit_owned(damage, from, attacker, receipt, _combat_request(receipt))
 
-func _take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dictionary) -> void:
-	if state == S.DEAD or damage <= 0 or not EventBus.combat_current(receipt) or (receipt.has("attack_current") and not receipt.attack_current.call()): return
-	var request := _combat_request(receipt)
+## Enclosing attacks allocate contact ONCE and retain it through post-hit procs.
+## Explicit empty inheritance refuses; the independent adapter above allocates.
+func take_contact_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dictionary, request: Dictionary) -> void:
+	if state == S.DEAD or damage <= 0 or not Enemy2D._combat_request_current(receipt, request): return
+	PlayerRegistry.for_player(receipt.origin.recipient.player_id, func(): _take_hit_owned(damage, from, attacker, receipt, request))
+
+func _take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dictionary, request: Dictionary) -> void:
+	if state == S.DEAD or damage <= 0: return
 	if not Enemy2D._combat_request_current(receipt, request): return
 	set_awake(true)
 	if not Enemy2D._combat_request_current(receipt, request): return

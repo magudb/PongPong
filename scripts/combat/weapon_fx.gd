@@ -61,6 +61,7 @@ static func on_swing_owned(player: Node2D, info: Dictionary, receipt: Dictionary
 				if not current.call(): return
 				if not is_instance_valid(enemy): continue
 				if enemy is Enemy2D:
+					if enemy.state == Enemy2D.S.DEAD: continue
 					var target := EventBus.combat_target_receipt(receipt,enemy,current)
 					enemy.reveal_owned(target,enemy._combat_request(target))
 				elif enemy.has_method("reveal"): enemy.reveal()
@@ -87,19 +88,20 @@ static func _pulse_owned(player: Node2D, radius: float, current: Callable) -> vo
 	ring.setup(radius)
 	ring.origin_current = current
 	parent.add_child(ring)
-	if not current.call() or not is_instance_valid(ring) or ring.get_parent() != parent: return
+	if not current.call() or not is_instance_valid(ring) or ring.is_queued_for_deletion() or ring.get_parent() != parent: return
 	ring.global_position = player.global_position
 	if not current.call(): return
 	ring.modulate = Color("fbf5e6",.35 if DungeonRun.assist("assist_reduce_flash") else .65)
 
-static func on_hit_owned(player: Node, enemy: Variant, info: Dictionary, receipt: Dictionary, current: Callable) -> void:
+static func on_hit_owned(player: Node, enemy: Variant, info: Dictionary, receipt: Dictionary, request: Dictionary, current: Callable) -> void:
 	if not current.call() or not is_instance_valid(enemy): return
+	if enemy is Enemy2D and not Enemy2D._combat_request_current(receipt,request): return
 	var effect := LuaData.dict(info.get("effect",{}))
 	if str(effect.get("id","")) != "stun_chance" or not enemy.has_method("stun") or bool(enemy.get("armor")): return
 	var chance := clampf(float(effect.get("p",0)),0,1)
 	var rng: Variant = enemy.get("rng")
 	if chance >= 1 or (rng is RandomNumberGenerator and rng.randf() < chance):
-		if enemy is Enemy2D: enemy.stun_owned(float(effect.get("s",.5)),receipt,enemy._combat_request(receipt))
+		if enemy is Enemy2D: enemy.stun_owned(float(effect.get("s",.5)),receipt,request)
 		else: enemy.stun(float(effect.get("s",.5)))
 
 static func _pulse(player: Node2D, radius: float) -> void:

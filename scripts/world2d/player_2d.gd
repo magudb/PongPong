@@ -1180,12 +1180,12 @@ func event_end() -> void:
 	_event_active = false
 	end_talk()
 
-func event_face(direction: Vector2) -> void:
+func event_face(direction: Vector2, current: Callable = Callable()) -> void:
 	if direction.length_squared() > 0.01:
 		combat_aim = Iso.to_ground(direction).normalized()
 		facing8 = Iso.dir8_of(direction)
 		facing_vec = Iso.dir8_vector(facing8)
-		visual.set_facing_direction(facing_vec)
+		visual.set_facing_direction(facing_vec, current)
 
 func event_stand(at: Vector2, direction := "S") -> void:
 	global_position = at

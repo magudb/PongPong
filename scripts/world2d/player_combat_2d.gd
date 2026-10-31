@@ -51,15 +51,55 @@ func _attack_root() -> Dictionary:
 	var attached := EventBus.interaction_attach(origin, player, player)
 	var receipt := EventBus.combat_receipt(origin)
 	if not EventBus.combat_current(receipt) or not EventBus.interaction_body_current(attached, player, player): return {}
-	var root := {"receipt":receipt, "attached":attached, "body":weakref(player), "area":weakref(player.area), "visual":weakref(player.visual), "camera":weakref(player.camera)}
+	var root := {"receipt":receipt, "attached":attached, "body":weakref(player), "area":weakref(player.area), "visual":weakref(player.visual), "camera":weakref(player.camera), "controls":player.controls, "input_revision":player.controls.revision, "local":player.is_local}
 	root.make_read_only()
 	return root
 
+func _attachment_current(root: Dictionary) -> bool:
+	if root.is_empty() or not is_instance_valid(player) or not is_inside_tree() or is_queued_for_deletion() or get_parent() != player or player.get("combat") != self: return false
+	if root.body.get_ref() != player: return false
+	var world := PlayerRegistry.world()
+	var physical := OperationOrigin.physical_snapshot(root.attached.recipient.player_id, player, player, world, world.get("session") if world != null else null, PlayerRegistry.registered_id(player), PlayerRegistry.by_id(root.attached.recipient.player_id))
+	if not OperationOrigin.is_physical_current(root.attached.physical, physical): return false
+	if root.area.get_ref() != player.area or root.controls != player.controls or root.input_revision != player.controls.revision or root.local != player.is_local: return false
+	for key in ["visual", "camera"]:
+		var node: Variant = root[key].get_ref()
+		if not is_instance_valid(node) or not node.is_inside_tree() or node.is_queued_for_deletion() or node.get_parent() != player or player.get(key) != node: return false
+	return true
+
 func _root_current(root: Dictionary) -> bool:
-	return not root.is_empty() and is_instance_valid(player) and root.body.get_ref() == player and EventBus.combat_current(root.receipt) and EventBus.interaction_body_current(root.attached, player, player) and root.area.get_ref() == player.area and root.visual.get_ref() == player.visual and root.camera.get_ref() == player.camera
+	return _attachment_current(root) and EventBus.combat_current(root.receipt) and EventBus.interaction_body_current(root.attached, player, player)
+
+## Model replacement revokes hits, not the right to retire this exact old
+## physical action. Never release a newer buffer, modal, dodge or shared art.
+func _retire_obsolete_swing() -> int:
+	var action := _swing_action
+	if action.is_empty() or action.serial != _action_serial or not _attachment_current(action.root) or _root_current(action.root): return _action_serial
+	if player.state != S.SWING: return _action_serial
+	player.state = S.FREE
+	_remaining = 0.0
+	hit_stop = 0
+	_shake = 0.0
+	extra_altitude = 0.0
+	_hit = {}
+	if not _root_current(_buffer_origin):
+		clear_buffer()
+		attack_held = false
+	_invalidate_swing()
+	var retired := _action_serial
+	player.visual.set_spin(0.0)
+	if retired == _action_serial and _attachment_current(action.root): player.camera.position = Vector2.ZERO
+	return retired
 
 func _attack_current(action: Dictionary) -> bool:
 	return not action.is_empty() and action.serial == _action_serial and _root_current(action.root)
+
+func _frozen_plan(value: Dictionary) -> Dictionary:
+	var plan := value.duplicate(true)
+	for key in plan:
+		if plan[key] is Dictionary: plan[key] = _frozen_plan(plan[key])
+	plan.make_read_only()
+	return plan
 
 func _invalidate_swing() -> void:
 	_action_serial += 1
@@ -124,7 +164,8 @@ func tick(delta: float) -> void:
 func _tick_owned(delta: float) -> void:
 	var root := _attack_root()
 	if not _root_current(root): return
-	var serial := _action_serial
+	var serial := _retire_obsolete_swing()
+	if not _root_current(root) or serial != _action_serial: return
 	stopped_this_tick = hit_stop > 0
 	if stopped_this_tick:
 		hit_stop -= 1
@@ -141,7 +182,7 @@ func _tick_owned(delta: float) -> void:
 		_buffer_time -= delta
 		if _buffer_time <= 0.0:
 			_buffer = &""
-	if attack_held and bool(_assist("assist_auto_swing", false)) and player.world_input_allowed():
+	if attack_held and _root_current(_buffer_origin) and bool(_assist("assist_auto_swing", false)) and player.world_input_allowed():
 		var dispatch := {"serial":serial}
 		_swing_owned(_buffer_item, null, root, dispatch)
 		serial = int(dispatch.serial)
@@ -284,10 +325,10 @@ func _swing_owned(item: StringName, aim: Variant, root: Dictionary, dispatch: Di
 	var radius := float(weapon.swing_radius)
 	var half := deg_to_rad(clampf(float(weapon.swing_half_angle_deg) * (1.0 + float(Svc.static_call(RULES,&"arc_pct",[],0))/100.0), 1.0, 175.0))
 	if not _root_current(root) or int(dispatch.serial) != _action_serial: return false
-	var action := {"serial":_action_serial, "root":root, "weapon":weapon.duplicate(true), "direction":direction, "duration":duration, "radius":radius, "half":half, "hit":{}}
+	var action := {"serial":_action_serial, "root":root, "weapon":_frozen_plan(weapon), "direction":direction, "duration":duration, "radius":radius, "half":half, "hit":{}}
 	action.make_read_only()
 	_swing_action = action
-	player.event_face(Iso.to_screen(direction))
+	player.event_face(Iso.to_screen(direction), _attack_current.bind(action))
 	if not _attack_current(action): return false
 	_weapon = weapon.duplicate(true)
 	_swing_direction = direction
@@ -310,7 +351,7 @@ func _swing_owned(item: StringName, aim: Variant, root: Dictionary, dispatch: Di
 	slash.tint = Rarity.ui(weapon.get("rarity", "normal")).ring
 	player.add_child(slash)
 	if not current.call(): return true
-	player.visual.play_action(&"interact", player.visual.clip_duration(&"interact", 1.0) / duration)
+	player.visual.play_action(&"interact", player.visual.clip_duration(&"interact", 1.0) / duration, current)
 	if not current.call(): return true
 	WeaponFx.on_swing_owned(player, action.weapon, root.receipt, current, direction)
 	if not current.call(): return true
@@ -335,15 +376,21 @@ func _apply_hits() -> void:
 		if target is Node2D:
 			var offset := Iso.to_ground(target.global_position-player.global_position)
 			if offset.length() > action.radius or absf(angle_difference(action.direction.angle(),offset.angle())) > action.half: continue
+		# Match the independent hit adapter's DEAD refusal BEFORE allocating a
+		# contact, or a later swing could cancel the corpse's only cleanup.
+		if target is Enemy2D and target.state == Enemy2D.S.DEAD: continue
 		action.hit[target.get_instance_id()] = true
 		var receipt := EventBus.combat_target_receipt(action.root.receipt, target, current)
-		if target.has_method("take_hit_owned"): target.call("take_hit_owned", int(action.weapon.get("damage", 5)), player.global_position, player, receipt)
+		var contact: Dictionary = target._combat_request(receipt) if target is Enemy2D else {}
+		if target is Enemy2D: target.take_contact_hit_owned(int(action.weapon.get("damage", 5)), player.global_position, player, receipt, contact)
+		elif target.has_method("take_hit_owned"): target.call("take_hit_owned", int(action.weapon.get("damage", 5)), player.global_position, player, receipt)
 		else: target.call("take_hit", int(action.weapon.get("damage", 5)), player.global_position, player)
 		if not current.call(): return
+		if target is Enemy2D and not Enemy2D._combat_request_current(receipt,contact): continue
 		hit_stop = int(_feel("hit_stop_frames", 3))
 		if is_instance_valid(target) and target.has_method("hit_stop"): target.call("hit_stop", hit_stop)
 		if not current.call(): return
-		WeaponFx.on_hit_owned(player, target, action.weapon, receipt, current)
+		WeaponFx.on_hit_owned(player, target, action.weapon, receipt, contact, current)
 		if not current.call(): return
 		_shake_camera(2.0)
 

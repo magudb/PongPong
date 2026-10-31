@@ -20,7 +20,7 @@ func setup(p_dir: Vector2, p_radius: float, p_half: float, p_duration: float) ->
 var origin_current: Callable
 
 func _ready() -> void:
-	if origin_current.is_valid() and not origin_current.call():
+	if is_queued_for_deletion() or (origin_current.is_valid() and not origin_current.call()):
 		queue_free()
 		return
 	var tw: Tween = create_tween()
