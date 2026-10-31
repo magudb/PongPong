@@ -39,9 +39,11 @@ func _stats(_player_id: StringName, stats: Dictionary) -> void:
 	if float(stats.get("stamina", 100)) <= float(stats.get("max_stamina", 100)) * 0.2:
 		_trigger("energy_low")
 
-func _event(id: StringName, payload: Dictionary) -> void:
+func _event(id: StringName, _payload: Dictionary) -> void:
 	if id == &"tutorial_hint_request":
-		request(str(payload.get("id", "")))
+		# TutorialRunner delivers this effect with its retained origin AFTER all
+		# public observers return. Raw notifications cannot authorize a request.
+		return
 	elif id == &"crop_ready":
 		_trigger("crop_ready")
 	else:

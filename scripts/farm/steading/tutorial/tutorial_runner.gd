@@ -87,7 +87,9 @@ func _play() -> bool:
 	if not _good():
 		active = false
 		return true
-	GameManager.set_clock(int(hour), int(round(fmod(hour, 1) * 60)))
+	# This synchronous clock notification reaches the attached routine
+	# readers too; they must not initialize an ambient guest's quest log.
+	PlayerRegistry.for_player(origin.recipient.player_id, func(): GameManager.set_clock(int(hour), int(round(fmod(hour, 1) * 60))))
 	if not _good():
 		active = false
 		return true
@@ -104,7 +106,7 @@ func _play() -> bool:
 		if skipped or not _good():
 			break
 		trace.append(str(step.kind))
-		EventBus.game_event.emit(&"tutorial_step", {"kind": str(step.kind), "id": str(step.get("id", step.get("npc", step.get("quest", ""))))})
+		_publish(&"tutorial_step", {"kind": str(step.kind), "id": str(step.get("id", step.get("npc", step.get("quest", ""))))})
 		if not _good() or skipped: break
 		match str(step.kind):
 			"npc_enter":
@@ -127,7 +129,7 @@ func _play() -> bool:
 			"quest_accept":
 				QuestManager.accept_quest_owned(StringName(str(step.quest)), origin)
 			"hint":
-				EventBus.game_event.emit(&"tutorial_hint_request", {"id": str(step.id)})
+				_hint(str(step.id))
 			"wait":
 				var left := maxf(0, float(step.get("seconds", 0)))
 				while _good() and not skipped and left > 0:
@@ -144,10 +146,10 @@ func _play() -> bool:
 			for step in steps:
 				if not _good(): break
 				if str(step.kind) == "hint":
-					EventBus.game_event.emit(&"tutorial_hint_request", {"id": str(step.id)})
+					_hint(str(step.id))
 		if EventBus.interaction_current(origin): GameManager.set_flag(&"intro_letter_seen", true)
 		if EventBus.interaction_current(origin): GameManager.set_flag(&"first_morning_done", true)
-		if EventBus.interaction_current(origin): EventBus.game_event.emit(&"tutorial_finished", {"skipped": skipped})
+		if EventBus.interaction_current(origin): _publish(&"tutorial_finished", {"skipped": skipped})
 	for id in actors.keys():
 		_retire_actor(str(id))
 	actors.clear()
@@ -156,6 +158,22 @@ func _play() -> bool:
 	if is_instance_valid(gate):
 		gate.queue_free()
 	return true
+
+func _publish(id: StringName, payload: Dictionary) -> void:
+	# The attached hint listener also queries Quest for step/finished events.
+	# Keep all of this producer's synchronous readers on its retained host;
+	# never hold that recipient scope over an awaited tutorial step.
+	PlayerRegistry.for_player(origin.recipient.player_id, func(): EventBus.game_event.emit(id, payload))
+
+func _hint(id: String) -> void:
+	if not _good(): return
+	var engine: Variant = world.get_node_or_null("FarmTutorialHints")
+	_publish(&"tutorial_hint_request", {"id": id})
+	# Public-first: a callback may replace the model or the attached consumer.
+	# Do not recapture authority or enqueue this old request on a successor.
+	if not _good(): return
+	if is_instance_valid(engine) and engine is TutorialHints and engine.world == world and engine.is_inside_tree() and not engine.is_queued_for_deletion() and world.get_node_or_null("FarmTutorialHints") == engine:
+		PlayerRegistry.for_player(origin.recipient.player_id, func(): engine.request(id))
 
 func _enter(id: String, post: String) -> void:
 	if not _good() or not _body_current() or skipped: return
