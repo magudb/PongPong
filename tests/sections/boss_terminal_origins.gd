@@ -5,11 +5,15 @@ const Compare := preload("res://tests/sections/ghostfam_origins.gd")
 
 func run(t) -> void:
 	var selected := OS.get_environment("H1_CASE")
+	if selected == "roots":
+		await _roots(t)
+		return
 	for seam in ([selected] if selected != "" else ["event", "flag", "atomic", "enemy", "hearts", "health", "stats"]):
 		for mode in ["normal", "direct"]: await _terminal(t, seam, mode)
 	if selected != "": return
 	for mode in ["failed", "incomplete", "same"]: await _rollback(t, mode)
 	for departed in [false, true]: await _recipient(t, departed)
+	await _roots(t)
 
 func _start(t) -> DungeonBoss2D:
 	if not await t.start_world(): return null
@@ -41,11 +45,16 @@ func _terminal(t, seam: String, mode: String) -> void:
 	var qm: Node = t.autoload("QuestManager")
 	var floors := DungeonFloors.inst()
 	var director: Node = t.world().get_node("MotherStory")
+	# The strict full-payload oracle retains the serializer's second-resolution
+	# timestamp as well as every gameplay field. Start in a real clock window;
+	# never rewrite the timestamp or remove it from the comparator.
+	var clock_window: bool = await t.until(func(): return fmod(Time.get_unix_time_from_system(), 1.0) < .2, 2.0)
 	var origin := EventBus.interaction_origin(&"p0")
 	var observed: Array = []
 	var notices: Array = []
 	var accepted: Array = []
 	var tag := seam + "_" + mode
+	var files := _files(saves)
 	var stale_stats: Array = []
 	var replace := func():
 		if mode == "normal" or not observed.is_empty(): return
@@ -56,6 +65,7 @@ func _terminal(t, seam: String, mode: String) -> void:
 		observed.append(saves.gather_payload())
 		observed.append(qm.is_active(MotherStory.quest_id("s03")))
 		observed.append(t.player()._last_stats.duplicate(true))
+		_journal(tag, "callback", {"payload":observed[3], "body_cache":observed[5], "files":_files(saves), "origin_current":EventBus.interaction_current(origin)})
 	var early := func(name, _payload):
 		if (name == &"dungeon_boss_defeated" and seam == "event") or (name == &"skovhjerte_grown" and seam == "hearts"): replace.call()
 	var flag := func(key, _value):
@@ -82,6 +92,7 @@ func _terminal(t, seam: String, mode: String) -> void:
 	EventBus.game_event.connect(director._event)
 	EventBus.game_event.connect(later)
 	EventBus.quest_accepted.connect(accept)
+	t.check(tag + "_real_clock_snapshot_window", clock_window)
 	t.check(tag + "_enabled_unprojected_outside_sync", MotherStory.enabled() and not qm.is_active(MotherStory.quest_id("s03")) and EventBus.interaction_current(origin))
 	var cell := boss.cell
 	boss.take_hit(9999, t.player().global_position, t.player())
@@ -97,19 +108,74 @@ func _terminal(t, seam: String, mode: String) -> void:
 		t.check(tag + "_healthy_real_apply_immediate_unprojected", observed.size() == 6 and observed[1] == true and observed[2] == true and observed[4] == false and not EventBus.interaction_current(origin))
 		t.check(tag + "_inside_body_cache_stats_suffix_stopped", t.player()._last_stats == observed[5] and stale_stats.is_empty())
 		var after: Dictionary = saves.gather_payload()
+		_journal(tag, "unwind", {"payload":after, "body_cache":t.player()._last_stats, "files":_files(saves)})
 		t.check(tag + "_winner_exact_whole_unwind", Compare.new()._same_payload(observed[3], after), str(Compare.new()._changed(observed[3], after)))
 		t.check(tag + "_old_director_cannot_project_winner", not qm.is_active(MotherStory.quest_id("s03")) and accepted.is_empty())
 		await t.frames(3)
 		var queued: Dictionary = saves.gather_payload()
+		_journal(tag, "three_frames", {"payload":queued, "body_cache":t.player()._last_stats, "files":_files(saves)})
 		t.check(tag + "_winner_exact_three_frames", Compare.new()._same_payload(observed[3], queued), str(Compare.new()._changed(observed[3], queued)))
 		MotherStory.sync()
 	else:
 		t.check(tag + "_earned_real_terminal_once", floors.is_done_cell(t.world().area, cell) and GameManager.flag_int(&"dungeon_boss_snurresvamp") > 0 and DungeonRun.hearts_bonus() == 2)
+	t.check(tag + "_disk_inventory_exact", _files(saves) == files)
 	t.check(tag + "_genuine_current_mother_root", qm.is_active(MotherStory.quest_id("s03")) and accepted == [&"p0"])
 	MotherStory.sync()
 	t.check(tag + "_current_root_idempotent", accepted == [&"p0"])
 	EventBus.quest_accepted.disconnect(accept)
 	await t.go_menu()
+
+func _roots(t) -> void:
+	var boss := await _start(t)
+	if boss == null: return
+	GameManager.set_flag(&"forest_mother_version", 0)
+	QuestManager.accept_quest(&"bossernes_vej")
+	GameManager.set_flag(&"forest_mother_version", 1)
+	var hp := boss.hp
+	var watch: Node = t.world().get_node("RunWatch")
+	var raw: Array = []
+	var notice := func(uid, kind, loot): raw.append([uid, kind, loot])
+	EventBus.enemy_defeated.connect(notice)
+	EventBus.enemy_defeated.emit(&"synthetic_notify", &"snurresvamp", [])
+	EventBus.game_event.emit(&"skovhjerte_grown", {"bonus":88, "hearts_max":98, "floor":4, "level":4})
+	EventBus.game_event.emit(&"dungeon_boss_defeated", {"kind":"snurresvamp", "floor":4})
+	t.check("raw_combat_names_notify_only", raw.size() == 1 and watch.kills == 0 and DungeonRun.hearts_bonus() == 0 and not GameManager.get_flag(&"dg_boss_clear", false) and not QuestManager.is_active(MotherStory.quest_id("s03")) and t.player().max_half_hearts == 10 and QuestManager.get_objective_progress(&"bossernes_vej", &"snurresvamp").get("current", -1) == 0)
+	var stranger := Node2D.new()
+	t.world().add_child(stranger)
+	boss.take_hit(9999, t.player().global_position, stranger)
+	t.check("unregistered_attacker_no_ambient_fallback", boss.hp == hp and raw.size() == 1 and watch.kills == 0)
+	stranger.queue_free()
+	var receipt := EventBus.combat_receipt(EventBus.combat_origin(t.player()), boss)
+	boss.take_hit_owned(9999, t.player().global_position, t.player(), {})
+	t.check("empty_inherited_receipt_refuses", boss.hp == hp and watch.kills == 0)
+	var saves: Node = t.autoload("SaveManager")
+	t.check("stale_receipt_real_same_value_apply", saves._apply_payload(saves.gather_payload()).ok and not EventBus.combat_current(receipt))
+	boss.take_hit_owned(9999, t.player().global_position, t.player(), receipt)
+	t.check("stale_inherited_receipt_no_recapture", boss.hp == hp and watch.kills == 0 and raw.size() == 1)
+	var rows: Dictionary = PlayerRegistry._states.duplicate()
+	PlayerRegistry._states.erase(&"p0")
+	boss.take_hit(9999, t.player().global_position, t.player())
+	t.check("missing_anchor_noncreating_refusal", not PlayerRegistry._states.has(&"p0") and boss.hp == hp)
+	PlayerRegistry._states = rows
+	# Ambient p1 and an oil-on-kill weapon cannot fabricate an environmental recipient.
+	var other := PlayerRegistry.state(&"p1")
+	var other_before := other.to_dict().duplicate(true)
+	t.player().combat._weapon = {"id":"test_oil", "effect":{"id":"oil_on_kill", "s":4}}
+	t.player().oil = 10
+	t.player().half_hearts = 2
+	PlayerRegistry.for_player(&"p1", func(): boss.take_hit(9999, t.player().global_position))
+	t.check("environmental_null_root_p0_model_only", boss.state == Enemy2D.S.DEAD and raw.size() == 2 and watch.kills == 1 and DungeonRun.hearts_bonus() == 2 and t.player().oil == 10 and t.player().half_hearts == 2 and other.to_dict() == other_before, str({"dead":boss.state == Enemy2D.S.DEAD, "raw":raw.size(), "kills":watch.kills, "bonus":DungeonRun.hearts_bonus(), "oil":t.player().oil, "hearts":t.player().half_hearts, "other_diff":Compare.new()._changed(other_before, other.to_dict())}))
+	EventBus.enemy_defeated.disconnect(notice)
+	await t.go_menu()
+
+func _journal(tag: String, endpoint: String, state: Dictionary) -> void:
+	var path := OS.get_environment("H1_STATE_JOURNAL")
+	if path == "": return
+	var file := FileAccess.open(path, FileAccess.READ_WRITE if FileAccess.file_exists(path) else FileAccess.WRITE_READ)
+	file.seek_end()
+	file.store_line(JSON.stringify({"tag":tag, "endpoint":endpoint, "state":state}, "", true, true))
+	file.flush()
+	file.close()
 
 func _files(saves: Node) -> Dictionary:
 	var out := {}

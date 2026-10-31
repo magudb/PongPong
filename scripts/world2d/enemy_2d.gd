@@ -323,6 +323,12 @@ func take_hit(damage: int, from: Vector2, attacker: Node = null) -> void:
 
 func take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dictionary) -> void:
 	if state == S.DEAD or damage <= 0 or not EventBus.combat_current(receipt): return
+	# Scope synchronous legacy presentation/query hooks to the authentic owner,
+	# including environmental p0 hits inside a conflicting caller's scope.
+	PlayerRegistry.for_player(receipt.origin.recipient.player_id, func(): _take_hit_owned(damage, from, attacker, receipt))
+
+func _take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dictionary) -> void:
+	if state == S.DEAD or damage <= 0 or not EventBus.combat_current(receipt): return
 	set_awake(true)
 	reveal()
 	hp = maxi(0,hp-damage)
@@ -340,7 +346,9 @@ func take_hit_owned(damage: int, from: Vector2, attacker: Variant, receipt: Dict
 		if is_instance_valid(attacker) and PlayerRegistry.registered_id(attacker) == receipt.origin.recipient.player_id: WeaponFx.on_kill(attacker,self)
 		if EventBus.combat_current(receipt): _die_owned(receipt)
 func _on_health_changed() -> void:
-	_on_health_changed_owned(EventBus.combat_receipt(EventBus.combat_origin(), self))
+	var receipt := EventBus.combat_receipt(EventBus.combat_origin(), self)
+	if EventBus.combat_current(receipt):
+		PlayerRegistry.for_player(&"p0", func(): _on_health_changed_owned(receipt))
 func _on_health_changed_owned(_receipt: Dictionary) -> void:
 	pass
 func hit_damage() -> int:
@@ -365,7 +373,9 @@ func cloud(at: Vector2) -> void:
 	area.ground_fx.add_child(node)
 	node.global_position = at
 func _die() -> void:
-	_die_owned(EventBus.combat_receipt(EventBus.combat_origin(), self))
+	var receipt := EventBus.combat_receipt(EventBus.combat_origin(), self)
+	if EventBus.combat_current(receipt):
+		PlayerRegistry.for_player(&"p0", func(): _die_owned(receipt))
 
 func _die_owned(receipt: Dictionary) -> void:
 	if state == S.DEAD or not EventBus.combat_current(receipt): return

@@ -92,7 +92,9 @@ func stun(seconds: float) -> void:
 	remaining = maxf(remaining,dazed)
 	cooldown = maxf(cooldown,wait)
 func _on_health_changed() -> void:
-	_on_health_changed_owned(EventBus.combat_receipt(EventBus.combat_origin(), self))
+	var receipt := EventBus.combat_receipt(EventBus.combat_origin(), self)
+	if EventBus.combat_current(receipt):
+		PlayerRegistry.for_player(&"p0", func(): _on_health_changed_owned(receipt))
 func _on_health_changed_owned(receipt: Dictionary) -> void:
 	if not EventBus.combat_current(receipt): return
 	EventBus.boss_bar_changed.emit(str(cfg.name_key),float(hp)/max_hp,awake)
@@ -134,7 +136,9 @@ func reset_fight() -> void:
 	arena_ring.set_process(true)
 	EventBus.boss_bar_changed.emit(str(cfg.name_key),1,false)
 func _die() -> void:
-	_die_owned(EventBus.combat_receipt(EventBus.combat_origin(), self))
+	var receipt := EventBus.combat_receipt(EventBus.combat_origin(), self)
+	if EventBus.combat_current(receipt):
+		PlayerRegistry.for_player(&"p0", func(): _die_owned(receipt))
 
 func _die_owned(receipt: Dictionary) -> void:
 	if state == S.DEAD or not EventBus.combat_current(receipt): return
