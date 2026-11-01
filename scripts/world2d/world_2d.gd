@@ -55,6 +55,9 @@ var roster: PlayerRoster
 ## Set before insertion. Guests deliberately do NOT boot a playable world in MP4.
 var guest_bootstrap := false
 var session: MultiplayerSession
+## Movement replication (MP5): a World child alongside the session. Offline
+## worlds keep it inactive (no body is ever claimed from its own physics).
+var sync: WorldSync
 var farm: Node
 var greenhouse_farm: FarmGrid
 var area: IsoArea
@@ -186,6 +189,9 @@ func _ready() -> void:
 	session = MultiplayerSession.new()
 	session.name = "MultiplayerSession"
 	add_child(session)
+	sync = WorldSync.new()
+	sync.name = "WorldSync"
+	add_child(sync)
 	if guest_bootstrap:
 		roster = PlayerRoster.new()
 		add_child(roster)

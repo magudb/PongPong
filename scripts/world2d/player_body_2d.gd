@@ -27,6 +27,9 @@ var is_local: bool = true:
 			camera.enabled = value and controls.local_active()
 ## Admission replicas have camera/input identity, but no gameplay boot.
 var admission_only := false
+## WorldSync (MP5) is this body's sole movement writer: the body's own physics
+## pass stays inert while it is driven, so exactly one transform writer exists.
+var net_sync_driven := false
 var player_slot: int = 0
 var controls := PlayerInput.new()
 var facing8: int = 0
@@ -253,15 +256,39 @@ func _set_zoom(z: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	# WorldSync (MP5) is the sole movement writer of a synced body: exactly one
+	# transform writer per body, never two simulations racing over it.
+	if net_sync_driven:
+		return
 	# Passive remote samples never authorize the fallback/base simulation either.
 	if area == null or not controls.local_active():
 		return
-	var in_dir := Vector2.ZERO
-	if state == S.FREE:
-		in_dir = controls.move_vector()
+	var frame := controls.sample_frame()
 	if not GameData.gm().is_modal_open():
 		_zoom_stick(delta)
-	var speed: float = _run if controls.is_action_pressed(&"run") else _walk
+	predict_movement_tick(delta, frame)
+	var in_dir := Vector2.ZERO
+	if state == S.FREE:
+		in_dir = Vector2(frame.move[0], frame.move[1])
+	if visual != null:
+		if forced_clip != &"":
+			visual.play_loop(forced_clip)
+		else:
+			visual.update_motion(velocity, bool(frame.actions.get("run", false)), false, false, in_dir)
+	_update_prompt(delta)
+
+
+# ------------------------------------------------------------------ movement-only simulation (MP5)
+
+## The movement-only physics of the shared body: ground accel/decel ->
+## Iso.to_screen -> move_and_slide -> Iso.to_ground -> facing. `frame` is a
+## closed PlayerInput sample ({sequence, move, aim, actions}); movement reads
+## only its move pair and run flag.
+func _movement_step(delta: float, frame: Dictionary) -> void:
+	var in_dir := Vector2.ZERO
+	if state == S.FREE:
+		in_dir = Vector2(frame.move[0], frame.move[1])
+	var speed: float = _run if bool(frame.actions.get("run", false)) else _walk
 	_gvel = _gvel.move_toward(in_dir * speed, (_accel if in_dir != Vector2.ZERO else _decel) * delta)
 	velocity = Iso.to_screen(_gvel)
 	move_and_slide()
@@ -269,12 +296,17 @@ func _physics_process(delta: float) -> void:
 	if in_dir != Vector2.ZERO:
 		facing8 = Iso.dir8_of(in_dir)
 		facing_vec = Iso.dir8_vector(facing8)
-	if visual != null:
-		if forced_clip != &"":
-			visual.play_loop(forced_clip)
-		else:
-			visual.update_motion(velocity, controls.is_action_pressed(&"run"), false, false, in_dir)
-	_update_prompt(delta)
+
+## Owner-side prediction step of the shared movement simulation (MP5): the
+## locally sampled frame advances the body immediately.
+func predict_movement_tick(delta: float, frame: Dictionary) -> void:
+	_movement_step(delta, frame)
+
+## Host-authority step of the same movement simulation (MP5): advances a remote
+## body from its validated input frame on the server. Identical physics to
+## predict_movement_tick, so host and guest move the same amount per frame.
+func host_movement_tick(delta: float, frame: Dictionary) -> void:
+	_movement_step(delta, frame)
 
 
 # ------------------------------------------------------------------ the Player contract

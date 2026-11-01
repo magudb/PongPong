@@ -138,6 +138,7 @@ func _peer_disconnected(id: int) -> void:
 	# Revoke membership before any public observer can reenter departure.
 	active.erase(id)
 	if world == null: return
+	if world.sync != null: world.sync.peer_left(id)
 	world.roster.capture_live_bodies(world)
 	var body := world.player_by_peer_id(id)
 	if body != null: world._unregister_player(body)
@@ -316,6 +317,7 @@ func _ready_ack(host_generation: Variant, ticket: Variant) -> void:
 	_committed.rpc_id(sender, epoch, int(ticket), _descriptor())
 	for id in active.keys():
 		if id != sender: _roster_update.rpc_id(id, epoch, _descriptor())
+	if _alive(epoch) and world.sync != null: world.sync.peer_committed(sender, body)
 	_publish_body(body, epoch)
 
 func _install_body(row: PlayerState, at: Vector2) -> Node2D:
@@ -367,7 +369,10 @@ func _committed(host_generation: int, ticket: int, bytes: PackedByteArray) -> vo
 	var lifetime: WeakRef = weakref(self)
 	_apply_view(data)
 	if lifetime.get_ref() == null: return
-	if state == &"connected": EventBus.net_session_changed.emit(state)
+	if state == &"connected":
+		var world := get_parent() as WorldRoot2D
+		if world != null and world.sync != null: world.sync.start_sync()
+		EventBus.net_session_changed.emit(state)
 
 @rpc("authority", "call_remote", "reliable", 0)
 func _roster_update(host_generation: int, bytes: PackedByteArray) -> void:
@@ -462,6 +467,7 @@ func close(reason: StringName = &"left") -> void:
 	active.clear()
 	_staged.clear()
 	var world := get_parent() as WorldRoot2D
+	if world != null and world.sync != null: world.sync.stop_sync()
 	if world != null and is_host(): world.roster.capture_live_bodies(world)
 	if api != null:
 		for signal_name in [&"peer_connected", &"peer_disconnected", &"connected_to_server", &"connection_failed", &"server_disconnected"]:

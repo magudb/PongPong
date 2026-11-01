@@ -288,38 +288,56 @@ func hotbar_slot(event: InputEvent) -> int:
 	var second := float(_held.get(&"ui_page_down", {}).get("button:%d" % JOY_BUTTON_RIGHT_SHOULDER, 0.0)) > 0.5
 	return index + (4 if second else 0) if index >= 0 else -1
 
-## Latest-only, copied, short-lived OFFLINE sample. Deliberately no RPC/peer or
-## world-write entry here. MP6 must validate sender, range, inventory, cooldown,
-## replay and world authority before ever applying a consequential intent.
-func submit_remote_frame(frame: Variant) -> bool:
-	if local_active() or not _attached or _owner() == null or bool(_owner().get("is_local")) or PlayerRegistry.registered_id(_owner()) == &"":
-		return false
+## The local input as one closed frame sample (MP5): exactly the wire schema of
+## submit_remote_frame, so one validator covers both the movement ticks and the
+## network path. Sequence is the sender's counter; aim stays the movement slice's
+## neutral pair (aim replication is a later MP5 task).
+func sample_frame(sequence: int = 0) -> Dictionary:
+	return {"sequence": sequence, "move": [move_vector().x, move_vector().y], "aim": [0.0, 0.0], "actions": {"run": is_action_pressed(&"run")}}
+
+## The closed frame schema, strictly typed: exactly four keys, a whole bounded
+## sequence, finite bounded move/aim pairs and bool actions from the allowlist.
+## Shared by submit_remote_frame and WorldSync's wire validation (MP5).
+static func valid_frame(frame: Variant) -> bool:
 	if typeof(frame) != TYPE_DICTIONARY or frame.size() != 4:
 		return false
 	for key in frame:
 		if typeof(key) != TYPE_STRING or key not in ["sequence", "move", "aim", "actions"]:
 			return false
 	var sequence: Variant = frame.get("sequence")
-	if typeof(sequence) != TYPE_INT or sequence < 0 or sequence > 2147483647 or sequence <= _remote_sequence:
+	if typeof(sequence) != TYPE_INT or sequence < 0 or sequence > 2147483647:
 		return false
 	if not _valid_pair(frame.get("move"), 1.0) or not _valid_pair(frame.get("aim"), 10000000.0):
 		return false
 	var actions: Variant = frame.get("actions")
 	if typeof(actions) != TYPE_DICTIONARY or actions.size() > REMOTE_ACTIONS.size():
 		return false
-	var copied := {}
 	for action in actions:
 		if typeof(action) != TYPE_STRING or action not in REMOTE_ACTIONS or typeof(actions[action]) != TYPE_BOOL:
 			return false
-		copied[StringName(action)] = actions[action]
-	_remote_sequence = sequence
+	return true
+
+## Latest-only, copied, short-lived OFFLINE sample. Deliberately no RPC/peer or
+## world-write entry here. MP6 must validate sender, range, inventory, cooldown,
+## replay and world authority before ever applying a consequential intent.
+func submit_remote_frame(frame: Variant) -> bool:
+	if local_active() or not _attached or _owner() == null or bool(_owner().get("is_local")) or PlayerRegistry.registered_id(_owner()) == &"":
+		return false
+	if not valid_frame(frame):
+		return false
+	if int(frame.get("sequence")) <= _remote_sequence:
+		return false
+	var copied := {}
+	for action in frame.actions:
+		copied[StringName(action)] = frame.actions[action]
+	_remote_sequence = int(frame.get("sequence"))
 	_remote_move = Vector2(frame.move[0], frame.move[1]).limit_length()
 	_remote_aim = Vector2(frame.aim[0], frame.aim[1])
 	_remote_actions = copied
 	_remote_until = Time.get_ticks_msec() + REMOTE_HOLD_MS
 	return true
 
-func _valid_pair(value: Variant, bound: float) -> bool:
+static func _valid_pair(value: Variant, bound: float) -> bool:
 	if typeof(value) != TYPE_ARRAY or value.size() != 2:
 		return false
 	for scalar in value:

@@ -131,6 +131,7 @@ func _run() -> void:
 		if str(options.phase) in ["save", "authority", "lifetime"]: _save_checks(world, host)
 		if str(options.phase) in ["authority", "lifetime"]: _authority_checks(world, host)
 		if str(options.phase) == "lifetime": await _lifetime_before(world, session, host)
+		if str(options.phase) == "movement": await _movement(world, host)
 		details["view"] = []
 		for body in world.all_players():
 			details.view.append({"id": str(body.player_id), "peer": body.peer_id, "local": body.is_local, "camera": body.camera != null and body.camera.enabled, "registered": registry.registered_id(body) == body.player_id})
@@ -196,6 +197,120 @@ func _run() -> void:
 	var audio := root.get_node_or_null("AudioManager")
 	if audio != null and audio.has_method("prepare_shutdown"): await audio.prepare_shutdown()
 	_finish()
+
+func _movement(world: Node, host: bool) -> void:
+	var dir := str(options.directory)
+	var sync: Node = world.get("sync")
+	var body: Node = world.player_by_id(&"p1") if host else world.local_player()
+	marker("movement-ready-" + str(options.role))
+	var roles := ["host"]
+	for i in range(1, int(options.count)): roles.append("guest%d" % i)
+	var ready := true
+	for role in roles:
+		var seen := await _wait_file(dir.path_join("movement-ready-" + role), 10.0)
+		ready = ready and seen
+	# Phase A: open walk over real ENet. The guest drives its body (local
+	# prediction + one input frame per physics tick to the host); the host drives
+	# its own body (replicated to the guest as authoritative state).
+	var move := &"move_left" if host else &"move_right"
+	var start: Vector2 = body.global_position if body != null else Vector2.ZERO
+	var p0_start: Vector2 = world.player.global_position if host and world.player != null else Vector2.ZERO
+	Input.action_press(move)
+	for tick in 60: await physics_frame
+	Input.action_release(move)
+	for tick in 20: await physics_frame
+	var host_file := dir.path_join("movement-a-host.json")
+	if host:
+		var waiting := true
+		for i in range(1, int(options.count)):
+			var seen := await _wait_file(dir.path_join("movement-a-guest%d-done" % i), 10.0)
+			waiting = waiting and seen
+		for tick in 30: await physics_frame
+		var p1_end: Vector2 = body.global_position if body != null else Vector2.ZERO
+		var p0_end: Vector2 = world.player.global_position if world.player != null else Vector2.ZERO
+		_write_json(host_file, {"p0": [p0_end.x, p0_end.y], "p0_start": [p0_start.x, p0_start.y], "p1": [p1_end.x, p1_end.y], "p1_start": [start.x, start.y]})
+		marker("movement-a-host-done")
+		var guest := _read_json(dir.path_join("movement-a-guest1.json"))
+		var frames: int = int(sync.get("frames_received")) if sync != null else 0
+		check("movement_frames_received", frames >= 30)
+		check("movement_guest_body_moved", (p1_end - start).length() >= 60.0 and p1_end.x > start.x + 20.0)
+		var matched: bool = guest.has("p1") and _near(p1_end, Vector2(float(guest.p1[0]), float(guest.p1[1])), 24.0) and (p1_end - start).length() >= 60.0
+		check("movement_prediction_matches_guest", matched)
+	else:
+		_write_json(dir.path_join("movement-a-%s.json" % str(options.role)), {"p1": [body.global_position.x, body.global_position.y]})
+		marker("movement-a-%s-done" % str(options.role))
+		var got := await _wait_file(dir.path_join("movement-a-host-done"), 10.0)
+		for tick in 45: await physics_frame
+		var host_state := _read_json(host_file) if got else {}
+		var frames: int = int(sync.get("frames_sent")) if sync != null else 0
+		check("movement_frames_sent", frames >= 30)
+		check("movement_local_predicted", (body.global_position - start).length() >= 60.0 and body.global_position.x > start.x + 20.0)
+		var replica: Node = world.player_by_id(&"p0")
+		var follows: bool = host_state.has("p0") and replica != null
+		if follows:
+			var host_p0 := Vector2(float(host_state.p0[0]), float(host_state.p0[1]))
+			var host_p0_start := Vector2(float(host_state.p0_start[0]), float(host_state.p0_start[1]))
+			follows = _near(replica.global_position, host_p0, 12.0) and (host_p0 - host_p0_start).length() >= 40.0
+		check("movement_replica_matches_host", follows)
+	# Phase B: a wall that exists ONLY in the host's physics world. The host's
+	# authoritative p1 must collide with it while the guest's (uncorrected)
+	# prediction walks on: movement authority ran real move_and_slide.
+	if host:
+		var wall_base: Vector2 = body.global_position if body != null else Vector2.ZERO
+		var wall_x: float = wall_base.x + 150.0
+		var wall := StaticBody2D.new()
+		wall.name = "MovementWall"
+		wall.collision_layer = 1
+		wall.collision_mask = 0
+		var shape := CollisionShape2D.new()
+		var rect := RectangleShape2D.new()
+		rect.size = Vector2(48, 800)
+		shape.shape = rect
+		wall.add_child(shape)
+		world.add_child(wall)
+		wall.global_position = Vector2(wall_x, wall_base.y)
+		marker("movement-wall-up")
+		var got := await _wait_file(dir.path_join("movement-b-guest1-done"), 15.0)
+		for tick in 30: await physics_frame
+		var p1_end: Vector2 = body.global_position if body != null else Vector2.ZERO
+		var guest := _read_json(dir.path_join("movement-b-guest1.json")) if got else {}
+		var face := wall_x - 24.0
+		var guest_advanced := 0.0
+		if guest.has("p1_pre") and guest.has("p1_post"):
+			guest_advanced = float(guest.p1_post[0]) - float(guest.p1_pre[0])
+		var advanced := p1_end.x - wall_base.x
+		check("movement_guest_body_collided", guest_advanced >= 180.0 and advanced >= 40.0 and p1_end.x <= face - 4.0 and face - p1_end.x <= 64.0)
+		wall.queue_free()
+	else:
+		await _wait_file(dir.path_join("movement-wall-up"), 10.0)
+		var pre: Vector2 = body.global_position if body != null else Vector2.ZERO
+		Input.action_press(&"move_right")
+		for tick in 90: await physics_frame
+		Input.action_release(&"move_right")
+		for tick in 20: await physics_frame
+		var post: Vector2 = body.global_position if body != null else Vector2.ZERO
+		_write_json(dir.path_join("movement-b-%s.json" % str(options.role)), {"p1_pre": [pre.x, pre.y], "p1_post": [post.x, post.y]})
+		marker("movement-b-%s-done" % str(options.role))
+
+func _near(a: Vector2, b: Vector2, tolerance: float) -> bool:
+	return a.distance_to(b) <= tolerance
+
+func _wait_file(path: String, timeout: float) -> bool:
+	var deadline := Time.get_ticks_msec() + int(timeout * 1000.0)
+	while not FileAccess.file_exists(path) and Time.get_ticks_msec() < deadline:
+		await process_frame
+	return FileAccess.file_exists(path)
+
+func _write_json(path: String, data: Dictionary) -> void:
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(JSON.stringify(data))
+	file.close()
+
+func _read_json(path: String) -> Dictionary:
+	if not FileAccess.file_exists(path):
+		return {}
+	var value: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	return value if value is Dictionary else {}
 
 func _area_lifetime_before(world: Node, session: Node, deadline: int) -> void:
 	while session.active.size() != 1 and Time.get_ticks_msec() < deadline: await process_frame

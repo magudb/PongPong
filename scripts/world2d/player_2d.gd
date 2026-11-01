@@ -88,6 +88,10 @@ var _place_cell := Vector2i(-999, -999)
 var _place_item := &""
 var _place_reason := ""
 var _place_stale: float = 0.0
+## Direction/running of the last movement tick: the pose update after the tick
+## reads exactly what the physics used, without re-deriving (and re-spending) it.
+var _moved_direction := Vector2.ZERO
+var _moved_running := false
 const RULES := "res://scripts/dungeon_run/dungeon_run.gd"
 const GEM := "res://scripts/combat/lantern_gem.gd"
 const PLACEMENT := "res://scripts/farm/placement_service.gd"
@@ -488,6 +492,9 @@ func set_zoom(value: float) -> void:
 		_set_zoom(value)
 
 func _physics_process(delta: float) -> void:
+	# WorldSync (MP5) is the sole movement writer of a synced body.
+	if net_sync_driven:
+		return
 	# Remote samples are passive until MP5/6 supplies host validation/replication.
 	if not controls.local_active():
 		_input_revoked()
@@ -543,43 +550,12 @@ func _tick_owned(delta: float) -> void:
 		state = S.FREE
 		_using_item = &""
 	_sync_equipment_display()
-	var direction := controls.move_vector()
-	var running := false
-	if _exhausted and stamina >= max_stamina * float(GameData.player_cfg("run_recover_ratio", 0.2)):
-		_exhausted = false
-	if state == S.FREE and not is_flying and not _landing and direction != Vector2.ZERO and controls.is_action_pressed(&"run") and not _exhausted:
-		running = true
-		_spend_stamina(float(GameData.player_cfg("run_cost_per_second", 15)) * float(GameData.perk("run_cost_mult", 1.0)) * delta)
-		if stamina <= 0:
-			_exhausted = true
-	if not running and not is_flying and _regen_delay == 0.0 and state == S.FREE:
-		stamina = minf(max_stamina, stamina + float(GameData.player_cfg("stamina_regen_per_second", 12)) * delta)
-	var speed := _run if running else _walk
-	if is_flying:
-		speed = _run * 0.9
-	elif state in [S.SWING, S.USING]:
-		speed *= 0.35
-	_slow_remaining = maxf(0,_slow_remaining-delta)
-	if _slow_remaining == 0: _slow_mult = 1
-	speed *= _slow_mult
-	if _landing:
-		direction = Iso.to_ground(_landing_at - global_position).normalized()
-		speed = minf(_walk, Iso.ground_dist(global_position, _landing_at) / maxf(delta, 0.001))
-	_gvel = _gvel.move_toward(direction * speed, (_accel if direction != Vector2.ZERO else _decel) * delta)
-	_gvel = combat.movement(_gvel, delta)
-	velocity = Iso.to_screen(_gvel)
-	move_and_slide()
-	_gvel = Iso.to_ground(velocity)
-	# A clicked use keeps the hero turned toward the clicked cell while it runs, even when walking the other way.
-	if direction != Vector2.ZERO and state != S.DODGE and not (state == S.USING and _click_facing):
-		combat_aim = direction.normalized()
-		facing8 = Iso.dir8_of(direction)
-		facing_vec = Iso.dir8_vector(facing8)
+	predict_movement_tick(delta, controls.sample_frame())
 	_update_vertical(delta)
 	if forced_clip != &"":
 		visual.play_loop(forced_clip)
 	else:
-		visual.update_motion(velocity, running, is_jumping or _landing, is_flying, direction)
+		visual.update_motion(velocity, _moved_running, is_jumping or _landing, is_flying, _moved_direction)
 	_update_target(delta)
 	if _click_buffer != null and (_click_buffer_time == 0.0 or hotbar.current() != _click_buffer_item or not _at_farm()):
 		_click_buffer = null
@@ -610,6 +586,59 @@ func _tick_owned(delta: float) -> void:
 	if _stats_timer >= 0.1:
 		_stats_timer = 0.0
 		_emit_stats_on_bus()
+
+# ------------------------------------------------------------------ movement-only simulation (MP5)
+
+## The movement-only simulation step of the gameplay body (the former inline
+## movement block of _tick_owned): direction/running/stamina -> speed modifiers
+## -> ground accel/decel -> Iso.to_screen -> move_and_slide -> Iso.to_ground ->
+## facing. Identical for prediction and host authority, so the host advances a
+## guest body exactly the way the guest predicts it from the same frame.
+func _movement_step(delta: float, frame: Dictionary) -> void:
+	var direction := Vector2(frame.move[0], frame.move[1])
+	var running := false
+	if _exhausted and stamina >= max_stamina * float(GameData.player_cfg("run_recover_ratio", 0.2)):
+		_exhausted = false
+	if state == S.FREE and not is_flying and not _landing and direction != Vector2.ZERO and bool(frame.actions.get("run", false)) and not _exhausted:
+		running = true
+		_spend_stamina(float(GameData.player_cfg("run_cost_per_second", 15)) * float(GameData.perk("run_cost_mult", 1.0)) * delta)
+		if stamina <= 0:
+			_exhausted = true
+	if not running and not is_flying and _regen_delay == 0.0 and state == S.FREE:
+		stamina = minf(max_stamina, stamina + float(GameData.player_cfg("stamina_regen_per_second", 12)) * delta)
+	var speed := _run if running else _walk
+	if is_flying:
+		speed = _run * 0.9
+	elif state in [S.SWING, S.USING]:
+		speed *= 0.35
+	_slow_remaining = maxf(0,_slow_remaining-delta)
+	if _slow_remaining == 0: _slow_mult = 1
+	speed *= _slow_mult
+	if _landing:
+		direction = Iso.to_ground(_landing_at - global_position).normalized()
+		speed = minf(_walk, Iso.ground_dist(global_position, _landing_at) / maxf(delta, 0.001))
+	_gvel = _gvel.move_toward(direction * speed, (_accel if direction != Vector2.ZERO else _decel) * delta)
+	if combat != null:
+		_gvel = combat.movement(_gvel, delta)
+	velocity = Iso.to_screen(_gvel)
+	move_and_slide()
+	_gvel = Iso.to_ground(velocity)
+	# A clicked use keeps the hero turned toward the clicked cell while it runs, even when walking the other way.
+	if direction != Vector2.ZERO and state != S.DODGE and not (state == S.USING and _click_facing):
+		combat_aim = direction.normalized()
+		facing8 = Iso.dir8_of(direction)
+		facing_vec = Iso.dir8_vector(facing8)
+	_moved_direction = direction
+	_moved_running = running
+
+## Owner-side prediction step (MP5): the locally sampled frame advances the body.
+func predict_movement_tick(delta: float, frame: Dictionary) -> void:
+	_movement_step(delta, frame)
+
+## Host-authority step (MP5): advances a remote body from its validated input
+## frame on the server; identical physics to predict_movement_tick.
+func host_movement_tick(delta: float, frame: Dictionary) -> void:
+	_movement_step(delta, frame)
 
 func _update_target(delta: float = 0.0) -> void:
 	_flower_time = maxf(0.0, _flower_time - delta)

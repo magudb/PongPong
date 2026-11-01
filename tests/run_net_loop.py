@@ -51,6 +51,9 @@ def required_assertions(phase, role, case="normal"):
         required |= {"inert_guest_boot_available", "matching_roster", "application_admitted", "one_local_camera", "p0_alias", "all_profile_visuals_owned", "one_local_input", "remote_frames_passive", "server_rpc_authority_on_all_bodies", "host_configured_profiles_initialized"}
         if not host:
             required.add("guest_parked_not_ready")
+    if phase == "movement":
+        common = {"movement_frames_received", "movement_guest_body_moved", "movement_guest_body_collided", "movement_prediction_matches_guest"} if host else {"movement_frames_sent", "movement_local_predicted", "movement_replica_matches_host"}
+        required |= common
     if phase in ("save", "authority", "lifetime"):
         required |= {"host_save_positive", "host_saved_all_live_rows"} if host else {"guest_save_refused", "guest_autosave_refused", "guest_gather_refused", "guest_world_files_unchanged"}
     if phase in ("authority", "lifetime"):
@@ -85,7 +88,7 @@ def reconcile(report, expected, expected_source_pin):
     phase = report.get("phase")
     if type(count) is not int or count not in ((5,) if report.get("phase") == "admission" and report.get("case") == "fifth_client" else (2, 3, 4)):
         problems.append("malformed participant count")
-    if type(phase) is not str or phase not in ("transport", "admission", "save", "authority", "lifetime", "attack", "navigation"):
+    if type(phase) is not str or phase not in ("transport", "admission", "save", "authority", "lifetime", "attack", "navigation", "movement"):
         return problems + ["unknown phase"]
     rows = report.get("checks")
     if type(rows) is not list or not rows:
@@ -190,7 +193,7 @@ def main():
     ap.add_argument("--expected-source-pin", help="Explicit known runtime source SHA256 for archived verification")
     ap.add_argument("--role", default="host")
     ap.add_argument("--count", type=int, choices=(2, 3, 4, 5), default=2)
-    ap.add_argument("--phase", choices=("admission", "save", "authority", "lifetime", "attack", "navigation"), default="lifetime")
+    ap.add_argument("--phase", choices=("admission", "save", "authority", "lifetime", "attack", "navigation", "movement"), default="lifetime")
     ap.add_argument("--case", default="normal")
     args = ap.parse_args()
     if args.verify_participants is not None:
