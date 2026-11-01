@@ -52,7 +52,7 @@ def required_assertions(phase, role, case="normal"):
         if not host:
             required.add("guest_parked_not_ready")
     if phase == "movement":
-        common = {"movement_frames_received", "movement_guest_body_moved", "movement_guest_body_collided", "movement_prediction_matches_guest"} if host else {"movement_frames_sent", "movement_local_predicted", "movement_replica_matches_host"}
+        common = {"movement_frames_received", "movement_guest_body_moved", "movement_guest_body_collided", "movement_prediction_matches_guest", "movement_all_guests_moved"} if host else {"movement_frames_sent", "movement_local_predicted", "movement_replica_matches_host", "movement_sees_all_guests"}
         required |= common
     if phase in ("save", "authority", "lifetime"):
         required |= {"host_save_positive", "host_saved_all_live_rows"} if host else {"guest_save_refused", "guest_autosave_refused", "guest_gather_refused", "guest_world_files_unchanged"}

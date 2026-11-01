@@ -228,7 +228,11 @@ func _movement(world: Node, host: bool) -> void:
 		for tick in 30: await physics_frame
 		var p1_end: Vector2 = body.global_position if body != null else Vector2.ZERO
 		var p0_end: Vector2 = world.player.global_position if world.player != null else Vector2.ZERO
-		_write_json(host_file, {"p0": [p0_end.x, p0_end.y], "p0_start": [p0_start.x, p0_start.y], "p1": [p1_end.x, p1_end.y], "p1_start": [start.x, start.y]})
+		var body_ends := {}
+		for n in range(0, int(options.count)):
+			var b: Node = world.player_by_id(StringName("p%d" % n))
+			if b != null: body_ends["p%d" % n] = [b.global_position.x, b.global_position.y]
+		_write_json(host_file, {"p0": [p0_end.x, p0_end.y], "p0_start": [p0_start.x, p0_start.y], "p1": [p1_end.x, p1_end.y], "p1_start": [start.x, start.y], "bodies": body_ends})
 		marker("movement-a-host-done")
 		var guest := _read_json(dir.path_join("movement-a-guest1.json"))
 		var frames: int = int(sync.get("frames_received")) if sync != null else 0
@@ -236,8 +240,19 @@ func _movement(world: Node, host: bool) -> void:
 		check("movement_guest_body_moved", (p1_end - start).length() >= 60.0 and p1_end.x > start.x + 20.0)
 		var matched: bool = guest.has("p1") and _near(p1_end, Vector2(float(guest.p1[0]), float(guest.p1[1])), 24.0) and (p1_end - start).length() >= 60.0
 		check("movement_prediction_matches_guest", matched)
+		# Every guest body advanced (multi-guest): each guest json carries its own start+end.
+		var all_moved := true
+		for i in range(1, int(options.count)):
+			var gj := _read_json(dir.path_join("movement-a-guest%d.json" % i))
+			var moved := false
+			if gj.has("p1") and gj.has("start"):
+				var ge := Vector2(float(gj.p1[0]), float(gj.p1[1]))
+				var gs := Vector2(float(gj.start[0]), float(gj.start[1]))
+				moved = (ge - gs).length() >= 60.0 and ge.x > gs.x + 20.0
+			all_moved = all_moved and moved
+		check("movement_all_guests_moved", all_moved)
 	else:
-		_write_json(dir.path_join("movement-a-%s.json" % str(options.role)), {"p1": [body.global_position.x, body.global_position.y]})
+		_write_json(dir.path_join("movement-a-%s.json" % str(options.role)), {"p1": [body.global_position.x, body.global_position.y], "start": [start.x, start.y]})
 		marker("movement-a-%s-done" % str(options.role))
 		var got := await _wait_file(dir.path_join("movement-a-host-done"), 10.0)
 		for tick in 45: await physics_frame
@@ -252,6 +267,20 @@ func _movement(world: Node, host: bool) -> void:
 			var host_p0_start := Vector2(float(host_state.p0_start[0]), float(host_state.p0_start[1]))
 			follows = _near(replica.global_position, host_p0, 12.0) and (host_p0 - host_p0_start).length() >= 40.0
 		check("movement_replica_matches_host", follows)
+		# Cross-guest replication: this guest sees every OTHER guest's body at the
+		# host's authoritative position (same interpolation path as p0 above).
+		var own := int(str(options.role).trim_prefix("guest"))
+		var sees_all := true
+		for n in range(1, int(options.count)):
+			if n == own: continue
+			var key := "p%d" % n
+			var rb: Node = world.player_by_id(StringName(key))
+			var ok := false
+			if rb != null and host_state.has("bodies") and host_state.bodies.has(key):
+				var hb = host_state.bodies[key]
+				ok = _near(rb.global_position, Vector2(float(hb[0]), float(hb[1])), 24.0)
+			sees_all = sees_all and ok
+		check("movement_sees_all_guests", sees_all)
 	# Phase B: a wall that exists ONLY in the host's physics world. The host's
 	# authoritative p1 must collide with it while the guest's (uncorrected)
 	# prediction walks on: movement authority ran real move_and_slide.

@@ -27,12 +27,12 @@ const RECONCILE_BOUND := 512.0
 ## per-tick rate are capped and the nudge is collision-checked, so host
 ## collision stays authoritative: a blocked body is never dragged through what
 ## stops it. Above this distance no correction is offered at all.
-const COURSE_BOUND := 64.0
+const COURSE_BOUND := 256.0
 const COURSE_RATE := 0.2
 const COURSE_STEP_MAX := 6.0
 ## Per-sender input queue bound and per-tick advance budget: bounds hostile
 ## bursts without stalling honest drift (drops cost one movement step each).
-const QUEUE_MAX := 8
+const QUEUE_MAX := 24
 const STEP_BUDGET := 4
 ## Remote-body blend per physics tick on a guest (settles within ~5 ticks).
 const INTERP := 0.6
