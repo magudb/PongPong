@@ -131,10 +131,13 @@ func _enter_city(t, spawn: StringName = &"default") -> void:
 
 
 ## A second area of the city in a host node under the world (the variants: fake handlers, a test town script ...); the caller frees the host.
-func _fresh_area() -> Dictionary:
+## `parent` (default: the World) hosts the area. A second IsoArea inside the World that is not its published `area` has no
+## `when=` attachment of its own (IsoArea._begin_when refuses it, as for a parked area): a fixture that checks `when=` tracking
+## hosts its area outside the World, the standalone route.
+func _fresh_area(parent: Node = null) -> Dictionary:
 	var host := Node2D.new()
 	host.name = "CityHost"
-	_world.add_child(host)
+	(parent if parent != null else _world).add_child(host)
 	var a := IsoArea.new()
 	host.add_child(a)
 	a.setup(WorldRoot2D.load_map(&"traetoppen"))
@@ -1079,7 +1082,7 @@ func _fake_handlers(t) -> void:
 	IsoArea.clear_handler_cache()
 	made_markers.clear()
 	var mark: int = t.log_mark()
-	var v: Dictionary = _fresh_area()
+	var v: Dictionary = _fresh_area(t.root)
 	var a: IsoArea = v["area"]
 	var city: CityBuilder = v["city"]
 	await t.physics(3)
