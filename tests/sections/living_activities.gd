@@ -81,8 +81,14 @@ func _dialogue(t, saved: Dictionary) -> void:
 		await t.until_game(func(): return screen._choice_grace <= 0.0, 1.0)
 		wanted.grab_focus()
 		t.tap_key(KEY_ENTER)
-		await t.frames(4)
-		if reached: break
+		# The pressed row is freed with its page: remember its id, never capture the Node in a lambda.
+		var pressed := wanted.get_instance_id()
+		if reached:
+			# The contextual reply is a new page the game opens after the pick: wait for it, bounded by game time.
+			await t.until_game(func(): return not screen._buttons.any(func(b): return b.get_instance_id() == pressed) and actor.is_talking and screen._lines.any(func(line): return line.get("text_key") == "LC_SMITH_THORIN_ACTIVITY"), 2.0)
+			break
+		# "More" replaces the page: wait until the pressed row is gone and the next page is open.
+		await t.until_game(func(): return not screen._buttons.any(func(b): return b.get_instance_id() == pressed) and screen.is_open(), 2.0)
 		await t.page_to_choices(screen)
 	t.check("contextual_choice_reachable_real_npc_more_ui", reached)
 	t.check("contextual_followup_on_actual_npc", reached and actor.is_talking and screen._lines.any(func(line): return line.get("text_key") == "LC_SMITH_THORIN_ACTIVITY"))

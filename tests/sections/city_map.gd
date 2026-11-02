@@ -131,10 +131,13 @@ func _enter_city(t, spawn: StringName = &"default") -> void:
 
 
 ## A second area of the city in a host node under the world (the variants: fake handlers, a test town script ...); the caller frees the host.
-func _fresh_area() -> Dictionary:
+## `parent` (default: the World) hosts the area. A second IsoArea inside the World that is not its published `area` has no
+## `when=` attachment of its own (IsoArea._begin_when refuses it, as for a parked area): a fixture that checks `when=` tracking
+## hosts its area outside the World, the standalone route.
+func _fresh_area(parent: Node = null) -> Dictionary:
 	var host := Node2D.new()
 	host.name = "CityHost"
-	_world.add_child(host)
+	(parent if parent != null else _world).add_child(host)
 	var a := IsoArea.new()
 	host.add_child(a)
 	a.setup(WorldRoot2D.load_map(&"traetoppen"))
@@ -1079,7 +1082,7 @@ func _fake_handlers(t) -> void:
 	IsoArea.clear_handler_cache()
 	made_markers.clear()
 	var mark: int = t.log_mark()
-	var v: Dictionary = _fresh_area()
+	var v: Dictionary = _fresh_area(t.root)
 	var a: IsoArea = v["area"]
 	var city: CityBuilder = v["city"]
 	await t.physics(3)
@@ -2089,7 +2092,9 @@ func _warps_and_zone(t) -> void:
 	EventBus.area_change_requested.disconnect(cb)
 	t.check("every_warp_round_trips", trip_ok, "the two bridge warps round-trip with P11's farm and Hyggebyen (the pending-area allowance of maps_iso / maps_farm is closed here): %s" % [trips])
 	# --- the zone unlocks on the first arrival (a new game: only farm and city are open), once, with the toast
-	t.new_game()
+	# (a model-only new game would leave this World bound to the previous profile, refusing every _enter: start a real one)
+	await t.start_world()
+	_world = t.world()
 	await t.frames(2)
 	var before: bool = bool(gm.call("is_zone_unlocked", &"traetoppen"))
 	var unlocked: Array = []

@@ -29,9 +29,8 @@ func run(t) -> void:
 	launch("gardener_hoppe", n, out)
 	await t.frames(2)
 	r.skip()
-	for i in 180:
-		if not out.is_empty(): break
-		await t.frames(1)
+	# The skipped scene unwinds through the game's own (delta-driven) presentation: a game-time bound, not a frame count.
+	await t.until_game(func(): return not out.is_empty(), 3.0)
 	t.check("ordinary_skipped_relationship_scene_finishes", out == [true])
 	t.check("ordinary_relationship_restores_exact_resolver", r.actor_resolver == old and not n._event and not t.player()._event_active)
 	r.actor_resolver = Callable()

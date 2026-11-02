@@ -63,7 +63,7 @@ func run(t) -> void:
 			t.check(id+"_one_scene_per_day",SocialManager.events_ready(npc).is_empty())
 			seen_before = id
 	t.check("forty_scenes_registered",all_ids.size() == 40 and all_ids.all(func(id):return not SocialData.event(id).is_empty()))
-	t.check("save_and_reload_all_scenes",SaveManager.save_game(3) and SaveManager.load_game(3))
+	t.check("save_and_reload_all_scenes",SaveManager.save_game(3) and await _load_and_enter(t,3))
 	t.check("all_seen_survive_save",all_ids.all(func(id):return SocialManager.event_seen(id)))
 	await world.travel(&"farm",&"default")
 	SocialManager.reset()
@@ -76,6 +76,16 @@ func run(t) -> void:
 	t.check("source_reproducible",int(t.run_tool(t.python(), [ProjectSettings.globalize_path("res://tools/social/content/build_hearts.py"),"--check"]).code) == 0)
 	director.reset()
 	await t.go_menu()
+## A load inside a World leaves that World bound to the previous profile (it refuses travel and saves), so the section
+## continues the way a player does: load_and_enter, wait for the new World, re-acquire it and its dialogue UI.
+func _load_and_enter(t,slot: int) -> bool:
+	var old_world := world.get_instance_id()
+	if not SaveManager.load_and_enter(slot):return false
+	if not await t.until(func():return t.world() != null and t.world().get_instance_id() != old_world and t.world().ready_for_play,12):return false
+	world = t.world()
+	ui = t.first(&"dialogue_ui")
+	await t.physics(4)
+	return true
 func _stage(t,npc: String,meta: Dictionary) -> bool:
 	await t.until(func():return not world.traveling and not GameManager.is_modal_open(),5.0)
 	await world.travel(&"farm",&"default")

@@ -24,9 +24,14 @@ func run(t) -> void:
 	home._rec = home_script.Rec.new()
 	home._rec.attach(home._bus)
 	home._ladder(t)
+	# home._flag_mirror saves after a model-only new game (Fresh.new_game), the title-screen shape: this World would stay
+	# bound to the previous profile and refuse that save, so it runs from the menu as in home, and the quest and delivery
+	# drivers below get a real new World again.
+	await t.go_menu()
 	home._flag_mirror(t)
 	home._rec.detach(home._bus)
 	if is_instance_valid(home._dialogue_fixture): home._dialogue_fixture.free()
+	await t.start_world()
 	var quests = load("res://tests/sections/quests.gd").new()
 	quests.t = t
 	for pair in [["qm","QuestManager"],["gm","GameManager"],["eco","EconomyManager"],["bus","EventBus"],["lr","LuaRuntime"],["lm","LocalizationManager"]]: quests.set(pair[0], t.autoload(pair[1]))

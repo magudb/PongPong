@@ -27,6 +27,16 @@ func finish(t) -> void:
 			else:ui._advance()
 		return director.runner.active=="" and director.queue.is_empty(),10.0)
 	t.check("extended_scene_returns_control",ended and not GameManager.is_modal_open())
+## A load inside a World leaves that World bound to the previous profile (it refuses travel and saves), so the
+## loop continues the way a player does: load_and_enter, wait for the new World, re-acquire it and its dialogue UI.
+func load_and_enter(t,slot: int) -> bool:
+	var old_world := world.get_instance_id()
+	if not SaveManager.load_and_enter(slot):return false
+	if not await t.until(func():return t.world() != null and t.world().get_instance_id() != old_world and t.world().ready_for_play,12):return false
+	world = t.world()
+	ui = TownProbe.dialogue(t)
+	await t.physics(4)
+	return true
 func run(t,owner) -> void:
 	suite = owner
 	world = t.world()
@@ -162,7 +172,7 @@ func run(t,owner) -> void:
 		EconomyManager.add_item(&"loefteagern",1,true)
 		var proposed := GiftFlow.give_gift("gardener_hoppe","loefteagern",true)
 		var wedding := int(SocialManager.partner().get("wedding",0))
-		check(t,"x09_commitment","x09_commitment_saved_safe_wedding",bool(proposed.get("ok",false)) and FLOW.state("gardener_hoppe")==2 and wedding>=SocialManager.today()+7 and CalendarUtil.weekday_of(wedding)==6 and SaveManager.save_game(3) and SaveManager.load_game(3) and int(SocialManager.partner().get("wedding",0))==wedding)
+		check(t,"x09_commitment","x09_commitment_saved_safe_wedding",bool(proposed.get("ok",false)) and FLOW.state("gardener_hoppe")==2 and wedding>=SocialManager.today()+7 and CalendarUtil.weekday_of(wedding)==6 and SaveManager.save_game(3) and await load_and_enter(t,3) and int(SocialManager.partner().get("wedding",0))==wedding)
 	if suite._leg(t,"L16",["audio"]):
 		var next_day := SocialManager.today()+1
 		while CalendarUtil.weekday_of(next_day)!=1:next_day += 1

@@ -100,3 +100,11 @@ func _case(t, route: String) -> void:
 	t.release(&"move_right")
 	t.check(prefix+"later_enabled_movement_and_actual_save", body.is_physics_processing() and body.global_position.distance_to(at) > 1.0 and sm.save_game(4))
 	gm.clear_config_overrides()
+	# Retire the test-owned group-local p1 body after its validation window. Left in the old World it stays
+	# PlayerRegistry.local_id(), and the next new game's synchronous reset (character_changed -> refresh_stats ->
+	# WardrobeManager.state()) lazily recreates a p1 row in the fresh registry of whatever section starts next.
+	if secondary != null and is_instance_valid(secondary):
+		var retired: WeakRef = weakref(secondary)
+		w._unregister_player(secondary)
+		secondary.queue_free()
+		await t.until_game(func(): return retired.get_ref() == null, 1.0)

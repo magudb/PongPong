@@ -280,6 +280,8 @@ func _reentrant_and_rollback_controls(t) -> void:
 	gm.start_new_game("Reentrant claims", gm.character_type)
 	gm.clear_flag(&"intro_pending")
 	qm.register_quest_from_lua({"id":"zz_claim_multi", "objectives":[{"id":"done","on":"manual","target":1}], "rewards":{"items":{"wood":2,"stone":3}}, "meta":{}})
+	# A test-only definition: the global quest registry must not carry it into later sections (quests lints every definition).
+	t.on_cleanup(func(): qm.quest_defs.erase(&"zz_claim_multi"))
 	PlayerRegistry.for_player(&"p1", func():
 		_full(eco)
 		qm.accept_quest(&"lost_cat")
