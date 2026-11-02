@@ -27,6 +27,11 @@ _children = []
 
 
 def required_assertions(phase, role, case="normal"):
+    if case in ("farm_input_2", "farm_input_4"):
+        count = int(case.rsplit("_", 1)[1])
+        ids = {f"guest{i}_input_{name}" for i in range(1, count) for name in ("till", "till_cost", "till_projection", "plant", "plant_cost", "plant_projection", "water", "water_cost", "water_projection", "growth", "harvest", "reward", "harvest_projection", "far_click", "gui_occlusion", "near_click")}
+        ids |= {f"guest{i}_input_gate_{gate}" for i in range(1, count) for gate in ("modal", "paused_modal", "state", "flight", "event", "travel", "foreign", "ownership", "departure", "selection")}
+        return _original_required("admission", role, "normal") | ids | (set() if role == "host" else {"input_guest_projection_only", "input_no_economic_replay", "input_guest_no_save"})
     if case == "farm_close":
         common = {"isolated_user_data", "transport_started", "application_admitted", "successor_progress", "all_counterparts_done"}
         return common if role == "host" else common | {"nonempty_projection_ready", "close_callback_executed", "offline_immediate_integrity", "offline_unwound_integrity", "retired_snapshot_serial_zero", "retired_notifications_stop", "offline_late_integrity", "successor_transport_started", "successor_admitted", "successor_close_preserves_offline"}
@@ -38,9 +43,9 @@ class FarmPopen(_original_popen):
         # Keep the supervisor's command receipt identical to the actual argv.
         for i, value in enumerate(args):
             if value == "res://tests/acceptance/net_peer.gd":
-                args[i] = "res://tests/acceptance/net_farm_close_peer.gd" if "--case=farm_close" in args else "res://tests/acceptance/net_farm_peer.gd"
+                args[i] = ("res://tests/acceptance/net_farm_input_peer.gd" if any(case in args for case in ("--case=farm_input_2", "--case=farm_input_4")) else "res://tests/acceptance/net_farm_close_peer.gd" if "--case=farm_close" in args else "res://tests/acceptance/net_farm_peer.gd")
         super().__init__(args, *rest, **kwargs)
-        if any(script in args for script in ("res://tests/acceptance/net_farm_peer.gd", "res://tests/acceptance/net_farm_close_peer.gd")):
+        if any(script in args for script in ("res://tests/acceptance/net_farm_peer.gd", "res://tests/acceptance/net_farm_close_peer.gd", "res://tests/acceptance/net_farm_input_peer.gd")):
             _children.append(self)
 
 

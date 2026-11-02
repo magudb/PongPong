@@ -249,7 +249,69 @@ func _input(event: InputEvent) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not controls.handle_event(event):
 		return
+	if admission_only:
+		actor_work(func(): _handle_guest_farm_event(event))
+		return
 	actor_work(func(): _handle_world_event(event))
+
+## Admission guests have only a presentation area, never ordinary World boot.
+## This discrete route requests host transactions; Capture/WorldSync remain the
+## sole raw sampler and movement writer. No local tool/economy code runs here.
+func _guest_farm_world() -> WorldRoot2D:
+	var world := PlayerRegistry.world() as WorldRoot2D
+	if not admission_only or not controls.local_active() or PlayerRegistry.registered_id(self) == &"" or world == null or not world.is_inside_tree() or world.is_queued_for_deletion() or world.local_player() != self or not world.guest_bootstrap or not NetAuthority.owns_guest(world): return null
+	if world.session == null or not world.session.is_guest() or world.session.state != &"connected" or world.intents == null: return null
+	if GameData.gm().is_modal_open() or state != S.FREE or is_flying or is_jumping or _event_active or world.traveling or world.sleeping: return null
+	var replication := world.farm_replication
+	if replication == null or replication.projection == null or replication.presentation_area == null: return null
+	for attachment in [replication, replication.projection, replication.presentation_area]:
+		if not is_instance_valid(attachment) or not attachment.is_inside_tree() or attachment.is_queued_for_deletion(): return null
+	if replication.get_parent() != world or replication.projection.get_parent() != replication or replication.presentation_area.get_parent() != replication: return null
+	return world
+
+func _handle_guest_farm_event(event: InputEvent) -> void:
+	var world := _guest_farm_world()
+	if world == null: return
+	var slot := controls.hotbar_slot(event)
+	if slot >= 0:
+		hotbar.select(slot)
+	elif event is InputEventJoypadButton and controls.hotbar_modifier():
+		pass # LB chords must not leak into farming actions.
+	elif event.is_action_pressed("hotbar_previous") or event.is_action_pressed("hotbar_next"):
+		hotbar.cycle(-1 if event.is_action_pressed("hotbar_previous") else 1)
+	else:
+		for index in 10:
+			if event.is_action_pressed("slot_%d" % (index + 1)):
+				hotbar.select(index)
+				controls.consume_if_handled()
+				return
+		var harvest := event.is_action_pressed("interact")
+		if not harvest and not event.is_action_pressed("use_tool"): return
+		if event is InputEventMouseButton and _cursor_over_gui(): return
+		var view: IsoArea = world.farm_replication.presentation_area
+		var feet := view.global_to_cell(global_position)
+		var at := feet + view.facing_step(facing8)
+		if event is InputEventMouseButton:
+			_cursor_screen = event.position
+			at = view.global_to_cell(cursor_global())
+		# Clicks name their actual presentation cell, never a nearer substitute.
+		if absi(at.x - feet.x) <= 1 and absi(at.y - feet.y) <= 1:
+			_submit_guest_farm(world, at, feet, harvest)
+	controls.consume_if_handled()
+
+func _submit_guest_farm(world: WorldRoot2D, at: Vector2i, feet: Vector2i, harvest_only: bool) -> void:
+	if _guest_farm_world() != world: return
+	var item := hotbar.current()
+	var definition := GameData.item_def(item)
+	var ready: bool = world.farm_replication.projection.state_of(at) == FarmGrid.State.READY
+	if harvest_only or (ready and str(definition.get("tool_type", "")) not in ["axe", "pickaxe", "scythe"]):
+		if ready: world.intents.submit(&"harvest", at)
+	elif str(definition.get("category", "")) == "seed":
+		if at != feet: world.intents.submit(&"plant", at, item)
+	else:
+		match str(definition.get("tool_type", "")):
+			"hoe": world.intents.submit(&"till", at, item)
+			"watering": world.intents.submit(&"water", at, item)
 
 ## Trusted owner-resolved HUD dispatch shares world guards, not synthetic identity.
 func select_gui_slot(index: int) -> void:
