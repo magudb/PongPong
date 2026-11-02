@@ -93,8 +93,14 @@ func _journey(t) -> void:
 		await t.until_game(func(): return screen._choice_grace <= 0.0, 1.0)
 		chosen.grab_focus()
 		_joy(JOY_BUTTON_A)
-		await t.frames(4)
-		if reached: break
+		# The pressed row is freed with its page: remember its id, never capture the Node in a lambda.
+		var pressed := chosen.get_instance_id()
+		if reached:
+			# The contextual reply is a new page the game opens after the pick: wait for it, bounded by game time.
+			await t.until_game(func(): return not screen._buttons.any(func(b): return b.get_instance_id() == pressed) and smith.is_talking and screen._lines.any(func(l): return l.get("text_key") == "LC_SMITH_THORIN_ACTIVITY"), 2.0)
+			break
+		# "More" replaces the page: wait until the pressed row is gone and the next page is open.
+		await t.until_game(func(): return not screen._buttons.any(func(b): return b.get_instance_id() == pressed) and screen.is_open(), 2.0)
 		await t.page_to_choices(screen)
 	t.check("journey_controller_context_choice_reaches_live_npc", reached and smith.is_talking and screen._lines.any(func(l): return l.get("text_key") == "LC_SMITH_THORIN_ACTIVITY"))
 	if shots:
