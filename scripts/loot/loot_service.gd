@@ -349,10 +349,14 @@ func container_spot(zone: String, container_id: String) -> String:
 ## The one-time friendship gifts of loot.gifts: every row of `npc` whose hearts are reached (flag friend_<npc>) and that was not given yet, keyed `npc:hearts` in the claimed table.
 ## Public and idempotent: SocialManager calls it after EVERY heart gain; a second call grants nothing.
 func check_friend_gifts(npc_id: String) -> Dictionary:
+	return check_friend_gifts_guarded(npc_id, Callable())
+
+func check_friend_gifts_guarded(npc_id: String, valid: Callable) -> Dictionary:
 	var hearts := GameManager.flag_int(StringName("friend_%s" % npc_id), 0)
 	var granted: Array = []
 	var sold: Array = []
 	for g in _Data.arr(loot_cfg().get("gifts", [])):
+		if valid.is_valid() and not bool(valid.call()): break
 		var gd := _Data.dict(g)
 		if str(gd.get("npc", "")) != npc_id:
 			continue
@@ -361,7 +365,7 @@ func check_friend_gifts(npc_id: String) -> Dictionary:
 		var item := str(gd.get("item", ""))
 		if hearts < need or claimed.has(key) or item == "":
 			continue
-		var res := _finish(StringName("gift:%s" % key), {"ok": true, "results": [_row_of_item(item, 1)], "delta": {"claimed": key}}, {}, rng, rng.state)
+		var res := _finish(StringName("gift:%s" % key), {"ok": true, "results": [_row_of_item(item, 1)], "delta": {"claimed": key}}, {"accounting_valid": valid}, rng, rng.state)
 		if bool(res["ok"]):
 			granted.append_array(res["results"])
 			sold.append_array(res.get("sold", []))
@@ -484,17 +488,19 @@ func missing_items(spot_id: String) -> Array[String]:
 ## the kinds of loot.duplicates) is SOLD at once at its sell value (whisper FIND_UI_DUPLICATE_FMT) - nothing is lost silently. Keepsakes (rank >= unique) are written to the
 ## registry `dungeon.found` and announced once. {ok, sold, reason, gold}: ok = false only when the item could not enter and may not be sold (a full backpack: the pickup
 ## orb stays on the ground).
-func deliver(item_id: Variant, amount: int = 1) -> Dictionary:
+func deliver(item_id: Variant, amount: int = 1, valid: Callable = Callable()) -> Dictionary:
 	var result := {}
-	EconomyManager.defer_notifications(func() -> void: result.merge(_deliver(item_id, amount)))
+	EconomyManager.defer_notifications(func() -> void: result.merge(_deliver(item_id, amount, valid)), valid)
 	return result
 
 
-func _deliver(item_id: Variant, amount: int) -> Dictionary:
+func _deliver(item_id: Variant, amount: int, valid: Callable = Callable()) -> Dictionary:
+	if valid.is_valid() and not bool(valid.call()): return {"ok": false, "sold": false, "reason": &"lifecycle", "gold": 0}
 	var id := StringName(str(item_id))
 	if id == &"" or amount <= 0:
 		return {"ok": false, "sold": false, "reason": &"invalid", "gold": 0}
 	if EconomyManager.add_item(id, amount):
+		if valid.is_valid() and not bool(valid.call()): return {"ok": true, "sold": false, "reason": &"lifecycle", "gold": 0}
 		_note_keepsake(id)
 		return {"ok": true, "sold": false, "reason": &"", "gold": 0}
 	var def := _Kinds.def(id)
@@ -504,6 +510,7 @@ func _deliver(item_id: Variant, amount: int) -> Dictionary:
 		var gold := mini(_Economy.total_of(unit, amount), _Economy.MAX_GOLD)
 		if gold > 0:
 			EconomyManager.add_gold(gold)
+		if valid.is_valid() and not bool(valid.call()): return {"ok": true, "sold": true, "reason": &"lifecycle", "gold": gold}
 		_note_keepsake(id)
 		var shown := tr(str(def.get("name_key", "ITEM_%s" % str(id).to_upper())))
 		_announce_after_transaction(&"whisper_requested", [tr("FIND_UI_DUPLICATE_FMT") % [shown, gold]])
@@ -525,8 +532,8 @@ func _note_keepsake(id: StringName) -> void:
 	_announce_after_transaction(&"whisper_requested", [tr(KEY_KEEPSAKE_FMT) % shown])
 
 
-func _announce_after_transaction(event_name: StringName, args: Array) -> void:
-	EconomyManager.after_transaction(func() -> void: EventBus.emit_signal.callv([event_name] + args))
+func _announce_after_transaction(event_name: StringName, args: Array, valid: Callable = Callable()) -> void:
+	EconomyManager.after_transaction(func() -> void: EventBus.emit_signal.callv([event_name] + args), valid)
 
 
 # ================================================================================================ the container algorithm (base)
@@ -578,6 +585,8 @@ func _open_base(zone: String, container_id: String, cc: Dictionary, uid: String,
 
 ## the common end of every mutating call: fit, consume, deliver, commit. plan = {ok, reason, results, delta, delegate?}
 func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNumberGenerator, rng_before: int) -> Dictionary:
+	var valid: Callable = ctx.get("accounting_valid", Callable())
+	if valid.is_valid() and not bool(valid.call()): return _answer(false, [], &"lifecycle")
 	var own_stream := r == rng
 	if not bool(plan.get("ok", false)):
 		_restore(r, rng_before, own_stream)
@@ -613,21 +622,24 @@ func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNum
 			out_rows.append_array(rows.duplicate(true))
 		else:
 			for row in rows:
-				var res := deliver(str(row["id"]), int(row["amount"]))
+				if valid.is_valid() and not bool(valid.call()): break
+				var res := deliver(str(row["id"]), int(row["amount"]), valid)
 				out_rows.append(row)
 				if bool(res.get("sold", false)):
 					sold.append({"id": str(row["id"]), "gold": int(res.get("gold", 0))})
 		_source = prior
-		_commit(plan)
-	)
+		if not valid.is_valid() or bool(valid.call()): _commit(plan)
+	, valid)
+	if valid.is_valid() and not bool(valid.call()): return _answer(false, out_rows, &"lifecycle")
 	if refused[0]:
 		_restore(r, rng_before, own_stream)
 		return _answer(false, [], &"missing_items")
 	if not orbs and not out_rows.is_empty():
-		_announce_after_transaction(&"loot_rolled",[source,out_rows])
+		_announce_after_transaction(&"loot_rolled",[source,out_rows],valid)
+	if valid.is_valid() and not bool(valid.call()): return _answer(false, out_rows, &"lifecycle")
 	_announce_cap()
 	var surprise := _Data.dict(plan.get("surprise",{}))
-	if not surprise.is_empty(): _announce_after_transaction(&"game_event",[&"dungeon_surprise",surprise.duplicate(true)])
+	if not surprise.is_empty(): _announce_after_transaction(&"game_event",[&"dungeon_surprise",surprise.duplicate(true)],valid)
 	var answer := _answer(true, out_rows, &"")
 	answer["sold"] = sold
 	return answer

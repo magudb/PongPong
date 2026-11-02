@@ -30,6 +30,8 @@ const CHAPTERS := [
 ]
 const HELPERS := ["mapseller_natteblik","appraiser_fru_ugle","postman_pip","guard_oak","ghostfam_dyne","ghostfam_silke"]
 static var _syncing := false
+static var _sync_guard: Callable
+static var _sync_ticket: RefCounted
 static func enabled() -> bool:
 	return SecretGardenStory.has_evidence("garden_trail") or GameManager.flag_int(&"forest_mother_version",0) == VERSION
 static func has(id: String) -> bool:
@@ -57,6 +59,10 @@ static func can_read(id: String) -> bool:
 	if id == "memory_map": return has(id) or MotherMemoryWork.complete("memory_lamp")
 	return MotherMemoryWork.complete(id)
 static func record(id: String) -> bool:
+	return record_owned(id, preload("res://scripts/traetoppen/life/presenter_origin.gd").model_guard())
+
+static func record_owned(id: String, effects_current: Callable) -> bool:
+	if not effects_current.is_valid() or not effects_current.call(): return false
 	if not can_read(id) or has(id): return false
 	var changes := {"forest_mother_version":VERSION,PREFIX+id:GameManager.total_day()}
 	if id == "mother_fate":
@@ -66,25 +72,46 @@ static func record(id: String) -> bool:
 		changes[PREFIX+"role_refused"] = true
 		changes[PREFIX+"seed_tin_homeward"] = true
 	GameManager.set_flags(changes)
-	sync()
+	if not effects_current.call(): return false
+	sync_owned(effects_current)
+	if not effects_current.call(): return false
 	SaveManager.autosave()
+	if not effects_current.call(): return false
 	EventBus.game_event.emit(&"forest_mother_evidence",{"id":id,"chapter":chapter(),"version":VERSION})
 	return true
 static func sync() -> void:
-	if _syncing or not enabled(): return
+	sync_owned(preload("res://scripts/traetoppen/life/presenter_origin.gd").model_guard())
+
+static func sync_owned(effects_current: Callable) -> void:
+	if not effects_current.is_valid() or not effects_current.call() or not enabled(): return
+	if _syncing and _sync_guard.is_valid() and _sync_guard.call(): return
+	var ticket := RefCounted.new()
+	_sync_ticket = ticket
+	_sync_guard = effects_current
 	_syncing = true
+	_sync_chapters(effects_current)
+	if _sync_ticket == ticket:
+		_syncing = false
+		_sync_guard = Callable()
+		_sync_ticket = null
+
+static func _sync_chapters(effects_current: Callable) -> void:
 	GameManager.set_flag(&"forest_mother_version",VERSION)
 	for row in CHAPTERS:
+		if not effects_current.call(): return
 		var quest := quest_id(row.id)
 		if QuestManager.is_completed(quest): continue
 		if not QuestManager.is_active(quest):
 			GameManager.set_flag(StringName("forest_mother_ready_"+str(row.id)),true)
-			QuestManager.accept_quest(quest)
+			if not effects_current.call(): return
+			QuestManager.accept_quest_owned(quest, effects_current)
 		for id in row.needs:
-			if has(id): QuestManager.complete_manual(quest,StringName(id))
-		if row.has("boss_floor") and boss_cleared(row.boss_floor): QuestManager.complete_manual(quest,&"checkpoint")
+			if not effects_current.call(): return
+			if has(id): QuestManager.complete_manual_owned(quest,StringName(id), effects_current)
+		if not effects_current.call(): return
+		if row.has("boss_floor") and boss_cleared(row.boss_floor): QuestManager.complete_manual_owned(quest,&"checkpoint", effects_current)
+		if not effects_current.call(): return
 		if not QuestManager.is_completed(quest): break
-	_syncing = false
 static func chapter() -> String:
 	for row in CHAPTERS:
 		if not QuestManager.is_completed(quest_id(row.id)): return row.id
@@ -120,7 +147,11 @@ static func topic_page(npc: String) -> Dictionary:
 	if evidence != "": key = "FM_E_"+evidence.to_upper()+"_TEXT"
 	return {"speaker":npc,"social":false,"mother_npc":npc,"mother_evidence":evidence,"lines":[{"text_key":key},{"text_key":"FM_RECORD_ACCOUNT" if evidence != "" else next_lead()}],"choices":[{"text_key":"REL_TALK_GOODBYE","action":"close"}]}
 static func finish_topic(npc: String,page: Dictionary,completed: bool,shown: int) -> bool:
+	return finish_topic_owned(npc, page, completed, shown, preload("res://scripts/traetoppen/life/presenter_origin.gd").model_guard())
+
+static func finish_topic_owned(npc: String, page: Dictionary, completed: bool, shown: int, effects_current: Callable) -> bool:
+	if not effects_current.is_valid() or not effects_current.call(): return false
 	if not page.has("mother_npc"): return false
 	var id := str(page.get("mother_evidence",""))
-	if completed and shown >= LuaData.arr(page.get("lines",[])).size() and str(page.mother_npc) == npc and id != "" and id == _npc_evidence(npc): record(id)
+	if completed and shown >= LuaData.arr(page.get("lines",[])).size() and str(page.mother_npc) == npc and id != "" and id == _npc_evidence(npc): record_owned(id, effects_current)
 	return true

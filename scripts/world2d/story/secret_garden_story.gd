@@ -40,6 +40,10 @@ static func has_evidence(id: String) -> bool:
 	return threshold.has(id) and step() >= int(threshold[id])
 
 static func advance(expected: int) -> bool:
+	return advance_owned(expected, preload("res://scripts/traetoppen/life/presenter_origin.gd").model_guard())
+
+static func advance_owned(expected: int, effects_current: Callable) -> bool:
+	if not effects_current.is_valid() or not effects_current.call(): return false
 	if expected < 0 or expected >= STEPS.size() or step() != expected:
 		return false
 	if expected == 6 and not bloom_ready():
@@ -48,7 +52,8 @@ static func advance(expected: int) -> bool:
 	# objective listener then sees the complete watering transaction.
 	if expected == 5:
 		GameManager.set_flag(WATER_DAY, GameManager.total_day())
-	return QuestManager.complete_manual(QUEST, StringName(STEPS[expected].id))
+	if not effects_current.call(): return false
+	return QuestManager.complete_manual_owned(QUEST, StringName(STEPS[expected].id), effects_current)
 
 static func choice(npc: String) -> Dictionary:
 	if npc not in HELPERS or step() < 0:
@@ -73,12 +78,16 @@ static func topic_page(npc: String) -> Dictionary:
 		"lines": [{"text_key": key}], "choices": [{"text_key": "REL_TALK_GOODBYE", "action": "close"}]}
 
 static func finish_topic(npc: String, page: Dictionary, completed: bool, shown: int) -> bool:
+	return finish_topic_owned(npc, page, completed, shown, preload("res://scripts/traetoppen/life/presenter_origin.gd").model_guard())
+
+static func finish_topic_owned(npc: String, page: Dictionary, completed: bool, shown: int, effects_current: Callable) -> bool:
+	if not effects_current.is_valid() or not effects_current.call(): return false
 	if not page.has("garden_step"):
 		return false
 	var expected := int(page.garden_step)
 	if completed and shown >= LuaData.arr(page.get("lines", [])).size() and str(page.get("garden_npc", "")) == npc:
 		if expected >= 0 and expected < STEPS.size() and str(STEPS[expected].get("npc", "")) == npc:
-			advance(expected)
+			advance_owned(expected, effects_current)
 	return true
 
 static func guide_key() -> String:

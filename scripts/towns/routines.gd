@@ -24,6 +24,7 @@ static func day_end() -> float:
 const RAIN_ACTS: Array[String] = ["sit", "tend", "play", "fish"]
 
 static var _tl: Dictionary = {}
+static var _tl_generation: int = -1
 static var compile_problems: Array[String] = []
 static var override_registry: Dictionary = {}    # tests: replaces the Lua registry
 static var _fb: Dictionary = {}                  # "npc|day|festival" -> festival block (the social track is asked once per citizen and day)
@@ -45,6 +46,12 @@ static func npc_ids() -> Array:
 	return ids
 
 
+static func reload_content() -> void:
+	# Lua may change route speed/anchors and an existing plan's authored work.
+	# Drop derived schedules together; SocialManager's durable latch is untouched.
+	RouteTable.load_table()
+	clear_cache()
+
 static func clear_cache() -> void:
 	_tl.clear()
 	_end_session()
@@ -53,6 +60,7 @@ static func clear_cache() -> void:
 
 ## The per-day memos belong to one run: a new game or a load (another seed, other hearts) starts them again.
 static func _end_session() -> void:
+	Svc.static_call("res://scripts/social/living/living_activity.gd", &"clear_cache", [])
 	_fb.clear()
 	_plans.clear()
 	_plans_day = -1
@@ -113,6 +121,8 @@ static func now_ctx() -> Dictionary:
 			if sm.has_method("shop_closed_by_festival"):
 				c["fest_closed_fn"] = Callable(sm, "shop_closed_by_festival")
 	if sm != null and sm.has_method("home_routine_context"):c.merge(sm.call("home_routine_context"))
+	if sm != null and sm.has_method("living_activity_snapshot"):
+		c["living_activity"] = sm.call("living_activity_snapshot")
 	return c
 
 
@@ -317,7 +327,12 @@ static func timeline(npc: String, plan: String, rain: bool, fb: Dictionary = {})
 
 
 static func _timeline(npc: String, plan: String, rain: bool, fb: Dictionary, ending: float) -> Array:
-	var key: String = "%s|%s|%s|%s|%s" % [npc, plan, rain, ending, "" if fb.is_empty() else "%s@%s-%s" % [fb["at"], fb["from"], fb["to"]]]
+	# Direct route loads (including failures) invalidate derived legs, not
+	# daily plan/festival commitments or SocialManager's persisted selection.
+	if _tl_generation != RouteTable.generation:
+		_tl.clear()
+		_tl_generation = RouteTable.generation
+	var key: String = "%s|%s|%s|%s|%s|%s" % [npc, plan, rain, ending, RouteTable.generation, "" if fb.is_empty() else "%s@%s-%s" % [fb["at"], fb["from"], fb["to"]]]
 	if _tl.has(key):
 		return _tl[key]
 	if not fb.is_empty():
@@ -516,6 +531,8 @@ static func where_is(npc: String, ctx: Dictionary) -> Dictionary:
 	var ending := float(ctx["_day_end"]) if ctx.has("_day_end") else day_end()
 	var segs: Array = _timeline(npc, plan, is_rainy(ctx), fb, ending)
 	if npc in ctx.get("home_guests",[]):segs = Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"timeline",[npc,ctx,segs],segs)
+	if npc == "smith_thorin" and not ctx.get("living_activity", {}).get("selected", {}).is_empty():
+		segs = Svc.static_call("res://scripts/social/living/living_activity.gd", &"timeline", [npc,ctx,segs], segs)
 	if segs.is_empty():
 		return out
 	var t: float = float(ctx["hour"])

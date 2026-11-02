@@ -23,6 +23,7 @@ const SECTION := "social"
 const SECTION_ORDER := 60                      # after loot 40 and collection 50 (SaveManager.FEATURE_ORDERS has no entry for it: the order is passed explicitly)
 const SAVE_V := 2
 const LIVING_STATE := "res://scripts/social/living/living_state.gd"
+const LIVING_ACTIVITY := "res://scripts/social/living/living_activity.gd"
 const LAST_GIFTS := 3                          # the `ls` list of a row: the last three gifts [item, day]
 
 ## Fields of a saved row (zero fields are omitted; wk and gwk default to -1 = "never"). pc = the purchase counter packed as week * 100000 + points * 1000 + gold
@@ -55,7 +56,69 @@ var world_seed: int = 0
 ## player_id -> {npc id (String) -> {p, wk, gt, gd, gwk, gw, bd, bk, ls, kn, rv, rs, pc}} (RM8).
 ## Single-player has one key (`p0`); hearts/friendship are per hero.
 var _rows: Dictionary = {}
-var _living: Dictionary = {"v": 1, "world": {"pairs": {}}, "players": {}, "orphans": {"players": {}}}
+## Transient accounting identity, never serialized. Reset/load cancels the old
+## synchronous stack, not already committed effects in the old world.
+var _accounting_world := RefCounted.new()
+var _accounting_suspended := false
+var _accounting_reset_serial := 0
+
+func invalidate_accounting() -> void:
+	_accounting_reset_serial += 1
+	_accounting_world = RefCounted.new()
+
+## SaveManager invokes these only after all rollback snapshots succeed. Retain
+## row identity on genuine rollback: an earned stack may still hold that row.
+func _suspend_accounting() -> Dictionary:
+	var saved := {"world": _accounting_world, "rows": _rows, "suspended": _accounting_suspended, "reset": _accounting_reset_serial, "living": _living, "owed": _event_owed}
+	_accounting_suspended = true
+	return saved
+
+func _resume_accounting(saved: Dictionary, restored: bool) -> void:
+	if saved.reset != _accounting_reset_serial: return
+	if restored:
+		_accounting_world = saved.world
+		_rows = saved.rows
+		_living = saved.living
+		_event_owed = saved.owed
+		_living_view = {}
+		# Never restore transient physical dwell after a load attempt.
+		_living_cast_runs = {}
+		_living_pair_run = {}
+	else:
+		# An early decoder can fail both apply and restoration before Social's
+		# own decoder ever runs. Unchanged rows are not complete rollback: revoke
+		# the old accounting incarnation even in that otherwise-inert prefix.
+		_accounting_world = RefCounted.new()
+	_accounting_suspended = saved.suspended
+
+func _accounting(npc: String) -> Dictionary:
+	var pid := PlayerRegistry.acting_id()
+	var body: Variant = PlayerRegistry.by_id(pid)
+	var profile: Variant = PlayerRegistry._states.get(pid) # noncreating origin
+	return {"world": _accounting_world, "pid": pid, "npc": npc,
+		"profile": weakref(profile) if profile != null else null,
+		"body": weakref(body) if is_instance_valid(body) else null, "row": _row(npc)}
+
+func _accounting_valid(context: Dictionary) -> bool:
+	if _accounting_suspended or context.world != _accounting_world or context.pid != PlayerRegistry.acting_id(): return false
+	if context.profile == null or context.profile.get_ref() == null or PlayerRegistry._states.get(context.pid) != context.profile.get_ref(): return false
+	if not is_same(context.row, _row_for(context.pid, context.npc, false)): return false
+	if context.has("effects_current"):
+		var guard: Callable = context.effects_current
+		return guard.is_valid() and guard.call()
+	if context.body != null:
+		var body: Variant = context.body.get_ref()
+		if not is_instance_valid(body) or not body is Node or body.is_queued_for_deletion() or not body.is_inside_tree(): return false
+		if PlayerRegistry.registered_id(body) != context.pid or PlayerRegistry.by_id(context.pid) != body: return false
+	return true
+var _living: Dictionary = {"v": 4, "world": {"pairs": {}}, "players": {}, "orphans": {"players": {}}}
+var _living_pair_run: Dictionary = {}
+var _living_cast_runs: Dictionary = {}
+var _living_epoch := 0
+var _living_pending := -1
+var _living_view: Dictionary = {}
+var _living_profile: Dictionary = {}
+var _living_known := false
 var _seen: Dictionary = {}               # event id -> 1 (heart events: once) or year (festival scenes: once per year)
 var _fest_year: Dictionary = {}          # festival id -> last year attended
 var _last_day: int = 0                   # total_day processed by the daily step
@@ -67,6 +130,7 @@ var _lines: Dictionary = {}              # remember_line memory (S-talk): npc ->
 var _shop_now: String = ""               # the shop whose panel is open (shop friendliness)
 var _event_owed: Dictionary = {}         # item rewards waiting for backpack space
 var _retry_owed_pending := false
+var _owed_ticket: RefCounted
 
 # festival index: "season:day" -> festival id, rebuilt when the registry object changes; the festival of the last asked day and the windows of the festivals are memoised
 var _fest_src: Variant = null
@@ -105,13 +169,14 @@ func _ready() -> void:
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.time_of_day_changed.connect(_on_time_changed)
 	EventBus.load_completed.connect(_on_load_completed)
+	EventBus.lua_reloaded.connect(_living_content_changed)
 	EventBus.shop_opened.connect(_on_shop_opened)
 	EventBus.shop_closed.connect(_on_shop_closed)
 	EventBus.item_purchased.connect(func(player_id: StringName, item_id, amount, cost) -> void:
 		for_player(player_id, func() -> void: _on_item_purchased(item_id, amount, cost)))
 	EventBus.visitor_gift.connect(func(npc,_item):
 		if str(npc)!="":mark_event_seen("home_visit:"+str(npc),week()+1))
-	EventBus.player_inventory_changed.connect(func(_player_id: StringName, _inv: Dictionary) -> void: _retry_event_items())
+	EventBus.player_inventory_changed.connect(func(player_id: StringName, inv: Dictionary) -> void: _retry_event_items(player_id, inv))
 	var sm := Svc.node("SaveManager")
 	if sm != null and sm.has_method("register_section"):
 		sm.call("register_section", SECTION, self, SECTION_ORDER)
@@ -310,6 +375,7 @@ func stage(npc: Variant) -> StringName:
 ## toasts: one per conversation). Returns {ok, points, hearts, gained, hearts_before, stage_before, stage_after, source}; a refusal is {ok: false, reason,
 ## gained: 0, points, hearts} with the reasons bad_delta unknown_npc locked absent. At the cap the answer is ok with gained 0 and nothing is emitted.
 func add_points(npc: Variant, delta: int, source: StringName = &"", opts: Dictionary = {}) -> Dictionary:
+	if _accounting_suspended: return {"ok": false, "reason": "lifecycle", "gained": 0, "points": points(npc), "hearts": hearts(npc)}
 	if opts.has("player_id"):
 		var scoped := opts.duplicate()
 		scoped.erase("player_id")
@@ -322,6 +388,10 @@ func add_points(npc: Variant, delta: int, source: StringName = &"", opts: Dictio
 		return {"ok": false, "reason": why, "gained": 0, "points": points(id), "hearts": hearts(id)}
 	var row := _row(id)
 	var cap_points := heart_cap() * points_per_heart()
+	var accounting := _accounting(id)
+	if opts.has("effects_current"):
+		accounting["effects_current"] = opts.effects_current
+		if not _accounting_valid(accounting): return {"ok": false, "reason": "lifecycle", "gained": 0}
 	var before_points := LuaData.int_of(row["p"])
 	var before_hearts := hearts(id)
 	var before_stage := stage(id)
@@ -331,19 +401,26 @@ func add_points(npc: Variant, delta: int, source: StringName = &"", opts: Dictio
 		return result
 	row["p"] = before_points + gained
 	_mirror(id)
+	if not _accounting_valid(accounting): return result
 	var after_hearts := hearts(id)
 	var after_stage := stage(id)
 	result["points"] = int(row["p"])
 	result["hearts"] = after_hearts
 	result["stage_after"] = after_stage
 	EventBus.game_event.emit(EV_POINTS, {"player_id": str(PlayerRegistry.acting_id()), "npc": id, "delta": gained, "points": int(row["p"]), "hearts": after_hearts, "source": String(source)})
+	if not _accounting_valid(accounting): return result
 	if after_hearts > before_hearts:
 		EventBus.friend_changed.emit(PlayerRegistry.acting_id(), StringName(id), after_hearts)
+		if not _accounting_valid(accounting): return result
 		var loot := Svc.node("LootService")
 		if loot != null and loot.has_method("check_friend_gifts"):
-			loot.call("check_friend_gifts", StringName(id))
+			if loot.has_method("check_friend_gifts_guarded"):
+				loot.call("check_friend_gifts_guarded", StringName(id), func(): return _accounting_valid(accounting))
+			else:
+				loot.call("check_friend_gifts", StringName(id))
+		if not _accounting_valid(accounting): return result
 	if after_stage != before_stage:
-		_stage_changed(id, after_stage, bool(opts.get("toast", true)))
+		_stage_changed(id, after_stage, bool(opts.get("toast", true)), accounting)
 	return result
 
 
@@ -368,8 +445,9 @@ func _mirror(npc: String) -> void:
 	GameManager.set_flag(StringName("friend_" + npc), hearts(npc))
 
 
-func _stage_changed(npc: String, new_stage: StringName, with_toast: bool) -> void:
+func _stage_changed(npc: String, new_stage: StringName, with_toast: bool, accounting: Dictionary = {}) -> void:
 	EventBus.game_event.emit(EV_RELATION, {"npc": npc, "stage": String(new_stage), "partner": false})
+	if not accounting.is_empty() and not _accounting_valid(accounting): return
 	if with_toast:
 		_toast(_t("SOC_SYS_TOAST_TITLE"), _stage_line(npc, new_stage))
 
@@ -391,12 +469,15 @@ func talked_today(npc: Variant) -> bool:
 ## Called by Npc2D exactly once per conversation: `lines_shown` lines were shown, `completed` = the last line was advanced or a closing choice was picked (an
 ## Esc after the first line is not). The FIRST FINISHED conversation of a calendar week (Monday..Sunday) gives exactly one heart (the DF3 floor); the daily
 ## greeting and every further chat of the week give nothing. ONE combined toast (heart, stage-up, keeper sample). Returns {weekly_heart}.
-func on_conversation_finished(npc: Variant, lines_shown: int, completed: bool = true) -> Dictionary:
+func on_conversation_finished(npc: Variant, lines_shown: int, completed: bool = true, effects_current: Callable = Callable()) -> Dictionary:
+	if _accounting_suspended or (effects_current.is_valid() and not effects_current.call()): return {"weekly_heart": false}
 	var id := str(npc)
 	if not can_befriend(id) or lines_shown < SocialData.cfg_int("chat_min_lines", 1):
 		return {"weekly_heart": false}
 	var row := _row(id)
 	row["gt"] = today()
+	var accounting := _accounting(id)
+	if effects_current.is_valid(): accounting["effects_current"] = effects_current
 	row["bk"] = 1                                          # you know their birthday once you have talked
 	if not completed:
 		return {"weekly_heart": false}
@@ -406,16 +487,22 @@ func on_conversation_finished(npc: Variant, lines_shown: int, completed: bool = 
 	if LuaData.int_of(row["wk"], -1) != week():
 		row["wk"] = week()
 		GameManager.set_flag(StringName("friend_last_" + id), today())
-		var r := add_points(id, SocialData.cfg_int("chat_points", 100), &"chat", {"toast": false})
+		if not _accounting_valid(accounting): return {"weekly_heart": false}
+		var chat_options := {"toast": false}
+		if effects_current.is_valid(): chat_options["effects_current"] = effects_current
+		var r := add_points(id, SocialData.cfg_int("chat_points", 100), &"chat", chat_options)
+		if not _accounting_valid(accounting): return {"weekly_heart": false}
 		got = bool(r.get("ok", false)) and int(r.get("gained", 0)) > 0
 		if got:
 			parts.append(_t("SOC_SYS_TOAST_HEART_FMT", [_name_of(id), hearts(id), heart_cap()]))
 			if stage(id) != stage_before:
 				parts.append(_stage_line(id, stage(id)))
-			var sample := _keeper_sample(id)
+			var sample := _keeper_sample(id, accounting)
+			if not _accounting_valid(accounting): return {"weekly_heart": false}
 			if sample != "":
 				parts.append(sample)
 	EventBus.game_event.emit(EV_CHAT, {"npc": id, "weekly_heart": got})
+	if not _accounting_valid(accounting): return {"weekly_heart": got}
 	if not parts.is_empty():
 		_toast(_t("SOC_SYS_TOAST_TITLE"), "\n".join(parts))
 	return {"weekly_heart": got}
@@ -423,14 +510,19 @@ func on_conversation_finished(npc: Variant, lines_shown: int, completed: bool = 
 
 ## The weekly keeper sample: with the weekly heart of a SHOPKEEPER whose citizens row names a sample {item, from_hearts} and hearts >= from_hearts, ONE
 ## cheap item is handed over through EconomyManager (the data and its price limits are S-data's). Returns the toast line, "" when nothing was given.
-func _keeper_sample(npc: String) -> String:
+func _keeper_sample(npc: String, accounting: Dictionary = {}) -> String:
 	var sample := SocialData.sample_of(npc)
 	var item := str(sample.get("item", ""))
 	if item == "" or hearts(npc) < LuaData.int_of(sample.get("from_hearts", 0)):
 		return ""
 	var eco := Svc.node("EconomyManager")
-	if eco == null or not eco.has_method("add_item") or not bool(eco.call("add_item", StringName(item), 1, true)):
+	if eco == null or not eco.has_method("add_item"):
 		return ""
+	var added := [false]
+	var valid := func(): return accounting.is_empty() or _accounting_valid(accounting)
+	eco.defer_notifications(func():
+		if valid.call(): added[0] = bool(eco.call("add_item", StringName(item), 1, true)), valid)
+	if not added[0] or not valid.call(): return ""
 	var def: Variant = eco.call("item_def", item) if eco.has_method("item_def") else {}
 	var item_name := _t(str(LuaData.dict(def).get("name_key", "ITEM_" + item.to_upper())))
 	return _t("SOC_SYS_TOAST_SAMPLE_FMT", [_name_of(npc), item_name])
@@ -1142,25 +1234,44 @@ func owe_event_items(items: Dictionary) -> void:
 			_event_owed[str(item)] = mini(9999,int(_event_owed.get(str(item),0))+maxi(0,int(items[item])))
 	claim_event_items()
 
+func _event_claim_guard(pid: StringName) -> Callable:
+	var profile: Variant = PlayerRegistry._states.get(pid)
+	var profile_ref: WeakRef = weakref(profile) if profile != null else null
+	var incarnation := _accounting_world
+	return func() -> bool: return profile_ref != null and profile_ref.get_ref() != null and PlayerRegistry._states.get(pid) == profile_ref.get_ref() and PlayerRegistry.acting_id() == pid and not _accounting_suspended and _accounting_world == incarnation
+
 func claim_event_items() -> void:
-	for item in _event_owed.keys():
-		var amount := int(_event_owed[item])
+	_claim_event_items_owned(_event_claim_guard(PlayerRegistry.acting_id()))
+
+func _claim_event_items_owned(guard: Callable) -> void:
+	if not guard.is_valid() or not guard.call(): return
+	var owed := _event_owed
+	for item in owed.keys():
+		if not guard.call() or not is_same(owed, _event_owed): return
+		var amount := int(owed[item])
 		if amount <= 0:
-			_event_owed.erase(item)
+			owed.erase(item)
 		elif EconomyManager.can_add_item(StringName(item),amount):
 			EconomyManager.defer_notifications(func() -> void:
-				_event_owed.erase(item)
+				if not guard.call() or not is_same(owed, _event_owed): return
+				owed.erase(item)
 				EconomyManager.add_item(StringName(item),amount)
 			)
 
-func _retry_event_items(_player_id: StringName = &"", _items: Dictionary = {}) -> void:
-	if _event_owed.is_empty() or _retry_owed_pending: return
+func _retry_event_items(player_id: StringName = &"", _items: Dictionary = {}) -> void:
+	if _event_owed.is_empty() or _accounting_suspended: return
+	var pid := player_id if player_id != &"" else PlayerRegistry.acting_id()
+	var guard := _event_claim_guard(pid)
+	var ticket := RefCounted.new()
+	_owed_ticket = ticket
 	_retry_owed_pending = true
-	call_deferred("_claim_owed_deferred")
+	_claim_owed_deferred.bind(pid, guard, ticket).call_deferred()
 
-func _claim_owed_deferred() -> void:
-	_retry_owed_pending = false
-	claim_event_items()
+func _claim_owed_deferred(pid: StringName, guard: Callable, ticket: RefCounted) -> void:
+	if _owed_ticket == ticket:
+		_owed_ticket = null
+		_retry_owed_pending = false
+	PlayerRegistry.for_player(pid, func(): _claim_event_items_owned(guard))
 
 
 ## S-events / S-heart-content: a scene was played (1 = once for good, a year number = once per year).
@@ -1203,24 +1314,27 @@ func _on_time_changed(_hour: int, _minute: int) -> void:
 
 
 func _on_load_completed(_slot: int) -> void:
+	# Independent current-model calendar/Living reconciliation remains public.
+	# Earned item resumption is captured only by Save at successful apply.
 	_defer()
-	_retry_event_items()
 
 
 func _defer() -> void:
+	_living_defer()
 	if not _pending:
 		_pending = true
-		call_deferred("flush")
+		call_deferred("flush", false)
 
 
 ## The daily work and the festival state, now. Public for tests and loads; loops over every skipped day keyed on total_day. The world flag birthday_today follows the
 ## STATE (written here, idempotently, not by the day roll and not by reset()): a new game that starts on somebody's birthday (fairy_lily, foraar 1, in the design data)
 ## gets it with the first flush after the start, so the world flags are still exactly the new game's own at the moment new_game_started fires (core pins that).
-func flush() -> void:
+func flush(settle_living: bool = true) -> void:
 	_pending = false
 	_process_days()
 	Svc.static_call("res://scripts/social/relationships/relationship_flow.gd",&"flush",[])
 	Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"daily_chore",[])
+	if settle_living: _living_flush(_living_epoch)
 	_write_birthday_flag(birthdays_today())
 	_update_festival_state()
 
@@ -1294,12 +1408,154 @@ func living_record_delivery(source: Node) -> Dictionary:
 	return Svc.static_call(LIVING_STATE, &"record", [_living, pid, npc, int(ctx.day)], {"ok": false})
 
 
+func _living_invalidate() -> void:
+	_living_cast_runs = {}
+	_living_pair_run = {}
+	_living_epoch += 1
+	_living_pending = -1
+	_living_view = {}
+	Svc.static_call(LIVING_ACTIVITY, &"clear_cache", [])
+
+
+func _living_content_changed() -> void:
+	_living_cast_runs = {}
+	_living_view = {}
+	Svc.static_call("res://scripts/towns/routines.gd", &"reload_content", [])
+
+
+func _living_defer() -> void:
+	if _living_pending == _living_epoch: return
+	_living_pending = _living_epoch
+	_living_flush.call_deferred(_living_epoch)
+
+
+func _living_flush(epoch: int) -> void:
+	if epoch != _living_epoch: return
+	_living_pending = -1
+	if not living_can_simulate(): return
+	var actor: Node = Svc.static_call("res://scripts/towns/npc_director.gd", &"node_of", ["smith_thorin"], null)
+	var blocked: bool = not SocialData.npcs().has("smith_thorin") or GameManager.is_modal_open() or (is_instance_valid(actor) and (actor.is_talking or actor._held))
+	var ctx: Dictionary = Svc.static_call("res://scripts/towns/routines.gd", &"now_ctx", [], {})
+	var profile: Dictionary = Svc.static_call("res://scripts/social/living/living_data.gd", &"profile", ["smith_thorin"], {})
+	var changed: bool = Svc.static_call(LIVING_ACTIVITY, &"settle", [_living, ctx, profile, blocked], false)
+	if changed:
+		_living_view = {}
+		# One soft schedule invalidation; never publish a private cause owner.
+		EventBus.game_event.emit(&"living_schedule_changed", {})
+
+
+## Hot shared reader: small immutable cache, no codec/private rows/scoring.
+func living_activity_snapshot() -> Dictionary:
+	var profile: Dictionary = Svc.static_call("res://scripts/social/living/living_data.gd", &"profile", ["smith_thorin"], {})
+	var known := SocialData.npcs().has("smith_thorin")
+	if _living_view.is_empty() or not is_same(profile, _living_profile) or known != _living_known:
+		_living_profile = profile
+		_living_known = known
+		_living_view = Svc.static_call(LIVING_ACTIVITY, &"snapshot", [_living, profile, known], {})
+	return _living_view
+
+
 ## Explicit player reads; no ambient identity, row creation or goal evaluation.
 func living_context(npc: String, player_id: StringName) -> Dictionary:
 	if not SocialData.npcs().has(npc):
 		return {}
 	return Svc.static_call(LIVING_STATE, &"context", [living_snapshot(), npc, player_id, today()], {})
 
+
+## Captured before NPC builders/flags/presentation callbacks. No row creation.
+func living_encounter_origin(pid: StringName) -> Dictionary:
+	return {"world": _accounting_world, "model": _living, "day": today(), "profile": PlayerRegistry._states.get(pid)}
+
+## The actual actor retains the exact immutable completing receipt before its
+## first authored callback. Public payloads cannot substitute another result.
+func living_settle_encounter(actor: Variant, ticket: RefCounted) -> void:
+	if not is_instance_valid(actor) or not actor is Npc2D or actor._lease != ticket or not actor._talk_pages.has(ticket): return
+	var state: Dictionary = actor._talk_pages[ticket]
+	if (not state.page.has("living_pause_day") and not state.page.has("living_cast_day")) or not state.has("living_terminal"): return
+	var origin: Dictionary = state.living_origin
+	var page: Dictionary = state.page
+	var result: Dictionary = state.living_terminal
+	var ui: Variant = actor._screen
+	var body: Variant = state.body.get_ref()
+	var area: Variant = state.living_area.get_ref() if state.living_area != null else null
+	if not is_instance_valid(area) or not area is Node or not area.is_inside_tree() or area.is_queued_for_deletion(): return
+	if not living_can_simulate() or _accounting_suspended or origin.world != _accounting_world or not is_same(origin.model, _living) or origin.day != today(): return
+	if not is_instance_valid(actor) or not actor is Npc2D or not actor.is_inside_tree() or actor.is_queued_for_deletion() or actor._talk_generation != state.generation or actor.area != area: return
+	if not is_instance_valid(ui) or not ui is Node or not ui.is_inside_tree() or not ui.completion_effects_current(ticket) or not ui.valid_owner(ticket): return
+	if not is_same(ui.completion_result(ticket), result) or not state.talk_origin.current(): return
+	if not is_instance_valid(body) or not body is Node2D or not body.is_inside_tree() or body.is_queued_for_deletion(): return
+	if PlayerRegistry.registered_id(body) != state.pid or PlayerRegistry.by_id(state.pid) != body or PlayerRegistry._states.get(state.pid) != origin.profile or origin.profile == null: return
+	if (not state.page.has("living_cast_day") and str(actor.npc_id) not in ["baker_maja", "beekeeper_birk", "smith_thorin"]) or result.get("completed") != true or int(result.get("lines_shown", 0)) < page.get("lines", []).size(): return
+	if Iso.to_ground(body.global_position - actor.global_position).length() > 420.0: return
+	var choice: Dictionary = result.get("choice", {})
+	var action: String = choice.get("action", "")
+	if not page.get("choices", []).any(func(c): return c.get("id") == choice.get("id") and c.get("action") == action): return
+	var current: Dictionary = Svc.static_call(LIVING_STATE, &"decode", [_living, SocialData.npcs(), today()], {"ok": false})
+	if not current.get("ok", false): return
+	var next: Dictionary = current.state
+	if state.page.has("living_cast_day"):
+		if not Svc.static_call("res://scripts/social/living/living_cast.gd", &"respond", [next, str(actor.npc_id), state.pid, today(), page, action], false): return
+		var checked: Dictionary = Svc.static_call(LIVING_STATE, &"decode", [next, SocialData.npcs(), today()], {"ok": false})
+		if checked.get("ok", false): _living = checked.state
+		return
+	var responses: Dictionary = next.get("responses", {})
+	var previous: Dictionary = responses.get(str(state.pid), {})
+	var day := today()
+	if action in ["living_help", "living_defer", "living_decline"]:
+		if day >= 1000000 or int(previous.get("day", 0)) >= day or int(previous.get("not_before_day", 0)) > day: return
+		responses[str(state.pid)] = {"day": day, "choice": action.trim_prefix("living_"), "not_before_day": day + 1 if action == "living_defer" else 0, "attended_day": 0, "ack_day": 0}
+		next["responses"] = responses
+	elif action == "living_ack":
+		if previous.get("choice") != "help" or previous.get("attended_day") != day or int(previous.get("ack_day", 0)) >= day: return
+		previous["ack_day"] = day
+	elif action == "living_clarify":
+		var pair_script := load("res://scripts/social/living/living_pair.gd")
+		var pair: Dictionary = pair_script.row(next)
+		if pair.get("status") != "needs_clarification" or not is_instance_valid(actor.area): return
+		var source: Variant = state.living_director.get_ref() if state.living_director != null else null
+		var ctx := _living_pair_context()
+		if ctx.is_empty(): return
+		var slot: Dictionary = pair_script.window(ctx)
+		if slot.is_empty() or float(ctx.hour) + 2.0 / 60.0 >= float(slot.end) or pair_script.actors(source, ctx, actor).size() != 3: return
+		pair["phase"] = "clarification_pending"
+	else: return
+	var decoded: Dictionary = Svc.static_call(LIVING_STATE, &"decode", [next, SocialData.npcs(), day], {"ok": false})
+	if not decoded.get("ok", false): return
+	_living = decoded.state # one callback-free validated commit; no rewards/signals
+	_living_pair_run = {}
+
+# Context is a late-bound capability. Refuse malformed/missing siblings before
+# pair scheduling helpers can read typed weekday/hour or dependent collections.
+func _living_pair_context() -> Dictionary:
+	var ctx: Variant = Svc.static_call("res://scripts/towns/routines.gd", &"now_ctx", [], null)
+	if not ctx is Dictionary: return {}
+	for key in ["hour", "weekday", "total_day"]:
+		if typeof(ctx.get(key)) not in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(ctx[key])): return {}
+	if float(ctx.weekday) != floorf(float(ctx.weekday)) or int(ctx.weekday) < 0 or int(ctx.weekday) > 6 or float(ctx.total_day) < 1 or float(ctx.hour) < 0: return {}
+	for key in ["weather", "season", "hero", "festival"]:
+		if not ctx.get(key) is String: return {}
+	for key in ["hearts", "flags", "done"]:
+		if not ctx.get(key) is Dictionary: return {}
+	if ctx.has("fest") and not ctx.fest is Dictionary: return {}
+	if ctx.has("home_guests") and not ctx.home_guests is Array: return {}
+	return ctx
+
+## Only the loaded director minute seam supplies physical observations.
+func living_observe_cast(source: Variant) -> void:
+	Svc.static_call("res://scripts/social/living/living_actions.gd", &"observe", [self, source])
+
+func living_guard_cast(source: Variant) -> void:
+	Svc.static_call("res://scripts/social/living/living_actions.gd", &"guard", [self, source])
+
+func living_guard_pair(source: Variant) -> void:
+	Svc.static_call("res://scripts/social/living/living_pair.gd", &"guard", [self, source])
+
+func living_observe_pairs(source: Variant) -> void:
+	Svc.static_call("res://scripts/social/living/living_pair.gd", &"observe", [self, source])
+
+func living_pair_reply(npc: String) -> String:
+	if npc not in ["baker_maja", "beekeeper_birk", "smith_thorin"]: return ""
+	return Svc.static_call("res://scripts/social/living/living_pair.gd", &"reply", [living_snapshot()], "")
 
 func living_snapshot() -> Dictionary:
 	var decoded: Dictionary = Svc.static_call(LIVING_STATE, &"decode", [_living, SocialData.npcs(), GameManager.total_day()], {"ok": false})
@@ -1323,8 +1579,11 @@ func validate_dict(d: Dictionary) -> bool:
 ## A new game (and a save without the section): points are re-seeded from the flags friend_<npc> so the old hearts-only saves keep their hearts; the weekly
 ## chat of a heart that was given in the week of friend_last_<npc> counts as taken.
 func reset() -> void:
+	if not _accounting_suspended: _accounting_reset_serial += 1
+	_accounting_world = RefCounted.new()
+	_living_invalidate()
 	_living = Svc.static_call(LIVING_STATE, &"empty", [], {})
-	_rows.clear()
+	_rows = {}
 	_seen.clear()
 	_fest_year.clear()
 	_partner.clear()
@@ -1355,7 +1614,19 @@ func _seed_friend_flags() -> void:
 				row["wk"] = CalendarUtil.week_of(last)
 
 
-func to_dict() -> Dictionary:
+func to_dict() -> Variant:
+	return _project_dict(PlayerRegistry.local_id())
+
+# Explicit persistence view: generic local-hero readers retain their old facade.
+func persistence_dict() -> Variant:
+	return _project_dict(&"p0")
+
+func _project_dict(host_id: StringName) -> Variant:
+	# save_game does not run validate_payload: its pre-write guard is the
+	# gather contract (non-Dictionary => gather failure, no backup/write).
+	# Never turn a rejected internal codec projection into an empty save.
+	var decoded: Dictionary = Svc.static_call(LIVING_STATE, &"decode", [_living, SocialData.npcs(), GameManager.total_day()], {"ok": false})
+	if not decoded.get("ok", false): return null
 	var by_player := {}
 	for pid in _rows:
 		var npcs := {}
@@ -1376,7 +1647,7 @@ func to_dict() -> Dictionary:
 			by_player[str(pid)] = npcs
 	# `npcs` stays the local hero's table so older readers keep working; `by_player` is the
 	# source of truth once a second hero exists (RM8). Omitted when single-player matches `npcs`.
-	var local_id := str(PlayerRegistry.local_id())
+	var local_id := str(host_id)
 	var local_npcs: Variant = by_player.get(local_id, {})
 	var out := {
 		"v": SAVE_V, "seed": world_seed, "last": _last_day,
@@ -1385,8 +1656,8 @@ func to_dict() -> Dictionary:
 	}
 	# Sparse empty LC keeps the unchanged legacy social size budget. Missing
 	# living is explicitly the v1 empty default, not inferred historical help.
-	var living := living_snapshot()
-	if not living.get("players", {}).is_empty() or not living.get("orphans", {}).get("players", {}).is_empty():
+	var living: Dictionary = decoded.state
+	if not living.get("world", {}).get("citizens", {}).is_empty() or not living.get("orphans", {}).get("citizens", {}).is_empty() or not living.get("orphans", {}).get("encounters", {}).is_empty() or not living.get("encounters", {}).is_empty() or not living.get("responses", {}).is_empty() or not living.get("world", {}).get("pairs", {}).is_empty() or not living.get("players", {}).is_empty() or not living.get("orphans", {}).get("players", {}).is_empty() or living.get("world", {}).has("pilot") or living.get("orphans", {}).has("pilot"):
 		out["living"] = living
 	if by_player.size() > 1 or (by_player.size() == 1 and not by_player.has(local_id)):
 		out["by_player"] = by_player
@@ -1402,14 +1673,15 @@ func to_dict() -> Dictionary:
 func from_dict(d: Dictionary) -> bool:
 	if not validate_dict(d):
 		return false
-	# LC has no deferred jobs or lifecycle effects. Replace its entire value on
-	# load/rollback/reset; the legacy daily queue never reads or writes LC.
+	# Decode/rollback cancels old generations; it never queues simulation.
 	var decoded: Dictionary = Svc.static_call(LIVING_STATE, &"decode", [d.get("living", Svc.static_call(LIVING_STATE, &"empty", [], {})), SocialData.npcs(), GameManager.total_day()], {"ok": false})
 	if not decoded.get("ok", false):
 		return false
 	_living = decoded.state
-	_rows.clear()
+	_rows = {}
 	_orphans.clear()
+	_accounting_world = RefCounted.new()
+	_living_invalidate()
 	_lines.clear()
 	_toast_queue.clear()
 	_toast_next_ms = 0

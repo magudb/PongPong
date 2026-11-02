@@ -67,6 +67,18 @@ static func run(t) -> void:
 	var directory_before: String = saves.save_dir
 	saves.save_dir = "user://living-delivery-before"
 	t.check("save_immediately_before_receipt", saves.save_game(0) and saves.load_game(0) and _memories(sm, &"p1").is_empty())
+	if not await resume_loaded_world(t, "pre_receipt"): return
+	# The pending-only load replaced profiles, not physical attachments (D09).
+	# Admit genuinely new bodies/NPC in the fresh World; never rebind the old ones.
+	bodies.clear()
+	for slot in [1, 2]:
+		var body := PlayerStub2D.new()
+		t.world()._register_player(body, slot, slot + 1)
+		t.world().add_child(body)
+		bodies.append(body)
+	smith = Npc2D.create({"id": NPC, "wander": "0"})
+	smith.area = t.world().area
+	t.world().area.objects.add_child(smith)
 	saves.save_dir = directory_before
 	# Load normalizes empty legacy equipment slots. Take the isolation baseline
 	# after that pre-receipt roundtrip, not before the independent load fixture.
@@ -131,11 +143,33 @@ static func run(t) -> void:
 		var directory: String = saves.save_dir
 		saves.save_dir = "user://living-delivery"
 		t.check("physical_memory_disk_roundtrip", saves.save_game(0) and saves.load_game(0) and sm.living_snapshot() == committed)
+		if not await resume_loaded_world(t, "committed_receipt"): return
 		saves.save_dir = directory
-	smith.queue_free()
+	if is_instance_valid(smith): smith.queue_free()
 	for body in bodies:
-		t.world()._unregister_player(body)
+		if is_instance_valid(body): t.world()._unregister_player(body)
 	gm.clear_config_overrides()
+
+## Preserve the model-only load/apply assertions, then perform the caller's real
+## pending World handoff. SceneTree entry does not reset models or reload disk.
+## Old body/profile authority remains revoked; all physical consumers reacquire.
+static func resume_loaded_world(t, phase: String) -> bool:
+	var saves: Node = t.autoload("SaveManager")
+	var gm: Node = t.autoload("GameManager")
+	var sm: Node = t.autoload("SocialManager")
+	var old: Node = t.world()
+	var old_id: int = old.get_instance_id()
+	var rows: Dictionary = PlayerRegistry._states.duplicate()
+	var private_rows := {}
+	for pid in [&"p1", &"p2"]:
+		if rows.has(pid): private_rows[pid] = JSON.stringify(rows[pid].to_dict())
+	var living: Dictionary = sm.living_snapshot()
+	t.check("handoff_" + phase + "_old_projection_revoked", not gm.lifecycle_busy() and not old.persistence_ready() and old._host_profile != rows.get(&"p0") and not saves.pending_world.is_empty())
+	if not await t.change_scene(t.WORLD_SCENE): return false
+	var ready: bool = await t.until(func(): return t.world() != null and t.world().get_instance_id() != old_id and t.world().ready_for_play and not gm.lifecycle_busy(), 15.0)
+	t.check("handoff_" + phase + "_fresh_scene_consumed_pending", ready and t.world().persistence_ready() and saves.pending_world.is_empty())
+	t.check("handoff_" + phase + "_loaded_profiles_and_memory_retained", PlayerRegistry._states.size() == rows.size() and rows.keys().all(func(pid): return PlayerRegistry._states.get(pid) == rows[pid]) and private_rows.keys().all(func(pid): return JSON.stringify(rows[pid].to_dict()) == private_rows[pid]) and sm.living_snapshot() == living)
+	return ready
 
 static func _persisted_delivery_consistent(kind: String, owner: Dictionary) -> bool:
 	var stock := {"iron_ore": 0, "amethyst": 0}

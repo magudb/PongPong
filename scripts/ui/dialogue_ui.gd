@@ -1,8 +1,24 @@
 extends TTScreen
-## NPCs and event scenes await the same modal lifetime; text takes no keyboard focus.
+## One UI-owned claim ledger. Broadcast signals are observation, never waiters.
 signal session_finished(result: Dictionary)
 signal choice_selected(action: String, data: Dictionary)
 const Portraits := preload("res://scripts/ui/theme/tt_portraits.gd")
+const Lease := preload("res://scripts/ui/dialogue_lease.gd")
+var _incarnation := RefCounted.new()
+var _revision := 0
+var _epoch := 0
+var _records: Dictionary = {}
+var _active: RefCounted
+var _pending: RefCounted
+var _barrier := 0
+var _draining := false
+var _disposing := false
+var _suspended := false
+var _load_fence: RefCounted
+var _load_effects: Dictionary = {}
+var _resetting := false
+var _permit: RefCounted
+var _permit_record: Dictionary = {}
 ## Accept / interact presses are ignored this long after the choices appear (UX-12): a player tapping E through the lines must SEE the
 ## choices before a press can answer one, instead of the next tap committing the first choice unseen. Mouse clicks on a choice are aimed
 ## and are never delayed.
@@ -53,34 +69,253 @@ func _initial_focus() -> Control:
 	return _buttons[0] if not _buttons.is_empty() else null
 
 func show_lines(speaker: Dictionary, lines: Array, choices: Array = []) -> Dictionary:
-	# Resolve the old await before starting the next one.
-	if _session:
-		_finish(false)
-	_generation += 1
-	_speaker = speaker.duplicate(true)
-	_lines = lines.duplicate(true)
-	_choices = choices.duplicate(true)
-	_line = -1
-	_line_name_key = ""
-	_shown = 0
-	_session = true
-	%TextLabel.text = ""
-	_clear_choices()
-	super.open()
-	if not is_open():
-		# Refused (another modal is on top): nothing was shown or answered.
-		_session = false
-		return {"completed": false, "lines_shown": 0, "choice": {}, "refused": true}
-	# This frameless overlay dispatches advance in _input; the panel/choice buttons
-	# own GUI clicks. World actions remain guarded by the dialogue modal/phase.
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_next_line()
-	return await session_finished
+	var ticket := request_page(null, speaker, lines, choices, {"replace": true})
+	return await ticket.wait()
+
+## A request is admitted only after validation. One pending slot, never a FIFO.
+## Callbacks are synchronous; no acting-player scope or barrier crosses an await.
+func request_page(owner: Variant, speaker: Dictionary, lines: Array, choices: Array = [], options: Dictionary = {}) -> RefCounted:
+	var ticket := Lease.new()
+	var body: Variant = options.get("body")
+	var pid := PlayerRegistry.registered_id(body) if _live(body) else &""
+	var nested := StringName(options.get("nested_under", &""))
+	var replacing := bool(options.get("replace", false))
+	if _disposing or _suspended or _resetting or not is_inside_tree() or is_queued_for_deletion() or (owner != null and not _live(owner)) or (body != null and pid == &"") or (GameManager.is_modal_open() and GameManager.top_modal() != modal_name and GameManager.top_modal() != nested) or (_pending != null and not replacing) or (_active != null and _barrier == 0 and not replacing):
+		ticket.resolve({"completed": false, "lines_shown": 0, "choice": {}, "refused": true})
+		return ticket
+	_revision += 1
+	_permit = null
+	_permit_record = {}
+	var record := {"revision": _revision, "epoch": 0, "incarnation": _incarnation,
+		"owner": weakref(owner) if owner != null else null, "body": weakref(body) if body != null else null, "pid": pid,
+		"speaker": speaker.duplicate(true), "lines": lines.duplicate(true), "choices": choices.duplicate(true),
+		"options": options.duplicate(), "state": "pending", "started": false, "optional": true, "effects": true,
+		"nested": nested, "id": RefCounted.new()}
+	_records[ticket] = record
+	_barrier += 1
+	if _pending != null:
+		var superseded := _pending
+		_pending = null
+		_refuse(superseded, "replaced")
+	_pending = ticket
+	_barrier -= 1
+	_drain()
+	return ticket
+
+static func _live(value: Variant) -> bool:
+	return is_instance_valid(value) and value is Node and value.is_inside_tree() and not value.is_queued_for_deletion()
+
+func valid_owner(ticket: RefCounted) -> bool:
+	if not _records.has(ticket) or _disposing or _suspended or _resetting: return false
+	return _records[ticket].effects and _valid_record(_records[ticket])
+
+## A read page's essential effect can finish after same-run body departure or
+## replacement, but not across reset/successful load/UI destruction. Rollback
+## restores this exact record's effects; mutable flags/payloads cannot confer it.
+func completion_effects_current(ticket: RefCounted) -> bool:
+	if not _records.has(ticket) or _disposing or _suspended or _resetting: return false
+	var record: Dictionary = _records[ticket]
+	return record.state == "completing" and record.incarnation == _incarnation and record.effects
+
+func completion_result(ticket: RefCounted) -> Dictionary:
+	if not completion_effects_current(ticket): return {}
+	return _records[ticket].get("terminal", {})
+
+func _valid_record(record: Dictionary) -> bool:
+	if record.incarnation != _incarnation: return false
+	if record.owner != null and not _live(record.owner.get_ref()): return false
+	if record.body != null:
+		var body: Variant = record.body.get_ref()
+		if not _live(body) or PlayerRegistry.registered_id(body) != record.pid or PlayerRegistry.by_id(record.pid) != body: return false
+	return true
+
+func _refuse(ticket: RefCounted, reason: String) -> void:
+	_records.erase(ticket)
+	ticket.resolve({"completed": false, "lines_shown": 0, "choice": {}, "refused": true, "reason": reason})
+
+func _drain() -> void:
+	if _barrier > 0 or _draining or _suspended: return
+	_draining = true
+	# Bound synchronous callback storms as well as retained requests.
+	for _i in 2:
+		if _pending == null: break
+		if _active != null: _finish(false, {}, "replaced")
+		if _pending == null: break
+		var next := _pending
+		_pending = null
+		_activate(next)
+	_draining = false
+	if _pending != null: _drain.call_deferred()
+
+func _activate(ticket: RefCounted) -> void:
+	if not valid_owner(ticket):
+		_refuse(ticket, "owner")
+		return
+	var record: Dictionary = _records[ticket]
+	_active = ticket
+	_epoch += 1
+	record.epoch = _epoch
+	record.state = "claimed"
+	_barrier += 1
+	var prepare: Callable = record.options.get("prepare", Callable())
+	if prepare.is_valid():
+		var content: Dictionary = prepare.call(ticket)
+		if not content.is_empty():
+			record.lines = LuaData.arr(content.get("lines", []))
+			record.choices = LuaData.arr(content.get("choices", []))
+	if _active == ticket and valid_owner(ticket):
+		_generation += 1
+		_speaker = record.speaker
+		_lines = record.lines
+		_choices = record.choices
+		_line = -1
+		_line_name_key = ""
+		_shown = 0
+		_session = true
+		%TextLabel.text = ""
+		_clear_choices()
+		nested_under = record.nested
+		super.open()
+		if not is_open():
+			_finish(false, {}, "refused")
+		elif _active == ticket and valid_owner(ticket):
+			record.state = "open"
+			if bool(record.options.get("events", false)):
+				record.started = true
+				_scoped(record, func():
+					EventBus.dialogue_session_started.emit(_snapshot(record))
+					EventBus.dialogue_started.emit(StringName(str(record.speaker.get("id", ""))), StringName(str(record.options.get("module", record.speaker.get("id", ""))))))
+			var started: Callable = record.options.get("started", Callable())
+			if started.is_valid() and _active == ticket and valid_owner(ticket): started.call(ticket)
+			if _active == ticket and valid_owner(ticket):
+				mouse_filter = Control.MOUSE_FILTER_IGNORE
+				_next_line()
+	if _active == ticket and not valid_owner(ticket): _finish(false, {}, "owner")
+	_barrier -= 1
+
+## Teardown from an old owner never means close whichever page is current.
+func close_owned(ticket: RefCounted, reason := "cancelled") -> void:
+	if ticket == null or not _records.has(ticket): return
+	var record: Dictionary = _records[ticket]
+	record.optional = false
+	if _pending == ticket:
+		_pending = null
+		_refuse(ticket, reason)
+	elif _active == ticket:
+		_finish(false, {}, reason)
+
+func continuation(ticket: RefCounted, kind: String, payload: Dictionary = {}) -> RefCounted:
+	if not _records.has(ticket): return null
+	var record: Dictionary = _records[ticket]
+	if not record.optional or not record.effects or record.revision != _revision or not _valid_record(record): return null
+	_permit = RefCounted.new()
+	_permit_record = {"origin": record, "kind": kind, "payload": payload.duplicate(true)}
+	return _permit
+
+func dispatch_continuation(permit: RefCounted) -> Dictionary:
+	if permit == null or permit != _permit: return {}
+	var captured := _permit_record
+	_permit = null
+	_permit_record = {}
+	var record: Dictionary = captured.origin
+	if _disposing or _suspended or _active != null or _pending != null or _barrier > 0 or record.revision != _revision or not _valid_record(record) or GameManager.is_modal_open(): return {}
+	return captured
+
+func optional_allowed(ticket: RefCounted) -> bool:
+	return valid_owner(ticket) and _records[ticket].optional and _records[ticket].effects and _records[ticket].revision == _revision
+
+func _snapshot(record: Dictionary) -> Dictionary:
+	return Lease.freeze({"session_id": record.id, "npc": str(record.speaker.get("id", "")), "module": str(record.options.get("module", "")), "effects": record.effects})
+
+func _scoped(record: Dictionary, operation: Callable) -> void:
+	if record.body != null and _valid_record(record): PlayerRegistry.for_player(record.pid, operation)
+	else: operation.call()
+
+func acquire_hold(ticket: RefCounted, point: Vector2) -> void:
+	if not valid_owner(ticket): return
+	var record: Dictionary = _records[ticket]
+	if record.body == null or bool(record.get("held", false)): return
+	record.held = true
+	var body: Variant = record.body.get_ref()
+	if body.has_method("begin_talk"): body.begin_talk(point)
+
+func release_hold(ticket: RefCounted) -> void:
+	if not _records.has(ticket): return
+	var record: Dictionary = _records[ticket]
+	if not bool(record.get("held", false)): return
+	record.held = false
+	var body: Variant = record.body.get_ref() if record.body != null else null
+	if _live(body) and body.has_method("end_talk"): body.end_talk()
+
+## Narrow new-game fence: revoke before reset mutations, never settle old effects.
+func begin_reset() -> void:
+	if _load_fence != null:
+		_load_fence = null
+		_load_effects = {}
+		_suspended = false
+		_barrier -= 1
+	_resetting = true
+	_barrier += 1
+	_revision += 1
+	_permit = null
+	_permit_record = {}
+	for record in _records.values():
+		record.effects = false
+		record.optional = false
+	if _pending != null:
+		var pending := _pending
+		_pending = null
+		_refuse(pending, "lifecycle")
+	_finish(false, {}, "lifecycle")
+
+func end_reset() -> void:
+	_resetting = false
+	_barrier -= 1
+	_drain()
+
+## Snapshot refusal never enters this seam. Suspension is synchronous and keeps
+## the exact page/hold intact until apply commits or real rollback completes.
+func suspend_load() -> RefCounted:
+	if _load_fence != null: return null
+	_load_fence = RefCounted.new()
+	_suspended = true
+	_barrier += 1
+	_revision += 1
+	_permit = null
+	_permit_record = {}
+	for ticket in _records:
+		_load_effects[ticket] = _records[ticket].effects
+		_records[ticket].effects = false
+		_records[ticket].optional = false
+	return _load_fence
+
+func finish_load(fence: RefCounted, restored: bool) -> void:
+	if fence == null or fence != _load_fence: return
+	_load_fence = null
+	_suspended = false
+	if restored:
+		for ticket in _load_effects:
+			if not _records.has(ticket): continue
+			var record: Dictionary = _records[ticket]
+			# Complete rollback authenticates the same run. Already-read essential
+			# effects outlive a physical owner; optional work still uses valid_owner.
+			var earned: bool = record.state == "completing" and record.incarnation == _incarnation
+			if earned or _valid_record(record): record.effects = _load_effects[ticket]
+	_load_effects = {}
+	if not restored or (_active != null and not valid_owner(_active)):
+		if _pending != null:
+			var pending := _pending
+			_pending = null
+			_refuse(pending, "lifecycle")
+		_finish(false, {}, "lifecycle")
+	_barrier -= 1
+	_drain()
 
 func start_dialogue(speaker: Dictionary, lines: Array, choices: Array = []) -> Dictionary:
 	return await show_lines(speaker, lines, choices)
 
 func _process(delta: float) -> void:
+	if _suspended: return
 	super._process(delta)
 	_choice_grace = maxf(0.0, _choice_grace - delta)
 	if _typing:
@@ -90,6 +325,7 @@ func _process(delta: float) -> void:
 	%VoiceGroup.visible = _has_voice and AudioManager.is_voice_playing()
 
 func _input(event: InputEvent) -> void:
+	if _suspended: return
 	if is_open() and is_top() and not _wants_focus() and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		get_viewport().set_input_as_handled()
 		_advance()
@@ -169,7 +405,7 @@ func _show_choices() -> void:
 		button.icon = preload("res://assets/ui/icons/caret.svg")
 		button.set_meta("choice", choice)
 		%ChoicesBox.add_child(button)
-		button.pressed.connect(_pick.bind(choice))
+		button.pressed.connect(_pick_owned.bind(choice, _active, _epoch))
 		_buttons.append(button)
 	UiNav.wire_ring(_buttons)
 	if not _buttons.is_empty():
@@ -179,6 +415,9 @@ func _pick(choice: Dictionary) -> void:
 	if not _session or not is_top():
 		return
 	_finish(true, choice)
+
+func _pick_owned(choice: Dictionary, ticket: RefCounted, epoch: int) -> void:
+	if ticket == _active and epoch == _epoch: _pick(choice)
 
 func close() -> void:
 	_finish(false)
@@ -193,21 +432,56 @@ func _on_cancel() -> void:
 	else:
 		close()
 
-func _finish(completed: bool, choice: Dictionary = {}) -> void:
-	if not _session:
+func _finish(completed: bool, choice: Dictionary = {}, reason := "") -> void:
+	if _active == null or _suspended:
 		return
+	var ticket := _active
+	var record: Dictionary = _records[ticket]
+	var result: Dictionary = Lease.freeze({"completed": completed, "lines_shown": _shown if _session else 0, "choice": choice.duplicate(true), "reason": reason})
+	record.state = "completing"
+	record["terminal"] = result
+	_active = null
+	_barrier += 1
 	_session = false
 	_generation += 1
 	_typing = false
 	_has_voice = false
+	# NPC's private validated Living commit is callback-free. It precedes voice,
+	# focus/choice and modal teardown; ordinary callbackful settlers stay below.
+	var commit: Callable = record.options.get("commit", Callable())
+	if commit.is_valid(): _scoped(record, func(): commit.call(ticket, result))
 	AudioManager.stop_voice()
 	_clear_choices()
 	super.close()
+	_scoped(record, func():
+		var settle: Callable = record.options.get("settle", Callable())
+		if settle.is_valid(): settle.call(ticket, result)
+		release_hold(ticket)
+		if record.started:
+			record.started = false
+			EventBus.dialogue_session_ended.emit(_snapshot(record), result, reason)
+			EventBus.dialogue_ended.emit())
 	if completed and not choice.is_empty():
 		choice_selected.emit(str(choice.get("action", "close")), choice.duplicate(true))
-	session_finished.emit({"completed": completed, "lines_shown": _shown, "choice": choice.duplicate(true)})
+	var after: Callable = record.options.get("after", Callable())
+	if after.is_valid(): after.call(ticket, result)
+	record.state = "terminal"
+	ticket.resolve(result)
+	session_finished.emit(result)
+	_records.erase(ticket)
+	_barrier -= 1
+	_drain()
 
 func _exit_tree() -> void:
+	_disposing = true
+	_revision += 1
+	_incarnation = RefCounted.new()
+	_permit = null
+	_suspended = false
+	if _pending != null:
+		var pending := _pending
+		_pending = null
+		_refuse(pending, "ui_exit")
 	_finish(false)
 	super._exit_tree()
 

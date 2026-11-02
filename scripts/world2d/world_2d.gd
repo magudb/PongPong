@@ -76,6 +76,9 @@ var intro_script_path: String = INTRO_PATH
 var intro_script: Script = null
 var warm_skipped: int = 0
 var ready_for_play := false
+var _lifecycle_bootstrap_done: Callable
+var _lifecycle_bootstrap_exit: Callable
+var _bootstrap_cancelled := false
 var last_travel_profile: Dictionary = {}
 var art_prefetch: AreaArtPrefetch
 
@@ -87,6 +90,134 @@ var _faint_pending: bool = false
 var _wakes: int = 0                         # bumped by every night's wake-up (_sleep_sequence): a faint reads it to wake only once
 var _zone: StringName = &""
 var _rebuild_queued: bool = false
+# Persistence attachment is bound at admission, not lazily rebound by a reader.
+var _host_profile: PlayerState
+# Interaction-admission adoption, distinct from _host_profile spawn
+# provenance: a model-only new-game reset replaces the p0 profile while
+# this body stays attached and playing; the reset adopts the new run's
+# model for interaction admission ONLY. Persistence and physical fences
+# never read this, and loads never adopt (their model arrives re-entered).
+var _host_reset_adoptee: PlayerState
+var _host_generation := 0
+var _host_departure: Dictionary = {}
+# Runtime-only operation receipts, distinct from attachment provenance. A faint
+# can wait beside a travel/night; only the presentation owner owns their flags,
+# tween and prefetch. Neither receipt is part of any persistence projection.
+var _physical_operation: Dictionary = {}
+var _physical_faint: Dictionary = {}
+
+func _host_attached() -> bool:
+	if not is_instance_valid(player) or not player.is_inside_tree() or player.is_queued_for_deletion(): return false
+	if players.size() == 0 or players[0] != player or player_by_peer.get(1) != player: return false
+	# Matching aliases alone do not authenticate a body re-registered as p1.
+	# Keep this entirely noncreating: no state()/roster/codec normalization.
+	if player.get("player_id") != &"p0" or player.get("player_slot") != 0 or player.get("peer_id") != 1: return false
+	if players.count(player) != 1 or player_by_peer.values().count(player) != 1: return false
+	var tree := player.get_tree()
+	if PlayerRegistry.world(tree) != self or PlayerRegistry.by_id(&"p0", tree) != player or PlayerRegistry.by_peer(1, tree) != player or PlayerRegistry.registered_id(player) != &"p0": return false
+	return is_instance_valid(area) and area.is_inside_tree() and area.is_ancestor_of(player) and (not "area" in player or player.get("area") == area)
+
+func _host_live() -> bool:
+	return _host_attached() and PlayerRegistry._states.get(&"p0") == _host_profile and _host_profile != null
+
+## The reset wave replaces PlayerRegistry rows before this signal; adopt the
+## new run's model for the still-attached body. Never rebinds _host_profile;
+## a body that is not the attached host adopts nothing.
+func _on_new_game_started() -> void:
+	_host_reset_adoptee = PlayerRegistry._states.get(&"p0") if _host_attached() else null
+
+func _sample_host() -> Dictionary:
+	if not _host_attached(): return {}
+	var body := player
+	var generation := _host_generation
+	var profile := _host_profile
+	var pos: Vector2 = body.global_position
+	if not is_finite(pos.x) or not is_finite(pos.y): return {}
+	var out := {"area":str(area.map.id), "player_pos":[pos.x, pos.y]}
+	var hb: Variant = body.get("hotbar") if "hotbar" in body else null
+	if hb is Object and hb.has_method("to_dict"):
+		var hotbar_data: Variant = hb.call("to_dict")
+		if not hotbar_data is Dictionary: return {}
+		out["hotbar"] = hotbar_data.duplicate(true)
+	if not _host_attached() or player != body or _host_generation != generation or _host_profile != profile: return {}
+	for key in ["half_hearts", "stamina", "oil"]:
+		if key in body:
+			var value: Variant = body.get(key)
+			if typeof(value) not in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(value)): return {}
+			out[key] = value
+	return out
+
+# Pure/noncreating authority preflight; this must precede any codec/normalizer.
+func persistence_ready() -> bool:
+	if not is_inside_tree() or is_queued_for_deletion() or not ready_for_play or not is_instance_valid(area) or not area.is_inside_tree() or _host_profile == null or PlayerRegistry._states.get(&"p0") != _host_profile: return false
+	if _host_live():
+		if not is_finite(player.global_position.x) or not is_finite(player.global_position.y): return false
+		for key in ["half_hearts", "stamina", "oil"]:
+			if key in player:
+				var value: Variant = player.get(key)
+				if typeof(value) not in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(value)): return false
+		return true
+	# A malformed/detached replacement is not equivalent to sanctioned absence.
+	if is_instance_valid(player) or (players.size() > 0 and is_instance_valid(players[0])): return false
+	if _host_departure.is_empty() or _host_departure.generation != _host_generation or _host_departure.area != str(area.map.id): return false
+	for key in ["half_hearts", "stamina", "oil"]:
+		if not is_finite(float(_host_profile.get(key))): return false
+	return true
+
+func _host_attachment() -> Dictionary:
+	if not persistence_ready(): return {}
+	var out: Dictionary
+	if _host_live():
+		out = _sample_host()
+	else:
+		out = _host_departure.data.duplicate(true)
+		# A sanctioned departure survives complete graph rollback. Only an
+		# actual subsequent model write (not equal values or a default row)
+		# supersedes its sampled vital. The runtime provenance tokens themselves
+		# are restored by the existing authenticated alias-graph finalizer.
+		for key in ["half_hearts", "stamina", "oil"]:
+			if not is_same(_host_profile._vital_writes.get(key), _host_departure.model_writes.get(key)):
+				out[key] = _host_profile.get(key)
+	for key in ["half_hearts", "stamina", "oil"]:
+		if out.has(key) and (typeof(out[key]) not in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(out[key]))): return {}
+	return out
+
+func persistence_vitals() -> Dictionary:
+	var attachment := _host_attachment()
+	var out := {}
+	for key in ["half_hearts", "stamina", "oil"]:
+		if attachment.has(key): out[key] = attachment[key]
+	return out
+
+# Explicit rejoin, distinct from admission of an already configured replacement.
+func rejoin_host() -> Node2D:
+	if not persistence_ready() or _host_live(): return null
+	var data := _host_attachment()
+	if data.is_empty(): return null
+	# The authenticated p0 producer includes synchronous spawn/readiness and
+	# their model consumers, even if p1 is group-local or the caller's scope.
+	# No await may enter this scope. It covers readiness and the original
+	# player_spawned consumers, then restores even a conflicting caller scope.
+	return PlayerRegistry.for_player(&"p0", func():
+		for key in ["half_hearts", "stamina", "oil"]:
+			if data.has(key): _host_profile.set(key, data[key])
+		var p := _make_player()
+		var prepared: bool = p.has_method("prepare_persistence_rejoin") and bool(p.call("prepare_persistence_rejoin", data))
+		_register_player(p, 0, 1)
+		var generation := _host_generation
+		add_child(p)
+		if not is_instance_valid(p) or p.is_queued_for_deletion() or player != p or _host_generation != generation or PlayerRegistry._states.get(&"p0") != _host_profile: return null
+		p.call("enter_area", area, Vector2(float(data.player_pos[0]), float(data.player_pos[1])))
+		if not _host_live() or player != p or _host_generation != generation: return null
+		if not prepared:
+			if data.has("hotbar") and "hotbar" in p: p.get("hotbar").call("from_dict", data.hotbar)
+			for key in ["half_hearts", "stamina", "oil"]:
+				if data.has(key) and key in p: p.set(key, data[key])
+		if not _host_live() or player != p or _host_generation != generation: return null
+		EventBus.player_spawned.emit(p)
+		if not _host_live() or player != p or _host_generation != generation: return null
+		_flush_rebuild()
+		return p)
 
 static var _registry: Dictionary = {}       # id -> {path, fixture, map: AreaMap or null (in-memory maps of tests)}
 static var _registry_scanned: bool = false
@@ -178,6 +309,16 @@ static func load_map(id: StringName) -> AreaMap:
 
 # ------------------------------------------------------------------ boot
 
+func _bind_lifecycle_bootstrap(done: Callable, exited: Callable) -> bool:
+	if is_inside_tree() or _lifecycle_bootstrap_done.is_valid(): return false
+	_lifecycle_bootstrap_done = done
+	_lifecycle_bootstrap_exit = exited
+	return true
+
+
+func _ack_lifecycle_bootstrap(success: bool) -> void:
+	if _lifecycle_bootstrap_done.is_valid(): _lifecycle_bootstrap_done.call(success)
+
 func _ready() -> void:
 	add_to_group("world_2d")
 	GameManager.change_phase(GameManager.GamePhase.PLAYING)   # the 2D game never captures the mouse: the cursor stays visible
@@ -229,6 +370,7 @@ func _ready() -> void:
 	EventBus.quest_completed.connect(_on_quest_completed)
 	EventBus.home_upgraded.connect(_on_home_upgraded)
 	EventBus.furniture_changed.connect(_on_furniture_changed)
+	EventBus.new_game_started.connect(_on_new_game_started)
 	EventBus.player_spawned.emit(player)
 	for p in all_players():
 		if p != player:
@@ -242,12 +384,24 @@ func _ready() -> void:
 	if not _enter(start, spawn) and start != FALLBACK_AREA:
 		_enter(FALLBACK_AREA, spawn)             # a registered default whose map file is bad must not leave the world without an area
 	if not saved.is_empty():
-		_apply_saved(saved)                      # puts the player back only when the area entered IS the saved one
+		if not _apply_saved(saved): # puts the player back only in its saved area
+			_ack_lifecycle_bootstrap(false)
+			return
 	_welcome_toast(saved)
 	ContractManifest.report()
+	if _bootstrap_cancelled:
+		_ack_lifecycle_bootstrap(false)
+		return
 	await warm_clips()
+	if _bootstrap_cancelled or not is_inside_tree():
+		_ack_lifecycle_bootstrap(false)
+		return
 	_maybe_intro()
+	if _bootstrap_cancelled or not is_inside_tree():
+		_ack_lifecycle_bootstrap(false)
+		return
 	ready_for_play = true
+	_ack_lifecycle_bootstrap(true) # terminal mutation; owner releases only after this stack unwinds
 
 
 ## The toast of a world start: the TITLE OF THE ZONE the player arrives in (ZONE_FARM -> "Trætoppen") and nothing else; it used to be
@@ -267,6 +421,11 @@ func _welcome_toast(saved: Dictionary) -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		free_parked_areas()
+		# A detached world may be retained past its exit settlement and only freed
+		# later, without ever resuming warm_clips. Notify the same exact owner;
+		# it defers settlement and requires the WeakRef to be null before release.
+		if _lifecycle_bootstrap_exit.is_valid():
+			_lifecycle_bootstrap_exit.call()
 
 
 ## The world sets the clear colour of the area it shows (navy in the forest, plum in the home); RenderingServer keeps it for the whole
@@ -278,6 +437,14 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
+	# A request belongs to this attached World, not a later reattachment.
+	# Body-only departure keeps the World in-tree and retains its dirty room.
+	_rebuild_queued = false
+	if not _physical_operation.is_empty(): _retire_physical(_physical_operation)
+	if not _physical_faint.is_empty(): _retire_physical(_physical_faint)
+	if _lifecycle_bootstrap_exit.is_valid():
+		_bootstrap_cancelled = true
+		_lifecycle_bootstrap_exit.call()
 	RenderingServer.set_default_clear_color(project_clear_color())
 
 
@@ -353,6 +520,9 @@ func _register_player(p: Node2D, slot: int, peer_id: int = 1) -> void:
 	p.set("is_local", peer_id == 1)
 	if slot == 0:
 		player = p
+		_host_generation += 1
+		if _host_profile == null: _host_profile = PlayerRegistry._states.get(&"p0")
+		_host_departure = {}
 
 
 ## Removes a body from the slot table and emits player_despawned. Returns the player_id.
@@ -363,6 +533,18 @@ func _unregister_player(p: Node2D) -> StringName:
 	if "player_id" in p:
 		pid = StringName(str(p.get("player_id")))
 	var idx: int = players.find(p)
+	# A displaced/unregistered body owns no slot or despawn publication.
+	if idx < 0: return &""
+	if idx == 0 and player == p and _host_profile != null and _host_attached():
+		var attachment := _sample_host()
+		if not attachment.is_empty():
+			_host_departure = {"generation":_host_generation, "area":str(area.map.id), "data":attachment.duplicate(true), "model_writes":_host_profile._vital_writes.duplicate()}
+			# This is an owned physical producer, not a serializer normalization.
+			for key in ["half_hearts", "stamina", "oil"]:
+				if attachment.has(key): _host_profile.set(key, attachment[key])
+	# Sampling may call a codec; a reentrant replacement owns the new slot.
+	idx = players.find(p)
+	if idx < 0: return &""
 	if idx >= 0:
 		players[idx] = null
 	if idx == 0 and player == p:
@@ -373,8 +555,10 @@ func _unregister_player(p: Node2D) -> StringName:
 			break
 	if p.get_parent() != null:
 		p.get_parent().remove_child(p)
-	p.queue_free()
-	if pid != &"":
+	# tree-exit observers can admit a replacement (including the same Node
+	# under a new attachment). Cleanup/publication retires only the old slot.
+	if is_instance_valid(p) and players.find(p) < 0: p.queue_free()
+	if pid != &"" and player_by_id(pid) == null:
 		EventBus.player_despawned.emit(pid)
 	return pid
 
@@ -385,7 +569,9 @@ func _unregister_player(p: Node2D) -> StringName:
 func local_player() -> Node2D:
 	if players.size() > 0 and is_instance_valid(players[0]):
 		return players[0]
-	return player
+	# Raw destruction is unsupported persistence, but readers must still receive
+	# null rather than a freed typed Node alias while the World refuses saves.
+	return player if is_instance_valid(player) else null
 
 
 func player_by_id(player_id: StringName) -> Node2D:
@@ -480,6 +666,7 @@ func is_parked(id: StringName) -> bool:
 
 
 func _enter(id: StringName, spawn: StringName) -> bool:
+	if not is_instance_valid(player) or not player.is_inside_tree() or player.is_queued_for_deletion() or PlayerRegistry._states.get(&"p0") != _host_profile: return false
 	if not has_area(id):
 		last_travel_error = "no such area: %s" % id
 		return false
@@ -599,37 +786,111 @@ func _on_area_change_requested(area_id: StringName, spawn_name: StringName) -> v
 
 
 ## Fade out, swap, warm the sprite clips behind the fade, fade in. Safe to await.
+func _physical_origin() -> Dictionary:
+	if not is_inside_tree() or is_queued_for_deletion() or not _host_live(): return {}
+	return {"body":weakref(player), "generation":_host_generation, "profile":_host_profile}
+
+func _physical_attached(origin: Dictionary) -> bool:
+	return not origin.is_empty() and is_inside_tree() and not is_queued_for_deletion() and _host_live() and origin.generation == _host_generation and origin.profile == _host_profile and origin.body.get_ref() == player
+
+func _physical_current(origin: Dictionary) -> bool:
+	return _physical_attached(origin) and (is_same(origin, _physical_operation) or is_same(origin, _physical_faint))
+
+## A current attachment proves physical ownership, not the ambient economic
+## recipient. Re-enter the exact retained host for each synchronous consumer;
+## never keep this scope open over a timer, fade or frame await.
+func _physical_for_player(origin: Dictionary, work: Callable) -> Variant:
+	if not _physical_current(origin): return null
+	return PlayerRegistry.for_player(&"p0", work)
+
+func _end_defeated_run(origin: Dictionary) -> void:
+	_physical_for_player(origin, func():
+		var floors: Variant = Svc.static_call("res://scripts/dungeon/floors/dungeon_floors.gd", &"inst", [])
+		if floors is Node and floors.has_method("end_run"):
+			floors.call("end_run", &"defeated"))
+
+func _retire_physical(origin: Dictionary) -> void:
+	# A killed Tween never emits finished. Physical callers poll its validity
+	# instead, so revocation settles an await without letting an old fade write B.
+	var tw: Tween = origin.get("tween")
+	if tw != null and tw.is_valid(): tw.kill()
+	if is_same(origin, _physical_faint):
+		_physical_faint = {}
+		_faint_pending = false
+	if not is_same(origin, _physical_operation): return
+	_physical_operation = {}
+	traveling = false
+	sleeping = false
+	_pass_out_pending = false
+	if is_instance_valid(_fade): _fade.color.a = 0.0
+	if is_instance_valid(art_prefetch): art_prefetch.release()
+
+func _retire_stale_physical() -> void:
+	if not _physical_operation.is_empty() and not _physical_attached(_physical_operation):
+		_retire_physical(_physical_operation)
+	if not _physical_faint.is_empty() and not _physical_attached(_physical_faint):
+		_retire_physical(_physical_faint)
+
+func _physical_fade(origin: Dictionary, alpha: float, seconds: float) -> void:
+	if not _physical_current(origin): return
+	var tw := _fade_tween(alpha, seconds)
+	origin["tween"] = tw
+	var tree := get_tree()
+	while tw.is_valid() and tw.is_running() and _physical_current(origin):
+		await tree.process_frame
+	if not _physical_current(origin): _retire_physical(origin)
+
 func travel(area_id: StringName, spawn: StringName) -> void:
+	var origin := _physical_origin()
+	if origin.is_empty(): return
 	if GameManager.is_modal_open(&"event"): return
-	if traveling or not has_area(area_id):
+	_retire_stale_physical()
+	if traveling or not _physical_operation.is_empty() or not has_area(area_id):
 		if not has_area(area_id):
 			last_travel_error = "no such area: %s" % area_id
 			# a walk-in door to a place that is not built yet would refuse in silence: the player hears the gate is closed
 			EventBus.whisper_requested.emit("WORLD_WARP_LOCKED")
 		return
+	_physical_operation = origin
 	traveling = true
 	var began := Time.get_ticks_usec()
 	last_travel_profile = {}
 	art_prefetch.request(area_id)
 	last_travel_profile.request_ms = (Time.get_ticks_usec()-began)/1000.0
-	var tw := _fade_tween(1.0, FADE_OUT)
-	await tw.finished
+	await _physical_fade(origin, 1.0, FADE_OUT)
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	await art_prefetch.finish()
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	last_travel_profile.prefetch_and_fade_ms = (Time.get_ticks_usec()-began)/1000.0
 	last_travel_profile.prepared_paths = art_prefetch.staged.keys()
 	_enter(area_id, spawn)
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	last_travel_profile.entered_ms = (Time.get_ticks_usec()-began)/1000.0
 	await warm_clips()
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	art_prefetch.release()
 	last_travel_profile.warmed_ms = (Time.get_ticks_usec()-began)/1000.0
 	_flush_rebuild()                         # a tier / furniture change that arrived since _enter: rebuilt behind the black screen
-	var tw2 := _fade_tween(0.0, FADE_IN)
-	await tw2.finished
-	traveling = false
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
+	await _physical_fade(origin, 0.0, FADE_IN)
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	last_travel_profile.total_ms = (Time.get_ticks_usec()-began)/1000.0
+	var pass_out := _pass_out_pending and not _faint_pending
+	_retire_physical(origin)
 	_flush_rebuild()                         # one that arrived during the fade-in
-	if _pass_out_pending and not _faint_pending:  # a faint that waits for this travel wakes the player itself
-		_pass_out_pending = false
+	if pass_out and _physical_attached(origin) and _physical_operation.is_empty():
 		await _sleep_sequence(true)
 
 
@@ -666,12 +927,14 @@ func warm_jobs() -> Array:
 ## is set (then TextureLoads loads the sheets on the main thread: dummy textures made on loader threads raced, engine message
 ## "texture_2d_initialize: Parameter t is null" + a leaked RID at exit, measured 2 of 120 runs with the threaded warm-up).
 func warm_clips() -> void:
+	var tree := get_tree()
 	# Population waits for collider registration. Warm only after those real
 	# citizens have appeared, so their first frame is also behind the travel fade.
-	for director in get_tree().get_nodes_in_group("town_director"):
+	for director in tree.get_nodes_in_group("town_director"):
 		if area != null and area.is_ancestor_of(director):
 			while is_instance_valid(director) and director.is_inside_tree() and not director.ready_for_population:
-				await get_tree().physics_frame
+				await tree.physics_frame
+				if not is_inside_tree(): return
 	if DisplayServer.get_name() == "headless" and not warm_in_headless:
 		warm_skipped += 1
 		return
@@ -682,6 +945,7 @@ func warm_clips() -> void:
 ## earlier one warms (TownDirector at a routine boundary): it is skipped, as a freed object cannot even be passed to warm_one().
 func warm_each(jobs: Array) -> void:
 	for j in jobs:
+		if not is_inside_tree(): return
 		if is_instance_valid(j[0]):
 			await warm_one(j[0], j[1])
 
@@ -691,11 +955,13 @@ func warm_each(jobs: Array) -> void:
 ## travel would keep the screen black for good (review GAP1-01). The sprite's coroutine marks a ticket instead, and this polls the ticket,
 ## the sprite's life and WARM_TIMEOUT_MS.
 func warm_one(visual: Object, clips: Array) -> void:
+	var tree := get_tree()
 	var ticket := {"done": false}
 	_run_warm(visual, clips, ticket)
 	var deadline: int = Time.get_ticks_msec() + WARM_TIMEOUT_MS
 	while not bool(ticket["done"]) and is_instance_valid(visual) and Time.get_ticks_msec() < deadline:
-		await get_tree().process_frame
+		await tree.process_frame
+		if not is_inside_tree(): return
 
 
 ## Not awaited by anyone: when `visual` is freed mid-way this coroutine is simply dropped with it.
@@ -731,6 +997,9 @@ func _on_furniture_changed(reason: StringName) -> void:
 
 
 func _queue_rebuild() -> void:
+	if not is_inside_tree() or is_queued_for_deletion():
+		_rebuild_queued = false
+		return
 	if area == null or not area.map.is_builder() or _rebuild_queued:
 		return
 	_rebuild_queued = true
@@ -748,7 +1017,10 @@ func _run_queued_rebuild() -> void:
 ## While a travel or the night runs (`traveling`) the rebuild is only QUEUED, never dropped: the day roll inside the sleep sequence is
 ## exactly when the builders finish (home_upgraded), and the room has to be the new one when the player wakes up.
 func rebuild_current_area() -> void:
-	if traveling:
+	if not is_inside_tree() or is_queued_for_deletion():
+		_rebuild_queued = false
+		return
+	if traveling or not _host_live():
 		_rebuild_queued = true
 		return
 	_rebuild_queued = false
@@ -758,7 +1030,10 @@ func rebuild_current_area() -> void:
 ## Runs a queued rebuild now (the end of a travel, the black screen of the sleep sequence). A request for a room the player has left
 ## is gone already: _enter() clears the flag, because the room it builds reads the current tier and furniture.
 func _flush_rebuild() -> void:
-	if not _rebuild_queued:
+	if not is_inside_tree() or is_queued_for_deletion():
+		_rebuild_queued = false
+		return
+	if not _rebuild_queued or not _host_live():
 		return
 	_rebuild_queued = false
 	_rebuild_area()
@@ -767,7 +1042,7 @@ func _flush_rebuild() -> void:
 func _rebuild_area() -> void:
 	# A tier notification may queue work in the same frame that quit/load
 	# removes this world. Never rebuild a detached or dying scene.
-	if area == null or not is_inside_tree() or is_queued_for_deletion():
+	if area == null or not is_inside_tree() or is_queued_for_deletion() or not _host_live():
 		return
 	var id: StringName = area.map.id
 	var at: Vector2 = player.global_position
@@ -813,8 +1088,10 @@ static func sleep_from_hour() -> int:
 ## E on the bed: sleep clip, fade out, next day (the farm grows), fade in. Energy and hearts are restored. Before 18:00 the bed
 ## only whispers WHISPER_TOO_EARLY.
 func sleep() -> void:
+	if not _host_live(): return
 	if GameManager.is_modal_open(&"event"): return
-	if sleeping or traveling:
+	_retire_stale_physical()
+	if sleeping or traveling or not _physical_operation.is_empty():
 		return
 	if not can_sleep_now():
 		EventBus.whisper_requested.emit("WHISPER_TOO_EARLY")
@@ -827,7 +1104,8 @@ func sleep() -> void:
 func _on_game_event(event_name: StringName, _payload: Dictionary) -> void:
 	if event_name != &"midnight_passed":
 		return
-	if sleeping or _faint_pending or player == null or area == null or area.projection != &"iso":
+	_retire_stale_physical()
+	if not _host_live() or sleeping or _faint_pending or area.projection != &"iso":
 		return
 	if traveling:
 		_pass_out_pending = true
@@ -836,44 +1114,82 @@ func _on_game_event(event_name: StringName, _payload: Dictionary) -> void:
 
 
 func _sleep_sequence(passed_out: bool) -> void:
+	var origin := _physical_origin()
+	if origin.is_empty(): return
+	_retire_stale_physical()
+	if not _physical_operation.is_empty(): return
+	_physical_operation = origin
 	sleeping = true
 	traveling = true
-	_pose_for_sleep()
-	var tw := _fade_tween(1.0, 0.7)
-	await tw.finished
+	_pose_for_sleep(origin)
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
+	await _physical_fade(origin, 1.0, 0.7)
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	# The day roll: builders finish (home_upgraded / furniture_changed), crops grow, the weather is rolled. `traveling` is set for the
 	# whole night, so a room that has to change is only QUEUED here and rebuilt below, behind the black screen, before the fade-in.
-	GameManager.sleep_until_morning()
+	_physical_for_player(origin, func(): GameManager.sleep_until_morning())
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	_wakes += 1
 	if passed_out:
-		_enter(_wake_area(), StringName(str(GameData.cfg("dungeon.hub.wake_spawn", "from_home"))))
-		_pose_for_sleep()
-		EventBus.notification_posted.emit(tr("NOTIF_PASSED_OUT_TITLE"), tr("NOTIF_PASSED_OUT"), "sleep")
-	_restore_player()
+		_physical_for_player(origin, func(): _enter(_wake_area(), StringName(str(GameData.cfg("dungeon.hub.wake_spawn", "from_home")))))
+		if not _physical_current(origin):
+			_retire_physical(origin)
+			return
+		_pose_for_sleep(origin)
+		if not _physical_current(origin):
+			_retire_physical(origin)
+			return
+		_physical_for_player(origin, func(): EventBus.notification_posted.emit(tr("NOTIF_PASSED_OUT_TITLE"), tr("NOTIF_PASSED_OUT"), "sleep"))
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
+	_restore_player(origin)
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	# The day-end autosave of a pass-out ran at 02:00 where the player collapsed; the morning at home is what a Continue must resume
 	# (sleep_until_morning emits no second day_ended). The bed's own day end is saved after its clock already reads the morning.
 	if passed_out and SaveManager.autosave_enabled:
-		SaveManager.autosave()
+		_physical_for_player(origin, func(): SaveManager.autosave())
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	await get_tree().create_timer(0.9).timeout
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	if _rebuild_queued:
-		_flush_rebuild()
-		_pose_for_sleep()                    # enter_area() of the new room must not wake the player before the fade-in
-	var tw2 := _fade_tween(0.0, 0.6)
-	await tw2.finished
-	player.call("end_talk")
+		_physical_for_player(origin, func(): _flush_rebuild())
+		_pose_for_sleep(origin)                    # enter_area() of the new room must not wake the player before the fade-in
+	await _physical_fade(origin, 0.0, 0.6)
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
+	_physical_for_player(origin, func(): player.call("end_talk"))
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	if "forced_clip" in player:
 		player.set("forced_clip", &"")
 	var pv: Variant = player.get("visual") if "visual" in player else null
 	if pv is Object and (pv as Object).has_method("play_loop"):
 		(pv as Object).call("play_loop", &"idle")
-	traveling = false
-	sleeping = false
-	_flush_rebuild()                         # a change that arrived while the fade-in ran
+	_physical_for_player(origin, func():
+		_retire_physical(origin)
+		_flush_rebuild())                    # a change that arrived while the fade-in ran
 
 
 ## The sleeping pose: the player is frozen (begin_talk) and plays the sleep clip until the fade-in is over.
-func _pose_for_sleep() -> void:
-	player.call("begin_talk", player.global_position)
+func _pose_for_sleep(origin: Dictionary) -> void:
+	if not _physical_current(origin): return
+	_physical_for_player(origin, func(): player.call("begin_talk", player.global_position))
+	if not _physical_current(origin): return
 	if "forced_clip" in player:
 		player.set("forced_clip", &"sleep")
 	var pv: Variant = player.get("visual") if "visual" in player else null
@@ -882,15 +1198,18 @@ func _pose_for_sleep() -> void:
 
 
 ## Energy and hearts back to full after sleeping or fainting (Player2D and the stub both have the fields).
-func _restore_player() -> void:
+func _restore_player(origin: Dictionary) -> void:
+	if not _physical_current(origin): return
 	if player.has_method("restore_after_sleep"):
-		player.call("restore_after_sleep")
+		_physical_for_player(origin, func(): player.call("restore_after_sleep"))
 		return
 	if "stamina" in player and "max_stamina" in player:
 		player.set("stamina", player.get("max_stamina"))
+	if not _physical_current(origin): return
 	if "half_hearts" in player and "max_half_hearts" in player:
 		player.set("half_hearts", player.get("max_half_hearts"))
-		EventBus.player_health_changed.emit(PlayerRegistry.local_id(), int(player.get("half_hearts")), int(player.get("max_half_hearts")))
+		if not _physical_current(origin): return
+		_physical_for_player(origin, func(): EventBus.player_health_changed.emit(&"p0", int(player.get("half_hearts")), int(player.get("max_half_hearts"))))
 
 
 func _wake_area() -> StringName:
@@ -900,57 +1219,101 @@ func _wake_area() -> StringName:
 
 ## Gentle defeat: the next morning at home, all items kept, a rounded-down gold fee.
 func _on_player_defeated(_player_id: StringName) -> void:
+	var origin := _physical_origin()
+	if origin.is_empty() or _player_id != &"p0": return
+	_retire_stale_physical()
 	if _faint_pending:
 		return
+	_physical_faint = origin
 	_faint_pending = true
 	var faint_day: int = GameManager.total_day()
 	# A night under way (a pass-out fading out, the bed) wakes the player at home itself, before or after this point.
 	var night_owned: bool = sleeping
 	var wakes_at_defeat: int = _wakes
 	await get_tree().create_timer(1.3, false).timeout    # the player lies fainted: a pause holds it, like the rest of the world
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	# travel() refuses while a fade / sleep sequence runs: wait it out so the rescue teleport is not silently skipped
 	var guard := 0
 	while (traveling or sleeping) and guard < 600:
 		await get_tree().process_frame
+		if not _physical_current(origin):
+			_retire_physical(origin)
+			return
 		guard += 1
 	# One wake-up per night (review SYS-01): a night that woke the player since the defeat already brought the morning and took the
 	# player home. A second sleep_until_morning() at 06:00 would run end_day() and skip a whole day, and a second fade, teleport and
 	# fee would rescue a player who is awake in bed. Only the run is closed and the player stood up where the night left them.
 	if night_owned or _wakes != wakes_at_defeat:
-		var run: Variant = Svc.static_call("res://scripts/dungeon/floors/dungeon_floors.gd", &"inst", [])
-		if run is Node and run.has_method("end_run"):
-			run.call("end_run", &"defeated")
+		_end_defeated_run(origin)
+		if not _physical_current(origin):
+			_retire_physical(origin)
+			return
 		if player.has_method("revive"):
-			player.call("revive", player.global_position)
-		_restore_player()
-		_pass_out_pending = false
-		_faint_pending = false
+			_physical_for_player(origin, func(): player.call("revive", player.global_position))
+		if not _physical_current(origin):
+			_retire_physical(origin)
+			return
+		_restore_player(origin)
+		_retire_physical(origin)
 		return
+	# Never displace an active presentation if the bounded wait expired.
+	if not _physical_operation.is_empty():
+		_retire_physical(origin)
+		return
+	_physical_operation = origin
 	traveling = true
-	var fade_out := _fade_tween(1.0, FADE_OUT)
-	await fade_out.finished
-	var floors: Variant = Svc.static_call("res://scripts/dungeon/floors/dungeon_floors.gd", &"inst", [])
-	if floors is Node and floors.has_method("end_run"):
-		floors.call("end_run", &"defeated")
+	await _physical_fade(origin, 1.0, FADE_OUT)
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
+	_end_defeated_run(origin)
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	# The calendar can also roll without a night: the day end passed during the delay above (midnight_passed is ignored while a faint
 	# is pending). With the clock at the morning a sleep_until_morning() would run end_day() and skip a whole day.
 	if GameManager.total_day() == faint_day or int(GameManager.hour) < GameManager.day_start_hour():
-		GameManager.sleep_until_morning()
-	var loss := floori(float(EconomyManager.gold) * clampf(float(GameData.cfg("dungeon.defeat.gold_loss_pct", 10)), 0.0, 100.0) / 100.0)
-	EconomyManager.spend_gold(loss)
-	_enter(_wake_area(), StringName(str(GameData.cfg("dungeon.hub.wake_spawn", "from_home"))))
+		_physical_for_player(origin, func(): GameManager.sleep_until_morning())
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
+	var loss: int = _physical_for_player(origin, func():
+		var fee := floori(float(EconomyManager.gold) * clampf(float(GameData.cfg("dungeon.defeat.gold_loss_pct", 10)), 0.0, 100.0) / 100.0)
+		EconomyManager.spend_gold(fee)
+		return fee)
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
+	_physical_for_player(origin, func(): _enter(_wake_area(), StringName(str(GameData.cfg("dungeon.hub.wake_spawn", "from_home")))))
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	if player.has_method("revive"):
-		player.call("revive", player.global_position)
-	_restore_player()
-	EventBus.whisper_requested.emit("WHISPER_FAINT")
-	Svc.static_call("res://scripts/dungeon_run/dungeon_run.gd", &"after_defeat", [loss])
+		_physical_for_player(origin, func(): player.call("revive", player.global_position))
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
+	_restore_player(origin)
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
+	_physical_for_player(origin, func(): EventBus.whisper_requested.emit("WHISPER_FAINT"))
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
+	_physical_for_player(origin, func(): Svc.static_call("res://scripts/dungeon_run/dungeon_run.gd", &"after_defeat", [loss]))
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
 	if SaveManager.autosave_enabled:
-		SaveManager.autosave()
-	var fade_in := _fade_tween(0.0, FADE_IN)
-	await fade_in.finished
-	traveling = false
-	_pass_out_pending = false
-	_faint_pending = false
+		_physical_for_player(origin, func(): SaveManager.autosave())
+	await _physical_fade(origin, 0.0, FADE_IN)
+	if not _physical_current(origin):
+		_retire_physical(origin)
+		return
+	_retire_physical(origin)
 
 
 func _on_quest_completed(_player_id: StringName, _quest_id: StringName) -> void:
@@ -1027,11 +1390,21 @@ func get_area_flag(area_id: StringName, key: String, default_value: Variant = nu
 
 ## The world part of a save (SaveManager hands it back through pending_world): area id, player position, crops, hotbar, placed
 ## items and per-area flags. Everything is JSON-safe (vectors as arrays).
+func rollback_projection() -> Dictionary:
+	if not ready_for_play or not is_inside_tree() or is_queued_for_deletion() or not is_instance_valid(area) or _host_profile == null: return {}
+	var attachment: Dictionary = _sample_host() if _host_attached() else (_host_departure.get("data", {}).duplicate(true) if not is_instance_valid(player) and _host_departure.get("generation") == _host_generation and _host_departure.get("area") == str(area.map.id) else {})
+	if attachment.is_empty(): return {}
+	return {"profile":_host_profile, "generation":_host_generation, "area_node":area, "data":_shared_dict(attachment), "vitals":{ "half_hearts":attachment.get("half_hearts"), "stamina":attachment.get("stamina"), "oil":attachment.get("oil")}}
+
 func to_dict() -> Dictionary:
+	var attachment := _host_attachment()
+	return {} if attachment.is_empty() else _shared_dict(attachment)
+
+func _shared_dict(attachment: Dictionary) -> Dictionary:
 	var d: Dictionary = {
 		"v": 1,
-		"area": String(area.map.id),
-		"player_pos": [player.global_position.x, player.global_position.y],
+		"area": attachment.area,
+		"player_pos": attachment.player_pos,
 		"placed": placed_items.duplicate(true),
 		"area_flags": area_flags.duplicate(true),
 	}
@@ -1041,34 +1414,48 @@ func to_dict() -> Dictionary:
 		d["farm"] = farm.call("to_dict")
 	if greenhouse_farm != null:
 		d["greenhouse_farm"] = greenhouse_farm.to_dict()
-	var hb: Variant = player.get("hotbar") if "hotbar" in player else null
-	if hb is Object and (hb as Object).has_method("to_dict"):
-		d["hotbar"] = (hb as Object).call("to_dict")
+	if attachment.has("hotbar"): d["hotbar"] = attachment.hotbar.duplicate(true)
 	return d
 
 
 ## Applies a world dict synchronously (no fade): the saved area, position, crops, hotbar, placed items and flags.
 func from_dict(d: Dictionary) -> void:
+	try_from_dict(d)
+
+func try_from_dict(d: Dictionary) -> Dictionary:
+	if GameManager.lifecycle_busy() or not persistence_ready() or not _host_live():
+		return {"ok":false, "code":"authority"}
+	var origin := _physical_origin()
 	var id := StringName(str(d.get("area", "")))
-	if id != &"" and has_area(id) and (area == null or area.map.id != id):
-		_enter(id, &"default")
-	_apply_saved(d)
+	if id != &"" and has_area(id) and area.map.id != id:
+		if not _enter(id, &"default"): return {"ok":false, "code":"area"}
+	if not _physical_attached(origin): return {"ok":false, "code":"authority"}
+	if not _apply_saved(d): return {"ok":false, "code":"authority"}
+	return {"ok":true, "code":""}
 
 
-func _apply_saved(d: Dictionary) -> void:
+func _apply_saved(d: Dictionary) -> bool:
+	var origin := _physical_origin()
+	if origin.is_empty(): return false
+	var bound_area: WeakRef = weakref(area)
+	var current: Callable = func(): return _physical_attached(origin) and bound_area.get_ref() == area
 	var saved_placed: Array = d.get("placed", []) if d.get("placed", []) is Array else []
 	var saved_orphans: Array = d.get("placed_orphans", []) if d.get("placed_orphans", []) is Array else []
 	var repaired: Dictionary = FarmEquipment.repair_placed(saved_placed, saved_orphans)
+	if not bool(current.call()): return false
 	placed_items = repaired["placed"]
 	placed_orphans = repaired["orphans"]
 	area_flags = (d.get("area_flags", {}) as Dictionary).duplicate(true) if d.get("area_flags", {}) is Dictionary else {}
 	if farm != null and farm.has_method("from_dict") and d.has("farm"):
 		farm.call("from_dict", d["farm"])
+		if not bool(current.call()): return false
 	if greenhouse_farm != null:
 		greenhouse_farm.from_dict(d.get("greenhouse_farm", {"plots": {}}))
+		if not bool(current.call()): return false
 	var hb: Variant = player.get("hotbar") if "hotbar" in player else null
 	if hb is Object and (hb as Object).has_method("from_dict") and d.has("hotbar"):
 		(hb as Object).call("from_dict", d["hotbar"])
+		if not bool(current.call()): return false
 	# The coordinates belong to the area the save was made in. When that map is gone (renamed, removed, a save from another build)
 	# the world entered the default area instead: keep the spawn point there, a position of another map is void in this one.
 	var saved_id := StringName(str(d.get("area", "")))
@@ -1076,10 +1463,13 @@ func _apply_saved(d: Dictionary) -> void:
 	if same_area and area != null and d.has("player_pos"):
 		# a save file is untrusted: anything but two finite numbers is a damaged position and starts at the spawn
 		var saved_pos: Variant = _saved_position(d["player_pos"])
-		player.global_position = _inside_area(saved_pos as Vector2) if saved_pos is Vector2 else area.get_spawn("default")
+		var position: Vector2 = _inside_area(saved_pos as Vector2) if saved_pos is Vector2 else area.get_spawn("default")
+		if not bool(current.call()): return false
+		player.global_position = position
 		if "camera" in player and player.get("camera") is Camera2D:
 			(player.get("camera") as Camera2D).reset_smoothing()
 	state_applied.emit()
+	return bool(current.call())
 
 
 ## `[x, y]` of a saved dictionary as a Vector2; null for anything else (not an Array, too short, an element that is no number -

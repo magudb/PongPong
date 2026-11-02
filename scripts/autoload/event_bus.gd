@@ -74,6 +74,9 @@ signal dialogue_started(npc_id: StringName, dialogue_id: StringName)
 signal npc_meeting_started(actor: Node)
 signal dialogue_line_shown(speaker: String, text: String, voice_key: String)
 signal dialogue_ended()
+## Transient exact pairing; legacy arities remain observational projections.
+signal dialogue_session_started(session: Dictionary)
+signal dialogue_session_ended(session: Dictionary, result: Dictionary, reason: String)
 
 # --- World / Adventure ---
 ## zone_entered / zone_exited are emitted ONLY by WorldRoot2D (the player entered an area or one of its zones);

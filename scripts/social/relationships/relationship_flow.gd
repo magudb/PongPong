@@ -56,16 +56,28 @@ static func reaction_lines(npc: String,result: Dictionary) -> Array:
 ## Use the shared staged runtime after consent, keeping the approved camera,
 ## clear-floor placement, skip behaviour and modal cleanup of every other scene.
 static func play_scene(npc: String,result: Dictionary,actor: WeakRef) -> bool:
-	var citizen: Node = actor.get_ref() if actor!=null else null
+	var citizen: Variant = actor.get_ref() if actor != null else null
+	if not preload("res://scripts/traetoppen/life/presenter_origin.gd")._live(citizen): return false
+	var origin: RefCounted = preload("res://scripts/traetoppen/life/presenter_origin.gd").capture(citizen)
+	return await play_scene_owned(npc, result, actor, origin)
+
+static func play_scene_owned(npc: String, result: Dictionary, actor: WeakRef, origin: RefCounted) -> bool:
+	if origin == null or not origin.current(): return false
+	var citizen: Variant = actor.get_ref() if actor != null else null
+	if not preload("res://scripts/traetoppen/life/presenter_origin.gd")._live(citizen): return false
 	var director := SocialManager.get_node_or_null("EventDirector") as SocialEventDirector
 	if citizen==null or director==null or director.runner.active!="":return false
 	var runtime := director.runner
 	var old := runtime.actor_resolver
-	var tree := citizen.get_tree()
-	runtime.actor_resolver = func(id: String) -> Node:
-		if id==npc:return actor.get_ref()
-		if old.is_valid():return old.call(id)
-		return PlayerRegistry.local_player(tree) if id=="player" else NpcDirector.node_of(id)
+	var installed := func(id: String) -> Variant:
+		if not origin.current(): return null
+		if id == npc:
+			var live_actor: Variant = actor.get_ref()
+			return live_actor if preload("res://scripts/traetoppen/life/presenter_origin.gd")._live(live_actor) else null
+		if old.is_valid(): return old.call(id)
+		return origin.body.get_ref() if id == "player" else NpcDirector.node_of(id)
+	runtime.actor_resolver = installed
+	var generation: int = runtime._generation + 1
 	var place := str(Routines.where_is(npc,Routines.now_ctx()).get("place",""))
 	var steps: Array = [{"act":"fade","to":"black","seconds":0.15},
 		{"act":"stand","who":npc,"mark":place.get_slice(".",1),"clear_view":true},
@@ -73,8 +85,9 @@ static func play_scene(npc: String,result: Dictionary,actor: WeakRef) -> bool:
 		{"act":"face","who":npc,"dir":"S"},{"act":"fade","to":"clear","seconds":0.15}]
 	for line in reaction_lines(npc,result):steps.append({"act":"say","who":npc,"text_key":str(line.text_key)})
 	steps.append({"act":"end"})
-	var played := await runtime.play("ev_relationship_"+npc+"_"+str(result.get("relationship",1)),{"meta":{"trigger":"automatic","npc":npc,"once":true},"steps":steps})
-	runtime.actor_resolver = old
+	var played := await runtime.play_owned("ev_relationship_"+npc+"_"+str(result.get("relationship",1)),{"meta":{"trigger":"automatic","npc":npc,"once":true},"steps":steps}, origin)
+	if runtime.actor_resolver == installed and (runtime._generation == generation or runtime.active == ""):
+		runtime.actor_resolver = old
 	return played
 
 static func fixed_on(td: int) -> bool:

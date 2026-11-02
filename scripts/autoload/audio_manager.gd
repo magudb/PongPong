@@ -42,6 +42,7 @@ var _own_faders := false                # true when this instance created per-in
 var _rain_id := ""
 var _cues: Array[Dictionary] = []
 var _shutting_down := false
+var _shutdown_request: Dictionary = {} # exact caller owns the global silence gate
 ## Weak references include replaced/stopped streams still retiring on the mixer thread.
 var _playbacks: Array[WeakRef] = []
 var _stream_paths: Dictionary = {}      # "dir|id" -> resolved path ("" = does not exist): ResourceLoader.exists is hit once per id
@@ -138,7 +139,7 @@ func _play(player: AudioStreamPlayer) -> void:
 
 func play_sfx(sfx_id: String, volume_db: float = NAN, pitch: float = 1.0) -> void:
 	sfx_id = sfx_id.trim_prefix("sfx/")
-	if _shutting_down:
+	if _shutdown_active():
 		_record("sfx",sfx_id,false)
 		return
 	var stream := _load_stream(SFX_DIR, sfx_id)
@@ -163,7 +164,7 @@ func play_sfx(sfx_id: String, volume_db: float = NAN, pitch: float = 1.0) -> voi
 
 func play_music(track_id: String, fade_seconds: float = 1.0) -> void:
 	track_id = track_id.trim_prefix("music/")
-	if _shutting_down:
+	if _shutdown_active():
 		_record("music",track_id,false)
 		return
 	var stream := _load_stream(MUSIC_DIR, track_id)
@@ -217,7 +218,7 @@ func _cancel_music_transition() -> void:
 
 func play_voice(voice_key: String, volume_db: float = NAN) -> void:
 	stop_voice()
-	if _shutting_down or not LocalizationManager.is_da():
+	if _shutdown_active() or not LocalizationManager.is_da():
 		_record("voice",voice_key,false)
 		return
 	var stream := _load_stream("", voice_key)
@@ -297,7 +298,7 @@ func _fade_ambient(index: int,target: float,seconds: float,stop := false) -> voi
 
 func play_ambience(id: String,fade_seconds := 1.5) -> void:
 	id = id.trim_prefix("amb/")
-	if _shutting_down:
+	if _shutdown_active():
 		_record("amb",id,false)
 		return
 	var stream := _load_stream(AMBIENT_DIR,id) if id!="" else null
@@ -322,7 +323,7 @@ func duck_ambience(db: float) -> void:
 	if _ambient_id!="":_fade_ambient(_ambient_slot,AMBIENT_LEVEL_DB+_ambient_duck,0.5)
 
 func play_rain(on: bool) -> void:
-	if _shutting_down:
+	if _shutdown_active():
 		_record("amb","rain" if on else "",false)
 		return
 	var id := "rain" if on else ""
@@ -353,20 +354,49 @@ func _silence_all() -> void:
 			player.stop()
 			player.stream = null
 
-func prepare_shutdown() -> void:
+func _shutdown_active() -> bool:
+	if not _shutdown_request.is_empty():
+		var current: Callable = _shutdown_request.current
+		if current.is_valid() and not current.call(): cancel_shutdown(_shutdown_request.id)
+	return _shutting_down
+
+func cancel_shutdown(receipt: RefCounted) -> void:
+	if _shutdown_request.is_empty() or _shutdown_request.id != receipt: return
+	_shutdown_request = {}
+	_shutting_down = false
+	# Streams were retired, not merely paused. Do not replay old-model audio;
+	# clear deduplication keys so the successor can request even the same ambience.
+	_ambient_id = ""
+	_rain_id = ""
+
+func prepare_shutdown(receipt: RefCounted = null, current: Callable = Callable()) -> void:
+	if receipt == null: receipt = RefCounted.new()
+	if current.is_valid() and not current.call(): return
+	if not _shutdown_request.is_empty():
+		if _shutdown_active(): return
+	_shutdown_request = {"id":receipt, "current":current}
 	_shutting_down = true
 	_silence_all()
 	# stop() queues a fade and deletion on the mixer thread; the main thread then
 	# retires the playback. A fixed delay races that handoff on a loaded runner.
 	var deadline := Time.get_ticks_msec()+SHUTDOWN_TIMEOUT_MS
 	while not _playbacks.is_empty():
+		if _shutdown_request.is_empty() or _shutdown_request.id != receipt: return
+		if current.is_valid() and not current.call():
+			cancel_shutdown(receipt)
+			return
 		_playbacks = _playbacks.filter(func(reference: WeakRef) -> bool: return reference.get_ref() != null)
 		if _playbacks.is_empty() or Time.get_ticks_msec()>=deadline:
 			break
 		await get_tree().process_frame
+	if _shutdown_request.is_empty() or _shutdown_request.id != receipt: return
+	if current.is_valid() and not current.call():
+		cancel_shutdown(receipt)
+		return
 	_playbacks.clear()
 
 func _exit_tree() -> void:
+	_shutdown_request = {}
 	_shutting_down = true
 	_silence_all()
 	if _own_faders:

@@ -9,6 +9,7 @@ var staged: Dictionary = {}
 var abandoned: Array[String] = []
 var _clock := 0.0
 var _target: StringName
+var _revision := 0
 
 func request(id: StringName) -> void:
 	if _target == id:
@@ -106,12 +107,18 @@ func _poll() -> void:
 			pending.erase(path)
 
 func finish() -> void:
-	while not pending.is_empty():
+	var revision := _revision
+	while revision == _revision and not pending.is_empty():
 		_poll()
 		if not pending.is_empty():
 			await get_tree().process_frame
 
 func release() -> void:
+	# Settle only the retired request's wait. A successor may request again
+	# before the old finish resumes; its revision must not adopt that work.
+	_revision += 1
+	abandoned.append_array(pending)
+	pending.clear()
 	staged.clear()
 	_target = &""
 

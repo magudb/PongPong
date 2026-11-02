@@ -33,6 +33,7 @@ static func select(npc: String, profile: Dictionary, inputs: Dictionary, previou
 			return prior
 	var best := {}
 	for goal in goals.values():
+		if inputs.has("eligible_goal_ids") and goal.id not in inputs.eligible_goal_ids: continue
 		var until := int(inputs.get("cooldowns", {}).get(goal.id, 0))
 		if prior.get("goal_id") == goal.id:
 			until = maxi(until, prior.cooldown_until_day)
@@ -176,6 +177,13 @@ static func _goal(npc: String, g: Dictionary, values: Dictionary, targets: Dicti
 
 
 static func _maps(inputs: Dictionary, goals: Dictionary) -> bool:
+	if inputs.has("eligible_goal_ids"):
+		var allowed: Variant = inputs.eligible_goal_ids
+		if not allowed is Array or allowed.size() > 4: return false
+		var seen := {}
+		for id in allowed:
+			if not _token(id) or not goals.has(id) or seen.has(id): return false
+			seen[id] = true
 	var triggers: Variant = inputs.get("triggers", {})
 	if typeof(triggers) != TYPE_DICTIONARY or triggers.size() > 1:
 		return false

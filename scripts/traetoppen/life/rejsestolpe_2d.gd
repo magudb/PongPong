@@ -3,6 +3,20 @@ extends Interactable2D
 var stop := ""
 var area: IsoArea
 var _busy := false
+var _busy_origin: RefCounted
+func _admit_operation(player: Variant) -> RefCounted:
+	if not is_enabled() or (_busy_origin != null and _busy_origin.current()): return null
+	var origin: RefCounted = preload("res://scripts/traetoppen/life/presenter_origin.gd").capture(self, player)
+	if origin == null: return null
+	_busy_origin = origin
+	_busy = true
+	return origin
+
+func _finish_operation(origin: RefCounted) -> void:
+	if _busy_origin != origin: return
+	_busy_origin = null
+	_busy = false
+
 static func create_marker(params: Dictionary, _pos: Vector2, _cell: Vector2i, target: IsoArea) -> Node:
 	var signpost := Rejsestolpe2D.new()
 	signpost.stop = str(params.get("id", "farm"))
@@ -17,16 +31,18 @@ func _process(_delta: float) -> void:
 	if player != null and Iso.to_ground(player.global_position - global_position).length() < 200:
 		GameManager.set_flag(StringName("ft_" + stop), 1)
 func interact(player: Node) -> void:
-	if _busy or not is_enabled():
-		return
-	_busy = true
+	var origin := _admit_operation(player)
+	if origin == null: return
 	var choices: Array = []
 	for row in LuaData.arr(GameManager.config_value("traetoppen.fast_travel.stops", [])):
 		if str(row.id) != stop and GameManager.flag_int(StringName(str(row.flag))) > 0:
 			choices.append({"text_key": "LIFE_STOP_" + str(row.id).to_upper(), "action": "travel", "spawn": str(row.spawn)})
 	choices.append({"text_key": "LIFE_LATER", "action": "close"})
-	var result := await LifeFlow.ask(self, "merchant_pip", [{"text_key": "LIFE_TRAVEL_INTRO"}], choices)
-	var choice := LuaData.dict(result.get("choice", {}))
-	if is_inside_tree() and is_instance_valid(player) and str(choice.get("action", "")) == "travel":
-		EventBus.area_change_requested.emit(area.map.id, StringName(str(choice.spawn)))
-	_busy = false
+	var destination := area.map.id
+	var ticket := LifeFlow.request_owned(self, "merchant_pip", [{"text_key": "LIFE_TRAVEL_INTRO"}], choices, origin,
+		func(_ticket, result):
+			var choice := LuaData.dict(result.get("choice", {}))
+			if origin.current() and bool(result.get("completed", false)) and str(choice.get("action", "")) == "travel":
+				EventBus.area_change_requested.emit(destination, StringName(str(choice.spawn))))
+	if ticket != null: await ticket.wait()
+	_finish_operation(origin)

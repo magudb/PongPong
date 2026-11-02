@@ -176,18 +176,49 @@ func expect_clean_since(mark_value: int, label: Variant = "") -> bool:
 
 ## Runs a program and waits for it (blocks the frame loop: keep it to short tools). Returns
 ## {code: int, output: String (stdout + stderr), lines: PackedStringArray}; code is non-zero (-1 / 127) when the program cannot start.
+var _tool_serial := 0
+
 func run_tool(exe: String, args: PackedStringArray = PackedStringArray()) -> Dictionary:
+	var directory := OS.get_environment("TT_TEST_TOOL_LOG_DIR")
+	var receipt := ""
+	if directory != "":
+		if not directory.is_absolute_path() or DirAccess.make_dir_recursive_absolute(directory) != OK:
+			return {"code": 2, "output": "Invalid tool receipt directory", "lines": PackedStringArray(["Invalid tool receipt directory"])}
+		_tool_serial += 1
+		receipt = directory.path_join("%d-%d-%d" % [OS.get_process_id(), get_instance_id(), _tool_serial])
+		if not _tool_receipt(receipt + ".started.json", {"phase": "started", "exe": exe, "args": args, "ticks_ms": Time.get_ticks_msec()}):
+			return {"code": 2, "output": "Could not journal tool launch", "lines": PackedStringArray(["Could not journal tool launch"])}
 	var out: Array = []
 	var code := OS.execute(exe, args, out, true)
 	var text := ""
 	for chunk in out:
 		text += str(chunk)
+	if receipt != "" and not _tool_receipt(receipt + ".finished.json", {"phase": "finished", "exe": exe, "args": args, "ticks_ms": Time.get_ticks_msec(), "code": code, "output": text}):
+		code = 2
+		text += "\nCould not journal tool completion"
 	return {"code": code, "output": text, "lines": text.split("\n", false)}
 
 
-## Runs a `-s` driver script of this project in a child Godot (headless, same project, same throwaway HOME).
+func _tool_receipt(path: String, record: Dictionary) -> bool:
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	if file == null: return false
+	file.store_string(JSON.stringify(record, "", true, true))
+	file.close()
+	return true
+
+
+## Runs a `-s` driver with the same throwaway HOME. An explicitly leased,
+## source-matched peer can be selected with TT_TEST_CHILD_PROJECT; the caller
+## owns its checkout lock and canonical path. The legacy default is unchanged.
 func run_godot_script(res_path: String, script_args: PackedStringArray = PackedStringArray()) -> Dictionary:
-	var args := PackedStringArray(["--headless", "--path", ProjectSettings.globalize_path("res://"), "-s", res_path])
+	var project := ProjectSettings.globalize_path("res://")
+	var configured := OS.get_environment("TT_TEST_CHILD_PROJECT")
+	if configured != "":
+		if not configured.is_absolute_path() or not FileAccess.file_exists(configured.path_join("project.godot")) or configured.simplify_path().trim_suffix("/") == project.simplify_path().trim_suffix("/"):
+			var message := "TT_TEST_CHILD_PROJECT requires a distinct existing absolute project"
+			return {"code": 2, "output": message, "lines": PackedStringArray([message])}
+		project = configured
+	var args := PackedStringArray(["--headless", "--path", project, "-s", res_path])
 	if not script_args.is_empty():
 		args.append("--")
 		args.append_array(script_args)

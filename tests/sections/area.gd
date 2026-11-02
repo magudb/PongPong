@@ -1061,7 +1061,7 @@ func _when_typos(area: IsoArea) -> Array[String]:
 ## RT6: IsoArea.evaluate_when delegates `&`, a leading `!` and the new kinds to SocialManager.eval_when (late bound), keeps the four old
 ## kinds on their fast path, answers FALSE for an unknown kind and reports it as `when_unknown_kind` in map.errors; the delegated specs
 ## are re-evaluated on the hour edge (raw game hours, CLOCK_26), on day_started, on friend_changed and on game events.
-func _when_grammar(t) -> void:
+func _when_grammar(t, after_absent_probe: Callable = Callable()) -> void:
 	var gm: Node = t.autoload("GameManager")
 	var bus: Node = t.autoload("EventBus")
 	var qm: Node = t.autoload("QuestManager")
@@ -1079,6 +1079,8 @@ func _when_grammar(t) -> void:
 		t.check("when_without_a_social_manager_is_local_and_quiet", local_ok, "no autoload: hearts / fest are false (also behind `!` and `&`), flag:a&!done:b and !flag:missing are evaluated here, no error")
 	else:
 		t.skip("area.when_without_a_social_manager_is_local_and_quiet: a real SocialManager autoload exists (S-core has landed); the absent-service fallback is only exercised while it does not")
+	# Optional fixture-only restoration must finish synchronously before any await.
+	if after_absent_probe.is_valid(): after_absent_probe.call()
 	Svc.override("SocialManager", fake)
 
 	# --- the new kinds, `&` and a leading `!` are answered by SocialManager.eval_when, once per call, with the spec as written

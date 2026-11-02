@@ -100,7 +100,8 @@ func _run(t,native: bool) -> void:
 	t.check("camera_released_on_end",world.player.camera.offset.is_zero_approx())
 	t.check("seen_event_refused",not director.request("event_reward"))
 	t.check("save_after_commit",SaveManager.save_game(3))
-	t.check("load_after_commit",SaveManager.load_game(3))
+	t.check("load_after_commit",await _load_and_resume(t,3))
+	world = t.world()
 	await t.frames(3)
 	t.check("rewards_paid_once_after_load",SocialManager.event_seen("event_reward") and EconomyManager.count_item(&"moonflower_seeds") == 2 and not director.request("event_reward"))
 	var skipped_before := runner.skipped_directives
@@ -124,7 +125,8 @@ func _run(t,native: bool) -> void:
 	await _finish_dialogue(t)
 	t.check("full_pack_reward_is_saved",SocialManager.to_dict().get("owed",{}).get("wood",0) == 1 and EconomyManager.count_item(&"wood") == 0)
 	t.check("full_pack_save_valid",SaveManager.save_game(3))
-	t.check("full_pack_reward_loads",SaveManager.load_game(3))
+	t.check("full_pack_reward_loads",await _load_and_resume(t,3))
+	world = t.world()
 	await t.frames(2)
 	t.check("owed_survives_load",SocialManager.to_dict().get("owed",{}).get("wood",0) == 1)
 	EconomyManager.remove_item(&"stone",99)
@@ -166,6 +168,15 @@ func _run(t,native: bool) -> void:
 	SocialFixture.uninstall()
 	director.reset()
 	t.new_game()
+
+## A successful model load deliberately leaves the old World incoherent (D09).
+## Gameplay fixture continuations consume the actual pending handoff in a fresh scene.
+func _load_and_resume(t, slot: int) -> bool:
+	var old_id: int = t.world().get_instance_id()
+	if not SaveManager.load_and_enter(slot): return false
+	var ready: bool = await t.until(func(): return t.world() != null and t.world().get_instance_id() != old_id and t.world().ready_for_play and not GameManager.lifecycle_busy(), 15.0)
+	ui = t.first(&"dialogue_ui")
+	return ready
 
 ## Esc during a staged step opens the skip confirm; the scene waits under it, and "Fortsæt" shows every page instead of answering them unseen.
 func _confirm_pauses_scene(t) -> void:

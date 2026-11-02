@@ -1,0 +1,111 @@
+extends RefCounted
+const SECTION := "lifecycle_scene_admission"
+const TIMEOUT_S := 90.0
+class PausedWorld extends WorldRoot2D:
+	signal warmed
+	func warm_clips() -> void: await warmed
+class SyncWorld extends WorldRoot2D:
+	func warm_clips() -> void: pass
+func run_windowed(t) -> void:
+	await run(t)
+func run(t) -> void:
+	await t.start_world()
+	var gm: Node = t.autoload("GameManager")
+	var saves: Node = t.autoload("SaveManager")
+	var bus: Node = t.autoload("EventBus")
+	saves.autosave_enabled = false
+	saves.save_dir = "user://admission_scene"
+	t.check("scene_saved_control", saves.save_game(0))
+	var terminal: Array = []
+	var completed := func(_slot): terminal.append(saves.try_load_game(-999))
+	bus.load_completed.connect(completed, CONNECT_ONE_SHOT)
+	var boot: Array = []
+	var spawned := func(_body): boot.append(saves.try_load_game(-999))
+	bus.player_spawned.connect(spawned, CONNECT_ONE_SHOT)
+	var engine_observers: Array = []
+	t.tree.scene_changed.connect(func():engine_observers.append(saves.try_load_game(-999)),CONNECT_ONE_SHOT)
+	var entered: Dictionary = saves.try_load_and_enter(0)
+	t.check("enter_returns_synchronous_request_success", entered.ok)
+	t.check("load_completed_listener_still_busy", terminal.size() == 1 and terminal[0].code == "busy")
+	t.check("queued_scene_holds_same_root_after_return", gm.lifecycle_busy())
+	await t.until(func(): return t.world() != null and t.world().ready_for_play, 15.0)
+	await t.frames(2)
+	t.check("bootstrap_observer_cannot_start_load", boot.size() == 1 and boot[0].code == "busy", str(boot))
+	t.check("engine_scene_changed_callback_still_busy",engine_observers.size() == 1 and engine_observers[0].code == "busy")
+	t.check("ready_tail_releases_for_next_deliberate_root", not gm.lifecycle_busy() and gm.try_start_new_game("After ready",gm.character_type).ok)
+	gm.set_flag(gm.FLAG_INTRO_PENDING,false)
+	if not gm.has_method("_request_lifecycle_world_node"):
+		t.check("exact_async_world_exit_and_sync_ready_controls",false,"Owned scene adapter absent")
+		return
+	# This is the same internal exact-instance handoff used by real public wrappers.
+	var w := PausedWorld.new()
+	var token: RefCounted = gm._begin_lifecycle(self,&"scene_test")
+	gm._stage_lifecycle(token,self,&"admitted",&"scene_request")
+	var err: int = gm._request_lifecycle_world_node(token,self,w)
+	gm._finish_lifecycle(token,self)
+	await t.until(func(): return t.tree.current_scene == w,10.0)
+	t.check("warm_await_keeps_busy_without_player_scope",err == OK and gm.lifecycle_busy() and not w.ready_for_play and PlayerRegistry.acting_id() == &"p0")
+	var stale_done: Callable = w.get("_lifecycle_bootstrap_done")
+	t.root.remove_child(w)
+	await t.frames(2)
+	t.check("retained_exited_coroutine_does_not_unlock_early",gm.lifecycle_busy() and not w.ready_for_play)
+	w.warmed.emit()
+	await t.frames(2)
+	t.check("cancelled_bootstrap_ack_quiescent_before_release",not gm.lifecycle_busy() and not w.ready_for_play)
+	w.free()
+	var next: RefCounted = gm._begin_lifecycle(self,&"successor")
+	stale_done.call(true)
+	await t.frames(1)
+	t.check("stale_exact_world_ack_cannot_release_successor",gm.lifecycle_busy())
+	gm._finish_lifecycle(next,self)
+	var sync := SyncWorld.new()
+	token = gm._begin_lifecycle(self,&"sync_scene")
+	gm._stage_lifecycle(token,self,&"admitted",&"scene_request")
+	err = gm._request_lifecycle_world_node(token,self,sync)
+	gm._finish_lifecycle(token,self)
+	await t.until(func(): return t.tree.current_scene == sync,10.0)
+	await t.frames(2)
+	t.check("synchronous_ready_before_scene_ack_releases_once",err == OK and sync.ready_for_play and not gm.lifecycle_busy())
+	var removed := PausedWorld.new()
+	token = gm._begin_lifecycle(self,&"destroyed_scene")
+	gm._stage_lifecycle(token,self,&"admitted",&"scene_request")
+	err = gm._request_lifecycle_world_node(token,self,removed)
+	gm._finish_lifecycle(token,self)
+	t.tree.scene_changed.emit() # wrong current scene must not acknowledge the queued instance
+	t.check("wrong_scene_signal_cannot_unlock_pending_world",gm.lifecycle_busy())
+	await t.until(func():return t.tree.current_scene == removed,10.0)
+	var removed_ref: WeakRef = weakref(removed)
+	removed.queue_free()
+	await t.frames(4)
+	t.check("freed_bootstrap_cannot_resume_and_releases_safely",err == OK and removed_ref.get_ref() == null and not gm.lifecycle_busy())
+	var bad := Node.new()
+	token = gm._begin_lifecycle(self,&"bad_world")
+	gm._stage_lifecycle(token,self,&"admitted",&"scene_request")
+	err = gm._request_lifecycle_world_node(token,self,bad)
+	gm._finish_lifecycle(token,self)
+	t.check("request_failure_releases_without_bootstrap",err == ERR_INVALID_DATA and not gm.lifecycle_busy())
+	bad.free()
+	var attached := SyncWorld.new()
+	token = gm._begin_lifecycle(self,&"caller_tail")
+	gm._stage_lifecycle(token,self,&"admitted",&"scene_request")
+	err = gm._request_lifecycle_world_node(token,self,attached,t.root)
+	t.check("sync_ready_cannot_release_before_owner_tail",err == OK and attached.ready_for_play and gm.lifecycle_busy())
+	gm._finish_lifecycle(token,self)
+	t.check("sync_owner_tail_final_action_releases",not gm.lifecycle_busy())
+	attached.free()
+	# Exit settlement must not unlock a retained live coroutine, but destruction
+	# later (without warmed) must schedule a new check after that script is gone.
+	var delayed := PausedWorld.new()
+	token = gm._begin_lifecycle(self,&"delayed_destruction")
+	gm._stage_lifecycle(token,self,&"admitted",&"scene_request")
+	err = gm._request_lifecycle_world_node(token,self,delayed,t.root)
+	gm._finish_lifecycle(token,self)
+	t.root.remove_child(delayed)
+	await t.frames(3)
+	t.check("delayed_destroy_retained_live_remains_busy",err == OK and gm.lifecycle_busy() and not delayed.ready_for_play)
+	var delayed_ref: WeakRef = weakref(delayed)
+	delayed.free()
+	await t.frames(4)
+	t.check("delayed_destroy_without_warm_releases_after_destruction",delayed_ref.get_ref() == null and not gm.lifecycle_busy())
+	var genuine: Dictionary = gm.try_start_new_game("After delayed destruction",gm.character_type)
+	t.check("delayed_destroy_next_genuine_root_admitted",genuine.ok and not gm.lifecycle_busy())

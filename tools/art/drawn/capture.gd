@@ -34,10 +34,9 @@ func _run() -> void:
 		quit()
 		return
 	var manager := root.get_node("GameManager")
-	manager.start_new_game("Art review", 0)
-	var world := load("res://scenes/main/world.tscn").instantiate() as Node2D
-	root.add_child(world)
-	current_scene = world
+	var admitted: Dictionary = manager.try_start_new_game_attached(root,"Art review",0,"",&"",true,Callable(),true)
+	if not admitted.ok: return
+	var world: Node2D = admitted.world
 	for frame in 120:
 		await process_frame
 		if frame > 15 and not bool(world.get("traveling")):

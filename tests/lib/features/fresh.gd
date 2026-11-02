@@ -14,16 +14,16 @@ const FEATURE_NODES := ["HomeManager", "FurnitureManager", "WardrobeManager", "L
 const DEFAULT_SEED := 424242
 
 
-static func new_game(t = null, character: String = "", p_name: String = "Tester", farm: String = "Testgaarden", skin: String = "", rng_seed: int = DEFAULT_SEED) -> void:
+static func new_game(t = null, character: String = "", p_name: String = "Tester", farm: String = "Testgaarden", skin: String = "", rng_seed: int = DEFAULT_SEED) -> bool:
 	if t != null:
-		t.new_game(character, p_name, farm, skin)
+		if not t.new_game(character, p_name, farm, skin): return false
 	else:
 		var gm := Svc.node("GameManager")
-		if gm != null:
-			gm.start_new_game(p_name, _character_type(character), farm, StringName(skin))
+		if gm == null or not gm.try_start_new_game(p_name, _character_type(character), farm, StringName(skin)).ok: return false
 	reset_quests()
 	reset_features()
 	seed_features(rng_seed)
+	return true
 
 
 ## reset() of every feature manager that exists (new_game_started already does it for managers that listen; this makes a test independent of that wiring)

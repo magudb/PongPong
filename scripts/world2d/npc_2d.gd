@@ -43,6 +43,9 @@ var _bubble_label: Label
 var _bubble_shown := "-"              # the kind the label shows now ("-" = never drawn): the label is restyled only when it changes
 var _bubble_queued := false
 var _talk_player: Node
+var _talk_generation := 0
+var _lease: RefCounted
+var _talk_pages: Dictionary = {}
 var _screen: Node
 var _act := &"idle"
 var _walk_generation := 0
@@ -217,110 +220,167 @@ func _can_stand(point: Vector2) -> bool:
 	_query.collision_mask = collision_mask
 	return get_world_2d().direct_space_state.intersect_shape(_query, 1).is_empty()
 
-func interact(player: Node) -> void:
-	if is_talking or not _enabled or not is_inside_tree() or GameManager.is_modal_open():
-		return
-	var owner_id := PlayerRegistry.registered_id(player)
-	if owner_id == &"":
-		return
-	# Scope only synchronous work. Both legacy dialogue effects and physical
-	# deliveries belong to this registered body, not local/ambient identity.
-	var page: Dictionary = PlayerRegistry.for_player(owner_id, func():
-		if not bool(Svc.static_call("res://scripts/ghostfam/hook/ghostfam_hook.gd",&"before_talk",[self,player],true)):
+func interact(player: Variant) -> RefCounted:
+	return _request_talk(player, {})
+
+## Callback producers can synchronously end/restart a session or remove its body.
+## Validate at the caller before every subsequent typed/body/progress handoff.
+func _owns_dialogue(player: Variant, owner_id: StringName, session: int, talking := true) -> bool:
+	return is_instance_valid(player) and player is Node and player.is_inside_tree() and not player.is_queued_for_deletion() and is_inside_tree() and not is_queued_for_deletion() and _talk_generation == session and is_talking == talking and (not talking or _talk_player == player) and PlayerRegistry.registered_id(player) == owner_id and PlayerRegistry.by_id(owner_id) == player and owner_id != &""
+
+## Explicit authored start (tutorial/compatibility), NOT a deferred continuation.
+func _begin_followup(player: Variant, page: Dictionary) -> RefCounted:
+	return _request_talk(player, page)
+
+func _request_talk(player: Variant, authored: Dictionary) -> RefCounted:
+	if not is_instance_valid(player) or not player is Node or not player.is_inside_tree() or player.is_queued_for_deletion(): return null
+	if is_talking or not _enabled or not is_inside_tree() or is_queued_for_deletion() or GameManager.is_modal_open(): return null
+	var pid := PlayerRegistry.registered_id(player)
+	if pid == &"": return null
+	_screen = get_tree().get_first_node_in_group("dialogue_ui")
+	if _screen == null: return null
+	var body: WeakRef = weakref(player)
+	# This authenticated physical producer is an admission, not a query. The
+	# legacy builder initialized a first joined hero's row later; do it before
+	# callbacks so its first real conversation also has an exact root identity.
+	if not PlayerRegistry._states.has(pid): PlayerRegistry.state(pid)
+	# Capture before request admission/preparation can call authored observers.
+	# Essential completion keeps this model/run even if its body later departs.
+	var origin: RefCounted = preload("res://scripts/traetoppen/life/presenter_origin.gd").capture(self, player)
+	if origin == null: return null
+	var captured := {"origin": origin, "ui": weakref(_screen), "area": weakref(area) if is_instance_valid(area) else null,
+		"living": SocialManager.living_encounter_origin(pid)}
+	var completion := preload("res://scripts/world2d/npc_talk_completion.gd").new()
+	completion.origin = origin
+	completion.ui = captured.ui
+	completion.area = captured.area
+	completion.actor = weakref(self)
+	completion.npc = str(npc_id)
+	captured["completion"] = completion
+	return _screen.request_page(self, {"id": str(npc_id), "name_key": display_name_key}, [], [], {
+		"body": player, "events": true, "module": str(dialogue_id),
+		"prepare": _prepare_talk.bind(body, pid, authored.duplicate(true), captured), "started": _start_meeting,
+		"commit": completion.commit, "settle": completion.settle, "after": completion.after})
+
+func _prepare_talk(ticket: RefCounted, body: WeakRef, pid: StringName, authored: Dictionary, captured: Dictionary) -> Dictionary:
+	_lease = ticket
+	_talk_generation += 1
+	var session := _talk_generation
+	var state := {"body": body, "pid": pid, "generation": session, "page": {}, "living": {}, "living_origin": captured.living,
+		"talk_origin": captured.origin, "talk_ui": captured.ui, "talk_area": captured.area}
+	state["effects_current"] = captured.completion.current.bind(ticket)
+	state["living_area"] = captured.area
+	var living_director: Variant = Svc.static_call("res://scripts/social/living/living_pair.gd", &"director_of", [self], null)
+	state["living_director"] = weakref(living_director) if is_instance_valid(living_director) else null
+	_talk_pages[ticket] = state
+	return PlayerRegistry.for_player(pid, func():
+		var player: Variant = body.get_ref()
+		if not _screen.valid_owner(ticket): return {}
+		if authored.is_empty() and not bool(Svc.static_call("res://scripts/ghostfam/hook/ghostfam_hook.gd", &"before_talk", [self, player], true)):
+			_screen.close_owned(ticket, "hook")
 			return {}
+		if not _screen.valid_owner(ticket): return {}
 		is_talking = true
 		_talk_player = player
 		_held = true
-		if player.has_method("begin_talk"):
-			player.begin_talk(global_position)
-			visual.set_facing_direction(player.global_position - global_position)
+		_screen.acquire_hold(ticket, global_position)
+		if not _screen.valid_owner(ticket) or _lease != ticket: return {}
+		visual.set_facing_direction(player.global_position - global_position)
 		set_act("talk")
-		# Build before signals can synchronously complete a quest.
-		var ctx := NpcDialogue.context(str(npc_id), player)
-		var initial := NpcDialogue.build(str(npc_id), str(dialogue_id), ctx, guest)
-		NpcDialogue.begin(str(npc_id), initial)
-		EventBus.dialogue_started.emit(npc_id, dialogue_id)
-		EventBus.npc_meeting_started.emit(self)
-		return initial)
-	if not is_talking:
-		return
-	_screen = get_tree().get_first_node_in_group("dialogue_ui")
-	if _screen == null:
-		_end_talk(0, false)
-		return
-	await _page(page)
+		state.page = NpcDialogue.build(str(npc_id), str(dialogue_id), NpcDialogue.context(str(npc_id), player), guest) if authored.is_empty() else authored
+		captured.completion.page = preload("res://scripts/ui/dialogue_lease.gd").freeze(state.page.duplicate(true))
+		NpcDialogue.begin(str(npc_id), state.page)
+		return state.page)
 
-func _page(page: Dictionary) -> void:
-	var result: Dictionary = await _screen.show_lines({"id": str(npc_id), "name_key": display_name_key}, LuaData.arr(page.get("lines", [])), LuaData.arr(page.get("choices", [])))
-	if not is_talking:
-		return
-	var player := _talk_player
-	var owner_id := PlayerRegistry.registered_id(player)
-	if owner_id == &"":
-		_end_talk(0, false)
-		return
-	# Re-resolve after the await; the owner may have left the live roster.
-	PlayerRegistry.for_player(owner_id, func():
-		NpcDialogue.finish(str(npc_id), page, result)
-		_end_talk(int(result.get("lines_shown", 0)), bool(result.get("completed", false)))
-		Bridge.finish_topic(str(npc_id), page, bool(result.get("completed", false)), int(result.get("lines_shown", 0)))
-		var choice := LuaData.dict(result.get("choice", {}))
-		var action := str(choice.get("action", "close"))
-		var social := Bridge.action(str(npc_id), action, choice)
-		if bool(social.get("handled", false)):
-			if not LuaData.dict(social.get("page", {})).is_empty():
-				_begin_followup.call_deferred(player, social.page)
-		elif NpcDialogue.action(str(npc_id), action, choice, guest):
-			interact.call_deferred(player))
+func _start_meeting(ticket: RefCounted) -> void:
+	if _lease != ticket or not _screen.valid_owner(ticket): return
+	var state: Dictionary = _talk_pages[ticket]
+	PlayerRegistry.for_player(state.pid, func():
+		if _screen.valid_owner(ticket) and is_talking: EventBus.npc_meeting_started.emit(self))
 
-func _begin_followup(player: Node, page: Dictionary) -> void:
-	if is_talking or not is_inside_tree() or GameManager.is_modal_open():
-		return
-	var owner_id := PlayerRegistry.registered_id(player)
-	if owner_id == &"":
-		return
-	_screen = get_tree().get_first_node_in_group("dialogue_ui")
-	if _screen == null:
-		return
-	PlayerRegistry.for_player(owner_id, func():
-		is_talking = true
-		_held = true
-		_talk_player = player
-		if player.has_method("begin_talk"):
-			player.begin_talk(global_position)
-		NpcDialogue.begin(str(npc_id), page)
-		EventBus.dialogue_started.emit(npc_id, dialogue_id)
-		EventBus.npc_meeting_started.emit(self))
-	await _page(page)
-
-func _end_talk(lines: int, completed: bool) -> void:
-	if not is_talking:
-		return
-	var owner_id := PlayerRegistry.registered_id(_talk_player)
+func _release_talk(ticket: RefCounted) -> void:
+	if _lease != ticket: return
 	is_talking = false
 	_held = false
-	if is_instance_valid(_talk_player) and _talk_player.has_method("end_talk"):
-		_talk_player.end_talk()
 	_talk_player = null
-	if owner_id != &"":
-		PlayerRegistry.for_player(owner_id, func():
-			SocialManager.on_conversation_finished(str(npc_id), lines, completed)
-			EventBus.dialogue_ended.emit())
-	else:
-		EventBus.dialogue_ended.emit()
-	set_act("hover" if bool(_row.get("hover", false)) else "idle")
-	_update_bubble()
+	_lease = null
+	if is_instance_valid(_screen): _screen.release_hold(ticket)
+	if is_inside_tree():
+		set_act("hover" if bool(_row.get("hover", false)) else "idle")
+		_update_bubble()
+
+## Called only from the UI's frozen terminal, before callback-producing teardown.
+func _commit_talk(ticket: RefCounted, result: Dictionary) -> bool:
+	if not _talk_pages.has(ticket) or _lease != ticket or not _screen.valid_owner(ticket): return false
+	var state: Dictionary = _talk_pages[ticket]
+	if not state.talk_origin.current(): return false
+	if not is_same(_screen.completion_result(ticket), result): return false
+	state["living_terminal"] = result
+	SocialManager.living_settle_encounter(self, ticket)
+	return true
+
+func _settle_talk(ticket: RefCounted, result: Dictionary) -> void:
+	if not _talk_pages.has(ticket): return
+	var state: Dictionary = _talk_pages[ticket]
+	PlayerRegistry.for_player(state.pid, func():
+		if _lease != ticket or not _screen.valid_owner(ticket) or not state.effects_current.call(): return
+		state.living = Svc.static_call("res://scripts/social/living/living_dialogue.gd", &"action", [self, state.body.get_ref(), state.page, result], {})
+		if not state.effects_current.call() or not _screen.valid_owner(ticket): return
+		if result.get("choice", {}).get("action") == "living_pause":
+			state.living = Svc.static_call("res://scripts/social/living/living_dialogue.gd", &"pause_page", [str(npc_id), state.pid], {})
+		var cast_action: String = result.get("choice", {}).get("action", "")
+		if cast_action in ["living_motivation", "living_correct"]:
+			state.living = Svc.static_call("res://scripts/social/living/living_cast.gd", &"page", [str(npc_id), state.pid, cast_action == "living_correct"], {}))
+	_release_talk(ticket)
+
+func _after_talk(ticket: RefCounted, result: Dictionary) -> void:
+	if not _talk_pages.has(ticket): return
+	var state: Dictionary = _talk_pages[ticket]
+	_talk_pages.erase(ticket)
+	PlayerRegistry.for_player(state.pid, func():
+		# Essential story completion was handled by the retained non-Node owner.
+		if not state.talk_origin.current() or not state.effects_current.call(): return
+		var screen: Variant = state.talk_ui.get_ref()
+		if not screen.optional_allowed(ticket): return
+		var choice := LuaData.dict(result.get("choice", {}))
+		var action := str(choice.get("action", "close"))
+		var social := {"handled": true, "page": state.living} if action in ["living_activity", "living_pause", "living_help", "living_defer", "living_decline", "living_ack", "living_clarify", "living_motivation", "living_listen", "living_space", "living_correct", "living_confirm"] else Bridge.action(str(npc_id), action, choice)
+		if not state.talk_origin.current() or not state.effects_current.call() or not screen.optional_allowed(ticket): return
+		var permit: RefCounted
+		if bool(social.get("handled", false)):
+			if not LuaData.dict(social.get("page", {})).is_empty(): permit = screen.continuation(ticket, "followup", social.page)
+		elif NpcDialogue.action(str(npc_id), action, choice, guest):
+			if not state.talk_origin.current() or not state.effects_current.call() or not screen.optional_allowed(ticket): return
+			permit = screen.continuation(ticket, "quizretry")
+		if permit != null: _dispatch_talk.call_deferred(weakref(screen), permit, state.talk_origin, state.talk_area))
+
+func _dispatch_talk(ui_ref: WeakRef, permit: RefCounted, origin: RefCounted, area_ref: WeakRef) -> void:
+	var ui: Variant = ui_ref.get_ref()
+	if not is_instance_valid(ui) or not ui is Node or not ui.is_inside_tree() or ui.is_queued_for_deletion(): return
+	if origin == null or not origin.current(): return
+	if area_ref != null:
+		var original_area: Variant = area_ref.get_ref()
+		if not is_instance_valid(original_area) or not original_area is Node or not original_area.is_inside_tree() or original_area.is_queued_for_deletion() or area != original_area: return
+	var dispatch: Dictionary = ui.dispatch_continuation(permit)
+	if dispatch.is_empty(): return
+	var body: Variant = dispatch.origin.body.get_ref()
+	# Revalidate before the Variant enters any Node-typed roster/content API.
+	if not is_instance_valid(body) or not body is Node or not body.is_inside_tree() or body.is_queued_for_deletion(): return
+	if PlayerRegistry.registered_id(body) != dispatch.origin.pid or PlayerRegistry.by_id(dispatch.origin.pid) != body: return
+	_request_talk(body, dispatch.payload if dispatch.kind == "followup" else {})
+
+func _end_talk(lines: int, completed: bool) -> void:
+	if _lease == null: return
+	var ticket := _lease
+	if is_instance_valid(_screen): _screen.close_owned(ticket)
+	_release_talk(ticket)
 
 func handle_choice(action: String, data: Dictionary = {}) -> void:
 	NpcDialogue.action(str(npc_id), action, data, guest)
 
 func _exit_tree() -> void:
 	_finish_walk(false)
-	if is_talking:
-		# Clear ownership before resuming the awaiting page on screen disposal.
-		_end_talk(0, false)
-		if is_instance_valid(_screen) and _screen.is_open():
-			_screen.close()
+	_end_talk(0, false)
 	_walk_generation += 1
 
 func set_driven(enabled: bool) -> void:
@@ -365,17 +425,32 @@ func face(direction: Variant) -> void:
 	var index := Iso.DIR8_NAMES.find(str(direction)) if direction is String or direction is StringName else int(direction)
 	visual.set_direction_index(clampi(index, 0, 7))
 
+var _event_hold: RefCounted
+
 func event_begin() -> void:
+	event_begin_owned(RefCounted.new())
+
+func event_hold_current(receipt: RefCounted) -> bool:
+	return receipt != null and _event_hold == receipt
+
+func event_begin_owned(receipt: RefCounted) -> void:
+	_event_hold = receipt
 	_event = true
 	_bubble = ""
 	_update_bubble()
 	hold(true)
 
 func event_end() -> void:
+	event_end_owned(_event_hold)
+
+func event_end_owned(receipt: RefCounted) -> void:
+	if not event_hold_current(receipt): return
+	_event_hold = null
 	_event = false
 	_bubble = ""
-	_finish_walk(false)
 	_walk_generation += 1
+	_finish_walk(false)
+	if _event_hold != null: return
 	hold(false)
 	Svc.static_call("res://scripts/towns/npc_director.gd", &"resync", [str(npc_id)])
 

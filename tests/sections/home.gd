@@ -220,6 +220,7 @@ var _lm: Node
 var _rec: Rec
 var _saved_autosave := true
 var _saved_dir := ""
+var _dialogue_fixture: Node
 
 
 func run(t) -> void:
@@ -322,6 +323,7 @@ func _atomic_transfers(t) -> void:
 
 
 func _cleanup(t) -> void:
+	if is_instance_valid(_dialogue_fixture): _dialogue_fixture.free()
 	_rec.detach(_bus)
 	Svc.clear_overrides()
 	_gm.clear_config_overrides()
@@ -694,14 +696,29 @@ func _break(row: Dictionary, proxy: QuestProxy, fake: LevelFake) -> Callable:
 	return func() -> void: pass
 
 
+## These are genuine claimed sessions. Bare broadcasts remain negative controls.
+func _begin_dialogue(npc: String) -> RefCounted:
+	var screen: Node = _t.tree.get_first_node_in_group("dialogue_ui")
+	if screen == null:
+		_dialogue_fixture = load("res://scenes/ui/dialogue_ui.tscn").instantiate()
+		_t.tree.root.add_child(_dialogue_fixture)
+		screen = _dialogue_fixture
+	return screen.request_page(null, {"id":npc, "name_key":"NPC_" + npc.to_upper()}, [{"text_key":"DLG_NEUTRAL"}], [], {"events":true, "module":npc})
+
+func _end_dialogue(ticket: RefCounted, completed := false) -> void:
+	var screen: Node = _t.tree.get_first_node_in_group("dialogue_ui")
+	if screen == null or not screen.optional_allowed(ticket): return
+	if completed and screen._active == ticket: screen._finish(true)
+	else: screen.close_owned(ticket)
+
 ## the builder has celebrated: the flag goes back to 0 and the dialogue is idle again (runs for every tier of the ladder)
 func _celebrate_and_check(t, n: int) -> void:
-	_bus.dialogue_started.emit(&"mayor_lyra", &"mayor_lyra")
-	_bus.dialogue_ended.emit()
+	var other := _begin_dialogue("mayor_lyra")
+	_end_dialogue(other)
 	var kept: bool = _gm.flag_int(&"home_upgrade_done", 0) == n
-	_bus.dialogue_started.emit(&"fairy_builder", &"fairy_builder")
+	var builder := _begin_dialogue("fairy_builder")
 	t.expect(_gm.flag_int(&"home_upgrade_done", 0) == n, "tier %d: the flag stays while the dialogue with the builder is open" % n)
-	_bus.dialogue_ended.emit()
+	_end_dialogue(builder)
 	t.expect(kept and _gm.flag_int(&"home_upgrade_done", -1) == 0 and _builder_line() == "t%02d_idle" % n, "tier %d: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (%s)" % [n, _builder_line()])
 
 
@@ -766,16 +783,19 @@ func _flag_mirror(t) -> void:
 	_bus.dialogue_ended.emit()
 	_ck(_gm.flag_int(&"home_upgrade_done", 0) == 3, "a dialogue_ended without a dialogue with the builder clears nothing", dbag)
 	_bus.dialogue_started.emit(&"fairy_builder", &"fairy_builder")
+	_bus.dialogue_ended.emit()
+	_ck(_gm.flag_int(&"home_upgrade_done", 0) == 3, "bare builder notifications do not authenticate a celebration", dbag)
+	var building := _begin_dialogue("fairy_builder")
 	_gm.set_flag(&"home_upgrade_done", 4)
-	_bus.dialogue_ended.emit()
+	_end_dialogue(building)
 	_ck(_gm.flag_int(&"home_upgrade_done", 0) == 4, "a tier that finished DURING the dialogue is celebrated at the next one", dbag)
-	_bus.dialogue_started.emit(&"fairy_builder", &"fairy_builder")
-	_bus.dialogue_ended.emit()
+	var celebration := _begin_dialogue("fairy_builder")
+	_end_dialogue(celebration, true)
 	_bus.dialogue_ended.emit()
 	_ck(_gm.flag_int(&"home_upgrade_done", -1) == 0, "a dialogue with fairy_builder clears the flag; a second dialogue_ended does nothing", dbag)
-	_bus.dialogue_started.emit(&"mayor_lyra", &"mayor_lyra")
+	var other := _begin_dialogue("mayor_lyra")
 	_gm.set_flag(&"home_upgrade_done", 5)
-	_bus.dialogue_ended.emit()
+	_end_dialogue(other)
 	_ck(_gm.flag_int(&"home_upgrade_done", 0) == 5, "another citizen never clears it", dbag)
 	t.check("upgrade_done_cleared_after_builder_dialogue", dbag.is_empty(), "home_upgrade_done is cleared after a dialogue with fairy_builder, never by another citizen (and the REAL dialogue goes from `done` to `idle` for every tier of the ladder above)")
 	_hm.reset()

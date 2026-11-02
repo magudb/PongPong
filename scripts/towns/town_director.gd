@@ -73,6 +73,7 @@ func _enter_tree() -> void:
 	EventBus.time_of_day_changed.connect(_clock)
 	EventBus.day_started.connect(_morning)
 	EventBus.area_changed.connect(_area_changed)
+	EventBus.game_event.connect(_living_schedule_changed)
 	if is_node_ready():
 		_initialize.call_deferred(_generation)
 
@@ -144,7 +145,7 @@ func _exit_tree() -> void:
 	_prepare_ticks = 0
 	_generation += 1
 	NpcDirector.unregister(self)
-	for pair in [[EventBus.time_of_day_changed, _clock], [EventBus.day_started, _morning], [EventBus.area_changed, _area_changed]]:
+	for pair in [[EventBus.time_of_day_changed, _clock], [EventBus.day_started, _morning], [EventBus.area_changed, _area_changed], [EventBus.game_event, _living_schedule_changed]]:
 		if pair[0].is_connected(pair[1]):
 			pair[0].disconnect(pair[1])
 	clear_all()
@@ -185,6 +186,11 @@ func _remove(id: String) -> void:
 func _context() -> Dictionary:
 	return Routines.now_ctx() if _ctx_override.is_empty() else _ctx_override.duplicate(true)
 
+func _living_schedule_changed(id: StringName, _data: Dictionary) -> void:
+	if id == &"living_schedule_changed" and ready_for_population:
+		# Existing physics retry is soft and skips held/talking bodies.
+		_dirty = true
+
 func _clock(hour: int, minute: int) -> void:
 	if not ready_for_population:
 		return
@@ -196,6 +202,8 @@ func _clock(hour: int, minute: int) -> void:
 	if minute == 0:
 		EventBus.game_event.emit(&"routine_changed", {"hour": hour})
 	resync(skipped, "", ctx)
+	SocialManager.living_observe_pairs(self)
+	SocialManager.living_observe_cast(self)
 	_emit_shop_changes(false, ctx)
 
 func _morning(_day: int, _season: StringName) -> void:
@@ -551,6 +559,8 @@ func _physics_process(delta: float) -> void:
 		return
 	if not ready_for_population or not running or (GameManager.current_phase != GameManager.GamePhase.PLAYING and _ctx_override.is_empty()):
 		return
+	if not SocialManager._living_pair_run.is_empty(): SocialManager.living_guard_pair(self)
+	if not SocialManager._living_cast_runs.is_empty(): SocialManager.living_guard_cast(self)
 	game_hours += delta * clock_rate() / 60.0
 	if not _staging.is_empty():
 		_poll_staging()

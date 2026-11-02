@@ -120,6 +120,7 @@ func _remember(row: Control) -> void:
 ## A save already exists: ask first (Cancel is the default) and name the run, so nobody starts over by accident. The run is kept
 ## either way (its manual slot, or its autosave as SaveManager.PREV_AUTO_SLOT), which the question says.
 func _on_new_game() -> void:
+	if GameManager.lifecycle_busy(): return
 	_remember(%NewGameButton)
 	var latest: int = SaveManager.get_latest_slot()
 	if latest != SaveManager.NO_SLOT:
@@ -129,10 +130,12 @@ func _on_new_game() -> void:
 			run_name = str(summary.get("player_name", ""))
 		if not await UiConfirm.ask(self, "TITLE_NEW_GAME_TITLE", "TITLE_NEW_GAME_CONFIRM", "MENU_NEW_GAME", "NAV_CANCEL", &"cancel", [run_name, int(summary.get("total_day", 1))]):
 			return
+	if not is_inside_tree() or GameManager.lifecycle_busy(): return
 	get_tree().change_scene_to_file("res://scenes/ui/character_select.tscn")
 
 func _on_continue() -> void:
-	SaveManager.continue_latest()
+	var result := SaveManager.try_continue_latest()
+	if result.code == "busy": return
 
 func _on_language() -> void:
 	LocalizationManager.set_locale("en" if LocalizationManager.is_da() else "da")

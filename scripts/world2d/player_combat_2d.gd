@@ -336,6 +336,9 @@ func cd_ratio(ability: String) -> float:
 	return clampf(float(cooldowns.get(ability, 0.0)) / maxf(0.001, float(durations.get(ability, 1.0))), 0.0, 1.0)
 
 func take_damage(amount: int, from: Vector2 = Vector2.ZERO) -> bool:
+	# Retain the damaged body's label before any health/fainted subscriber runs.
+	# A surviving first-group body is not the origin of this hit after p0 rejoins.
+	var defeated_id: StringName = player.player_id
 	if amount <= 0 or _iframes > 0.0 or player.state == S.FAINTED:
 		return false
 	player.half_hearts = maxi(0, player.half_hearts - amount)
@@ -359,7 +362,10 @@ func take_damage(amount: int, from: Vector2 = Vector2.ZERO) -> bool:
 		player.state = S.FAINTED
 		player.visual.play_loop(&"sleep")
 		player.emit_signal("fainted")
-		EventBus.player_defeated.emit(PlayerRegistry.local_id())
+		# A fainted subscriber can unregister/rejoin synchronously. An obsolete
+		# body must not publish a defeat for its replacement's live registration.
+		if PlayerRegistry.registered_id(player) == defeated_id:
+			EventBus.player_defeated.emit(defeated_id)
 	else:
 		player.state = S.HURT
 		_remaining = 0.28

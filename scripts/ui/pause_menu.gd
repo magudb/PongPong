@@ -7,6 +7,8 @@ static var auto_pause := true
 var _rows: Array[Button] = []
 var _row_specs: Array = []
 var _leaving := false
+var _leave_receipt: RefCounted
+var _leave_origin: Dictionary = {}
 ## The world hotkey of a transfer row, shown right-aligned on it (UI_NAVIGATION.md S07, review UX-17). The glyph is read from the
 ## live InputMap, including the decorating shortcut available on keyboard and pad.
 const ROW_HOTKEYS := {"InventoryButton": &"inventory", "MapButton": &"map", "JournalButton": &"journal", "PeopleButton": &"people",
@@ -56,8 +58,9 @@ func _initial_focus() -> Control:
 	return get_node("%ResumeButton")
 
 func _hotkey_open_allowed() -> bool:
+	if GameManager.lifecycle_busy(): return false
 	var world := get_tree().get_first_node_in_group("world_2d")
-	return world != null and world.get("area") != null and world.get("player") != null and not bool(world.get("sleeping")) and not bool(world.get("traveling")) and int(world.get("player").get("state")) == 0
+	return world != null and bool(world.get("ready_for_play")) and world.get("area") != null and world.get("player") != null and not bool(world.get("sleeping")) and not bool(world.get("traveling")) and int(world.get("player").get("state")) == 0
 
 func _screen(id: StringName) -> Node:
 	var game_ui := get_tree().get_first_node_in_group("game_ui")
@@ -146,22 +149,73 @@ func _transfer(id: StringName) -> void:
 	else:
 		EventBus.ui_panel_toggled.emit({&"inventory_ui": &"inventory", &"quest_journal": &"journal", &"build_menu_ui": &"build"}.get(id, id), true)
 
+func _finish_leave(receipt: RefCounted) -> void:
+	if receipt != _leave_receipt: return
+	_leave_receipt = null
+	_leave_origin = {}
+	_leaving = false
+
 func _leave(quit_game: bool) -> void:
-	if _leaving:
+	if GameManager.lifecycle_busy() or not is_inside_tree():
 		return
+	if _leaving and GameManager.consequential_origin_current(_leave_origin): return
+	var world: Variant = PlayerRegistry.world(get_tree())
+	var body: Variant = world.get("player") if is_instance_valid(world) else null
+	if not is_instance_valid(body): return
+	var pid := PlayerRegistry.registered_id(body)
+	if pid == &"" or not bool(world.get("ready_for_play")): return
+	var world_ref: WeakRef = weakref(world)
+	var body_ref: WeakRef = weakref(body)
+	var row: Variant = PlayerRegistry._states.get(pid)
+	if row == null: return
+	var generation := _focus_gen
+	var receipt := RefCounted.new()
+	var origin := GameManager.capture_consequential_origin()
+	_leave_receipt = receipt
+	_leave_origin = origin
 	_leaving = true
-	if quit_game:                              # GameManager owns the save-on-quit policy (the window's close button takes the same way)
-		await GameManager.quit_game(0, true, self)
-		_leaving = false
+	if quit_game:                              # GameManager owns save + confirmation + shutdown
+		await GameManager.quit_game(0, true, self, origin)
+		_finish_leave(receipt)
 		return
 	if not SaveManager.autosave():
-		var accepted := await UiConfirm.ask(self, "NOTIF_SAVE_FAILED_TITLE", tr("PAUSE_SAVE_FAILED_CONFIRM"), "NAV_OK")
-		if not accepted:
-			_leaving = false
+		if not _leave_context_current(world_ref,body_ref,pid,row,generation,origin,receipt):
+			_finish_leave(receipt)
 			return
+		var accepted := await UiConfirm.ask(self, "NOTIF_SAVE_FAILED_TITLE", tr("PAUSE_SAVE_FAILED_CONFIRM"), "NAV_OK")
+		if not accepted or not _leave_context_current(world_ref,body_ref,pid,row,generation,origin,receipt):
+			_finish_leave(receipt)
+			return
+	if not _leave_context_current(world_ref,body_ref,pid,row,generation,origin,receipt):
+		_finish_leave(receipt)
+		return
+	# No lease/scope crosses the confirmation. Admit only the synchronous scene
+	# departure, including its modal/phase observers, at this final boundary.
+	var token := GameManager._begin_lifecycle(self,&"return_title")
+	if token == null:
+		_finish_leave(receipt)
+		return
+	# TTScreen closes exactly once when our modal is dropped. Retain that expected
+	# generation, not a fresh one sampled after callback-producing teardown.
+	var departure_generation := generation + (1 if is_open() else 0)
 	GameManager.pop_all_modals()
-	GameManager.change_phase(GameManager.GamePhase.MENU)
-	get_tree().change_scene_to_file("res://scenes/main/main_menu.tscn")
+	if _leave_context_current(world_ref,body_ref,pid,row,departure_generation,origin,receipt,token):
+		GameManager.change_phase(GameManager.GamePhase.MENU)
+		if _leave_context_current(world_ref,body_ref,pid,row,departure_generation,origin,receipt,token):
+			get_tree().change_scene_to_file("res://scenes/main/main_menu.tscn")
+	GameManager._finish_lifecycle(token,self)
+	_finish_leave(receipt)
+
+func _leave_context_current(world_ref: WeakRef, body_ref: WeakRef, pid: StringName, row: RefCounted, generation: int, origin: Dictionary, receipt: RefCounted, token: RefCounted = null) -> bool:
+	if _leave_receipt != receipt: return false
+	if token == null:
+		if not GameManager.consequential_origin_current(origin): return false
+	elif not GameManager._consequential_origin_current_owned(origin,token,self) or is_open() or GameManager.is_modal_open():
+		return false
+	if not is_inside_tree() or is_queued_for_deletion() or generation != _focus_gen: return false
+	var world: Variant = world_ref.get_ref()
+	var body: Variant = body_ref.get_ref()
+	return is_instance_valid(world) and world.is_inside_tree() and not world.is_queued_for_deletion() and world == PlayerRegistry.world(get_tree()) and bool(world.get("ready_for_play")) and is_instance_valid(body) and PlayerRegistry.registered_id(body) == pid and world.get("player") == body and PlayerRegistry._states.get(pid) == row
 
 func _floors() -> Variant:
 	return Svc.static_call("res://scripts/dungeon/floors/dungeon_floors.gd", &"inst", [], null)

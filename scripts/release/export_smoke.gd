@@ -9,10 +9,7 @@ func _ready() -> void:
 
 func _run() -> void:
 	await tree.process_frame
-	if tree.current_scene != null:
-		tree.current_scene.queue_free()
-		tree.current_scene = null
-		for frame in 2: await tree.process_frame
+
 	var lua := tree.root.get_node("LuaRuntime")
 	_check("Lua items", lua.get_all_item_ids().size() > 100)
 	_check("Town data", lua.get_registry("buildings").size() >= 10)
@@ -22,12 +19,16 @@ func _run() -> void:
 	_check("Raw maps", WorldRoot2D.area_ids().size() >= 10)
 	_check("Characters", not CharacterCatalog.resolved_visual_for_skin("animal_fox").is_empty())
 	var game := tree.root.get_node("GameManager")
-	game.start_new_game("Release test", 0, "Smoke farm", &"animal_fox")
-	game.set_flag(game.FLAG_INTRO_PENDING, false)
-	game.set_flag(&"intro_done", true)
-	var world: Node = load("res://scenes/main/world.tscn").instantiate()
-	tree.root.add_child(world)
-	tree.current_scene = world
+	var setup := func():
+		game.set_flag(&"intro_done", true)
+		if tree.current_scene != null:
+			tree.current_scene.queue_free()
+			tree.current_scene = null
+	var result: Dictionary = game.try_start_new_game_attached(tree.root,"Release test",0,"Smoke farm",&"animal_fox",false,setup,true)
+	if not result.ok:
+		_check("Lifecycle admission",false)
+		return
+	var world: Node = result.world
 	for frame in 120:
 		if world.ready_for_play: break
 		await tree.process_frame

@@ -63,8 +63,7 @@ var _pending_gifts: Array[String] = []      # tier gifts that could not be deliv
 var _claiming_gifts := false
 var _visit_day: int = 0                     # total day of the last guest visit (idempotence, never saved)
 var _visit: Dictionary = {}                 # {npc, item, week, index} of that visit
-var _dialogue_npc: StringName = &""
-var _dialogue_done_at_start: int = 0
+var _dialogue_pairs: Dictionary = {} # transient exact session IDs, never saved
 var _captured_loot: Array = []              # results of the loot_rolled signal seen while a visit container is opened
 var _loot_reason: String = ""               # LootService's reason for the last visit container ("" = a find, "nothing" = it was empty, else why it refused)
 var _loot_refused: bool = false             # LootService answered ok = false (full backpack, cooldown ...): no second attempt
@@ -78,8 +77,8 @@ func _ready() -> void:
 	SaveManager.register_section("home", self, SaveManager.FEATURE_ORDERS["home"])
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.new_game_started.connect(reset)
-	EventBus.dialogue_started.connect(_on_dialogue_started)
-	EventBus.dialogue_ended.connect(_on_dialogue_ended)
+	EventBus.dialogue_session_started.connect(_on_dialogue_started)
+	EventBus.dialogue_session_ended.connect(_on_dialogue_ended)
 	EventBus.player_inventory_changed.connect(_on_inventory_changed)
 
 
@@ -316,20 +315,23 @@ func _sync_derived_flags() -> void:
 		GameManager.clear_flag(FLAG_CASTLE_BUILT)
 
 
-func _on_dialogue_started(npc_id: StringName, _dialogue_id: StringName) -> void:
-	_dialogue_npc = npc_id
-	_dialogue_done_at_start = GameManager.flag_int(GameManager.FLAG_HOME_UPGRADE_DONE, 0)
+func _on_dialogue_started(session: Dictionary) -> void:
+	var id: Variant = session.get("session_id")
+	if id == null or _dialogue_pairs.has(id): return
+	_dialogue_pairs[id] = {"npc": str(session.get("npc", "")), "done": GameManager.flag_int(GameManager.FLAG_HOME_UPGRADE_DONE, 0)}
 
 
 ## The builder has had her celebration line (the dialogue branch reads home_upgrade_done): the flag goes back to 0. A tier that finished DURING the
 ## dialogue keeps its flag (the builder has not said anything about it yet).
-func _on_dialogue_ended() -> void:
-	var talked_to := _dialogue_npc
-	_dialogue_npc = &""
-	if str(talked_to) != str(_HomeData.config().get("builder_npc", "fairy_builder")):
+func _on_dialogue_ended(session: Dictionary, _result: Dictionary, _reason: String) -> void:
+	var id: Variant = session.get("session_id")
+	if not _dialogue_pairs.has(id): return
+	var pair: Dictionary = _dialogue_pairs[id]
+	_dialogue_pairs.erase(id) # remove before a flag observer can reenter
+	if not bool(session.get("effects", false)) or pair.npc != str(_HomeData.config().get("builder_npc", "fairy_builder")):
 		return
 	var now := GameManager.flag_int(GameManager.FLAG_HOME_UPGRADE_DONE, 0)
-	if now != 0 and now == _dialogue_done_at_start:
+	if now != 0 and now == pair.done:
 		GameManager.set_flag(GameManager.FLAG_HOME_UPGRADE_DONE, 0)
 
 
@@ -744,7 +746,7 @@ func reset() -> void:
 	_visit_day = 0
 	_visit = {}
 	_visits_owed = []
-	_dialogue_npc = &""
+	_dialogue_pairs.clear()
 	last_visit = {}
 	_sync_flags()
 	GameManager.set_flag(GameManager.FLAG_HOME_UPGRADE_DONE, 0)
@@ -811,7 +813,7 @@ func from_dict(d: Dictionary) -> bool:
 		if owed_index >= 0 and owed_index < 7 and owed_week >= 0 and _visits_owed.size() < MAX_VISITS_OWED:
 			_visits_owed.append({"week": owed_week, "index": owed_index, "npc": str(owed.get("npc", ""))})
 	last_visit = {}
-	_dialogue_npc = &""
+	# Live pairing is transient and fenced by DialogueUI, not by save codecs.
 	# home_tier, home_building and home_castle_built are MIRRORS of this section: always rewritten from it, so a flag that disagrees with the tier (a
 	# damaged save, an old writer) can never make the gates that read the flag disagree with the ones that read `tier` (ARCH-07); home_upgrade_done is present.
 	_sync_flags()

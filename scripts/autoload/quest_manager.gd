@@ -519,6 +519,13 @@ func _offer_allowed(quest_id: StringName) -> bool:
 # =============================================================================================== accept / progress / complete
 
 func accept_quest(quest_id: StringName) -> bool:
+	return accept_quest_owned(quest_id, Callable())
+
+func _continuation_current(guard: Callable) -> bool:
+	return not guard.is_valid() or bool(guard.call())
+
+func accept_quest_owned(quest_id: StringName, guard: Callable) -> bool:
+	if not _continuation_current(guard): return false
 	if not _can_start(quest_id) or not _offer_allowed(quest_id):
 		return false
 
@@ -527,12 +534,13 @@ func accept_quest(quest_id: StringName) -> bool:
 		push_warning("Unknown quest: %s" % quest_id)
 		return false
 
-	_activate(quest_id, def)
+	if not _continuation_current(guard): return false
+	_activate(quest_id, def, guard)
 	return true
 
 
 ## The part of accept_quest after the checks (the table-driven completability test also starts quests whose hidden Lua gate it cannot open).
-func _activate(quest_id: StringName, def: Dictionary) -> void:
+func _activate(quest_id: StringName, def: Dictionary, guard: Callable = Callable()) -> void:
 	var rt := QuestRuntime.new()
 	rt.id = quest_id
 	rt.state = QuestState.ACTIVE
@@ -553,15 +561,18 @@ func _activate(quest_id: StringName, def: Dictionary) -> void:
 	active_quests[quest_id] = rt
 	offered_quests.erase(quest_id)
 	EventBus.quest_accepted.emit(PlayerRegistry.acting_id(), quest_id)
+	if not _continuation_current(guard): return
 	EventBus.notification_posted.emit(
 		tr("NOTIF_QUEST_ACCEPTED_TITLE"),
 		get_title(quest_id),
 		"quest"
 	)
+	if not _continuation_current(guard): return
 	_lua_notify("quest_accepted", quest_id)
+	if not _continuation_current(guard): return
 	# what the player already owns / stands in counts from the first moment (have and state objectives)
 	if quest_id in active_quests:
-		_refresh_quest(quest_id)
+		_refresh_quest(quest_id, guard)
 
 
 func _can_start(quest_id: StringName) -> bool:
@@ -597,6 +608,10 @@ func _quest_context() -> Dictionary:
 
 
 func update_objective(quest_id: StringName, objective_id: StringName, amount: int = 1) -> void:
+	_update_objective_owned(quest_id, objective_id, amount, Callable())
+
+func _update_objective_owned(quest_id: StringName, objective_id: StringName, amount: int, guard: Callable) -> void:
+	if not _continuation_current(guard): return
 	if quest_id not in active_quests:
 		return
 	var rt: QuestRuntime = active_quests[quest_id]
@@ -609,11 +624,12 @@ func update_objective(quest_id: StringName, objective_id: StringName, amount: in
 	if obj["current"] >= obj["target"]:
 		obj["done"] = true
 	EventBus.quest_objective_updated.emit(PlayerRegistry.acting_id(), quest_id, objective_id, obj["current"], obj["target"])
-	_check_completion(quest_id)
+	_check_completion(quest_id, guard)
 
 
 ## Progress that is a VALUE (have / state objectives): set to `value` (0..target), done once the target is reached. Unchanged = no signal.
-func _set_progress(quest_id: StringName, objective_id: Variant, value: int) -> void:
+func _set_progress(quest_id: StringName, objective_id: Variant, value: int, guard: Callable = Callable()) -> void:
+	if not _continuation_current(guard): return
 	if quest_id not in active_quests:
 		return
 	var rt: QuestRuntime = active_quests[quest_id]
@@ -629,7 +645,7 @@ func _set_progress(quest_id: StringName, objective_id: Variant, value: int) -> v
 	if current >= int(obj["target"]):
 		obj["done"] = true
 	EventBus.quest_objective_updated.emit(PlayerRegistry.acting_id(), quest_id, StringName(str(objective_id)), current, obj["target"])
-	_check_completion(quest_id)
+	_check_completion(quest_id, guard)
 
 
 func can_complete_manual(quest_id: StringName, objective_id: StringName) -> bool:
@@ -641,11 +657,15 @@ func can_complete_manual(quest_id: StringName, objective_id: StringName) -> bool
 
 ## Manual map interactions commit all resource costs before publishing quest or inventory signals.
 func complete_manual(quest_id: StringName, objective_id: StringName, needs: Dictionary = {}, consume: bool = false) -> bool:
+	return complete_manual_owned(quest_id, objective_id, Callable(), needs, consume)
+
+func complete_manual_owned(quest_id: StringName, objective_id: StringName, guard: Callable, needs: Dictionary = {}, consume: bool = false) -> bool:
+	if not _continuation_current(guard): return false
 	if not can_complete_manual(quest_id, objective_id):
 		return false
 	var rt: QuestRuntime = active_quests[quest_id]
 	var remaining := int(rt.objectives[objective_id]["target"]) - int(rt.objectives[objective_id]["current"])
-	var commit := func() -> void: update_objective(quest_id, objective_id, remaining)
+	var commit := func() -> void: _update_objective_owned(quest_id, objective_id, remaining, guard)
 	if consume:
 		return EconomyManager.consume_backpack_items(needs, commit)
 	if not EconomyManager.has_items(needs):
@@ -655,6 +675,10 @@ func complete_manual(quest_id: StringName, objective_id: StringName, needs: Dict
 
 
 func complete_quest(quest_id: StringName) -> void:
+	_complete_quest_owned(quest_id, Callable())
+
+func _complete_quest_owned(quest_id: StringName, guard: Callable) -> void:
+	if not _continuation_current(guard): return
 	if quest_id not in active_quests:
 		return
 	var def := get_quest_def(quest_id)
@@ -676,21 +700,27 @@ func complete_quest(quest_id: StringName) -> void:
 		pending_rewards[quest_id] = owed
 	if rewards.has("gold"):
 		EconomyManager.add_gold(_Data.int_of(rewards["gold"]))
-	_grant_friendship(_Data.int_map(rewards.get("friendship", {})))
-	claim_rewards()
+	if not _continuation_current(guard): return
+	_grant_friendship(_Data.int_map(rewards.get("friendship", {})), guard)
+	if not _continuation_current(guard): return
+	_claim_rewards_owned(guard)
+	if not _continuation_current(guard): return
 	EventBus.quest_completed.emit(PlayerRegistry.acting_id(), quest_id)
+	if not _continuation_current(guard): return
 	EventBus.notification_posted.emit(
 		tr("NOTIF_QUEST_COMPLETED_TITLE"),
 		get_title(quest_id),
 		"quest_done"
 	)
+	if not _continuation_current(guard): return
 	_lua_notify("quest_completed", quest_id)
 
 
 ## rewards.friendship = { npc = hearts }. SocialManager (S-core, the one writer of hearts) when it exists; else the world flag friend_<npc>
 ## (whole hearts, capped at FRIEND_CAP) and EventBus.friend_changed when the hearts changed.
-func _grant_friendship(hearts_by_npc: Dictionary) -> void:
+func _grant_friendship(hearts_by_npc: Dictionary, guard: Callable = Callable()) -> void:
 	for npc in hearts_by_npc:
+		if not _continuation_current(guard): return
 		var hearts := int(hearts_by_npc[npc])
 		if hearts <= 0:
 			continue
@@ -704,6 +734,7 @@ func _grant_friendship(hearts_by_npc: Dictionary) -> void:
 		if after == before:
 			continue
 		GameManager.set_flag(flag, after)
+		if not _continuation_current(guard): return
 		EventBus.friend_changed.emit(PlayerRegistry.acting_id(), StringName(str(npc)), after)
 
 
@@ -713,24 +744,33 @@ func _grant_friendship(hearts_by_npc: Dictionary) -> void:
 ## Returns true when nothing remains owed. The guard prevents item-gained listeners from claiming a grant twice; a claim asked for
 ## during a pass (a reward that completed another quest owes that quest's rewards) runs as one more pass before the guard is released.
 func claim_rewards() -> bool:
+	return _claim_rewards_owned(Callable())
+
+func _claim_rewards_owned(guard: Callable) -> bool:
+	if not _continuation_current(guard): return false
 	if _claiming_rewards:
 		_claim_again = true
+		# A reentrant request can belong to another profile. It must not be
+		# consumed solely by the claimant already on the synchronous stack.
+		_queue_reward_claim()
 		return pending_rewards.is_empty()
 	_claiming_rewards = true
 	_claim_again = true
-	while _claim_again:
+	while _claim_again and _continuation_current(guard):
 		_claim_again = false
-		_claim_pass()
+		_claim_pass(guard)
 	_claiming_rewards = false
 	return pending_rewards.is_empty()
 
 
-func _claim_pass() -> void:
+func _claim_pass(guard: Callable = Callable()) -> void:
 	for quest_id in pending_rewards.keys():
+		if not _continuation_current(guard): return
 		if not pending_rewards.has(quest_id):
 			continue
 		var owed: Dictionary = pending_rewards[quest_id]
 		for item_id in owed.keys():
+			if not _continuation_current(guard): return
 			var amount := int(owed[item_id])
 			var give := _claimable(StringName(item_id), amount)
 			if give <= 0:
@@ -740,8 +780,11 @@ func _claim_pass() -> void:
 				owed[item_id] = amount - give
 			else:
 				owed.erase(item_id)
-			if not _deliver_reward(StringName(item_id), give):
-				owed[item_id] = amount
+			var delivered := _deliver_reward(StringName(item_id), give)
+			if not _continuation_current(guard): return
+			# An authenticated rollback can restore the owning row with rebuilt children.
+			owed = pending_rewards.get(quest_id, {})
+			if not delivered: owed[item_id] = amount
 		if owed.is_empty():
 			pending_rewards.erase(quest_id)
 
@@ -763,29 +806,41 @@ func _deliver_reward(item_id: StringName, amount: int) -> bool:
 	return EconomyManager.add_item(item_id, amount)
 
 
-func _on_inventory_changed(_player_id: StringName, _inventory: Dictionary) -> void:
-	_queue_reward_claim()
+func _on_inventory_changed(player_id: StringName, _inventory: Dictionary) -> void:
+	_queue_reward_claim(player_id)
 	_queue_refresh()
 
 
 func _on_load_completed(_slot: int) -> void:
-	_queue_reward_claim()
-	# every section of the save is applied now (home, furniture, social come after the quests): have and state objectives read the new world
-	refresh_objectives()
+	# Public slot notifications authorize independent current-host projection,
+	# never resumption of an earned transfer. Save captures that exact ticket
+	# at actual successful apply, before callback-producing finalizers.
+	PlayerRegistry.for_player(&"p0", func(): refresh_objectives())
 
 
-func _queue_reward_claim() -> void:
-	if pending_rewards.is_empty() or _claiming_rewards or _reward_claim_queued:
+func _queue_reward_claim(player_id: StringName = &"") -> void:
+	var id := PlayerRegistry.acting_id() if player_id == &"" else player_id
+	var profile: Variant = PlayerRegistry._states.get(id)
+	# Decode notifications inside a whole-save apply are not successful-load
+	# authority. Its completion notification queues the final incarnation.
+	if profile == null or SocialManager._accounting_suspended:
 		return
+	var owed: Dictionary = profile.quests.get("pending_rewards", {})
+	if owed.is_empty(): return
+	var guard: Callable = PlayerRegistry.for_player(id, func():
+		return preload("res://scripts/traetoppen/life/presenter_origin.gd").model_guard())
+	# Each notification owns its lexical ticket, independent of the old stack
+	# and the legacy coalescing bit (from_dict/rollback may restore that bit).
+	# No callback requeues itself: work is bounded by actual requests/events.
 	_reward_claim_queued = true
-	_run_reward_claim.call_deferred()
+	_run_reward_claim.bind(id, guard).call_deferred()
 
 
-func _run_reward_claim() -> void:
-	if not _reward_claim_queued:
-		return
-	_reward_claim_queued = false
-	claim_rewards()
+func _run_reward_claim(player_id: StringName, guard: Callable) -> void:
+	PlayerRegistry.for_player(player_id, func():
+		if not guard.call(): return
+		_reward_claim_queued = false
+		_claim_rewards_owned(guard))
 
 
 func fail_quest(quest_id: StringName) -> void:
@@ -815,12 +870,13 @@ func get_quest_progress(quest_id: StringName) -> Dictionary:
 	return (active_quests[quest_id] as QuestRuntime).to_dict()
 
 
-func _check_completion(quest_id: StringName) -> void:
+func _check_completion(quest_id: StringName, guard: Callable = Callable()) -> void:
+	if not _continuation_current(guard) or not active_quests.has(quest_id): return
 	var rt: QuestRuntime = active_quests[quest_id]
 	for obj_id in rt.objectives:
 		if not rt.objectives[obj_id]["done"]:
 			return
-	complete_quest(quest_id)
+	_complete_quest_owned(quest_id, guard)
 
 
 func _lua_notify(event: String, quest_id: StringName) -> void:
@@ -1171,11 +1227,12 @@ func _run_refresh() -> void:
 		refresh_objectives()
 
 
-func _refresh_quest(quest_id: StringName) -> void:
+func _refresh_quest(quest_id: StringName, guard: Callable = Callable()) -> void:
+	if not _continuation_current(guard): return
 	var rt: QuestRuntime = active_quests[quest_id]
 	var defs := _objective_defs(quest_id)
 	for objective_id in rt.objectives.keys():
-		if not active_quests.has(quest_id) or active_quests[quest_id] != rt:
+		if not _continuation_current(guard) or not active_quests.has(quest_id) or active_quests[quest_id] != rt:
 			return
 		var obj: Dictionary = rt.objectives[objective_id]
 		if bool(obj.get("done", false)):
@@ -1196,7 +1253,8 @@ func _refresh_quest(quest_id: StringName) -> void:
 			continue
 		if bool(od.get("after_others", false)) and not _non_turn_ins_done(rt, defs):
 			continue
-		_set_progress(quest_id, objective_id, value)
+		if not _continuation_current(guard): return
+		_set_progress(quest_id, objective_id, value, guard)
 
 
 func _have_value(od: Dictionary) -> int:

@@ -35,9 +35,9 @@ func probe(label: String, base: Vector2, dxs: Array, offs: Array) -> void:
 
 
 func _run() -> void:
-	GameManager.start_new_game("T", 0, "F")
-	world = (load("res://scenes/main/world.tscn") as PackedScene).instantiate()
-	add_child(world)
+	var admitted := GameManager.try_start_new_game_attached(self,"T",0,"F")
+	if not admitted.ok: return
+	world = admitted.world
 	await wait(1.0)
 	var p: Node2D = world.player
 	p.visual.sprite.self_modulate = Color(1, 0, 1)

@@ -320,8 +320,12 @@ static func owner_hand_in(t, quest: StringName, producer: String, ambient: Strin
 		if producer == "initial":
 			smith.interact(players[0])
 		elif producer == "consumer":
-			smith.is_talking = true
-			smith._talk_player = players[0]
+			# Admit a genuine claimed physical page, withholding only the tested
+			# Quest consumer during setup so the producer cannot mask this probe.
+			bus.npc_meeting_started.disconnect(qm._on_npc_meeting_started)
+			var claim: RefCounted = smith._begin_followup(players[0], {"lines": [{"text_key":"DLG_NEUTRAL"}], "choices": [{"text_key":"REL_TALK_GOODBYE", "action":"close"}]})
+			bus.npc_meeting_started.connect(qm._on_npc_meeting_started)
+			t.check(label + "_consumer_has_genuine_physical_claim", claim != null and smith.is_talking and not claim.resolved)
 			bus.npc_meeting_started.emit(smith)
 		else:
 			smith._begin_followup(players[0], {"lines": [{"text_key": "DLG_NEUTRAL"}], "choices": [{"text_key": "REL_TALK_GOODBYE", "action": "close"}]})
