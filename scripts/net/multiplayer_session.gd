@@ -139,6 +139,7 @@ func _peer_disconnected(id: int) -> void:
 	active.erase(id)
 	if world == null: return
 	if world.sync != null: world.sync.peer_left(id)
+	if world.intents != null: world.intents.peer_left(id)
 	world.roster.capture_live_bodies(world)
 	var body := world.player_by_peer_id(id)
 	if body != null: world._unregister_player(body)
@@ -468,6 +469,8 @@ func close(reason: StringName = &"left") -> void:
 	_staged.clear()
 	var world := get_parent() as WorldRoot2D
 	if world != null and world.sync != null: world.sync.stop_sync()
+	if world != null and world.intents != null: world.intents.stop()
+	if world != null and world.farm_replication != null: world.farm_replication.stop()
 	if world != null and is_host(): world.roster.capture_live_bodies(world)
 	if api != null:
 		for signal_name in [&"peer_connected", &"peer_disconnected", &"connected_to_server", &"connection_failed", &"server_disconnected"]:

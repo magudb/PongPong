@@ -58,6 +58,8 @@ var session: MultiplayerSession
 ## Movement replication (MP5): a World child alongside the session. Offline
 ## worlds keep it inactive (no body is ever claimed from its own physics).
 var sync: WorldSync
+var intents: Node
+var farm_replication: Node
 var farm: Node
 var greenhouse_farm: FarmGrid
 var area: IsoArea
@@ -192,6 +194,12 @@ func _ready() -> void:
 	sync = WorldSync.new()
 	sync.name = "WorldSync"
 	add_child(sync)
+	intents = load("res://scripts/net/intent_bus.gd").new()
+	intents.name = "IntentBus"
+	add_child(intents)
+	farm_replication = load("res://scripts/net/farm_replication.gd").new()
+	farm_replication.name = "FarmReplication"
+	add_child(farm_replication)
 	if guest_bootstrap:
 		roster = PlayerRoster.new()
 		add_child(roster)

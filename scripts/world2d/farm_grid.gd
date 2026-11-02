@@ -34,6 +34,8 @@ var _last_day: int = 0
 var _busy: bool = false
 var map_path := "res://data/maps/farm.map"
 var indoor := false
+## Explicit visual-only model. Normal mutation/save APIs remain host-gated.
+var presentation_only := false
 
 static func crop_definitions() -> Dictionary:
 	return GameData.dict_of(GameData.cfg("crops", {})).duplicate(true)
@@ -41,6 +43,7 @@ static func crop_definitions() -> Dictionary:
 func _ready() -> void:
 	crop_defs = crop_definitions()
 	configure_map(AreaMap.load_file(map_path))
+	if presentation_only: return
 	_last_day = GameData.gm().total_day()
 	rng.randomize()
 	EventBus.day_started.connect(_on_day_started)
@@ -256,7 +259,11 @@ func harvest(cell: Vector2i) -> int:
 	if p.fertilizer:
 		amount += int(GameData.cfg("farm.fertilizer_bonus_yield", 1))
 	if p.yield_amount == 0:
-		if rng.randf() < float(SpeciesPerks.current("harvest_bonus_chance", 0.0)):
+		# A host-applied guest harvest keeps the existing transaction, but its
+		# species belongs to the scoped recipient, not GameManager's p0 skin.
+		var recipient := PlayerRegistry.peek_state(PlayerRegistry.acting_id())
+		var bonus := float(SpeciesPerks.value(recipient.character_skin, "harvest_bonus_chance", 0.0)) if recipient != null and recipient.player_id != &"p0" else float(SpeciesPerks.current("harvest_bonus_chance", 0.0))
+		if rng.randf() < bonus:
 			amount += 1
 		p.yield_amount = amount
 	amount = p.yield_amount
@@ -382,6 +389,29 @@ func to_dict() -> Dictionary:
 	for cell in plots:
 		out["%d,%d" % [cell.x, cell.y]] = (plots[cell] as PlotData).to_dict()
 	return {"plots": out}
+
+## Callback-free network commit. The owning replication operation publishes the
+## returned dirty cells only after its complete farm/profile commit, revalidating
+## its retained session and attachments between public notifications.
+func commit_presentation(value: Dictionary) -> Dictionary:
+	var world := _world() as WorldRoot2D
+	if not presentation_only or world == null or not world.guest_bootstrap or not NetAuthority.owns_guest(world) or world.farm_replication == null or get_parent() != world.farm_replication or not validate_dict(value): return {}
+	var loaded := {}
+	var dirty := plots.duplicate()
+	for key in value.get("plots", {}):
+		var bits := str(key).split(",")
+		var cell := Vector2i(int(bits[0]), int(bits[1]))
+		if cell.x < 0 or cell.y < 0 or cell.x >= map.width or cell.y >= map.height: return {}
+		var row: Dictionary = value.plots[key]
+		var p := PlotData.new()
+		for field in ["state", "planted_day", "auto_water_days", "yield_amount"]: p.set(field, int(row.get(field, 0)))
+		for field in ["growth_days", "watered_hour"]: p.set(field, float(row.get(field, 0)))
+		for field in ["watered", "eligible_water", "fertilizer", "regrowing"]: p.set(field, bool(row.get(field, false)))
+		p.crop_id = StringName(row.get("crop_id", ""))
+		loaded[cell] = p
+		dirty[cell] = true
+	plots = loaded
+	return {"dirty": dirty.keys()}
 
 ## Reject malformed saves before touching the live model; older valid plots default new fields. STRUCTURE only: a crop that the
 ## current Lua catalogue no longer has (renamed, removed, no longer regrowing) is content drift, not damage, and from_dict repairs it
