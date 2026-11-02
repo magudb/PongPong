@@ -154,6 +154,20 @@ var _auto_file_seen: Dictionary = {}
 var _inspect_cache: Dictionary = {}
 ## Top-level keys of the loaded save that no section of this build owns: written back unchanged by gather_payload().
 var _carried_sections: Dictionary = {}
+var _applying := false
+var _apply_dispatch: RefCounted
+
+
+func _lifecycle_available() -> bool:
+	return is_instance_valid(GameManager) and GameManager.is_inside_tree()
+
+
+func _lifecycle_blocked() -> bool:
+	return not _lifecycle_available() or GameManager.lifecycle_busy()
+
+
+func _lifecycle_unavailable_result() -> Dictionary:
+	return {"ok": false, "code": "unavailable", "detail": "Run lifecycle is unavailable."}
 
 
 ## Counts the script/engine ERRORS that the main thread raises while sections apply a save (warnings are tolerated).
@@ -194,6 +208,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if _lifecycle_blocked(): return
 	if GameManager.current_phase != GameManager.GamePhase.PLAYING or not autosave_enabled:
 		return
 	_auto_save_timer += delta
@@ -203,6 +218,22 @@ func _process(delta: float) -> void:
 
 ## New game (EventBus.new_game_started): no current slot, timers zero, nothing waits for a world, no stale error.
 func reset() -> void:
+	try_reset_metadata()
+
+
+func try_reset_metadata() -> Dictionary:
+	if not _lifecycle_available(): return _lifecycle_unavailable_result()
+	var token := GameManager._begin_lifecycle(self, &"metadata_reset")
+	if token == null: return GameManager._lifecycle_busy_result()
+	GameManager._stage_lifecycle(token, self, &"admitted", &"metadata_reset")
+	_reset_metadata_owned(token, self)
+	GameManager._finish_lifecycle(token, self)
+	return {"ok": true, "code": "", "detail": ""}
+
+
+func _reset_metadata_owned(token: Variant, owner: Object) -> void:
+	var stage: StringName = &"new_game" if owner == GameManager else &"metadata_reset"
+	if not GameManager._owns_lifecycle(token, owner, stage): return
 	_backup_validation.clear()
 	_inspect_cache.clear()
 	run_id = _new_run_id()
@@ -261,6 +292,7 @@ func has_any_save() -> bool:
 
 
 func delete_save(slot: int = 0) -> void:
+	if _lifecycle_blocked(): return
 	if not is_valid_slot(slot):
 		return
 	for path in [slot_path(slot), backup_path(slot), slot_path(slot) + ".tmp", slot_path(slot) + ".old"]:
@@ -277,65 +309,102 @@ func delete_save(slot: int = 0) -> void:
 ## NOTIF_SAVED_* and becomes current_slot. Returns false when the file could not be written (see _save_failed); the old file
 ## of the slot is then untouched.
 func save_game(slot: int = 0, is_auto: bool = false) -> bool:
-	if GameManager.is_modal_open(&"event"):
-		last_error = {"slot":slot,"code":"event","detail":"scene effects have not committed"}
-		return false
-	if is_auto:
-		slot = AUTO_SLOT
-	if not is_valid_slot(slot):
-		last_error = {"slot": slot, "code": "slot", "detail": "slot %d does not exist" % slot}
-		return false
-	var silent := slot == AUTO_SLOT
-	var payload := gather_payload()
-	if not _gather_failures.is_empty():
-		# A section that could not describe itself would be missing from the file and reset to new-game state on the next load:
-		# nothing is written, the file of the slot (and its .bak) stays as it was.
-		last_error = {"slot": slot, "code": "gather", "detail": "to_dict() failed for %s" % ", ".join(_gather_failures)}
-		return _save_failed(slot, silent)
-	var text := JSON.stringify(payload, "\t", true, true)
-	_ensure_dir()
-	if not silent:
-		_roll_backup(slot)
-	else:
-		_keep_foreign_auto_file()
-	if not _write_atomic(slot_path(slot), text):
-		last_error = {"slot": slot, "code": "write", "detail": "could not write %s" % slot_path(slot)}
-		return _save_failed(slot, silent)
-	last_error = {}
-	save_failing = false
-	if silent:
-		_auto_save_timer = 0.0
-		_auto_file_seen = {"hash": FileAccess.get_sha256(slot_path(slot)), "run": run_id}
-	else:
-		current_slot = slot
-	EventBus.save_completed.emit(slot)
-	if not silent:
-		_toast(tr("NOTIF_SAVED_TITLE"), tr("NOTIF_SAVED_MSG"), slot + 1)
+	if not _lifecycle_available(): return false
+	var token := GameManager._begin_lifecycle(self, &"save")
+	if token == null: return false
+	# The operation body is lexical. An observer knowing the token cannot call
+	# another public/helper entry and borrow this admission.
+	GameManager._stage_lifecycle(token, self, &"admitted", &"writing")
+	var receipt := _write_receipt(token)
+	var current := func() -> bool: return _write_current(receipt)
+	var operation := func() -> bool:
+		if not current.call(): return false
+		if is_auto: slot = AUTO_SLOT
+		if GameManager.is_modal_open(&"event"):
+			last_error = {"slot":slot,"code":"event","detail":"scene effects have not committed"}
+			return false
+		if not is_valid_slot(slot):
+			last_error = {"slot":slot,"code":"slot","detail":"slot %d does not exist" % slot}
+			return false
+		var silent := slot == AUTO_SLOT
+		var gathered: Dictionary = PlayerRegistry.for_player(&"p0", func(): return _gather_checked(false, current))
+		if not current.call(): return false
+		if not gathered.failures.is_empty():
+			last_error = {"slot":slot,"code":"gather","detail":"to_dict() failed for %s" % ", ".join(gathered.failures)}
+			return _save_failed(slot, silent, current)
+		var text := JSON.stringify(gathered.payload, "	", true, true)
+		if not current.call(): return false
+		_ensure_dir()
+		if not current.call(): return false
+		if not silent: _roll_backup(slot, current)
+		else: _keep_foreign_auto_file(current)
+		if not current.call(): return false
+		var path := slot_path(slot)
+		if not _write_atomic(path, text, current):
+			if not current.call(): return false
+			last_error = {"slot":slot,"code":"write","detail":"could not write %s" % path}
+			return _save_failed(slot, silent, current)
+		# Durability is immutable even if a raw observer replaces presentation.
+		if not current.call(): return true
+		last_error = {}
+		save_failing = false
+		if silent:
+			_auto_save_timer = 0.0
+			_auto_file_seen = {"hash":FileAccess.get_sha256(path), "run":receipt.run}
+		else: current_slot = slot
+		EventBus.save_completed.emit(slot)
+		if current.call() and not silent: _toast(tr("NOTIF_SAVED_TITLE"), tr("NOTIF_SAVED_MSG"), slot + 1)
+		return true
+	var committed: bool = operation.call()
+	GameManager._finish_lifecycle(token, self)
+	return committed
+
+func _write_receipt(token: RefCounted) -> Dictionary:
+	var social := SvcLib.node("SocialManager")
+	var bindings := []
+	for entry in _ordered_entries(): bindings.append([entry.name, _node_of(entry)])
+	var w := PlayerRegistry.world()
+	return {"token":token, "run":run_id, "dir":save_dir, "clock":clock_override, "old":replace_via_old, "profile":PlayerRegistry._states.get(&"p0"), "profiles":PlayerRegistry._states.duplicate(), "save_binding":SvcLib.node("SaveManager"), "rows":PlayerRegistry._states, "world":w, "generation":w.get("_host_generation") if w != null else null, "accounting":social.get("_accounting_world") if social != null else null, "social":social, "bindings":bindings}
+
+func _write_current(receipt: Dictionary) -> bool:
+	if not is_inside_tree() or is_queued_for_deletion() or SvcLib.node("SaveManager") != receipt.save_binding or PlayerRegistry._states.size() != receipt.profiles.size(): return false
+	for pid in receipt.profiles:
+		if PlayerRegistry._states.get(pid) != receipt.profiles[pid]: return false
+	if not GameManager._owns_lifecycle(receipt.token, self, &"writing") or run_id != receipt.run or save_dir != receipt.dir or clock_override != receipt.clock or replace_via_old != receipt.old or not is_same(PlayerRegistry._states, receipt.rows) or PlayerRegistry._states.get(&"p0") != receipt.profile or PlayerRegistry.world() != receipt.world: return false
+	if is_instance_valid(receipt.social) and receipt.social.get("_accounting_world") != receipt.accounting: return false
+	if receipt.world != null and (not is_instance_valid(receipt.world) or receipt.world.get("_host_generation") != receipt.generation): return false
+	var entries := _ordered_entries()
+	if entries.size() != receipt.bindings.size(): return false
+	for i in entries.size():
+		if entries[i].name != receipt.bindings[i][0] or _node_of(entries[i]) != receipt.bindings[i][1]: return false
 	return true
 
 
 ## A save that could not be written (last_error is set): EventBus.save_failed, save_failing, and feedback. A manual save toasts
 ## NOTIF_SAVE_FAILED_*; an autosave toasts only the first failure of a streak (the HUD keeps showing it) and is tried again after
 ## AUTOSAVE_RETRY_SECONDS instead of a whole interval. Always false.
-func _save_failed(slot: int, silent: bool) -> bool:
+func _save_failed(slot: int, silent: bool, current: Callable = Callable()) -> bool:
+	if current.is_valid() and not current.call(): return false
+	var first_failure := not save_failing
+	save_failing = true
 	if silent:
 		_auto_save_timer = maxf(0.0, auto_save_interval_seconds - AUTOSAVE_RETRY_SECONDS)
-		if not save_failing:
+		if first_failure:
 			EventBus.notification_posted.emit(tr("NOTIF_SAVE_FAILED_TITLE"), tr("NOTIF_SAVE_FAILED_AUTO_MSG"), "save")
 	else:
 		_toast(tr("NOTIF_SAVE_FAILED_TITLE"), tr("NOTIF_SAVE_FAILED_MSG"), slot + 1)
-	save_failing = true
+	if current.is_valid() and not current.call(): return false
 	EventBus.save_failed.emit(slot, str(last_error.get("code", "")))
 	return false
 
 
 ## Writes the auto slot (never a manual one) and restarts the autosave countdown.
 func autosave() -> bool:
-	_auto_save_timer = 0.0
 	return save_game(AUTO_SLOT, true)
 
 
 func _on_day_ended(_day: int, _season: StringName) -> void:
+	if _lifecycle_blocked(): return
 	if not autosave_enabled or _autosave_queued or not _game_running():
 		return
 	_autosave_queued = true
@@ -346,6 +415,7 @@ func _run_queued_autosave() -> void:
 	if not _autosave_queued:                   # reset() (a new game began in the same frame) dropped it: nothing of the old run is saved
 		return
 	_autosave_queued = false
+	if _lifecycle_blocked(): return
 	if autosave_enabled and _game_running():
 		autosave()
 
@@ -362,67 +432,122 @@ func _game_running() -> bool:
 ## continue_latest) enters the world. Emits load_completed(slot) on success; a manual slot becomes current_slot, the auto slot
 ## does not (see current_slot).
 func load_game(slot: int = 0) -> bool:
-	last_error = {}
-	if not is_readable_slot(slot):
-		return _fail_load(slot, "missing", "slot %d does not exist" % slot)
-	var info := inspect_slot(slot)
-	match info["state"]:
-		&"empty":
-			return _fail_load(slot, "missing", "no save in slot %d" % slot)
-		&"newer":
-			return _fail_load(slot, "version", str(info["detail"]))
-		&"corrupt":
-			return _fail_load(slot, str(info["code"]), str(info["detail"]))
-	var applied := _apply_payload(info["payload"])
-	if not applied["ok"] and not info["from_backup"]:
-		# the file passed every check and still did not apply (a section refused it): its .bak is the next best thing
-		var backup := _inspect_backup(slot)
-		if not backup.is_empty() and _apply_payload(backup["payload"])["ok"]:
-			info = backup
-			applied = {"ok": true, "detail": ""}
-	if not applied["ok"]:
-		return _fail_load(slot, "apply", str(applied["detail"]))
-	if is_manual_slot(slot):                   # the auto slots are not places the player saves to: keep the manual slot of this run
-		current_slot = slot
-	run_id = _run_id_of(info["payload"])
-	if run_id.begins_with(LEGACY_RUN_PREFIX):
-		run_id = _new_run_id()                 # written into every later save of this run: one derived id must never join two runs for good
-	if slot == AUTO_SLOT:
-		_auto_file_seen = {"hash": FileAccess.get_sha256(slot_path(slot)), "run": run_id}   # the auto file IS this run
-	_auto_save_timer = 0.0
-	if info["from_backup"]:
-		_toast(tr("NOTIF_LOAD_BACKUP_TITLE"), tr("NOTIF_LOAD_BACKUP_MSG"), slot + 1)
-	EventBus.load_completed.emit(slot)
-	return true
+	return bool(try_load_game(slot).ok)
 
 
-## load_game(slot), then the whole way into the world: pop every modal, phase PLAYING, change to world_scene (WORLD_SCENE,
-## whose WorldRoot2D takes pending_world). False (with feedback) leaves phase, scene AND the running game exactly as they were:
-## a world scene that does not exist is refused before the save is applied.
+func try_load_game(slot: int = 0) -> Dictionary:
+	return _try_load_operation(slot, false, false)
+
+
+## Every callable whole-load entry owns independent admission. The composed
+## Continue -> enter -> load steps are lexical, not borrowable token helpers.
+func _try_load_operation(slot: int, enter: bool, latest: bool) -> Dictionary:
+	if not _lifecycle_available(): return _lifecycle_unavailable_result()
+	var kind: StringName = &"continue" if latest else (&"load_enter" if enter else &"load")
+	var token := GameManager._begin_lifecycle(self, kind)
+	if token == null: return GameManager._lifecycle_busy_result()
+	GameManager._stage_lifecycle(token, self, &"admitted", &"loading")
+	# Original enclosing-root proof precedes discovery/validator callbacks and
+	# is forwarded unchanged through every primary/backup attempt.
+	var root_proof := _load_root_snapshot()
+	var apply_one := func(data: Dictionary) -> Dictionary:
+		if not GameManager._stage_lifecycle(token, self, &"loading", &"load"): return {"ok":false, "detail":"Invalid load authority."}
+		var applied: Dictionary = PlayerRegistry.for_player(&"p0", func(): return _dispatch_apply(data, token, &"load", root_proof))
+		GameManager._stage_lifecycle(token, self, &"load", &"loading")
+		return applied
+	var operation := func() -> bool:
+		var selected := get_latest_slot() if latest else slot
+		if latest and selected == NO_SLOT:
+			last_error = {}
+			return _fail_load(NO_SLOT, "missing", "no loadable save in any slot")
+		if enter and not ResourceLoader.exists(world_scene):
+			last_error = {}
+			return _fail_load(selected, "scene", "%s does not exist" % world_scene)
+		var load_selected := func(slot: int) -> bool:
+			last_error = {}
+			if not is_readable_slot(slot):
+				return _fail_load(slot, "missing", "slot %d does not exist" % slot)
+			var info := inspect_slot(slot)
+			match info["state"]:
+				&"empty":
+					return _fail_load(slot, "missing", "no save in slot %d" % slot)
+				&"newer":
+					return _fail_load(slot, "version", str(info["detail"]))
+				&"corrupt":
+					return _fail_load(slot, str(info["code"]), str(info["detail"]))
+			# A whole-run load is not an operation on the observer's acting slot. The
+			# legacy single-host social projection belongs to the local saved host;
+			# restore the caller scope before returning to any p1 accounting stack.
+			var applied: Dictionary = apply_one.call(info["payload"])
+			if not applied["ok"] and not info["from_backup"]:
+				# the file passed every check and still did not apply (a section refused it): its .bak is the next best thing
+				var backup := _inspect_backup(slot)
+				if not backup.is_empty() and apply_one.call(backup["payload"])["ok"]:
+					info = backup
+					applied = {"ok": true, "detail": ""}
+			if not applied["ok"]:
+				return _fail_load(slot, "apply", str(applied["detail"]))
+			if is_manual_slot(slot):                   # the auto slots are not places the player saves to: keep the manual slot of this run
+				current_slot = slot
+			run_id = _run_id_of(info["payload"])
+			if run_id.begins_with(LEGACY_RUN_PREFIX):
+				run_id = _new_run_id()                 # written into every later save of this run: one derived id must never join two runs for good
+			if slot == AUTO_SLOT:
+				_auto_file_seen = {"hash": FileAccess.get_sha256(slot_path(slot)), "run": run_id}   # the auto file IS this run
+			_auto_save_timer = 0.0
+			if info["from_backup"]:
+				_toast(tr("NOTIF_LOAD_BACKUP_TITLE"), tr("NOTIF_LOAD_BACKUP_MSG"), slot + 1)
+			EventBus.load_completed.emit(slot)
+			return true
+		if not load_selected.call(selected): return false
+		if not enter: return true
+		GameManager._stage_lifecycle(token, self, &"loading", &"scene_request")
+		var err := GameManager._request_lifecycle_world(token, self, world_scene)
+		if err != OK:
+			return _fail_load(selected, "scene", "could not change to %s (error %d)" % [world_scene, err])
+		# Loaded transient intro state must never replay a new-game opening.
+		GameManager.set_flag(GameManager.FLAG_INTRO_PENDING, false)
+		GameManager.pop_all_modals()
+		GameManager.change_phase(GameManager.GamePhase.PLAYING)
+		return true
+	var ok: bool = operation.call()
+	var result := {"ok": ok, "code": "" if ok else str(last_error.get("code", "")), "detail": "" if ok else str(last_error.get("detail", ""))}
+	GameManager._finish_lifecycle(token, self)
+	return result
+
+
+func _load_root_snapshot() -> Dictionary:
+	var w := PlayerRegistry.world()
+	var social := SvcLib.node("SocialManager")
+	var rows := PlayerRegistry._states
+	var profile: Variant = rows.get(&"p0")
+	var accounting: Variant = social.get("_accounting_world") if social != null else null
+	var projection: Dictionary = w.call("rollback_projection") if w != null and w.has_method("rollback_projection") else {}
+	return {"world":weakref(w) if is_instance_valid(w) else null, "present":w != null, "projection":projection, "rows":rows, "profile":profile, "accounting":accounting}
+
+func _load_root_restored(root: Dictionary, accounting: Dictionary) -> bool:
+	if not is_same(root.rows, PlayerRegistry._states) or root.profile != PlayerRegistry._states.get(&"p0"): return false
+	if not accounting.is_empty() and accounting.world != root.accounting: return false
+	var w := PlayerRegistry.world()
+	if not root.present: return w == null
+	return w != null and root.world.get_ref() == w and not root.projection.is_empty() and w.has_method("rollback_projection") and w.call("rollback_projection") == root.projection
+
+## Load and enter retain one admission through completion and scene bootstrap.
 func load_and_enter(slot: int) -> bool:
-	if not ResourceLoader.exists(world_scene):          # checked BEFORE the save is applied: a load that cannot enter the world leaves no half-loaded game behind
-		last_error = {}
-		return _fail_load(slot, "scene", "%s does not exist" % world_scene)
-	if not load_game(slot):
-		return false
-	var err := get_tree().change_scene_to_file(world_scene)
-	if err != OK:
-		return _fail_load(slot, "scene", "could not change to %s (error %d)" % [world_scene, err])
-	# An old save may contain the transient new-game opening flag. Continue/load
-	# must never replay the letter or first morning when the new world enters.
-	GameManager.set_flag(GameManager.FLAG_INTRO_PENDING, false)
-	GameManager.pop_all_modals()
-	GameManager.change_phase(GameManager.GamePhase.PLAYING)
-	return true
+	return bool(try_load_and_enter(slot).ok)
 
 
-## The Continue button of the title screen: loads the newest save (get_latest_slot) and enters the world.
+func try_load_and_enter(slot: int) -> Dictionary:
+	return _try_load_operation(slot, true, false)
+
+
+## Continue composes discovery, loading and scene entry under the same root.
 func continue_latest() -> bool:
-	var slot := get_latest_slot()
-	if slot == NO_SLOT:
-		last_error = {}
-		return _fail_load(NO_SLOT, "missing", "no loadable save in any slot")
-	return load_and_enter(slot)
+	return bool(try_continue_latest().ok)
+
+
+func try_continue_latest() -> Dictionary:
+	return _try_load_operation(NO_SLOT, true, true)
 
 
 ## The world dictionary of the loaded game, once: WorldRoot2D._ready calls it after its areas and player exist.
@@ -719,16 +844,42 @@ func _node_of(entry: Dictionary) -> Node:
 ## the world. `quests` carries no Lua definitions. A section whose to_dict() does not return a Dictionary is left out and
 ## named in _gather_failures, which makes save_game() refuse to write the payload.
 func gather_payload() -> Dictionary:
+	var result: Dictionary = PlayerRegistry.for_player(&"p0", func(): return _gather_checked(true))
+	_gather_failures.assign(result.failures)
+	return result.payload
+
+func _world_preflight() -> Dictionary:
+	var w := PlayerRegistry.world()
+	if w == null: return {"ok":true, "world":null}
+	# A present world is never an opaque pending handoff. Require the explicit
+	# checked capability instead of treating partial/foreign scenes as absence.
+	return {"ok": w.has_method("persistence_ready") and bool(w.call("persistence_ready")), "world":w}
+
+func _section_projection(node: Node) -> Variant:
+	return node.call("persistence_dict") if node.has_method("persistence_dict") else node.call("to_dict")
+
+func _gather_checked(observe := false, current: Callable = Callable()) -> Dictionary:
 	var payload: Dictionary = {}
-	_gather_failures.clear()
+	var failures: Array[String] = []
+	var preflight := _world_preflight()
+	if not preflight.ok:
+		# Observation may expose the current model without granting a write or
+		# sampling an old attachment into it. Missing host rows still refuse
+		# before any potentially creating normalizer, in either mode.
+		if not observe or not PlayerRegistry._states.get(&"p0") is PlayerState:
+			return {"payload":{}, "failures":["world"]}
+		failures.append("world")
+	var world: Node = preflight.world
 	for entry in _ordered_entries():
 		var node := _node_of(entry)
 		if node == null or not node.has_method("to_dict"):
 			continue
-		var data: Variant = node.call("to_dict")
+		if current.is_valid() and not current.call(): return {"payload":payload, "failures":["authority"]}
+		var data: Variant = _section_projection(node)
+		if current.is_valid() and not current.call(): return {"payload":payload, "failures":["authority"]}
 		if typeof(data) != TYPE_DICTIONARY:
 			push_error("SaveManager: %s.to_dict() did not return a Dictionary, the section '%s' is not saved" % [node.name, entry["name"]])
-			_gather_failures.append(str(entry["name"]))
+			failures.append(str(entry["name"]))
 			continue
 		payload[entry["name"]] = _json_safe(data, str(entry["name"]))
 	if not payload.has("players"): payload["players"] = _json_safe(_staging_roster.to_dict(), "players")
@@ -736,16 +887,18 @@ func gather_payload() -> Dictionary:
 	for key in _carried_sections:
 		if not payload.has(key):
 			payload[key] = (_carried_sections[key] as Variant)
-	payload["world"] = _json_safe(_gather_world(), "world")
+	var after := _world_preflight()
+	if not after.ok or after.world != world: failures.append("world")
+	payload["world"] = _json_safe(world.call("to_dict") if world != null and after.ok else (pending_world.duplicate(true) if world == null else {}), "world")
+	if world != null and payload.world.is_empty(): failures.append("world")
 	if payload.get("players") is Dictionary:
 		var rows: Dictionary = payload.players.get("rows", {})
-		var local: Dictionary = rows.get(str(PlayerRegistry.local_id()), {})
+		var local: Dictionary = rows.get("p0", {})
 		for key in ["area", "player_pos", "hotbar"]:
 			if payload.world.has(key): local[key] = payload.world[key]
-		var body := PlayerRegistry.local_player()
-		if body != null:
-			for key in ["half_hearts", "stamina", "oil"]:
-				if key in body: local[key] = body.get(key)
+		if world != null and after.ok:
+			var vitals: Dictionary = world.call("persistence_vitals")
+			for key in vitals: local[key] = vitals[key]
 	var stamp := clock_override if clock_override >= 0.0 else Time.get_unix_time_from_system()
 	payload["meta"] = {
 		"version": PAYLOAD_VERSION,
@@ -754,19 +907,15 @@ func gather_payload() -> Dictionary:
 		"run_id": run_id,
 		"summary": _summarize(payload),
 	}
-	return payload
+	return {"payload":payload, "failures":failures}
 
 
 ## The live world's to_dict(); without a world (title screen, world not built yet after a load) the state that is still
 ## waiting in pending_world, so a save made in between does not lose the world.
 func _gather_world() -> Dictionary:
-	var tree := get_tree()
-	var world: Node = tree.get_first_node_in_group(&"world_2d") if tree != null else null
-	if world != null and world.has_method("to_dict"):
-		var data: Variant = world.call("to_dict")
-		if typeof(data) == TYPE_DICTIONARY:
-			return data
-	return pending_world.duplicate(true)
+	var checked := _world_preflight()
+	if checked.world == null: return pending_world.duplicate(true)
+	return checked.world.call("to_dict") if checked.ok else {}
 
 
 ## Quest definitions are Lua, never saved. QuestManager of the first waves kept them in quest_flags as "def_<id>".
@@ -1150,6 +1299,50 @@ func _summarize(payload: Dictionary) -> Dictionary:
 
 ## Applies a validated payload to the sections, all or nothing. {ok, detail}. See the header (LOADING).
 func _apply_payload(payload: Dictionary) -> Dictionary:
+	if not _lifecycle_available(): return _lifecycle_unavailable_result()
+	var token := GameManager._begin_lifecycle(self, &"direct_apply")
+	if token == null: return GameManager._lifecycle_busy_result()
+	# Match disk/backup whole-save dispatch: section facades belong to the host,
+	# never to a conflicting caller's ambient player slot.
+	var result: Dictionary = PlayerRegistry.for_player(&"p0", func(): return _dispatch_apply(payload, token, &"admitted"))
+	GameManager._finish_lifecycle(token, self)
+	return result
+
+
+# The issuer stays occupied through snapshots, rollback and UI finalization.
+# The leaf stage is consumed before callbacks: neither an exact parent identity
+# nor a direct whole-payload helper call can recursively borrow this authority.
+func _dispatch_apply(payload: Dictionary, token: RefCounted, parent_stage: StringName, root_proof: Dictionary = {}) -> Dictionary:
+	if parent_stage not in [&"admitted", &"load"] or _apply_dispatch != null or not GameManager._owns_lifecycle(token, self, parent_stage):
+		return {"ok": false, "code": "authority", "detail": "Invalid apply authority."}
+	GameManager._stage_lifecycle(token, self, parent_stage, &"apply_dispatch")
+	_apply_dispatch = token
+	var result := _apply_payload_owned(payload, token, root_proof)
+	GameManager._stage_lifecycle(token, self, &"applying", parent_stage)
+	_apply_dispatch = null
+	return result
+
+
+func _apply_payload_owned(payload: Dictionary, token: Variant, root_proof: Dictionary = {}) -> Dictionary:
+	if token == null or token != _apply_dispatch or not GameManager._owns_lifecycle(token, self, &"apply_dispatch"):
+		return {"ok": false, "code": "authority", "detail": "Invalid apply authority."}
+	GameManager._stage_lifecycle(token, self, &"apply_dispatch", &"sections_dispatch")
+	var result := _apply_sections(payload, token, root_proof)
+	result["code"] = "" if result.ok else "apply"
+	return result
+
+
+func _apply_sections(payload: Dictionary, token: Variant = null, root_proof: Dictionary = {}) -> Dictionary:
+	if token == null or token != _apply_dispatch or not GameManager._owns_lifecycle(token, self, &"sections_dispatch"):
+		return {"ok": false, "code": "authority", "detail": "Invalid apply authority."}
+	GameManager._stage_lifecycle(token, self, &"sections_dispatch", &"applying")
+	if _applying: return {"ok": false, "detail": "a load is already applying"}
+	if root_proof.is_empty(): root_proof = _load_root_snapshot()
+	var original_world := PlayerRegistry.world()
+	if original_world != null and not original_world.has_method("rollback_projection"): return {"ok":false, "detail":"world has no rollback capability"}
+	var world_snapshot: Dictionary = original_world.call("rollback_projection") if original_world != null else {}
+	var world_profile: Variant = PlayerRegistry._states.get(&"p0")
+	if original_world != null and world_snapshot.is_empty(): return {"ok":false, "detail":"world failed its rollback snapshot"}
 	if not payload.has("wardrobe") and payload.get("players") is Dictionary:
 		payload = payload.duplicate(true)
 		payload["wardrobe"] = payload.players.rows.p0.get("wardrobe", {})
@@ -1158,14 +1351,66 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 		entries.append({"name": "players", "node": _staging_roster, "order": 15, "seq": -1})
 		entries.sort_custom(_entry_before)
 	var snapshot: Dictionary = {}
-	for entry in entries:
-		var node := _node_of(entry)
-		if node != null and node.has_method("to_dict"):
-			var before: Variant = node.call("to_dict")
-			snapshot[entry["name"]] = (before as Dictionary).duplicate(true) if typeof(before) == TYPE_DICTIONARY else {}
 	var guard := ApplyGuard.new()
 	OS.add_logger(guard)
+	for entry in entries:
+		var node := _node_of(entry)
+		if node == null:
+			continue
+		var section_name: String = entry["name"]
+		var will_apply := node.has_method("from_dict") if payload.has(section_name) else node.has_method("reset")
+		if not will_apply:
+			continue # Inert built-in stand-ins are outside the rollback contract.
+		if not node.has_method("to_dict") or not node.has_method("from_dict"):
+			OS.remove_logger(guard)
+			return {"ok": false, "detail": "section '%s' has no rollback snapshot methods" % section_name}
+		var before: Variant = _section_projection(node)
+		if not before is Dictionary or guard.errors > 0:
+			OS.remove_logger(guard)
+			return {"ok": false, "detail": "section '%s' failed its rollback snapshot" % section_name}
+		snapshot[section_name] = (before as Dictionary).duplicate(true)
+	# Retain the actual alias graph before the FIRST mutator (game/economy run
+	# before players). JSON alone loses profile, QuestRuntime, objective and owed
+	# identities, plus runtime-only vitals. This snapshot stays lexical to this
+	# consumed sections dispatch; no callable/bearer can independently restore it.
+	var original_rows := PlayerRegistry._states
+	var original_fallback := PlayerRegistry._fallback_state
+	var graph: Array[Dictionary] = []
+	var pending: Array = [original_rows, original_fallback]
+	var cursor := 0
+	while cursor < pending.size():
+		var value: Variant = pending[cursor]
+		cursor += 1
+		if not (value is Dictionary or value is Array or value is PlayerState or value is QuestManager.QuestRuntime): continue
+		var seen := false
+		for saved in graph:
+			if is_same(saved.target, value):
+				seen = true
+				break
+		if seen: continue
+		var fields: Variant
+		if value is Dictionary or value is Array:
+			fields = value.duplicate() # shallow: edges must keep their exact targets
+		else:
+			fields = {}
+			for property in value.get_property_list():
+				if int(property.usage) & PROPERTY_USAGE_SCRIPT_VARIABLE:
+					fields[property.name] = value.get(property.name)
+		graph.append({"target": value, "fields": fields})
+		pending.append_array(fields.values() if fields is Dictionary else fields)
+	var quest_manager := SvcLib.node("QuestManager")
+	var quest_transients := {}
+	if quest_manager != null:
+		for field in ["_accept_counter", "_reward_claim_queued", "_refresh_queued"]:
+			quest_transients[field] = quest_manager.get(field)
+	# No transient ownership is touched on validation/snapshot refusal.
+	var social := SvcLib.node("SocialManager")
+	var accounting: Dictionary = social._suspend_accounting() if social != null and social.has_method("_suspend_accounting") else {}
+	var ui := get_tree().get_first_node_in_group("dialogue_ui") if is_inside_tree() else null
+	var fence: RefCounted = ui.suspend_load() if ui != null else null
+	_applying = true
 	var failure := ""
+	var rollback_ok := true
 	var touched: Array[Dictionary] = []          # the sections that ran from_dict / reset (the failing one included)
 	for entry in entries:
 		var node := _node_of(entry)
@@ -1195,11 +1440,72 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 				_carried_sections[str(key)] = payload[key].duplicate(true) if payload[key] is Dictionary or payload[key] is Array else payload[key]
 	else:
 		for entry in touched:                      # sections that were never reached still hold their own state
+			var before_rollback_errors := guard.errors
 			var node := _node_of(entry)
 			if node != null and node.has_method("from_dict") and snapshot.has(entry["name"]):
-				node.call("from_dict", (snapshot[entry["name"]] as Dictionary).duplicate(true))
+				var restored: Variant = node.call("from_dict", (snapshot[entry["name"]] as Dictionary).duplicate(true))
+				if restored is bool and not restored: rollback_ok = false
+			else:
+				rollback_ok = false
+			if guard.errors != before_rollback_errors: rollback_ok = false
+		# A true decoder result is not proof of restoration. Check every saved
+		# section, including rows touched indirectly by other sections/observers,
+		# before restoring any original identity or completing-page authority.
+		for entry in entries:
+			if not snapshot.has(entry["name"]): continue
+			var node := _node_of(entry)
+			var before_verify_errors := guard.errors
+			if node == null or not node.has_method("to_dict"):
+				rollback_ok = false
+			else:
+				var actual: Variant = _section_projection(node)
+				if not actual is Dictionary or actual != snapshot[entry["name"]]: rollback_ok = false
+			if guard.errors != before_verify_errors: rollback_ok = false
+		if rollback_ok:
+			# All decoders and value checks succeeded. Restore original objects AND
+			# their nested aliases, not a new equal-valued profile. No notifications
+			# run in this finalizer; accounting/UI remain suspended throughout it.
+			var before_finalize_errors := guard.errors
+			for saved in graph:
+				var target: Variant = saved.target
+				if target is Dictionary:
+					target.clear()
+					target.merge(saved.fields)
+				elif target is Array:
+					target.assign(saved.fields)
+				else:
+					for field in saved.fields: target.set(field, saved.fields[field])
+			PlayerRegistry._states = original_rows
+			PlayerRegistry._fallback_state = original_fallback
+			if quest_manager != null:
+				for field in quest_transients: quest_manager.set(field, quest_transients[field])
+			for saved in graph:
+				var target: Variant = saved.target
+				var fields: Variant = saved.fields
+				if target is Dictionary or target is Array:
+					if target.size() != fields.size(): rollback_ok = false
+				for field in (range(fields.size()) if fields is Array else fields.keys()):
+					var actual: Variant = target[field] if target is Dictionary or target is Array else target.get(field)
+					if not is_same(actual, fields[field]): rollback_ok = false
+			if guard.errors != before_finalize_errors: rollback_ok = false
+		# World is verification-only, never an eagerly applied save section.
+		# A live-to-departed representation change is allowed only when the
+		# exact original model and current shared projection are still proven.
+		if PlayerRegistry.world() != original_world or PlayerRegistry._states.get(&"p0") != world_profile: rollback_ok = false
+		if original_world != null and (not is_instance_valid(original_world) or original_world.call("rollback_projection") != world_snapshot): rollback_ok = false
+		if not root_proof.is_empty() and not _load_root_restored(root_proof, accounting): rollback_ok = false
+	if not accounting.is_empty(): social._resume_accounting(accounting, failure != "" and rollback_ok)
 	OS.remove_logger(guard)
-	return {"ok": failure == "", "detail": failure}
+	_applying = false
+	var result := {"ok": failure == "", "detail": failure}
+	# Direct apply has no load_completed notification. Capture its actual
+	# committed host after accounting resumes, BEFORE UI finalizers can replace
+	# that incarnation. Decoder callbacks/failed rollback grant no new ticket.
+	if result.ok and GameManager._owns_lifecycle(token, self, &"applying"):
+		if quest_manager != null: quest_manager._queue_reward_claim(&"p0")
+		if social != null and social.has_method("_retry_event_items"): social._retry_event_items(&"p0")
+	if is_instance_valid(ui): ui.finish_load(fence, failure != "" and rollback_ok)
+	return result
 
 
 # ------------------------------------------------------------------ runs and the auto file
@@ -1221,7 +1527,8 @@ func _run_id_of(payload: Dictionary) -> String:
 
 ## Before an autosave replaces save_auto.json (see RUNS in the header): the autosave of another run becomes save_auto.prev.json,
 ## a file that does not load is quarantined. Neither ever stops the autosave itself.
-func _keep_foreign_auto_file() -> void:
+func _keep_foreign_auto_file(current: Callable = Callable()) -> void:
+	if current.is_valid() and not current.call(): return
 	var path := slot_path(AUTO_SLOT)
 	if not FileAccess.file_exists(path):
 		return
@@ -1229,8 +1536,9 @@ func _keep_foreign_auto_file() -> void:
 		return                                 # the file this session wrote last for this run
 	var parsed := _read_json_file(path)
 	var checked := validate_payload(parsed["data"]) if parsed["state"] == "ok" else {"ok": false}
+	if current.is_valid() and not current.call(): return
 	if not checked["ok"]:
-		_quarantine_auto_file(path)
+		_quarantine_auto_file(path, current)
 		return
 	if _run_id_of(checked["payload"]) == run_id:
 		return
@@ -1238,11 +1546,12 @@ func _keep_foreign_auto_file() -> void:
 	if DirAccess.copy_absolute(path, temp) != OK:
 		DirAccess.remove_absolute(temp)
 		return
-	_commit_temp(temp, slot_path(PREV_AUTO_SLOT))
+	_commit_temp(temp, slot_path(PREV_AUTO_SLOT), current)
 
 
 ## Moves an auto file that does not load to save_auto.damaged-<unix>.json and keeps only the newest QUARANTINE_KEEP of those.
-func _quarantine_auto_file(path: String) -> void:
+func _quarantine_auto_file(path: String, current: Callable = Callable()) -> void:
+	if current.is_valid() and not current.call(): return
 	var stamp := int(clock_override if clock_override >= 0.0 else Time.get_unix_time_from_system())
 	var target := save_dir.path_join(QUARANTINE_FILE % stamp)
 	while FileAccess.file_exists(target):
@@ -1250,8 +1559,10 @@ func _quarantine_auto_file(path: String) -> void:
 		target = save_dir.path_join(QUARANTINE_FILE % stamp)
 	if _replace_file(path, target) != OK:
 		return
+	if current.is_valid() and not current.call(): return
 	print("[Save] the auto file did not load; it was kept as %s" % ProjectSettings.globalize_path(target))
 	EventBus.notification_posted.emit(tr("NOTIF_AUTO_SET_ASIDE_TITLE"), tr("NOTIF_AUTO_SET_ASIDE_MSG") % target.get_file(), "save")
+	if current.is_valid() and not current.call(): return
 	var kept: Array[String] = []
 	for file_name in DirAccess.get_files_at(save_dir):
 		if file_name.begins_with("save_auto.damaged-") and file_name.ends_with(".json"):
@@ -1334,7 +1645,8 @@ func _store_text(file: FileAccess, text: String) -> void:
 
 
 ## Temp file, read back and compared, then moved over the target (_commit_temp). False leaves the target as it was.
-func _write_atomic(path: String, text: String) -> bool:
+func _write_atomic(path: String, text: String, current: Callable = Callable()) -> bool:
+	if current.is_valid() and not current.call(): return false
 	var temp := path + ".tmp"
 	var file := FileAccess.open(temp, FileAccess.WRITE)
 	if file == null:
@@ -1346,7 +1658,10 @@ func _write_atomic(path: String, text: String) -> bool:
 	if write_error != OK or FileAccess.get_file_as_bytes(temp) != text.to_utf8_buffer():
 		DirAccess.remove_absolute(temp)
 		return false
-	return _commit_temp(temp, path)
+	if current.is_valid() and not current.call():
+		DirAccess.remove_absolute(temp)
+		return false
+	return _commit_temp(temp, path, current)
 
 
 ## Moves a verified temp file over `path`. A POSIX rename replaces the target atomically. The engine's Windows rename deletes the
@@ -1354,7 +1669,8 @@ func _write_atomic(path: String, text: String) -> bool:
 ## would leave no file at all: with replace_via_old the old file is first moved aside to <path>.old, the temp moved in, the .old
 ## removed, and a failed move puts the .old back. A verified temp is never deleted while the target is missing; whatever a
 ## failure leaves behind, _recover_interrupted_writes() sorts out at the next start.
-func _commit_temp(temp: String, path: String) -> bool:
+func _commit_temp(temp: String, path: String, current: Callable = Callable()) -> bool:
+	if current.is_valid() and not current.call(): return false
 	if not replace_via_old:
 		if _replace_file(temp, path) == OK:
 			return true
@@ -1369,6 +1685,11 @@ func _commit_temp(temp: String, path: String) -> bool:
 		if _replace_file(path, old) != OK:     # nothing was moved: the target is as it was
 			DirAccess.remove_absolute(temp)
 			return false
+	if current.is_valid() and not current.call():
+		# Only restore the exact file moved by this operation; never commit stale bytes.
+		if had_target: DirAccess.rename_absolute(old, path)
+		DirAccess.remove_absolute(temp)
+		return false
 	if _replace_file(temp, path) != OK:
 		if had_target and _replace_file(old, path) == OK:
 			DirAccess.remove_absolute(temp)
@@ -1390,7 +1711,8 @@ func _replace_file(source: String, destination: String) -> Error:
 
 ## A manual save keeps the file it replaces as save_N.bak.json, but only when that file is a valid payload, so a damaged
 ## file never replaces a good .bak.
-func _roll_backup(slot: int) -> void:
+func _roll_backup(slot: int, current: Callable = Callable()) -> void:
+	if current.is_valid() and not current.call(): return
 	var path := slot_path(slot)
 	var backup := backup_path(slot)
 	if backup == "" or not FileAccess.file_exists(path):
@@ -1404,13 +1726,14 @@ func _roll_backup(slot: int) -> void:
 		var valid: bool = bool(validated.get("valid", false)) if same_content else (previous["state"] == "ok" and bool(validate_payload(previous["data"])["ok"]))
 		validated = {"hash": digest, "content": signature, "valid": valid}
 		_backup_validation[path] = validated
+	if current.is_valid() and not current.call(): return
 	if not bool(validated.get("valid", false)):
 		return
 	var temp := backup + ".tmp"
 	if DirAccess.copy_absolute(path, temp) != OK:
 		DirAccess.remove_absolute(temp)
 		return
-	_commit_temp(temp, backup)
+	_commit_temp(temp, backup, current)
 
 
 # ------------------------------------------------------------------ feedback

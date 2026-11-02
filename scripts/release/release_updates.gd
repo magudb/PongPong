@@ -19,6 +19,8 @@ var _request: HTTPRequest
 var _downloading := false
 var _last_bytes := 0
 var _stalled := 0.0
+var _install_request: Dictionary = {}
+var _install_serial := 0
 
 static func inst() -> ReleaseUpdates:
 	var tree := Engine.get_main_loop() as SceneTree
@@ -84,6 +86,7 @@ func _watch(delta: float) -> void:
 
 ## Quitting during a background download leaves no partial archive behind in user://updates (it never resumes, so it is only waste).
 func _exit_tree() -> void:
+	if not _install_request.is_empty(): _release_install(_install_request, true)
 	if state == "downloading":
 		_drop_partial()
 		state = "available"
@@ -245,38 +248,77 @@ func install_target() -> String:
 		return executable.get_base_dir()
 	return ""
 
+func _install_current(request: Dictionary) -> bool:
+	return is_inside_tree() and not is_queued_for_deletion() and not _install_request.is_empty() and _install_request.id == request.id and GameManager.consequential_origin_current(request.origin)
+
+func _release_install(request: Dictionary, abort := false) -> void:
+	if _install_request.is_empty() or _install_request.id != request.id: return
+	_install_request = {} # detach before publishing or allowing a successor
+	if abort:
+		var process: int = request.get("process", -1)
+		if process > 0 and OS.is_process_running(process): OS.kill(process)
+		var result: String = request.get("result", "")
+		if not result.is_empty():
+			for path in [result, result+".ready"]:
+				if FileAccess.file_exists(path): DirAccess.remove_absolute(path)
+		if state == "installing": _set_state("ready")
+
 func install() -> bool:
-	if state != "ready" or install_target().is_empty():
+	if GameManager.lifecycle_busy(): return false
+	if not _install_request.is_empty():
+		if _install_current(_install_request): return false
+		_release_install(_install_request, true)
+		if not _install_request.is_empty() or GameManager.lifecycle_busy(): return false
+	var request := {"id":RefCounted.new(), "origin":GameManager.capture_consequential_origin()}
+	_install_request = request
+	var installed := await _install_owned(request)
+	_release_install(request, not installed)
+	return installed
+
+func _install_owned(request: Dictionary) -> bool:
+	if not _install_current(request): return false
+	var target := install_target()
+	if not _install_current(request): return false
+	if state != "ready" or target.is_empty():
 		_fail("folder")
 		return false
 	if not FileAccess.file_exists(downloaded_path) or FileAccess.get_sha256(downloaded_path) != available.get("sha256", ""):
 		_set_state("download_failed")
 		return false
-	var parent := install_target().get_base_dir()
+	var parent := target.get_base_dir()
 	var probe := parent.path_join(".Traetoppen-write-" + str(OS.get_process_id()))
 	if DirAccess.make_dir_absolute(probe) != OK:
 		_fail("folder")
 		return false
 	DirAccess.remove_absolute(probe)
 	var world := get_tree().get_first_node_in_group("world_2d")
-	if world != null and not SaveManager.autosave():
+	var committed := world == null or SaveManager.autosave()
+	if not _install_current(request): return false
+	if not committed:
 		_set_state("save_failed")
 		return false
 	var helper := write_helper(platform_name())
+	if not _install_current(request): return false
 	if helper.is_empty():
 		_fail("")
 		return false
-	var result := ProjectSettings.globalize_path(CACHE.path_join("install-" + str(OS.get_process_id()) + ".json"))
-	if FileAccess.file_exists(result + ".ready"): DirAccess.remove_absolute(result + ".ready")
-	var command := helper_command(platform_name(), helper, install_target(), result)
+	_install_serial += 1
+	var result := ProjectSettings.globalize_path(CACHE.path_join("install-" + str(OS.get_process_id()) + "-" + str(get_instance_id()) + "-" + str(_install_serial) + ".json"))
+	request.result = result
+	var command := helper_command(platform_name(), helper, target, result)
+	if not _install_current(request): return false
 	var process := OS.create_process(command[0], command[1])
+	request.process = process
+	if not _install_current(request): return false
 	if process < 0:
 		_fail("")
 		return false
 	_set_state("installing")
-	if not await handshake(process, result): return false
-	GameManager.quit_game(0, false)                 # saved above, before the helper started
-	return true
+	if not _install_current(request): return false
+	if not await handshake(process, result, request): return false
+	if not _install_current(request): return false
+	var quitting: bool = await GameManager.try_quit_game(0, false, null, request.origin)
+	return quitting and _install_current(request)
 
 ## Copies the platform's install helper out of the package, where it cannot run; "" when that fails.
 static func write_helper(platform: String) -> String:
@@ -300,14 +342,32 @@ func helper_command(platform: String, helper: String, target: String, result: St
 
 ## Waits until the helper has validated and staged the update and says "ready". A helper that refuses or never
 ## answers fails the install with the reason from its result file; the game keeps running and reports it.
-func handshake(process: int, result: String) -> bool:
+func handshake(process: int, result: String, request: Dictionary = {}) -> bool:
+	var standalone := request.is_empty()
+	if standalone:
+		if GameManager.lifecycle_busy() or not _install_request.is_empty(): return false
+		request = {"id":RefCounted.new(), "origin":GameManager.capture_consequential_origin(), "process":process, "result":result}
+		_install_request = request
+	var ready := await _handshake_owned(process, result, request)
+	if standalone: _release_install(request, not ready)
+	return ready
+
+func _handshake_owned(process: int, result: String, request: Dictionary) -> bool:
 	var ready := result + ".ready"
-	# Allow large packages to finish validation and extraction before the game exits.
+	# No global status/result is adopted after an await. The original request
+	# owns exactly this process and these uniquely named acknowledgement files.
 	for attempt in 1200:
-		if _says_ready(ready) or not OS.is_process_running(process): break
+		if not _install_current(request): return false
+		if _says_ready(ready): break
+		if not OS.is_process_running(process):
+			request.process = -1 # child status consumed; cleanup must not reap twice
+			break
 		await get_tree().create_timer(0.1, true).timeout
+	if not _install_current(request): return false
 	if not _says_ready(ready):
-		if OS.is_process_running(process): OS.kill(process)
+		if request.get("process", -1) > 0:
+			OS.kill(process)
+			request.process = -1
 		var outcome := read_result(result)
 		if FileAccess.file_exists(result): DirAccess.remove_absolute(result)
 		_fail(outcome.get("reason", ""))

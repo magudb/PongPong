@@ -73,9 +73,9 @@ func _tier(tier: int) -> void:
 
 
 func _run() -> void:
-	GameManager.start_new_game("Tester", character, "Min Traekronsgaard")
-	world = (load("res://scenes/main/world.tscn") as PackedScene).instantiate() as WorldRoot2D
-	add_child(world)
+	var admitted := GameManager.try_start_new_game_attached(self,"Tester",character,"Min Traekronsgaard")
+	if not admitted.ok: return
+	world = admitted.world as WorldRoot2D
 	await wait(1.0)
 	world._enter(&"farm", &"default")
 	await wait(0.6)

@@ -79,6 +79,9 @@ var _group_ok: bool = true
 
 func run(tt) -> void:
 	t = tt
+	# Exercise the real present-World entry case as well as model-only resets.
+	# A section must not accidentally rely on its predecessor ending at the menu.
+	await t.start_world()
 	ls = t.autoload("LootService")
 	gm = t.autoload("GameManager")
 	eco = t.autoload("EconomyManager")
@@ -118,8 +121,9 @@ func run(tt) -> void:
 	_spots()
 	_gifts_and_capstones()
 	_duplicates()
+	_legacy_deliver_contract()
 	_full_backpack()
-	_save()
+	await _save()
 	laps.append("spots..save %d" % (Time.get_ticks_msec() - clock))
 	clock = Time.get_ticks_msec()
 	await _markers_fixture()
@@ -127,7 +131,7 @@ func run(tt) -> void:
 	_real_maps()
 	_floors_hosting()
 	await _dungeon_handlers()
-	_delegate_seam()
+	await _delegate_seam()
 	await _appraisal_host()
 	_keys()
 	_price_keeper()
@@ -138,6 +142,8 @@ func run(tt) -> void:
 	bus.loot_rolled.disconnect(_on_rolled)
 	bus.game_event.disconnect(_on_event)
 	bus.notification_posted.disconnect(_on_toast)
+	# _cleanup's model-only reset must not leak an obsolete physical World.
+	await t.go_menu()
 
 
 func _on_whisper(text: String) -> void:
@@ -170,6 +176,42 @@ func _fresh(seed_value: int = 424242) -> void:
 	_rolled.clear()
 	_events.clear()
 	_toasts.clear()
+
+
+## Fresh.new_game is deliberately model-only. Only the two real-write fixtures
+## need physical entry; do it BEFORE they earn seed/loot/appraisal state, not by
+## resetting earned models or rebinding the obsolete World to the new profile.
+func _enter_reset_world(phase: String) -> bool:
+	var old: Node = t.world()
+	var old_id: int = old.get_instance_id()
+	var old_body: WeakRef = weakref(old.player)
+	var rows: Dictionary = PlayerRegistry._states.duplicate()
+	var stock := _inventory_snapshot()
+	var loot: Dictionary = ls.to_dict().duplicate(true)
+	t.check(phase+"_reset_keeps_old_world_revoked", not gm.lifecycle_busy() and not old.persistence_ready() and old._host_profile != rows.get(&"p0") and sm.pending_world.is_empty())
+	if not await t.change_scene(t.WORLD_SCENE):return false
+	var ready: bool = await t.until(func():return t.world()!=null and t.world().get_instance_id()!=old_id and t.world().ready_for_play and not gm.lifecycle_busy(),15.0)
+	t.check(phase+"_fresh_physical_world",ready and t.world().persistence_ready() and old_body.get_ref()==null and sm.pending_world.is_empty())
+	t.check(phase+"_same_reset_profiles_stock_and_seed",PlayerRegistry._states.size()==rows.size() and rows.keys().all(func(pid):return PlayerRegistry._states.get(pid)==rows[pid]) and _inventory_snapshot()==stock and ls.to_dict()==loot)
+	return ready
+
+
+## Actual public dispatch, not a wrapper or an unbounded argument-count check.
+func _legacy_deliver_contract() -> void:
+	_fresh(5901)
+	var count: int = eco.count_item(&"wood")
+	var legacy: Dictionary = ls.deliver("wood",2)
+	t.check("deliver_legacy_two_argument_dispatch",bool(legacy.ok) and eco.count_item(&"wood")==count+2)
+	var amount_default: Dictionary = ls.deliver("wood")
+	var guard_default: Dictionary = ls.deliver("wood",1,Callable())
+	t.check("deliver_optional_amount_and_empty_callable_defaults",bool(amount_default.ok) and bool(guard_default.ok) and eco.count_item(&"wood")==count+4)
+	var before := _inventory_snapshot()
+	var refused_calls: Array = []
+	var refused: Dictionary = ls.deliver("wood",3,func() -> bool:refused_calls.append(true);return false)
+	t.check("deliver_guarded_three_argument_refusal",not bool(refused.ok) and refused.reason==&"lifecycle" and not refused_calls.is_empty() and _inventory_snapshot()==before)
+	var allowed_calls: Array = []
+	var allowed: Dictionary = ls.deliver("wood",3,func() -> bool:allowed_calls.append(true);return true)
+	t.check("deliver_guarded_three_argument_progress",bool(allowed.ok) and not allowed_calls.is_empty() and eco.count_item(&"wood")==count+7)
 
 
 func _z(k: float, n: float, p: float) -> float:
@@ -1008,7 +1050,16 @@ func _full_backpack() -> void:
 		for m in ls.get_method_list():
 			if str(m["name"]) == spec[0]:
 				found_m = true
-				sigs_ok = sigs_ok and (m["args"] as Array).size() == int(spec[1])
+				# Explicit optional-guard migration: source216 already declares
+				# deliver(Variant, int=1, Callable=Callable()). Other APIs stay exact.
+				if spec[0] == "deliver":
+					var args: Array = m["args"]
+					var defaults: Array = m["default_args"]
+					sigs_ok = sigs_ok and args.size() == 3 and defaults.size() == 2
+					if args.size() == 3 and defaults.size() == 2:
+						sigs_ok = sigs_ok and args.size()-defaults.size() == 1 and int(args[0].type) == TYPE_NIL and int(args[1].type) == TYPE_INT and int(args[2].type) == TYPE_CALLABLE and str(args[2].name) == "valid" and typeof(defaults[0]) == TYPE_INT and defaults[0] == 1 and typeof(defaults[1]) == TYPE_CALLABLE and not (defaults[1] as Callable).is_valid()
+				else:
+					sigs_ok = sigs_ok and (m["args"] as Array).size() == int(spec[1])
 		sigs_ok = sigs_ok and found_m
 	var full_pack := _pool_cfg(["wood", "stone", "moss"], 1, "material", "normal")
 	ls.set_loot_config(full_pack)
@@ -1023,6 +1074,7 @@ func _full_backpack() -> void:
 
 func _save() -> void:
 	_fresh(71)
+	if not await _enter_reset_world("loot_save"):return
 	var big := 0x7fffffffffffffff - 12345
 	ls.set_seed(big)
 	for _i in 7:
@@ -1061,6 +1113,24 @@ func _save() -> void:
 	ls.reset()
 	var loaded: bool = sm.load_game(4)
 	t.expect(saved and loaded and ls.opened.has("skovkant:5,5") and str(ls.rng.seed) == seed_text, "save_game(4) -> reset -> load_game(4) restores the section")
+	# D09 still refuses the obsolete present World even when pending is valid.
+	var obsolete: Node = t.world()
+	var disk := FileAccess.get_sha256(sm.slot_path(4))
+	var pending: Dictionary = sm.pending_world.duplicate(true)
+	var loaded_profile: Variant = PlayerRegistry._states.get(&"p0")
+	t.check("loot_loaded_old_world_save_refused",not obsolete.persistence_ready() and not sm.save_game(4) and sm.last_error.get("code")=="gather" and FileAccess.get_sha256(sm.slot_path(4))==disk and sm.pending_world==pending)
+	var retired_body: WeakRef = weakref(obsolete.player)
+	obsolete._unregister_player(obsolete.player)
+	await t.frames(3)
+	var old_area: Variant = obsolete.area
+	var old_day: int = gm.total_day()
+	await obsolete.travel(&"hyggebyen",&"default")
+	await obsolete.sleep()
+	t.check("loot_null_host_pending_does_not_authorize_old_world",retired_body.get_ref()==null and obsolete.player==null and not sm.save_game(4) and sm.last_error.get("code")=="gather" and FileAccess.get_sha256(sm.slot_path(4))==disk and sm.pending_world==pending and PlayerRegistry._states.get(&"p0")==loaded_profile and obsolete.area==old_area and gm.total_day()==old_day and not obsolete.traveling and not obsolete.sleeping)
+	if not await load("res://tests/progression/living_delivery.gd").resume_loaded_world(t,"loot_roundtrip"):return
+	t.check("loot_loaded_world_next_real_save",sm.save_game(4) and ls.opened.has("skovkant:5,5") and str(ls.rng.seed)==seed_text)
+	await t.world().travel(&"hyggebyen",&"default")
+	t.check("loot_loaded_world_next_physical_progress_and_save",t.world().area.map.id==&"hyggebyen" and not t.world().traveling and t.world().persistence_ready() and sm.save_game(4))
 	sm.delete_save(4)
 	# a new game wipes it
 	Fresh.new_game(t)
@@ -1782,6 +1852,7 @@ static func commit(state: Dictionary, plan: Dictionary) -> Dictionary:
 
 func _delegate_seam() -> void:
 	_fresh(111)
+	if not await _enter_reset_world("loot_appraisal"):return
 	_write_fixture(RULES_FIXTURE, RULES_SOURCE)
 	ls.delegate_path = RULES_FIXTURE
 	Engine.set_meta("f4_rows", [{"id": "wood", "amount": 3, "rarity": "normal", "kind": "material"}])

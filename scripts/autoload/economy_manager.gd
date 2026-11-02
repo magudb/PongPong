@@ -150,15 +150,43 @@ static func _empty_equipment() -> Dictionary:
 
 var _notification_depth := 0
 var _deferred_notifications: Array[Callable] = []
+## Optional cancellation for the synchronous social-reward producer only.
+## Restore before publishing so observers' new-world work inherits no old guard.
+var _notification_guard: Callable
+## Bookkeeping for the guarded producer, not authority for mutations. An outer
+## guard must not attach to an independent player or replacement-model root.
+var _notification_owner: Dictionary = {}
+
+func _capture_notification_owner() -> Dictionary:
+	var pid := PlayerRegistry.acting_id()
+	var profile: Variant = PlayerRegistry._states.get(pid) # never create a row
+	var social := _Svc.node("SocialManager")
+	return {"pid": pid, "profile": weakref(profile) if profile != null else null,
+		"run": social.get("_accounting_world") if social != null else null}
+
+func _notification_owner_matches(owner: Dictionary) -> bool:
+	var profile: Variant = owner.profile.get_ref() if owner.profile != null else null
+	var social := _Svc.node("SocialManager")
+	return PlayerRegistry._states.get(owner.pid) == profile and (social.get("_accounting_world") if social != null else null) == owner.run
+
+func _notification_owner_current(owner: Dictionary) -> bool:
+	return owner.profile != null and owner.profile.get_ref() != null and _notification_owner_matches(owner)
 
 
 ## Execute an already-validated multi-item transaction before observers can save or
 ## re-enter it. This batches notifications, not validation or rollback. Nested calls
 ## share the outer transaction; normal calls keep their existing synchronous events.
-func defer_notifications(action: Callable) -> void:
+func defer_notifications(action: Callable, valid: Callable = Callable()) -> void:
+	var previous := _notification_guard
+	var previous_owner := _notification_owner
+	if valid.is_valid():
+		_notification_guard = valid
+		_notification_owner = _capture_notification_owner()
 	_notification_depth += 1
 	action.call()
 	_notification_depth -= 1
+	_notification_guard = previous
+	_notification_owner = previous_owner
 	if _notification_depth == 0:
 		var queued := _deferred_notifications
 		_deferred_notifications = []
@@ -166,11 +194,27 @@ func defer_notifications(action: Callable) -> void:
 			notification.call()
 
 
-func after_transaction(action: Callable) -> void:
+func after_transaction(action: Callable, explicit_valid: Callable = Callable()) -> void:
+	var valid := explicit_valid
+	var owner: Dictionary = {}
+	if valid.is_valid():
+		owner = _capture_notification_owner()
+	elif _notification_guard.is_valid() and _notification_owner.pid == PlayerRegistry.acting_id() and _notification_owner_matches(_notification_owner):
+		valid = _notification_guard
+		owner = _notification_owner
+	var notification := func():
+		if not valid.is_valid():
+			action.call() # preserve unrelated unscoped producers' legacy delivery
+			return
+		if not _notification_owner_current(owner): return
+		# The exact original guard is evaluated in its retained producer scope,
+		# together with its callback. No scope is held across queued work/await.
+		PlayerRegistry.for_player(owner.pid, func():
+			if bool(valid.call()): action.call())
 	if _notification_depth > 0:
-		_deferred_notifications.append(action)
+		_deferred_notifications.append(notification)
 	else:
-		action.call()
+		notification.call()
 
 
 ## Player-scoped EventBus signals that take player_id as their first argument (MP3 / DT-MP5).

@@ -19,9 +19,9 @@ func wait(s: float) -> void:
 
 
 func _run() -> void:
-	GameManager.start_new_game("T", 1, "F")
-	world = (load("res://scenes/main/world.tscn") as PackedScene).instantiate()
-	add_child(world)
+	var admitted := GameManager.try_start_new_game_attached(self,"T",1,"F")
+	if not admitted.ok: return
+	world = admitted.world
 	await wait(1.0)
 	world._enter(&"_fixture_iso", &"default")
 	world.day_night.override_hour = 11.0

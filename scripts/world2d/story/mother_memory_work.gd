@@ -33,6 +33,10 @@ static func choices(id: String) -> Array:
 	return result
 
 static func apply(id: String, action: String) -> String:
+	return apply_owned(id, action, preload("res://scripts/traetoppen/life/presenter_origin.gd").model_guard())
+
+static func apply_owned(id: String, action: String, effects_current: Callable) -> String:
+	if not effects_current.is_valid() or not effects_current.call(): return ""
 	if not MotherStory.enabled() or id not in IDS or complete(id): return ""
 	var value := state(id)
 	if id == "memory_lamp":
@@ -52,6 +56,8 @@ static func apply(id: String, action: String) -> String:
 		else: return ""
 	if value != state(id):
 		GameManager.set_flag(StringName(MotherStory.PREFIX+"work_"+id), value)
+		if not effects_current.call(): return ""
 		SaveManager.autosave()
+		if not effects_current.call(): return ""
 		EventBus.game_event.emit(&"forest_mother_work", {"id":id, "complete":complete(id)})
 	return ""

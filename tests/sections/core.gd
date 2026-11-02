@@ -93,6 +93,9 @@ const FEATURE_SIGNALS := {
 ## The devin-review fix round: flags are event-driven (IsoArea used to poll them at 4 Hz). The 2026-10-19 review: a Lua reload
 ## (F9) tells the systems that copied Lua data (LUA-03).
 const REVIEW_SIGNALS := {
+	# Claimed UI sessions supplement, never change, legacy presentation arities.
+	"dialogue_session_started": "session:Dictionary",
+	"dialogue_session_ended": "session:Dictionary,result:Dictionary,reason:String",
 	"npc_meeting_started": "actor:Node",
 	"flag_changed": "flag:StringName,value:Nil",
 	"save_failed": "slot:int,code:String",
@@ -234,6 +237,9 @@ func _test_signal_lint() -> void:
 	t.check("signal_arity_lint", violations.is_empty(), "%d EventBus uses in %d files, %d violation(s) %s; covers %d feature signals" % [
 		uses, files.size(), violations.size(), violations.slice(0, 3), FEATURE_SIGNALS.size()])
 	t.check("signal_arity_lint_covers_14_feature_signals", feature_ok and FEATURE_SIGNALS.size() == 11, "arity of every addendum 3.1 signal")
+	var session_bad := _lint_text("session-negative", "EventBus.dialogue_session_started.emit()\nEventBus.dialogue_session_ended.emit({})\n", sigs, members)
+	var session_good := _lint_text("session-positive", "EventBus.dialogue_session_started.emit({})\nEventBus.dialogue_session_ended.emit({}, {}, \"cancelled\")\n", sigs, members)
+	t.check("claimed_session_arity_positive_and_negative", session_bad.violations.size() == 2 and session_good.violations.is_empty())
 	# the lint itself must see mistakes (a lint that scans nothing would stay green forever)
 	var bad := "EventBus.gold_changed.emit(5)\nEventBus.nope.emit()\nEventBus.day_started.connect(func(a): pass)\nEventBus.home_upgraded.connect(_h)\nfunc _h(a, b, c):\n\tpass\nEventBus.save_completed.connect(_t2)\nfunc _t2():\n\tpass\nEventBus.item_sold.emit(\n\t&\"p0\", &\"x\", clampi(1, 0, 5)\n)\nMyEventBus.nope.emit()\n"
 	var bad_result := _lint_text("sample", bad, sigs, members)

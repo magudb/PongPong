@@ -87,6 +87,7 @@ func _codec(t) -> void:
 		var low: Dictionary = codec.empty()
 		codec.record(low, &"p1", "smith_thorin", 1)
 		var conflict: Dictionary = codec.empty()
+		conflict.world = raw.world.duplicate(true)
 		conflict.players = (raw if high_bucket == "active" else low).players.duplicate(true)
 		conflict.orphans.players = (raw if high_bucket == "orphan" else low).players.duplicate(true)
 		var conflict_before := conflict.duplicate(true)
@@ -102,7 +103,7 @@ func _codec(t) -> void:
 		t.check("invalid_slot_" + invalid, not codec.record(state, StringName(invalid), "smith_thorin", 22).ok)
 	for pid in [&"p0", &"p2", &"p3"]:
 		t.check("explicit_slot_" + str(pid), codec.record(state, pid, "smith_thorin", 22).ok)
-	var bad_cases: Array = [null, [], {"v": 2}, {"v": 0}, {"v": "1"}, {"v": 1, "players": []}, {"v": 1, "players": {"p99": {}}}, {"v": 1, "world": {"pairs": {"b|a": {}}}}, {"v": 1, "junk": "x".repeat(262145)}]
+	var bad_cases: Array = [null, [], {"v": codec.VERSION + 1}, {"v": 0}, {"v": "1"}, {"v": 1, "players": []}, {"v": 1, "players": {"p99": {}}}, {"v": 1, "world": {"pairs": {"b|a": {}}}}, {"v": 1, "junk": "x".repeat(262145)}]
 	for i in bad_cases.size():
 		t.check("invalid_codec_case_%d" % i, not codec.decode(bad_cases[i], known, 21).ok)
 	var object_case: Dictionary = codec.empty()
@@ -165,7 +166,7 @@ func _codec(t) -> void:
 	live_actor.queue_free()
 	forged.queue_free()
 	var future := saved.duplicate(true)
-	future.living.v = 2
+	future.living.v = codec.VERSION + 1
 	t.check("future_living_fail_before_mutation", not sm.validate_dict(future) and not sm.from_dict(future) and sm.living_snapshot() == before)
 	var payload: Dictionary = sv.gather_payload()
 	payload.social = future
@@ -182,7 +183,7 @@ func _codec(t) -> void:
 	peer.close()
 	sm.reset()
 	await t.frames(3)
-	t.check("reset_deferred_does_not_resurrect_living", sm.living_snapshot() == codec.empty())
+	t.check("reset_deferred_does_not_resurrect_living", sm.living_snapshot().players.is_empty() and sm.living_snapshot().orphans.players.is_empty() and int(sm._living.world.get("pilot", {}).get("pending_day", 0)) == 0)
 	sm.from_dict(saved)
 	t.check("load_restores_receipt_without_grants", sm.living_snapshot() == before and not before.players.is_empty())
 	var late := LateReject.new()
@@ -212,6 +213,6 @@ func _codec(t) -> void:
 	t.check("all_living_reads_pure_copies", sm._living == raw_before and sm.living_snapshot() == before)
 	gm.start_new_game("LC", gm.CharacterType.FAIRY, "LC")
 	await t.frames(3)
-	t.check("actual_new_game_clears_receipts", sm.living_snapshot() == codec.empty())
+	t.check("actual_new_game_clears_receipts", sm.living_snapshot().players.is_empty() and sm.living_snapshot().orphans.players.is_empty() and int(sm._living.world.get("pilot", {}).get("pending_day", 0)) == 0)
 	gm.clear_config_overrides()
 

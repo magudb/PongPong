@@ -54,7 +54,9 @@ func _run(t,shots: bool,skin := "") -> void:
 	t.check("full_pack_cannot_block_evidence",MotherStory.has("marked_lamp") and eco.used_slots() == 24 and eco.count_item(&"wood") == 2376)
 	t.check("evidence_save_written",sm.save_game(4))
 	gm.clear_flag(StringName(MotherStory.PREFIX+"marked_lamp"))
-	t.check("evidence_save_loaded",sm.load_game(4))
+	# A loaded model arrives with a re-entered body (the real player path,
+	# save_load_ui -> load_and_enter): the obsolete World is not reused.
+	t.check("evidence_save_loaded",await _load_and_enter(t,sm,4))
 	await t.frames(3)
 	t.check("evidence_restored_with_quest_progress",MotherStory.has("marked_lamp") and qm.get_objective_progress(MotherStory.quest_id("s03"),&"marked_lamp").done)
 	gm.hour = 12
@@ -168,6 +170,16 @@ func _marker(id: String) -> MotherEvidenceMarker:
 	for node in world.area.objects.get_children():
 		if node is MotherEvidenceMarker and node.evidence_id == id: return node
 	return null
+## Real whole-run load through the player path: a fresh World enters the
+## saved area and applies the save; world/ui are re-acquired from it.
+func _load_and_enter(t,sm: Node,slot: int) -> bool:
+	var old_world := world.get_instance_id()
+	if not sm.load_and_enter(slot): return false
+	if not await t.until(func():return t.world() != null and t.world().get_instance_id() != old_world and t.world().ready_for_play,12): return false
+	world = t.world()
+	ui = t.first(&"dialogue_ui")
+	await t.physics(4)
+	return true
 func _floor(t,number: int) -> void:
 	DungeonFloors.inst().enter(number)
 	await t.until(func():return DungeonFloors.floor_of(world.area) == number and not world.traveling,12)

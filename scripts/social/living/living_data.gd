@@ -78,6 +78,26 @@ static func validate(candidate: Variant = null) -> Array[String]:
 	return errors
 
 
+## Shipped semantic bindings must cover every declared goal, not a generic fallback.
+static func validate_actions() -> Array[String]:
+	var errors: Array[String] = []
+	var copy := _copy_rows(errors)
+	var bindings: Dictionary = Svc.lua_config("living_actions", {})
+	for npc in AUDITED_IDS:
+		if not bindings.has(npc):
+			errors.append("actions:missing:" + npc)
+			continue
+		var b: Dictionary = bindings[npc]
+		for field in ["explanation_key", "repeat_key", "correction_key", "reply_listen", "reply_space", "reply_clarify", "reply_reflection", "reply_connection"]: _key(errors, b.get(field), npc + "." + field, copy)
+		var expected := {}
+		for goal in profile(npc).get("goals", []):
+			expected[goal.id] = "connect" if goal.kind == "connect" else "clarify" if goal.kind == "reconcile" else "reflect"
+		_require(errors, b.get("goals") == expected, npc, "goal_executor_coverage")
+		_require(errors, (b.get("safe_posts") is Array or (npc == "mapseller_natteblik" and b.get("safe_posts") == {})) and b.get("safe_acts") is Array, npc, "safe_stay_authoring")
+		if npc == "mapseller_natteblik": _require(errors, b.get("safe_posts", []).is_empty(), npc, "service_perch_never_leisure")
+	for npc in bindings: _require(errors, npc in AUDITED_IDS, str(npc), "unknown_binding")
+	return errors
+
 static func _goal(errors: Array[String], goal: Dictionary, path: String, npc: String, values: Dictionary, targets: Dictionary, ids: Dictionary, copy: Dictionary) -> void:
 	var id := str(goal.get("id", ""))
 	_require(errors, id.begins_with("lc_" + npc + "_") and not ids.has(id), path, "id")

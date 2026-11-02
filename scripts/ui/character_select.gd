@@ -195,16 +195,17 @@ func _to_title() -> void:
 func _on_confirm() -> void:
 	if _starting:
 		return
-	_starting = true
 	var player: String = %NameInput.text.strip_edges()
 	var farm: String = %FarmNameInput.text.strip_edges()
 	if player == "":
 		player = tr("DEFAULT_PLAYER_NAME")
 	if farm == "":
 		farm = tr("DEFAULT_FARM_NAME")
-	character_chosen.emit(selected_type, selected_skin, player)
-	GameManager.start_new_game(player, selected_type, farm, selected_skin)
-	get_tree().change_scene_to_file("res://scenes/main/world.tscn")
+	var admitted := func():
+		_starting = true
+		character_chosen.emit(selected_type, selected_skin, player)
+	var result := GameManager.try_start_new_game_and_enter(player, selected_type, farm, selected_skin, true, admitted)
+	if not result.ok and result.code != "busy": _starting = false
 
 static func fixture_names(node: Node, _host: Node) -> void:
 	await node.call("_set_page", 2)

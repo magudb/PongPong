@@ -37,7 +37,7 @@ func reset() -> void:
 
 func to_dict() -> Dictionary:
 	# Facades normalize runtime-only quest records and preserve content-drift buckets.
-	var local := local_state()
+	var local := state(&"p0")
 	var game := Svc.node("GameManager")
 	if game != null:
 		local.name = str(game.get("player_name"))
@@ -98,11 +98,16 @@ func from_dict(d: Dictionary) -> bool:
 		game.set("character_type", host.character_type)
 		game.set("character_skin", host.character_skin)
 	# Rebuild typed quest runtimes and route saved items through the existing loaders.
+	var decoded_ok := true
 	for id in rows:
-		PlayerRegistry.for_player(id, func() -> void:
+		var row_ok: bool = PlayerRegistry.for_player(id, func() -> bool:
 			var row: Dictionary = d.rows[str(id)]
 			for pair in [["EconomyManager", row], ["QuestManager", row.get("quests", {})]]:
 				var manager := Svc.node(pair[0])
-				if manager != null and manager.has_method("from_dict"): manager.call("from_dict", pair[1].duplicate(true))
+				if manager != null and manager.has_method("from_dict"):
+					var result: Variant = manager.call("from_dict", pair[1].duplicate(true))
+					if result is bool and not result: return false
+			return true
 		)
-	return true
+		if not row_ok: decoded_ok = false
+	return decoded_ok

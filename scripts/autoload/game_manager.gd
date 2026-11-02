@@ -80,10 +80,142 @@ var _base_phase: GamePhase = GamePhase.MENU
 var _modals: Array[Dictionary] = []          # [{name: StringName, pauses: bool}] in push order
 var _config_overrides: Dictionary = {}       # path -> value; tests and the debug console only, never saved
 var _quitting := false
-var _quit_asking := false                    # save_before_quit is waiting for the answer to the failed-save question
+var _quit_asking := false                    # compatibility observation, owned by _quit_request
+var _quit_request: Dictionary = {}           # exact consequential root, never lifecycle admission
 ## Test seam (no behaviour of its own): when valid, quit_game calls it with the exit code instead of ending the process, after
 ## everything quit_game decides (the save, the question); the game keeps running.
 var quit_seam: Callable = Callable()
+
+# Transient, main-thread admission. Tokens never enter model/save data or public results.
+var _lifecycle_token: RefCounted
+var _lifecycle_owner: Object
+var _lifecycle_kind: StringName
+var _lifecycle_stage: StringName
+var _lifecycle_handoff: Dictionary = {}
+
+
+func lifecycle_busy() -> bool:
+	return _lifecycle_token != null
+
+
+func _begin_lifecycle(owner: Object, kind: StringName) -> RefCounted:
+	if lifecycle_busy() or owner == null: return null
+	_lifecycle_token = RefCounted.new()
+	_lifecycle_owner = owner
+	_lifecycle_kind = kind
+	_lifecycle_stage = &"admitted"
+	return _lifecycle_token
+
+
+func _owns_lifecycle(token: Variant, owner: Object, stage: StringName) -> bool:
+	return token != null and token is RefCounted and token == _lifecycle_token and owner == _lifecycle_owner and stage == _lifecycle_stage
+
+
+func _stage_lifecycle(token: Variant, owner: Object, before: StringName, after: StringName) -> bool:
+	if not _owns_lifecycle(token, owner, before): return false
+	_lifecycle_stage = after
+	return true
+
+
+func _finish_lifecycle(token: Variant, owner: Object) -> void:
+	if token == null or not token is RefCounted or token != _lifecycle_token or owner != _lifecycle_owner: return
+	if not _lifecycle_handoff.is_empty():
+		_lifecycle_handoff["tail"] = true
+		_settle_lifecycle_scene(token, owner)
+		return
+	_release_lifecycle(token, owner)
+
+
+func _release_lifecycle(token: RefCounted, owner: Object) -> void:
+	if token != _lifecycle_token or owner != _lifecycle_owner: return
+	if not _lifecycle_handoff.is_empty():
+		var callback: Callable = _lifecycle_handoff["callback"]
+		if callback.is_valid() and get_tree().scene_changed.is_connected(callback): get_tree().scene_changed.disconnect(callback)
+	_lifecycle_handoff = {}
+	_lifecycle_token = null
+	_lifecycle_owner = null
+	_lifecycle_kind = &""
+	_lifecycle_stage = &""
+
+
+# Godot 4.7.2 change_scene_to_node retains this exact instance, installs it
+# before add_child/_ready, then emits scene_changed. Bind before scheduling;
+# readiness can complete synchronously before that engine acknowledgement.
+func _request_lifecycle_world_node(token: RefCounted, owner: Object, world: Node, parent: Node = null, make_current := false) -> Error:
+	if not _owns_lifecycle(token, owner, &"scene_request") or not _lifecycle_handoff.is_empty(): return ERR_BUSY
+	if not world.has_method("_bind_lifecycle_bootstrap"): return ERR_INVALID_DATA
+	var ref: WeakRef = weakref(world)
+	var callback := _lifecycle_scene_changed.bind(token, owner, ref) if parent == null else Callable()
+	if not world.call("_bind_lifecycle_bootstrap", _lifecycle_world_done.bind(token, owner, ref), _lifecycle_world_exited.bind(token, owner, ref)): return ERR_INVALID_DATA
+	_lifecycle_handoff = {"world":ref,"callback":callback,"tail":false,"done":false,"ack":false,"exited":false}
+	if parent != null:
+		parent.add_child(world)
+		if make_current: get_tree().current_scene = world
+		_lifecycle_handoff["ack"] = true
+		return OK
+	get_tree().scene_changed.connect(callback)
+	var err := get_tree().change_scene_to_node(world)
+	if err != OK:
+		get_tree().scene_changed.disconnect(callback)
+		_lifecycle_handoff = {}
+	return err
+
+
+func _request_lifecycle_world(token: RefCounted, owner: Object, path: String) -> Error:
+	if not _owns_lifecycle(token, owner, &"scene_request"): return ERR_BUSY
+	var packed := load(path) as PackedScene
+	if packed == null: return ERR_CANT_OPEN
+	var world := packed.instantiate()
+	var err := _request_lifecycle_world_node(token, owner, world)
+	if err != OK: world.free()
+	return err
+
+
+func _matching_lifecycle_world(token: RefCounted, owner: Object, ref: WeakRef) -> bool:
+	return _owns_lifecycle(token, owner, &"scene_request") and not _lifecycle_handoff.is_empty() and _lifecycle_handoff["world"] == ref
+
+
+func _lifecycle_scene_changed(token: RefCounted, owner: Object, ref: WeakRef) -> void:
+	if not _matching_lifecycle_world(token,owner,ref) or get_tree().current_scene != ref.get_ref(): return
+	_lifecycle_handoff["ack"] = true
+	# Hold through every synchronous scene_changed/ready listener, not just ours.
+	_settle_lifecycle_scene.call_deferred(token,owner)
+
+
+func _lifecycle_world_done(success: bool, token: RefCounted, owner: Object, ref: WeakRef) -> void:
+	if not _matching_lifecycle_world(token,owner,ref): return
+	var world: Variant = ref.get_ref()
+	if not is_instance_valid(world): return
+	if success and (not world.ready_for_play or not world.is_inside_tree()): return
+	if not success and not _lifecycle_handoff["exited"]: return
+	_lifecycle_handoff["done"] = true
+	if not success: _lifecycle_handoff["ack"] = true
+	_settle_lifecycle_scene.call_deferred(token,owner)
+
+
+func _lifecycle_world_exited(token: RefCounted, owner: Object, ref: WeakRef) -> void:
+	if not _matching_lifecycle_world(token,owner,ref): return
+	_lifecycle_handoff["exited"] = true
+	_settle_lifecycle_scene.call_deferred(token,owner)
+
+
+func _settle_lifecycle_scene(token: RefCounted, owner: Object) -> void:
+	if token != _lifecycle_token or owner != _lifecycle_owner or _lifecycle_handoff.is_empty(): return
+	# A retained exited coroutine must acknowledge its cancellation at its tail.
+	# A freed script cannot resume; defer until its destruction actually finished.
+	if _lifecycle_handoff["exited"] and _lifecycle_handoff["world"].get_ref() == null:
+		_lifecycle_handoff["done"] = true
+		_lifecycle_handoff["ack"] = true
+	if _lifecycle_handoff["tail"] and _lifecycle_handoff["done"] and _lifecycle_handoff["ack"]:
+		_release_lifecycle(token,owner)
+
+
+func _lifecycle_result(ok: bool, code := "", detail := "") -> Dictionary:
+	return {"ok": ok, "code": code, "detail": detail}
+
+
+func _lifecycle_busy_result() -> Dictionary:
+	return _lifecycle_result(false, "busy", "Another run operation is still finishing.")
 
 
 func _ready() -> void:
@@ -92,50 +224,168 @@ func _ready() -> void:
 	get_tree().auto_accept_quit = false
 	get_tree().root.close_requested.connect(quit_game)
 
-## The one way out of the game: the window's close button, Cmd+Q / Alt+F4 (close_requested), the title's and the pause menu's
-## Quit, the updater. `save` = true first autosaves a running world (save_before_quit); when the player answers the failed-save
-## question with Cancel the game keeps running. The updater (it has just saved) and the release smoke pass `save` = false.
-func quit_game(code := 0, save := true, asker: Control = null) -> void:
-	if _quitting or _quit_asking:return
-	if save and not await save_before_quit(asker):return
-	if _quitting:return
+## Noncreating consequential origin, independent of a write's immutable committed
+## bool. Empty bootstrap/menu models are valid; equal-valued replacement is not.
+## This is lexical bookkeeping, never an acting-player or lifecycle permit.
+func capture_consequential_origin() -> Dictionary:
+	var rows := {}
+	for pid in PlayerRegistry._states:
+		rows[pid] = weakref(PlayerRegistry._states[pid])
+	var social := get_node_or_null("/root/SocialManager")
+	var world := get_tree().get_first_node_in_group("world_2d")
+	var scene := get_tree().current_scene
+	return {"rows":rows, "run":social._accounting_world if social != null else null,
+		"world":weakref(world) if world != null else null, "scene":weakref(scene) if scene != null else null}
+
+
+func consequential_origin_current(origin: Dictionary) -> bool:
+	return not lifecycle_busy() and _consequential_model_current(origin)
+
+
+## A title departure must retain its original model through its own admitted
+## modal/phase teardown. This exact token does not authorize any other caller.
+func _consequential_origin_current_owned(origin: Dictionary, token: RefCounted, owner: Object) -> bool:
+	return _lifecycle_kind == &"return_title" and _owns_lifecycle(token, owner, &"admitted") and _consequential_model_current(origin)
+
+
+func _consequential_model_current(origin: Dictionary) -> bool:
+	if origin.is_empty(): return false
+	var social := get_node_or_null("/root/SocialManager")
+	if social != null and (social._accounting_suspended or social._accounting_world != origin.run): return false
+	if PlayerRegistry._states.size() != origin.rows.size(): return false
+	for pid in origin.rows:
+		var row: Variant = origin.rows[pid].get_ref()
+		if row == null or PlayerRegistry._states.get(pid) != row: return false
+	var world := get_tree().get_first_node_in_group("world_2d")
+	if origin.world == null:
+		if world != null: return false
+	elif not is_instance_valid(origin.world.get_ref()) or world != origin.world.get_ref() or not world.is_inside_tree() or world.is_queued_for_deletion(): return false
+	var scene := get_tree().current_scene
+	return (scene == null if origin.scene == null else is_instance_valid(origin.scene.get_ref()) and scene == origin.scene.get_ref() and not scene.is_queued_for_deletion())
+
+
+func _quit_current(request: Dictionary) -> bool:
+	return not _quit_request.is_empty() and _quit_request.id == request.id and consequential_origin_current(request.origin)
+
+
+func _begin_quit() -> Dictionary:
+	if lifecycle_busy(): return {}
+	if not _quit_request.is_empty():
+		if _quit_current(_quit_request): return {}
+		_finish_quit(_quit_request)
+		# Cleanup can synchronously start a different, legitimate quit.
+		if not _quit_request.is_empty() or lifecycle_busy(): return {}
+	var request := {"id":RefCounted.new(), "origin":capture_consequential_origin(), "stage":&"admitted"}
+	if not consequential_origin_current(request.origin): return {}
+	_quit_request = request
+	return request
+
+
+func _finish_quit(request: Dictionary) -> void:
+	# A stale stack may acquire its last UI node during add_child/_ready after a
+	# successor has already retired it. Always release exact local resources;
+	# only the matching request may touch the global flags.
+	if not _quit_request.is_empty() and _quit_request.id == request.id:
+		_quit_request = {}
+		_quit_asking = false
+		_quitting = false
+	var audio: Variant = request.get("audio")
+	var dialog: Variant = request.get("dialog")
+	var host: Variant = request.get("host")
+	request.erase("audio")
+	request.erase("dialog")
+	request.erase("host")
+	if audio != null and is_instance_valid(audio.get_ref()): audio.get_ref().cancel_shutdown(request.id)
+	if dialog != null and is_instance_valid(dialog.get_ref()):
+		if dialog.get_ref().is_open(): dialog.get_ref()._finish(false)
+		if is_instance_valid(dialog.get_ref()): dialog.get_ref().queue_free()
+	if host != null and is_instance_valid(host.get_ref()): host.get_ref().queue_free()
+	pop_modal_owned(&"quit_shutdown", request.id)
+
+
+## All entrypoints share one request from before save through every await. The
+## updater forwards its ORIGINAL origin instead of minting authority after handoff.
+func quit_game(code := 0, save := true, asker: Control = null, origin: Dictionary = {}) -> void:
+	await try_quit_game(code, save, asker, origin)
+
+## Additive checked handoff: true only after dispatching this request's terminal
+## effect. Legacy quit_game stays void; disk durability remains SaveManager's bool.
+func try_quit_game(code := 0, save := true, asker: Control = null, origin: Dictionary = {}) -> bool:
+	if not origin.is_empty() and not consequential_origin_current(origin): return false
+	var request := _begin_quit()
+	if request.is_empty(): return false
+	if not origin.is_empty(): request.origin = origin
+	if save and not await _save_before_quit(request, asker):
+		_finish_quit(request)
+		return false
+	if not _quit_current(request):
+		_finish_quit(request)
+		return false
 	if quit_seam.is_valid():
-		quit_seam.call(code)
-		return
+		var terminal := quit_seam
+		_finish_quit(request)
+		if not _quit_request.is_empty() or not consequential_origin_current(request.origin): return false
+		terminal.call(code)
+		return true
+	request.stage = &"shutdown"
 	_quitting = true
-	get_tree().paused = true
+	push_modal_owned(&"quit_shutdown", true, request.id)
+	if not _quit_current(request):
+		_finish_quit(request)
+		return false
 	var audio := get_node_or_null("/root/AudioManager")
-	if audio!=null and audio.has_method("prepare_shutdown"):await audio.prepare_shutdown()
+	if audio != null and audio.has_method("prepare_shutdown"):
+		request.audio = weakref(audio)
+		await audio.prepare_shutdown(request.id, func(): return _quit_current(request))
+	if not _quit_current(request):
+		_finish_quit(request)
+		return false
 	get_tree().quit(code)
+	return true
 
 
-## Autosaves a running world before the game closes; true = go on and quit. Nothing to save (no world: the title, the
-## character select) and an event scene in progress (its effects have not committed, SaveManager refuses) are true at once.
-## A failed save asks PAUSE_SAVE_FAILED_CONFIRM on `asker` with Cancel as the default; without an asker (the window's close
-## button) the question gets a host Control of its own on the GameUI layer (the HUDs cannot host it: their controls never take focus).
+## Standalone policy facade keeps its own exact root too, without a token over UI.
 func save_before_quit(asker: Control = null) -> bool:
-	if get_tree().get_first_node_in_group("world_2d") == null or is_modal_open(&"event"):
-		return true
+	var request := _begin_quit()
+	if request.is_empty(): return false
+	var accepted := await _save_before_quit(request, asker)
+	var current := _quit_current(request)
+	_finish_quit(request)
+	return accepted and current and consequential_origin_current(request.origin)
+
+
+func _save_before_quit(request: Dictionary, asker: Control) -> bool:
+	if not _quit_current(request) or request.stage != &"admitted": return false
+	request.stage = &"saving" # consume before serializers/status/confirmation callbacks
+	if get_tree().get_first_node_in_group("world_2d") == null or is_modal_open(&"event"): return true
 	var saves := get_node_or_null("/root/SaveManager")
-	if saves == null or not saves.has_method("autosave") or bool(saves.call("autosave")):
-		return true
-	var host: Control = null
-	if asker == null or not asker.is_visible_in_tree():
-		host = Control.new()
+	var committed := saves == null or not saves.has_method("autosave") or bool(saves.call("autosave"))
+	if not _quit_current(request): return false
+	if committed: return true
+	_quit_asking = true
+	if not is_instance_valid(asker) or not asker.is_inside_tree() or not asker.is_visible_in_tree():
+		var host := Control.new()
 		host.name = "QuitQuestion"
 		host.process_mode = Node.PROCESS_MODE_ALWAYS
 		host.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		request.host = weakref(host)
 		var layer := get_tree().get_first_node_in_group("game_ui")
 		(layer if layer != null else get_tree().root).add_child(host)
+		if not _quit_current(request): return false
 		host.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		asker = host
-	_quit_asking = true
 	var confirm: Script = load("res://scripts/ui/components/ui_confirm.gd")
-	var accepted: bool = await confirm.call("ask", asker, "NOTIF_SAVE_FAILED_TITLE", "PAUSE_SAVE_FAILED_CONFIRM", "NAV_OK")
-	_quit_asking = false
-	if host != null:
-		host.queue_free()
-	return accepted
+	var dialog: Variant = confirm.call("_make", asker)
+	if dialog == null: return false
+	request.dialog = weakref(dialog)
+	if not _quit_current(request): return false
+	dialog.setup("NOTIF_SAVE_FAILED_TITLE", "PAUSE_SAVE_FAILED_CONFIRM", "NAV_OK")
+	var answers := []
+	dialog.answered.connect(func(result): answers.append(bool(result)), CONNECT_ONE_SHOT)
+	dialog.begin()
+	if not _quit_current(request): return false
+	if answers.is_empty(): await dialog.answered
+	return _quit_current(request) and not answers.is_empty() and answers[0]
 
 
 func _process(delta: float) -> void:
@@ -242,6 +492,27 @@ func minutes_per_real_second() -> float:
 
 ## Starts a fresh run: resets this node's state, then announces it. `p_skin` empty selects the default skin of the race.
 func start_new_game(p_name: String, p_type: CharacterType, p_farm: String = "", p_skin: StringName = &"") -> void:
+	try_start_new_game(p_name, p_type, p_farm, p_skin)
+
+
+func try_start_new_game(p_name: String, p_type: CharacterType, p_farm: String = "", p_skin: StringName = &"") -> Dictionary:
+	var token := _begin_lifecycle(self, &"new_game")
+	if token == null: return _lifecycle_busy_result()
+	_stage_lifecycle(token, self, &"admitted", &"new_game_ready")
+	_start_new_game_owned(token, p_name, p_type, p_farm, p_skin)
+	_finish_lifecycle(token, self)
+	return _lifecycle_result(true)
+
+
+func _start_new_game_owned(token: RefCounted, p_name: String, p_type: CharacterType, p_farm: String, p_skin: StringName, on_admitted: Callable = Callable()) -> void:
+	# Consume the issuer's one entry before ANY callback, including admission.
+	# An observer can see the exact token but cannot borrow this whole body.
+	if not _stage_lifecycle(token, self, &"new_game_ready", &"new_game"): return
+	if on_admitted.is_valid(): on_admitted.call()
+	var social := get_node_or_null("/root/SocialManager")
+	if social != null: social.invalidate_accounting()
+	var dialogue := get_tree().get_first_node_in_group("dialogue_ui")
+	if dialogue != null: dialogue.begin_reset()
 	player_name = p_name.strip_edges() if p_name.strip_edges() != "" else tr("DEFAULT_PLAYER_NAME")
 	character_type = p_type
 	character_skin = p_skin if p_skin != &"" else _default_skin_for(p_type)
@@ -270,11 +541,60 @@ func start_new_game(p_name: String, p_type: CharacterType, p_farm: String = "", 
 	_drop_modals()
 	# the skin is final here; the reset wave of every other system comes last
 	EventBus.player_character_changed.emit(PlayerRegistry.local_id(), character_skin)
+	# SaveManager was the first reset listener. Preserve its visibility/order,
+	# but explicitly authorize exactly one metadata reset before the reset wave.
+	var saves := get_node_or_null("/root/SaveManager")
+	if saves != null: saves._reset_metadata_owned(token, self)
 	EventBus.new_game_started.emit()
+	if is_instance_valid(dialogue): dialogue.end_reset()
+	_stage_lifecycle(token, self, &"new_game", &"new_game_done")
+
+
+func try_start_new_game_and_enter(p_name: String, p_type: CharacterType, p_farm: String = "", p_skin: StringName = &"", play_intro := true, on_admitted: Callable = Callable()) -> Dictionary:
+	var token := _begin_lifecycle(self, &"new_game_enter")
+	if token == null: return _lifecycle_busy_result()
+	var path := "res://scenes/main/world.tscn"
+	if not ResourceLoader.exists(path):
+		_finish_lifecycle(token,self)
+		return _lifecycle_result(false,"scene","World scene is unavailable.")
+	_stage_lifecycle(token,self,&"admitted",&"new_game_ready")
+	_start_new_game_owned(token,p_name,p_type,p_farm,p_skin,on_admitted)
+	if not play_intro: set_flag(FLAG_INTRO_PENDING,false)
+	_stage_lifecycle(token,self,&"new_game_done",&"scene_request")
+	var err := _request_lifecycle_world(token,self,path)
+	var result := _lifecycle_result(err == OK,"" if err == OK else "scene","" if err == OK else "Could not enter the world.")
+	_finish_lifecycle(token,self)
+	return result
 
 
 func _default_zones() -> Array[StringName]:
 	return [&"farm", &"city"]
+
+
+# Explicit release/art/test adapter: attach a fresh world without deleting its
+# driver scene. All setup is synchronous; the same finite bootstrap owns release.
+func try_start_new_game_attached(parent: Node, p_name: String, p_type: CharacterType, p_farm: String = "", p_skin: StringName = &"", play_intro := true, after_reset: Callable = Callable(), make_current := false) -> Dictionary:
+	var token := _begin_lifecycle(self,&"new_game_attached")
+	if token == null: return _lifecycle_busy_result()
+	if not is_instance_valid(parent) or not parent.is_inside_tree() or (make_current and parent != get_tree().root):
+		_finish_lifecycle(token,self)
+		return _lifecycle_result(false,"scene","World parent is unavailable.")
+	var packed := load("res://scenes/main/world.tscn") as PackedScene
+	if packed == null:
+		_finish_lifecycle(token,self)
+		return _lifecycle_result(false,"scene","World scene is unavailable.")
+	_stage_lifecycle(token,self,&"admitted",&"new_game_ready")
+	_start_new_game_owned(token,p_name,p_type,p_farm,p_skin)
+	if not play_intro: set_flag(FLAG_INTRO_PENDING,false)
+	if after_reset.is_valid(): after_reset.call()
+	_stage_lifecycle(token,self,&"new_game_done",&"scene_request")
+	var world := packed.instantiate()
+	var err := _request_lifecycle_world_node(token,self,world,parent,make_current)
+	var result := _lifecycle_result(err == OK,"" if err == OK else "scene","" if err == OK else "Could not attach the world.")
+	if err == OK: result["world"] = world
+	else: world.free()
+	_finish_lifecycle(token,self)
+	return result
 
 
 func _default_skin_for(type: CharacterType) -> StringName:
@@ -303,16 +623,28 @@ func change_phase(phase: GamePhase) -> void:
 
 ## Opens a modal. A name that is already open only updates its pause behaviour (a panel pushes exactly once).
 func push_modal(modal_name: StringName, pauses_tree: bool = true) -> void:
+	push_modal_owned(modal_name, pauses_tree, RefCounted.new())
+
+## The caller retains its receipt before callback-producing phase publication.
+func push_modal_owned(modal_name: StringName, pauses_tree: bool, receipt: RefCounted) -> void:
 	if modal_name == &"":
 		push_error("GameManager.push_modal: a modal needs a name")
 		return
 	var idx := _modal_index(modal_name)
 	if idx >= 0:
+		_modals[idx]["receipt"] = receipt
 		if bool(_modals[idx]["pauses"]) == pauses_tree:
 			return
 		_modals[idx]["pauses"] = pauses_tree
 	else:
-		_modals.append({"name": modal_name, "pauses": pauses_tree})
+		_modals.append({"name": modal_name, "pauses": pauses_tree, "receipt": receipt})
+	_apply_modal_state()
+
+
+func pop_modal_owned(modal_name: StringName, receipt: RefCounted) -> void:
+	var idx := _modal_index(modal_name)
+	if idx < 0 or receipt == null or _modals[idx].get("receipt") != receipt: return
+	_modals.remove_at(idx)
 	_apply_modal_state()
 
 

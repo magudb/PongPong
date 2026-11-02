@@ -38,6 +38,7 @@ var _default: StringName = DEFAULT_CANCEL
 var _initial_text := ""
 var _max_len := 24
 var _open := false
+var _modal_receipt: RefCounted
 var _prev_focus: Variant = null
 var _wired := false
 var _amount_mode := false
@@ -118,7 +119,7 @@ func _exit_tree() -> void:
 	_prev_focus = null
 	var gm := Svc.node("GameManager")
 	if gm != null:
-		gm.call("pop_modal", MODAL)
+		gm.call("pop_modal_owned", MODAL, _modal_receipt)
 	# Removing the asker cancels the request and releases any surviving awaiter.
 	answered.emit("" if _text_mode else (0 if _amount_mode else false))
 
@@ -235,13 +236,16 @@ func begin() -> void:
 	if _open:
 		return
 	_open = true
+	_modal_receipt = RefCounted.new()
 	visible = true
+	if not _open or not is_inside_tree(): return
 	set_process(true)
 	var vp := get_viewport()
 	_prev_focus = vp.gui_get_focus_owner() if vp != null else null
 	var gm := Svc.node("GameManager")
 	if gm != null:
-		gm.call("push_modal", MODAL, get_tree().paused)      # a confirm never changes the pause state
+		gm.call("push_modal_owned", MODAL, get_tree().paused, _modal_receipt) # exact question owns its pause entry
+	if not _open or not is_inside_tree(): return
 	if _text_mode:
 		_field.max_length = _max_len
 		_field.select_all_on_focus = true
@@ -323,11 +327,13 @@ func _finish(accepted: bool) -> void:
 		result = int(_stepper.get("value")) if accepted else 0
 	var gm := Svc.node("GameManager")
 	if gm != null:
-		gm.call("pop_modal", MODAL)
+		gm.call("pop_modal_owned", MODAL, _modal_receipt)
 	UiNav.swallow(get_viewport())
 	var prev: Variant = _prev_focus
 	_prev_focus = null
-	if UiNav.is_stop(prev) and prev.is_visible_in_tree():
+	if gm != null and gm.call("is_modal_open", MODAL):
+		pass # a synchronous close observer opened a successor; leave its focus alone
+	elif UiNav.is_stop(prev) and prev.is_visible_in_tree():
 		prev.grab_focus()
 	else:
 		UiNav.release_world_focus()

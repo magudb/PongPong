@@ -390,7 +390,7 @@ static func world_is_free() -> bool:
 	var gm := Svc.node("GameManager")
 	if gm == null:
 		return false
-	if bool(gm.call("is_modal_open")):
+	if bool(gm.call("lifecycle_busy")) or bool(gm.call("is_modal_open")):
 		return false
 	var phases: Variant = (gm.get_script() as Script).get_script_constant_map().get("GamePhase", {})
 	var playing: Variant = (phases as Dictionary).get("PLAYING", 2) if phases is Dictionary else 2
@@ -399,6 +399,8 @@ static func world_is_free() -> bool:
 	var tree := Engine.get_main_loop() as SceneTree
 	var world: Node = tree.current_scene if tree != null else null
 	if world != null:
+		if world.is_in_group("world_2d") and not bool(world.get("ready_for_play")):
+			return false
 		if bool(world.get("sleeping")) or bool(world.get("traveling")):
 			return false
 	return true

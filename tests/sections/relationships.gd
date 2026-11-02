@@ -76,6 +76,10 @@ func run(t) -> void:
 	t.check("fixed_calendar_still_nine",SocialData.festivals().size()==9)
 	t.check("real_save_reload",SaveManager.save_game(3) and SaveManager.load_game(3))
 	t.check("proposal_dates_and_stages_saved",int(SocialManager.partner().get("wedding",0))==wedding and SocialManager.event_stamp("heartfriend:gardener_hoppe")==2 and FLOW.state("gardener_hoppe")==2)
+	# Drain the successful loader's real queued daily settlement before the
+	# strict scene-handoff snapshot (the raw date jump did not run that work).
+	await t.frames(2)
+	if not await load("res://tests/progression/living_delivery.gd").resume_loaded_world(t,"proposal"):return
 	_date(wedding,20)
 	FLOW.flush()
 	var delayed := int(SocialManager.partner().get("wedding",0))
@@ -151,6 +155,9 @@ func run(t) -> void:
 	var stamp := SocialManager.partner()
 	VISITS.daily_chore()
 	t.check("daily_help_saved_idempotent",SocialManager.partner()==stamp)
+	await t.frames(2)
+	if not await load("res://tests/progression/living_delivery.gd").resume_loaded_world(t,"chore"):return
+	farm = t.world().farm
 	for npc in ["baker_maja","merchant_pip","postman_pip","bathkeeper_sofus","beekeeper_birk","appraiser_fru_ugle","fairy_lily"]:SocialManager.debug_set_hearts(npc,4)
 	var party := SocialManager.start_house_party()
 	t.check("party_names_six_real_friends",party.size()==6 and party.all(func(npc):return SocialManager.can_befriend(npc) and SocialManager.hearts(npc)>=4))
@@ -173,6 +180,8 @@ func run(t) -> void:
 	HomeManager._roll_weekly_visit()
 	t.check("real_weekly_gift_not_replayed",EconomyManager.to_dict()==inventory and HomeManager.visit_today()==visit)
 	t.check("named_visit_and_history_saved",SaveManager.save_game(3) and SaveManager.load_game(3) and HomeManager.visit_today()==visit and SocialManager.event_stamp("home_visit:"+named)==SocialManager.week()+1)
+	await t.frames(2)
+	if not await load("res://tests/progression/living_delivery.gd").resume_loaded_world(t,"named_visit"):return
 	for npc in candidates:
 		if not SocialManager.can_befriend(npc):t.check("hero_twin_not_a_partner",FLOW.reason(npc,"hjertebuket")=="PARTNER_NOT_ADULT")
 	var gen: Dictionary = t.run_tool(t.python(), [ProjectSettings.globalize_path("res://tools/social/content/build_relationships.py"),"--check"])

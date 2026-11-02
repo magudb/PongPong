@@ -134,6 +134,8 @@ var _water_t: float = 0.0
 var _when_hour: int = -1                    # the raw game hour (6..25) the `when=` nodes were last evaluated at: the hour edge test
 var _has_water: bool = false                # a `~` cell was painted: the four swap layers and the 0.5 s tick are needed
 var _hooked: bool = false
+var _when_revision := 0
+var _when_lifetimes: Dictionary = {}
 
 static var _handler_cache: Dictionary = {}  # script path -> {"mode": String, "script": Script}
 static var _registry_cache: Dictionary = {} # marker_registry(), memoised: a map resolves ~once per marker cell
@@ -1376,14 +1378,14 @@ func _on_quest_spot(_player: Node, m: Dictionary) -> void:
 ## Registers nodes behind a `when=` condition and applies it at once. A typo in the spec is reported even when nobody is registered.
 func _track_when(params: Dictionary, nodes: Array) -> void:
 	var w: String = str(params.get("when", ""))
-	if w == "":
-		return
-	_report_when_errors(params)
-	if nodes.is_empty():
-		return
+	if w == "": return
 	var rec: Dictionary = {"nodes": nodes, "when": w, "active": true, "delegated": when_is_delegated(w.strip_edges()), "flag": _when_uses(w, "flag")}
-	_when_nodes.append(rec)
-	_apply_when(rec)                        # flag whens re-evaluate on flag_changed; quest / night / clock arrive by signal
+	var origin := _begin_when([rec])
+	_when_scoped(origin, func():
+		_report_when_errors(params)
+		if not _when_current(origin) or nodes.is_empty(): return
+		_when_nodes.append(rec)
+		_apply_when(rec, origin))
 
 
 ## A `when=` the grammar does not know goes to map.errors once as `when_unknown_kind: when=<spec> (<what>)`: a map test that asserts
@@ -1508,51 +1510,149 @@ static func _truthy(v: Variant) -> bool:
 	return true
 
 
-## Re-evaluates every `when=` of this area (called on enter and on quest / day / game event changes).
+## Each independent instance root owns one model and one view revision. The
+## static evaluator remains an ordinary caller-scoped API. Keep service access
+## late-bound rather than adding an autoload identifier to class-name drivers.
+func _begin_when(extra: Array = []) -> Dictionary:
+	var social: Node = Svc.node("SocialManager")
+	var model: Variant = PlayerRegistry._states.get(&"p0")
+	if model == null or model.get("player_id") != &"p0" or model.get("peer_id") != 1: return {}
+	if social != null and _truthy(social.get("_accounting_suspended")): return {}
+	_when_revision += 1
+	var revision := _when_revision
+	var owner_ref: WeakRef = weakref(self)
+	var parent_ref: WeakRef = weakref(get_parent()) if get_parent() != null else null
+	var was_inside := is_inside_tree()
+	var place := map
+	var container_ref: WeakRef = weakref(objects) if is_instance_valid(objects) else null
+	var model_ref: WeakRef = weakref(model) if model != null else null
+	var run: Variant = social.get("_accounting_world") if social != null else null
+	# A missing WeakRef means originally absent; a cleared WeakRef means the
+	# original service was destroyed, never permission to adopt a new/absent one.
+	var social_ref: WeakRef = weakref(social) if social != null else null
+	var world: Node = PlayerRegistry.world()
+	if world != null and not world.is_ancestor_of(self): world = null
+	if world != null and world.get("area") != self and world.get("area") != null: return {}
+	var world_ref: WeakRef = weakref(world) if world != null else null
+	var published_ref: WeakRef = weakref(world.get("area")) if world != null and world.get("area") != null else null
+	var current := func() -> bool:
+		var owner: Variant = owner_ref.get_ref()
+		if not is_instance_valid(owner) or owner.is_queued_for_deletion(): return false
+		if owner._when_revision != revision or owner.is_inside_tree() != was_inside or owner.map != place: return false
+		if owner.get_parent() != (parent_ref.get_ref() if parent_ref != null else null): return false
+		if owner.objects != (container_ref.get_ref() if container_ref != null else null): return false
+		var retained_social: Variant = social_ref.get_ref() if social_ref != null else null
+		if social_ref != null and not is_instance_valid(retained_social): return false
+		if Svc.node("SocialManager") != retained_social: return false
+		if (model_ref.get_ref() == null or PlayerRegistry._states.get(&"p0") != model_ref.get_ref() or model_ref.get_ref().get("player_id") != &"p0" or model_ref.get_ref().get("peer_id") != 1): return false
+		if retained_social != null and (_truthy(retained_social.get("_accounting_suspended")) or retained_social.get("_accounting_world") != run): return false
+		if world_ref != null:
+			var scene: Variant = world_ref.get_ref()
+			if not is_instance_valid(scene) or scene.is_queued_for_deletion() or not scene.is_inside_tree() or PlayerRegistry.world() != scene or not scene.is_ancestor_of(owner): return false
+			if published_ref != null and published_ref.get_ref() == null: return false
+			if scene.get("area") != (published_ref.get_ref() if published_ref != null else null): return false
+		return true
+	var origin: Dictionary = {"current":current, "records":[], "nodes":{}, "glows":_glows.duplicate(), "lights":_lights.duplicate()}
+	for rec in _when_nodes + extra:
+		origin.records.append({"record":rec,"nodes":rec.nodes.duplicate(),"spec":str(rec.when),"delegated":bool(rec.delegated),"flag":bool(rec.flag)})
+		for n in rec.nodes: _retain_when_node(origin, n)
+	for row in origin.glows + origin.lights: _retain_when_node(origin, row.node)
+	return origin
+
+func _retain_when_node(origin: Dictionary, value: Variant) -> void:
+	if not is_instance_valid(value) or not value is Node: return
+	var n: Node = value
+	var id := n.get_instance_id()
+	if origin.nodes.has(id): return
+	var life: Dictionary = _when_lifetimes.get(id, {})
+	if life.is_empty() or life.ref.get_ref() != n or not life.live or life.inside != n.is_inside_tree():
+		life = {"ref":weakref(n), "live":true, "inside":n.is_inside_tree()}
+		_when_lifetimes[id] = life
+		if n.is_inside_tree(): n.tree_exiting.connect(func(): life.live = false, CONNECT_ONE_SHOT)
+	origin.nodes[id] = {"ref":weakref(n), "parent":weakref(n.get_parent()) if n.get_parent() != null else null, "inside":n.is_inside_tree(), "life":life}
+	for ch in n.get_children(): _retain_when_node(origin, ch)
+
+static func _when_current(origin: Dictionary) -> bool:
+	return not origin.is_empty() and bool(origin.current.call())
+
+func _when_node_current(origin: Dictionary, value: Variant) -> bool:
+	if not is_instance_valid(value) or not value is Node or value.is_queued_for_deletion(): return false
+	if origin.is_empty(): return true # legacy visual-only helper calls
+	if not _when_current(origin): return false
+	var row: Dictionary = origin.nodes.get(value.get_instance_id(), {})
+	return not row.is_empty() and row.ref.get_ref() == value and row.life.live and value.is_inside_tree() == row.inside and value.get_parent() == (row.parent.get_ref() if row.parent != null else null)
+
+func _when_scoped(origin: Dictionary, operation: Callable) -> void:
+	if not _when_current(origin): return
+	PlayerRegistry.for_player(&"p0", operation)
+
+## Snapshot once before callbacks; no scope survives an await.
 func refresh_when() -> void:
+	var origin := _begin_when()
+	_when_scoped(origin, func(): _refresh_when(origin))
+
+func _refresh_when(origin: Dictionary) -> void:
+	if not _when_current(origin): return
 	var gm: Node = GameData.gm()
 	_when_hour = int(gm.get("hour")) if gm != null else -1
-	for rec in _when_nodes:
-		_apply_when(rec)
+	for row in origin.records:
+		if not _when_current(origin): return
+		_apply_when(row.record, origin)
 
-
-## Re-evaluates the `when=` nodes whose spec SocialManager answers (the hour edge, a change of hearts).
 func _refresh_delegated() -> void:
-	for rec in _when_nodes:
-		if bool(rec["delegated"]):
-			_apply_when(rec)
+	var origin := _begin_when()
+	_when_scoped(origin, func():
+		for row in origin.records:
+			if not _when_current(origin): return
+			if row.delegated: _apply_when(row.record, origin))
 
-
-func _apply_when(rec: Dictionary) -> void:
-	var on: bool = evaluate_when(str(rec["when"]))
-	rec["active"] = on
-	for n in (rec["nodes"] as Array):
-		if is_instance_valid(n):
-			_set_node_active(n as Node, on)
-
-
-func _set_node_active(n: Node, on: bool) -> void:
-	if n.has_method("set_enabled"):
-		n.call("set_enabled", on)
+func _apply_when(rec: Dictionary, origin: Dictionary = {}) -> void:
+	if origin.is_empty():
+		origin = _begin_when([rec] if not _when_nodes.has(rec) else [])
+		_when_scoped(origin, func(): _apply_when(rec, origin))
 		return
-	if n is CanvasItem:
-		(n as CanvasItem).visible = on
+	if not _when_current(origin): return
+	var found: Dictionary = {}
+	for row in origin.records:
+		if is_same(row.record, rec):
+			found = row
+			break
+	if found.is_empty(): return
+	var on: bool = evaluate_when(found.spec)
+	if not _when_current(origin): return
+	rec["active"] = on
+	for n in found.nodes:
+		if not _when_current(origin): return
+		if _when_node_current(origin, n): _set_node_active(n, on, origin)
+
+func _set_node_active(n: Node, on: bool, origin: Dictionary = {}) -> void:
+	if not _when_node_current(origin, n): return
+	if n.has_method("set_enabled"):
+		if n is Interactable2D and not origin.is_empty():
+			n.set_enabled_guarded(on, func() -> bool: return _when_node_current(origin, n))
+		else:
+			n.call("set_enabled", on)
+		return
+	if n is CanvasItem: (n as CanvasItem).visible = on
+	if not _when_node_current(origin, n): return
 	n.process_mode = Node.PROCESS_MODE_INHERIT if on else Node.PROCESS_MODE_DISABLED
-	_set_collision_enabled(n, on)
+	if not _when_node_current(origin, n): return
+	_set_collision_enabled(n, on, origin)
 
-
-func _set_collision_enabled(n: Node, on: bool) -> void:
+func _set_collision_enabled(n: Node, on: bool, origin: Dictionary = {}) -> void:
+	if not _when_node_current(origin, n): return
 	if n is CollisionObject2D:
 		var co: CollisionObject2D = n
 		if on:
-			if co.has_meta("when_layer"):
-				co.collision_layer = int(co.get_meta("when_layer"))
+			if co.has_meta("when_layer"): co.collision_layer = int(co.get_meta("when_layer"))
 		else:
-			if not co.has_meta("when_layer"):
-				co.set_meta("when_layer", co.collision_layer)
+			if not co.has_meta("when_layer"): co.set_meta("when_layer", co.collision_layer)
+			if not _when_node_current(origin, n): return
 			co.collision_layer = 0
+	if not _when_node_current(origin, n): return
 	for ch in n.get_children():
-		_set_collision_enabled(ch, on)
+		if not _when_node_current(origin, n): return
+		if _when_node_current(origin, ch): _set_collision_enabled(ch, on, origin)
 
 
 func when_active_count() -> int:
@@ -1575,18 +1675,22 @@ func set_night_factor(f: float) -> void:
 	_apply_night()
 
 
-func _apply_night() -> void:
-	for g in _glows:
-		var n: CanvasItem = g["node"]
-		if is_instance_valid(n):
+func _apply_night(origin: Dictionary = {}) -> void:
+	for g in (_glows if origin.is_empty() else origin.glows):
+		if not origin.is_empty() and not _when_current(origin): return
+		var n: Variant = g["node"]
+		if _when_node_current(origin, n):
 			var col: Color = n.modulate
 			col.a = night_factor * float(g["base"])
 			n.modulate = col
+			if not _when_node_current(origin, n): return
 			n.visible = night_factor > 0.004
-	for l in _lights:
-		var pl: PointLight2D = l["node"]
-		if is_instance_valid(pl):
+	for l in (_lights if origin.is_empty() else origin.lights):
+		if not origin.is_empty() and not _when_current(origin): return
+		var pl: Variant = l["node"]
+		if _when_node_current(origin, pl):
 			pl.energy = night_factor * float(l["base"])
+			if not _when_node_current(origin, pl): return
 			pl.visible = night_factor > 0.004
 
 
@@ -1616,6 +1720,7 @@ func set_water_frame(i: int) -> void:
 
 
 func _enter_tree() -> void:
+	_when_revision += 1
 	if _hooked:
 		return
 	_hooked = true
@@ -1633,6 +1738,7 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
+	_when_revision += 1
 	if not _hooked:
 		return
 	_hooked = false
@@ -1658,11 +1764,14 @@ func _on_day_event(_day: int, _season: StringName) -> void:
 ## EDGE: minute 0, or an hour other than the one they were last evaluated at (a time skip lands on any minute). `hour` is the raw game
 ## hour 6..25 of CLOCK_26: 24:00 and 01:00 are edges too, and the roll back to 02:00 is one (the hour changes).
 func _on_clock_event(hour: int, minute: int) -> void:
-	var edge: bool = minute == 0 or hour != _when_hour
-	_when_hour = hour
-	for rec in _when_nodes:
-		if str(rec["when"]) == "night" or (edge and bool(rec["delegated"])):
-			_apply_when(rec)
+	var origin := _begin_when()
+	_when_scoped(origin, func():
+		if not _when_current(origin): return
+		var edge: bool = minute == 0 or hour != _when_hour
+		_when_hour = hour
+		for row in origin.records:
+			if not _when_current(origin): return
+			if row.spec == "night" or (edge and row.delegated): _apply_when(row.record, origin))
 
 
 ## Every game event re-evaluates every `when=` (also the events of SocialManager.WHEN_REFRESH_EVENTS: town_festival_*, birthday_today,
@@ -1680,9 +1789,11 @@ func _on_friend_event(_player_id: StringName, _npc_id: StringName, _hearts: int)
 
 ## A flag's new value re-evaluates every `when=` that mentions a `flag:` term (also `&` / delegated combos that carry one).
 func _on_flag_event(_flag: StringName, _value: Variant) -> void:
-	for rec in _when_nodes:
-		if bool(rec["flag"]):
-			_apply_when(rec)
+	var origin := _begin_when()
+	_when_scoped(origin, func():
+		for row in origin.records:
+			if not _when_current(origin): return
+			if row.flag: _apply_when(row.record, origin))
 
 
 func _process(delta: float) -> void:
@@ -1696,5 +1807,7 @@ func _process(delta: float) -> void:
 
 ## Called by WorldRoot2D after the player is put into the area.
 func on_enter() -> void:
-	refresh_when()
-	_apply_night()
+	var origin := _begin_when()
+	_when_scoped(origin, func():
+		_refresh_when(origin)
+		if _when_current(origin): _apply_night(origin))

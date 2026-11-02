@@ -83,7 +83,9 @@ func _run(t, shots: bool, skin := "") -> void:
 	t.check("garden_save_written", sm.save_game(4))
 	gm.set_flag(Story.WATER_DAY, 0)
 	qm.reset()
-	t.check("garden_save_loaded", sm.load_game(4))
+	# A loaded model arrives with a re-entered body (the real player path,
+	# save_load_ui -> load_and_enter): the obsolete World is not reused.
+	t.check("garden_save_loaded", await _load_and_enter(t, sm, 4))
 	await t.frames(6)
 	t.check("watering_and_chapter_restore_together", Story.step() == 6 and not Story.bloom_ready() and gm.flag_int(Story.WATER_DAY) == gm.total_day())
 	await _enter(t, "secret_garden")
@@ -131,7 +133,7 @@ func _run(t, shots: bool, skin := "") -> void:
 	t.check("evidence_can_be_reread_after_completion", qm.is_completed(&"secret_garden") and not gm.is_modal_open())
 	t.check("complete_save_written", sm.save_game(4))
 	qm.reset()
-	t.check("complete_save_loaded", sm.load_game(4))
+	t.check("complete_save_loaded", await _load_and_enter(t, sm, 4))
 	await t.frames(5)
 	await _enter(t, "secret_garden")
 	t.check("completed_place_and_evidence_survive_load", Story.step() == 12 and Story.has_evidence("garden_trail") and _marker("bench")._look.begins_with("bench:"))
@@ -146,6 +148,19 @@ func _run(t, shots: bool, skin := "") -> void:
 	if not capture and skin == "":
 		var alternate: String = {"animal": "animal_monkey", "fairy": "fairy_birk", "hobbit": "hobbit_bodil", "ghost": "ghost_hviske"}[t.character]
 		await _run(t, false, alternate)
+
+## Real whole-run load through the player path: a fresh World enters the
+## saved area and applies the save; world/ui are re-acquired from it.
+func _load_and_enter(t, sm: Node, slot: int) -> bool:
+	var old_world := world.get_instance_id()
+	if not sm.load_and_enter(slot):
+		return false
+	if not await t.until(func(): return t.world() != null and t.world().get_instance_id() != old_world and t.world().ready_for_play, 12):
+		return false
+	world = t.world()
+	ui = t.first(&"dialogue_ui")
+	await t.physics(4)
+	return true
 
 func _enter(t, id: String) -> void:
 	t.check("enter_" + id, world._enter(StringName(id), &"default"))

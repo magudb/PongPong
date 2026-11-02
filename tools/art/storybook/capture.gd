@@ -15,13 +15,10 @@ func _run() -> void:
 		await process_frame
 	RenderingServer.force_draw(false)
 	root.get_texture().get_image().save_png("res://docs/art/storybook/title.png")
-	title.queue_free()
-	await process_frame
 	var manager := root.get_node("GameManager")
-	manager.start_new_game("Art review", 0)
-	var world := load("res://scenes/main/world.tscn").instantiate() as Node2D
-	root.add_child(world)
-	current_scene = world
+	var admitted: Dictionary = manager.try_start_new_game_attached(root,"Art review",0,"",&"",true,func(): title.queue_free(),true)
+	if not admitted.ok: return
+	var world: Node2D = admitted.world
 	for frame in 120:
 		await process_frame
 		if frame > 15 and not bool(world.get("traveling")):

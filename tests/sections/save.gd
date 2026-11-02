@@ -152,6 +152,14 @@ class BadSection extends Node:
 		pass
 
 
+## Mutable built-in stand-in: unlike a bare Node it needs a rollback codec.
+class ApplyOnlySection extends Node:
+	var calls := 0
+	func from_dict(_d: Dictionary) -> bool:
+		calls += 1
+		return true
+	func reset() -> void: calls += 1
+
 var t
 var sm: Node
 var gm: Node
@@ -1151,6 +1159,25 @@ func _test_sections_without_methods() -> void:
 	t.check("section_without_from_dict_is_skipped_on_load", loaded and eco.gold == 321 and gm.day == 4, "the save has a 'shops' section, the stand-in cannot take it: skipped, the rest loads (gold %d)" % eco.gold)
 	svc.clear_overrides()
 	bare.free()
+	var partial := ApplyOnlySection.new()
+	svc.override("ShopSystem", partial)
+	for present in [true, false]:
+		var candidate: Dictionary = doc.duplicate(true)
+		if not present: candidate.erase("shops")
+		var before := _sentinel()
+		var refused: Dictionary = sm._apply_payload(candidate)
+		t.check("missing_snapshot_methods_preflight_%s" % present, not refused.ok and str(refused.detail).contains("snapshot") and partial.calls == 0 and _diff(before, _sentinel()) == "")
+	svc.clear_overrides()
+	partial.free()
+	var valid := _payload() # healthy incoming data; current snapshot alone is invalid
+	var bad := BadSection.new()
+	t.expect(sm.register_section("bad_snapshot", bad), "registry permits a section whose snapshot later fails")
+	valid.bad_snapshot = {}
+	var before := _sentinel()
+	var refused: Dictionary = sm._apply_payload(valid)
+	t.check("non_dictionary_snapshot_preflight", not refused.ok and str(refused.detail).contains("bad_snapshot") and _diff(before, _sentinel()) == "")
+	sm.unregister_section("bad_snapshot")
+	bad.free()
 
 
 # ================================================================ slots, auto slot, backup, atomic write (task 2)
@@ -2088,6 +2115,11 @@ func _summary_has_clean_types(summary: Dictionary) -> bool:
 class WorldStub extends Node2D:
 	var content: Dictionary = {}
 	var from_dict_calls := 0
+	# Opaque world fixture explicitly participates in the checked boundary;
+	# real attachment authentication is covered by persistence_projection.
+	func persistence_ready() -> bool: return is_inside_tree() and not is_queued_for_deletion()
+	func persistence_vitals() -> Dictionary: return {}
+	func rollback_projection() -> Dictionary: return {"content":content.duplicate(true)}
 	func to_dict() -> Dictionary:
 		return content.duplicate(true)
 	func from_dict(_d: Dictionary) -> void:

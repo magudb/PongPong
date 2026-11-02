@@ -21,11 +21,24 @@ var area: StringName = &""
 var player_pos: Vector2 = Vector2.ZERO
 var hotbar: Variant = {}
 ## Vitals are not in the v2 save; they are restored full on sleep/load.
-var half_hearts: int = 10
+# Runtime write provenance, intentionally absent from the disk schema. Exact
+# alias rollback restores these tokens; a later equal-valued assignment still
+# creates a distinct producer and can supersede a departure sample.
+var _vital_writes: Dictionary = {}
+var half_hearts: int = 10:
+	set(value):
+		half_hearts = value
+		_vital_writes["half_hearts"] = RefCounted.new()
 var max_half_hearts: int = 10
-var stamina: float = 100.0
+var stamina: float = 100.0:
+	set(value):
+		stamina = value
+		_vital_writes["stamina"] = RefCounted.new()
 var max_stamina: float = 100.0
-var oil: float = 150.0
+var oil: float = 150.0:
+	set(value):
+		oil = value
+		_vital_writes["oil"] = RefCounted.new()
 var max_oil: float = 150.0
 ## Economy (was EconomyManager's single backpack).
 var gold: int = DEFAULT_STARTING_GOLD

@@ -75,6 +75,12 @@ func run(t) -> void:
 	t.check("lost_save_reload",SaveManager.save_game(3) and SaveManager.load_game(3))
 	runtime = QuestManager.active_quests[&"ghostfam_hittegods"]
 	t.check("lost_assignment_saved",str(runtime.meta.lost_owner)==owner and str(runtime.meta.lost_item)==item and bool(runtime.meta.parcel_given) and EconomyManager.count_item(StringName(item))==count)
+	# Let the successful loader's real deferred daily settlement finish before
+	# retaining the scene-handoff snapshot; it may select today's Living pilot.
+	await t.frames(2)
+	if not await load("res://tests/progression/living_delivery.gd").resume_loaded_world(t,"lost_assignment"):return
+	quests = SocialManager.get_node("FamilyQuests") as GhostFamilyQuests
+	runtime = QuestManager.active_quests[&"ghostfam_hittegods"]
 	EventBus.game_event.emit(&"gift_given",{"npc":"ghostfam_silke","item":item})
 	EventBus.game_event.emit(&"gift_given",{"npc":owner,"item":"stone"})
 	t.check("wrong_owner_or_item_cannot_finish",QuestManager.is_active(&"ghostfam_hittegods"))
@@ -98,6 +104,10 @@ func run(t) -> void:
 	runtime = QuestManager.active_quests[&"ghostfam_hittegods"]
 	item = str(runtime.meta.lost_item)
 	t.check("deferred_state_survives",not bool(runtime.meta.parcel_given))
+	await t.frames(2)
+	if not await load("res://tests/progression/living_delivery.gd").resume_loaded_world(t,"deferred_parcel"):return
+	quests = SocialManager.get_node("FamilyQuests") as GhostFamilyQuests
+	runtime = QuestManager.active_quests[&"ghostfam_hittegods"]
 	EconomyManager.remove_item(&"stone",99)
 	var silke := Npc2D.create({"id":"ghostfam_silke"})
 	t.world().area.objects.add_child(silke)

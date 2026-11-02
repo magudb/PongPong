@@ -22,9 +22,11 @@ static var speed: float = SPEED_DEFAULT
 static var portal_seconds: float = PORTAL_SECONDS_DEFAULT
 static var game_min_per_s: float = GAME_MIN_PER_S_DEFAULT
 static var fallbacks_used: int = 0
+static var generation: int = 0
 
 
 static func load_table(path: String = "res://data/towns/routes.json") -> bool:
+	generation += 1
 	speed = maxf(1.0, LuaData.num(Svc.lua_config("towns.npc_speed", 0.65)) * LuaData.num(Svc.lua_config("player.walk_speed", 285.0)))
 	portal_seconds = maxf(0.0, LuaData.num(Svc.lua_config("towns.portal_seconds", PORTAL_SECONDS_DEFAULT)))
 	game_min_per_s = maxf(0.001, LuaData.num(Svc.lua_config("time.minutes_per_real_second", GAME_MIN_PER_S_DEFAULT)))

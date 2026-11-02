@@ -244,3 +244,297 @@ LC_SMITH_THORIN_AUTONOMOUS,Afslut det almindelige arbejde og hvil ved smedjen hv
 LC_SMITH_THORIN_CLARIFY,Fortæl at arbejdet forsinkede besøget og aftal en ny pause uden gæld eller tab af venskab.,Explain that work delayed the visit and agree another pause without debt or lost friendship.
 LC_SMITH_THORIN_TIE,Nyt forslag: Thorin og Rosmarin kunne dele en pause som ikke handler om værktøj eller varer.,New proposal: Thorin and Rosmarin could share a pause that is not about tools or goods.
 LC_SMITH_THORIN_TIE_2,Nyt forslag: Thorin vil høre hvornår Birk har tid til roligt selskab.,New proposal: Thorin would ask when Birk has time for quiet company.
+LC_ACTIVITY_ASK,Hvad har du lyst til i dag?,What would you like to do today?
+LC_SMITH_THORIN_ACTIVITY,Der er tid til en stille pause på bænken i aften. Jeg går tilbage til springvandet bagefter. Du behøver ikke komme.,There is time for a quiet break on the bench this evening. I will return to the fountain afterwards. You do not have to come.
+LC_PAIR_WISH,Vi vil gerne holde en stille pause ved springvandet. Er de andre optaget tager vi hver vores pause.,We would like a quiet pause by the fountain. If the others are busy we can each rest on our own.
+LC_PAIR_INVITED,Rosmarin har spurgt Birk og Thorin her ved springvandet. Vi finder ud af om der er tid før Birk går hjem.,Rosmarin has asked Birk and Thorin here by the fountain. We are checking there is time before Birk goes home.
+LC_PAIR_AT_EASE,Vi holdt en stille pause sammen ved springvandet. Det var rart bare at være selskab.,We shared a quiet pause by the fountain. It was good just to be company.
+LC_PAIR_MISMATCH,Vi fik talt om pausen men tiden passede ikke før Birk skulle hjem. Næste gang kan vi aftale en kortere pause.,We talked about the pause but it did not fit before Birk needed to go home. Next time we can agree on a shorter pause.
+LC_PAIR_CLARIFIED,Vi har begge sagt ja til at gøre næste pause kortere. Ingen behøver at skynde sig eller vente.,We have both agreed to make our next pause shorter. Nobody needs to hurry or wait.
+LC_PAUSE_ASK,Jeres pause i dag?,Your pause today?
+LC_PAUSE_OPTIONAL,Det er helt frivilligt. At sige ja er ikke det samme som at have været med. Vi kan også holde pause uden dig.,It is entirely optional. Saying yes is not the same as having joined us. We can rest without you too.
+LC_PAUSE_CHOOSE_HELP,Jeg vil gerne være med.,I would like to join you.
+LC_PAUSE_CHOOSE_DEFER,En anden dag.,Another day.
+LC_PAUSE_CHOOSE_DECLINE,Ikke i dag.,Not today.
+LC_PAUSE_HELP,Du har sagt at du gerne vil være med. Kom hen til os mens pausen finder sted hvis det passer dig.,You said you would like to join us. Come over while the pause is happening if it suits you.
+LC_PAUSE_DEFER,Vi lader invitationen ligge til en anden dag. Du skylder os ikke noget.,We can leave the invitation for another day. You do not owe us anything.
+LC_PAUSE_DECLINE,Helt i orden. Vi finder selv en rolig stund.,That is fine. We will find our own quiet moment.
+LC_PAUSE_ACK,Det var rart at være med.,It was good to join you.
+LC_PAUSE_CLARIFY,Skal vi tale om en kortere pause mens I begge er her?,Shall we discuss a shorter pause while you are both here?
+LC_PAUSE_PRESENT,Du var her under pausen. Har du lyst til at fortælle hvordan det var?,You were here during the pause. Would you like to say how it felt?
+LC_PAUSE_SUPPORTED,Tak for det stille selskab. Vi husker den pause vi delte.,Thank you for the quiet company. We remember the pause we shared.
+LC_MOTIVATION_ASK,Hvad tænker du på for tiden?,What is on your mind?
+LC_MOTIVATION_SPACE,Jeg giver dig lidt ro.,I will give you some space.
+LC_MOTIVATION_CORRECT,Kan du forklare det på en anden måde?,Could you explain that another way?
+LC_CARPENTER_BRUMME_EXPLAIN,En samling skal føles rolig i hånden. Jeg vil forklare hvorfor uden at skynde mig.,A joint should feel steady in the hand. I want to explain why without rushing.
+LC_CARPENTER_BRUMME_REPEAT,"Du mener stabil, ikke bare stram.","You mean steady, not merely tight."
+LC_CARPENTER_BRUMME_CORRECTION,"Stabil er ikke det samme som stiv; det er den forskel, jeg mener.",Steady is not the same as rigid; that is the distinction I mean.
+LC_CARPENTER_BRUMME_LISTENED,Du lyttede og gentog tanken om forskellen på stabil og stiv. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about steady versus rigid. We can build on that understanding.
+LC_CARPENTER_BRUMME_SPACED,Du gav plads i samtalen om forskellen på stabil og stiv. Jeg vil ikke presse på for et svar.,You gave space in our conversation about steady versus rigid. I will not press for an answer.
+LC_CARPENTER_BRUMME_CLARIFIED,Vi fik præciseret ordene om forskellen på stabil og stiv. Nu bruger jeg den forklaring.,We clarified the words about steady versus rigid. That is the explanation I use now.
+LC_APPRAISER_FRU_UGLE_EXPLAIN,"En almindelig sten kan være værd at se på, selv uden en pris.",An ordinary stone can be worth observing without a price.
+LC_APPRAISER_FRU_UGLE_REPEAT,Så en iagttagelse er ikke en vurdering i mønter.,So an observation is not a price in coins.
+LC_APPRAISER_FRU_UGLE_CORRECTION,"Jeg mener, hvad du lægger mærke til, ikke hvad stenen kan sælges for.","I mean what you notice, not what the stone could sell for."
+LC_APPRAISER_FRU_UGLE_LISTENED,Du lyttede og gentog tanken om iagttagelser uden priser. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about observations without prices. We can build on that understanding.
+LC_APPRAISER_FRU_UGLE_SPACED,Du gav plads i samtalen om iagttagelser uden priser. Jeg vil ikke presse på for et svar.,You gave space in our conversation about observations without prices. I will not press for an answer.
+LC_APPRAISER_FRU_UGLE_CLARIFIED,Vi fik præciseret ordene om iagttagelser uden priser. Nu bruger jeg den forklaring.,We clarified the words about observations without prices. That is the explanation I use now.
+LC_APPRAISER_FRU_UGLE_REFLECTED,Jeg havde en stille stund til at tænke over iagttagelser uden priser.,I spent a quiet moment considering observations without prices.
+LC_APPRAISER_FRU_UGLE_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om iagttagelser uden priser.,We exchanged a brief hello and made room for the thought about observations without prices.
+LC_BAKER_MAJA_EXPLAIN,"Jeg ønsker selskab, hvor jeg ikke straks skal servere noget.",I would like company without immediately serving something.
+LC_BAKER_MAJA_REPEAT,Jeg kan være her uden at bestille noget.,I can be here without ordering anything.
+LC_BAKER_MAJA_CORRECTION,Selskab er ikke en bestilling; stilhed må også gerne være med.,Company is not an order; silence is welcome too.
+LC_BAKER_MAJA_LISTENED,Du lyttede og gentog tanken om selskab uden servering. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about company without serving. We can build on that understanding.
+LC_BAKER_MAJA_SPACED,Du gav plads i samtalen om selskab uden servering. Jeg vil ikke presse på for et svar.,You gave space in our conversation about company without serving. I will not press for an answer.
+LC_BAKER_MAJA_CLARIFIED,Vi fik præciseret ordene om selskab uden servering. Nu bruger jeg den forklaring.,We clarified the words about company without serving. That is the explanation I use now.
+LC_BAKER_MAJA_REFLECTED,Jeg havde en stille stund til at tænke over selskab uden servering.,I spent a quiet moment considering company without serving.
+LC_BAKER_MAJA_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om selskab uden servering.,We exchanged a brief hello and made room for the thought about company without serving.
+LC_BATHKEEPER_SOFUS_EXPLAIN,"Jeg vil også gerne have en tur som den, andre lytter til.",I would like a turn as the one others listen to.
+LC_BATHKEEPER_SOFUS_REPEAT,Denne gang er det din tur til at fortælle.,This time it is your turn to speak.
+LC_BATHKEEPER_SOFUS_CORRECTION,"En kort fortælling er nok; jeg beder ikke om, at nogen bliver hele aftenen.",A short thought is enough; I am not asking anyone to stay all evening.
+LC_BATHKEEPER_SOFUS_LISTENED,Du lyttede og gentog tanken om at få en lyttende tur. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about having a turn to be heard. We can build on that understanding.
+LC_BATHKEEPER_SOFUS_SPACED,Du gav plads i samtalen om at få en lyttende tur. Jeg vil ikke presse på for et svar.,You gave space in our conversation about having a turn to be heard. I will not press for an answer.
+LC_BATHKEEPER_SOFUS_CLARIFIED,Vi fik præciseret ordene om at få en lyttende tur. Nu bruger jeg den forklaring.,We clarified the words about having a turn to be heard. That is the explanation I use now.
+LC_BATHKEEPER_SOFUS_REFLECTED,Jeg havde en stille stund til at tænke over at få en lyttende tur.,I spent a quiet moment considering having a turn to be heard.
+LC_BATHKEEPER_SOFUS_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om at få en lyttende tur.,We exchanged a brief hello and made room for the thought about having a turn to be heard.
+LC_BEEKEEPER_BIRK_EXPLAIN,"Min stille tid er ikke et tegn på, at jeg ikke vil have venner.",My quiet time does not mean I do not want friends.
+LC_BEEKEEPER_BIRK_REPEAT,Ro kan godt være en venlig grænse.,Quiet can be a friendly boundary.
+LC_BEEKEEPER_BIRK_CORRECTION,"Et stille hej er velkomment; en lang aftale kræver, at vi spørger først.",A quiet hello is welcome; a long arrangement needs a question first.
+LC_BEEKEEPER_BIRK_LISTENED,Du lyttede og gentog tanken om venlige grænser for ro. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about friendly boundaries around quiet. We can build on that understanding.
+LC_BEEKEEPER_BIRK_SPACED,Du gav plads i samtalen om venlige grænser for ro. Jeg vil ikke presse på for et svar.,You gave space in our conversation about friendly boundaries around quiet. I will not press for an answer.
+LC_BEEKEEPER_BIRK_CLARIFIED,Vi fik præciseret ordene om venlige grænser for ro. Nu bruger jeg den forklaring.,We clarified the words about friendly boundaries around quiet. That is the explanation I use now.
+LC_BEEKEEPER_BIRK_REFLECTED,Jeg havde en stille stund til at tænke over venlige grænser for ro.,I spent a quiet moment considering friendly boundaries around quiet.
+LC_BEEKEEPER_BIRK_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om venlige grænser for ro.,We exchanged a brief hello and made room for the thought about friendly boundaries around quiet.
+LC_BERTIL_EXPLAIN,"Jeg vil gerne fortælle, hvad jeg selv har lagt mærke til ved at dyrke.",I would like to share what I have noticed about growing things myself.
+LC_BERTIL_REPEAT,Din iagttagelse behøver ikke ligne andres.,Your observation need not match anyone else's.
+LC_BERTIL_CORRECTION,"Mit råd er et forslag, ikke et løfte om, hvordan din have bliver.","My advice is a suggestion, not a promise about your garden."
+LC_BERTIL_LISTENED,Du lyttede og gentog tanken om egne iagttagelser om at dyrke. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about personal observations about growing. We can build on that understanding.
+LC_BERTIL_SPACED,Du gav plads i samtalen om egne iagttagelser om at dyrke. Jeg vil ikke presse på for et svar.,You gave space in our conversation about personal observations about growing. I will not press for an answer.
+LC_BERTIL_CLARIFIED,Vi fik præciseret ordene om egne iagttagelser om at dyrke. Nu bruger jeg den forklaring.,We clarified the words about personal observations about growing. That is the explanation I use now.
+LC_BERTIL_REFLECTED,Jeg havde en stille stund til at tænke over egne iagttagelser om at dyrke.,I spent a quiet moment considering personal observations about growing.
+LC_BERTIL_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om egne iagttagelser om at dyrke.,We exchanged a brief hello and made room for the thought about personal observations about growing.
+LC_BODIL_EXPLAIN,Jeg kan lide at tale om farver uden at vælge for andre.,I like discussing colours without choosing for other people.
+LC_BODIL_REPEAT,Vi må gerne foretrække forskellige farver.,We may prefer different colours.
+LC_BODIL_CORRECTION,En anden farve er ikke en afvisning af min smag.,A different colour is not a rejection of my taste.
+LC_BODIL_LISTENED,Du lyttede og gentog tanken om forskellige farvevalg. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about different colour preferences. We can build on that understanding.
+LC_BODIL_SPACED,Du gav plads i samtalen om forskellige farvevalg. Jeg vil ikke presse på for et svar.,You gave space in our conversation about different colour preferences. I will not press for an answer.
+LC_BODIL_CLARIFIED,Vi fik præciseret ordene om forskellige farvevalg. Nu bruger jeg den forklaring.,We clarified the words about different colour preferences. That is the explanation I use now.
+LC_BODIL_REFLECTED,Jeg havde en stille stund til at tænke over forskellige farvevalg.,I spent a quiet moment considering different colour preferences.
+LC_BODIL_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om forskellige farvevalg.,We exchanged a brief hello and made room for the thought about different colour preferences.
+LC_CARPENTER_BRUMME_REFLECTED,Jeg havde en stille stund til at tænke over forskellen på stabil og stiv.,I spent a quiet moment considering steady versus rigid.
+LC_CARPENTER_BRUMME_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om forskellen på stabil og stiv.,We exchanged a brief hello and made room for the thought about steady versus rigid.
+LC_CAT_MORFAR_MIS_EXPLAIN,"Et stille mjav, så et skridt tilbage. Morfar Mis vælger selv, om han nærmer sig.","A quiet meow, then a step back. Morfar Mis chooses whether to approach."
+LC_CAT_MORFAR_MIS_REPEAT,Jeg bliver rolig her og lader dig vælge afstand.,I will stay quietly here and let you choose the distance.
+LC_CAT_MORFAR_MIS_CORRECTION,Han bliver på sin plads. Et hej er ikke et løfte om at komme nærmere.,He stays where he is. A hello is not a promise to come closer.
+LC_CAT_MORFAR_MIS_LISTENED,Du lyttede og gentog tanken om ro og selvvalgt afstand. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about quiet and chosen distance. We can build on that understanding.
+LC_CAT_MORFAR_MIS_SPACED,Du gav plads i samtalen om ro og selvvalgt afstand. Jeg vil ikke presse på for et svar.,You gave space in our conversation about quiet and chosen distance. I will not press for an answer.
+LC_CAT_MORFAR_MIS_CLARIFIED,Vi fik præciseret ordene om ro og selvvalgt afstand. Nu bruger jeg den forklaring.,We clarified the words about quiet and chosen distance. That is the explanation I use now.
+LC_CAT_MORFAR_MIS_REFLECTED,Jeg havde en stille stund til at tænke over ro og selvvalgt afstand.,I spent a quiet moment considering quiet and chosen distance.
+LC_CAT_MORFAR_MIS_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om ro og selvvalgt afstand.,We exchanged a brief hello and made room for the thought about quiet and chosen distance.
+LC_CLERK_FJERPEN_EXPLAIN,"Jeg vil gerne fortælle noget, som ikke er en besked fra mit kontor.",I would like to say something that is not a notice from my office.
+LC_CLERK_FJERPEN_REPEAT,"Det her er din tanke, ikke en officiel besked.","This is your thought, not an official notice."
+LC_CLERK_FJERPEN_CORRECTION,Min personlige iagttagelse ændrer ingen aftale eller opslag.,My personal observation changes no agreement or notice.
+LC_CLERK_FJERPEN_LISTENED,Du lyttede og gentog tanken om egne tanker uden officielle opslag. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about personal thoughts apart from official notices. We can build on that understanding.
+LC_CLERK_FJERPEN_SPACED,Du gav plads i samtalen om egne tanker uden officielle opslag. Jeg vil ikke presse på for et svar.,You gave space in our conversation about personal thoughts apart from official notices. I will not press for an answer.
+LC_CLERK_FJERPEN_CLARIFIED,Vi fik præciseret ordene om egne tanker uden officielle opslag. Nu bruger jeg den forklaring.,We clarified the words about personal thoughts apart from official notices. That is the explanation I use now.
+LC_CLERK_FJERPEN_REFLECTED,Jeg havde en stille stund til at tænke over egne tanker uden officielle opslag.,I spent a quiet moment considering personal thoughts apart from official notices.
+LC_CLERK_FJERPEN_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om egne tanker uden officielle opslag.,We exchanged a brief hello and made room for the thought about personal thoughts apart from official notices.
+LC_CUB_BAMSE_EXPLAIN,En stille deltager skal også kunne være med i en leg.,A quiet participant should be able to join a game too.
+LC_CUB_BAMSE_REPEAT,Vi kan skiftes uden at råbe højest.,We can take turns without being the loudest.
+LC_CUB_BAMSE_CORRECTION,At sige nej til en tur er også et valg; ingen skal overtales.,Saying no to a turn is a choice too; nobody needs persuading.
+LC_CUB_BAMSE_LISTENED,Du lyttede og gentog tanken om en leg med plads til et nej. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about play with room for a no. We can build on that understanding.
+LC_CUB_BAMSE_SPACED,Du gav plads i samtalen om en leg med plads til et nej. Jeg vil ikke presse på for et svar.,You gave space in our conversation about play with room for a no. I will not press for an answer.
+LC_CUB_BAMSE_CLARIFIED,Vi fik præciseret ordene om en leg med plads til et nej. Nu bruger jeg den forklaring.,We clarified the words about play with room for a no. That is the explanation I use now.
+LC_CUB_BAMSE_REFLECTED,Jeg havde en stille stund til at tænke over en leg med plads til et nej.,I spent a quiet moment considering play with room for a no.
+LC_CUB_BAMSE_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om en leg med plads til et nej.,We exchanged a brief hello and made room for the thought about play with room for a no.
+LC_FAIRY_BUILDER_EXPLAIN,"Jeg tænker på en skitse, hvor en del kan repareres i stedet for at alt udskiftes.",I am thinking of a sketch where one part can be repaired instead of replacing everything.
+LC_FAIRY_BUILDER_REPEAT,"Du sammenligner idéer, ikke ændrer et hus nu.","You are comparing ideas, not changing a house now."
+LC_FAIRY_BUILDER_CORRECTION,"Det er et valg i en skitse, ikke en ny byggeaftale.","It is a choice in a sketch, not a new building agreement."
+LC_FAIRY_BUILDER_LISTENED,Du lyttede og gentog tanken om reparerbare skitseidéer. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about repairable sketch ideas. We can build on that understanding.
+LC_FAIRY_BUILDER_SPACED,Du gav plads i samtalen om reparerbare skitseidéer. Jeg vil ikke presse på for et svar.,You gave space in our conversation about repairable sketch ideas. I will not press for an answer.
+LC_FAIRY_BUILDER_CLARIFIED,Vi fik præciseret ordene om reparerbare skitseidéer. Nu bruger jeg den forklaring.,We clarified the words about repairable sketch ideas. That is the explanation I use now.
+LC_FAIRY_BUILDER_REFLECTED,Jeg havde en stille stund til at tænke over reparerbare skitseidéer.,I spent a quiet moment considering repairable sketch ideas.
+LC_FAIRY_BUILDER_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om reparerbare skitseidéer.,We exchanged a brief hello and made room for the thought about repairable sketch ideas.
+LC_FAIRY_FURNISHER_EXPLAIN,Et hyggeligt hjørne behøver ikke have samme farve for alle.,A cosy corner need not have the same colour for everyone.
+LC_FAIRY_FURNISHER_REPEAT,Mit farvevalg kan være et andet end dit.,My colour choice can differ from yours.
+LC_FAIRY_FURNISHER_CORRECTION,Vi taler om idéer; jeg flytter ikke noget møbel.,We are discussing ideas; I am not moving any furniture.
+LC_FAIRY_FURNISHER_LISTENED,Du lyttede og gentog tanken om hyggelige hjørner med egne farver. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about cosy corners with individual colours. We can build on that understanding.
+LC_FAIRY_FURNISHER_SPACED,Du gav plads i samtalen om hyggelige hjørner med egne farver. Jeg vil ikke presse på for et svar.,You gave space in our conversation about cosy corners with individual colours. I will not press for an answer.
+LC_FAIRY_FURNISHER_CLARIFIED,Vi fik præciseret ordene om hyggelige hjørner med egne farver. Nu bruger jeg den forklaring.,We clarified the words about cosy corners with individual colours. That is the explanation I use now.
+LC_FAIRY_FURNISHER_REFLECTED,Jeg havde en stille stund til at tænke over hyggelige hjørner med egne farver.,I spent a quiet moment considering cosy corners with individual colours.
+LC_FAIRY_FURNISHER_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om hyggelige hjørner med egne farver.,We exchanged a brief hello and made room for the thought about cosy corners with individual colours.
+LC_FAIRY_KING_EXPLAIN,Jeg vil høre en almindelig erfaring uden først at gøre den til en ceremoni.,I would like to hear an ordinary experience without turning it into a ceremony.
+LC_FAIRY_KING_REPEAT,"Vi kan tale enkelt, som naboer.","We can speak simply, as neighbours."
+LC_FAIRY_KING_CORRECTION,En enkel samtale behøver hverken tale eller tilskuere.,A simple conversation needs neither a speech nor an audience.
+LC_FAIRY_KING_LISTENED,Du lyttede og gentog tanken om enkle samtaler uden ceremoni. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about simple conversations without ceremony. We can build on that understanding.
+LC_FAIRY_KING_SPACED,Du gav plads i samtalen om enkle samtaler uden ceremoni. Jeg vil ikke presse på for et svar.,You gave space in our conversation about simple conversations without ceremony. I will not press for an answer.
+LC_FAIRY_KING_CLARIFIED,Vi fik præciseret ordene om enkle samtaler uden ceremoni. Nu bruger jeg den forklaring.,We clarified the words about simple conversations without ceremony. That is the explanation I use now.
+LC_FAIRY_KING_REFLECTED,Jeg havde en stille stund til at tænke over enkle samtaler uden ceremoni.,I spent a quiet moment considering simple conversations without ceremony.
+LC_FAIRY_KING_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om enkle samtaler uden ceremoni.,We exchanged a brief hello and made room for the thought about simple conversations without ceremony.
+LC_FAIRY_LILY_EXPLAIN,En blomsterhistorie må gerne have mere end én slutning.,A flower story may have more than one ending.
+LC_FAIRY_LILY_REPEAT,Din slutning og min kan begge få plads.,Your ending and mine can both have room.
+LC_FAIRY_LILY_CORRECTION,"Jeg spørger efter din idé, ikke efter det rigtige svar.","I am asking for your idea, not the correct answer."
+LC_FAIRY_LILY_LISTENED,Du lyttede og gentog tanken om flere slutninger på en blomsterhistorie. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about different endings to a flower story. We can build on that understanding.
+LC_FAIRY_LILY_SPACED,Du gav plads i samtalen om flere slutninger på en blomsterhistorie. Jeg vil ikke presse på for et svar.,You gave space in our conversation about different endings to a flower story. I will not press for an answer.
+LC_FAIRY_LILY_CLARIFIED,Vi fik præciseret ordene om flere slutninger på en blomsterhistorie. Nu bruger jeg den forklaring.,We clarified the words about different endings to a flower story. That is the explanation I use now.
+LC_FAIRY_LILY_REFLECTED,Jeg havde en stille stund til at tænke over flere slutninger på en blomsterhistorie.,I spent a quiet moment considering different endings to a flower story.
+LC_FAIRY_LILY_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om flere slutninger på en blomsterhistorie.,We exchanged a brief hello and made room for the thought about different endings to a flower story.
+LC_FAIRY_TAILOR_EXPLAIN,Et anderledes mønster er ikke nødvendigvis en fejl.,A different pattern is not necessarily a mistake.
+LC_FAIRY_TAILOR_REPEAT,Forskel i et mønster kan være et bevidst valg.,A difference in a pattern can be a deliberate choice.
+LC_FAIRY_TAILOR_CORRECTION,Vi ser på en idé til et mønster; intet stof bliver bestilt.,We are considering a pattern idea; no cloth is being ordered.
+LC_FAIRY_TAILOR_LISTENED,Du lyttede og gentog tanken om forskelle i mønstre. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about differences in patterns. We can build on that understanding.
+LC_FAIRY_TAILOR_SPACED,Du gav plads i samtalen om forskelle i mønstre. Jeg vil ikke presse på for et svar.,You gave space in our conversation about differences in patterns. I will not press for an answer.
+LC_FAIRY_TAILOR_CLARIFIED,Vi fik præciseret ordene om forskelle i mønstre. Nu bruger jeg den forklaring.,We clarified the words about differences in patterns. That is the explanation I use now.
+LC_FAIRY_TAILOR_REFLECTED,Jeg havde en stille stund til at tænke over forskelle i mønstre.,I spent a quiet moment considering differences in patterns.
+LC_FAIRY_TAILOR_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om forskelle i mønstre.,We exchanged a brief hello and made room for the thought about differences in patterns.
+LC_FAIRY_WIZARD_EXPLAIN,Jeg vil prøve at forklare en undren med et enkelt eksempel.,I want to explain a question of wonder with a simple example.
+LC_FAIRY_WIZARD_REPEAT,Et enkelt eksempel kan hjælpe uden store ord.,A simple example can help without grand words.
+LC_FAIRY_WIZARD_CORRECTION,Et eksempel hjælper os med at spørge; det er ikke bevis for alt.,An example helps us ask; it is not proof of everything.
+LC_FAIRY_WIZARD_LISTENED,Du lyttede og gentog tanken om enkle eksempler og gode spørgsmål. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about simple examples and useful questions. We can build on that understanding.
+LC_FAIRY_WIZARD_SPACED,Du gav plads i samtalen om enkle eksempler og gode spørgsmål. Jeg vil ikke presse på for et svar.,You gave space in our conversation about simple examples and useful questions. I will not press for an answer.
+LC_FAIRY_WIZARD_CLARIFIED,Vi fik præciseret ordene om enkle eksempler og gode spørgsmål. Nu bruger jeg den forklaring.,We clarified the words about simple examples and useful questions. That is the explanation I use now.
+LC_FAIRY_WIZARD_REFLECTED,Jeg havde en stille stund til at tænke over enkle eksempler og gode spørgsmål.,I spent a quiet moment considering simple examples and useful questions.
+LC_FAIRY_WIZARD_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om enkle eksempler og gode spørgsmål.,We exchanged a brief hello and made room for the thought about simple examples and useful questions.
+LC_FARMER_ROSA_EXPLAIN,"Dyr har forskellige grænser for, hvor tæt man skal komme.",Animals have different boundaries about how close to come.
+LC_FARMER_ROSA_REPEAT,Vi kan lægge mærke til dem uden at gå nærmere.,We can notice them without moving closer.
+LC_FARMER_ROSA_CORRECTION,At give plads er ikke det samme som at passe eller fodre et dyr.,Giving space is not the same as tending or feeding an animal.
+LC_FARMER_ROSA_LISTENED,Du lyttede og gentog tanken om dyrs forskellige afstandsgrænser. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about animals' different boundaries around distance. We can build on that understanding.
+LC_FARMER_ROSA_SPACED,Du gav plads i samtalen om dyrs forskellige afstandsgrænser. Jeg vil ikke presse på for et svar.,You gave space in our conversation about animals' different boundaries around distance. I will not press for an answer.
+LC_FARMER_ROSA_CLARIFIED,Vi fik præciseret ordene om dyrs forskellige afstandsgrænser. Nu bruger jeg den forklaring.,We clarified the words about animals' different boundaries around distance. That is the explanation I use now.
+LC_FARMER_ROSA_REFLECTED,Jeg havde en stille stund til at tænke over dyrs forskellige afstandsgrænser.,I spent a quiet moment considering animals' different boundaries around distance.
+LC_FARMER_ROSA_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om dyrs forskellige afstandsgrænser.,We exchanged a brief hello and made room for the thought about animals' different boundaries around distance.
+LC_FIDDLER_STRIMMEL_EXPLAIN,"Jeg tænker på, hvor kort en melodiidé kan være og stadig få plads.",I am thinking about how short a melody idea can be and still have room.
+LC_FIDDLER_STRIMMEL_REPEAT,Man må gerne ønske en kort eller stille stund.,It is fine to ask for a short or quiet moment.
+LC_FIDDLER_STRIMMEL_CORRECTION,"Vi taler om en melodiidé, ikke om en aftalt optræden.","We are discussing a melody idea, not an agreed performance."
+LC_FIDDLER_STRIMMEL_LISTENED,Du lyttede og gentog tanken om korte melodiidéer og plads til stilhed. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about short melody ideas and room for silence. We can build on that understanding.
+LC_FIDDLER_STRIMMEL_SPACED,Du gav plads i samtalen om korte melodiidéer og plads til stilhed. Jeg vil ikke presse på for et svar.,You gave space in our conversation about short melody ideas and room for silence. I will not press for an answer.
+LC_FIDDLER_STRIMMEL_CLARIFIED,Vi fik præciseret ordene om korte melodiidéer og plads til stilhed. Nu bruger jeg den forklaring.,We clarified the words about short melody ideas and room for silence. That is the explanation I use now.
+LC_FIDDLER_STRIMMEL_REFLECTED,Jeg havde en stille stund til at tænke over korte melodiidéer og plads til stilhed.,I spent a quiet moment considering short melody ideas and room for silence.
+LC_FIDDLER_STRIMMEL_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om korte melodiidéer og plads til stilhed.,We exchanged a brief hello and made room for the thought about short melody ideas and room for silence.
+LC_GARDENER_HOPPE_EXPLAIN,En lille iagttagelse i en have er ikke en regel for alle haver.,A small observation in one garden is not a rule for every garden.
+LC_GARDENER_HOPPE_REPEAT,Vi kan være nysgerrige uden at være sikre.,We can be curious without being certain.
+LC_GARDENER_HOPPE_CORRECTION,Mit forslag må gerne prøves senere; det er ikke en ordre til din have.,My suggestion may be considered later; it is not an order for your garden.
+LC_GARDENER_HOPPE_LISTENED,Du lyttede og gentog tanken om nysgerrighed uden sikre haveregler. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about curiosity without certain gardening rules. We can build on that understanding.
+LC_GARDENER_HOPPE_SPACED,Du gav plads i samtalen om nysgerrighed uden sikre haveregler. Jeg vil ikke presse på for et svar.,You gave space in our conversation about curiosity without certain gardening rules. I will not press for an answer.
+LC_GARDENER_HOPPE_CLARIFIED,Vi fik præciseret ordene om nysgerrighed uden sikre haveregler. Nu bruger jeg den forklaring.,We clarified the words about curiosity without certain gardening rules. That is the explanation I use now.
+LC_GARDENER_HOPPE_REFLECTED,Jeg havde en stille stund til at tænke over nysgerrighed uden sikre haveregler.,I spent a quiet moment considering curiosity without certain gardening rules.
+LC_GARDENER_HOPPE_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om nysgerrighed uden sikre haveregler.,We exchanged a brief hello and made room for the thought about curiosity without certain gardening rules.
+LC_GHOSTFAM_BLUND_EXPLAIN,"Et hej skal være rart for den, der får det. En vinkende hånd kan være nok.",A hello should feel welcome to its recipient. A wave can be enough.
+LC_GHOSTFAM_BLUND_REPEAT,Vi spørger før vi foreslår en forskrækkelse.,We ask before suggesting a scare.
+LC_GHOSTFAM_BLUND_CORRECTION,En hilsen er ikke tilladelse til at forskrække; et vink kan stå alene.,A greeting is not permission to scare; a wave can stand on its own.
+LC_GHOSTFAM_BLUND_LISTENED,Du lyttede og gentog tanken om hilsner med tydeligt samtykke. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about greetings with clear consent. We can build on that understanding.
+LC_GHOSTFAM_BLUND_SPACED,Du gav plads i samtalen om hilsner med tydeligt samtykke. Jeg vil ikke presse på for et svar.,You gave space in our conversation about greetings with clear consent. I will not press for an answer.
+LC_GHOSTFAM_BLUND_CLARIFIED,Vi fik præciseret ordene om hilsner med tydeligt samtykke. Nu bruger jeg den forklaring.,We clarified the words about greetings with clear consent. That is the explanation I use now.
+LC_GHOSTFAM_BLUND_REFLECTED,Jeg havde en stille stund til at tænke over hilsner med tydeligt samtykke.,I spent a quiet moment considering greetings with clear consent.
+LC_GHOSTFAM_BLUND_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om hilsner med tydeligt samtykke.,We exchanged a brief hello and made room for the thought about greetings with clear consent.
+LC_GHOSTFAM_DYNE_EXPLAIN,"Jeg vil tale om en farve, jeg selv kan lide, uden straks at gøre den til en gave.",I want to discuss a colour I like without immediately making it a gift.
+LC_GHOSTFAM_DYNE_REPEAT,Din farve kan bare være din egen glæde.,Your colour can simply be your own pleasure.
+LC_GHOSTFAM_DYNE_CORRECTION,At tale om en farve lover hverken strik eller en gave.,Discussing a colour promises neither knitting nor a gift.
+LC_GHOSTFAM_DYNE_LISTENED,Du lyttede og gentog tanken om farver valgt for egen glæde. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about colours chosen for personal pleasure. We can build on that understanding.
+LC_GHOSTFAM_DYNE_SPACED,Du gav plads i samtalen om farver valgt for egen glæde. Jeg vil ikke presse på for et svar.,You gave space in our conversation about colours chosen for personal pleasure. I will not press for an answer.
+LC_GHOSTFAM_DYNE_CLARIFIED,Vi fik præciseret ordene om farver valgt for egen glæde. Nu bruger jeg den forklaring.,We clarified the words about colours chosen for personal pleasure. That is the explanation I use now.
+LC_GHOSTFAM_DYNE_REFLECTED,Jeg havde en stille stund til at tænke over farver valgt for egen glæde.,I spent a quiet moment considering colours chosen for personal pleasure.
+LC_GHOSTFAM_DYNE_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om farver valgt for egen glæde.,We exchanged a brief hello and made room for the thought about colours chosen for personal pleasure.
+LC_GHOSTFAM_GNIST_EXPLAIN,"Jeg har også en mening om lys, når det ikke handler om en bestilling.",I have a view about light even when it is not an order.
+LC_GHOSTFAM_GNIST_REPEAT,Din lysidé er ikke en bestilling fra mig.,Your light idea is not an order from me.
+LC_GHOSTFAM_GNIST_CORRECTION,En samtale om lys ændrer ikke lamper eller butikkens aftaler.,A conversation about light changes neither lamps nor shop agreements.
+LC_GHOSTFAM_GNIST_LISTENED,Du lyttede og gentog tanken om egne tanker om lys. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about personal thoughts about light. We can build on that understanding.
+LC_GHOSTFAM_GNIST_SPACED,Du gav plads i samtalen om egne tanker om lys. Jeg vil ikke presse på for et svar.,You gave space in our conversation about personal thoughts about light. I will not press for an answer.
+LC_GHOSTFAM_GNIST_CLARIFIED,Vi fik præciseret ordene om egne tanker om lys. Nu bruger jeg den forklaring.,We clarified the words about personal thoughts about light. That is the explanation I use now.
+LC_GHOSTFAM_GNIST_REFLECTED,Jeg havde en stille stund til at tænke over egne tanker om lys.,I spent a quiet moment considering personal thoughts about light.
+LC_GHOSTFAM_GNIST_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om egne tanker om lys.,We exchanged a brief hello and made room for the thought about personal thoughts about light.
+LC_GHOSTFAM_SILKE_EXPLAIN,"Jeg vil skelne mellem det, jeg har set, og det, jeg blot vil fortælle senere.",I want to distinguish what I have seen from what I only intend to say later.
+LC_GHOSTFAM_SILKE_REPEAT,"En hensigt er ikke noget, der allerede er sket.",An intention is not something that has already happened.
+LC_GHOSTFAM_SILKE_CORRECTION,"Jeg kan forklare mine ord uden at påstå, at vi begge har set udsigten.",I can explain my words without claiming we both saw the view.
+LC_GHOSTFAM_SILKE_LISTENED,Du lyttede og gentog tanken om forskellen på iagttagelse og hensigt. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about observation versus intention. We can build on that understanding.
+LC_GHOSTFAM_SILKE_SPACED,Du gav plads i samtalen om forskellen på iagttagelse og hensigt. Jeg vil ikke presse på for et svar.,You gave space in our conversation about observation versus intention. I will not press for an answer.
+LC_GHOSTFAM_SILKE_CLARIFIED,Vi fik præciseret ordene om forskellen på iagttagelse og hensigt. Nu bruger jeg den forklaring.,We clarified the words about observation versus intention. That is the explanation I use now.
+LC_GHOSTFAM_SILKE_REFLECTED,Jeg havde en stille stund til at tænke over forskellen på iagttagelse og hensigt.,I spent a quiet moment considering observation versus intention.
+LC_GHOSTFAM_SILKE_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om forskellen på iagttagelse og hensigt.,We exchanged a brief hello and made room for the thought about observation versus intention.
+LC_GUARD_OAK_EXPLAIN,Jeg kan lide at tale om en skovsti uden at gøre samtalen til en prøve.,I like discussing a forest path without making the conversation a test.
+LC_GUARD_OAK_REPEAT,En vejforklaring er ikke en adgangsprøve.,A route explanation is not an admission test.
+LC_GUARD_OAK_CORRECTION,"Du behøver ikke være enig for at bruge den adgang, du allerede har.",You need not agree to use access you already have.
+LC_GUARD_OAK_LISTENED,Du lyttede og gentog tanken om venlige vejforklaringer. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about friendly route explanations. We can build on that understanding.
+LC_GUARD_OAK_SPACED,Du gav plads i samtalen om venlige vejforklaringer. Jeg vil ikke presse på for et svar.,You gave space in our conversation about friendly route explanations. I will not press for an answer.
+LC_GUARD_OAK_CLARIFIED,Vi fik præciseret ordene om venlige vejforklaringer. Nu bruger jeg den forklaring.,We clarified the words about friendly route explanations. That is the explanation I use now.
+LC_GUARD_OAK_REFLECTED,Jeg havde en stille stund til at tænke over venlige vejforklaringer.,I spent a quiet moment considering friendly route explanations.
+LC_GUARD_OAK_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om venlige vejforklaringer.,We exchanged a brief hello and made room for the thought about friendly route explanations.
+LC_INNKEEPER_KVAK_EXPLAIN,Jeg vil gerne tale en kort tanke færdig før næste spørgsmål.,I would like to finish one short thought before the next question.
+LC_INNKEEPER_KVAK_REPEAT,Du kan få din egen tur til at tale.,You can have your own turn to speak.
+LC_INNKEEPER_KVAK_CORRECTION,En lyttende tur er ikke en betaling eller en reservation.,A listening turn is not a payment or a reservation.
+LC_INNKEEPER_KVAK_LISTENED,Du lyttede og gentog tanken om taleture uden afbrydelser. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about turns to speak without interruption. We can build on that understanding.
+LC_INNKEEPER_KVAK_SPACED,Du gav plads i samtalen om taleture uden afbrydelser. Jeg vil ikke presse på for et svar.,You gave space in our conversation about turns to speak without interruption. I will not press for an answer.
+LC_INNKEEPER_KVAK_CLARIFIED,Vi fik præciseret ordene om taleture uden afbrydelser. Nu bruger jeg den forklaring.,We clarified the words about turns to speak without interruption. That is the explanation I use now.
+LC_INNKEEPER_KVAK_REFLECTED,Jeg havde en stille stund til at tænke over taleture uden afbrydelser.,I spent a quiet moment considering turns to speak without interruption.
+LC_INNKEEPER_KVAK_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om taleture uden afbrydelser.,We exchanged a brief hello and made room for the thought about turns to speak without interruption.
+LC_LAMPLIGHTER_KIKI_EXPLAIN,"Jeg tænker på et sted, jeg kunne blive lidt ved, når runden er færdig.",I am thinking of a place I could linger once the round is finished.
+LC_LAMPLIGHTER_KIKI_REPEAT,Tanken om en pause ændrer ikke din runde.,Thinking about a pause does not change your round.
+LC_LAMPLIGHTER_KIKI_CORRECTION,Et ønske om at mødes er ikke en aftale om at forlade lamperne.,A wish to meet is not an agreement to leave the lamps.
+LC_LAMPLIGHTER_KIKI_LISTENED,Du lyttede og gentog tanken om pauser efter en afsluttet runde. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about pauses after a finished round. We can build on that understanding.
+LC_LAMPLIGHTER_KIKI_SPACED,Du gav plads i samtalen om pauser efter en afsluttet runde. Jeg vil ikke presse på for et svar.,You gave space in our conversation about pauses after a finished round. I will not press for an answer.
+LC_LAMPLIGHTER_KIKI_CLARIFIED,Vi fik præciseret ordene om pauser efter en afsluttet runde. Nu bruger jeg den forklaring.,We clarified the words about pauses after a finished round. That is the explanation I use now.
+LC_LAMPLIGHTER_KIKI_REFLECTED,Jeg havde en stille stund til at tænke over pauser efter en afsluttet runde.,I spent a quiet moment considering pauses after a finished round.
+LC_LAMPLIGHTER_KIKI_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om pauser efter en afsluttet runde.,We exchanged a brief hello and made room for the thought about pauses after a finished round.
+LC_MAPSELLER_NATTEBLIK_EXPLAIN,"En vejforklaring skal skelne mellem et kendt sted og et sted, vi endnu ikke kender.",A route explanation should distinguish a known place from somewhere we do not yet know.
+LC_MAPSELLER_NATTEBLIK_REPEAT,En kendt vej er ikke et løfte om ukendte steder.,A known route is not a promise about unknown places.
+LC_MAPSELLER_NATTEBLIK_CORRECTION,Jeg forklarer kun det kendte; et spørgsmål åbner ikke en ny vej.,I explain only what is known; a question does not open a new route.
+LC_MAPSELLER_NATTEBLIK_LISTENED,Du lyttede og gentog tanken om tydelige forklaringer af kendte veje. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about clear explanations of known routes. We can build on that understanding.
+LC_MAPSELLER_NATTEBLIK_SPACED,Du gav plads i samtalen om tydelige forklaringer af kendte veje. Jeg vil ikke presse på for et svar.,You gave space in our conversation about clear explanations of known routes. I will not press for an answer.
+LC_MAPSELLER_NATTEBLIK_CLARIFIED,Vi fik præciseret ordene om tydelige forklaringer af kendte veje. Nu bruger jeg den forklaring.,We clarified the words about clear explanations of known routes. That is the explanation I use now.
+LC_MAPSELLER_NATTEBLIK_REFLECTED,Jeg havde en stille stund til at tænke over tydelige forklaringer af kendte veje.,I spent a quiet moment considering clear explanations of known routes.
+LC_MAPSELLER_NATTEBLIK_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om tydelige forklaringer af kendte veje.,We exchanged a brief hello and made room for the thought about clear explanations of known routes.
+LC_MAYOR_LYRA_EXPLAIN,Jeg vil gerne være med som nabo uden at arrangere det hele.,I would like to join as a neighbour without organizing everything.
+LC_MAYOR_LYRA_REPEAT,En venlig invitation behøver ikke give dig en opgave.,A friendly invitation need not give you a task.
+LC_MAYOR_LYRA_CORRECTION,En samtale mellem naboer er ikke et nyt arrangement på kalenderen.,A conversation between neighbours is not a new calendar event.
+LC_MAYOR_LYRA_LISTENED,Du lyttede og gentog tanken om naboskab uden arrangøransvar. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about neighbourliness without organizing duties. We can build on that understanding.
+LC_MAYOR_LYRA_SPACED,Du gav plads i samtalen om naboskab uden arrangøransvar. Jeg vil ikke presse på for et svar.,You gave space in our conversation about neighbourliness without organizing duties. I will not press for an answer.
+LC_MAYOR_LYRA_CLARIFIED,Vi fik præciseret ordene om naboskab uden arrangøransvar. Nu bruger jeg den forklaring.,We clarified the words about neighbourliness without organizing duties. That is the explanation I use now.
+LC_MAYOR_LYRA_REFLECTED,Jeg havde en stille stund til at tænke over naboskab uden arrangøransvar.,I spent a quiet moment considering neighbourliness without organizing duties.
+LC_MAYOR_LYRA_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om naboskab uden arrangøransvar.,We exchanged a brief hello and made room for the thought about neighbourliness without organizing duties.
+LC_MERCHANT_PIP_EXPLAIN,Et plantenavn kan gøre mig nysgerrig uden at nogen behøver købe noget.,A plant name can make me curious without anyone needing to buy anything.
+LC_MERCHANT_PIP_REPEAT,Nysgerrighed er ikke en bestilling på frø.,Curiosity is not an order for seeds.
+LC_MERCHANT_PIP_CORRECTION,Vi kan spørge til et navn uden at love en bestemt høst.,We can ask about a name without promising a particular harvest.
+LC_MERCHANT_PIP_LISTENED,Du lyttede og gentog tanken om plantenavne og nysgerrighed. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about plant names and curiosity. We can build on that understanding.
+LC_MERCHANT_PIP_SPACED,Du gav plads i samtalen om plantenavne og nysgerrighed. Jeg vil ikke presse på for et svar.,You gave space in our conversation about plant names and curiosity. I will not press for an answer.
+LC_MERCHANT_PIP_CLARIFIED,Vi fik præciseret ordene om plantenavne og nysgerrighed. Nu bruger jeg den forklaring.,We clarified the words about plant names and curiosity. That is the explanation I use now.
+LC_MERCHANT_PIP_REFLECTED,Jeg havde en stille stund til at tænke over plantenavne og nysgerrighed.,I spent a quiet moment considering plant names and curiosity.
+LC_MERCHANT_PIP_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om plantenavne og nysgerrighed.,We exchanged a brief hello and made room for the thought about plant names and curiosity.
+LC_PENGUIN_POSTMAN_EXPLAIN,Et venligt hej må gerne få et stille vink som svar.,A friendly hello may receive a quiet wave in return.
+LC_PENGUIN_POSTMAN_REPEAT,Et vink tæller også som en venlig hilsen.,A wave is a friendly greeting too.
+LC_PENGUIN_POSTMAN_CORRECTION,Ingen skylder et langt svar på en hilsen.,Nobody owes a long answer to a greeting.
+LC_PENGUIN_POSTMAN_LISTENED,Du lyttede og gentog tanken om hilsner uden krav om svar. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about greetings without demands for a reply. We can build on that understanding.
+LC_PENGUIN_POSTMAN_SPACED,Du gav plads i samtalen om hilsner uden krav om svar. Jeg vil ikke presse på for et svar.,You gave space in our conversation about greetings without demands for a reply. I will not press for an answer.
+LC_PENGUIN_POSTMAN_CLARIFIED,Vi fik præciseret ordene om hilsner uden krav om svar. Nu bruger jeg den forklaring.,We clarified the words about greetings without demands for a reply. That is the explanation I use now.
+LC_PENGUIN_POSTMAN_REFLECTED,Jeg havde en stille stund til at tænke over hilsner uden krav om svar.,I spent a quiet moment considering greetings without demands for a reply.
+LC_PENGUIN_POSTMAN_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om hilsner uden krav om svar.,We exchanged a brief hello and made room for the thought about greetings without demands for a reply.
+LC_PIPPIN_BOEGEKNOP_EXPLAIN,"En ting kan være interessant på grund af historien, ikke prisen.",An object can be interesting for its story rather than its price.
+LC_PIPPIN_BOEGEKNOP_REPEAT,En anden fortolkning behøver ikke ændre en pris.,Another interpretation need not change a price.
+LC_PIPPIN_BOEGEKNOP_CORRECTION,"Vi udveksler tanker om betydning, ikke selve tingen.","We are exchanging thoughts about meaning, not the object itself."
+LC_PIPPIN_BOEGEKNOP_LISTENED,Du lyttede og gentog tanken om tingenes betydning frem for deres pris. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about objects' meaning rather than their price. We can build on that understanding.
+LC_PIPPIN_BOEGEKNOP_SPACED,Du gav plads i samtalen om tingenes betydning frem for deres pris. Jeg vil ikke presse på for et svar.,You gave space in our conversation about objects' meaning rather than their price. I will not press for an answer.
+LC_PIPPIN_BOEGEKNOP_CLARIFIED,Vi fik præciseret ordene om tingenes betydning frem for deres pris. Nu bruger jeg den forklaring.,We clarified the words about objects' meaning rather than their price. That is the explanation I use now.
+LC_PIPPIN_BOEGEKNOP_REFLECTED,Jeg havde en stille stund til at tænke over tingenes betydning frem for deres pris.,I spent a quiet moment considering objects' meaning rather than their price.
+LC_PIPPIN_BOEGEKNOP_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om tingenes betydning frem for deres pris.,We exchanged a brief hello and made room for the thought about objects' meaning rather than their price.
+LC_POSTMAN_PIP_EXPLAIN,"Jeg vil gerne høre en hilsen som mig selv, ikke kun som bud.","I would like to hear a greeting as myself, not only as a messenger."
+LC_POSTMAN_PIP_REPEAT,"Denne hilsen er til dig, ikke en ny levering.","This greeting is for you, not a new delivery."
+LC_POSTMAN_PIP_CORRECTION,En personlig hilsen er ikke viden om andres breve.,A personal greeting is not knowledge of other people's letters.
+LC_POSTMAN_PIP_LISTENED,Du lyttede og gentog tanken om personlige hilsner efter runden. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about personal greetings after the round. We can build on that understanding.
+LC_POSTMAN_PIP_SPACED,Du gav plads i samtalen om personlige hilsner efter runden. Jeg vil ikke presse på for et svar.,You gave space in our conversation about personal greetings after the round. I will not press for an answer.
+LC_POSTMAN_PIP_CLARIFIED,Vi fik præciseret ordene om personlige hilsner efter runden. Nu bruger jeg den forklaring.,We clarified the words about personal greetings after the round. That is the explanation I use now.
+LC_POSTMAN_PIP_REFLECTED,Jeg havde en stille stund til at tænke over personlige hilsner efter runden.,I spent a quiet moment considering personal greetings after the round.
+LC_POSTMAN_PIP_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om personlige hilsner efter runden.,We exchanged a brief hello and made room for the thought about personal greetings after the round.
+LC_RASMUS_EXPLAIN,"En forklaring på et mål er mere nyttig end bare at sige, at noget er forkert.",Explaining a measurement is more useful than merely saying something is wrong.
+LC_RASMUS_REPEAT,"Du vil forklare vurderingen, ikke kassere noget.","You want to explain the judgement, not discard anything."
+LC_RASMUS_CORRECTION,Vi sammenligner forklaringer; ingen varer bliver kasseret eller fremstillet.,We are comparing explanations; no goods are discarded or made.
+LC_RASMUS_LISTENED,Du lyttede og gentog tanken om forklaringer frem for hurtige domme. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about explanations rather than hasty judgements. We can build on that understanding.
+LC_RASMUS_SPACED,Du gav plads i samtalen om forklaringer frem for hurtige domme. Jeg vil ikke presse på for et svar.,You gave space in our conversation about explanations rather than hasty judgements. I will not press for an answer.
+LC_RASMUS_CLARIFIED,Vi fik præciseret ordene om forklaringer frem for hurtige domme. Nu bruger jeg den forklaring.,We clarified the words about explanations rather than hasty judgements. That is the explanation I use now.
+LC_RASMUS_REFLECTED,Jeg havde en stille stund til at tænke over forklaringer frem for hurtige domme.,I spent a quiet moment considering explanations rather than hasty judgements.
+LC_RASMUS_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om forklaringer frem for hurtige domme.,We exchanged a brief hello and made room for the thought about explanations rather than hasty judgements.
+LC_SMITH_THORIN_EXPLAIN,Selskab kan være rart uden at nogen beder mig reparere noget.,Company can be welcome without someone asking me to repair something.
+LC_SMITH_THORIN_REPEAT,Jeg kan sige hej uden at tage arbejde med.,I can say hello without bringing work.
+LC_SMITH_THORIN_CORRECTION,"Vi taler om selskab; en pause kræver stadig, at tiden faktisk passer.",We are discussing company; a pause still needs the time to actually fit.
+LC_SMITH_THORIN_LISTENED,Du lyttede og gentog tanken om selskab uden en reparationsopgave. Den forståelse kan vi bygge videre på.,You listened and repeated the thought about company without a repair task. We can build on that understanding.
+LC_SMITH_THORIN_SPACED,Du gav plads i samtalen om selskab uden en reparationsopgave. Jeg vil ikke presse på for et svar.,You gave space in our conversation about company without a repair task. I will not press for an answer.
+LC_SMITH_THORIN_CLARIFIED,Vi fik præciseret ordene om selskab uden en reparationsopgave. Nu bruger jeg den forklaring.,We clarified the words about company without a repair task. That is the explanation I use now.
+LC_SMITH_THORIN_REFLECTED,Jeg havde en stille stund til at tænke over selskab uden en reparationsopgave.,I spent a quiet moment considering company without a repair task.
+LC_SMITH_THORIN_CONNECTED,Vi udvekslede et kort hej og gav plads til tanken om selskab uden en reparationsopgave.,We exchanged a brief hello and made room for the thought about company without a repair task.

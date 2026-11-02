@@ -32,6 +32,45 @@ var _weather: StringName = &"solskin"
 var _days_left := 0
 var _pending_friends: Dictionary = {}
 var _last_health := Vector2i(-1, -1)
+var _view_revision := 0
+
+## The HUD presents logical p0, including a newly loaded model whose old World
+## is deliberately no longer a valid physical projection. Never use acting_id
+## or the first group body to authorise a lazy manager read.
+func _model_guard() -> Callable:
+	var model: Variant = PlayerRegistry._states.get(&"p0")
+	if not model is PlayerState or model.player_id != &"p0" or model.peer_id != 1:
+		return Callable()
+	var profile_ref: WeakRef = weakref(model)
+	var owner_ref: WeakRef = weakref(self)
+	var incarnation: RefCounted = SocialManager._accounting_world
+	return func() -> bool:
+		var owner: Variant = owner_ref.get_ref()
+		var profile: Variant = profile_ref.get_ref()
+		return is_instance_valid(owner) and owner.is_inside_tree() and not owner.is_queued_for_deletion() and profile != null and PlayerRegistry._states.get(&"p0") == profile and profile.player_id == &"p0" and profile.peer_id == 1 and not SocialManager._accounting_suspended and SocialManager._accounting_world == incarnation
+
+func _begin_refresh() -> Callable:
+	var model := _model_guard()
+	if not _current(model): return Callable()
+	_view_revision += 1
+	var revision := _view_revision
+	var owner_ref: WeakRef = weakref(self)
+	return func() -> bool:
+		return model.call() and owner_ref.get_ref()._view_revision == revision
+
+static func _current(current: Callable) -> bool:
+	return current.is_valid() and bool(current.call())
+
+# Empty origins are explicit visual-only setters (including fixture_setup).
+# Model-reading roots must authenticate before passing a nonempty receipt.
+func _view_current(current: Callable) -> bool:
+	return is_inside_tree() and not is_queued_for_deletion() and (not current.is_valid() or bool(current.call()))
+
+func _physical_player(player: Variant) -> bool:
+	var world := PlayerRegistry.world(get_tree())
+	# The first player_spawned precedes area attachment. Its registered p0
+	# body can supply display data, but this never authorises input/travel.
+	return is_instance_valid(player) and player is Node2D and player.is_inside_tree() and not player.is_queued_for_deletion() and PlayerRegistry.registered_id(player) == &"p0" and PlayerRegistry.by_id(&"p0", get_tree()) == player and PlayerRegistry.by_peer(1, get_tree()) == player and player.get("player_slot") == 0 and is_instance_valid(world) and world.is_inside_tree() and not world.is_queued_for_deletion() and world.has_method("_host_live") and (world._host_live() or (world.area == null and player.get("area") == null)) and world.player == player and world._host_profile == PlayerRegistry._states.get(&"p0")
 
 ## The social overlay reserves a row below health without moving the chosen
 ## HUD when there are no birthdays. The HUD owns the spacer's lifetime.
@@ -48,9 +87,12 @@ func set_social_row_height(height: float) -> void:
 		_social_space.visible = height > 0
 
 func _ready() -> void:
+	var current := _begin_refresh()
+	if not _current(current): return
 	current_item_badge = CurrentItemBadge.new()
 	current_item_badge.name = "CurrentItemBadge"
-	add_child(current_item_badge)
+	PlayerRegistry.for_player(&"p0", func(): add_child(current_item_badge))
+	if not _current(current): return
 	current_item_badge.anchor_left = 0.5
 	current_item_badge.anchor_right = 0.5
 	current_item_badge.anchor_top = 1.0
@@ -61,6 +103,7 @@ func _ready() -> void:
 	current_item_badge.offset_bottom = -114
 	tool_name_label.visible = false
 	_build_save_chip()
+	if not _current(current): return
 	toasts.z_index = ToastStack.ABOVE_MODALS_Z
 	%WhisperLine.z_index = ToastStack.ABOVE_MODALS_Z
 	EventBus.modal_changed.connect(func(stack):
@@ -68,27 +111,36 @@ func _ready() -> void:
 		toasts.visible = ToastStack.shown_with_modals(stack)
 		%WhisperLine.visible = toasts.visible)
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("hud", Callable(get_script(), &"fixture_setup"))
-	EventBus.gold_changed.connect(func(_player_id: StringName, amount, delta) -> void: _gold(amount, delta))
-	EventBus.time_of_day_changed.connect(_time)
-	EventBus.day_started.connect(_date)
-	EventBus.season_changed.connect(_season_changed)
-	EventBus.weather_changed.connect(_weather_changed)
-	EventBus.player_stats_changed.connect(func(_player_id: StringName, stats) -> void: _stats(stats))
-	EventBus.player_health_changed.connect(func(_player_id: StringName, half_hearts, max_half_hearts) -> void: _health(half_hearts, max_half_hearts))
-	EventBus.hotbar_changed.connect(func(_player_id: StringName, entries, selected) -> void: set_hotbar(entries, selected))
+	EventBus.gold_changed.connect(func(player_id: StringName, amount, delta) -> void:
+		if player_id == &"p0": _present(_gold, [amount, delta]))
+	EventBus.time_of_day_changed.connect(func(hour, minute): _present(_time, [hour, minute]))
+	EventBus.day_started.connect(func(day, season): _present(_date, [day, season]))
+	EventBus.season_changed.connect(func(season): _present(_season_changed, [season]))
+	EventBus.weather_changed.connect(func(weather): _present(_weather_changed, [weather]))
+	EventBus.player_stats_changed.connect(func(player_id: StringName, stats) -> void:
+		if player_id == &"p0": _present(_stats, [stats]))
+	EventBus.player_health_changed.connect(func(player_id: StringName, half_hearts, max_half_hearts) -> void:
+		if player_id == &"p0": _present(_health, [half_hearts, max_half_hearts]))
+	EventBus.hotbar_changed.connect(func(player_id: StringName, entries, selected) -> void:
+		if player_id == &"p0": _present(set_hotbar, [entries, selected]))
 	EventBus.player_spawned.connect(_player_spawned)
 	EventBus.new_game_started.connect(_refresh_all)
 	EventBus.load_completed.connect(func(_slot: int): _refresh_all())
 	EventBus.save_completed.connect(func(_slot: int): _show_save_state())
 	EventBus.save_failed.connect(func(_slot: int, _code: String): _show_save_state())
-	EventBus.quest_accepted.connect(func(_player_id: StringName, quest_id) -> void: _quests_changed(quest_id))
-	EventBus.quest_completed.connect(func(_player_id: StringName, quest_id) -> void: _quests_changed(quest_id))
-	EventBus.quest_failed.connect(func(_player_id: StringName, quest_id) -> void: _quests_changed(quest_id))
-	EventBus.quest_objective_updated.connect(func(_player_id: StringName, _q, _o, _p, _t): _refresh_quests())
-	EventBus.home_upgrade_progress.connect(_construction_progress)
+	EventBus.quest_accepted.connect(func(player_id: StringName, quest_id) -> void:
+		if player_id == &"p0": _quests_changed(quest_id))
+	EventBus.quest_completed.connect(func(player_id: StringName, quest_id) -> void:
+		if player_id == &"p0": _quests_changed(quest_id))
+	EventBus.quest_failed.connect(func(player_id: StringName, quest_id) -> void:
+		if player_id == &"p0": _quests_changed(quest_id))
+	EventBus.quest_objective_updated.connect(func(player_id: StringName, _q, _o, _p, _t):
+		if player_id == &"p0": _refresh_quests())
+	EventBus.home_upgrade_progress.connect(func(days, total): _present(_construction_progress, [days, total]))
 	EventBus.home_upgrade_started.connect(func(_from, _to, _ready_day): _refresh_construction())
 	EventBus.home_upgraded.connect(func(_from, _to): _refresh_construction())
-	EventBus.friend_changed.connect(func(_player_id: StringName, npc_id, hearts) -> void: _friend(npc_id, hearts))
+	EventBus.friend_changed.connect(func(player_id: StringName, npc_id, hearts) -> void:
+		if player_id == &"p0": _friend(npc_id, hearts))
 	EventBus.notification_posted.connect(_social_feedback)
 	for index in hotbar.get_child_count():
 		var slot: Button = hotbar.get_child(index)
@@ -103,87 +155,124 @@ func _ready() -> void:
 		get_parent().mode_changed.connect(func(mode):
 			if mode == &"action":
 				toasts.clear())
-	_refresh_all()
-	if SaveManager.save_failing:
+	_refresh_all(current)
+	if _current(current) and SaveManager.save_failing:
 		_show_save_state()                   # a HUD built while saving fails (a load from the pause menu) shows it from the start
 
-func _refresh_all() -> void:
-	if not is_inside_tree() or is_queued_for_deletion():
-		return
-	_gold(EconomyManager.gold, 0)
+func _present(setter: Callable, args: Array) -> void:
+	var current := _begin_refresh()
+	if _current(current): setter.callv(args + [current])
+
+func _refresh_all(current: Callable = Callable()) -> void:
+	if not current.is_valid(): current = _begin_refresh()
+	if not _current(current): return
+	# A synchronous scope is repeated at each independent root; it never spans
+	# an await, nor confers physical authority on an obsolete World/body.
+	PlayerRegistry.for_player(&"p0", func(): _paint_all(current))
+
+func _paint_all(current: Callable) -> void:
+	if not _current(current): return
+	_gold(EconomyManager.gold, 0, current)
+	if not _current(current): return
 	_hour = GameManager.hour
 	_minute = GameManager.minute
 	_day = GameManager.day
 	_season = GameManager.season
 	_weather = TimeManager.weather
-	_refresh_date()
-	_refresh_quests()
-	_refresh_construction()
-	var player := PlayerRegistry.local_player(get_tree())
-	if player != null:
-		_player_spawned(player)
+	_refresh_date(current)
+	if not _current(current): return
+	_refresh_quests(current)
+	if not _current(current): return
+	_refresh_construction(current)
+	if not _current(current): return
+	var player := PlayerRegistry.by_id(&"p0", get_tree())
+	if _physical_player(player):
+		_player_spawned(player, current)
 	else:
-		set_hotbar(_entries, _selected)
+		var model: PlayerState = PlayerRegistry._states[&"p0"]
+		var bar := Hotbar.new()
+		if model.hotbar is Dictionary: bar.from_dict(model.hotbar)
+		set_hotbar(bar.entries(), bar.selected, current)
+		if not _current(current): return
+		_stats({"half_hearts":model.half_hearts, "max_half_hearts":model.max_half_hearts, "stamina":model.stamina, "max_stamina":model.max_stamina}, current)
 
-func _player_spawned(player: Node2D) -> void:
-	if player.get("hotbar") != null:
-		set_hotbar(player.hotbar.entries(), player.hotbar.selected)
-	_stats({"half_hearts": player.get("half_hearts"), "max_half_hearts": player.get("max_half_hearts"), "stamina": player.get("stamina"), "max_stamina": player.get("max_stamina")})
+func _player_spawned(player: Node2D, current: Callable = Callable()) -> void:
+	if not _physical_player(player): return
+	if not current.is_valid(): current = _begin_refresh()
+	if not _current(current): return
+	PlayerRegistry.for_player(&"p0", func():
+		if player.get("hotbar") != null:
+			set_hotbar(player.hotbar.entries(), player.hotbar.selected, current)
+		if not _current(current) or not _physical_player(player): return
+		_stats({"half_hearts": player.get("half_hearts"), "max_half_hearts": player.get("max_half_hearts"), "stamina": player.get("stamina"), "max_stamina": player.get("max_stamina")}, current))
 
-func _gold(amount: int, _delta: int) -> void:
+func _gold(amount: int, _delta: int, current: Callable = Callable()) -> void:
+	if not _view_current(current): return
 	gold_label.text = Fmt.thousands(amount)
 
-func _time(hour: int, minute: int) -> void:
+func _time(hour: int, minute: int, current: Callable = Callable()) -> void:
+	if not _view_current(current): return
 	_hour = hour
 	_minute = minute
-	_refresh_date()
+	_refresh_date(current)
 
-func _date(day: int, season: StringName) -> void:
+func _date(day: int, season: StringName, current: Callable = Callable()) -> void:
+	if not _view_current(current): return
 	_day = day
 	_season = season
-	_refresh_date()
+	_refresh_date(current)
 
-func _season_changed(season: StringName) -> void:
+func _season_changed(season: StringName, current: Callable = Callable()) -> void:
+	if not _view_current(current): return
 	_season = season
-	_refresh_date()
+	_refresh_date(current)
 
-func _weather_changed(weather: StringName) -> void:
+func _weather_changed(weather: StringName, current: Callable = Callable()) -> void:
+	if not _view_current(current): return
 	_weather = weather
-	_refresh_date()
+	_refresh_date(current)
 
-func _refresh_date() -> void:
+func _refresh_date(current: Callable = Callable()) -> void:
+	if not _view_current(current): return
 	day_label.text = Fmt.season_day_text(_day, _season)
+	if not _view_current(current): return
 	time_label.text = "%s · %s · %s" % [TimeManager.weekday_name(_day), Fmt.clock(_hour, _minute), TimeManager.weather_name(_weather)]
 
-func _health(current: int, maximum: int) -> void:
-	if _last_health == Vector2i(current, maximum):
-		return
-	_last_health = Vector2i(current, maximum)
-	hearts.set_health(current, maximum)
+func _health(current_hp: int, maximum: int, current: Callable = Callable()) -> void:
+	if not _view_current(current): return
+	if _last_health == Vector2i(current_hp, maximum): return
+	_last_health = Vector2i(current_hp, maximum)
+	hearts.set_health(current_hp, maximum)
 
-func _stats(stats: Dictionary) -> void:
+func _stats(stats: Dictionary, current: Callable = Callable()) -> void:
+	if not _view_current(current): return
 	if stats.get("stamina") != null and stats.get("max_stamina") != null:
 		stamina_bar.max_value = maxf(1.0, float(stats.max_stamina))
+		if not _view_current(current): return
 		stamina_bar.value = float(stats.stamina)
+	if not _view_current(current): return
 	if stats.get("half_hearts") != null and stats.get("max_half_hearts") != null:
-		_health(int(stats.half_hearts), int(stats.max_half_hearts))
+		_health(int(stats.half_hearts), int(stats.max_half_hearts), current)
 
-func set_hotbar(entries: Array, selected: int = 0) -> void:
+func set_hotbar(entries: Array, selected: int = 0, current: Callable = Callable()) -> void:
+	if not _view_current(current): return
 	_entries = entries.duplicate(true)
 	_selected = clampi(selected, 0, SLOT_COUNT - 1)
 	for index in hotbar.get_child_count():
+		if not _view_current(current): return
 		var slot: Button = hotbar.get_child(index)
 		var entry: Dictionary = _entries[index] if index < _entries.size() else {}
 		var id := StringName(str(entry.get("id", "")))
 		var rarity: Variant = entry.get("rarity", entry.get("rare", "normal"))
-		if rarity is bool:
-			rarity = "rare" if rarity else "normal"
+		if rarity is bool: rarity = "rare" if rarity else "normal"
 		var amount := int(entry.get("amount", 0))
 		slot.setup(id, amount, str(index + 1), false, _item_name(entry), StringName(str(rarity)))
+		if not _view_current(current): return
 		slot.set_pressed_no_signal(index == _selected)
 		slot.modulate.a = 0.45 if id != &"" and amount == 0 else 1.0
-	var current: Dictionary = _entries[_selected] if _selected < _entries.size() else {}
-	tool_name_label.text = _item_name(current)
+	if not _view_current(current): return
+	var entry: Dictionary = _entries[_selected] if _selected < _entries.size() else {}
+	tool_name_label.text = _item_name(entry)
 
 func _item_name(entry: Dictionary) -> String:
 	var id := str(entry.get("id", ""))
@@ -211,23 +300,38 @@ func _send_slot(index: int) -> void:
 func _quests_changed(_id: StringName) -> void:
 	_refresh_quests()
 
-func _refresh_quests() -> void:
+func _refresh_quests(current: Callable = Callable()) -> void:
+	if not current.is_valid(): current = _begin_refresh()
+	if not _current(current): return
+	PlayerRegistry.for_player(&"p0", func(): _paint_quests(current))
+
+func _paint_quests(current: Callable) -> void:
+	if not _current(current): return
 	for child in quest_tracker.get_children():
+		if not _current(current): return
 		quest_tracker.remove_child(child)
-		child.queue_free()
+		# remove_child can run a replacement refresh. Only this detached row is
+		# ours to retire; never clear rows published by that nested root.
+		if is_instance_valid(child) and child.get_parent() == null: child.queue_free()
+		if not _current(current): return
 	var tracked := QuestManager.get_tracked(3)
+	if not _current(current): return
 	quest_card.visible = not tracked.is_empty()
+	if not _current(current): return
 	for id in tracked:
+		if not _current(current): return
 		var row := VBoxContainer.new()
 		row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		row.add_theme_constant_override("separation", 2)
 		quest_tracker.add_child(row)
+		if not _current(current): return
 		var title := Label.new()
 		title.theme_type_variation = &"Display19"
 		title.text = QuestManager.get_title(id)
 		title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		row.add_child(title)
+		if not _current(current): return
 		var objective := QuestManager.get_current_objective(id)
 		if objective != &"":
 			var progress := QuestManager.get_objective_progress(id, objective)
@@ -237,6 +341,7 @@ func _refresh_quests() -> void:
 			label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			row.add_child(label)
+			if not _current(current): return
 
 func _build_save_chip() -> void:
 	save_chip = PanelContainer.new()
@@ -258,64 +363,71 @@ func _build_save_chip() -> void:
 
 ## SaveManager.save_failing decides: the failure stays until a save succeeds; a success shows "Gemt" briefly.
 func _show_save_state() -> void:
-	if not is_inside_tree() or is_queued_for_deletion():
-		return
+	var current := _model_guard()
+	if not _current(current): return
+	_saved_shown += 1
+	var shown := _saved_shown
 	var failing := bool(SaveManager.save_failing)
 	_save_text.text = tr("HUD_SAVE_FAILED" if failing else "HUD_SAVED")
+	if not _current(current) or shown != _saved_shown: return
 	save_chip.visible = true
-	_saved_shown += 1
-	if failing:
-		return
-	var shown := _saved_shown
+	if not _current(current) or shown != _saved_shown or failing: return
 	await get_tree().create_timer(SAVED_SHOW_SECONDS, true).timeout
-	if is_instance_valid(save_chip) and shown == _saved_shown and not SaveManager.save_failing:
+	if _current(current) and is_instance_valid(save_chip) and shown == _saved_shown and not SaveManager.save_failing:
 		save_chip.visible = false
 
-func _refresh_construction() -> void:
+func _refresh_construction(current: Callable = Callable()) -> void:
+	if not current.is_valid(): current = _begin_refresh()
+	if not _current(current): return
 	var home := Svc.node("HomeManager")
 	var building := home != null and home.has_method("is_under_construction") and home.has_method("days_left") and bool(home.call("is_under_construction"))
-	_construction_progress(int(home.call("days_left")) if building else 0, 0)
+	if not _current(current): return
+	_construction_progress(int(home.call("days_left")) if building else 0, 0, current)
 
-func _construction_progress(days_left: int, _total_days: int) -> void:
+func _construction_progress(days_left: int, _total_days: int, current: Callable = Callable()) -> void:
+	if not _view_current(current): return
 	_days_left = days_left
 	construction.visible = days_left > 0
+	if not _view_current(current): return
 	%ConstructionText.text = tr("HUD_CONSTRUCTION_FMT") % days_left
 
 func _friend(npc: StringName, _heart_count: int) -> void:
-	if not is_inside_tree() or is_queued_for_deletion():
-		return
+	var current := _model_guard()
+	if not _current(current): return
 	var row := SocialData.npc_row(str(npc))
 	var key := str(row.get("name_key", ""))
 	if key != "":
-		_pending_friends[npc] = key
-		_post_friend.call_deferred(npc)
+		var entry := {"key":key, "current":current}
+		_pending_friends[npc] = entry
+		_post_friend.call_deferred(npc, entry)
 
 func _social_feedback(_title: String, message: String, icon: String) -> void:
-	if icon == "social":
-		for npc in _pending_friends.keys():
-			if message.contains(tr(_pending_friends[npc])):
-				_pending_friends.erase(npc)
+	var current := _model_guard()
+	if not _current(current) or icon != "social": return
+	for npc in _pending_friends.keys():
+		if not _current(current): return
+		var entry: Dictionary = _pending_friends[npc]
+		if _current(entry.current) and message.contains(tr(entry.key)) and is_same(_pending_friends.get(npc), entry):
+			_pending_friends.erase(npc)
 
-func _post_friend(npc: StringName) -> void:
-	if not is_inside_tree() or is_queued_for_deletion():
-		_pending_friends.clear()
+func _post_friend(npc: StringName, entry: Dictionary) -> void:
+	# Every deferred entry owns its exact model and slot, not all pending work
+	# for this NPC. An obsolete callback cannot erase a fresh same-NPC message.
+	if not is_same(_pending_friends.get(npc), entry): return
+	if not _current(entry.current):
+		_pending_friends.erase(npc)
 		return
-	if not _pending_friends.has(npc):
-		return
-	var key := str(_pending_friends[npc])
-	_pending_friends.erase(npc)
-	var social := Svc.node("SocialManager")
-	if social != null and social.has_method("has_pending_feedback") and social.has_pending_feedback(npc):
-		return
-	toasts.post(tr("HUD_FRIEND_FMT") % tr(key), "", "info")
+	PlayerRegistry.for_player(&"p0", func():
+		var social := Svc.node("SocialManager")
+		var pending := social != null and social.has_method("has_pending_feedback") and bool(social.has_pending_feedback(npc))
+		if not is_same(_pending_friends.get(npc), entry): return
+		_pending_friends.erase(npc)
+		if not _current(entry.current) or pending: return
+		toasts.post(tr("HUD_FRIEND_FMT") % tr(entry.key), "", "info"))
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
-		_gold(EconomyManager.gold, 0)
-		_refresh_date()
-		_refresh_quests()
-		set_hotbar(_entries, _selected)
-		_construction_progress(_days_left, 0)
+		_refresh_all()
 
 static func fixture_setup(node: Node, _host: Node) -> void:
 	node._date(16, &"foraar")

@@ -112,9 +112,9 @@ func run_windowed(t) -> void:
 
 func _worlds(t) -> void:
 	var manager: Node = t.root.get_node("GameManager")
-	manager.start_new_game("Style audit", 0)
-	var world: WorldRoot2D = load("res://scenes/main/world.tscn").instantiate()
-	t.root.add_child(world)
+	var admitted: Dictionary = manager.try_start_new_game_attached(t.root,"Style audit",0)
+	if not admitted.ok: return
+	var world: WorldRoot2D = admitted.world
 	await t.frames(45)
 	for area in [&"farm", &"hyggebyen", &"traetoppen", &"moerkeskoven"]:
 		world._enter(area, &"default")

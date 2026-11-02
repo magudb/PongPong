@@ -210,6 +210,7 @@ func _refresh_hints() -> void:
 	%HintBar.set_hints(hints)
 
 func _on_slot_pressed(slot: int) -> void:
+	if GameManager.lifecycle_busy(): return
 	if _busy or slot < 0 or slot >= _rows.size() or not UiNav.is_stop(_rows[slot]):
 		return
 	_busy = true
@@ -217,7 +218,7 @@ func _on_slot_pressed(slot: int) -> void:
 	var accepted := true
 	if needs_confirm:
 		accepted = await UiConfirm.ask(self, "SAVELOAD_CONFIRM", tr("SAVELOAD_OVERWRITE") % run_name(slot) if mode == Mode.SAVE else tr("SAVELOAD_LOAD_CONFIRM"), "NAV_OK")
-	if accepted and is_open():
+	if accepted and is_inside_tree() and is_open() and not GameManager.lifecycle_busy():
 		if mode == Mode.SAVE:
 			if SaveManager.save_game(slot):
 				slot_selected.emit(slot, true)
@@ -226,7 +227,8 @@ func _on_slot_pressed(slot: int) -> void:
 			else:
 				_show_failure(slot)
 		else:
-			if SaveManager.load_and_enter(slot):
+			var result := SaveManager.try_load_and_enter(slot)
+			if result.ok:
 				slot_selected.emit(slot, false)
 	_busy = false
 
@@ -238,11 +240,12 @@ func _show_failure(slot: int) -> void:
 	_details[slot].add_theme_color_override("font_color", preload("res://scripts/ui/theme/tt_colors.gd").THORNBERRY)
 
 func _on_delete_pressed(slot: int) -> void:
+	if GameManager.lifecycle_busy(): return
 	if _busy or slot < 0 or slot >= SaveManager.MANUAL_SLOTS or not UiNav.is_stop(_deletes[slot]):
 		return
 	_busy = true
 	var accepted := await UiConfirm.ask(self, "SAVELOAD_CONFIRM", tr("SAVELOAD_DELETE_CONFIRM") % [run_name(slot), slot + 1], "SAVELOAD_DELETE")
-	if accepted and is_open():
+	if accepted and is_inside_tree() and is_open() and not GameManager.lifecycle_busy():
 		SaveManager.delete_save(slot)
 		_refresh_texts()
 		_initial_focus().grab_focus()

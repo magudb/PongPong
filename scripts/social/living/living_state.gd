@@ -1,7 +1,7 @@
 extends RefCounted
 ## Pure LC2 codec and receipt reducer. Only the fixed seven-day mining source
 ## uses day as occurrence authority; detail retention is NOT dedup authority.
-const VERSION := 1
+const VERSION := 4
 const SOURCE := "dark_forest_mining/return_to_smith"
 const NPC := "smith_thorin"
 const PLAYERS := ["p0", "p1", "p2", "p3"]
@@ -40,30 +40,79 @@ static func record(state: Dictionary, player_id: StringName, npc: String, day: i
 	row.source_watermarks[SOURCE] = day
 	player.npcs[npc] = row
 	players[str(player_id)] = player
+	# Preserve the original LC2 receipt range. The optional selector's tighter
+	# day range must not corrupt/refuse a valid private save beyond its horizon.
+	if day > 1000000:
+		return {"ok": true, "event_id": event_id}
+	# Shared knowledge belongs to the recipient, not to an ambient player.
+	# Only this validated source reducer creates it; v1 migration never scans
+	# private memories to invent a new pending cause. No player payload escapes.
+	var pilot: Dictionary = state.world.get("pilot", {"selected": {}, "cooldowns": {}})
+	pilot["pending_day"] = maxi(day, int(pilot.get("pending_day", 0)))
+	state.world["pilot"] = pilot
 	return {"ok": true, "event_id": event_id}
 
 static func _event(pid: String, day: int) -> String:
 	return "%s:%s:%d" % [SOURCE, pid, day]
 
 ## Validate without copying untrusted trees first. Closed vocabulary in this
-## tracer bullet: no goals, promises or pair transitions are inferred/retained.
-## Empty canonical world/pairs is reserved; nonempty data needs a new codec.
+## tracer bullet: private v1 receipts migrate without inferred shared knowledge.
 static func decode(raw: Variant, known: Dictionary, day: int = 0) -> Dictionary:
 	if not _bounded_json(raw) or not raw is Dictionary:
 		return {"ok": false}
-	if not _whole(raw.get("v"), 1, VERSION) or int(raw.v) != VERSION or not _keys(raw, ["v", "world", "players", "orphans"]):
+	if not _whole(raw.get("v"), 1, VERSION) or not _keys(raw, ["v", "world", "players", "orphans", "responses", "encounters"]):
 		return {"ok": false}
 	var world: Variant = raw.get("world", {})
 	var orphans: Variant = raw.get("orphans", {})
-	if not world is Dictionary or not _keys(world, ["pairs"]) or not world.get("pairs", {}) is Dictionary or not world.get("pairs", {}).is_empty():
+	if not world is Dictionary or not _keys(world, ["pairs", "pilot", "citizens"]) or not world.get("pairs", {}) is Dictionary :
 		return {"ok": false}
-	if not orphans is Dictionary or not _keys(orphans, ["players"]) or JSON.stringify(orphans).to_utf8_buffer().size() > 65536:
+	if not orphans is Dictionary or not _keys(orphans, ["players", "pilot", "citizens", "encounters"]) or JSON.stringify(orphans).to_utf8_buffer().size() > 65536:
 		return {"ok": false}
 	var active := _decode_players(raw.get("players", {}), day)
 	var suspended := _decode_players(orphans.get("players", {}), day)
 	if not active.ok or not suspended.ok:
 		return {"ok": false}
 	var out := empty()
+	var encounters: Dictionary = Svc.static_call("res://scripts/social/living/living_cast.gd", &"decode_encounters", [raw.get("encounters", {})], {"ok": false})
+	if not encounters.get("ok", false) or (int(raw.v) < 4 and not encounters.rows.is_empty()): return {"ok": false}
+	var retired_encounters: Dictionary = Svc.static_call("res://scripts/social/living/living_cast.gd", &"decode_encounters", [orphans.get("encounters", {})], {"ok": false})
+	if not retired_encounters.get("ok", false) or (int(raw.v) < 4 and not retired_encounters.rows.is_empty()): return {"ok": false}
+	var merged: Dictionary = _merge_encounters(encounters.rows, retired_encounters.rows)
+	for pid in merged:
+		for npc in merged[pid]:
+			var key := "encounters"
+			var bucket: Dictionary = out if known.has(npc) else out.orphans
+			if not bucket.has(key): bucket[key] = {}
+			if not bucket[key].has(pid): bucket[key][pid] = {}
+			bucket[key][pid][npc] = merged[pid][npc]
+	var citizens: Dictionary = Svc.static_call("res://scripts/social/living/living_actions.gd", &"decode", [world.get("citizens", {})], {"ok": false})
+	var retired_citizens: Dictionary = Svc.static_call("res://scripts/social/living/living_actions.gd", &"decode", [orphans.get("citizens", {})], {"ok": false})
+	if not citizens.get("ok", false) or not retired_citizens.get("ok", false): return {"ok": false}
+	if int(raw.v) < 4 and (not citizens.rows.is_empty() or not retired_citizens.rows.is_empty()): return {"ok": false}
+	for npc in retired_citizens.rows:
+		var old: Dictionary = citizens.rows.get(npc, {})
+		var retired: Dictionary = retired_citizens.rows[npc]
+		if int(retired.day) > int(old.get("day", 0)) or (retired.day == old.get("day") and retired.closed_day > old.get("closed_day", 0)): citizens.rows[npc] = retired
+	for npc in citizens.rows:
+		var bucket: Dictionary = out.world if known.has(npc) else out.orphans
+		if not bucket.has("citizens"): bucket["citizens"] = {}
+		bucket.citizens[npc] = citizens.rows[npc]
+	var responses: Dictionary = Svc.static_call("res://scripts/social/living/living_pair.gd", &"decode_responses", [raw.get("responses", {})], {"ok": false})
+	if not responses.get("ok", false) or (int(raw.v) < 3 and not responses.rows.is_empty()): return {"ok": false}
+	if not responses.rows.is_empty(): out["responses"] = responses.rows
+	var pairs: Dictionary = Svc.static_call("res://scripts/social/living/living_pair.gd", &"decode", [world.get("pairs", {})], {"ok": false})
+	if not pairs.get("ok", false) or (int(raw.v) < 3 and not pairs.pairs.is_empty()): return {"ok": false}
+	if not pairs.pairs.is_empty():
+		# Retired pilot members suspend the whole incident; preserve its terminal.
+		out.world.pairs = pairs.pairs
+	if int(raw.v) == 1 and (world.has("pilot") or orphans.has("pilot")):
+		return {"ok": false}
+	var pilot: Dictionary = Svc.static_call("res://scripts/social/living/living_activity.gd", &"decode", [world.get("pilot", {}), orphans.get("pilot", {})], {"ok": false})
+	if not pilot.get("ok", false):
+		return {"ok": false}
+	if not pilot.row.is_empty():
+		if known.has(NPC): out.world["pilot"] = pilot.row
+		else: out.orphans["pilot"] = pilot.row
 	for pid in PLAYERS:
 		var row: Dictionary = active.rows.get(pid, {}).get("npcs", {}).get(NPC, {})
 		var orphan: Dictionary = suspended.rows.get(pid, {}).get("npcs", {}).get(NPC, {})
@@ -74,7 +123,19 @@ static func decode(raw: Variant, known: Dictionary, day: int = 0) -> Dictionary:
 		if not row.is_empty():
 			var bucket: Dictionary = out.players if known.has(NPC) else out.orphans.players
 			bucket[pid] = {"npcs": {NPC: row}}
+	if JSON.stringify(out.orphans).to_utf8_buffer().size() > 65536 or JSON.stringify(out).to_utf8_buffer().size() > MAX_BYTES: return {"ok": false}
 	return {"ok": true, "state": out}
+
+static func _merge_encounters(active: Dictionary, retired: Dictionary) -> Dictionary:
+	var out := active
+	for pid in retired:
+		if not out.has(pid): out[pid] = {}
+		for npc in retired[pid]:
+			var r: Dictionary = retired[pid][npc]
+			var old: Dictionary = out[pid].get(npc, {})
+			var ranks := {"space": 0, "listen": 1, "clarify": 2}
+			if int(r.day) > int(old.get("day", 0)) or (r.day == old.get("day") and ranks[r.response] > ranks.get(old.get("response"), -1)): out[pid][npc] = r
+	return out
 
 static func _decode_players(raw: Variant, day: int) -> Dictionary:
 	if not raw is Dictionary or raw.size() > PLAYERS.size():

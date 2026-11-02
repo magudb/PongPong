@@ -72,39 +72,25 @@ func go_menu() -> bool:
 
 # ---------------------------------------------------------------- new game
 
-## Resets the game model like the select screen does and returns. Works before and after P02:
-## `new_game_started` is emitted exactly once (by GameManager when it does, else by this helper).
-func new_game(char_id: String = "", p_name: String = PLAYER_NAME, farm: String = FARM_NAME, skin: String = "") -> void:
-	if char_id != "":
-		character = char_id
+## Model-only fixture reset. A refused root has no fallback reset wave or fixture effects.
+func new_game(char_id: String = "", p_name: String = PLAYER_NAME, farm: String = FARM_NAME, skin: String = "") -> bool:
 	var gm := autoload("GameManager")
 	if gm == null:
-		return
-	var bus := root.get_node_or_null("EventBus")
-	var emitted := [0]
-	var counter := func() -> void: emitted[0] += 1
-	var has_signal := bus != null and bus.has_signal("new_game_started")
-	if has_signal:
-		bus.connect("new_game_started", counter)
-	if skin != "" and _arg_count(gm, "start_new_game") >= 4:
-		gm.start_new_game(p_name, character_type(), farm, StringName(skin))
-	else:
-		gm.start_new_game(p_name, character_type(), farm)
-	if has_signal:
-		bus.disconnect("new_game_started", counter)
-		if emitted[0] == 0:
-			bus.emit_signal("new_game_started")
+		return false
+	var result: Dictionary = gm.try_start_new_game(p_name, character_type(char_id), farm, StringName(skin))
+	if not result.ok: return false
+	if char_id != "": character = char_id
+	return true
 
 
 ## Fresh world without the menus: new_game() then the world scene, then waits for the player node.
 func start_world(char_id: String = "", p_name: String = PLAYER_NAME, farm: String = FARM_NAME, skin: String = "", play_intro := false) -> bool:
-	go_to_neutral()
-	new_game(char_id, p_name, farm, skin)
-	# System fixtures start after the letter. Intro/acceptance tests opt in explicitly;
-	# the production title/select path always retains its real new-game opening.
-	if not play_intro:
-		autoload("GameManager").set_flag(GameManager.FLAG_INTRO_PENDING, false)
-	if not await change_scene(WORLD_SCENE, 20.0):
+	var gm := autoload("GameManager")
+	if gm == null: return false
+	var result: Dictionary = gm.try_start_new_game_and_enter(p_name, character_type(char_id), farm, StringName(skin), play_intro, go_to_neutral)
+	if not result.ok: return false
+	if char_id != "": character = char_id
+	if not await until(func(): return scene_path() == WORLD_SCENE, 20.0):
 		fail("world scene did not load (got %s)" % scene_name())
 		return false
 	var ok := await until(func() -> bool: return player() != null and world() != null and world().get("ready_for_play") == true, 10.0)

@@ -26,6 +26,22 @@ Rules of thumb: one Godot instance per worktree at a time (the editor and a head
 moved by hand run `git worktree repair`. Saves live in Godot's `user://` of the project name, which all worktrees share:
 play-test with a throwaway profile (the harness does this automatically).
 
+Sections that call `t.run_godot_script` synchronously also need a separate engine
+checkout. Set `TT_TEST_CHILD_PROJECT` to an absolute, canonical, source-matched
+peer path; hold that peer's checkout lock throughout the parent run and import
+it before starting the parent. The helper retains driver arguments and the
+parent's throwaway HOME. It refuses relative, missing and explicit same-project
+overrides; the controller remains responsible for resolving symlinks and
+verifying source equivalence. An unset override retains legacy behavior, not a
+second-project guarantee. `TT_TEST_PYTHON` explicitly chooses the tool interpreter
+without consulting the linked art environment; use a known stdlib interpreter
+only for sections whose tools require no additional packages. These overrides
+change execution routing, not assertions, deadlines or accepted diagnostics.
+Set `TT_TEST_TOOL_LOG_DIR` to a scratch directory to retain every tool's launch
+record before it blocks and its actual exit plus complete combined stdout/stderr
+before assertions consume the result. Audit these child logs as well as the
+parent report: a child can emit an engine error even when its process exits zero.
+
 ## Trying the game by hand
 
 `tools/dev/play.sh` opens the game in a 1280x720 window (add `--throwaway` for a temporary profile). Controls today: WASD or arrows move,

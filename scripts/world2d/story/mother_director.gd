@@ -19,34 +19,62 @@ func _ready() -> void:
 	EventBus.quest_objective_updated.connect(_objective)
 	EventBus.game_event.connect(_event)
 	EventBus.load_completed.connect(_loaded)
-func _quest(_player_id: StringName, _id: StringName) -> void:
-	MotherStory.sync()
-	_refresh()
-func _objective(_player_id: StringName, _quest_id: StringName,_id: StringName,_current: int,_target: int) -> void:
+func _root_guard(pid: StringName = &"p0") -> Callable:
+	if not is_instance_valid(world) or not is_instance_valid(world.area): return Callable()
+	return SecretGardenMarker.refresh_guard(self, world.area, false, pid)
+
+func _sync(current: Callable, pid: StringName = &"p0") -> bool:
+	if not current.is_valid() or not current.call(): return false
+	PlayerRegistry.for_player(pid, func(): MotherStory.sync_owned(current))
+	return current.call()
+
+func _quest(player_id: StringName, _id: StringName) -> void:
+	var host := _root_guard()
+	var current := _root_guard(player_id)
+	if _sync(current, player_id): _refresh_owned(host)
+func _objective(player_id: StringName, _quest_id: StringName,_id: StringName,_current: int,_target: int) -> void:
 	if _quest_id == SecretGardenStory.QUEST:
-		MotherStory.sync()
-		_refresh()
+		# Labelled quest reconciliation belongs to that existing model. The
+		# shared scenery has a separate host receipt, both captured pre-callback.
+		var host := _root_guard()
+		var current := _root_guard(player_id)
+		if _sync(current, player_id): _refresh_owned(host)
 func _event(id: StringName,_data: Dictionary) -> void:
 	if id in [&"dungeon_boss_defeated",&"forest_mother_evidence",&"forest_mother_work"]:
-		MotherStory.sync()
-		_refresh()
+		var current := _root_guard()
+		# Evidence already synchronizes its retained earning owner before this
+		# public notification; work changes only its shared presentation flags.
+		# Re-syncing the host here would transfer a p1 earned chapter to p0.
+		if id != &"dungeon_boss_defeated":
+			_refresh_owned(current)
+		elif _sync(current):
+			_refresh_owned(current)
 func _loaded(_slot: int) -> void:
-	MotherStory.sync()
-	if world.area != null: _area_ready(world.area.map.id)
+	var current := _root_guard()
+	if _sync(current): _area_ready_owned(current)
 func _refresh() -> void:
-	if world.area == null: return
+	_refresh_owned(_root_guard())
+func _refresh_owned(current: Callable) -> void:
+	if not current.is_valid() or not current.call(): return
+	var generation := _generation
 	for node in world.area.objects.get_children():
-		if node is MotherEvidenceMarker: node.refresh()
+		if not current.call() or generation != _generation: return
+		if is_instance_valid(node) and not node.is_queued_for_deletion() and node is MotherEvidenceMarker: node._refresh_origin(current)
 func _area_ready(_id: StringName) -> void:
+	_area_ready_owned(_root_guard())
+func _area_ready_owned(current: Callable) -> void:
+	if not current.is_valid() or not current.call(): return
 	_generation += 1
 	var token := _generation
 	var area := world.area
 	anchors.clear()
-	MotherStory.sync()
-	if not MotherStory.enabled(): return
+	if not _sync(current) or token != _generation: return
+	var enabled: bool = PlayerRegistry.for_player(&"p0", MotherStory.enabled)
+	if not enabled or not current.call() or token != _generation: return
 	await get_tree().physics_frame
+	if not current.call() or token != _generation: return
 	await get_tree().physics_frame
-	if token != _generation or not is_instance_valid(area) or world.area != area: return
+	if not current.call() or token != _generation: return
 	var number := DungeonFloors.floor_of(area)
 	var wanted: Array[Dictionary] = []
 	for row in MotherStory.EVIDENCE:
@@ -72,13 +100,16 @@ func _area_ready(_id: StringName) -> void:
 				if not route.is_empty(): path = route.slice(maxi(0,route.size()-6))
 	var used := {}
 	for index in wanted.size():
+		if not current.call() or token != _generation: return
 		var existing: MotherEvidenceMarker
 		for node in area.objects.get_children():
 			if node is MotherEvidenceMarker and node.evidence_id == wanted[index].id:
 				existing = node
 				break
 		if existing != null:
-			existing.refresh()
+			existing._refresh_origin(current)
+			if not current.call() or token != _generation: return
+			if not is_instance_valid(existing) or existing.is_queued_for_deletion() or existing.get_parent() != area.objects: continue
 			used[existing.cell] = true
 			anchors.append({"id":wanted[index].id,"cell":existing.cell,"node":existing})
 			continue
@@ -92,7 +123,13 @@ func _area_ready(_id: StringName) -> void:
 		marker.area = area
 		marker.cell = at
 		marker.position = area.objects.to_local(area.cell_to_global(at))
-		area.objects.add_child(marker)
+		# Readiness cannot borrow a replacement model installed by an
+		# add_child observer before _ready. The allocating root owns this call.
+		marker._ready_guard = current
+		marker.set_enabled(false)
+		PlayerRegistry.for_player(&"p0", func(): area.objects.add_child(marker))
+		if not current.call() or token != _generation: return
+		if not is_instance_valid(marker) or marker.is_queued_for_deletion() or marker.get_parent() != area.objects: return
 		anchors.append({"id":wanted[index].id,"cell":at,"node":marker})
 func _arrival_path(nav: NavGrid,start: Vector2i,minimum: int) -> Array[Vector2i]:
 	var best: Array[Vector2i] = [nav.nearest_free(start)]

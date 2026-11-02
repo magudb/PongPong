@@ -1559,6 +1559,7 @@ func _python_validates_mutants(pristine: Dictionary, _opts: Dictionary) -> Dicti
 	var path := _user_path("mutant.json")
 	var routes := _user_path("routes.json")
 	_write(routes, JSON.stringify({"default_route_minutes": 40.0}))
+	_write(path, JSON.stringify(pristine))
 	var clean := _run_py(PY_VALIDATE, PackedStringArray([ProjectSettings.globalize_path(path)]))
 	_write(path, JSON.stringify(pristine))
 	clean = _run_py(PY_VALIDATE, PackedStringArray([ProjectSettings.globalize_path(path)]))

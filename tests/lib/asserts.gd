@@ -175,6 +175,10 @@ func skip(label: Variant) -> void:
 ## it with tools/art/setup_env.sh, worktrees and test copies link it) when it exists, else `python3` from PATH. Pair it with
 ## require_tool() when the tool needs the venv's packages.
 func python() -> String:
+	# The source-pinned verification controller may select stdlib tooling without
+	# following another checkout's art-environment link. Never rewrite arguments.
+	var configured := OS.get_environment("TT_TEST_PYTHON")
+	if configured != "": return configured
 	var venv := ProjectSettings.globalize_path("res://tools/art/.venv/bin/python")
 	return venv if FileAccess.file_exists(venv) else "python3"
 

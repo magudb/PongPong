@@ -27,6 +27,8 @@ static func decorate(npc: String, dialogue: Dictionary, context: Dictionary = {}
 		var key := TALK.pick(npc, "GREET", ctx)
 		if key != "":
 			lines.append(TALK.line(npc, key))
+	var living_reply: String = sm.call("living_pair_reply", npc)
+	if living_reply != "": lines.append({"text_key": living_reply})
 	out["lines"] = lines
 	var choices: Array = []
 	var close := {"id": "goodbye", "text_key": "REL_TALK_GOODBYE", "action": "close"}
@@ -63,6 +65,13 @@ static func decorate(npc: String, dialogue: Dictionary, context: Dictionary = {}
 			choices.push_front(mother)
 		else:
 			choices.append(mother)
+	# Optional information follows authored services/story and uses More.
+	var living: Dictionary = Svc.static_call("res://scripts/social/living/living_dialogue.gd", &"choice", [npc], {})
+	if not living.is_empty(): choices.append(living)
+	var pause: Dictionary = Svc.static_call("res://scripts/social/living/living_dialogue.gd", &"pause_choice", [npc], {})
+	if not pause.is_empty(): choices.append(pause)
+	var motivation: Dictionary = Svc.static_call("res://scripts/social/living/living_cast.gd", &"choice", [npc], {})
+	if not motivation.is_empty(): choices.append(motivation)
 	if choices.size() > 4:
 		var extra := choices.slice(3)
 		choices = choices.slice(0, 3)
@@ -105,9 +114,17 @@ static func topic_page(npc: String) -> Dictionary:
 		"topic": topic, "topic_index": all.find(topic)}
 
 static func finish_topic(npc: String, page: Dictionary, completed: bool, lines_shown: int) -> bool:
-	if MotherStory.finish_topic(npc,page,completed,lines_shown): return true
-	if SecretGardenStory.finish_topic(npc, page, completed, lines_shown):
+	return finish_topic_owned(npc, page, completed, lines_shown, preload("res://scripts/traetoppen/life/presenter_origin.gd").model_guard())
+
+## Owned callers forward their original completing receipt/model guard. This
+## layer must never recapture a replacement winner after NPC callbacks.
+static func finish_topic_owned(npc: String, page: Dictionary, completed: bool, lines_shown: int, effects_current: Callable) -> bool:
+	if not effects_current.is_valid() or not effects_current.call(): return false
+	if MotherStory.finish_topic_owned(npc, page, completed, lines_shown, effects_current): return true
+	if not effects_current.call(): return false
+	if SecretGardenStory.finish_topic_owned(npc, page, completed, lines_shown, effects_current):
 		return true
+	if not effects_current.call(): return false
 	var sm := Svc.node("SocialManager")
 	if sm == null or not completed or lines_shown <= 0 or not page.has("topic"):
 		return false

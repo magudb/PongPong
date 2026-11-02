@@ -36,16 +36,18 @@ func _go() -> void:
 			days[str(weekday)] = weathers
 		npcs[npc] = days
 	var inputs := {}
-	for folder in ["res://lua/routines","res://lua/buildings","res://data/interiors"]: _hashes(folder,inputs)
-	for file in ["res://lua/social/citizens.lua","res://lua/config/npcs.lua","res://data/towns/routes.json","res://scripts/towns/routines.gd","res://scripts/towns/route_table.gd","res://lua/config/towns.lua","res://lua/config/game_balance.lua","res://scripts/towns/hours.gd","res://scripts/towns/interior_room.gd","res://tools/social/core/export_availability.gd"]: inputs[file] = FileAccess.get_sha256(file)
-	var result := {"version":1,"source":"Live Routines.timeline, exact spans; all citizens, hearts 5, no absent hero twin, ordinary week, raw 06:00–02:00","talkable_kinds":["outdoor","walk","counter","public"],"assumptions":{"hearts":5,"hero":"","total_days":[113,119],"festival":false,"home_entry":"one heart with the owner, owner home and awake; tested dynamically by the simulation"},"inputs":inputs,"npcs":npcs}
-	var file := FileAccess.open(path,FileAccess.WRITE)
-	if file == null:
-		print("AVAILABILITY cannot write ",path)
+	var collected := collect_inputs(["res://lua/social/citizens.lua","res://lua/config/npcs.lua","res://data/towns/routes.json","res://scripts/towns/routines.gd","res://scripts/towns/route_table.gd","res://lua/towns.lua","res://lua/config/game_balance.lua","res://scripts/towns/hours.gd","res://scripts/towns/interior_room.gd","res://tools/social/core/export_availability.gd"], ["res://lua/routines","res://lua/buildings","res://data/interiors"])
+	if not collected.ok:
+		print("AVAILABILITY ", collected.error)
 		quit(1)
 		return
-	file.store_string(JSON.stringify(result,"",true)+"\n")
-	file.close()
+	inputs = collected.inputs
+	var result := {"version":1,"source":"Live Routines.timeline, exact spans; all citizens, hearts 5, no absent hero twin, ordinary week, raw 06:00–02:00","talkable_kinds":["outdoor","walk","counter","public"],"assumptions":{"hearts":5,"hero":"","total_days":[113,119],"festival":false,"home_entry":"one heart with the owner, owner home and awake; tested dynamically by the simulation"},"inputs":inputs,"npcs":npcs}
+	var error := write_result(path, result)
+	if error != "":
+		print("AVAILABILITY ", error)
+		quit(1)
+		return
 	print("AVAILABILITY exported ",npcs.size()," live citizens; compile problems ",Routines.compile_problems)
 	quit(0 if Routines.compile_problems.is_empty() else 1)
 
@@ -61,10 +63,68 @@ func _kind(row: Dictionary) -> String:
 	if place.begins_with("int_"): return "room"
 	return "inside" if act == "inside" else "outdoor"
 
-func _hashes(folder: String,out: Dictionary) -> void:
-	for file in DirAccess.get_files_at(folder):
-		if file.ends_with(".lua") or file.ends_with(".json"): out[folder+"/"+file] = FileAccess.get_sha256(folder+"/"+file)
-	for child in DirAccess.get_directories_at(folder): _hashes(folder+"/"+child,out)
+static func _hash_file(path: String, out: Dictionary) -> String:
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null: return "unreadable input: " + path
+	file.close()
+	var digest := FileAccess.get_sha256(path)
+	if not _valid_digest(digest): return "invalid SHA256: " + path
+	out[path] = digest
+	return ""
+
+static func _valid_digest(digest: Variant) -> bool:
+	if not digest is String or digest.length() != 64: return false
+	for character in digest:
+		if not character in "0123456789abcdef": return false
+	return true
+
+static func _hashes(folder: String, out: Dictionary) -> String:
+	var directory := DirAccess.open(folder)
+	if directory == null: return "unreadable directory: " + folder
+	var error: Error = directory.list_dir_begin()
+	if error != OK: return "unreadable directory: " + folder
+	var name := directory.get_next()
+	while name != "":
+		var path := folder + "/" + name
+		var problem := ""
+		if directory.current_is_dir(): problem = _hashes(path, out)
+		elif name.ends_with(".lua") or name.ends_with(".json"): problem = _hash_file(path, out)
+		if problem != "":
+			directory.list_dir_end()
+			return problem
+		name = directory.get_next()
+	directory.list_dir_end()
+	return ""
+
+static func collect_inputs(files: Array, folders: Array) -> Dictionary:
+	var inputs := {}
+	for folder in folders:
+		var error := _hashes(str(folder), inputs)
+		if error != "": return {"ok": false, "error": error, "inputs": {}}
+	for path in files:
+		var error := _hash_file(str(path), inputs)
+		if error != "": return {"ok": false, "error": error, "inputs": {}}
+	return {"ok": true, "error": "", "inputs": inputs}
+
+static func validate_inputs(inputs: Dictionary) -> String:
+	if inputs.is_empty(): return "empty declared inputs"
+	for path in inputs:
+		if not _valid_digest(inputs[path]): return "invalid SHA256: " + str(path)
+		var actual := {}
+		var error := _hash_file(str(path), actual)
+		if error != "": return error
+		if actual[str(path)] != inputs[path]: return "SHA256 mismatch: " + str(path)
+	return ""
+
+static func write_result(path: String, result: Dictionary) -> String:
+	var error := validate_inputs(result.get("inputs", {}))
+	if error != "": return error
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	if file == null: return "cannot write " + path
+	file.store_string(JSON.stringify(result, "", true) + "\n")
+	var write_error: Error = file.get_error()
+	file.close()
+	return "" if write_error == OK else "cannot write " + path
 
 func _accessible_spans(npc: String,plan: String,rain: bool,ctx: Dictionary) -> Array:
 	var out: Array = []
