@@ -60,7 +60,9 @@ static func after_opening(t, label: String) -> void:
 		t.check("board_first_real_welcome_still_unread_at_social_line", screen._line == 0 and not bool(gm.get_flag(&"mayor_welcome_seen", false)))
 		t.tap_key(KEY_ESCAPE)
 		await t.frames(3)
-		t.check("board_first_mayor_escape_save_load", saves.save_game(0) and saves.load_game(0))
+		t.check("board_first_mayor_escape_save_load", saves.save_game(0) and await _load_and_enter(t, saves, 0))
+		mayor = await _installed_mayor(t)
+		screen = t.tree.get_first_node_in_group("dialogue_ui")
 		mayor.interact(t.player())
 		keys = screen._lines.map(func(row): return str(row.get("text_key", "")))
 		t.check("board_first_escape_load_retries_unread_welcome_without_repaying", keys.has("DLG_LYRA_GREET_1") and not keys.has("DLG_LYRA_HELLO") and qm.to_dict() == progress and t.autoload("EconomyManager").to_dict() == economy, str(keys))
@@ -80,7 +82,9 @@ static func after_opening(t, label: String) -> void:
 	t.tap(&"ui_accept")
 	await t.frames(3)
 	t.check(label + "_welcome_page_finished", not screen.is_open() and not mayor.is_talking)
-	t.check(label + "_completed_introduction_survives_save_load", saves.save_game(0) and saves.load_game(0) and qm.is_completed(&"intro_lottery"))
+	t.check(label + "_completed_introduction_survives_save_load", saves.save_game(0) and await _load_and_enter(t, saves, 0) and qm.is_completed(&"intro_lottery"))
+	mayor = await _installed_mayor(t)
+	screen = t.tree.get_first_node_in_group("dialogue_ui")
 	mayor.interact(t.player())
 	keys = screen._lines.map(func(row): return str(row.get("text_key", "")))
 	t.check(label + "_welcome_not_repeated", keys.has("DLG_LYRA_HELLO") and not keys.has("DLG_LYRA_GREET_1"), str(keys))
@@ -156,7 +160,9 @@ static func interrupted_welcome(t) -> void:
 		bus.quest_completed.disconnect(observe)
 		var progress: Dictionary = qm.to_dict().duplicate(true)
 		var economy: Dictionary = t.autoload("EconomyManager").to_dict().duplicate(true)
-		t.check(timing + "_unread_completion_saved_and_loaded", saves.save_game(0) and saves.load_game(0))
+		t.check(timing + "_unread_completion_saved_and_loaded", saves.save_game(0) and await _load_and_enter(t, saves, 0))
+		mayor = _stand_in_mayor(t)
+		screen = t.tree.get_first_node_in_group("dialogue_ui")
 		mayor.interact(t.player())
 		t.check(timing + "_completed_lottery_retries_unread_welcome", screen._lines.any(func(row): return row.get("text_key", "") == "DLG_LYRA_GREET_1"), str(screen._lines))
 		await t.page_to_choices(screen)
@@ -165,13 +171,43 @@ static func interrupted_welcome(t) -> void:
 		t.tap(&"ui_accept")
 		await t.frames(3)
 		t.check(timing + "_retried_welcome_read_without_repaying", bool(gm.get_flag(&"mayor_welcome_seen", false)) and not bool(gm.get_flag(&"mayor_welcome_pending", false)) and qm.to_dict() == progress and t.autoload("EconomyManager").to_dict() == economy)
-		t.check(timing + "_read_completion_saved_and_loaded", saves.save_game(0) and saves.load_game(0))
+		t.check(timing + "_read_completion_saved_and_loaded", saves.save_game(0) and await _load_and_enter(t, saves, 0))
+		mayor = _stand_in_mayor(t)
+		screen = t.tree.get_first_node_in_group("dialogue_ui")
 		mayor.interact(t.player())
 		t.check(timing + "_retried_welcome_exactly_once", screen._lines.any(func(row): return row.get("text_key", "") == "DLG_LYRA_HELLO") and not screen._lines.any(func(row): return row.get("text_key", "") == "DLG_LYRA_GREET_1"))
 		t.tap_key(KEY_ESCAPE)
 		await t.frames(3)
 		mayor.queue_free()
 	saves.save_dir = directory
+
+## A load inside a World leaves that World bound to the previous profile (it refuses saves and travel), so a
+## positive fixture continues the way a player does: load_and_enter, wait for the new World, re-acquire it.
+static func _load_and_enter(t, saves: Node, slot: int) -> bool:
+	var old_world: int = t.world().get_instance_id()
+	if not saves.load_and_enter(slot):
+		return false
+	if not await t.until(func(): return t.world() != null and t.world().get_instance_id() != old_world and t.world().ready_for_play, 12):
+		return false
+	await t.physics(4)
+	return true
+
+## The installed, scheduled mayor of the current World (the lookup after_opening uses before its first meeting).
+static func _installed_mayor(t) -> Npc2D:
+	NpcDirector.resync("mayor_lyra")
+	await t.until(func(): return NpcDirector.node_of("mayor_lyra") != null, 10)
+	await t.physics(3)
+	for actor in t.tree.get_nodes_in_group("npc"):
+		if actor.npc_id == &"mayor_lyra":
+			return actor
+	return null
+
+## The same test-created mayor interrupted_welcome places, in the current World.
+static func _stand_in_mayor(t) -> Npc2D:
+	var mayor := Npc2D.create({"id": "mayor_lyra", "wander": "0"})
+	mayor.area = t.world().area
+	t.world().area.objects.add_child(mayor)
+	return mayor
 
 static func legacy_saves(t) -> void:
 	var gm: Node = t.autoload("GameManager")

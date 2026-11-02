@@ -158,6 +158,7 @@ func _run(t) -> void:
 	menu.close()
 	var payload: Dictionary = JSON.parse_string(JSON.stringify(sm.gather_payload()))
 	t.check("greenhouse_construction_roundtrips", sm._apply_payload(payload).ok and FarmEquipment.greenhouse_building())
+	w = await _enter_applied_world(t)
 	for i in int(row.build_days): gm.end_day()
 	await t.frames(3)
 	t.check("greenhouse_completes_on_configured_morning", FarmEquipment.greenhouse_built() and not FarmEquipment.greenhouse_building())
@@ -210,6 +211,8 @@ func _run(t) -> void:
 		await t.capture("greenhouse_crops")
 	payload=JSON.parse_string(JSON.stringify(sm.gather_payload()))
 	t.check("both_crop_models_and_indoor_equipment_roundtrip", sm._apply_payload(payload).ok and w.greenhouse_farm.get_plot(cells[0]).crop_id==&"snow_turnip" and FarmEquipment.at(&"greenhouse",Vector2i(4,4)).item=="quality_sprinkler")
+	w = await _enter_applied_world(t)
+	indoor = w.greenhouse_farm
 	var bad: Dictionary = payload.duplicate(true)
 	bad.world.placed[0]["batch"]={"input":"carrot","output":"iron_sword","ready_day":1}
 	# SAVE-07: a job whose output no longer matches its recipe is content drift (a renamed product), not damage: the save loads and
@@ -249,6 +252,15 @@ func _run(t) -> void:
 		and loaded_door.position.is_equal_approx(loaded_world.area.objects.to_local(loaded_world.area.cell_to_global(loaded_door.cell - Vector2i(2, 0)))),
 		"after load_and_enter the greenhouse marker is built (%s) with its door at the painted door" % [loaded_door._built if loaded_door != null else "no marker"])
 	sm.save_dir=directory
+
+## A direct apply inside a World leaves that World bound to the previous profile (it refuses travel, doors and saves) and
+## the applied world data pending; the player reaches it through the scene entry load_and_enter performs: a new World.
+func _enter_applied_world(t) -> WorldRoot2D:
+	var old_world: int = t.world().get_instance_id()
+	if await t.change_scene(t.WORLD_SCENE):
+		await t.until(func(): return t.world() != null and t.world().get_instance_id() != old_world and t.world().ready_for_play, 12)
+	await t.physics(4)
+	return t.world()
 
 func _machine(area: IsoArea, cell: Vector2i) -> FarmMachine2D:
 	for node in area.find_children("*","Node",true,false):

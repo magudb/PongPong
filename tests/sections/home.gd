@@ -240,6 +240,11 @@ func run(t) -> void:
 	_sm.autosave_enabled = false
 	_saved_dir = _sm.save_dir
 	_sm.save_dir = OS.get_user_data_dir().path_join("home_section_saves")
+	# Every new game below is Fresh.new_game: model-only, the title-screen shape (character select has no World). A World
+	# left by the boot stage or an earlier section would stay bound to the previous profile and refuse the saves of
+	# flags_mirror and save_mid_construction, so run from the menu, where a new game really starts.
+	if t.in_world():
+		await t.go_menu()
 	Svc.clear_overrides()
 	_rec = Rec.new()
 	_rec.attach(_bus)

@@ -2218,7 +2218,11 @@ func run_windowed(tt) -> void:
 	if not await t.start_world():
 		return
 	var w: WorldRoot2D = t.world()
-	Fresh.new_game(null)
+	# start_world is already a real new game in a new World; a second, model-only new game would leave this World bound to
+	# the previous profile (refusing _enter). Keep only the rest of Fresh.new_game: quests, feature managers, seeds.
+	Fresh.reset_quests()
+	Fresh.reset_features()
+	Fresh.seed_features()
 	Fresh.jump_to_total_day(3)
 	ls.set_loot_config(null)
 	WorldRoot2D.register_map(&"_t_loot_look", AreaMap.parse_text(LOOK_MAP))

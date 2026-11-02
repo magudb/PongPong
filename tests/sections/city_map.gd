@@ -2089,7 +2089,9 @@ func _warps_and_zone(t) -> void:
 	EventBus.area_change_requested.disconnect(cb)
 	t.check("every_warp_round_trips", trip_ok, "the two bridge warps round-trip with P11's farm and Hyggebyen (the pending-area allowance of maps_iso / maps_farm is closed here): %s" % [trips])
 	# --- the zone unlocks on the first arrival (a new game: only farm and city are open), once, with the toast
-	t.new_game()
+	# (a model-only new game would leave this World bound to the previous profile, refusing every _enter: start a real one)
+	await t.start_world()
+	_world = t.world()
 	await t.frames(2)
 	var before: bool = bool(gm.call("is_zone_unlocked", &"traetoppen"))
 	var unlocked: Array = []
